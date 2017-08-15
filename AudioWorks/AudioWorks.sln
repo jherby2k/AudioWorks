@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Commands", "Audi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Commands.Tests", "AudioWorks.Commands.Tests\AudioWorks.Commands.Tests.csproj", "{6424C037-48CC-4518-BD51-D45275545FE2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioWorks.Api", "AudioWorks.Api\AudioWorks.Api.csproj", "{EBCF9266-D1CE-43F5-BB62-8E33FD4FE3F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6424C037-48CC-4518-BD51-D45275545FE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6424C037-48CC-4518-BD51-D45275545FE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6424C037-48CC-4518-BD51-D45275545FE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBCF9266-D1CE-43F5-BB62-8E33FD4FE3F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBCF9266-D1CE-43F5-BB62-8E33FD4FE3F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBCF9266-D1CE-43F5-BB62-8E33FD4FE3F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBCF9266-D1CE-43F5-BB62-8E33FD4FE3F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

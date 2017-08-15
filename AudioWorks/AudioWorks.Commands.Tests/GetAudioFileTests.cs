@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using System;
+using System.IO;
 using System.Management.Automation;
 using Xunit;
 
@@ -80,6 +81,23 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _psFixture.Runspace;
                 ps.AddCommand("Get-AudioFile");
                 Assert.Throws(typeof(ParameterBindingException), () => ps.Invoke());
+            }
+        }
+
+        [Fact(DisplayName = "Get-AudioFile returns an error if the Path can't be found")]
+        public void GetAudioFilePathNotFoundReturnsError()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _psFixture.Runspace;
+                ps.AddCommand("Get-AudioFile").AddArgument("Foo");
+                ps.Invoke();
+                var errors = ps.Streams.Error.ReadAll();
+                Assert.True(
+                    errors.Count == 1 &&
+                    errors[0].Exception is FileNotFoundException &&
+                    errors[0].FullyQualifiedErrorId == $"{nameof(FileNotFoundException)},AudioWorks.Commands.GetAudioFileCommand" &&
+                    errors[0].CategoryInfo.Category == ErrorCategory.InvalidArgument);
             }
         }
     }

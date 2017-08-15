@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>The primary AudioWorks API. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
+    <Authors>Jeremy Herbison</Authors>
+    <Company />
+    <Product>AudioWorks</Product>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <Copyright>Copyright © 2017 Jeremy Herbison</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="11.0.0" />
+  </ItemGroup>
+
+</Project>
