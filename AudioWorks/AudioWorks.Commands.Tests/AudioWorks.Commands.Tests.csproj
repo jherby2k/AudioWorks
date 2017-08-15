@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+
+    <Product>AudioWorks</Product>
+
+    <Company />
+
+    <Authors>Jeremy Herbison</Authors>
+
+    <Description>Unit testing project for the AudioWorks PowerShell module. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
+
+    <NeutralLanguage>en-US</NeutralLanguage>
+
+    <PackageId />
+
+    <Copyright>Copyright © 2017 Jeremy Herbison</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="11.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
+    <PackageReference Include="Microsoft.PowerShell.Commands.Diagnostics" Version="6.0.0-beta.5" />
+    <PackageReference Include="Microsoft.PowerShell.SDK" Version="6.0.0-beta.5" />
+    <PackageReference Include="Microsoft.WSMan.Management" Version="6.0.0-beta.5" />
+    <PackageReference Include="xunit" Version="2.2.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+  </ItemGroup>
+
+</Project>
