@@ -34,5 +34,17 @@ namespace AudioWorks.Commands.Tests
                 Assert.True(true);
             }
         }
+
+        [Fact(DisplayName = "Get-AudioFile accepts a Path parameter")]
+        public void GetAudioFileAcceptsPathParameter()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _psFixture.Runspace;
+                ps.AddCommand("Get-AudioFile").AddParameter("Path", "Foo");
+                ps.Invoke();
+                Assert.True(true);
+            }
+        }
     }
 }

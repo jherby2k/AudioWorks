@@ -7,5 +7,7 @@ namespace AudioWorks.Commands
     [Cmdlet(VerbsCommon.Get, "AudioFile")]
     public class GetAudioFileCommand : Cmdlet
     {
+        [Parameter]
+        public string Path { get; set; }
     }
 }
