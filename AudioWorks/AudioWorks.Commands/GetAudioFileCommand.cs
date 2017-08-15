@@ -7,7 +7,7 @@ namespace AudioWorks.Commands
     [Cmdlet(VerbsCommon.Get, "AudioFile")]
     public class GetAudioFileCommand : Cmdlet
     {
-        [Parameter(Position = 0, ValueFromPipeline = true)]
+        [Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
         public string Path { get; set; }
     }
 }
