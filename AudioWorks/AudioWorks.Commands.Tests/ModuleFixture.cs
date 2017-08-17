@@ -20,20 +20,20 @@ namespace AudioWorks.Commands.Tests
             var workingDir = new DirectoryInfo(Directory.GetCurrentDirectory());
 
             // Publish the module project to the output folder
-            using (var publishProcess = new Process())
+            using (var publish = new Process())
             {
-                publishProcess.StartInfo.FileName = "dotnet";
-                publishProcess.StartInfo.Arguments =
+                publish.StartInfo.FileName = "dotnet";
+                publish.StartInfo.Arguments =
                     $"publish -c {workingDir.Parent.Name} -o \"{workingDir.CreateSubdirectory(_moduleDir).FullName}\"";
-                publishProcess.StartInfo.WorkingDirectory = Path.Combine(
+                publish.StartInfo.WorkingDirectory = Path.Combine(
                     workingDir.Parent.Parent.Parent.Parent.FullName, _moduleProject);
-                publishProcess.Start();
-                publishProcess.WaitForExit();
+                publish.Start();
+                publish.WaitForExit();
             }
 
             // Import the module
             var state = InitialSessionState.CreateDefault();
-            state.ImportPSModule(new[] {Path.Combine(workingDir.FullName, _moduleDir, $"{_moduleProject}.dll")});
+            state.ImportPSModule(new[] { Path.Combine(workingDir.FullName, _moduleDir, $"{_moduleProject}.dll") });
             Runspace = RunspaceFactory.CreateRunspace(state);
             Runspace.Open();
         }
