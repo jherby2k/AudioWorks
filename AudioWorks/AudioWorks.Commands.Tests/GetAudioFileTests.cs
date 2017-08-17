@@ -7,14 +7,14 @@ using Xunit;
 namespace AudioWorks.Commands.Tests
 {
     public class GetAudioFileTests :
-        IClassFixture<PowerShellFixture>
+        IClassFixture<ModuleFixture>
     {
-        [NotNull] readonly PowerShellFixture _psFixture;
+        [NotNull] readonly ModuleFixture _moduleFixture;
 
         public GetAudioFileTests(
-            [NotNull] PowerShellFixture psFixture)
+            [NotNull] ModuleFixture moduleFixture)
         {
-            _psFixture = psFixture;
+            _moduleFixture = moduleFixture;
         }
 
         [Fact(DisplayName = "Get-AudioFile command exists")]
@@ -22,7 +22,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _psFixture.Runspace;
+                ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioFile");
                 try
                 {
@@ -41,7 +41,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _psFixture.Runspace;
+                ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioFile").AddParameter("Path", "Foo");
                 ps.Invoke();
                 Assert.True(true);
@@ -53,7 +53,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _psFixture.Runspace;
+                ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioFile").AddArgument("Foo");
                 ps.Invoke();
                 Assert.True(true);
@@ -65,7 +65,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _psFixture.Runspace;
+                ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("New-Variable").AddArgument("Path").AddParameter("Value", "Foo");
                 ps.AddCommand("Get-AudioFile");
                 ps.Invoke();
@@ -78,7 +78,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _psFixture.Runspace;
+                ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioFile");
                 Assert.Throws(typeof(ParameterBindingException), () => ps.Invoke());
             }
@@ -89,7 +89,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _psFixture.Runspace;
+                ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioFile").AddArgument("Foo");
                 ps.Invoke();
                 var errors = ps.Streams.Error.ReadAll();
