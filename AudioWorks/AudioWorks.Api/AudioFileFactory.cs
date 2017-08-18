@@ -1,4 +1,5 @@
-﻿using AudioWorks.Common;
+﻿using System;
+using AudioWorks.Common;
 using AudioWorks.Extensions;
 using JetBrains.Annotations;
 using System.IO;
@@ -11,6 +12,8 @@ namespace AudioWorks.Api
         [NotNull]
         public static AudioFile Create([NotNull] string path)
         {
+            if (path == null) throw new ArgumentNullException(nameof(path));
+
             LoadAudioInfo(new FileInfo(path));
             return new AudioFile();
         }
