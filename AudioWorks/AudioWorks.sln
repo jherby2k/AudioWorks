@@ -20,6 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestFiles", "TestFiles", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unsupported", "Unsupported", "{D2650C7C-32ED-48DC-9B13-A1905BE1F9E7}"
 	ProjectSection(SolutionItems) = preProject
+		TestFiles\Unsupported\MS ADPCM 44100Hz Stereo.wav = TestFiles\Unsupported\MS ADPCM 44100Hz Stereo.wav
 		TestFiles\Unsupported\Not Audio.txt = TestFiles\Unsupported\Not Audio.txt
 	EndProjectSection
 EndProject

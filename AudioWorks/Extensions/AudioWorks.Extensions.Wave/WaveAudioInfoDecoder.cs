@@ -24,7 +24,14 @@ namespace AudioWorks.Extensions.Wave
                     if (fmtChunkSize == 0)
                         throw new InvalidFileException("Missing 'fmt' chunk.", stream.Name);
 
-                    return new AudioInfo();
+                    switch (reader.ReadUInt16())
+                    {
+                        case 1:
+                        case 0xFFFE:
+                            return new AudioInfo();
+                        default:
+                            throw new UnsupportedFileException("Only PCM wave files are supported.", stream.Name);
+                    }
                 }
                 catch (IOException e)
                 {
