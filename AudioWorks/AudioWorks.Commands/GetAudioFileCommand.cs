@@ -1,4 +1,5 @@
 ﻿using AudioWorks.Api;
+using AudioWorks.Common;
 using JetBrains.Annotations;
 using System.IO;
 using System.Management.Automation;
@@ -21,6 +22,10 @@ namespace AudioWorks.Commands
             catch (FileNotFoundException e)
             {
                 WriteError(new ErrorRecord(e, nameof(FileNotFoundException), ErrorCategory.InvalidArgument, Path));
+            }
+            catch (UnsupportedFileException e)
+            {
+                WriteError(new ErrorRecord(e, nameof(UnsupportedFileException), ErrorCategory.InvalidData, Path));
             }
         }
     }

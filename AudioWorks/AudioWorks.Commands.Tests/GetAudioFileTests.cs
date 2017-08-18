@@ -1,3 +1,4 @@
+using AudioWorks.Common;
 using JetBrains.Annotations;
 using System;
 using System.IO;
@@ -7,7 +8,8 @@ using Xunit;
 namespace AudioWorks.Commands.Tests
 {
     public class GetAudioFileTests :
-        IClassFixture<ModuleFixture>
+        IClassFixture<ModuleFixture>,
+        IClassFixture<ExtensionsFixture>
     {
         [NotNull] readonly ModuleFixture _moduleFixture;
 
@@ -98,6 +100,29 @@ namespace AudioWorks.Commands.Tests
                     errors[0].Exception is FileNotFoundException &&
                     errors[0].FullyQualifiedErrorId == $"{nameof(FileNotFoundException)},AudioWorks.Commands.GetAudioFileCommand" &&
                     errors[0].CategoryInfo.Category == ErrorCategory.InvalidArgument);
+            }
+        }
+
+        [Theory(DisplayName = "Get-AudioFile returns an error if the Path is an unsupported file")]
+        [ClassData(typeof(UnsupportedTestFilesClassData))]
+        public void GetAudioFilePathUnsupportedReturnsError([NotNull] string fileName)
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Get-AudioFile").AddArgument(
+                    Path.Combine(
+                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                        "TestFiles",
+                        "Unsupported",
+                        fileName));
+                ps.Invoke();
+                var errors = ps.Streams.Error.ReadAll();
+                Assert.True(
+                    errors.Count == 1 &&
+                    errors[0].Exception is UnsupportedFileException &&
+                    errors[0].FullyQualifiedErrorId == $"{nameof(UnsupportedFileException)},AudioWorks.Commands.GetAudioFileCommand" &&
+                    errors[0].CategoryInfo.Category == ErrorCategory.InvalidData);
             }
         }
     }

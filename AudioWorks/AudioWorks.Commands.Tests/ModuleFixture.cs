@@ -19,17 +19,10 @@ namespace AudioWorks.Commands.Tests
         {
             var workingDir = new DirectoryInfo(Directory.GetCurrentDirectory());
 
-            // Publish the module project to the output folder
-            using (var publish = new Process())
-            {
-                publish.StartInfo.FileName = "dotnet";
-                publish.StartInfo.Arguments =
-                    $"publish -c {workingDir.Parent.Name} -o \"{workingDir.CreateSubdirectory(_moduleDir).FullName}\"";
-                publish.StartInfo.WorkingDirectory = Path.Combine(
-                    workingDir.Parent.Parent.Parent.Parent.FullName, _moduleProject);
-                publish.Start();
-                publish.WaitForExit();
-            }
+            Publish(
+                Path.Combine(workingDir.Parent.Parent.Parent.Parent.FullName, _moduleProject),
+                workingDir.Parent.Name,
+                workingDir.CreateSubdirectory(_moduleDir).FullName);
 
             // Import the module
             var state = InitialSessionState.CreateDefault();
@@ -41,6 +34,18 @@ namespace AudioWorks.Commands.Tests
         public void Dispose()
         {
             Runspace.Close();
+        }
+
+        void Publish(string projectDir, string configuration, string outputDir)
+        {
+            using (var publish = new Process())
+            {
+                publish.StartInfo.FileName = "dotnet";
+                publish.StartInfo.Arguments = $"publish -c {configuration} -o \"{outputDir}\"";
+                publish.StartInfo.WorkingDirectory = projectDir;
+                publish.Start();
+                publish.WaitForExit();
+            }
         }
     }
 }
