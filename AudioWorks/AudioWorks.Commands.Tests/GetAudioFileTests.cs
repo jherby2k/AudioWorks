@@ -104,6 +104,22 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
+        [Fact(DisplayName = "Get-AudioFile has an OutputType of AudioFile")]
+        public void GetAudioFileOutputTypeIsAudioFile()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Get-Command").AddArgument("Get-AudioFile");
+                ps.AddCommand("Select-Object").AddParameter("ExpandProperty", "OutputType");
+                ps.AddCommand("Select-Object").AddParameter("ExpandProperty", "Type");
+                var result = ps.Invoke();
+                Assert.True(
+                    result.Count == 1 &&
+                    (Type) result[0].BaseObject == typeof(AudioFile));
+            }
+        }
+
         [Theory(DisplayName = "Get-AudioFile returns an error if the Path is an unsupported file")]
         [ClassData(typeof(UnsupportedTestFilesClassData))]
         public void GetAudioFilePathUnsupportedReturnsError([NotNull] string fileName)

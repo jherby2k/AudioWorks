@@ -1,13 +1,12 @@
 ﻿using AudioWorks.Api;
 using AudioWorks.Common;
 using JetBrains.Annotations;
-using System.IO;
 using System.Management.Automation;
 
 namespace AudioWorks.Commands
 {
     [PublicAPI]
-    [Cmdlet(VerbsCommon.Get, "AudioFile", DefaultParameterSetName = "ByPath")]
+    [Cmdlet(VerbsCommon.Get, "AudioFile", DefaultParameterSetName = "ByPath"), OutputType(typeof(AudioFile))]
     public class GetAudioFileCommand : PSCmdlet
     {
         [Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true, ParameterSetName = "ByPath")]
