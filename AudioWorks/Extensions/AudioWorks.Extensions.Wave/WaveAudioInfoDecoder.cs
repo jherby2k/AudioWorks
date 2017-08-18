@@ -13,6 +13,17 @@ namespace AudioWorks.Extensions.Wave
                 try
                 {
                     reader.Initialize();
+
+                    if (stream.Length != reader.RiffChunkSize + 8)
+                        throw new InvalidFileException("File is unexpectedly truncated.", stream.Name);
+
+                    if (reader.ReadFourcc() != "WAVE")
+                        throw new InvalidFileException("Not a Wave file.", stream.Name);
+
+                    var fmtChunkSize = reader.SeekToChunk("fmt ");
+                    if (fmtChunkSize == 0)
+                        throw new InvalidFileException("Missing 'fmt' chunk.", stream.Name);
+
                     return new AudioInfo();
                 }
                 catch (IOException e)

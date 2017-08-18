@@ -8,7 +8,10 @@ namespace AudioWorks.Commands.Tests
     {
         [NotNull] readonly List<object[]> _data = new List<object[]>
         {
-            new object[] { "Not a RIFF File.wav" }
+            new object[] { "Not RIFF Format.wav" },
+            new object[] { "Unexpectedly Truncated.wav" },
+            new object[] { "Not Wave Format.wav" },
+            new object[] { "Missing 'fmt' Chunk.wav" }
         };
 
         public IEnumerator<object[]> GetEnumerator()
