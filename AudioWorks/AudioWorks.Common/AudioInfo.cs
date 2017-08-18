@@ -1,5 +1,8 @@
-﻿namespace AudioWorks.Common
+﻿using JetBrains.Annotations;
+
+namespace AudioWorks.Common
 {
+    [PublicAPI]
     public class AudioInfo
     {
     }
