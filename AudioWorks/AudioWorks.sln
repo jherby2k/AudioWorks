@@ -16,6 +16,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Common", "AudioW
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions", "AudioWorks.Extensions\AudioWorks.Extensions.csproj", "{D237F613-F6AF-4B79-B297-56A5EB75BB97}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestFiles", "TestFiles", "{ED5F2925-FC55-4D6B-8E32-7FD957F04B35}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unsupported", "Unsupported", "{D2650C7C-32ED-48DC-9B13-A1905BE1F9E7}"
+	ProjectSection(SolutionItems) = preProject
+		TestFiles\Unsupported\Not Audio.txt = TestFiles\Unsupported\Not Audio.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +52,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D2650C7C-32ED-48DC-9B13-A1905BE1F9E7} = {ED5F2925-FC55-4D6B-8E32-7FD957F04B35}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {73104514-BD86-4575-A404-A192C2B5BF6D}
