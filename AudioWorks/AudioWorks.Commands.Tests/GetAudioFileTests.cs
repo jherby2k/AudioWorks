@@ -1,6 +1,7 @@
 using AudioWorks.Common;
 using JetBrains.Annotations;
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Management.Automation;
 using Xunit;
@@ -97,9 +98,9 @@ namespace AudioWorks.Commands.Tests
                 var errors = ps.Streams.Error.ReadAll();
                 Assert.True(
                     errors.Count == 1 &&
-                    errors[0].Exception is FileNotFoundException &&
-                    errors[0].FullyQualifiedErrorId == $"{nameof(FileNotFoundException)},AudioWorks.Commands.GetAudioFileCommand" &&
-                    errors[0].CategoryInfo.Category == ErrorCategory.InvalidArgument);
+                    errors[0].Exception is ItemNotFoundException &&
+                    errors[0].FullyQualifiedErrorId == $"{nameof(ItemNotFoundException)},AudioWorks.Commands.GetAudioFileCommand" &&
+                    errors[0].CategoryInfo.Category == ErrorCategory.ObjectNotFound);
             }
         }
 
@@ -161,9 +162,43 @@ namespace AudioWorks.Commands.Tests
                         new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
                         "TestFiles",
                         "Valid",
-                        fileName)); var result = ps.Invoke();
+                        fileName));
+                var result = ps.Invoke();
                 Assert.True(result.Count == 1 && result[0].BaseObject is AudioFile);
             }
+        }
+
+        [Theory(DisplayName = "Get-AudioFile returns an AudioFile using a relative path")]
+        [ClassData(typeof(TestFilesClassData))]
+        public void GetAudioFileRelativePathReturnsAudioFile([NotNull] string fileName)
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Push-Location").AddArgument(
+                    Path.Combine(
+                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                        "TestFiles",
+                        "Valid"));
+                ps.Invoke();
+            }
+
+            Collection<PSObject> result;
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Get-AudioFile").AddArgument(fileName);
+                result = ps.Invoke();
+            }
+
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Pop-Location");
+                ps.Invoke();
+            }
+
+            Assert.True(result.Count == 1 && result[0].BaseObject is AudioFile);
         }
     }
 }

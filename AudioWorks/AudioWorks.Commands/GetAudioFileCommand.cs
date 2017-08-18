@@ -7,21 +7,25 @@ using System.Management.Automation;
 namespace AudioWorks.Commands
 {
     [PublicAPI]
-    [Cmdlet(VerbsCommon.Get, "AudioFile")]
-    public class GetAudioFileCommand : Cmdlet
+    [Cmdlet(VerbsCommon.Get, "AudioFile", DefaultParameterSetName = "ByPath")]
+    public class GetAudioFileCommand : PSCmdlet
     {
-        [Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
+        [Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true, ParameterSetName = "ByPath")]
         public string Path { get; set; }
+
+        [Parameter(Position = 0, Mandatory = true, ParameterSetName = "ByLiteralPath"), Alias("PSPath")]
+        public string LiteralPath { get; set; }
 
         protected override void ProcessRecord()
         {
             try
             {
-                WriteObject(AudioFileFactory.Create(Path));
+                foreach (var path in this.GetFileSystemPaths(Path, LiteralPath))
+                    WriteObject(AudioFileFactory.Create(path));
             }
-            catch (FileNotFoundException e)
+            catch (ItemNotFoundException e)
             {
-                WriteError(new ErrorRecord(e, nameof(FileNotFoundException), ErrorCategory.InvalidArgument, Path));
+                WriteError(new ErrorRecord(e, nameof(ItemNotFoundException), ErrorCategory.ObjectNotFound, Path));
             }
             catch (UnsupportedFileException e)
             {
