@@ -125,5 +125,28 @@ namespace AudioWorks.Commands.Tests
                     errors[0].CategoryInfo.Category == ErrorCategory.InvalidData);
             }
         }
+
+        [Theory(DisplayName = "Get-AudioFile returns an error if the Path is an invalid file")]
+        [ClassData(typeof(InvalidTestFilesClassData))]
+        public void GetAudioFilePathInvalidReturnsError([NotNull] string fileName)
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Get-AudioFile").AddArgument(
+                    Path.Combine(
+                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                        "TestFiles",
+                        "Invalid",
+                        fileName));
+                ps.Invoke();
+                var errors = ps.Streams.Error.ReadAll();
+                Assert.True(
+                    errors.Count == 1 &&
+                    errors[0].Exception is InvalidFileException &&
+                    errors[0].FullyQualifiedErrorId == $"{nameof(InvalidFileException)},AudioWorks.Commands.GetAudioFileCommand" &&
+                    errors[0].CategoryInfo.Category == ErrorCategory.InvalidData);
+            }
+        }
     }
 }

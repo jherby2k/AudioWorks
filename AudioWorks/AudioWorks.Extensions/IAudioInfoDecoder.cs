@@ -7,6 +7,6 @@ namespace AudioWorks.Extensions
     [PublicAPI]
     public interface IAudioInfoDecoder
     {
-        AudioInfo ReadAudioInfo(FileStream stream);
+        AudioInfo ReadAudioInfo([NotNull] FileStream stream);
     }
 }

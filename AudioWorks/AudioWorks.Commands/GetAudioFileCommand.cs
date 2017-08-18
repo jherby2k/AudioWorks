@@ -27,6 +27,10 @@ namespace AudioWorks.Commands
             {
                 WriteError(new ErrorRecord(e, nameof(UnsupportedFileException), ErrorCategory.InvalidData, Path));
             }
+            catch (InvalidFileException e)
+            {
+                WriteError(new ErrorRecord(e, nameof(InvalidFileException), ErrorCategory.InvalidData, Path));
+            }
         }
     }
 }
