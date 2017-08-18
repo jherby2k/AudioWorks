@@ -1,6 +1,5 @@
 ﻿using System;
 using JetBrains.Annotations;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -20,22 +19,10 @@ namespace AudioWorks.Commands.Tests
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
                 "Extensions")).GetDirectories())
             {
-                Publish(
+                DotNetUtility.Publish(
                     extensionProjectDir.FullName,
                     configuration,
                     extensionsInstallDir.CreateSubdirectory(extensionProjectDir.Name).FullName);
-            }
-        }
-
-        void Publish(string projectDir, string configuration, string outputDir)
-        {
-            using (var publish = new Process())
-            {
-                publish.StartInfo.FileName = "dotnet";
-                publish.StartInfo.Arguments = $"publish -c {configuration} -o \"{outputDir}\"";
-                publish.StartInfo.WorkingDirectory = projectDir;
-                publish.Start();
-                publish.WaitForExit();
             }
         }
     }

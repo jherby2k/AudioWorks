@@ -1,6 +1,5 @@
 using JetBrains.Annotations;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Management.Automation.Runspaces;
 
@@ -19,7 +18,7 @@ namespace AudioWorks.Commands.Tests
         {
             var workingDir = new DirectoryInfo(Directory.GetCurrentDirectory());
 
-            Publish(
+            DotNetUtility.Publish(
                 Path.Combine(workingDir.Parent.Parent.Parent.Parent.FullName, _moduleProject),
                 workingDir.Parent.Name,
                 workingDir.CreateSubdirectory(_moduleDir).FullName);
@@ -34,18 +33,6 @@ namespace AudioWorks.Commands.Tests
         public void Dispose()
         {
             Runspace.Close();
-        }
-
-        void Publish(string projectDir, string configuration, string outputDir)
-        {
-            using (var publish = new Process())
-            {
-                publish.StartInfo.FileName = "dotnet";
-                publish.StartInfo.Arguments = $"publish -c {configuration} -o \"{outputDir}\"";
-                publish.StartInfo.WorkingDirectory = projectDir;
-                publish.Start();
-                publish.WaitForExit();
-            }
         }
     }
 }
