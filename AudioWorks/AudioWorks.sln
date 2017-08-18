@@ -36,6 +36,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioWorks.Extensions.Wave", "Extensions\AudioWorks.Extensions.Wave\AudioWorks.Extensions.Wave.csproj", "{1447D6EA-60F7-44A8-A5DA-69A4287348CF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Valid", "Valid", "{F3EE5042-D0AB-4B5C-8255-4A1D87A8C4A1}"
+	ProjectSection(SolutionItems) = preProject
+		TestFiles\Valid\LPCM 16-bit 44100Hz Mono.wav = TestFiles\Valid\LPCM 16-bit 44100Hz Mono.wav
+		TestFiles\Valid\LPCM 16-bit 44100Hz Stereo.wav = TestFiles\Valid\LPCM 16-bit 44100Hz Stereo.wav
+		TestFiles\Valid\LPCM 16-bit 48000Hz Stereo.wav = TestFiles\Valid\LPCM 16-bit 48000Hz Stereo.wav
+		TestFiles\Valid\LPCM 24-bit 96000Hz Stereo.wav = TestFiles\Valid\LPCM 24-bit 96000Hz Stereo.wav
+		TestFiles\Valid\LPCM 8-bit 8000Hz Stereo.wav = TestFiles\Valid\LPCM 8-bit 8000Hz Stereo.wav
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +83,7 @@ Global
 		{D2650C7C-32ED-48DC-9B13-A1905BE1F9E7} = {ED5F2925-FC55-4D6B-8E32-7FD957F04B35}
 		{F91FD451-BD07-4280-B74F-870DAF191591} = {ED5F2925-FC55-4D6B-8E32-7FD957F04B35}
 		{1447D6EA-60F7-44A8-A5DA-69A4287348CF} = {5C8B6EE1-CC71-4069-BD6A-E82E550FED11}
+		{F3EE5042-D0AB-4B5C-8255-4A1D87A8C4A1} = {ED5F2925-FC55-4D6B-8E32-7FD957F04B35}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {73104514-BD86-4575-A404-A192C2B5BF6D}

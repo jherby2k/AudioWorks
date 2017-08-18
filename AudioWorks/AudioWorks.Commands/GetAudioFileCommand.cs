@@ -17,7 +17,7 @@ namespace AudioWorks.Commands
         {
             try
             {
-                AudioFileFactory.Create(Path);
+                WriteObject(AudioFileFactory.Create(Path));
             }
             catch (FileNotFoundException e)
             {

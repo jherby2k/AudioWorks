@@ -148,5 +148,22 @@ namespace AudioWorks.Commands.Tests
                     errors[0].CategoryInfo.Category == ErrorCategory.InvalidData);
             }
         }
+
+        [Theory(DisplayName = "Get-AudioFile returns an AudioFile")]
+        [ClassData(typeof(TestFilesClassData))]
+        public void GetAudioFileReturnsAudioFile([NotNull] string fileName)
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Get-AudioFile").AddArgument(
+                    Path.Combine(
+                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                        "TestFiles",
+                        "Valid",
+                        fileName)); var result = ps.Invoke();
+                Assert.True(result.Count == 1 && result[0].BaseObject is AudioFile);
+            }
+        }
     }
 }
