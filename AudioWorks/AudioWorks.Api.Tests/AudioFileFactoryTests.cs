@@ -16,8 +16,7 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "AudioFileFactory.Create throws an exception when fileName cannot be found")]
         public void CreatePathNotFoundThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws(typeof(FileNotFoundException), () => AudioFileFactory.Create(""));
+            Assert.Throws(typeof(FileNotFoundException), () => AudioFileFactory.Create("Foo"));
         }
     }
 }

@@ -12,8 +12,8 @@ namespace AudioWorks.Api
         [NotNull]
         public static AudioFile Create([NotNull] string path)
         {
-            if (path == null) throw new ArgumentNullException(nameof(path));
-            if (!File.Exists(path)) throw new FileNotFoundException($"The file '{path}' cannot be found.");
+            if (string.IsNullOrEmpty(path)) throw new ArgumentException("Value cannot be null or empty.", nameof(path));
+            if (!File.Exists(path)) throw new FileNotFoundException($"The file '{path}' cannot be found.", path);
 
             LoadAudioInfo(new FileInfo(path));
             return new AudioFile();
