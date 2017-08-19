@@ -43,5 +43,16 @@ namespace AudioWorks.Api.Tests
                 "Invalid",
                 fileName)));
         }
+
+        [Theory(DisplayName = "AudioFileFactory.Create returns an AudioFile")]
+        [ClassData(typeof(ValidTestFilesClassData))]
+        public void CreateReturnsAudioFile([NotNull] string fileName)
+        {
+            Assert.IsType<AudioFile>(AudioFileFactory.Create(Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                "TestFiles",
+                "Valid",
+                fileName)));
+        }
     }
 }
