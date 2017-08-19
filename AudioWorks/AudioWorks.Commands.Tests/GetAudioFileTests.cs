@@ -1,3 +1,4 @@
+using AudioWorks.Api.Tests;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 using System;

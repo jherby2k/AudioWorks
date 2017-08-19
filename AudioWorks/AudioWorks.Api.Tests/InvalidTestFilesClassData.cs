@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace AudioWorks.Commands.Tests
+namespace AudioWorks.Api.Tests
 {
     public class InvalidTestFilesClassData : IEnumerable<object[]>
     {

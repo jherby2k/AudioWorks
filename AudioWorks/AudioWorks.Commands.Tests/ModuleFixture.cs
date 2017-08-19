@@ -1,3 +1,4 @@
+using AudioWorks.Api.Tests;
 using JetBrains.Annotations;
 using System;
 using System.IO;
@@ -9,7 +10,6 @@ namespace AudioWorks.Commands.Tests
     public class ModuleFixture : IDisposable
     {
         const string _moduleProject = "AudioWorks.Commands";
-        const string _moduleDir = "Module";
 
         [NotNull]
         internal Runspace Runspace { get; }
@@ -21,11 +21,11 @@ namespace AudioWorks.Commands.Tests
             DotNetUtility.Publish(
                 Path.Combine(workingDir.Parent.Parent.Parent.Parent.FullName, _moduleProject),
                 workingDir.Parent.Name,
-                workingDir.CreateSubdirectory(_moduleDir).FullName);
+                workingDir.FullName);
 
             // Import the module
             var state = InitialSessionState.CreateDefault();
-            state.ImportPSModule(new[] { Path.Combine(workingDir.FullName, _moduleDir, $"{_moduleProject}.dll") });
+            state.ImportPSModule(new[] { Path.Combine(workingDir.FullName, $"{_moduleProject}.dll") });
             Runspace = RunspaceFactory.CreateRunspace(state);
             Runspace.Open();
         }

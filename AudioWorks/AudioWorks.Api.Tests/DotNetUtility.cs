@@ -1,11 +1,11 @@
 ﻿using JetBrains.Annotations;
 using System.Diagnostics;
 
-namespace AudioWorks.Commands.Tests
+namespace AudioWorks.Api.Tests
 {
-    static class DotNetUtility
+    public static class DotNetUtility
     {
-        internal static void Publish([NotNull] string projectDir, [NotNull] string configuration, [NotNull] string outputDir)
+        public static void Publish([NotNull] string projectDir, [NotNull] string configuration, [NotNull] string outputDir)
         {
             using (var publish = new Process())
             {

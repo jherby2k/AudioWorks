@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj" />
     <ProjectReference Include="..\AudioWorks.Common\AudioWorks.Common.csproj" />
   </ItemGroup>
 
