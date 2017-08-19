@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AudioWorks.Common\AudioWorks.Common.csproj" />
     <ProjectReference Include="..\AudioWorks.Extensions\AudioWorks.Extensions.csproj" />
   </ItemGroup>
 
