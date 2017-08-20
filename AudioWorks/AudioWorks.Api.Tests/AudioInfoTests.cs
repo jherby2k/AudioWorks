@@ -43,5 +43,17 @@ namespace AudioWorks.Api.Tests
                 fileName);
             Assert.Equal(expectedAudioInfo.BitsPerSample, AudioFileFactory.Create(path).AudioInfo.BitsPerSample);
         }
+
+        [Theory(DisplayName = "AudioInfo has the expected SampleRate property value")]
+        [ClassData(typeof(ValidTestFilesClassData))]
+        public void AudioInfoHasExpectedSampleRate([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        {
+            var path = Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                "TestFiles",
+                "Valid",
+                fileName);
+            Assert.Equal(expectedAudioInfo.SampleRate, AudioFileFactory.Create(path).AudioInfo.SampleRate);
+        }
     }
 }

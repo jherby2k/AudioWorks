@@ -12,27 +12,27 @@ namespace AudioWorks.Api.Tests
             new object[]
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
-                new AudioInfo("LPCM", 2, 8)
+                new AudioInfo("LPCM", 2, 8, 8000)
             },
             new object[]
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
-                new AudioInfo("LPCM", 1, 16)
+                new AudioInfo("LPCM", 1, 16, 44100)
             },
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
-                new AudioInfo("LPCM", 2, 16)
+                new AudioInfo("LPCM", 2, 16, 44100)
             },
             new object[]
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
-                new AudioInfo("LPCM", 2, 16)
+                new AudioInfo("LPCM", 2, 16, 48000)
             },
             new object[]
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
-                new AudioInfo("LPCM", 2, 24)
+                new AudioInfo("LPCM", 2, 24, 96000)
             }
         };
 
