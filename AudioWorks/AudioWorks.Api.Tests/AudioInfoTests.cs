@@ -44,6 +44,13 @@ namespace AudioWorks.Api.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => new AudioInfo("Test", 2, 33, 44100, 0));
         }
 
+        [Fact(DisplayName = "AudioInfo throws an exception if SampleRate is less than 1")]
+        public void AudioInfoSampleRateTooLowThrowsException()
+        {
+            // ReSharper disable once AssignNullToNotNullAttribute
+            Assert.Throws<ArgumentOutOfRangeException>(() => new AudioInfo("Test", 2, 16, 0, 0));
+        }
+
         [Theory(DisplayName = "AudioInfo has the expected Description property value")]
         [ClassData(typeof(ValidTestFilesClassData))]
         public void AudioInfoHasExpectedDescription([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)

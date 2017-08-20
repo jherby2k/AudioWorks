@@ -33,6 +33,8 @@ namespace AudioWorks.Common
             if (bitsPerSample < 1 || bitsPerSample > 32)
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample), bitsPerSample,
                     "Value should be between 1 and 32.");
+            if (sampleRate < 1)
+                throw new ArgumentOutOfRangeException(nameof(sampleRate), sampleRate, "Value should be 1 or greater.");
 
             Description = description;
             Channels = channels;
