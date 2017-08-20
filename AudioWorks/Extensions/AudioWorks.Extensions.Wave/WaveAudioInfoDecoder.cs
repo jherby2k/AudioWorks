@@ -28,7 +28,7 @@ namespace AudioWorks.Extensions.Wave
                     {
                         case 1:
                         case 0xFFFE:
-                            return new AudioInfo();
+                            return new AudioInfo("LPCM");
                         default:
                             throw new UnsupportedFileException("Only PCM wave files are supported.", stream.Name);
                     }

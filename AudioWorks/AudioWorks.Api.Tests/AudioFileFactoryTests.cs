@@ -46,7 +46,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioFileFactory.Create returns an AudioFile")]
         [ClassData(typeof(ValidTestFilesClassData))]
-        public void CreateReturnsAudioFile([NotNull] string fileName)
+        public void CreateReturnsAudioFile([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
         {
             Assert.IsType<AudioFile>(AudioFileFactory.Create(Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,

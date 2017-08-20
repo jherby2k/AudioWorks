@@ -168,8 +168,8 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Theory(DisplayName = "Get-AudioFile returns an AudioFile")]
-        [ClassData(typeof(TestFilesClassData))]
-        public void GetAudioFileReturnsAudioFile([NotNull] string fileName)
+        [ClassData(typeof(ValidTestFilesClassData))]
+        public void GetAudioFileReturnsAudioFile([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
         {
             using (var ps = PowerShell.Create())
             {
@@ -186,8 +186,8 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Theory(DisplayName = "Get-AudioFile returns an AudioFile using a relative path")]
-        [ClassData(typeof(TestFilesClassData))]
-        public void GetAudioFileRelativePathReturnsAudioFile([NotNull] string fileName)
+        [ClassData(typeof(ValidTestFilesClassData))]
+        public void GetAudioFileRelativePathReturnsAudioFile([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
         {
             using (var ps = PowerShell.Create())
             {

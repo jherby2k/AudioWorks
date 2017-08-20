@@ -10,7 +10,7 @@ namespace AudioWorks.Api.Tests
     {
         [Theory(DisplayName = "AudioFile has the expected FileInfo property value")]
         [ClassData(typeof(ValidTestFilesClassData))]
-        public void AudioFileHasExpectedFileInfo([NotNull] string fileName)
+        public void AudioFileHasExpectedFileInfo([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -20,9 +20,9 @@ namespace AudioWorks.Api.Tests
             Assert.Equal(path, AudioFileFactory.Create(path).FileInfo.FullName);
         }
 
-        [Theory(DisplayName = "AudiodFile's AudioInfo property is set")]
+        [Theory(DisplayName = "AudioFile's AudioInfo property is set")]
         [ClassData(typeof(ValidTestFilesClassData))]
-        public void AudioFileHasAudioInfo([NotNull] string fileName)
+        public void AudioFileHasAudioInfo([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
