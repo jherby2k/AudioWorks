@@ -9,11 +9,31 @@ namespace AudioWorks.Api.Tests
     {
         [NotNull] readonly List<object[]> _data = new List<object[]>
         {
-            new object[] { "LPCM 8-bit 8000Hz Stereo.wav", new AudioInfo("LPCM") },
-            new object[] { "LPCM 16-bit 44100Hz Mono.wav", new AudioInfo("LPCM") },
-            new object[] { "LPCM 16-bit 44100Hz Stereo.wav", new AudioInfo("LPCM") },
-            new object[] { "LPCM 16-bit 48000Hz Stereo.wav", new AudioInfo("LPCM") },
-            new object[] { "LPCM 24-bit 96000Hz Stereo.wav", new AudioInfo("LPCM") }
+            new object[]
+            {
+                "LPCM 8-bit 8000Hz Stereo.wav",
+                new AudioInfo("LPCM", 2, 8)
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Mono.wav",
+                new AudioInfo("LPCM", 1, 16)
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                new AudioInfo("LPCM", 2, 16)
+            },
+            new object[]
+            {
+                "LPCM 16-bit 48000Hz Stereo.wav",
+                new AudioInfo("LPCM", 2, 16)
+            },
+            new object[]
+            {
+                "LPCM 24-bit 96000Hz Stereo.wav",
+                new AudioInfo("LPCM", 2, 24)
+            }
         };
 
         public IEnumerator<object[]> GetEnumerator()

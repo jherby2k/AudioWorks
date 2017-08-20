@@ -8,12 +8,15 @@ namespace AudioWorks.Common
         [NotNull]
         public string Description { get; }
 
-        public AudioInfo(string description)
+        public int Channels { get; }
+
+        public int BitsPerSample { get; }
+
+        public AudioInfo([NotNull] string description, int channels, int bitsPerSample)
         {
-            if (string.IsNullOrEmpty(description))
-            {
-                throw new System.ArgumentNullException(nameof(description));
-            }
+            Description = description;
+            Channels = channels;
+            BitsPerSample = bitsPerSample;
         }
     }
 }

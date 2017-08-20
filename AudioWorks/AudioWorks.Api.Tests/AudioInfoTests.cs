@@ -19,5 +19,29 @@ namespace AudioWorks.Api.Tests
                 fileName);
             Assert.Equal(expectedAudioInfo.Description, AudioFileFactory.Create(path).AudioInfo.Description);
         }
+
+        [Theory(DisplayName = "AudioInfo has the expected Channel property value")]
+        [ClassData(typeof(ValidTestFilesClassData))]
+        public void AudioInfoHasExpectedChannels([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        {
+            var path = Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                "TestFiles",
+                "Valid",
+                fileName);
+            Assert.Equal(expectedAudioInfo.Channels, AudioFileFactory.Create(path).AudioInfo.Channels);
+        }
+
+        [Theory(DisplayName = "AudioInfo has the expected BitsPerSample property value")]
+        [ClassData(typeof(ValidTestFilesClassData))]
+        public void AudioInfoHasExpectedBitsPerSample([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        {
+            var path = Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                "TestFiles",
+                "Valid",
+                fileName);
+            Assert.Equal(expectedAudioInfo.BitsPerSample, AudioFileFactory.Create(path).AudioInfo.BitsPerSample);
+        }
     }
 }
