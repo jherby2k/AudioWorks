@@ -16,6 +16,20 @@ namespace AudioWorks.Api.Tests
             Assert.Throws<ArgumentNullException>(() => new AudioInfo(null, 2, 16, 44100, 0));
         }
 
+        [Fact(DisplayName = "AudioInfo throws an exception if Channels is greater than 2")]
+        public void AudioInfoChannelsTooHighThrowsException()
+        {
+            // ReSharper disable once AssignNullToNotNullAttribute
+            Assert.Throws<ArgumentOutOfRangeException>(() => new AudioInfo("Test", 3, 16, 44100, 0));
+        }
+
+        [Fact(DisplayName = "AudioInfo throws an exception if Channels is less than 1")]
+        public void AudioInfoChannelsTooLowThrowsException()
+        {
+            // ReSharper disable once AssignNullToNotNullAttribute
+            Assert.Throws<ArgumentOutOfRangeException>(() => new AudioInfo("Test", 0, 16, 44100, 0));
+        }
+
         [Theory(DisplayName = "AudioInfo has the expected Description property value")]
         [ClassData(typeof(ValidTestFilesClassData))]
         public void AudioInfoHasExpectedDescription([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)

@@ -28,6 +28,8 @@ namespace AudioWorks.Common
         {
             if (string.IsNullOrEmpty(description))
                 throw new ArgumentNullException(nameof(description), "Value cannot be null or empty.");
+            if (channels < 1 || channels > 2)
+                throw new ArgumentOutOfRangeException(nameof(channels), channels, "Value should be 1 or 2.");
 
             Description = description;
             Channels = channels;
