@@ -10,7 +10,7 @@ namespace AudioWorks.Api.Tests
     public class AudioInfoTests
     {
         [Fact(DisplayName = "AudioInfo throws an exception if the Description is null")]
-        public void AudioInfoRequiresDescription()
+        public void AudioInfoDescriptionNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => new AudioInfo(null, 2, 16, 44100, 0));
