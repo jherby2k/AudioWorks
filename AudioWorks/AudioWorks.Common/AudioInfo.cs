@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using System;
 
 namespace AudioWorks.Common
 {
@@ -16,13 +17,22 @@ namespace AudioWorks.Common
 
         public long SampleCount { get; }
 
-        public AudioInfo([NotNull] string description, int channels, int bitsPerSample, int sampleRate, long sampleCount)
+        public TimeSpan PlayLength { get; }
+
+        public AudioInfo(
+            [NotNull] string description, 
+            int channels, 
+            int bitsPerSample, 
+            int sampleRate,
+            long sampleCount)
         {
             Description = description;
             Channels = channels;
             BitsPerSample = bitsPerSample;
             SampleRate = sampleRate;
             SampleCount = sampleCount;
+            if (sampleCount == 0)
+                PlayLength = new TimeSpan(0, 0, (int) Math.Round(sampleCount / (double) sampleRate));
         }
     }
 }

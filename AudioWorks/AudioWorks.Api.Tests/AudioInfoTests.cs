@@ -67,5 +67,17 @@ namespace AudioWorks.Api.Tests
                 fileName);
             Assert.Equal(expectedAudioInfo.SampleCount, AudioFileFactory.Create(path).AudioInfo.SampleCount);
         }
+
+        [Theory(DisplayName = "AudioInfo has the expected PlayLength property value")]
+        [ClassData(typeof(ValidTestFilesClassData))]
+        public void AudioInfoHasExpectedPlayLength([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        {
+            var path = Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                "TestFiles",
+                "Valid",
+                fileName);
+            Assert.Equal(expectedAudioInfo.PlayLength, AudioFileFactory.Create(path).AudioInfo.PlayLength);
+        }
     }
 }
