@@ -17,9 +17,8 @@ namespace AudioWorks.Api
             if (!File.Exists(path))
                 throw new FileNotFoundException($"The file '{path}' cannot be found.", path);
 
-            var result = new AudioFile(new FileInfo(path));
-            LoadAudioInfo(result.FileInfo);
-            return result;
+            var fileInfo = new FileInfo(path);
+            return new AudioFile(fileInfo, LoadAudioInfo(fileInfo));
         }
 
         [NotNull]
