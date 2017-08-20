@@ -1,14 +1,14 @@
-﻿using System;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
+using System;
 using System.IO;
 using System.Reflection;
 
 namespace AudioWorks.Api.Tests
 {
     [UsedImplicitly]
-    public class ExtensionsFixture
+    public class ExtensionFixture
     {
-        public ExtensionsFixture()
+        public ExtensionFixture()
         {
             var configuration = new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Name;
             var extensionsInstallDir = new DirectoryInfo(

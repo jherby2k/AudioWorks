@@ -13,7 +13,7 @@ namespace AudioWorks.Api.Tests
                 publish.StartInfo.Arguments = $"publish -c {configuration} -o \"{outputDir}\"";
                 publish.StartInfo.WorkingDirectory = projectDir;
                 publish.Start();
-                publish.WaitForExit();
+                publish.WaitForExit(15000);
             }
         }
     }

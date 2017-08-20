@@ -6,8 +6,8 @@ using Xunit;
 
 namespace AudioWorks.Api.Tests
 {
+    [Collection("Extensions")]
     public class AudioFileFactoryTests
-        : IClassFixture<ExtensionsFixture>
     {
         [Fact(DisplayName = "AudioFileFactory.Create throws an exception if the Path is null")]
         public void CreatePathNullThrowsException()

@@ -11,7 +11,7 @@ namespace AudioWorks.Commands.Tests
 {
     public class GetAudioFileTests :
         IClassFixture<ModuleFixture>,
-        IClassFixture<ExtensionsFixture>
+        IClassFixture<ExtensionFixture>
     {
         [NotNull] readonly ModuleFixture _moduleFixture;
 
