@@ -1,3 +1,4 @@
+using System;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 using System.IO;
@@ -8,6 +9,13 @@ namespace AudioWorks.Api.Tests
     [Collection("Extensions")]
     public class AudioInfoTests
     {
+        [Fact(DisplayName = "AudioInfo throws an exception if the Description is null")]
+        public void AudioInfoRequiresDescription()
+        {
+            // ReSharper disable once AssignNullToNotNullAttribute
+            Assert.Throws<ArgumentNullException>(() => new AudioInfo(null, 2, 16, 44100, 0));
+        }
+
         [Theory(DisplayName = "AudioInfo has the expected Description property value")]
         [ClassData(typeof(ValidTestFilesClassData))]
         public void AudioInfoHasExpectedDescription([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)

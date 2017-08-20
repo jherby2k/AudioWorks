@@ -26,6 +26,9 @@ namespace AudioWorks.Common
             int sampleRate,
             long sampleCount)
         {
+            if (string.IsNullOrEmpty(description))
+                throw new ArgumentNullException(nameof(description), "Value cannot be null or empty.");
+
             Description = description;
             Channels = channels;
             BitsPerSample = bitsPerSample;
