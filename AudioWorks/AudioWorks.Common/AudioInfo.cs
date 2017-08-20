@@ -35,6 +35,8 @@ namespace AudioWorks.Common
                     "Value should be between 1 and 32.");
             if (sampleRate < 1)
                 throw new ArgumentOutOfRangeException(nameof(sampleRate), sampleRate, "Value should be 1 or greater.");
+            if (sampleCount <= 0)
+                throw new ArgumentOutOfRangeException(nameof(sampleCount), sampleCount, "Value cannot be negative.");
 
             Description = description;
             Channels = channels;
