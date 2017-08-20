@@ -14,12 +14,15 @@ namespace AudioWorks.Common
 
         public int SampleRate { get; }
 
-        public AudioInfo([NotNull] string description, int channels, int bitsPerSample, int sampleRate)
+        public long SampleCount { get; }
+
+        public AudioInfo([NotNull] string description, int channels, int bitsPerSample, int sampleRate, long sampleCount)
         {
             Description = description;
             Channels = channels;
             BitsPerSample = bitsPerSample;
             SampleRate = sampleRate;
+            SampleCount = sampleCount;
         }
     }
 }

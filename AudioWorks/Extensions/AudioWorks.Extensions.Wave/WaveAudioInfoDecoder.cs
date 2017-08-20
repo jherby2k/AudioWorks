@@ -35,10 +35,13 @@ namespace AudioWorks.Extensions.Wave
 
                     var channels = reader.ReadUInt16();
                     var sampleRate = reader.ReadUInt32();
-                    stream.Seek(6, SeekOrigin.Current);
+                    stream.Seek(4, SeekOrigin.Current);
+                    var blockAlign = reader.ReadUInt16();
                     var bitsPerSample = reader.ReadUInt16();
 
-                    return new AudioInfo("LPCM", channels, bitsPerSample, checked((int) sampleRate));
+                    var dataChunkSize = reader.SeekToChunk("data");
+
+                    return new AudioInfo("LPCM", channels, bitsPerSample, checked((int) sampleRate), dataChunkSize / blockAlign);
                 }
                 catch (IOException e)
                 {
