@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace AudioWorks.Commands
 {
     [PublicAPI]
-    [Cmdlet(VerbsCommon.Get, "AudioInfo")]
+    [Cmdlet(VerbsCommon.Get, "AudioInfo"), OutputType(typeof(AudioInfo))]
     public class GetAudioInfoCommand : Cmdlet
     {
         [NotNull, SuppressMessage("ReSharper", "NotNullMemberIsNotInitialized")]

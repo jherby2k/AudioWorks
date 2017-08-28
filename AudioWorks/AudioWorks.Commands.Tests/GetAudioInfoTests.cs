@@ -103,5 +103,24 @@ namespace AudioWorks.Commands.Tests
                 Assert.Throws(typeof(ParameterBindingException), () => ps.Invoke());
             }
         }
+
+        [Fact(DisplayName = "Get-AudioInfo has an OutputType of AudioInfo")]
+        public void GetAudioInfoOutputTypeIsAudioInfo()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Get-Command")
+                    .AddArgument("Get-AudioInfo");
+                ps.AddCommand("Select-Object")
+                    .AddParameter("ExpandProperty", "OutputType");
+                ps.AddCommand("Select-Object")
+                    .AddParameter("ExpandProperty", "Type");
+                var result = ps.Invoke();
+                Assert.True(
+                    result.Count == 1 &&
+                    (Type)result[0].BaseObject == typeof(AudioInfo));
+            }
+        }
     }
 }
