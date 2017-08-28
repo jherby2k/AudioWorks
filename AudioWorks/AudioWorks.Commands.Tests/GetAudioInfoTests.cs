@@ -1,10 +1,10 @@
-﻿using JetBrains.Annotations;
+﻿using AudioWorks.Api;
+using AudioWorks.Api.Tests;
+using AudioWorks.Common;
+using JetBrains.Annotations;
 using System;
 using System.IO;
 using System.Management.Automation;
-using AudioWorks.Api;
-using AudioWorks.Api.Tests;
-using AudioWorks.Common;
 using Xunit;
 
 namespace AudioWorks.Commands.Tests
