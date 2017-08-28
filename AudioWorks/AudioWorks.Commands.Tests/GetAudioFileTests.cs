@@ -51,6 +51,17 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
+        [Fact(DisplayName = "Get-AudioFile requires the Path parameter")]
+        public void GetAudioFileRequiresPathParameter()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Get-AudioFile");
+                Assert.Throws(typeof(ParameterBindingException), () => ps.Invoke());
+            }
+        }
+
         [Fact(DisplayName = "Get-AudioFile accepts the Path parameter as the first argument")]
         public void GetAudioFileAcceptsPathParameterAsFirstArgument()
         {
@@ -88,14 +99,22 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
-        [Fact(DisplayName = "Get-AudioFile requires the Path parameter")]
-        public void GetAudioFileRequiresPathParameter()
+        [Fact(DisplayName = "Get-AudioFile has an OutputType of AudioFile")]
+        public void GetAudioFileOutputTypeIsAudioFile()
         {
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
-                ps.AddCommand("Get-AudioFile");
-                Assert.Throws(typeof(ParameterBindingException), () => ps.Invoke());
+                ps.AddCommand("Get-Command")
+                    .AddArgument("Get-AudioFile");
+                ps.AddCommand("Select-Object")
+                    .AddParameter("ExpandProperty", "OutputType");
+                ps.AddCommand("Select-Object")
+                    .AddParameter("ExpandProperty", "Type");
+                var result = ps.Invoke();
+                Assert.True(
+                    result.Count == 1 &&
+                    (Type)result[0].BaseObject == typeof(AudioFile));
             }
         }
 
@@ -114,25 +133,6 @@ namespace AudioWorks.Commands.Tests
                     errors[0].Exception is ItemNotFoundException &&
                     errors[0].FullyQualifiedErrorId == $"{nameof(ItemNotFoundException)},AudioWorks.Commands.GetAudioFileCommand" &&
                     errors[0].CategoryInfo.Category == ErrorCategory.ObjectNotFound);
-            }
-        }
-
-        [Fact(DisplayName = "Get-AudioFile has an OutputType of AudioFile")]
-        public void GetAudioFileOutputTypeIsAudioFile()
-        {
-            using (var ps = PowerShell.Create())
-            {
-                ps.Runspace = _moduleFixture.Runspace;
-                ps.AddCommand("Get-Command")
-                    .AddArgument("Get-AudioFile");
-                ps.AddCommand("Select-Object")
-                    .AddParameter("ExpandProperty", "OutputType");
-                ps.AddCommand("Select-Object")
-                    .AddParameter("ExpandProperty", "Type");
-                var result = ps.Invoke();
-                Assert.True(
-                    result.Count == 1 &&
-                    (Type) result[0].BaseObject == typeof(AudioFile));
             }
         }
 

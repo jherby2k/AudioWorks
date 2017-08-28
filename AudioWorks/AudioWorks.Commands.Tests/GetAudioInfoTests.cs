@@ -52,6 +52,17 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
+        [Fact(DisplayName = "Get-AudioInfo requires the AudioFile parameter")]
+        public void GetAudioInfoRequiresAudioFileParameter()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Get-AudioInfo");
+                Assert.Throws(typeof(ParameterBindingException), () => ps.Invoke());
+            }
+        }
+
         [Fact(DisplayName = "Get-AudioInfo accepts the AudioFile parameter as the first argument")]
         public void GetAudioInfoAcceptsAudioFileParameterAsFirstArgument()
         {
@@ -90,17 +101,6 @@ namespace AudioWorks.Commands.Tests
                         throw error.Exception;
                 }
                 Assert.True(true);
-            }
-        }
-
-        [Fact(DisplayName = "Get-AudioInfo requires the AudioFile parameter")]
-        public void GetAudioInfoRequiresAudioFileParameter()
-        {
-            using (var ps = PowerShell.Create())
-            {
-                ps.Runspace = _moduleFixture.Runspace;
-                ps.AddCommand("Get-AudioInfo");
-                Assert.Throws(typeof(ParameterBindingException), () => ps.Invoke());
             }
         }
 

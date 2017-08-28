@@ -9,10 +9,10 @@ namespace AudioWorks.Commands
     [Cmdlet(VerbsCommon.Get, "AudioFile", DefaultParameterSetName = "ByPath"), OutputType(typeof(AudioFile))]
     public class GetAudioFileCommand : PSCmdlet
     {
-        [Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true, ParameterSetName = "ByPath")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByPath")]
         public string Path { get; set; }
 
-        [Parameter(Position = 0, Mandatory = true, ParameterSetName = "ByLiteralPath"), Alias("PSPath")]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = "ByLiteralPath"), Alias("PSPath")]
         public string LiteralPath { get; set; }
 
         protected override void ProcessRecord()
