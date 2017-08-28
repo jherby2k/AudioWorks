@@ -51,5 +51,20 @@ namespace AudioWorks.Commands.Tests
                 Assert.True(true);
             }
         }
+
+        [Fact(DisplayName = "Get-AudioInfo accepts the AudioFile parameter as the first argument")]
+        public void GetAudioInfoAcceptsAudioFileParameterAsFirstArgument()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Get-AudioInfo")
+                    .AddArgument(new AudioFile(
+                        new FileInfo("Foo"),
+                        new AudioInfo("Test", 2, 16, 44100, 0)));
+                ps.Invoke();
+                Assert.True(true);
+            }
+        }
     }
 }

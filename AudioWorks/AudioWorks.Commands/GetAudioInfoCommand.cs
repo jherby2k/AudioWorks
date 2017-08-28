@@ -10,7 +10,7 @@ namespace AudioWorks.Commands
     public class GetAudioInfoCommand : Cmdlet
     {
         [NotNull, SuppressMessage("ReSharper", "NotNullMemberIsNotInitialized")]
-        [Parameter]
+        [Parameter(Position = 0)]
         public AudioFile AudioFile { get; set; }
     }
 }
