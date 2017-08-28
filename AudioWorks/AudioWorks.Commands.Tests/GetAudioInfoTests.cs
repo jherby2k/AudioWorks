@@ -92,5 +92,16 @@ namespace AudioWorks.Commands.Tests
                 Assert.True(true);
             }
         }
+
+        [Fact(DisplayName = "Get-AudioInfo requires the AudioFile parameter")]
+        public void GetAudioInfoRequiresAudioFileParameter()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Get-AudioInfo");
+                Assert.Throws(typeof(ParameterBindingException), () => ps.Invoke());
+            }
+        }
     }
 }
