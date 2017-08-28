@@ -14,9 +14,9 @@
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="11.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
-    <PackageReference Include="Microsoft.PowerShell.Commands.Diagnostics" Version="6.0.0-beta.5" />
-    <PackageReference Include="Microsoft.PowerShell.SDK" Version="6.0.0-beta.5" />
-    <PackageReference Include="Microsoft.WSMan.Management" Version="6.0.0-beta.5" />
+    <PackageReference Include="Microsoft.PowerShell.Commands.Diagnostics" Version="6.0.0-beta.6" />
+    <PackageReference Include="Microsoft.PowerShell.SDK" Version="6.0.0-beta.6" />
+    <PackageReference Include="Microsoft.WSMan.Management" Version="6.0.0-beta.6" />
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
   </ItemGroup>
