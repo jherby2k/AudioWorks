@@ -1,4 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿using AudioWorks.Common;
+using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Management.Automation;
 
 namespace AudioWorks.Commands
@@ -7,5 +9,8 @@ namespace AudioWorks.Commands
     [Cmdlet(VerbsCommon.Get, "AudioInfo")]
     public class GetAudioInfoCommand : Cmdlet
     {
+        [NotNull, SuppressMessage("ReSharper", "NotNullMemberIsNotInitialized")]
+        [Parameter]
+        public AudioFile AudioFile { get; set; }
     }
 }
