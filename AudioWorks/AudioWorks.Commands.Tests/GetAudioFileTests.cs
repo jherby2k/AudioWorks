@@ -2,7 +2,6 @@ using AudioWorks.Api.Tests;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 using System;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Management.Automation;
 using Xunit;
@@ -196,25 +195,14 @@ namespace AudioWorks.Commands.Tests
                         new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
                         "TestFiles",
                         "Valid"));
-                ps.Invoke();
-            }
-
-            Collection<PSObject> result;
-            using (var ps = PowerShell.Create())
-            {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddStatement();
                 ps.AddCommand("Get-AudioFile").AddArgument(fileName);
-                result = ps.Invoke();
-            }
-
-            using (var ps = PowerShell.Create())
-            {
-                ps.Runspace = _moduleFixture.Runspace;
+                var result = ps.Invoke();
+                ps.Commands.Clear();
                 ps.AddCommand("Pop-Location");
                 ps.Invoke();
+                Assert.True(result.Count == 1 && result[0].BaseObject is AudioFile);
             }
-
-            Assert.True(result.Count == 1 && result[0].BaseObject is AudioFile);
         }
     }
 }
