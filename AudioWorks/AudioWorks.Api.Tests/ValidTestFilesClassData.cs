@@ -38,6 +38,11 @@ namespace AudioWorks.Api.Tests
             {
                 "LPCM 16-bit 44100Hz Stereo (extensible).wav",
                 new AudioInfo("LPCM", 2, 16, 44100, 124112)
+            },
+            new object[]
+            {
+                "Lame CBR 128 44100Hz Stereo.mp3",
+                new AudioInfo("MP3", 2, 0, 44100, 0) 
             }
         };
 
