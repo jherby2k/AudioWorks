@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.8
+VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Commands", "AudioWorks.Commands\AudioWorks.Commands.csproj", "{53605AC7-B464-478F-ABA4-EBE6CB8BC968}"
 EndProject
@@ -39,6 +39,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Valid", "Valid", "{F3EE5042-D0AB-4B5C-8255-4A1D87A8C4A1}"
 	ProjectSection(SolutionItems) = preProject
 		TestFiles\Valid\LPCM 16-bit 44100Hz Mono.wav = TestFiles\Valid\LPCM 16-bit 44100Hz Mono.wav
+		TestFiles\Valid\LPCM 16-bit 44100Hz Stereo (extensible).wav = TestFiles\Valid\LPCM 16-bit 44100Hz Stereo (extensible).wav
 		TestFiles\Valid\LPCM 16-bit 44100Hz Stereo.wav = TestFiles\Valid\LPCM 16-bit 44100Hz Stereo.wav
 		TestFiles\Valid\LPCM 16-bit 48000Hz Stereo.wav = TestFiles\Valid\LPCM 16-bit 48000Hz Stereo.wav
 		TestFiles\Valid\LPCM 24-bit 96000Hz Stereo.wav = TestFiles\Valid\LPCM 24-bit 96000Hz Stereo.wav

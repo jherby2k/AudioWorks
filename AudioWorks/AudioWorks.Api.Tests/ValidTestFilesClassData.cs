@@ -1,7 +1,7 @@
+using AudioWorks.Common;
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
-using AudioWorks.Common;
 
 namespace AudioWorks.Api.Tests
 {
@@ -33,6 +33,11 @@ namespace AudioWorks.Api.Tests
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 new AudioInfo("LPCM", 2, 24, 96000, 270174)
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo (extensible).wav",
+                new AudioInfo("LPCM", 2, 16, 44100, 124112)
             }
         };
 
