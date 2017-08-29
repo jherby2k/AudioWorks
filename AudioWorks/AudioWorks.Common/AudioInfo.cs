@@ -30,9 +30,9 @@ namespace AudioWorks.Common
                 throw new ArgumentNullException(nameof(description), "Value cannot be null or empty.");
             if (channels < 1 || channels > 2)
                 throw new ArgumentOutOfRangeException(nameof(channels), channels, "Value should be 1 or 2.");
-            if (bitsPerSample < 1 || bitsPerSample > 32)
+            if (bitsPerSample < 0 || bitsPerSample > 32)
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample), bitsPerSample,
-                    "Value should be between 1 and 32.");
+                    "Value should be between 0 and 32.");
             if (sampleRate < 1)
                 throw new ArgumentOutOfRangeException(nameof(sampleRate), sampleRate, "Value should be 1 or greater.");
             if (sampleCount < 0)

@@ -28,10 +28,10 @@ namespace AudioWorks.Api.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => new AudioInfo("Test", 0, 16, 44100, 0));
         }
 
-        [Fact(DisplayName = "AudioInfo throws an exception if BitsPerSample is less than 1")]
+        [Fact(DisplayName = "AudioInfo throws an exception if BitsPerSample is negative")]
         public void AudioInfoBitsPerSampleTooLowThrowsException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new AudioInfo("Test", 2, 0, 44100, 0));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new AudioInfo("Test", 2, -1, 44100, 0));
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if BitsPerSample is greater than 32")]
