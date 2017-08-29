@@ -8,7 +8,7 @@ namespace AudioWorks.Extensions.Wave
     {
         internal uint RiffChunkSize { get; private set; }
 
-        public RiffReader(Stream input)
+        public RiffReader([NotNull] Stream input)
             : base(input, Encoding.ASCII, true)
         {
         }
@@ -29,7 +29,7 @@ namespace AudioWorks.Extensions.Wave
             return new string(ReadChars(4));
         }
 
-        internal uint SeekToChunk(string chunkId)
+        internal uint SeekToChunk([NotNull] string chunkId)
         {
             BaseStream.Position = 12;
 
