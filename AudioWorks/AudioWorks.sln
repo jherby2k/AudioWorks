@@ -26,6 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unsupported", "Unsupported"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Invalid", "Invalid", "{F91FD451-BD07-4280-B74F-870DAF191591}"
 	ProjectSection(SolutionItems) = preProject
+		TestFiles\Invalid\Audio Layer II.mp3 = TestFiles\Invalid\Audio Layer II.mp3
 		TestFiles\Invalid\Missing 'fmt' Chunk.wav = TestFiles\Invalid\Missing 'fmt' Chunk.wav
 		TestFiles\Invalid\Not RIFF Format.wav = TestFiles\Invalid\Not RIFF Format.wav
 		TestFiles\Invalid\Not Wave Format.wav = TestFiles\Invalid\Not Wave Format.wav

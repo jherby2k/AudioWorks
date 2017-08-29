@@ -11,7 +11,8 @@ namespace AudioWorks.Api.Tests
             new object[] { "Not RIFF Format.wav" },
             new object[] { "Unexpectedly Truncated.wav" },
             new object[] { "Not Wave Format.wav" },
-            new object[] { "Missing 'fmt' Chunk.wav" }
+            new object[] { "Missing 'fmt' Chunk.wav" },
+            new object[] { "Audio Layer II.mp3"}
         };
 
         public IEnumerator<object[]> GetEnumerator()

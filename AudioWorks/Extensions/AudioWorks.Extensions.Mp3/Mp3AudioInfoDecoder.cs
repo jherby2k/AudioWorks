@@ -1,4 +1,5 @@
 ﻿using AudioWorks.Common;
+using System;
 using System.IO;
 
 namespace AudioWorks.Extensions.Mp3
@@ -10,15 +11,22 @@ namespace AudioWorks.Extensions.Mp3
         {
             using (var reader = new FrameReader(stream))
             {
-                // Seek to the first valid frame header:
-                FrameHeader frameHeader;
-                do
+                try
                 {
-                    reader.SeekToNextFrame();
-                    frameHeader = new FrameHeader(reader.ReadBytes(4));
-                } while (!reader.VerifyFrameSync(frameHeader));
+                    // Seek to the first valid frame header:
+                    FrameHeader frameHeader;
+                    do
+                    {
+                        reader.SeekToNextFrame();
+                        frameHeader = new FrameHeader(reader.ReadBytes(4));
+                    } while (!reader.VerifyFrameSync(frameHeader));
 
-                return new AudioInfo("MP3", frameHeader.Channels, 0, frameHeader.SampleRate, 0);
+                    return new AudioInfo("MP3", frameHeader.Channels, 0, frameHeader.SampleRate, 0);
+                }
+                catch (ArgumentException e)
+                {
+                    throw new InvalidFileException(e.Message, stream.Name);
+                }
             }
         }
     }
