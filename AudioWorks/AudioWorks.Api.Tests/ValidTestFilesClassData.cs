@@ -41,6 +41,16 @@ namespace AudioWorks.Api.Tests
             },
             new object[]
             {
+                "Lame CBR 24 8000Hz Stereo.mp3",
+                new AudioInfo("MP3", 2, 0, 8000, 24192)
+            },
+            new object[]
+            {
+                "Lame CBR 64 44100Hz Mono.mp3",
+                new AudioInfo("MP3", 1, 0, 44100, 125568)
+            },
+            new object[]
+            {
                 "Lame CBR 128 44100Hz Stereo.mp3",
                 new AudioInfo("MP3", 2, 0, 44100, 125568) 
             },
@@ -48,6 +58,16 @@ namespace AudioWorks.Api.Tests
             {
                 "Lame CBR 128 44100Hz Stereo (no header).mp3",
                 new AudioInfo("MP3", 2, 0, 44100, 0)
+            },
+            new object[]
+            {
+                "Lame CBR 128 48000Hz Stereo.mp3",
+                new AudioInfo("MP3", 2, 0, 48000, 137088)
+            },
+            new object[]
+            {
+                "Lame VBR Standard 44100Hz Stereo.mp3",
+                new AudioInfo("MP3", 2, 0, 44100, 125568)
             }
         };
 

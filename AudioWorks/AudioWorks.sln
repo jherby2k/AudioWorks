@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.10
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Commands", "AudioWorks.Commands\AudioWorks.Commands.csproj", "{53605AC7-B464-478F-ABA4-EBE6CB8BC968}"
 EndProject
@@ -42,6 +42,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Valid", "Valid", "{F3EE5042
 	ProjectSection(SolutionItems) = preProject
 		TestFiles\Valid\Lame CBR 128 44100Hz Stereo (no header).mp3 = TestFiles\Valid\Lame CBR 128 44100Hz Stereo (no header).mp3
 		TestFiles\Valid\Lame CBR 128 44100Hz Stereo.mp3 = TestFiles\Valid\Lame CBR 128 44100Hz Stereo.mp3
+		TestFiles\Valid\Lame CBR 128 48000Hz Stereo.mp3 = TestFiles\Valid\Lame CBR 128 48000Hz Stereo.mp3
+		TestFiles\Valid\Lame CBR 24 8000Hz Stereo.mp3 = TestFiles\Valid\Lame CBR 24 8000Hz Stereo.mp3
+		TestFiles\Valid\Lame CBR 64 44100Hz Mono.mp3 = TestFiles\Valid\Lame CBR 64 44100Hz Mono.mp3
+		TestFiles\Valid\Lame VBR Standard 44100Hz Stereo.mp3 = TestFiles\Valid\Lame VBR Standard 44100Hz Stereo.mp3
 		TestFiles\Valid\LPCM 16-bit 44100Hz Mono.wav = TestFiles\Valid\LPCM 16-bit 44100Hz Mono.wav
 		TestFiles\Valid\LPCM 16-bit 44100Hz Stereo (extensible).wav = TestFiles\Valid\LPCM 16-bit 44100Hz Stereo (extensible).wav
 		TestFiles\Valid\LPCM 16-bit 44100Hz Stereo.wav = TestFiles\Valid\LPCM 16-bit 44100Hz Stereo.wav
