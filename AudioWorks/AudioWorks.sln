@@ -26,8 +26,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unsupported", "Unsupported"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Invalid", "Invalid", "{F91FD451-BD07-4280-B74F-870DAF191591}"
 	ProjectSection(SolutionItems) = preProject
-		TestFiles\Invalid\Audio Layer II.mp3 = TestFiles\Invalid\Audio Layer II.mp3
 		TestFiles\Invalid\Missing 'fmt' Chunk.wav = TestFiles\Invalid\Missing 'fmt' Chunk.wav
+		TestFiles\Invalid\Not Audio Layer III.mp3 = TestFiles\Invalid\Not Audio Layer III.mp3
+		TestFiles\Invalid\Not MPEG Audio.mp3 = TestFiles\Invalid\Not MPEG Audio.mp3
 		TestFiles\Invalid\Not RIFF Format.wav = TestFiles\Invalid\Not RIFF Format.wav
 		TestFiles\Invalid\Not Wave Format.wav = TestFiles\Invalid\Not Wave Format.wav
 		TestFiles\Invalid\Unexpectedly Truncated.wav = TestFiles\Invalid\Unexpectedly Truncated.wav
@@ -50,7 +51,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Valid", "Valid", "{F3EE5042
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Api.Tests", "AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj", "{83565750-78B5-4481-AAF6-C2732E3CE040}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioWorks.Extensions.Mp3", "Extensions\AudioWorks.Extensions.Mp3\AudioWorks.Extensions.Mp3.csproj", "{327C902A-DEF9-46AA-850E-1023BB2D8187}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Mp3", "Extensions\AudioWorks.Extensions.Mp3\AudioWorks.Extensions.Mp3.csproj", "{327C902A-DEF9-46AA-850E-1023BB2D8187}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
