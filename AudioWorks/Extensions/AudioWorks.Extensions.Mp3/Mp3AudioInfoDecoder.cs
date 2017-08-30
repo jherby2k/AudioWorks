@@ -13,19 +13,12 @@ namespace AudioWorks.Extensions.Mp3
             {
                 try
                 {
-                    // Seek to the first valid frame header:
-                    FrameHeader frameHeader;
-                    do
-                    {
-                        reader.SeekToNextFrame();
-                        frameHeader = new FrameHeader(reader.ReadBytes(4));
-                    } while (!reader.VerifyFrameSync(frameHeader));
-
+                    var frameHeader = ReadFrameHeader(reader);
                     reader.BaseStream.Seek(frameHeader.SideInfoLength, SeekOrigin.Current);
+                    var frameCount = ReadFrameCount(reader);
 
-                    var xingHeader = reader.ReadXingHeader();
-
-                    return new AudioInfo("MP3", frameHeader.Channels, 0, frameHeader.SampleRate, xingHeader.FrameCount * frameHeader.SamplesPerFrame);
+                    return new AudioInfo("MP3", frameHeader.Channels, 0, frameHeader.SampleRate,
+                        frameCount * frameHeader.SamplesPerFrame);
                 }
                 catch (EndOfStreamException e)
                 {
@@ -38,6 +31,33 @@ namespace AudioWorks.Extensions.Mp3
                     throw new InvalidFileException(e.Message, stream.Name);
                 }
             }
+        }
+
+        static FrameHeader ReadFrameHeader(FrameReader reader)
+        {
+            // Seek to the first valid frame header:
+            FrameHeader result;
+            do
+            {
+                reader.SeekToNextFrame();
+                result = new FrameHeader(reader.ReadBytes(4));
+            } while (!reader.VerifyFrameSync(result));
+            return result;
+        }
+
+        static uint ReadFrameCount(FrameReader reader)
+        {
+            // Check for the optional Xing header
+            var headerId = new string(reader.ReadChars(4));
+            if (headerId == "Xing" || headerId == "Info")
+            {
+                // The flags DWORD indicates whether the frame count is included in the header
+                var flags = reader.ReadUInt32BigEndian();
+                if ((flags & 0b00000001) == 0b00000001)
+                    return reader.ReadUInt32BigEndian();
+            }
+
+            return 0u;
         }
     }
 }

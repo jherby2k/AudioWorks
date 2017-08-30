@@ -41,27 +41,7 @@ namespace AudioWorks.Extensions.Mp3
             return firstByte == 0xff && secondByte >= 0xe0;
         }
 
-        internal XingHeader ReadXingHeader()
-        {
-            var result = new XingHeader();
-
-            var headerId = new string(ReadChars(4));
-            if (headerId != "Xing" && headerId != "Info")
-                return result;
-
-            // The flags DWORD indicates whether the frame and byte counts are present:
-            var flags = ReadUInt32BigEndian();
-
-            if ((flags & 0x1) == 1)
-                result.FrameCount = ReadUInt32BigEndian();
-
-            if ((flags >> 1 & 0x1) == 1)
-                result.ByteCount = ReadUInt32BigEndian();
-
-            return result;
-        }
-
-        uint ReadUInt32BigEndian()
+        internal uint ReadUInt32BigEndian()
         {
             Read(_buffer, 0, 4);
             if (BitConverter.IsLittleEndian)

@@ -53,11 +53,9 @@ namespace AudioWorks.Extensions.Wave
                     // Use wValidBitsPerSample if this is WAVE_FORMAT_EXTENSIBLE
                     if (isExtensible)
                         stream.Seek(4, SeekOrigin.Current);
-                    var bitsPerSample = reader.ReadUInt16();
 
-                    var dataChunkSize = reader.SeekToChunk("data");
-
-                    return new AudioInfo("LPCM", channels, bitsPerSample, checked((int) sampleRate), dataChunkSize / blockAlign);
+                    return new AudioInfo("LPCM", channels, reader.ReadUInt16(), (int) sampleRate,
+                        reader.SeekToChunk("data") / blockAlign);
                 }
                 catch (IOException e)
                 {
