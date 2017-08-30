@@ -29,6 +29,8 @@ namespace AudioWorks.Extensions.Mp3
 
         internal int SamplesPerFrame { get; }
 
+        internal int SideInfoLength { get; }
+
         public FrameHeader([NotNull] IReadOnlyList<byte> data)
         {
             var mpegVersion = ParseMpegVersion(data);
@@ -38,6 +40,7 @@ namespace AudioWorks.Extensions.Mp3
             Padding = ParsePadding(data);
             Channels = ParseChannels(data);
             SamplesPerFrame = CalculateSamplesPerFrame(mpegVersion);
+            SideInfoLength = CalculateSideInfoLength(mpegVersion, Channels);
         }
 
         [Pure, NotNull]
@@ -123,6 +126,14 @@ namespace AudioWorks.Extensions.Mp3
         static int CalculateSamplesPerFrame([NotNull] string mpegVersion)
         {
             return mpegVersion == "1" ? 1152 : 576;
+        }
+
+        [Pure]
+        static int CalculateSideInfoLength([NotNull] string mpegVersion, int channels)
+        {
+            if (channels == 1)
+                return mpegVersion == "1" ? 17 : 9;
+            return mpegVersion == "1" ? 32 : 17;
         }
     }
 }

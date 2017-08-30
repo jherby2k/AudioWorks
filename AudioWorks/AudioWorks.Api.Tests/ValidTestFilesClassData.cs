@@ -42,7 +42,12 @@ namespace AudioWorks.Api.Tests
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new AudioInfo("MP3", 2, 0, 44100, 0) 
+                new AudioInfo("MP3", 2, 0, 44100, 125568) 
+            },
+            new object[]
+            {
+                "Lame CBR 128 44100Hz Stereo (no header).mp3",
+                new AudioInfo("MP3", 2, 0, 44100, 0)
             }
         };
 

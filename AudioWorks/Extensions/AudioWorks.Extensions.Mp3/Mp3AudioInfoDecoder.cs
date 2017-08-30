@@ -21,7 +21,11 @@ namespace AudioWorks.Extensions.Mp3
                         frameHeader = new FrameHeader(reader.ReadBytes(4));
                     } while (!reader.VerifyFrameSync(frameHeader));
 
-                    return new AudioInfo("MP3", frameHeader.Channels, 0, frameHeader.SampleRate, 0);
+                    reader.BaseStream.Seek(frameHeader.SideInfoLength, SeekOrigin.Current);
+
+                    var xingHeader = reader.ReadXingHeader();
+
+                    return new AudioInfo("MP3", frameHeader.Channels, 0, frameHeader.SampleRate, xingHeader.FrameCount * frameHeader.SamplesPerFrame);
                 }
                 catch (EndOfStreamException e)
                 {

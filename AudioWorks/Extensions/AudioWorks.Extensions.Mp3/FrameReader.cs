@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using System;
 using System.IO;
 using System.Text;
 
@@ -6,6 +7,8 @@ namespace AudioWorks.Extensions.Mp3
 {
     class FrameReader : BinaryReader
     {
+        readonly byte[] _buffer = new byte[4];
+
         public FrameReader([NotNull] Stream input)
             : base(input, Encoding.ASCII, true)
         {
@@ -36,6 +39,34 @@ namespace AudioWorks.Extensions.Mp3
 
             // If another sync is detected, return success
             return firstByte == 0xff && secondByte >= 0xe0;
+        }
+
+        internal XingHeader ReadXingHeader()
+        {
+            var result = new XingHeader();
+
+            var headerId = new string(ReadChars(4));
+            if (headerId != "Xing" && headerId != "Info")
+                return result;
+
+            // The flags DWORD indicates whether the frame and byte counts are present:
+            var flags = ReadUInt32BigEndian();
+
+            if ((flags & 0x1) == 1)
+                result.FrameCount = ReadUInt32BigEndian();
+
+            if ((flags >> 1 & 0x1) == 1)
+                result.ByteCount = ReadUInt32BigEndian();
+
+            return result;
+        }
+
+        uint ReadUInt32BigEndian()
+        {
+            Read(_buffer, 0, 4);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(_buffer);
+            return BitConverter.ToUInt32(_buffer, 0);
         }
     }
 }
