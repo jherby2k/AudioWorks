@@ -26,13 +26,13 @@ namespace AudioWorks.Commands
             {
                 WriteError(new ErrorRecord(e, nameof(ItemNotFoundException), ErrorCategory.ObjectNotFound, Path));
             }
-            catch (UnsupportedFileException e)
+            catch (AudioUnsupportedException e)
             {
-                WriteError(new ErrorRecord(e, nameof(UnsupportedFileException), ErrorCategory.InvalidData, Path));
+                WriteError(new ErrorRecord(e, nameof(AudioUnsupportedException), ErrorCategory.InvalidData, Path));
             }
-            catch (InvalidFileException e)
+            catch (AudioInvalidException e)
             {
-                WriteError(new ErrorRecord(e, nameof(InvalidFileException), ErrorCategory.InvalidData, Path));
+                WriteError(new ErrorRecord(e, nameof(AudioInvalidException), ErrorCategory.InvalidData, Path));
             }
         }
     }

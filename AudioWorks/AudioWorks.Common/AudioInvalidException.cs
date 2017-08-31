@@ -7,39 +7,39 @@ namespace AudioWorks.Common
 {
     [PublicAPI]
     [Serializable]
-    public class UnsupportedFileException : Exception
+    public class AudioInvalidException : AudioException
     {
         [CanBeNull]
         public FileInfo FileInfo { get; }
 
-        public UnsupportedFileException([CanBeNull] string message, [CanBeNull] string fileName)
+        public AudioInvalidException([CanBeNull] string message, [CanBeNull] string fileName)
             : base(message)
         {
             if (fileName != null)
                 FileInfo = new FileInfo(fileName);
         }
 
-        public UnsupportedFileException([CanBeNull] string message, [CanBeNull] FileInfo fileInfo)
+        public AudioInvalidException([CanBeNull] string message, [CanBeNull] FileInfo fileInfo)
             : base(message)
         {
             FileInfo = fileInfo;
         }
 
-        public UnsupportedFileException()
+        public AudioInvalidException()
         {
         }
 
-        public UnsupportedFileException([CanBeNull] string message)
+        public AudioInvalidException([CanBeNull] string message)
             : base(message)
         {
         }
 
-        public UnsupportedFileException([CanBeNull] string message, [CanBeNull] Exception innerException)
+        public AudioInvalidException([CanBeNull] string message, [CanBeNull] Exception innerException)
             : base(message, innerException)
         {
         }
 
-        protected UnsupportedFileException([NotNull] SerializationInfo info, StreamingContext context)
+        protected AudioInvalidException([NotNull] SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }

@@ -19,37 +19,37 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "AudioInfo throws an exception if Channels is greater than 2")]
         public void AudioInfoChannelsTooHighThrowsException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new AudioInfo("Test", 3, 16, 44100, 0));
-        }
-
-        [Fact(DisplayName = "AudioInfo throws an exception if Channels is less than 1")]
-        public void AudioInfoChannelsTooLowThrowsException()
-        {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new AudioInfo("Test", 0, 16, 44100, 0));
-        }
-
-        [Fact(DisplayName = "AudioInfo throws an exception if BitsPerSample is negative")]
-        public void AudioInfoBitsPerSampleTooLowThrowsException()
-        {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new AudioInfo("Test", 2, -1, 44100, 0));
+            Assert.Throws<AudioUnsupportedException>(() => new AudioInfo("Test", 3, 16, 44100, 0));
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if BitsPerSample is greater than 32")]
         public void AudioInfoBitsPerSampleTooHighThrowsException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new AudioInfo("Test", 2, 33, 44100, 0));
+            Assert.Throws<AudioUnsupportedException>(() => new AudioInfo("Test", 2, 33, 44100, 0));
+        }
+
+        [Fact(DisplayName = "AudioInfo throws an exception if Channels is less than 1")]
+        public void AudioInfoChannelsTooLowThrowsException()
+        {
+            Assert.Throws<AudioInvalidException>(() => new AudioInfo("Test", 0, 16, 44100, 0));
+        }
+
+        [Fact(DisplayName = "AudioInfo throws an exception if BitsPerSample is negative")]
+        public void AudioInfoBitsPerSampleTooLowThrowsException()
+        {
+            Assert.Throws<AudioInvalidException>(() => new AudioInfo("Test", 2, -1, 44100, 0));
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if SampleRate is less than 1")]
         public void AudioInfoSampleRateTooLowThrowsException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new AudioInfo("Test", 2, 16, 0, 0));
+            Assert.Throws<AudioInvalidException>(() => new AudioInfo("Test", 2, 16, 0, 0));
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if SampleCount is negative")]
         public void AudioInfoSampleCountNegativeThrowsException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new AudioInfo("Test", 2, 16, 44100, -1));
+            Assert.Throws<AudioInvalidException>(() => new AudioInfo("Test", 2, 16, 44100, -1));
         }
 
         [Theory(DisplayName = "AudioInfo has the expected Description property value")]

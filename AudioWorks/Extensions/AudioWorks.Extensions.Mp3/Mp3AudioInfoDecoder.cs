@@ -1,5 +1,5 @@
 ﻿using AudioWorks.Common;
-using System;
+using JetBrains.Annotations;
 using System.IO;
 
 namespace AudioWorks.Extensions.Mp3
@@ -23,29 +23,32 @@ namespace AudioWorks.Extensions.Mp3
                 catch (EndOfStreamException e)
                 {
                     // If a frame sync couldn't be located, this isn't an MP3
-                    throw new InvalidFileException(e.Message, stream.Name);
-                }
-                catch (ArgumentException e)
-                {
-                    // If the frame header isn't valid for an MP3, this isn't an MP3
-                    throw new InvalidFileException(e.Message, stream.Name);
+                    throw new AudioInvalidException(e.Message, stream.Name);
                 }
             }
         }
 
-        static FrameHeader ReadFrameHeader(FrameReader reader)
+        [NotNull]
+        static FrameHeader ReadFrameHeader([NotNull] FrameReader reader)
         {
             // Seek to the first valid frame header:
-            FrameHeader result;
+            FrameHeader result = null;
             do
             {
-                reader.SeekToNextFrame();
-                result = new FrameHeader(reader.ReadBytes(4));
-            } while (!reader.VerifyFrameSync(result));
+                try
+                {
+                    reader.SeekToNextFrame();
+                    result = new FrameHeader(reader.ReadBytes(4));
+                }
+                catch (AudioException)
+                {
+                    // If the frame header appears wrong, its probably a bad sync
+                }
+            } while (result == null || !reader.VerifyFrameSync(result));
             return result;
         }
 
-        static uint ReadFrameCount(FrameReader reader)
+        static uint ReadFrameCount([NotNull] FrameReader reader)
         {
             // Check for the optional Xing header
             var headerId = new string(reader.ReadChars(4));

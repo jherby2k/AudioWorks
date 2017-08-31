@@ -35,7 +35,7 @@ namespace AudioWorks.Api
                         using (var lifetimeContext = decoderFactory.CreateExport())
                             return lifetimeContext.Value.ReadAudioInfo(fileStream);
                     }
-                    catch (UnsupportedFileException)
+                    catch (AudioUnsupportedException)
                     {
                         // If a decoder wasn't supported, rewind the stream and try another:
                         fileStream.Position = 0;
@@ -43,7 +43,7 @@ namespace AudioWorks.Api
                 }
             }
 
-            throw new UnsupportedFileException("No supporting extensions are available.");
+            throw new AudioUnsupportedException("No supporting extensions are available.");
         }
     }
 }

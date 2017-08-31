@@ -21,17 +21,17 @@ namespace AudioWorks.Extensions.Wave
                     reader.Initialize();
 
                     if (stream.Length != reader.RiffChunkSize + 8)
-                        throw new InvalidFileException("File is unexpectedly truncated.", stream.Name);
+                        throw new AudioInvalidException("File is unexpectedly truncated.", stream.Name);
 
                     if (reader.ReadFourcc() != "WAVE")
-                        throw new InvalidFileException("Not a Wave file.", stream.Name);
+                        throw new AudioInvalidException("Not a Wave file.", stream.Name);
 
                     var fmtChunkSize = reader.SeekToChunk("fmt ");
                     if (fmtChunkSize == 0)
-                        throw new InvalidFileException("Missing 'fmt' chunk.", stream.Name);
+                        throw new AudioInvalidException("Missing 'fmt' chunk.", stream.Name);
 
                     var isExtensible = false;
-                    switch ((FormatTag)reader.ReadUInt16())
+                    switch ((FormatTag) reader.ReadUInt16())
                     {
                         case FormatTag.WaveFormatPcm:
                             break;
@@ -39,7 +39,7 @@ namespace AudioWorks.Extensions.Wave
                             isExtensible = true;
                             break;
                         default:
-                            throw new UnsupportedFileException("Only PCM wave files are supported.", stream.Name);
+                            throw new AudioUnsupportedException("Only PCM wave files are supported.", stream.Name);
                     }
 
                     var channels = reader.ReadUInt16();
@@ -57,9 +57,10 @@ namespace AudioWorks.Extensions.Wave
                     return new AudioInfo("LPCM", channels, reader.ReadUInt16(), (int) sampleRate,
                         reader.SeekToChunk("data") / blockAlign);
                 }
-                catch (IOException e)
+                catch (EndOfStreamException e)
                 {
-                    throw new InvalidFileException(e.Message, stream.Name);
+                    // The end of the stream was unexpectedly reached
+                    throw new AudioInvalidException(e.Message, stream.Name);
                 }
             }
         }

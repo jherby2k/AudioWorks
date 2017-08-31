@@ -1,5 +1,5 @@
-﻿using JetBrains.Annotations;
-using System;
+﻿using AudioWorks.Common;
+using JetBrains.Annotations;
 using System.Collections.Generic;
 
 namespace AudioWorks.Extensions.Mp3
@@ -55,7 +55,7 @@ namespace AudioWorks.Extensions.Mp3
                 case 0b00000011:
                     return "1";
                 default:
-                    throw new ArgumentException("Not a valid MPEG header.", nameof(data));
+                    throw new AudioInvalidException("Not a valid MPEG header.");
             }
         }
 
@@ -66,7 +66,7 @@ namespace AudioWorks.Extensions.Mp3
                 case 0b00000001:
                     return;
                 default:
-                    throw new ArgumentException("Not an MPEG audio layer III header.", nameof(data));
+                    throw new AudioUnsupportedException("Not an MPEG audio layer III header.");
             }
         }
 
@@ -75,7 +75,7 @@ namespace AudioWorks.Extensions.Mp3
         {
             var column = (data[2] >> 4) & 0b00001111;
             if (column == 0b00001111)
-                throw new ArgumentException("Not a valid MPEG header.", nameof(data));
+                throw new AudioInvalidException("Not a valid MPEG header.");
 
             return _bitRateTable[mpegVersion == "1" ? 0 : 1, column];
         }
@@ -85,7 +85,7 @@ namespace AudioWorks.Extensions.Mp3
         {
             var column = (data[2] >> 2) & 0b00000011;
             if (column == 0b00000011)
-                throw new ArgumentException("Not a valid MPEG header.", nameof(data));
+                throw new AudioInvalidException("Not a valid MPEG header.");
 
             int row;
             switch (mpegVersion)

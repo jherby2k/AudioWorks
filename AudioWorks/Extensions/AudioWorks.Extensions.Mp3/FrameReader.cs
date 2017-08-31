@@ -7,7 +7,7 @@ namespace AudioWorks.Extensions.Mp3
 {
     class FrameReader : BinaryReader
     {
-        readonly byte[] _buffer = new byte[4];
+        [NotNull] readonly byte[] _buffer = new byte[4];
 
         public FrameReader([NotNull] Stream input)
             : base(input, Encoding.ASCII, true)

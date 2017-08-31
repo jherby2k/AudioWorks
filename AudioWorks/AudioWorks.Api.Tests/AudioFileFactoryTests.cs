@@ -26,7 +26,7 @@ namespace AudioWorks.Api.Tests
         [ClassData(typeof(UnsupportedTestFilesClassData))]
         public void CreatePathUnsupportedThrowsException([NotNull] string fileName)
         {
-            Assert.Throws(typeof(UnsupportedFileException), () => AudioFileFactory.Create(Path.Combine(
+            Assert.Throws(typeof(AudioUnsupportedException), () => AudioFileFactory.Create(Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
                 "TestFiles",
                 "Unsupported",
@@ -37,7 +37,7 @@ namespace AudioWorks.Api.Tests
         [ClassData(typeof(InvalidTestFilesClassData))]
         public void CreatePathInvalidThrowsException([NotNull] string fileName)
         {
-            Assert.Throws(typeof(InvalidFileException), () => AudioFileFactory.Create(Path.Combine(
+            Assert.Throws(typeof(AudioInvalidException), () => AudioFileFactory.Create(Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
                 "TestFiles",
                 "Invalid",

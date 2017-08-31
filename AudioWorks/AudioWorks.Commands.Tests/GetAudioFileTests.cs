@@ -153,8 +153,8 @@ namespace AudioWorks.Commands.Tests
                 var errors = ps.Streams.Error.ReadAll();
                 Assert.True(
                     errors.Count == 1 &&
-                    errors[0].Exception is UnsupportedFileException &&
-                    errors[0].FullyQualifiedErrorId == $"{nameof(UnsupportedFileException)},AudioWorks.Commands.GetAudioFileCommand" &&
+                    errors[0].Exception is AudioUnsupportedException &&
+                    errors[0].FullyQualifiedErrorId == $"{nameof(AudioUnsupportedException)},AudioWorks.Commands.GetAudioFileCommand" &&
                     errors[0].CategoryInfo.Category == ErrorCategory.InvalidData);
             }
         }
@@ -176,8 +176,8 @@ namespace AudioWorks.Commands.Tests
                 var errors = ps.Streams.Error.ReadAll();
                 Assert.True(
                     errors.Count == 1 &&
-                    errors[0].Exception is InvalidFileException &&
-                    errors[0].FullyQualifiedErrorId == $"{nameof(InvalidFileException)},AudioWorks.Commands.GetAudioFileCommand" &&
+                    errors[0].Exception is AudioInvalidException &&
+                    errors[0].FullyQualifiedErrorId == $"{nameof(AudioInvalidException)},AudioWorks.Commands.GetAudioFileCommand" &&
                     errors[0].CategoryInfo.Category == ErrorCategory.InvalidData);
             }
         }

@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using System.IO;
 using System.Text;
+using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Wave
 {
@@ -17,7 +18,7 @@ namespace AudioWorks.Extensions.Wave
         {
             BaseStream.Position = 0;
             if (new string(ReadChars(4)) != "RIFF")
-                throw new IOException("Not a valid RIFF stream.");
+                throw new AudioInvalidException("Not a valid RIFF stream.");
 
             RiffChunkSize = ReadUInt32();
         }
