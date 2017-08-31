@@ -6,18 +6,18 @@ namespace AudioWorks.Common
 {
     [PublicAPI]
     [Serializable]
-    public class AudioException : Exception
+    public abstract class AudioException : Exception
     {
-        public AudioException()
+        protected AudioException()
         {
         }
 
-        public AudioException([CanBeNull] string message)
+        protected AudioException([CanBeNull] string message)
             : base(message)
         {
         }
 
-        public AudioException([CanBeNull] string message, [CanBeNull] Exception innerException)
+        protected AudioException([CanBeNull] string message, [CanBeNull] Exception innerException)
             : base(message, innerException)
         {
         }
