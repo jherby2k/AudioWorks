@@ -7,6 +7,8 @@ namespace AudioWorks.Extensions.Mp3
 {
     class FrameReader : BinaryReader
     {
+        internal long FrameStart { get; private set; }
+
         [NotNull] readonly byte[] _buffer = new byte[4];
 
         public FrameReader([NotNull] Stream input)
@@ -14,13 +16,14 @@ namespace AudioWorks.Extensions.Mp3
         {
         }
 
-        internal long SeekToNextFrame()
+        internal void SeekToNextFrame()
         {
             // A frame begins with the first 11 bits set:
             while (true)
             {
                 if (ReadByte() != 0xff || ReadByte() < 0xe0) continue;
-                return BaseStream.Seek(-2, SeekOrigin.Current);
+                FrameStart = BaseStream.Seek(-2, SeekOrigin.Current);
+                return;
             }
         }
 

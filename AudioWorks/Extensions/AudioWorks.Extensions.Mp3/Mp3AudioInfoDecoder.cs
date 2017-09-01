@@ -13,14 +13,12 @@ namespace AudioWorks.Extensions.Mp3
             {
                 try
                 {
-                    var frameHeader = ReadFrameHeader(reader, out var framePosition);
-                    reader.BaseStream.Seek(frameHeader.SideInfoLength, SeekOrigin.Current);
-                    var frameCount = ReadFrameCountFromXing(reader);
+                    var frameHeader = ReadFrameHeader(reader);
+
+                    // Frame count is found in the optional Xing or VBRI header
+                    var frameCount = ReadFrameCountFromXing(reader, frameHeader);
                     if (frameCount == 0)
-                    {
-                        reader.BaseStream.Seek(framePosition + 36, SeekOrigin.Begin);
                         frameCount = ReadFrameCountFromVbri(reader);
-                    }
 
                     return new AudioInfo("MP3", frameHeader.Channels, 0, frameHeader.SampleRate,
                         frameCount * frameHeader.SamplesPerFrame);
@@ -34,17 +32,15 @@ namespace AudioWorks.Extensions.Mp3
         }
 
         [NotNull]
-        static FrameHeader ReadFrameHeader([NotNull] FrameReader reader, out long framePosition)
+        static FrameHeader ReadFrameHeader([NotNull] FrameReader reader)
         {
-            framePosition = 0;
-
             // Seek to the first valid frame header:
             FrameHeader result = null;
             do
             {
                 try
                 {
-                    framePosition = reader.SeekToNextFrame();
+                    reader.SeekToNextFrame();
                     result = new FrameHeader(reader.ReadBytes(4));
                 }
                 catch (AudioException)
@@ -55,9 +51,11 @@ namespace AudioWorks.Extensions.Mp3
             return result;
         }
 
-        static uint ReadFrameCountFromXing([NotNull] FrameReader reader)
+        static uint ReadFrameCountFromXing([NotNull] FrameReader reader, [NotNull] FrameHeader header)
         {
-            // Check for the optional Xing header
+            // Xing header (if present) is located after the side info
+            reader.BaseStream.Seek(reader.FrameStart + 4 + header.SideInfoLength, SeekOrigin.Begin);
+
             var headerId = new string(reader.ReadChars(4));
             if (headerId == "Xing" || headerId == "Info")
             {
@@ -72,6 +70,9 @@ namespace AudioWorks.Extensions.Mp3
 
         static uint ReadFrameCountFromVbri([NotNull] FrameReader reader)
         {
+            // VBRI header (if present) is located 32 bytes past the frame header
+            reader.BaseStream.Seek(reader.FrameStart + 36, SeekOrigin.Begin);
+
             var headerId = new string(reader.ReadChars(4));
             if (headerId != "VBRI") return 0u;
             reader.BaseStream.Seek(10, SeekOrigin.Current);
