@@ -83,6 +83,46 @@ namespace AudioWorks.Api.Tests
             {
                 "Fraunhofer VBR 44100Hz Stereo (with header).mp3",
                 new AudioInfo("MP3", 2, 0, 44100, 126720)
+            },
+            new object[]
+            {
+                "AAC-LC VBR 8000Hz Stereo.m4a",
+                new AudioInfo("AAC-LC", 2, 0, 8000, 25600)
+            },
+            new object[]
+            {
+                "AAC-LC VBR 44100Hz Mono.m4a",
+                new AudioInfo("AAC-LC", 1, 0, 44100, 126976)
+            },
+            new object[]
+            {
+                "AAC-LC VBR 44100Hz Stereo.m4a",
+                new AudioInfo("AAC-LC", 2, 0, 44100, 126976)
+            },
+            new object[]
+            {
+                "AAC-LC VBR 48000Hz Stereo.m4a",
+                new AudioInfo("AAC-LC", 2, 0, 48000, 137216)
+            },
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Mono.m4a",
+                new AudioInfo("ALAC", 1, 16, 44100, 122880)
+            },
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo.m4a",
+                new AudioInfo("ALAC", 2, 16, 44100, 122880)
+            },
+            new object[]
+            {
+                "ALAC 16-bit 48000Hz Stereo.m4a",
+                new AudioInfo("ALAC", 2, 16, 48000, 131072)
+            },
+            new object[]
+            {
+                "ALAC 24-bit 96000Hz Stereo.m4a",
+                new AudioInfo("ALAC", 2, 24, 96000, 266240)
             }
         };
 
