@@ -40,6 +40,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Wave"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Valid", "Valid", "{F3EE5042-D0AB-4B5C-8255-4A1D87A8C4A1}"
 	ProjectSection(SolutionItems) = preProject
+		TestFiles\Valid\Fraunhofer CBR 128 44100Hz Stereo.mp3 = TestFiles\Valid\Fraunhofer CBR 128 44100Hz Stereo.mp3
+		TestFiles\Valid\Fraunhofer VBR 44100Hz Stereo (with header).mp3 = TestFiles\Valid\Fraunhofer VBR 44100Hz Stereo (with header).mp3
+		TestFiles\Valid\Fraunhofer VBR 44100Hz Stereo.mp3 = TestFiles\Valid\Fraunhofer VBR 44100Hz Stereo.mp3
 		TestFiles\Valid\Lame CBR 128 44100Hz Stereo (no header).mp3 = TestFiles\Valid\Lame CBR 128 44100Hz Stereo (no header).mp3
 		TestFiles\Valid\Lame CBR 128 44100Hz Stereo.mp3 = TestFiles\Valid\Lame CBR 128 44100Hz Stereo.mp3
 		TestFiles\Valid\Lame CBR 128 48000Hz Stereo.mp3 = TestFiles\Valid\Lame CBR 128 48000Hz Stereo.mp3

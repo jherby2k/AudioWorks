@@ -14,14 +14,13 @@ namespace AudioWorks.Extensions.Mp3
         {
         }
 
-        internal void SeekToNextFrame()
+        internal long SeekToNextFrame()
         {
             // A frame begins with the first 11 bits set:
             while (true)
             {
                 if (ReadByte() != 0xff || ReadByte() < 0xe0) continue;
-                BaseStream.Seek(-2, SeekOrigin.Current);
-                return;
+                return BaseStream.Seek(-2, SeekOrigin.Current);
             }
         }
 

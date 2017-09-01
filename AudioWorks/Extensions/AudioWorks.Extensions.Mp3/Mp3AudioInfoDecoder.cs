@@ -13,9 +13,14 @@ namespace AudioWorks.Extensions.Mp3
             {
                 try
                 {
-                    var frameHeader = ReadFrameHeader(reader);
+                    var frameHeader = ReadFrameHeader(reader, out var framePosition);
                     reader.BaseStream.Seek(frameHeader.SideInfoLength, SeekOrigin.Current);
-                    var frameCount = ReadFrameCount(reader);
+                    var frameCount = ReadFrameCountFromXing(reader);
+                    if (frameCount == 0)
+                    {
+                        reader.BaseStream.Seek(framePosition + 36, SeekOrigin.Begin);
+                        frameCount = ReadFrameCountFromVbri(reader);
+                    }
 
                     return new AudioInfo("MP3", frameHeader.Channels, 0, frameHeader.SampleRate,
                         frameCount * frameHeader.SamplesPerFrame);
@@ -29,15 +34,17 @@ namespace AudioWorks.Extensions.Mp3
         }
 
         [NotNull]
-        static FrameHeader ReadFrameHeader([NotNull] FrameReader reader)
+        static FrameHeader ReadFrameHeader([NotNull] FrameReader reader, out long framePosition)
         {
+            framePosition = 0;
+
             // Seek to the first valid frame header:
             FrameHeader result = null;
             do
             {
                 try
                 {
-                    reader.SeekToNextFrame();
+                    framePosition = reader.SeekToNextFrame();
                     result = new FrameHeader(reader.ReadBytes(4));
                 }
                 catch (AudioException)
@@ -48,7 +55,7 @@ namespace AudioWorks.Extensions.Mp3
             return result;
         }
 
-        static uint ReadFrameCount([NotNull] FrameReader reader)
+        static uint ReadFrameCountFromXing([NotNull] FrameReader reader)
         {
             // Check for the optional Xing header
             var headerId = new string(reader.ReadChars(4));
@@ -61,6 +68,14 @@ namespace AudioWorks.Extensions.Mp3
             }
 
             return 0u;
+        }
+
+        static uint ReadFrameCountFromVbri([NotNull] FrameReader reader)
+        {
+            var headerId = new string(reader.ReadChars(4));
+            if (headerId != "VBRI") return 0u;
+            reader.BaseStream.Seek(10, SeekOrigin.Current);
+            return reader.ReadUInt32BigEndian();
         }
     }
 }

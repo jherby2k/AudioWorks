@@ -68,6 +68,21 @@ namespace AudioWorks.Api.Tests
             {
                 "Lame VBR Standard 44100Hz Stereo.mp3",
                 new AudioInfo("MP3", 2, 0, 44100, 125568)
+            },
+            new object[]
+            {
+                "Fraunhofer CBR 128 44100Hz Stereo.mp3",
+                new AudioInfo("MP3", 2, 0, 44100, 0)
+            },
+            new object[]
+            {
+                "Fraunhofer VBR 44100Hz Stereo.mp3",
+                new AudioInfo("MP3", 2, 0, 44100, 0)
+            },
+            new object[]
+            {
+                "Fraunhofer VBR 44100Hz Stereo (with header).mp3",
+                new AudioInfo("MP3", 2, 0, 44100, 126720)
             }
         };
 
