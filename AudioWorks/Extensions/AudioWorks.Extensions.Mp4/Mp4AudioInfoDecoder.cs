@@ -1,5 +1,4 @@
 ﻿using AudioWorks.Common;
-using System;
 using System.IO;
 
 namespace AudioWorks.Extensions.Mp4
@@ -25,11 +24,6 @@ namespace AudioWorks.Extensions.Mp4
             mp4.DescendToAtom("moov", "trak", "mdia", "minf", "stbl", "stsd", "alac");
             var alac = new AlacAtom(mp4.ReadAtom(mp4.CurrentAtom));
             return new AudioInfo("ALAC", alac.Channels, alac.BitsPerSample, (int) alac.SampleRate, sampleCount);
-        }
-
-        static int CalculateBitRate(uint byteCount, uint sampleCount, uint sampleRate)
-        {
-            return (int) Math.Round(byteCount * 8 / (sampleCount / (double) sampleRate) / 1000);
         }
     }
 }

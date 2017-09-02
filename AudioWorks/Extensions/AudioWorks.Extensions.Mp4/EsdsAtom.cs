@@ -1,5 +1,5 @@
 ﻿using JetBrains.Annotations;
-using System.IO;
+using System.Collections.Generic;
 
 namespace AudioWorks.Extensions.Mp4
 {
@@ -27,34 +27,13 @@ namespace AudioWorks.Extensions.Mp4
 
         internal ushort Channels { get; }
 
-        internal EsdsAtom([NotNull] byte[] data)
+        internal EsdsAtom([NotNull] IReadOnlyList<byte> data)
         {
-            using (var reader = new Mp4Reader(new MemoryStream(data), false))
-            {
-                reader.BaseStream.Seek(12, SeekOrigin.Begin);
+            // This appears to be 0 for Apple Lossless files: 
+            if (data[12] == 0) return;
 
-                // This appears to be 0 for Apple Lossless files: 
-                if (reader.ReadByte() == 0) return;
-
-                SkipDescriptorLength(reader);
-                reader.BaseStream.Seek(4, SeekOrigin.Current);
-                SkipDescriptorLength(reader);
-                reader.BaseStream.Seek(14, SeekOrigin.Current);
-                SkipDescriptorLength(reader);
-
-                var dsiBytes = reader.ReadBytes(2);
-                SampleRate = _sampleRates[(dsiBytes[0] << 1) & 0b00001110 | (dsiBytes[1] >> 7) & 0b00000001];
-                Channels = (ushort) ((dsiBytes[1] >> 3) & 0b00001111);
-            }
-        }
-
-        static void SkipDescriptorLength([NotNull] BinaryReader reader)
-        {
-            byte currentByte;
-            do
-            {
-                currentByte = reader.ReadByte();
-            } while ((currentByte & 0b10000000) == 0b10000000);
+            SampleRate = _sampleRates[(data[43] << 1) & 0b00001110 | (data[44] >> 7) & 0b00000001];
+            Channels = (ushort) ((data[44] >> 3) & 0b00001111);
         }
     }
 }
