@@ -87,22 +87,22 @@ namespace AudioWorks.Api.Tests
             new object[]
             {
                 "AAC-LC VBR 8000Hz Stereo.m4a",
-                new AudioInfo("AAC-LC", 2, 0, 8000, 25600)
+                new AudioInfo("AAC", 2, 0, 8000, 25600)
             },
             new object[]
             {
                 "AAC-LC VBR 44100Hz Mono.m4a",
-                new AudioInfo("AAC-LC", 1, 0, 44100, 126976)
+                new AudioInfo("AAC", 1, 0, 44100, 126976)
             },
             new object[]
             {
                 "AAC-LC VBR 44100Hz Stereo.m4a",
-                new AudioInfo("AAC-LC", 2, 0, 44100, 126976)
+                new AudioInfo("AAC", 2, 0, 44100, 126976)
             },
             new object[]
             {
                 "AAC-LC VBR 48000Hz Stereo.m4a",
-                new AudioInfo("AAC-LC", 2, 0, 48000, 137216)
+                new AudioInfo("AAC", 2, 0, 48000, 137216)
             },
             new object[]
             {
