@@ -24,7 +24,7 @@ namespace AudioWorks.Extensions.Wave
         }
 
         [NotNull]
-        internal string ReadFourcc()
+        internal string ReadFourCc()
         {
             BaseStream.Position = 8;
             return new string(ReadChars(4));
