@@ -31,6 +31,9 @@ namespace AudioWorks.Extensions.Mp4
                         var subAtom = new AtomInfo((uint)_stream.Position, reader.ReadUInt32BigEndian(),
                             reader.ReadFourCc());
 
+                        if (subAtom.End > _stream.Length)
+                            throw new EndOfStreamException();
+
                         if (subAtom.FourCc == fourCc)
                         {
                             _atomInfoStack.Push(subAtom);
@@ -52,7 +55,7 @@ namespace AudioWorks.Extensions.Mp4
                             break;
                         }
 
-                        _stream.Position = subAtom.End;
+                        _stream.Seek(subAtom.End, SeekOrigin.Begin);
 
                     } while (_stream.Position < (_atomInfoStack.Count == 0 ? _stream.Length : _atomInfoStack.Peek().End));
                 }
