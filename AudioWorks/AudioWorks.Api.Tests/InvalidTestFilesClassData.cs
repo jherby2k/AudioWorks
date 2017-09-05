@@ -13,7 +13,8 @@ namespace AudioWorks.Api.Tests
             new object[] { "Not Wave Format.wav" },
             new object[] { "Missing 'fmt' Chunk.wav" },
             new object[] { "Not MPEG Audio.mp3"},
-            new object[] { "Not Audio Layer III.mp3"}
+            new object[] { "Not Audio Layer III.mp3"},
+            new object[] { "Not MPEG Audio.m4a" }
         };
 
         public IEnumerator<object[]> GetEnumerator()

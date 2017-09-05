@@ -9,8 +9,8 @@ namespace AudioWorks.Extensions.Mp4
     {
         [NotNull] readonly byte[] _buffer = new byte[4];
 
-        public Mp4Reader([NotNull] Stream input, bool leaveOpen = true)
-            : base(input, Encoding.ASCII, leaveOpen)
+        public Mp4Reader([NotNull] Stream input)
+            : base(input, Encoding.ASCII, true)
         {
         }
 
