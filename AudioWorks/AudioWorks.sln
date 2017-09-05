@@ -40,10 +40,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Wave"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Valid", "Valid", "{F3EE5042-D0AB-4B5C-8255-4A1D87A8C4A1}"
 	ProjectSection(SolutionItems) = preProject
-		TestFiles\Valid\AAC-LC VBR 44100Hz Mono.m4a = TestFiles\Valid\AAC-LC VBR 44100Hz Mono.m4a
-		TestFiles\Valid\AAC-LC VBR 44100Hz Stereo.m4a = TestFiles\Valid\AAC-LC VBR 44100Hz Stereo.m4a
-		TestFiles\Valid\AAC-LC VBR 48000Hz Stereo.m4a = TestFiles\Valid\AAC-LC VBR 48000Hz Stereo.m4a
-		TestFiles\Valid\AAC-LC VBR 8000Hz Stereo.m4a = TestFiles\Valid\AAC-LC VBR 8000Hz Stereo.m4a
 		TestFiles\Valid\ALAC 16-bit 44100Hz Mono.m4a = TestFiles\Valid\ALAC 16-bit 44100Hz Mono.m4a
 		TestFiles\Valid\ALAC 16-bit 44100Hz Stereo.m4a = TestFiles\Valid\ALAC 16-bit 44100Hz Stereo.m4a
 		TestFiles\Valid\ALAC 16-bit 48000Hz Stereo.m4a = TestFiles\Valid\ALAC 16-bit 48000Hz Stereo.m4a
@@ -63,13 +59,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Valid", "Valid", "{F3EE5042
 		TestFiles\Valid\LPCM 16-bit 48000Hz Stereo.wav = TestFiles\Valid\LPCM 16-bit 48000Hz Stereo.wav
 		TestFiles\Valid\LPCM 24-bit 96000Hz Stereo.wav = TestFiles\Valid\LPCM 24-bit 96000Hz Stereo.wav
 		TestFiles\Valid\LPCM 8-bit 8000Hz Stereo.wav = TestFiles\Valid\LPCM 8-bit 8000Hz Stereo.wav
+		TestFiles\Valid\QAAC TVBR 91 44100Hz Mono.m4a = TestFiles\Valid\QAAC TVBR 91 44100Hz Mono.m4a
+		TestFiles\Valid\QAAC TVBR 91 44100Hz Stereo.m4a = TestFiles\Valid\QAAC TVBR 91 44100Hz Stereo.m4a
+		TestFiles\Valid\QAAC TVBR 91 48000Hz Stereo.m4a = TestFiles\Valid\QAAC TVBR 91 48000Hz Stereo.m4a
+		TestFiles\Valid\QAAC TVBR 91 8000Hz Stereo.m4a = TestFiles\Valid\QAAC TVBR 91 8000Hz Stereo.m4a
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Api.Tests", "AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj", "{83565750-78B5-4481-AAF6-C2732E3CE040}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Mp3", "Extensions\AudioWorks.Extensions.Mp3\AudioWorks.Extensions.Mp3.csproj", "{327C902A-DEF9-46AA-850E-1023BB2D8187}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioWorks.Extensions.Mp4", "Extensions\AudioWorks.Extensions.Mp4\AudioWorks.Extensions.Mp4.csproj", "{0F6C00B0-92C7-4755-B1C6-133E88E6333A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Mp4", "Extensions\AudioWorks.Extensions.Mp4\AudioWorks.Extensions.Mp4.csproj", "{0F6C00B0-92C7-4755-B1C6-133E88E6333A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -19,7 +19,7 @@ namespace AudioWorks.Extensions.Mp4
             mp4.DescendToAtom("moov", "trak", "mdia", "minf", "stbl", "stsd", "mp4a", "esds");
             var esds = new EsdsAtom(mp4.ReadAtom(mp4.CurrentAtom));
             if (esds.SampleRate > 0)
-                return new AudioInfo("AAC-LC", esds.Channels, 0, (int) esds.SampleRate, sampleCount);
+                return new AudioInfo("AAC", esds.Channels, 0, (int) esds.SampleRate, sampleCount);
 
             // Apple Lossless files have their own atom for storing audio info
             mp4.DescendToAtom("moov", "trak", "mdia", "minf", "stbl", "stsd", "alac");
