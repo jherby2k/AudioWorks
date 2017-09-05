@@ -71,6 +71,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Mp3",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Mp4", "Extensions\AudioWorks.Extensions.Mp4\AudioWorks.Extensions.Mp4.csproj", "{0F6C00B0-92C7-4755-B1C6-133E88E6333A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioWorks.Extensions.Vorbis", "Extensions\AudioWorks.Extensions.Vorbis\AudioWorks.Extensions.Vorbis.csproj", "{5716EF44-6F81-4C73-B16C-43B1952A4A44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,6 +115,10 @@ Global
 		{0F6C00B0-92C7-4755-B1C6-133E88E6333A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F6C00B0-92C7-4755-B1C6-133E88E6333A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F6C00B0-92C7-4755-B1C6-133E88E6333A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5716EF44-6F81-4C73-B16C-43B1952A4A44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5716EF44-6F81-4C73-B16C-43B1952A4A44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5716EF44-6F81-4C73-B16C-43B1952A4A44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5716EF44-6F81-4C73-B16C-43B1952A4A44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -124,6 +130,7 @@ Global
 		{F3EE5042-D0AB-4B5C-8255-4A1D87A8C4A1} = {ED5F2925-FC55-4D6B-8E32-7FD957F04B35}
 		{327C902A-DEF9-46AA-850E-1023BB2D8187} = {5C8B6EE1-CC71-4069-BD6A-E82E550FED11}
 		{0F6C00B0-92C7-4755-B1C6-133E88E6333A} = {5C8B6EE1-CC71-4069-BD6A-E82E550FED11}
+		{5716EF44-6F81-4C73-B16C-43B1952A4A44} = {5C8B6EE1-CC71-4069-BD6A-E82E550FED11}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {73104514-BD86-4575-A404-A192C2B5BF6D}

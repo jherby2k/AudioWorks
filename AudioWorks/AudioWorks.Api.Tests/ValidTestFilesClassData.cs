@@ -123,6 +123,31 @@ namespace AudioWorks.Api.Tests
             {
                 "ALAC 24-bit 96000Hz Stereo.m4a",
                 new AudioInfo("ALAC", 2, 24, 96000, 266240)
+            },
+            new object[]
+            {
+                "Vorbis Quality 3 8000Hz Stereo.ogg",
+                new AudioInfo("Vorbis", 2, 0, 8000, 0)
+            },
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Mono.ogg",
+                new AudioInfo("Vorbis", 1, 0, 44100, 0)
+            },
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo.ogg",
+                new AudioInfo("Vorbis", 2, 0, 44100, 0)
+            },
+            new object[]
+            {
+                "Vorbis Quality 3 48000Hz Stereo.ogg",
+                new AudioInfo("Vorbis", 2, 0, 48000, 0)
+            },
+            new object[]
+            {
+                "Vorbis Quality 3 96000Hz Stereo.ogg",
+                new AudioInfo("Vorbis", 2, 0, 96000, 0)
             }
         };
 
