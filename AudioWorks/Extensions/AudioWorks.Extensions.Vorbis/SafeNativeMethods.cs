@@ -39,7 +39,7 @@ namespace AudioWorks.Extensions.Vorbis
         internal static bool OggPageEndOfStream(ref OggPage page)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return WinOggPageEos(ref page) != 0;
+                return WinOggPageEos(ref page);
 
             throw new NotImplementedException();
         }
@@ -194,8 +194,9 @@ namespace AudioWorks.Extensions.Vorbis
         static extern int WinOggPageSerialNo(ref OggPage page);
 
         [Pure]
+        [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport(_winOggLibrary, EntryPoint = "ogg_page_eos", CallingConvention = CallingConvention.Cdecl)]
-        static extern int WinOggPageEos(ref OggPage page);
+        static extern bool WinOggPageEos(ref OggPage page);
 
         [DllImport(_winOggLibrary, EntryPoint = "ogg_sync_init", CallingConvention = CallingConvention.Cdecl)]
         static extern int WinOggSyncInit(IntPtr syncState);
