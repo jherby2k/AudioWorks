@@ -11,50 +11,51 @@ namespace AudioWorks.Extensions.Vorbis
         {
             var buffer = new byte[4096];
 
-            using (var decoder = new NativeVorbisDecoder())
+            NativeOggStream oggStream = null;
+            SafeNativeMethods.VorbisCommentInitialize(out var vorbisComment);
+
+            try
             {
-                NativeOggStream oggStream = null;
-                SafeNativeMethods.VorbisCommentInitialize(out var vorbisComment);
-
-                try
+                using (var sync = new NativeOggSync())
+                using (var decoder = new NativeVorbisDecoder())
                 {
-                    using (var sync = new NativeOggSync())
+                    OggPage page;
+
+                    do
                     {
-                        OggPage page;
-
-                        do
+                        // Read from the buffer into a page:
+                        while (!sync.PageOut(out page))
                         {
-                            // Read from the buffer into a page:
-                            while (!sync.PageOut(out page))
-                            {
-                                var bytesRead = stream.Read(buffer, 0, buffer.Length);
-                                var nativeBuffer = sync.Buffer(bytesRead);
-                                Marshal.Copy(buffer, 0, nativeBuffer, bytesRead);
-                                sync.Wrote(bytesRead);
-                            }
+                            var bytesRead = stream.Read(buffer, 0, buffer.Length);
+                            if (bytesRead == 0)
+                                throw new AudioInvalidException("No Ogg stream was found.", stream.Name);
 
-                            if (oggStream == null)
-                                oggStream = new NativeOggStream(SafeNativeMethods.OggPageGetSerialNumber(ref page));
+                            var nativeBuffer = sync.Buffer(bytesRead);
+                            Marshal.Copy(buffer, 0, nativeBuffer, bytesRead);
+                            sync.Wrote(bytesRead);
+                        }
 
-                            oggStream.PageIn(ref page);
+                        if (oggStream == null)
+                            oggStream = new NativeOggStream(SafeNativeMethods.OggPageGetSerialNumber(ref page));
 
-                            while (oggStream.PacketOut(out var packet))
-                            {
-                                decoder.HeaderIn(ref vorbisComment, ref packet);
+                        oggStream.PageIn(ref page);
 
-                                var info = decoder.GetInfo();
-                                return new AudioInfo("Vorbis", info.Channels, 0, info.Rate, 0);
-                            }
-                        } while (!SafeNativeMethods.OggPageEndOfStream(ref page));
+                        while (oggStream.PacketOut(out var packet))
+                        {
+                            decoder.HeaderIn(ref vorbisComment, ref packet);
 
-                        throw new AudioInvalidException("The end of the stream was unexpectedly reached.", stream.Name);
-                    }
+                            var info = decoder.GetInfo();
+                            return new AudioInfo("Vorbis", info.Channels, 0, info.Rate, 0);
+                        }
+                    } while (!SafeNativeMethods.OggPageEndOfStream(ref page));
+
+                    throw new AudioInvalidException("The end of the Ogg stream was reached without finding.", stream.Name);
                 }
-                finally
-                {
-                    SafeNativeMethods.VorbisCommentClear(ref vorbisComment);
-                    oggStream?.Dispose();
-                }
+            }
+            finally
+            {
+                SafeNativeMethods.VorbisCommentClear(ref vorbisComment);
+                oggStream?.Dispose();
             }
         }
     }

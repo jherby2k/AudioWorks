@@ -29,6 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Invalid", "Invalid", "{F91F
 		TestFiles\Invalid\Missing 'fmt' Chunk.wav = TestFiles\Invalid\Missing 'fmt' Chunk.wav
 		TestFiles\Invalid\Not Audio Layer III.mp3 = TestFiles\Invalid\Not Audio Layer III.mp3
 		TestFiles\Invalid\Not MPEG Audio.mp3 = TestFiles\Invalid\Not MPEG Audio.mp3
+		TestFiles\Invalid\Not Ogg Format.ogg = TestFiles\Invalid\Not Ogg Format.ogg
 		TestFiles\Invalid\Not RIFF Format.wav = TestFiles\Invalid\Not RIFF Format.wav
 		TestFiles\Invalid\Not Wave Format.wav = TestFiles\Invalid\Not Wave Format.wav
 		TestFiles\Invalid\Unexpectedly Truncated.wav = TestFiles\Invalid\Unexpectedly Truncated.wav
@@ -71,7 +72,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Mp3",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Mp4", "Extensions\AudioWorks.Extensions.Mp4\AudioWorks.Extensions.Mp4.csproj", "{0F6C00B0-92C7-4755-B1C6-133E88E6333A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioWorks.Extensions.Vorbis", "Extensions\AudioWorks.Extensions.Vorbis\AudioWorks.Extensions.Vorbis.csproj", "{5716EF44-6F81-4C73-B16C-43B1952A4A44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Vorbis", "Extensions\AudioWorks.Extensions.Vorbis\AudioWorks.Extensions.Vorbis.csproj", "{5716EF44-6F81-4C73-B16C-43B1952A4A44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
