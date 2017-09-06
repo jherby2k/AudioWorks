@@ -11,6 +11,11 @@
     <Copyright>Copyright © 2017 Jeremy Herbison</Copyright>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="11.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />

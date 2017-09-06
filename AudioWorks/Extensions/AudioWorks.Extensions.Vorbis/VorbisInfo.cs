@@ -1,5 +1,7 @@
 ﻿using System;
 
+#pragma warning disable 169, 649
+
 namespace AudioWorks.Extensions.Vorbis
 {
     struct VorbisInfo
@@ -21,3 +23,5 @@ namespace AudioWorks.Extensions.Vorbis
         internal IntPtr CodecSetup;
     }
 }
+
+#pragma warning restore 169, 649

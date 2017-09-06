@@ -1,5 +1,7 @@
 ﻿using System;
 
+#pragma warning disable 169, 649
+
 namespace AudioWorks.Extensions.Vorbis
 {
     struct VorbisComment
@@ -13,3 +15,5 @@ namespace AudioWorks.Extensions.Vorbis
         internal IntPtr Vendor;
     }
 }
+
+#pragma warning restore 169, 649

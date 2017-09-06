@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
@@ -9,11 +10,11 @@ namespace AudioWorks.Extensions.Vorbis
 
         internal NativeOggStream(int serialNumber)
         {
-            _state = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(OggStreamState)));
+            _state = Marshal.AllocHGlobal(CalculateStateSize());
             SafeNativeMethods.OggStreamInitialize(_state, serialNumber);
         }
 
-        internal void PageIn(OggPage page)
+        internal void PageIn(ref OggPage page)
         {
             SafeNativeMethods.OggStreamPageIn(_state, ref page);
         }
@@ -25,19 +26,29 @@ namespace AudioWorks.Extensions.Vorbis
 
         public void Dispose()
         {
-            Dispose(true);
+            FreeUnmanaged();
             GC.SuppressFinalize(this);
         }
 
-        void Dispose(bool disposing)
+        ~NativeOggStream()
+        {
+            FreeUnmanaged();
+        }
+
+        void FreeUnmanaged()
         {
             SafeNativeMethods.OggStreamClear(_state);
             Marshal.FreeHGlobal(_state);
         }
 
-        ~NativeOggStream()
+        [Pure]
+        static int CalculateStateSize()
         {
-            Dispose(false);
+            // Size of ogg_stream_state
+            return Marshal.SizeOf(typeof(int)) * 12 +
+                   Marshal.SizeOf(typeof(long)) * 2 +
+                   Marshal.SizeOf(typeof(IntPtr)) * 3 +
+                   Marshal.SizeOf(typeof(char)) * 282;
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 
+#pragma warning disable 169, 649
+
 namespace AudioWorks.Extensions.Vorbis
 {
     struct OggPacket
@@ -17,3 +19,5 @@ namespace AudioWorks.Extensions.Vorbis
         internal long PacketNumber;
     }
 }
+
+#pragma warning restore 169, 649

@@ -1,10 +1,10 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Vorbis
 {
@@ -27,7 +27,7 @@ namespace AudioWorks.Extensions.Vorbis
         }
 
         [Pure]
-        internal static int OggPageGetSerialNumber(OggPage page)
+        internal static int OggPageGetSerialNumber(ref OggPage page)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 return WinOggPageSerialNo(ref page);
@@ -36,7 +36,7 @@ namespace AudioWorks.Extensions.Vorbis
         }
 
         [Pure]
-        internal static bool OggPageEndOfStream(OggPage page)
+        internal static bool OggPageEndOfStream(ref OggPage page)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 return WinOggPageEos(ref page) != 0;
@@ -58,7 +58,7 @@ namespace AudioWorks.Extensions.Vorbis
         internal static bool OggSyncPageOut(IntPtr syncState, out OggPage page)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return WinOggSyncPageOut(syncState, out page) != 1;
+                return WinOggSyncPageOut(syncState, out page) == 1;
 
             throw new NotImplementedException();
         }
@@ -134,12 +134,12 @@ namespace AudioWorks.Extensions.Vorbis
             throw new NotImplementedException();
         }
 
-        internal static VorbisComment VorbisCommentInitialize()
+        internal static void VorbisCommentInitialize(out VorbisComment comment)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                WinVorbisCommentInit(out VorbisComment result);
-                return result;
+                WinVorbisCommentInit(out comment);
+                return;
             }
 
             throw new NotImplementedException();
@@ -210,7 +210,7 @@ namespace AudioWorks.Extensions.Vorbis
         static extern int WinOggSyncWrote(IntPtr syncState, int bytes);
 
         [DllImport(_winOggLibrary, EntryPoint = "ogg_sync_clear", CallingConvention = CallingConvention.Cdecl)]
-        static extern void WinOggSyncClear(IntPtr syncState);
+        static extern int WinOggSyncClear(IntPtr syncState);
 
         [DllImport(_winOggLibrary, EntryPoint = "ogg_stream_init", CallingConvention = CallingConvention.Cdecl)]
         static extern int WinOggStreamInit(IntPtr streamState, int serialNumber);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
@@ -9,7 +10,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         internal NativeVorbisDecoder()
         {
-            _info = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(VorbisInfo)));
+            _info = Marshal.AllocHGlobal(CalculateStateSize());
             SafeNativeMethods.VorbisInfoInitialize(_info);
         }
 
@@ -25,19 +26,25 @@ namespace AudioWorks.Extensions.Vorbis
 
         public void Dispose()
         {
-            Dispose(true);
+            FreeUnmanaged();
             GC.SuppressFinalize(this);
         }
 
-        void Dispose(bool disposing)
+        ~NativeVorbisDecoder()
+        {
+            FreeUnmanaged();
+        }
+
+        void FreeUnmanaged()
         {
             SafeNativeMethods.VorbisInfoClear(_info);
             Marshal.FreeHGlobal(_info);
         }
 
-        ~NativeVorbisDecoder()
+        [Pure]
+        static int CalculateStateSize()
         {
-            Dispose(false);
+            return Marshal.SizeOf(typeof(VorbisInfo));
         }
     }
 }

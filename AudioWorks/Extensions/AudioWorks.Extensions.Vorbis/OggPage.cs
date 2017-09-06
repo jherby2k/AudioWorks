@@ -1,5 +1,7 @@
 ﻿using System;
 
+#pragma warning disable 169, 649
+
 namespace AudioWorks.Extensions.Vorbis
 {
     struct OggPage
@@ -13,3 +15,5 @@ namespace AudioWorks.Extensions.Vorbis
         internal int BodyLength;
     }
 }
+
+#pragma warning restore 169, 649

@@ -14,12 +14,10 @@ namespace AudioWorks.Extensions.Vorbis
             using (var decoder = new NativeVorbisDecoder())
             {
                 NativeOggStream oggStream = null;
-                var vorbisComment = new VorbisComment();
+                SafeNativeMethods.VorbisCommentInitialize(out var vorbisComment);
 
                 try
                 {
-                    vorbisComment = SafeNativeMethods.VorbisCommentInitialize();
-
                     using (var sync = new NativeOggSync())
                     {
                         OggPage page;
@@ -27,7 +25,7 @@ namespace AudioWorks.Extensions.Vorbis
                         do
                         {
                             // Read from the buffer into a page:
-                            while (sync.PageOut(out page))
+                            while (!sync.PageOut(out page))
                             {
                                 var bytesRead = stream.Read(buffer, 0, buffer.Length);
                                 var nativeBuffer = sync.Buffer(bytesRead);
@@ -36,27 +34,26 @@ namespace AudioWorks.Extensions.Vorbis
                             }
 
                             if (oggStream == null)
-                                oggStream = new NativeOggStream(SafeNativeMethods.OggPageGetSerialNumber(page));
+                                oggStream = new NativeOggStream(SafeNativeMethods.OggPageGetSerialNumber(ref page));
 
-                            oggStream.PageIn(page);
+                            oggStream.PageIn(ref page);
 
-                            while (oggStream.PacketOut(out OggPacket packet))
+                            while (oggStream.PacketOut(out var packet))
                             {
                                 decoder.HeaderIn(ref vorbisComment, ref packet);
 
                                 var info = decoder.GetInfo();
                                 return new AudioInfo("Vorbis", info.Channels, 0, info.Rate, 0);
                             }
-                        } while (!SafeNativeMethods.OggPageEndOfStream(page));
+                        } while (!SafeNativeMethods.OggPageEndOfStream(ref page));
 
-                        throw new EndOfStreamException("TODO error message");
+                        throw new AudioInvalidException("The end of the stream was unexpectedly reached.", stream.Name);
                     }
                 }
                 finally
                 {
-                    oggStream?.Dispose();
-
                     SafeNativeMethods.VorbisCommentClear(ref vorbisComment);
+                    oggStream?.Dispose();
                 }
             }
         }
