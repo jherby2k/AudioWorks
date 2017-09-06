@@ -178,6 +178,14 @@ namespace AudioWorks.Extensions.Vorbis
             throw new NotImplementedException();
         }
 
+        internal static bool VorbisSynthesisIdHeader(ref OggPacket packet)
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                return WinVorbisSynthesisIdHeader(ref packet);
+
+            throw new NotImplementedException();
+        }
+
         internal static void VorbisSynthesisHeaderIn(IntPtr info, ref VorbisComment comment, ref OggPacket packet)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -239,5 +247,10 @@ namespace AudioWorks.Extensions.Vorbis
 
         [DllImport(_winVorbisLibrary, EntryPoint = "vorbis_synthesis_headerin", CallingConvention = CallingConvention.Cdecl)]
         static extern int WinVorbisSynthesisHeaderIn(IntPtr info, ref VorbisComment comment, ref OggPacket packet);
+
+        [Pure]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport(_winVorbisLibrary, EntryPoint = "vorbis_synthesis_idheader", CallingConvention = CallingConvention.Cdecl)]
+        static extern bool WinVorbisSynthesisIdHeader(ref OggPacket packet);
     }
 }

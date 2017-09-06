@@ -42,6 +42,9 @@ namespace AudioWorks.Extensions.Vorbis
 
                         while (oggStream.PacketOut(out var packet))
                         {
+                            if (!SafeNativeMethods.VorbisSynthesisIdHeader(ref packet))
+                                throw new AudioUnsupportedException("Not a Vorbis file.", stream.Name);
+
                             decoder.HeaderIn(ref vorbisComment, ref packet);
 
                             var info = decoder.GetInfo();
