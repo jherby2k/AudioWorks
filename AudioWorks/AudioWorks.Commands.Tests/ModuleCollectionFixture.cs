@@ -4,7 +4,7 @@ using Xunit;
 namespace AudioWorks.Commands.Tests
 {
     [CollectionDefinition("Module")]
-    public class ModuleCollectionFixture
+    public sealed class ModuleCollectionFixture
         : ICollectionFixture<ModuleFixture>, ICollectionFixture<ExtensionFixture>
     {
     }

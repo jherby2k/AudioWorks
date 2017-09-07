@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AudioWorks.Extensions.Mp4
 {
-    class Mp4Reader : BinaryReader
+    sealed class Mp4Reader : BinaryReader
     {
         [NotNull] readonly byte[] _buffer = new byte[4];
 

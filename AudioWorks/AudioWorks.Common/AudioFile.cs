@@ -4,7 +4,7 @@ using System.IO;
 namespace AudioWorks.Common
 {
     [PublicAPI]
-    public class AudioFile
+    public sealed class AudioFile
     {
         [NotNull]
         public FileInfo FileInfo { get; }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AudioWorks.Extensions.Mp3
 {
-    class FrameReader : BinaryReader
+    sealed class FrameReader : BinaryReader
     {
         internal long FrameStart { get; private set; }
 

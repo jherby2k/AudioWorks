@@ -10,7 +10,7 @@ using System.Runtime.Loader;
 
 namespace AudioWorks.Extensions
 {
-    class ExtensionContainer<T>
+    sealed class ExtensionContainer<T>
     {
         [NotNull] static readonly Lazy<ExtensionContainer<T>> _lazyInstance = new Lazy<ExtensionContainer<T>>(() => new ExtensionContainer<T>());
 

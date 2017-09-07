@@ -4,7 +4,7 @@ using System.IO;
 namespace AudioWorks.Extensions.Wave
 {
     [AudioInfoDecoderExport(".wav")]
-    class WaveAudioInfoDecoder : IAudioInfoDecoder
+    sealed class WaveAudioInfoDecoder : IAudioInfoDecoder
     {
         enum FormatTag : ushort
         {

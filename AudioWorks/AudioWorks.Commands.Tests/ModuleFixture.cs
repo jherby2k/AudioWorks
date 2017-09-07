@@ -7,7 +7,7 @@ using System.Management.Automation.Runspaces;
 namespace AudioWorks.Commands.Tests
 {
     [UsedImplicitly]
-    public class ModuleFixture : IDisposable
+    public sealed class ModuleFixture : IDisposable
     {
         const string _moduleProject = "AudioWorks.Commands";
 

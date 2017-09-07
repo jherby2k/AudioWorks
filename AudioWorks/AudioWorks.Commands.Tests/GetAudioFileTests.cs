@@ -9,7 +9,7 @@ using Xunit;
 namespace AudioWorks.Commands.Tests
 {
     [Collection("Module")]
-    public class GetAudioFileTests
+    public sealed class GetAudioFileTests
     {
         [NotNull] readonly ModuleFixture _moduleFixture;
 
@@ -90,11 +90,9 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Get-AudioFile");
                 ps.Invoke();
                 foreach (var error in ps.Streams.Error)
-                {
                     if (error.Exception is ParameterBindingException &&
                         error.FullyQualifiedErrorId.StartsWith("InputObjectNotBound"))
                         throw error.Exception;
-                }
                 Assert.True(true);
             }
         }

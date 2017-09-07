@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace AudioWorks.Extensions.Mp4
 {
-    class EsdsAtom
+    sealed class EsdsAtom
     {
         [NotNull] static readonly uint[] _sampleRates =
         {
@@ -31,7 +31,7 @@ namespace AudioWorks.Extensions.Mp4
 
         internal EsdsAtom([NotNull] IReadOnlyList<byte> data)
         {
-            // Confirm this is an AAC descriptor 
+            // Confirm this is an AAC descriptor
             if (data[12] != 0x3 || data[25] != 0x40)
                 return;
 

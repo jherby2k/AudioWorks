@@ -7,7 +7,7 @@ namespace AudioWorks.Common
 {
     [PublicAPI]
     [Serializable]
-    public class AudioInvalidException : AudioException
+    public sealed class AudioInvalidException : AudioException
     {
         [CanBeNull]
         public FileInfo FileInfo { get; }
@@ -39,7 +39,7 @@ namespace AudioWorks.Common
         {
         }
 
-        protected AudioInvalidException([NotNull] SerializationInfo info, StreamingContext context)
+        AudioInvalidException([NotNull] SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }

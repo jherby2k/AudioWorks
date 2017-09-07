@@ -7,7 +7,7 @@ namespace AudioWorks.Commands
 {
     [PublicAPI]
     [Cmdlet(VerbsCommon.Get, "AudioFile", DefaultParameterSetName = "ByPath"), OutputType(typeof(AudioFile))]
-    public class GetAudioFileCommand : PSCmdlet
+    public sealed class GetAudioFileCommand : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByPath")]
         public string Path { get; set; }

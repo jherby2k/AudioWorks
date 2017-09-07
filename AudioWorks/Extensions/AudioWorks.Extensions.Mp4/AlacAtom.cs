@@ -3,7 +3,7 @@ using System;
 
 namespace AudioWorks.Extensions.Mp4
 {
-    class AlacAtom
+    sealed class AlacAtom
     {
         internal byte BitsPerSample { get; }
 

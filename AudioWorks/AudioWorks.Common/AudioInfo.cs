@@ -4,7 +4,7 @@ using System;
 namespace AudioWorks.Common
 {
     [PublicAPI]
-    public class AudioInfo
+    public sealed class AudioInfo
     {
         [NotNull]
         public string Description { get; }
@@ -23,9 +23,9 @@ namespace AudioWorks.Common
                 : new TimeSpan(0, 0, (int) Math.Round(SampleCount / (double) SampleRate));
 
         public AudioInfo(
-            [NotNull] string description, 
-            int channels, 
-            int bitsPerSample, 
+            [NotNull] string description,
+            int channels,
+            int bitsPerSample,
             int sampleRate,
             long sampleCount)
         {

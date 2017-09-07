@@ -6,7 +6,7 @@ using System.Reflection;
 namespace AudioWorks.Api.Tests
 {
     [UsedImplicitly]
-    public class ExtensionFixture
+    public sealed class ExtensionFixture
     {
         public ExtensionFixture()
         {
@@ -18,12 +18,10 @@ namespace AudioWorks.Api.Tests
             foreach (var extensionProjectDir in new DirectoryInfo(Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
                 "Extensions")).GetDirectories())
-            {
                 DotNetUtility.Publish(
                     extensionProjectDir.FullName,
                     configuration,
                     extensionsInstallDir.CreateSubdirectory(extensionProjectDir.Name).FullName);
-            }
         }
     }
 }

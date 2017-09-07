@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AudioWorks.Api.Tests
 {
-    public class ValidTestFilesClassData : IEnumerable<object[]>
+    public sealed class ValidTestFilesClassData : IEnumerable<object[]>
     {
         [NotNull] readonly List<object[]> _data = new List<object[]>
         {
@@ -52,7 +52,7 @@ namespace AudioWorks.Api.Tests
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new AudioInfo("MP3", 2, 0, 44100, 125568) 
+                new AudioInfo("MP3", 2, 0, 44100, 125568)
             },
             new object[]
             {
@@ -151,11 +151,13 @@ namespace AudioWorks.Api.Tests
             }
         };
 
+        [NotNull]
         public IEnumerator<object[]> GetEnumerator()
         {
             return _data.GetEnumerator();
         }
 
+        [NotNull]
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();

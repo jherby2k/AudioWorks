@@ -29,7 +29,6 @@ namespace AudioWorks.Api
                 // Try each info decoder that supports this file extension:
                 foreach (var decoderFactory in ExtensionProvider.GetFactories<IAudioInfoDecoder>(
                     "Extension", fileInfo.Extension))
-                {
                     try
                     {
                         using (var lifetimeContext = decoderFactory.CreateExport())
@@ -40,7 +39,6 @@ namespace AudioWorks.Api
                         // If a decoder wasn't supported, rewind the stream and try another:
                         fileStream.Position = 0;
                     }
-                }
             }
 
             throw new AudioUnsupportedException("No supporting extensions are available.");

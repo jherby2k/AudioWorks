@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace AudioWorks.Api.Tests
 {
-    public class UnsupportedTestFilesClassData : IEnumerable<object[]>
+    public sealed class UnsupportedTestFilesClassData : IEnumerable<object[]>
     {
         [NotNull] readonly List<object[]> _data = new List<object[]>
         {
@@ -14,11 +14,13 @@ namespace AudioWorks.Api.Tests
             new object[] { "Lame MP3.m4a" }
         };
 
+        [NotNull]
         public IEnumerator<object[]> GetEnumerator()
         {
             return _data.GetEnumerator();
         }
 
+        [NotNull]
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();

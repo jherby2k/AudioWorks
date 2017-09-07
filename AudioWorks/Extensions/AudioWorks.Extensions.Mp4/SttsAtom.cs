@@ -3,7 +3,7 @@ using System;
 
 namespace AudioWorks.Extensions.Mp4
 {
-    class SttsAtom
+    sealed class SttsAtom
     {
         internal uint PacketCount { get; }
 

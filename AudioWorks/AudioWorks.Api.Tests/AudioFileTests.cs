@@ -6,7 +6,7 @@ using Xunit;
 namespace AudioWorks.Api.Tests
 {
     [Collection("Extensions")]
-    public class AudioFileTests
+    public sealed class AudioFileTests
     {
         [Theory(DisplayName = "AudioFile has the expected FileInfo property value")]
         [ClassData(typeof(ValidTestFilesClassData))]

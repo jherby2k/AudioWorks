@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
 {
-    class NativeOggStream : IDisposable
+    sealed class NativeOggStream : IDisposable
     {
         readonly IntPtr _state;
 

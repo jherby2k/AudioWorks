@@ -5,7 +5,7 @@ using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Wave
 {
-    class RiffReader : BinaryReader
+    sealed class RiffReader : BinaryReader
     {
         internal uint RiffChunkSize { get; private set; }
 

@@ -4,7 +4,7 @@ using System.IO;
 namespace AudioWorks.Extensions.Mp4
 {
     [AudioInfoDecoderExport(".m4a")]
-    class Mp4AudioInfoDecoder : IAudioInfoDecoder
+    sealed class Mp4AudioInfoDecoder : IAudioInfoDecoder
     {
         public AudioInfo ReadAudioInfo(FileStream stream)
         {

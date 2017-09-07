@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace AudioWorks.Extensions.Mp3
 {
-    class FrameHeader
+    sealed class FrameHeader
     {
         static readonly int[,] _bitRateTable =
         {

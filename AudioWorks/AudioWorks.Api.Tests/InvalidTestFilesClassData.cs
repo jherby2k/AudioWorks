@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace AudioWorks.Api.Tests
 {
-    public class InvalidTestFilesClassData : IEnumerable<object[]>
+    public sealed class InvalidTestFilesClassData : IEnumerable<object[]>
     {
         [NotNull] readonly List<object[]> _data = new List<object[]>
         {
@@ -18,11 +18,13 @@ namespace AudioWorks.Api.Tests
             new object[] { "Not Ogg Format.ogg"}
         };
 
+        [NotNull]
         public IEnumerator<object[]> GetEnumerator()
         {
             return _data.GetEnumerator();
         }
 
+        [NotNull]
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();

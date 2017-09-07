@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace AudioWorks.Extensions.Mp4
 {
-    class Mp4
+    sealed class Mp4
     {
         [NotNull] readonly Stream _stream;
         [NotNull] readonly Stack<AtomInfo> _atomInfoStack = new Stack<AtomInfo>();
@@ -26,7 +26,6 @@ namespace AudioWorks.Extensions.Mp4
             using (var reader = new Mp4Reader(_stream))
             {
                 foreach (var fourCc in hierarchy)
-                {
                     do
                     {
                         var subAtom = new AtomInfo((uint)_stream.Position, reader.ReadUInt32BigEndian(),
@@ -59,7 +58,6 @@ namespace AudioWorks.Extensions.Mp4
                         _stream.Seek(subAtom.End, SeekOrigin.Begin);
 
                     } while (_stream.Position < (_atomInfoStack.Count == 0 ? _stream.Length : _atomInfoStack.Peek().End));
-                }
             }
 
             return _atomInfoStack.Peek().FourCc == hierarchy.Last();

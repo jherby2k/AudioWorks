@@ -2,7 +2,7 @@
 
 namespace AudioWorks.Extensions.Mp4
 {
-    class AtomInfo
+    sealed class AtomInfo
     {
         internal uint Start { get; }
 

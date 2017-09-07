@@ -7,7 +7,7 @@ using Xunit;
 namespace AudioWorks.Api.Tests
 {
     [Collection("Extensions")]
-    public class AudioInfoTests
+    public sealed class AudioInfoTests
     {
         [Fact(DisplayName = "AudioInfo throws an exception if the Description is null")]
         public void AudioInfoDescriptionNullThrowsException()

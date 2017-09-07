@@ -3,7 +3,7 @@
 namespace AudioWorks.Api.Tests
 {
     [CollectionDefinition("Extensions")]
-    public class ExtensionCollectionFixture : ICollectionFixture<ExtensionFixture>
+    public sealed class ExtensionCollectionFixture : ICollectionFixture<ExtensionFixture>
     {
     }
 }

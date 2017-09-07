@@ -7,7 +7,7 @@ namespace AudioWorks.Commands
 {
     [PublicAPI]
     [Cmdlet(VerbsCommon.Get, "AudioInfo"), OutputType(typeof(AudioInfo))]
-    public class GetAudioInfoCommand : Cmdlet
+    public sealed class GetAudioInfoCommand : Cmdlet
     {
         [NotNull, SuppressMessage("ReSharper", "NotNullMemberIsNotInitialized")]
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
