@@ -23,15 +23,19 @@ namespace AudioWorks.Extensions.Mp4
             0
         };
 
+        internal bool IsAac { get; }
+
         internal uint SampleRate { get; }
 
         internal ushort Channels { get; }
 
         internal EsdsAtom([NotNull] IReadOnlyList<byte> data)
         {
-            // This appears to be 0 for Apple Lossless files: 
-            if (data[12] == 0) return;
+            // Confirm this is an AAC descriptor 
+            if (data[12] != 0x3 || data[25] != 0x40)
+                return;
 
+            IsAac = true;
             SampleRate = _sampleRates[(data[43] << 1) & 0b00001110 | (data[44] >> 7) & 0b00000001];
             Channels = (ushort) ((data[44] >> 3) & 0b00001111);
         }

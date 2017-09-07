@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace AudioWorks.Extensions.Mp4
 {
@@ -17,7 +18,7 @@ namespace AudioWorks.Extensions.Mp4
             _stream = stream;
         }
 
-        internal void DescendToAtom([NotNull, ItemNotNull] params string[] hierarchy)
+        internal bool DescendToAtom([NotNull, ItemNotNull] params string[] hierarchy)
         {
             _stream.Position = 0;
             _atomInfoStack.Clear();
@@ -60,6 +61,8 @@ namespace AudioWorks.Extensions.Mp4
                     } while (_stream.Position < (_atomInfoStack.Count == 0 ? _stream.Length : _atomInfoStack.Peek().End));
                 }
             }
+
+            return _atomInfoStack.Peek().FourCc == hierarchy.Last();
         }
 
         [NotNull]
