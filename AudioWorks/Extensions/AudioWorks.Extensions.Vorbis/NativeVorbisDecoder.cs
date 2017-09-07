@@ -19,6 +19,7 @@ namespace AudioWorks.Extensions.Vorbis
             SafeNativeMethods.VorbisSynthesisHeaderIn(_info, ref comment, ref packet);
         }
 
+        [Pure]
         internal VorbisInfo GetInfo()
         {
             return Marshal.PtrToStructure<VorbisInfo>(_info);
