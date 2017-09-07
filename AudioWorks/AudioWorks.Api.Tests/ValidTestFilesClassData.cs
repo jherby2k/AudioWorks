@@ -148,6 +148,31 @@ namespace AudioWorks.Api.Tests
             {
                 "Vorbis Quality 3 96000Hz Stereo.ogg",
                 new AudioInfo("Vorbis", 2, 0, 96000, 0)
+            },
+            new object[]
+            {
+                "FLAC Level 5 8-bit 8000Hz Stereo.flac",
+                new AudioInfo("FLAC", 2, 8, 8000, 22515)
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Mono.flac",
+                new AudioInfo("FLAC", 1, 16, 44100, 124112)
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo.flac",
+                new AudioInfo("FLAC", 2, 16, 44100, 124112)
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 48000Hz Stereo.flac",
+                new AudioInfo("FLAC", 2, 16, 48000, 135087)
+            },
+            new object[]
+            {
+                "FLAC Level 5 24-bit 96000Hz Stereo.flac",
+                new AudioInfo("FLAC", 2, 24, 96000, 270174)
             }
         };
 
