@@ -35,7 +35,7 @@ namespace AudioWorks.Extensions.Flac
             throw new NotImplementedException();
         }
 
-        internal static void StreamDecoderInitialize(
+        internal static void StreamDecoderInitializeStream(
             [NotNull] NativeStreamDecoderHandle handle,
             [NotNull] NativeCallbacks.StreamDecoderReadCallback readCallback,
             [NotNull] NativeCallbacks.StreamDecoderSeekCallback seekCallback,
@@ -48,7 +48,7 @@ namespace AudioWorks.Extensions.Flac
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                WinStreamDecoderInitialize(
+                WinStreamDecoderInitializeStream(
                     handle,
                     readCallback,
                     seekCallback,
@@ -65,11 +65,11 @@ namespace AudioWorks.Extensions.Flac
             throw new NotImplementedException();
         }
 
-        internal static void StreamDecoderProcessMetadata([NotNull] NativeStreamDecoderHandle handle)
+        internal static void StreamDecoderProcessUntilEndOfMetadata([NotNull] NativeStreamDecoderHandle handle)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                WinStreamDecoderProcessMetadata(handle);
+                WinStreamDecoderProcessUntilEndOfMetadata(handle);
                 return;
             }
 
@@ -99,7 +99,7 @@ namespace AudioWorks.Extensions.Flac
         static extern NativeStreamDecoderHandle WinStreamDecoderNew();
 
         [DllImport(_winFlacLibrary, EntryPoint = "FLAC__stream_decoder_init_stream", CallingConvention = CallingConvention.Cdecl)]
-        static extern int WinStreamDecoderInitialize(
+        static extern int WinStreamDecoderInitializeStream(
             [NotNull] NativeStreamDecoderHandle handle,
             [NotNull] NativeCallbacks.StreamDecoderReadCallback readCallback,
             [NotNull] NativeCallbacks.StreamDecoderSeekCallback seekCallback,
@@ -113,7 +113,7 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_winFlacLibrary, EntryPoint = "FLAC__stream_decoder_process_until_end_of_metadata", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool WinStreamDecoderProcessMetadata(NativeStreamDecoderHandle handle);
+        static extern bool WinStreamDecoderProcessUntilEndOfMetadata(NativeStreamDecoderHandle handle);
 
         [DllImport(_winFlacLibrary, EntryPoint = "FLAC__stream_decoder_finish", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
