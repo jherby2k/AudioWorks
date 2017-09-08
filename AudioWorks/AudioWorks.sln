@@ -30,6 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Invalid", "Invalid", "{F91F
 	ProjectSection(SolutionItems) = preProject
 		TestFiles\Invalid\Missing 'fmt' Chunk.wav = TestFiles\Invalid\Missing 'fmt' Chunk.wav
 		TestFiles\Invalid\Not Audio Layer III.mp3 = TestFiles\Invalid\Not Audio Layer III.mp3
+		TestFiles\Invalid\Not FLAC Format.flac = TestFiles\Invalid\Not FLAC Format.flac
 		TestFiles\Invalid\Not MPEG Audio.mp3 = TestFiles\Invalid\Not MPEG Audio.mp3
 		TestFiles\Invalid\Not Ogg Format.ogg = TestFiles\Invalid\Not Ogg Format.ogg
 		TestFiles\Invalid\Not RIFF Format.wav = TestFiles\Invalid\Not RIFF Format.wav
@@ -81,7 +82,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Mp4",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Vorbis", "Extensions\AudioWorks.Extensions.Vorbis\AudioWorks.Extensions.Vorbis.csproj", "{5716EF44-6F81-4C73-B16C-43B1952A4A44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioWorks.Extensions.Flac", "Extensions\AudioWorks.Extensions.Flac\AudioWorks.Extensions.Flac.csproj", "{FD0CD1DC-F7D0-48E2-9E59-C5DD6AB4FAA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Flac", "Extensions\AudioWorks.Extensions.Flac\AudioWorks.Extensions.Flac.csproj", "{FD0CD1DC-F7D0-48E2-9E59-C5DD6AB4FAA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

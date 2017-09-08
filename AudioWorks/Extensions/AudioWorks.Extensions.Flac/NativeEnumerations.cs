@@ -5,6 +5,20 @@
         StreamInfo
     }
 
+    enum DecoderState
+    {
+        SearchForMetadata,
+        ReadMetadata,
+        SearchForFrameSync,
+        ReadFrame,
+        EndOfStream,
+        OggError,
+        SeekError,
+        Aborted,
+        MemoryAllocationError,
+        Uninitialized
+    }
+
     enum DecoderReadStatus
     {
         Continue,

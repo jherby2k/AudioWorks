@@ -11,10 +11,13 @@ namespace AudioWorks.Extensions.Flac
             using (var decoder = new NativeAudioInfoDecoder(stream))
             {
                 decoder.Initialize();
-                decoder.ProcessMetadata();
+                if (!decoder.ProcessMetadata())
+                    throw new AudioInvalidException(
+                        $"libFLAC was unable to read the audio information: {decoder.GetState()}.", stream.Name);
                 decoder.Finish();
 
-                return decoder.AudioInfo ?? throw new AudioInvalidException("Audio info could not be read.", stream.Name);
+                return decoder.AudioInfo ??
+                       throw new AudioInvalidException("Audio information was not provided by libFLAC.", stream.Name);
             }
         }
     }

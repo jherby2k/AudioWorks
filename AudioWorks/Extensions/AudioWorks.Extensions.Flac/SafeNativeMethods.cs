@@ -65,16 +65,22 @@ namespace AudioWorks.Extensions.Flac
             throw new NotImplementedException();
         }
 
-        internal static void StreamDecoderProcessUntilEndOfMetadata([NotNull] NativeStreamDecoderHandle handle)
+        internal static bool StreamDecoderProcessUntilEndOfMetadata([NotNull] NativeStreamDecoderHandle handle)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinStreamDecoderProcessUntilEndOfMetadata(handle);
-                return;
-            }
+                return WinStreamDecoderProcessUntilEndOfMetadata(handle);
 
             throw new NotImplementedException();
         }
+
+        internal static DecoderState StreamDecoderGetState([NotNull] NativeStreamDecoderHandle handle)
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                return WinStreamDecoderGetState(handle);
+
+            throw new NotImplementedException();
+        }
+
 
         internal static void StreamDecoderFinish([NotNull] NativeStreamDecoderHandle handle)
         {
@@ -113,7 +119,10 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_winFlacLibrary, EntryPoint = "FLAC__stream_decoder_process_until_end_of_metadata", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool WinStreamDecoderProcessUntilEndOfMetadata(NativeStreamDecoderHandle handle);
+        static extern bool WinStreamDecoderProcessUntilEndOfMetadata([NotNull] NativeStreamDecoderHandle handle);
+
+        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__stream_decoder_get_state", CallingConvention = CallingConvention.Cdecl)]
+        static extern DecoderState WinStreamDecoderGetState([NotNull] NativeStreamDecoderHandle handle);
 
         [DllImport(_winFlacLibrary, EntryPoint = "FLAC__stream_decoder_finish", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]

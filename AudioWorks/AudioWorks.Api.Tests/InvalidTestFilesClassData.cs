@@ -15,7 +15,8 @@ namespace AudioWorks.Api.Tests
             new object[] { "Not MPEG Audio.mp3"},
             new object[] { "Not Audio Layer III.mp3"},
             new object[] { "Not MPEG Audio.m4a" },
-            new object[] { "Not Ogg Format.ogg"}
+            new object[] { "Not Ogg Format.ogg"},
+            new object[] { "Not FLAC Format.flac"}
         };
 
         [NotNull]

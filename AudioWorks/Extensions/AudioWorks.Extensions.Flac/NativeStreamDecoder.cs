@@ -59,14 +59,20 @@ namespace AudioWorks.Extensions.Flac
                 (handle, error, userData) => { });
         }
 
-        internal void ProcessMetadata()
+        internal bool ProcessMetadata()
         {
-            SafeNativeMethods.StreamDecoderProcessUntilEndOfMetadata(_handle);
+            return SafeNativeMethods.StreamDecoderProcessUntilEndOfMetadata(_handle);
         }
 
         internal void Finish()
         {
             SafeNativeMethods.StreamDecoderFinish(_handle);
+        }
+
+        [Pure]
+        internal DecoderState GetState()
+        {
+            return SafeNativeMethods.StreamDecoderGetState(_handle);
         }
 
         public void Dispose()
