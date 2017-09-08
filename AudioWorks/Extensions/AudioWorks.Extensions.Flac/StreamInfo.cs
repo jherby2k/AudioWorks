@@ -2,25 +2,25 @@
 
 namespace AudioWorks.Extensions.Flac
 {
+    [StructLayout(LayoutKind.Sequential)]
     struct StreamInfo
     {
-        internal uint MinBlockSize;
+        readonly uint MinBlockSize;
 
-        internal uint MaxBlockSize;
+        readonly uint MaxBlockSize;
 
-        internal uint MinFrameSize;
+        readonly uint MinFrameSize;
 
-        internal uint MaxFrameSize;
+        readonly uint MaxFrameSize;
 
-        internal uint SampleRate;
+        internal readonly uint SampleRate;
 
-        internal uint Channels;
+        internal readonly uint Channels;
 
-        internal uint BitsPerSample;
+        internal readonly uint BitsPerSample;
 
-        internal ulong TotalSamples;
+        internal readonly ulong TotalSamples;
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
-        internal byte[] Md5Sum;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)] readonly byte[] Md5Sum;
     }
 }

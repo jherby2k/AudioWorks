@@ -1,7 +1,10 @@
-﻿namespace AudioWorks.Extensions.Flac
+﻿using System.Runtime.InteropServices;
+
+namespace AudioWorks.Extensions.Flac
 {
+    [StructLayout(LayoutKind.Sequential)]
     struct FrameFooter
     {
-        internal ushort Crc;
+        readonly ushort Crc;
     }
 }

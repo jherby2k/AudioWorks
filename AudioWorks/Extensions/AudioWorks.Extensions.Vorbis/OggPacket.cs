@@ -1,23 +1,21 @@
 ﻿using System;
-
-#pragma warning disable 169, 649
+using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
 {
+    [StructLayout(LayoutKind.Sequential)]
     struct OggPacket
     {
-        internal IntPtr Packet;
+        readonly IntPtr Packet;
 
-        internal int Bytes;
+        readonly int Bytes;
 
-        internal int BeginningOfStream;
+        readonly int BeginningOfStream;
 
-        internal int EndOfStream;
+        readonly int EndOfStream;
 
-        internal long GranulePosition;
+        readonly long GranulePosition;
 
-        internal long PacketNumber;
+        readonly long PacketNumber;
     }
 }
-
-#pragma warning restore 169, 649

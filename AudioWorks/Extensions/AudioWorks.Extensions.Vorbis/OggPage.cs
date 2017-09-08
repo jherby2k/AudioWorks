@@ -1,19 +1,17 @@
 ﻿using System;
-
-#pragma warning disable 169, 649
+using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
 {
+    [StructLayout(LayoutKind.Sequential)]
     struct OggPage
     {
-        internal IntPtr Header;
+        readonly IntPtr Header;
 
-        internal int HeaderLength;
+        readonly int HeaderLength;
 
-        internal IntPtr Body;
+        readonly IntPtr Body;
 
-        internal int BodyLength;
+        readonly int BodyLength;
     }
 }
-
-#pragma warning restore 169, 649

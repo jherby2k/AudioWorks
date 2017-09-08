@@ -10,7 +10,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         internal NativeVorbisDecoder()
         {
-            _info = Marshal.AllocHGlobal(CalculateStateSize());
+            _info = Marshal.AllocHGlobal(Marshal.SizeOf<VorbisInfo>());
             SafeNativeMethods.VorbisInfoInitialize(_info);
         }
 
@@ -31,21 +31,15 @@ namespace AudioWorks.Extensions.Vorbis
             GC.SuppressFinalize(this);
         }
 
-        ~NativeVorbisDecoder()
-        {
-            FreeUnmanaged();
-        }
-
         void FreeUnmanaged()
         {
             SafeNativeMethods.VorbisInfoClear(_info);
             Marshal.FreeHGlobal(_info);
         }
 
-        [Pure]
-        static int CalculateStateSize()
+        ~NativeVorbisDecoder()
         {
-            return Marshal.SizeOf(typeof(VorbisInfo));
+            FreeUnmanaged();
         }
     }
 }

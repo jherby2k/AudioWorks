@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Flac
 {
+    [StructLayout(LayoutKind.Sequential)]
     struct Frame
     {
-        internal FrameHeader Header;
+        readonly FrameHeader Header;
 
-        internal IntPtr SubFrames;
+        readonly IntPtr SubFrames;
 
-        internal FrameFooter Footer;
+        readonly FrameFooter Footer;
     }
 }

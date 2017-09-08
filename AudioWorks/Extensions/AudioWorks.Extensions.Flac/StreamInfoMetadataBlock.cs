@@ -1,12 +1,15 @@
-﻿namespace AudioWorks.Extensions.Flac
+﻿using System.Runtime.InteropServices;
+
+namespace AudioWorks.Extensions.Flac
 {
+    [StructLayout(LayoutKind.Sequential)]
     struct StreamInfoMetadataBlock
     {
-        internal MetadataType Type;
+        readonly MetadataType Type;
 
-        internal bool IsLast;
+        readonly bool IsLast;
 
-        internal uint Length;
+        readonly uint Length;
 
         internal StreamInfo StreamInfo;
     }

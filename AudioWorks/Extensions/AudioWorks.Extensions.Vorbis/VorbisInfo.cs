@@ -1,27 +1,25 @@
 ﻿using System;
-
-#pragma warning disable 169, 649
+using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
 {
+    [StructLayout(LayoutKind.Sequential)]
     struct VorbisInfo
     {
-        internal int Version;
+        readonly int Version;
 
-        internal int Channels;
+        internal readonly int Channels;
 
-        internal int Rate;
+        internal readonly int Rate;
 
-        internal int BitrateUpper;
+        readonly int BitrateUpper;
 
-        internal int BitrateNominal;
+        readonly int BitrateNominal;
 
-        internal int BitrateLower;
+        readonly int BitrateLower;
 
-        internal int BitrateWindow;
+        readonly int BitrateWindow;
 
-        internal IntPtr CodecSetup;
+        readonly IntPtr CodecSetup;
     }
 }
-
-#pragma warning restore 169, 649

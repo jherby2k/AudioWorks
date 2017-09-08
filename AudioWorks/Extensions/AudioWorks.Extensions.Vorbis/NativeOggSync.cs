@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
@@ -10,7 +9,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         public NativeOggSync()
         {
-            _state = Marshal.AllocHGlobal(CalculateStateSize());
+            _state = Marshal.AllocHGlobal(Marshal.SizeOf<OggSyncState>());
             SafeNativeMethods.OggSyncInitialize(_state);
         }
 
@@ -35,23 +34,15 @@ namespace AudioWorks.Extensions.Vorbis
             GC.SuppressFinalize(this);
         }
 
-        ~NativeOggSync()
-        {
-            FreeUnmanaged();
-        }
-
         void FreeUnmanaged()
         {
             SafeNativeMethods.OggSyncClear(_state);
             Marshal.FreeHGlobal(_state);
         }
 
-        [Pure]
-        static int CalculateStateSize()
+        ~NativeOggSync()
         {
-            // Size of ogg_sync_state
-            return Marshal.SizeOf(typeof(int)) * 6 +
-                   Marshal.SizeOf(typeof(IntPtr));
+            FreeUnmanaged();
         }
     }
 }

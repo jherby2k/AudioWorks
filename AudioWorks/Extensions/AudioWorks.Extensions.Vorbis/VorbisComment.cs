@@ -1,19 +1,17 @@
 ﻿using System;
-
-#pragma warning disable 169, 649
+using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
 {
+    [StructLayout(LayoutKind.Sequential)]
     struct VorbisComment
     {
-        internal IntPtr UserComments;
+        readonly IntPtr UserComments;
 
-        internal IntPtr CommentLengths;
+        readonly IntPtr CommentLengths;
 
-        internal int Comments;
+        readonly int Comments;
 
-        internal IntPtr Vendor;
+        readonly IntPtr Vendor;
     }
 }
-
-#pragma warning restore 169, 649
