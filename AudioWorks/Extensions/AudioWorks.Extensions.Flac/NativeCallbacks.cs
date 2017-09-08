@@ -27,6 +27,6 @@ namespace AudioWorks.Extensions.Flac
         internal delegate void StreamDecoderMetadataCallback(IntPtr handle, IntPtr metadataBlock, IntPtr userData);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate void StreamDecoderErrorCallback(IntPtr handle, int error, IntPtr userData);
+        internal delegate void StreamDecoderErrorCallback(IntPtr handle, DecoderErrorStatus error, IntPtr userData);
     }
 }
