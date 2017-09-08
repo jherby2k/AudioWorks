@@ -1,4 +1,6 @@
-﻿namespace AudioWorks.Extensions.Flac
+﻿using JetBrains.Annotations;
+
+namespace AudioWorks.Extensions.Flac
 {
     enum MetadataType
     {
@@ -7,16 +9,16 @@
 
     enum DecoderState
     {
-        SearchForMetadata,
-        ReadMetadata,
-        SearchForFrameSync,
-        ReadFrame,
-        EndOfStream,
-        OggError,
-        SeekError,
-        Aborted,
-        MemoryAllocationError,
-        Uninitialized
+        [UsedImplicitly] SearchForMetadata,
+        [UsedImplicitly] ReadMetadata,
+        [UsedImplicitly] SearchForFrameSync,
+        [UsedImplicitly] ReadFrame,
+        [UsedImplicitly] EndOfStream,
+        [UsedImplicitly] OggError,
+        [UsedImplicitly] SeekError,
+        [UsedImplicitly] Aborted,
+        [UsedImplicitly] MemoryAllocationError,
+        [UsedImplicitly] Uninitialized
     }
 
     enum DecoderReadStatus
@@ -43,5 +45,9 @@
     enum DecoderWriteStatus
     {
         Continue
+    }
+
+    enum DecoderErrorStatus
+    {
     }
 }
