@@ -11,7 +11,7 @@ namespace AudioWorks.Extensions.Flac
         [CanBeNull]
         internal AudioInfo AudioInfo { get; private set; }
 
-        public NativeAudioInfoDecoder([NotNull] FileStream stream)
+        internal NativeAudioInfoDecoder([NotNull] Stream stream)
             : base(stream)
         {
         }
