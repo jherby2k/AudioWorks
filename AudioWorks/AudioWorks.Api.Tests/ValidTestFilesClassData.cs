@@ -127,22 +127,22 @@ namespace AudioWorks.Api.Tests
             new object[]
             {
                 "Vorbis Quality 3 8000Hz Stereo.ogg",
-                AudioInfo.CreateForLossy("Vorbis", 2, 8000)
+                AudioInfo.CreateForLossy("Vorbis", 2, 8000, 0, 31800)
             },
             new object[]
             {
                 "Vorbis Quality 3 44100Hz Mono.ogg",
-                AudioInfo.CreateForLossy("Vorbis", 1, 44100)
+                AudioInfo.CreateForLossy("Vorbis", 1, 44100, 0, 80000)
             },
             new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
-                AudioInfo.CreateForLossy("Vorbis", 2, 44100)
+                AudioInfo.CreateForLossy("Vorbis", 2, 44100, 0, 112000)
             },
             new object[]
             {
                 "Vorbis Quality 3 48000Hz Stereo.ogg",
-                AudioInfo.CreateForLossy("Vorbis", 2, 48000)
+                AudioInfo.CreateForLossy("Vorbis", 2, 48000, 0, 112000)
             },
             new object[]
             {

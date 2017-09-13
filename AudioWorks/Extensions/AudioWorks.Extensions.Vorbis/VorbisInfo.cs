@@ -14,7 +14,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         readonly int BitrateUpper;
 
-        readonly int BitrateNominal;
+        internal readonly int BitrateNominal;
 
         readonly int BitrateLower;
 
