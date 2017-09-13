@@ -120,7 +120,7 @@ namespace AudioWorks.Commands.Tests
                 var result = ps.Invoke();
                 Assert.True(
                     result.Count == 1 &&
-                    (Type)result[0].BaseObject == typeof(AudioInfo));
+                    (Type) result[0].BaseObject == typeof(AudioInfo));
             }
         }
 
