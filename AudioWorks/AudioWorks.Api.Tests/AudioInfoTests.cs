@@ -14,49 +14,49 @@ namespace AudioWorks.Api.Tests
         {
             // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() =>
-                new AudioInfo(null, 2, 16, 44100, 0));
-        }
-
-        [Fact(DisplayName = "AudioInfo throws an exception if Channels is greater than 2")]
-        public void AudioInfoChannelsTooHighThrowsException()
-        {
-            Assert.Throws<AudioUnsupportedException>(() =>
-                new AudioInfo("Test", 3, 16, 44100, 0));
-        }
-
-        [Fact(DisplayName = "AudioInfo throws an exception if BitsPerSample is greater than 32")]
-        public void AudioInfoBitsPerSampleTooHighThrowsException()
-        {
-            Assert.Throws<AudioUnsupportedException>(() =>
-                new AudioInfo("Test", 2, 33, 44100, 0));
+                AudioInfo.CreateForLossless(null, 2, 16, 44100));
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if Channels is less than 1")]
         public void AudioInfoChannelsTooLowThrowsException()
         {
             Assert.Throws<AudioInvalidException>(() =>
-                new AudioInfo("Test", 0, 16, 44100, 0));
+                AudioInfo.CreateForLossless("Test", 0, 16, 44100));
+        }
+
+        [Fact(DisplayName = "AudioInfo throws an exception if Channels is greater than 2")]
+        public void AudioInfoChannelsTooHighThrowsException()
+        {
+            Assert.Throws<AudioUnsupportedException>(() =>
+                AudioInfo.CreateForLossless("Test", 3, 16, 44100));
+        }
+
+        [Fact(DisplayName = "AudioInfo throws an exception if BitsPerSample is greater than 32")]
+        public void AudioInfoBitsPerSampleTooHighThrowsException()
+        {
+            Assert.Throws<AudioUnsupportedException>(() =>
+                AudioInfo.CreateForLossless("Test", 2, 33, 44100));
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if BitsPerSample is negative")]
         public void AudioInfoBitsPerSampleTooLowThrowsException()
         {
             Assert.Throws<AudioInvalidException>(() =>
-                new AudioInfo("Test", 2, -1, 44100, 0));
+                AudioInfo.CreateForLossless("Test", 2, -1, 44100));
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if SampleRate is less than 1")]
         public void AudioInfoSampleRateTooLowThrowsException()
         {
             Assert.Throws<AudioInvalidException>(() =>
-                new AudioInfo("Test", 2, 16, 0, 0));
+                AudioInfo.CreateForLossless("Test", 2, 16, 0));
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if SampleCount is negative")]
         public void AudioInfoSampleCountNegativeThrowsException()
         {
             Assert.Throws<AudioInvalidException>(() =>
-                new AudioInfo("Test", 2, 16, 44100, -1));
+                AudioInfo.CreateForLossless("Test", 2, 16, 44100, -1));
         }
 
         [Theory(DisplayName = "AudioInfo has the expected Description property value")]

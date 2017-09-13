@@ -48,7 +48,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Get-AudioInfo")
                     .AddParameter("AudioFile", new AudioFile(
                         new FileInfo("Foo"),
-                        new AudioInfo("Test", 2, 16, 44100, 0)));
+                        AudioInfo.CreateForLossless("Test", 2, 16, 44100)));
                 ps.Invoke();
                 Assert.True(true);
             }
@@ -75,7 +75,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Get-AudioInfo")
                     .AddArgument(new AudioFile(
                         new FileInfo("Foo"),
-                        new AudioInfo("Test", 2, 16, 44100, 0)));
+                        AudioInfo.CreateForLossless("Test", 2, 16, 44100)));
                 ps.Invoke();
                 Assert.True(true);
             }
@@ -91,7 +91,7 @@ namespace AudioWorks.Commands.Tests
                     .AddArgument("audioFile")
                     .AddArgument(new AudioFile(
                         new FileInfo("Foo"),
-                        new AudioInfo("Test", 2, 16, 44100, 0)))
+                        AudioInfo.CreateForLossless("Test", 2, 16, 44100)))
                     .AddParameter("PassThru");
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Value");

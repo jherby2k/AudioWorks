@@ -22,8 +22,12 @@ namespace AudioWorks.Extensions.Flac
                 return;
 
             var streamInfo = Marshal.PtrToStructure<StreamInfoMetadataBlock>(metadataBlock).StreamInfo;
-            AudioInfo = new AudioInfo("FLAC", (int) streamInfo.Channels, (int) streamInfo.BitsPerSample,
-                (int) streamInfo.SampleRate, (long) streamInfo.TotalSamples);
+            AudioInfo = AudioInfo.CreateForLossless(
+                "FLAC",
+                (int) streamInfo.Channels,
+                (int) streamInfo.BitsPerSample,
+                (int) streamInfo.SampleRate,
+                (long) streamInfo.TotalSamples);
         }
     }
 }

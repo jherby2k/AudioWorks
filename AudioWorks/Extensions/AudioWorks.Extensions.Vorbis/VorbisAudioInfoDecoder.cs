@@ -48,7 +48,10 @@ namespace AudioWorks.Extensions.Vorbis
                             decoder.HeaderIn(ref vorbisComment, ref packet);
 
                             var info = decoder.GetInfo();
-                            return new AudioInfo("Vorbis", info.Channels, 0, info.Rate, 0);
+                            return AudioInfo.CreateForLossy(
+                                "Vorbis",
+                                info.Channels,
+                                info.Rate);
                         }
                     } while (!SafeNativeMethods.OggPageEndOfStream(ref page));
 

@@ -54,7 +54,11 @@ namespace AudioWorks.Extensions.Wave
                     if (isExtensible)
                         stream.Seek(4, SeekOrigin.Current);
 
-                    return new AudioInfo("LPCM", channels, reader.ReadUInt16(), (int) sampleRate,
+                    return AudioInfo.CreateForLossless(
+                        "LPCM",
+                        channels,
+                        reader.ReadUInt16(),
+                        (int) sampleRate,
                         reader.SeekToChunk("data") / blockAlign);
                 }
                 catch (EndOfStreamException e)

@@ -20,7 +20,10 @@ namespace AudioWorks.Extensions.Mp3
                     if (frameCount == 0)
                         frameCount = ReadFrameCountFromVbri(reader);
 
-                    return new AudioInfo("MP3", frameHeader.Channels, 0, frameHeader.SampleRate,
+                    return AudioInfo.CreateForLossy(
+                        "MP3",
+                        frameHeader.Channels,
+                        frameHeader.SampleRate,
                         frameCount * frameHeader.SamplesPerFrame);
                 }
                 catch (EndOfStreamException e)

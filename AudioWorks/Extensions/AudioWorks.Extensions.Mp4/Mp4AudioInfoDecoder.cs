@@ -20,14 +20,23 @@ namespace AudioWorks.Extensions.Mp4
                 mp4.DescendToAtom("moov", "trak", "mdia", "minf", "stbl", "stsd", "mp4a", "esds");
                 var esds = new EsdsAtom(mp4.ReadAtom(mp4.CurrentAtom));
                 if (esds.IsAac)
-                    return new AudioInfo("AAC", esds.Channels, 0, (int) esds.SampleRate, sampleCount);
+                    return AudioInfo.CreateForLossy(
+                        "AAC",
+                        esds.Channels,
+                        (int) esds.SampleRate,
+                        sampleCount);
 
                 // Apple Lossless files have their own atom for storing audio info
                 if (!mp4.DescendToAtom("moov", "trak", "mdia", "minf", "stbl", "stsd", "alac"))
                     throw new AudioUnsupportedException("Only AAC and ALAC files are supported.", stream.Name);
 
                 var alac = new AlacAtom(mp4.ReadAtom(mp4.CurrentAtom));
-                return new AudioInfo("ALAC", alac.Channels, alac.BitsPerSample, (int) alac.SampleRate, sampleCount);
+                return AudioInfo.CreateForLossless(
+                    "ALAC",
+                    alac.Channels,
+                    alac.BitsPerSample,
+                    (int) alac.SampleRate,
+                    sampleCount);
             }
             catch (EndOfStreamException e)
             {
