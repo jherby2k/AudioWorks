@@ -42,47 +42,47 @@ namespace AudioWorks.Api.Tests
             new object[]
             {
                 "Lame CBR 24 8000Hz Stereo.mp3",
-                AudioInfo.CreateForLossy("MP3", 2, 8000, 24192)
+                AudioInfo.CreateForLossy("MP3", 2, 8000, 24192, 24571)
             },
             new object[]
             {
                 "Lame CBR 64 44100Hz Mono.mp3",
-                AudioInfo.CreateForLossy("MP3", 1, 44100, 125568)
+                AudioInfo.CreateForLossy("MP3", 1, 44100, 125568, 64582)
             },
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568)
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568, 129170)
             },
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo (no header).mp3",
-                AudioInfo.CreateForLossy("MP3", 2, 44100)
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 0, 128000)
             },
             new object[]
             {
                 "Lame CBR 128 48000Hz Stereo.mp3",
-                AudioInfo.CreateForLossy("MP3", 2, 48000, 137088)
+                AudioInfo.CreateForLossy("MP3", 2, 48000, 137088, 129076)
             },
             new object[]
             {
                 "Lame VBR Standard 44100Hz Stereo.mp3",
-                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568)
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568, 213358)
             },
             new object[]
             {
                 "Fraunhofer CBR 128 44100Hz Stereo.mp3",
-                AudioInfo.CreateForLossy("MP3", 2, 44100)
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 0, 128000)
             },
             new object[]
             {
                 "Fraunhofer VBR 44100Hz Stereo.mp3",
-                AudioInfo.CreateForLossy("MP3", 2, 44100)
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 0, 160000)
             },
             new object[]
             {
                 "Fraunhofer VBR 44100Hz Stereo (with header).mp3",
-                AudioInfo.CreateForLossy("MP3", 2, 44100, 126720)
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 126720, 143200)
             },
             new object[]
             {

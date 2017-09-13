@@ -1,5 +1,6 @@
 ﻿using AudioWorks.Common;
 using JetBrains.Annotations;
+using System;
 using System.IO;
 
 namespace AudioWorks.Extensions.Mp3
@@ -15,16 +16,17 @@ namespace AudioWorks.Extensions.Mp3
                 {
                     var frameHeader = ReadFrameHeader(reader);
 
-                    // Frame count is found in the optional Xing or VBRI header
-                    var frameCount = ReadFrameCountFromXing(reader, frameHeader);
-                    if (frameCount == 0)
-                        frameCount = ReadFrameCountFromVbri(reader);
+                    // Frame count is found in the optional Xing (most common) or VBRI header
+                    var optionalHeader = ReadXingHeader(reader, frameHeader);
+                    if (optionalHeader.Incomplete)
+                        optionalHeader = ReadVbriHeader(reader);
 
                     return AudioInfo.CreateForLossy(
                         "MP3",
                         frameHeader.Channels,
                         frameHeader.SampleRate,
-                        frameCount * frameHeader.SamplesPerFrame);
+                        optionalHeader.FrameCount * frameHeader.SamplesPerFrame,
+                        DetermineBitRate(frameHeader, optionalHeader));
                 }
                 catch (EndOfStreamException e)
                 {
@@ -54,32 +56,53 @@ namespace AudioWorks.Extensions.Mp3
             return result;
         }
 
-        static uint ReadFrameCountFromXing([NotNull] FrameReader reader, [NotNull] FrameHeader header)
+        static OptionalHeaderInfo ReadXingHeader([NotNull] FrameReader reader, [NotNull] FrameHeader header)
         {
             // Xing header (if present) is located after the side info
             reader.BaseStream.Seek(reader.FrameStart + 4 + header.SideInfoLength, SeekOrigin.Begin);
 
-            var headerId = new string(reader.ReadChars(4));
-            if (headerId == "Xing" || headerId == "Info")
-            {
-                // The flags DWORD indicates whether the frame count is included in the header
-                var flags = reader.ReadUInt32BigEndian();
-                if ((flags & 0b00000001) == 0b00000001)
-                    return reader.ReadUInt32BigEndian();
-            }
+            var result = new OptionalHeaderInfo();
 
-            return 0u;
+            var headerId = new string(reader.ReadChars(4));
+            if (headerId != "Xing" && headerId != "Info") return result;
+
+            // Both fields are optional, even if the header is present
+            var flags = reader.ReadUInt32BigEndian();
+            if ((flags & 0b00000001) == 0b00000001)
+                result.FrameCount = reader.ReadUInt32BigEndian();
+            if ((flags >> 1 & 0b00000001) == 0b00000001)
+                result.ByteCount = reader.ReadUInt32BigEndian();
+
+            return result;
         }
 
-        static uint ReadFrameCountFromVbri([NotNull] FrameReader reader)
+        static OptionalHeaderInfo ReadVbriHeader([NotNull] FrameReader reader)
         {
             // VBRI header (if present) is located 32 bytes past the frame header
             reader.BaseStream.Seek(reader.FrameStart + 36, SeekOrigin.Begin);
 
+            var result = new OptionalHeaderInfo();
+
             var headerId = new string(reader.ReadChars(4));
-            if (headerId != "VBRI") return 0u;
-            reader.BaseStream.Seek(10, SeekOrigin.Current);
-            return reader.ReadUInt32BigEndian();
+            if (headerId != "VBRI") return result;
+
+            reader.BaseStream.Seek(6, SeekOrigin.Current);
+            result.ByteCount = reader.ReadUInt32BigEndian();
+            result.FrameCount = reader.ReadUInt32BigEndian();
+
+            return result;
+        }
+
+        static int DetermineBitRate([NotNull] FrameHeader frameHeader, OptionalHeaderInfo optionalHeader)
+        {
+            // If the BitRate can't be calculated because of an incomplete or missing VBR header, assume CBR
+            if (optionalHeader.Incomplete)
+                return frameHeader.BitRate * 1000;
+
+            return (int) Math.Round(
+                optionalHeader.ByteCount * 8 /
+                (optionalHeader.FrameCount * frameHeader.SamplesPerFrame /
+                 (double) frameHeader.SampleRate));
         }
     }
 }
