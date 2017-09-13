@@ -13,43 +13,50 @@ namespace AudioWorks.Api.Tests
         public void AudioInfoDescriptionNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() => new AudioInfo(null, 2, 16, 44100, 0));
+            Assert.Throws<ArgumentNullException>(() =>
+                new AudioInfo(null, 2, 16, 44100, 0));
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if Channels is greater than 2")]
         public void AudioInfoChannelsTooHighThrowsException()
         {
-            Assert.Throws<AudioUnsupportedException>(() => new AudioInfo("Test", 3, 16, 44100, 0));
+            Assert.Throws<AudioUnsupportedException>(() =>
+                new AudioInfo("Test", 3, 16, 44100, 0));
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if BitsPerSample is greater than 32")]
         public void AudioInfoBitsPerSampleTooHighThrowsException()
         {
-            Assert.Throws<AudioUnsupportedException>(() => new AudioInfo("Test", 2, 33, 44100, 0));
+            Assert.Throws<AudioUnsupportedException>(() =>
+                new AudioInfo("Test", 2, 33, 44100, 0));
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if Channels is less than 1")]
         public void AudioInfoChannelsTooLowThrowsException()
         {
-            Assert.Throws<AudioInvalidException>(() => new AudioInfo("Test", 0, 16, 44100, 0));
+            Assert.Throws<AudioInvalidException>(() =>
+                new AudioInfo("Test", 0, 16, 44100, 0));
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if BitsPerSample is negative")]
         public void AudioInfoBitsPerSampleTooLowThrowsException()
         {
-            Assert.Throws<AudioInvalidException>(() => new AudioInfo("Test", 2, -1, 44100, 0));
+            Assert.Throws<AudioInvalidException>(() =>
+                new AudioInfo("Test", 2, -1, 44100, 0));
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if SampleRate is less than 1")]
         public void AudioInfoSampleRateTooLowThrowsException()
         {
-            Assert.Throws<AudioInvalidException>(() => new AudioInfo("Test", 2, 16, 0, 0));
+            Assert.Throws<AudioInvalidException>(() =>
+                new AudioInfo("Test", 2, 16, 0, 0));
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if SampleCount is negative")]
         public void AudioInfoSampleCountNegativeThrowsException()
         {
-            Assert.Throws<AudioInvalidException>(() => new AudioInfo("Test", 2, 16, 44100, -1));
+            Assert.Throws<AudioInvalidException>(() =>
+                new AudioInfo("Test", 2, 16, 44100, -1));
         }
 
         [Theory(DisplayName = "AudioInfo has the expected Description property value")]
@@ -61,7 +68,9 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName);
-            Assert.Equal(expectedAudioInfo.Description, AudioFileFactory.Create(path).AudioInfo.Description);
+            Assert.Equal(
+                expectedAudioInfo.Description,
+                AudioFileFactory.Create(path).AudioInfo.Description);
         }
 
         [Theory(DisplayName = "AudioInfo has the expected Channel property value")]
@@ -73,7 +82,9 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName);
-            Assert.Equal(expectedAudioInfo.Channels, AudioFileFactory.Create(path).AudioInfo.Channels);
+            Assert.Equal(
+                expectedAudioInfo.Channels,
+                AudioFileFactory.Create(path).AudioInfo.Channels);
         }
 
         [Theory(DisplayName = "AudioInfo has the expected BitsPerSample property value")]
@@ -85,7 +96,9 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName);
-            Assert.Equal(expectedAudioInfo.BitsPerSample, AudioFileFactory.Create(path).AudioInfo.BitsPerSample);
+            Assert.Equal(
+                expectedAudioInfo.BitsPerSample,
+                AudioFileFactory.Create(path).AudioInfo.BitsPerSample);
         }
 
         [Theory(DisplayName = "AudioInfo has the expected SampleRate property value")]
@@ -97,7 +110,9 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName);
-            Assert.Equal(expectedAudioInfo.SampleRate, AudioFileFactory.Create(path).AudioInfo.SampleRate);
+            Assert.Equal(
+                expectedAudioInfo.SampleRate,
+                AudioFileFactory.Create(path).AudioInfo.SampleRate);
         }
 
         [Theory(DisplayName = "AudioInfo has the expected SampleCount property value")]
@@ -109,7 +124,9 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName);
-            Assert.Equal(expectedAudioInfo.SampleCount, AudioFileFactory.Create(path).AudioInfo.SampleCount);
+            Assert.Equal(
+                expectedAudioInfo.SampleCount,
+                AudioFileFactory.Create(path).AudioInfo.SampleCount);
         }
 
         [Theory(DisplayName = "AudioInfo has the expected PlayLength property value")]
@@ -121,7 +138,9 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName);
-            Assert.Equal(expectedAudioInfo.PlayLength, AudioFileFactory.Create(path).AudioInfo.PlayLength);
+            Assert.Equal(
+                expectedAudioInfo.PlayLength,
+                AudioFileFactory.Create(path).AudioInfo.PlayLength);
         }
     }
 }

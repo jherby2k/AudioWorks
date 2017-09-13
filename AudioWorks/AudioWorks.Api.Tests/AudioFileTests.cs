@@ -17,7 +17,9 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName);
-            Assert.Equal(path, AudioFileFactory.Create(path).FileInfo.FullName);
+            Assert.Equal(
+                path,
+                AudioFileFactory.Create(path).FileInfo.FullName);
         }
 
         [Theory(DisplayName = "AudioFile's AudioInfo property is set")]
@@ -29,7 +31,8 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName);
-            Assert.IsType<AudioInfo>(AudioFileFactory.Create(path).AudioInfo);
+            Assert.IsType<AudioInfo>(
+                AudioFileFactory.Create(path).AudioInfo);
         }
     }
 }
