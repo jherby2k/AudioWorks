@@ -25,7 +25,7 @@ namespace AudioWorks.Common
                 bitsPerSample,
                 sampleRate,
                 sampleCount,
-                (int) Math.Round(channels * bitsPerSample * sampleRate / (double) 1000));
+                channels * bitsPerSample * sampleRate);
         }
 
         [NotNull]
