@@ -43,8 +43,7 @@ namespace AudioWorks.Extensions.Mp4
 
         internal bool DescendToAtom([NotNull, ItemNotNull] params string[] hierarchy)
         {
-            _stream.Position = 0;
-            _atomInfoStack.Clear();
+            Reset();
 
             using (var reader = new Mp4Reader(_stream))
             {
@@ -84,6 +83,12 @@ namespace AudioWorks.Extensions.Mp4
             }
 
             return _atomInfoStack.Peek().FourCc == hierarchy.Last();
+        }
+
+        internal void Reset()
+        {
+            _stream.Position = 0;
+            _atomInfoStack.Clear();
         }
 
         [NotNull]
