@@ -18,6 +18,29 @@ namespace AudioWorks.Extensions.Mp4
             _stream = stream;
         }
 
+        [NotNull, ItemNotNull]
+        internal AtomInfo[] GetChildAtomInfo()
+        {
+            var result = new List<AtomInfo>();
+
+            using (var reader = new Mp4Reader(_stream))
+            {
+                _stream.Position = _atomInfoStack.Count == 0 ? 0 : _atomInfoStack.Peek().Start + 8;
+
+                while (_stream.Position < (_atomInfoStack.Count == 0 ? _stream.Length : _atomInfoStack.Peek().End))
+                {
+                    var childAtom = new AtomInfo(
+                        (uint) _stream.Position,
+                        reader.ReadUInt32BigEndian(),
+                        reader.ReadFourCc());
+                    result.Add(childAtom);
+                    _stream.Position = childAtom.End;
+                }
+            }
+
+            return result.ToArray();
+        }
+
         internal bool DescendToAtom([NotNull, ItemNotNull] params string[] hierarchy)
         {
             _stream.Position = 0;
@@ -32,7 +55,7 @@ namespace AudioWorks.Extensions.Mp4
                             reader.ReadFourCc());
 
                         if (subAtom.End > _stream.Length)
-                            throw new EndOfStreamException();
+                            throw new EndOfStreamException($"{fourCc} atom is missing.");
 
                         if (subAtom.FourCc == fourCc)
                         {

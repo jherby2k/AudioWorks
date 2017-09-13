@@ -87,22 +87,22 @@ namespace AudioWorks.Api.Tests
             new object[]
             {
                 "QAAC TVBR 91 8000Hz Stereo.m4a",
-                AudioInfo.CreateForLossy("AAC", 2, 8000, 25600)
+                AudioInfo.CreateForLossy("AAC", 2, 8000, 25600, 50795)
             },
             new object[]
             {
                 "QAAC TVBR 91 44100Hz Mono.m4a",
-                AudioInfo.CreateForLossy("AAC", 1, 44100, 126976)
+                AudioInfo.CreateForLossy("AAC", 1, 44100, 126976, 93207)
             },
             new object[]
             {
                 "QAAC TVBR 91 44100Hz Stereo.m4a",
-                AudioInfo.CreateForLossy("AAC", 2, 44100, 126976)
+                AudioInfo.CreateForLossy("AAC", 2, 44100, 126976, 183702)
             },
             new object[]
             {
                 "QAAC TVBR 91 48000Hz Stereo.m4a",
-                AudioInfo.CreateForLossy("AAC", 2, 48000, 137216)
+                AudioInfo.CreateForLossy("AAC", 2, 48000, 137216, 197757)
             },
             new object[]
             {
