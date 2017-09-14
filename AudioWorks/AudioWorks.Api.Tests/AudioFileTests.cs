@@ -34,5 +34,18 @@ namespace AudioWorks.Api.Tests
             Assert.IsType<AudioInfo>(
                 AudioFileFactory.Create(path).AudioInfo);
         }
+
+        [Theory(DisplayName = "AudioFile's Metadata property is set")]
+        [ClassData(typeof(ValidTestFilesClassData))]
+        public void AudioFileHasMetadata([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        {
+            var path = Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                "TestFiles",
+                "Valid",
+                fileName);
+            Assert.IsType<AudioMetadata>(
+                AudioFileFactory.Create(path).Metadata);
+        }
     }
 }
