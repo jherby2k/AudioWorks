@@ -1,12 +1,11 @@
 ﻿using JetBrains.Annotations;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace AudioWorks.Api.Tests
 {
-    public sealed class InvalidTestFilesClassData : IEnumerable<object[]>
+    public static class TestFilesInvalidDataSource
     {
-        [NotNull] readonly List<object[]> _data = new List<object[]>
+        [NotNull, ItemNotNull] static readonly List<object[]> _data = new List<object[]>
         {
             new object[] { "Not RIFF Format.wav" },
             new object[] { "Unexpectedly Truncated.wav" },
@@ -19,16 +18,10 @@ namespace AudioWorks.Api.Tests
             new object[] { "Not FLAC Format.flac"}
         };
 
-        [NotNull]
-        public IEnumerator<object[]> GetEnumerator()
+        [NotNull, ItemNotNull]
+        public static IEnumerable<object[]> FileNames
         {
-            return _data.GetEnumerator();
-        }
-
-        [NotNull]
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
+            [UsedImplicitly] get => _data;
         }
     }
 }

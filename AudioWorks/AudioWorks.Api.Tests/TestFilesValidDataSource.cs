@@ -1,13 +1,13 @@
-using AudioWorks.Common;
+﻿using AudioWorks.Common;
 using JetBrains.Annotations;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AudioWorks.Api.Tests
 {
-    public sealed class ValidTestFilesClassData : IEnumerable<object[]>
+    public static class TestFilesValidDataSource
     {
-        [NotNull] readonly List<object[]> _data = new List<object[]>
+        [NotNull, ItemNotNull] static readonly List<object[]> _data = new List<object[]>
         {
             new object[]
             {
@@ -176,16 +176,16 @@ namespace AudioWorks.Api.Tests
             }
         };
 
-        [NotNull]
-        public IEnumerator<object[]> GetEnumerator()
+        [NotNull, ItemNotNull]
+        public static IEnumerable<object[]> FileNames
         {
-            return _data.GetEnumerator();
+            [UsedImplicitly] get => _data.Select(item => new[] { item[0] });
         }
 
-        [NotNull]
-        IEnumerator IEnumerable.GetEnumerator()
+        [NotNull, ItemNotNull]
+        public static IEnumerable<object[]> FileNamesAndAudioInfo
         {
-            return GetEnumerator();
+            [UsedImplicitly] get => _data.Select(item => new[] { item[0], item[1] });
         }
     }
 }

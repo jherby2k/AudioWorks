@@ -9,8 +9,8 @@ namespace AudioWorks.Api.Tests
     public sealed class AudioFileTests
     {
         [Theory(DisplayName = "AudioFile has the expected FileInfo property value")]
-        [ClassData(typeof(ValidTestFilesClassData))]
-        public void AudioFileHasExpectedFileInfo([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        [MemberData(nameof(TestFilesValidDataSource.FileNames), MemberType = typeof(TestFilesValidDataSource))]
+        public void AudioFileHasExpectedFileInfo([NotNull] string fileName)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -23,8 +23,8 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioFile's AudioInfo property is set")]
-        [ClassData(typeof(ValidTestFilesClassData))]
-        public void AudioFileHasAudioInfo([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        [MemberData(nameof(TestFilesValidDataSource.FileNames), MemberType = typeof(TestFilesValidDataSource))]
+        public void AudioFileHasAudioInfo([NotNull] string fileName)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -36,8 +36,8 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioFile's Metadata property is set")]
-        [ClassData(typeof(ValidTestFilesClassData))]
-        public void AudioFileHasMetadata([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        [MemberData(nameof(TestFilesValidDataSource.FileNames), MemberType = typeof(TestFilesValidDataSource))]
+        public void AudioFileHasMetadata([NotNull] string fileName)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,

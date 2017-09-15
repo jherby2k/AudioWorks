@@ -25,7 +25,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioFileFactory.Create throws an exception if the Path is an unsupported file")]
-        [ClassData(typeof(UnsupportedTestFilesClassData))]
+        [MemberData(nameof(TestFilesUnsupportedDataSource.FileNames), MemberType = typeof(TestFilesUnsupportedDataSource))]
         public void CreatePathUnsupportedThrowsException([NotNull] string fileName)
         {
             Assert.Throws<AudioUnsupportedException>(() =>
@@ -37,7 +37,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioFileFactory.Create throws an exception if the Path is an invalid file")]
-        [ClassData(typeof(InvalidTestFilesClassData))]
+        [MemberData(nameof(TestFilesInvalidDataSource.FileNames), MemberType = typeof(TestFilesInvalidDataSource))]
         public void CreatePathInvalidThrowsException([NotNull] string fileName)
         {
             Assert.Throws<AudioInvalidException>(() =>
@@ -49,8 +49,8 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioFileFactory.Create returns an AudioFile")]
-        [ClassData(typeof(ValidTestFilesClassData))]
-        public void CreateReturnsAudioFile([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        [MemberData(nameof(TestFilesValidDataSource.FileNames), MemberType = typeof(TestFilesValidDataSource))]
+        public void CreateReturnsAudioFile([NotNull] string fileName)
         {
             Assert.IsType<AudioFile>(
                 AudioFileFactory.Create(Path.Combine(

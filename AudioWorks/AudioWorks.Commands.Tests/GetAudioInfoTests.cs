@@ -125,8 +125,8 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Theory(DisplayName = "Get-AudioInfo returns an AudioInfo")]
-        [ClassData(typeof(ValidTestFilesClassData))]
-        public void GetAudioInfoReturnsAudioInfo([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        [MemberData(nameof(TestFilesValidDataSource.FileNames), MemberType = typeof(TestFilesValidDataSource))]
+        public void GetAudioInfoReturnsAudioInfo([NotNull] string fileName)
         {
             using (var ps = PowerShell.Create())
             {
