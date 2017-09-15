@@ -303,7 +303,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioMetadata has the expected Title property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioInfoHasExpectedTitle([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        public void AudioMetadataHasExpectedTitle([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -317,7 +317,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioMetadata has the expected Artist property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioInfoHasExpectedArtist([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        public void AudioMetadataHasExpectedArtist([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -331,7 +331,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioMetadata has the expected Album property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioInfoHasExpectedAlbum([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        public void AudioMetadataHasExpectedAlbum([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -345,7 +345,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioMetadata has the expected Comment property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioInfoHasExpectedComment([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        public void AudioMetadataHasExpectedComment([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -359,7 +359,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioMetadata has the expected Year property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioInfoHasExpectedYear([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        public void AudioMetadataHasExpectedYear([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -373,7 +373,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioMetadata has the expected TrackNumber property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioInfoHasExpectedTrackNumber([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        public void AudioMetadataHasExpectedTrackNumber([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -387,7 +387,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioMetadata has the expected TrackCount property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioInfoHasExpectedTrackCount([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        public void AudioMetadataHasExpectedTrackCount([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
