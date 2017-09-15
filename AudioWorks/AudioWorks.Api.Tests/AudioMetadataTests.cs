@@ -487,6 +487,20 @@ namespace AudioWorks.Api.Tests
                 AudioFileFactory.Create(path).Metadata.Album);
         }
 
+        [Theory(DisplayName = "AudioMetadata has the expected Genre property value")]
+        [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
+        public void AudioMetadataHasExpectedGenre([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        {
+            var path = Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                "TestFiles",
+                "Valid",
+                fileName);
+            Assert.Equal(
+                expectedMetadata.Genre,
+                AudioFileFactory.Create(path).Metadata.Genre);
+        }
+
         [Theory(DisplayName = "AudioMetadata has the expected Comment property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
         public void AudioMetadataHasExpectedComment([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
@@ -499,6 +513,34 @@ namespace AudioWorks.Api.Tests
             Assert.Equal(
                 expectedMetadata.Comment,
                 AudioFileFactory.Create(path).Metadata.Comment);
+        }
+
+        [Theory(DisplayName = "AudioMetadata has the expected Day property value")]
+        [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
+        public void AudioMetadataHasExpectedDay([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        {
+            var path = Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                "TestFiles",
+                "Valid",
+                fileName);
+            Assert.Equal(
+                expectedMetadata.Day,
+                AudioFileFactory.Create(path).Metadata.Day);
+        }
+
+        [Theory(DisplayName = "AudioMetadata has the expected Month property value")]
+        [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
+        public void AudioMetadataHasExpectedMonth([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        {
+            var path = Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                "TestFiles",
+                "Valid",
+                fileName);
+            Assert.Equal(
+                expectedMetadata.Month,
+                AudioFileFactory.Create(path).Metadata.Month);
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Year property value")]
