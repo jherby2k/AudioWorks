@@ -31,7 +31,7 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName);
-            Assert.IsType<AudioInfo>(
+            Assert.IsAssignableFrom<AudioInfo>(
                 AudioFileFactory.Create(path).AudioInfo);
         }
 
@@ -44,7 +44,7 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName);
-            Assert.IsType<AudioMetadata>(
+            Assert.IsAssignableFrom<AudioMetadata>(
                 AudioFileFactory.Create(path).Metadata);
         }
     }

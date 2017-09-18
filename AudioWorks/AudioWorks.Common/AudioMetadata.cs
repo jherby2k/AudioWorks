@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 namespace AudioWorks.Common
 {
     [PublicAPI]
-    public sealed class AudioMetadata
+    public class AudioMetadata
     {
         [NotNull] string _title = string.Empty;
         [NotNull] string _artist = string.Empty;

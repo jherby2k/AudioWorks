@@ -52,7 +52,7 @@ namespace AudioWorks.Api.Tests
         [MemberData(nameof(TestFilesValidDataSource.FileNames), MemberType = typeof(TestFilesValidDataSource))]
         public void CreateReturnsAudioFile([NotNull] string fileName)
         {
-            Assert.IsType<AudioFile>(
+            Assert.IsAssignableFrom<AudioFile>(
                 AudioFileFactory.Create(Path.Combine(
                     new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
                     "TestFiles",
