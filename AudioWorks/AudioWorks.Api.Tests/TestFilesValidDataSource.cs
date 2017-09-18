@@ -101,6 +101,54 @@ namespace AudioWorks.Api.Tests
             },
             new object[]
             {
+                "Lame CBR 128 44100Hz Stereo (ID3v1).mp3",
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568, 129170),
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+            new object[]
+            {
+                "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568, 129170),
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+            new object[]
+            {
+                "Lame CBR 128 44100Hz Stereo (ID3v2.3 UTF16).mp3",
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568, 129170),
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+            new object[]
+            {
                 "QAAC TVBR 91 8000Hz Stereo.m4a",
                 AudioInfo.CreateForLossy("AAC", 2, 8000, 25600, 50795),
                 new AudioMetadata()
