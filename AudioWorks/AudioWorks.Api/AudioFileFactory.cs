@@ -18,7 +18,7 @@ namespace AudioWorks.Api
                 throw new FileNotFoundException($"The file '{path}' cannot be found.", path);
 
             var fileInfo = new FileInfo(path);
-            return new AudioFile(fileInfo, LoadAudioInfo(fileInfo));
+            return new AudioFile(fileInfo, LoadAudioInfo(fileInfo), LoadMetadata);
         }
 
         [NotNull]
@@ -42,6 +42,29 @@ namespace AudioWorks.Api
             }
 
             throw new AudioUnsupportedException("No supporting extensions are available.");
+        }
+
+        [NotNull]
+        static AudioMetadata LoadMetadata([NotNull] FileInfo fileInfo)
+        {
+            using (var fileStream = fileInfo.OpenRead())
+            {
+                // Try each decoder that supports this file extension:
+                foreach (var decoderFactory in ExtensionProvider.GetFactories<IAudioMetadataDecoder>(
+                    "Extension", fileInfo.Extension))
+                    try
+                    {
+                        using (var lifetimeContext = decoderFactory.CreateExport())
+                            return lifetimeContext.Value.ReadMetadata(fileStream);
+                    }
+                    catch (AudioUnsupportedException)
+                    {
+                        // If a decoder wasn't supported, rewind the stream and try another:
+                        fileStream.Position = 0;
+                    }
+            }
+
+            return new AudioMetadata();
         }
     }
 }
