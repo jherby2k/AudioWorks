@@ -14,7 +14,7 @@ namespace AudioWorks.Extensions
         public string Extension { get; }
 
         public AudioMetadataDecoderExportAttribute([NotNull] string extension)
-            : base(typeof(IAudioInfoDecoder))
+            : base(typeof(IAudioMetadataDecoder))
         {
             if (extension == null) throw new ArgumentNullException(nameof(extension));
             if (!extension.StartsWith(".", StringComparison.OrdinalIgnoreCase)
