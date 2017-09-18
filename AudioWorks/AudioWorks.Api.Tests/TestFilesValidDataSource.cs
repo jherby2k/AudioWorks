@@ -108,11 +108,10 @@ namespace AudioWorks.Api.Tests
                     Title = "Test Title",
                     Artist = "Test Artist",
                     Album = "Test Album",
-                    Genre = "Test Genre",
+                    Genre = "Other",
                     Comment = "Test Comment",
                     Year = "2017",
-                    TrackNumber = "01",
-                    TrackCount = "12"
+                    TrackNumber = "01"
                 }
             },
             new object[]
