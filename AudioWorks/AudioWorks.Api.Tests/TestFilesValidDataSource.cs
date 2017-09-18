@@ -253,6 +253,130 @@ namespace AudioWorks.Api.Tests
                 "FLAC Level 5 24-bit 96000Hz Stereo.flac",
                 AudioInfo.CreateForLossless("FLAC", 2, 24, 96000, 270174),
                 new AudioMetadata()
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using mixed-case fields).flac",
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using COMMENT).flac",
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TOTALTRACKS).flac",
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TRACKCOUNT).flac",
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TRACKTOTAL).flac",
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using YEAR).flac",
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
             }
         };
 

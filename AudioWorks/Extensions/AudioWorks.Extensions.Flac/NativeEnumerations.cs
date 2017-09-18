@@ -4,7 +4,13 @@ namespace AudioWorks.Extensions.Flac
 {
     enum MetadataType
     {
-        StreamInfo
+        StreamInfo,
+        Padding,
+        [UsedImplicitly] Application,
+        SeekTable,
+        VorbisComment,
+        [UsedImplicitly] CueSheet,
+        Picture
     }
 
     enum DecoderState

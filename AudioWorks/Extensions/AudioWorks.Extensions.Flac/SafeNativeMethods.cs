@@ -65,6 +65,17 @@ namespace AudioWorks.Extensions.Flac
             throw new NotImplementedException();
         }
 
+        internal static void StreamDecoderSetMetadataRespond([NotNull] NativeStreamDecoderHandle handle, MetadataType metadataType)
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                WinStreamDecoderSetMetadataRespond(handle, metadataType);
+                return;
+            }
+
+            throw new NotImplementedException();
+        }
+
         internal static bool StreamDecoderProcessUntilEndOfMetadata([NotNull] NativeStreamDecoderHandle handle)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -116,6 +127,10 @@ namespace AudioWorks.Extensions.Flac
             [NotNull] NativeCallbacks.StreamDecoderMetadataCallback metadataCallback,
             [NotNull] NativeCallbacks.StreamDecoderErrorCallback errorCallback,
             IntPtr userData);
+
+        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__stream_decoder_set_metadata_respond", CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool WinStreamDecoderSetMetadataRespond(NativeStreamDecoderHandle handle, MetadataType metadataType);
 
         [DllImport(_winFlacLibrary, EntryPoint = "FLAC__stream_decoder_process_until_end_of_metadata", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]

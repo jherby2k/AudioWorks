@@ -6,7 +6,6 @@ namespace AudioWorks.Extensions.Flac
 {
     class NativeStreamDecoder : IDisposable
     {
-        [NotNull] readonly NativeStreamDecoderHandle _handle = SafeNativeMethods.StreamDecoderNew();
         [NotNull] readonly NativeCallbacks.StreamDecoderReadCallback _readCallback;
         [NotNull] readonly NativeCallbacks.StreamDecoderSeekCallback _seekCallback;
         [NotNull] readonly NativeCallbacks.StreamDecoderTellCallback _tellCallback;
@@ -16,6 +15,9 @@ namespace AudioWorks.Extensions.Flac
         [NotNull] readonly NativeCallbacks.StreamDecoderMetadataCallback _metadataCallback;
         [NotNull] readonly NativeCallbacks.StreamDecoderErrorCallback _errorCallback;
         [NotNull] readonly Stream _stream;
+
+        [NotNull]
+        protected NativeStreamDecoderHandle Handle { get; } = SafeNativeMethods.StreamDecoderNew();
 
         internal NativeStreamDecoder([NotNull] Stream stream)
         {
@@ -34,7 +36,7 @@ namespace AudioWorks.Extensions.Flac
 
         internal void Initialize()
         {
-            SafeNativeMethods.StreamDecoderInitializeStream(_handle,
+            SafeNativeMethods.StreamDecoderInitializeStream(Handle,
                 _readCallback,
                 _seekCallback,
                 _tellCallback,
@@ -47,23 +49,23 @@ namespace AudioWorks.Extensions.Flac
 
         internal bool ProcessMetadata()
         {
-            return SafeNativeMethods.StreamDecoderProcessUntilEndOfMetadata(_handle);
+            return SafeNativeMethods.StreamDecoderProcessUntilEndOfMetadata(Handle);
         }
 
         internal void Finish()
         {
-            SafeNativeMethods.StreamDecoderFinish(_handle);
+            SafeNativeMethods.StreamDecoderFinish(Handle);
         }
 
         [Pure]
         internal DecoderState GetState()
         {
-            return SafeNativeMethods.StreamDecoderGetState(_handle);
+            return SafeNativeMethods.StreamDecoderGetState(Handle);
         }
 
         public void Dispose()
         {
-            _handle.Dispose();
+            Handle.Dispose();
         }
 
         DecoderReadStatus ReadCallback(IntPtr handle, [NotNull] byte[] buffer, ref int bytes, IntPtr userData)
