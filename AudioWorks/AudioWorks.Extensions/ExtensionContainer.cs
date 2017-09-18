@@ -33,7 +33,7 @@ namespace AudioWorks.Extensions
                     new DirectoryInfo(Path.Combine(
                             Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath) ??
                             string.Empty, "Extensions")).GetDirectories()
-                        .SelectMany(d => d.GetFiles("AudioWorks.Extensions.*.dll")).Select(f => f.FullName)
+                        .SelectMany(d => d.GetFiles("*.dll")).Select(f => f.FullName)
                         .Select(AssemblyLoadContext.Default.LoadFromAssemblyPath))
                 .CreateContainer().SatisfyImports(this);
         }
