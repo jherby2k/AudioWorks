@@ -9,7 +9,7 @@ namespace AudioWorks.Extensions.Wave
     {
         internal uint RiffChunkSize { get; private set; }
 
-        public RiffReader([NotNull] Stream input)
+        internal RiffReader([NotNull] Stream input)
             : base(input, Encoding.ASCII, true)
         {
         }

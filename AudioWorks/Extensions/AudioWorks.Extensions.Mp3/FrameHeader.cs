@@ -31,7 +31,7 @@ namespace AudioWorks.Extensions.Mp3
 
         internal int SideInfoLength { get; }
 
-        public FrameHeader([NotNull] IReadOnlyList<byte> data)
+        internal FrameHeader([NotNull] IReadOnlyList<byte> data)
         {
             var mpegVersion = ParseMpegVersion(data);
             VerifyLayer(data);

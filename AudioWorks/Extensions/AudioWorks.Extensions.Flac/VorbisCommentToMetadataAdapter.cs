@@ -7,7 +7,7 @@ namespace AudioWorks.Extensions.Flac
 {
     sealed class VorbisCommentToMetadataAdapter : AudioMetadata
     {
-        public void Set([NotNull] string field, [NotNull] string value)
+        internal void Set([NotNull] string field, [NotNull] string value)
         {
             switch (field.ToUpperInvariant())
             {

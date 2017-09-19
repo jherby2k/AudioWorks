@@ -7,7 +7,7 @@ namespace AudioWorks.Extensions.Flac
     [UsedImplicitly]
     sealed class NativeStreamDecoderHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
-        public NativeStreamDecoderHandle()
+        internal NativeStreamDecoderHandle()
             : base(true)
         {
         }

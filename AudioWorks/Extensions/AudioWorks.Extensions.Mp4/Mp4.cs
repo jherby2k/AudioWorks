@@ -11,15 +11,15 @@ namespace AudioWorks.Extensions.Mp4
         [NotNull] readonly Stack<AtomInfo> _atomInfoStack = new Stack<AtomInfo>();
 
         [NotNull]
-        public AtomInfo CurrentAtom => _atomInfoStack.Peek();
+        internal AtomInfo CurrentAtom => _atomInfoStack.Peek();
 
-        public Mp4([NotNull] Stream stream)
+        internal Mp4([NotNull] Stream stream)
         {
             _stream = stream;
         }
 
         [NotNull, ItemNotNull]
-        internal AtomInfo[] GetChildAtomInfo()
+        internal IEnumerable<AtomInfo> GetChildAtomInfo()
         {
             var result = new List<AtomInfo>();
 
