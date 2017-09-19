@@ -10,7 +10,7 @@ namespace AudioWorks.Extensions.Mp4
         [NotNull] readonly byte[] _buffer = new byte[4];
 
         internal Mp4Reader([NotNull] Stream input)
-            : base(input, Encoding.ASCII, true)
+            : base(input, CodePagesEncodingProvider.Instance.GetEncoding(1252), true)
         {
         }
 

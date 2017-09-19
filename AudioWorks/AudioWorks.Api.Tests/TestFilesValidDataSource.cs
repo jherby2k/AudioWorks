@@ -172,6 +172,24 @@ namespace AudioWorks.Api.Tests
             },
             new object[]
             {
+                "QAAC TVBR 91 44100Hz Stereo (Tagged).m4a",
+                AudioInfo.CreateForLossy("AAC", 2, 44100, 126976, 183702),
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+            new object[]
+            {
                 "ALAC 16-bit 44100Hz Mono.m4a",
                 AudioInfo.CreateForLossless("ALAC", 1, 16, 44100, 122880),
                 new AudioMetadata()
@@ -193,6 +211,24 @@ namespace AudioWorks.Api.Tests
                 "ALAC 24-bit 96000Hz Stereo.m4a",
                 AudioInfo.CreateForLossless("ALAC", 2, 24, 96000, 266240),
                 new AudioMetadata()
+            },
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo (Tagged).m4a",
+                AudioInfo.CreateForLossless("ALAC", 2, 16, 44100, 122880),
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
             },
             new object[]
             {

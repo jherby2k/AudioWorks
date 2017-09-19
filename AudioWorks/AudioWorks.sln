@@ -45,6 +45,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Valid", "Valid", "{F3EE5042-D0AB-4B5C-8255-4A1D87A8C4A1}"
 	ProjectSection(SolutionItems) = preProject
 		TestFiles\Valid\ALAC 16-bit 44100Hz Mono.m4a = TestFiles\Valid\ALAC 16-bit 44100Hz Mono.m4a
+		TestFiles\Valid\ALAC 16-bit 44100Hz Stereo (Tagged).m4a = TestFiles\Valid\ALAC 16-bit 44100Hz Stereo (Tagged).m4a
 		TestFiles\Valid\ALAC 16-bit 44100Hz Stereo.m4a = TestFiles\Valid\ALAC 16-bit 44100Hz Stereo.m4a
 		TestFiles\Valid\ALAC 16-bit 48000Hz Stereo.m4a = TestFiles\Valid\ALAC 16-bit 48000Hz Stereo.m4a
 		TestFiles\Valid\ALAC 24-bit 96000Hz Stereo.m4a = TestFiles\Valid\ALAC 24-bit 96000Hz Stereo.m4a
@@ -79,6 +80,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Valid", "Valid", "{F3EE5042
 		TestFiles\Valid\LPCM 24-bit 96000Hz Stereo.wav = TestFiles\Valid\LPCM 24-bit 96000Hz Stereo.wav
 		TestFiles\Valid\LPCM 8-bit 8000Hz Stereo.wav = TestFiles\Valid\LPCM 8-bit 8000Hz Stereo.wav
 		TestFiles\Valid\QAAC TVBR 91 44100Hz Mono.m4a = TestFiles\Valid\QAAC TVBR 91 44100Hz Mono.m4a
+		TestFiles\Valid\QAAC TVBR 91 44100Hz Stereo (Tagged).m4a = TestFiles\Valid\QAAC TVBR 91 44100Hz Stereo (Tagged).m4a
 		TestFiles\Valid\QAAC TVBR 91 44100Hz Stereo.m4a = TestFiles\Valid\QAAC TVBR 91 44100Hz Stereo.m4a
 		TestFiles\Valid\QAAC TVBR 91 48000Hz Stereo.m4a = TestFiles\Valid\QAAC TVBR 91 48000Hz Stereo.m4a
 		TestFiles\Valid\QAAC TVBR 91 8000Hz Stereo.m4a = TestFiles\Valid\QAAC TVBR 91 8000Hz Stereo.m4a
