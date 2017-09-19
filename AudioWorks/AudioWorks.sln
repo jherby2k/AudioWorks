@@ -82,6 +82,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Valid", "Valid", "{F3EE5042
 		TestFiles\Valid\QAAC TVBR 91 44100Hz Stereo.m4a = TestFiles\Valid\QAAC TVBR 91 44100Hz Stereo.m4a
 		TestFiles\Valid\QAAC TVBR 91 48000Hz Stereo.m4a = TestFiles\Valid\QAAC TVBR 91 48000Hz Stereo.m4a
 		TestFiles\Valid\QAAC TVBR 91 8000Hz Stereo.m4a = TestFiles\Valid\QAAC TVBR 91 8000Hz Stereo.m4a
+		TestFiles\Valid\Vorbis Quality 3 44100Hz Mono.ogg = TestFiles\Valid\Vorbis Quality 3 44100Hz Mono.ogg
+		TestFiles\Valid\Vorbis Quality 3 44100Hz Stereo (Tagged).ogg = TestFiles\Valid\Vorbis Quality 3 44100Hz Stereo (Tagged).ogg
+		TestFiles\Valid\Vorbis Quality 3 44100Hz Stereo.ogg = TestFiles\Valid\Vorbis Quality 3 44100Hz Stereo.ogg
+		TestFiles\Valid\Vorbis Quality 3 48000Hz Stereo.ogg = TestFiles\Valid\Vorbis Quality 3 48000Hz Stereo.ogg
+		TestFiles\Valid\Vorbis Quality 3 8000Hz Stereo.ogg = TestFiles\Valid\Vorbis Quality 3 8000Hz Stereo.ogg
+		TestFiles\Valid\Vorbis Quality 3 96000Hz Stereo.ogg = TestFiles\Valid\Vorbis Quality 3 96000Hz Stereo.ogg
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Api.Tests", "AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj", "{83565750-78B5-4481-AAF6-C2732E3CE040}"

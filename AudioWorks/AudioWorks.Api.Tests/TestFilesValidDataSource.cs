@@ -226,6 +226,24 @@ namespace AudioWorks.Api.Tests
             },
             new object[]
             {
+                "Vorbis Quality 3 44100Hz Stereo (Tagged).ogg",
+                AudioInfo.CreateForLossy("Vorbis", 2, 44100, 0, 112000),
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+            new object[]
+            {
                 "FLAC Level 5 8-bit 8000Hz Stereo.flac",
                 AudioInfo.CreateForLossless("FLAC", 2, 8, 8000, 22515),
                 new AudioMetadata()

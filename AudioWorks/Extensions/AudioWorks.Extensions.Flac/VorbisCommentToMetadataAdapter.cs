@@ -34,9 +34,9 @@ namespace AudioWorks.Extensions.Flac
 
                 case "DATE":
                 case "YEAR":
-                    // The DATE comment may contain a full date, or only the year:
-                    if (DateTime.TryParse(value, CultureInfo.CurrentCulture, DateTimeStyles.NoCurrentDateDefault,
-                        out var result))
+                    // The DATE comment may contain a full date, or only the year
+                    if (DateTime.TryParse(value, CultureInfo.CurrentCulture,
+                        DateTimeStyles.NoCurrentDateDefault, out var result))
                     {
                         Day = result.Day.ToString(CultureInfo.InvariantCulture);
                         Month = result.Month.ToString(CultureInfo.InvariantCulture);
@@ -47,7 +47,7 @@ namespace AudioWorks.Extensions.Flac
                     break;
 
                 case "TRACKNUMBER":
-                    // The track number and count may be packed into the same comment:
+                    // The track number and count may be packed into the same comment
                     var segments = value.Split('/');
                     TrackNumber = segments[0];
                     if (segments.Length > 1)

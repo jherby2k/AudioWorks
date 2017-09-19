@@ -16,6 +16,6 @@ namespace AudioWorks.Extensions.Vorbis
 
         readonly long GranulePosition;
 
-        readonly long PacketNumber;
+        internal readonly long PacketNumber;
     }
 }
