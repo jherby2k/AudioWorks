@@ -57,7 +57,8 @@ namespace AudioWorks.Extensions.Vorbis
                         }
                     } while (!SafeNativeMethods.OggPageEndOfStream(ref page));
 
-                    throw new AudioInvalidException("The end of the Ogg stream was reached without finding.", stream.Name);
+                    throw new AudioInvalidException("The end of the Ogg stream was reached without finding the header.",
+                        stream.Name);
                 }
             }
             finally
