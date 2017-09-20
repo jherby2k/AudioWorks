@@ -133,7 +133,7 @@ namespace AudioWorks.Commands.Tests
                         "TestFiles",
                         "Valid",
                         fileName)));
-                Assert.IsType<AudioInfo>(ps.Invoke()[0].BaseObject);
+                Assert.IsAssignableFrom<AudioInfo>(ps.Invoke()[0].BaseObject);
             }
         }
     }
