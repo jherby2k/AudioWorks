@@ -82,5 +82,31 @@ namespace AudioWorks.Commands.Tests
                 Assert.True(true);
             }
         }
+
+        [Fact(DisplayName = "Get-AudioMetadata accepts the AudioFile parameter from the pipeline")]
+        public void GetAudioMetadataAcceptsAudioFileParameterFromPipeline()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-Variable")
+                    .AddArgument("audioFile")
+                    .AddArgument(new AudioFile(
+                        new FileInfo("Foo"),
+                        AudioInfo.CreateForLossless("Test", 2, 16, 44100),
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null))
+                    .AddParameter("PassThru");
+                ps.AddCommand("Select-Object")
+                    .AddParameter("ExpandProperty", "Value");
+                ps.AddCommand("Get-AudioMetadata");
+                ps.Invoke();
+                foreach (var error in ps.Streams.Error)
+                    if (error.Exception is ParameterBindingException &&
+                        error.FullyQualifiedErrorId.StartsWith("InputObjectNotBound"))
+                        throw error.Exception;
+                Assert.True(true);
+            }
+        }
     }
 }
