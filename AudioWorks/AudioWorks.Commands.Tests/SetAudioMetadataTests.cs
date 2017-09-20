@@ -1,8 +1,7 @@
-﻿using JetBrains.Annotations;
+﻿using AudioWorks.Common;
+using JetBrains.Annotations;
 using System;
-using System.IO;
 using System.Management.Automation;
-using AudioWorks.Common;
 using Xunit;
 
 namespace AudioWorks.Commands.Tests
@@ -45,7 +44,8 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", new AudioFile(
-                        new FileInfo("Foo"),
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
                         // ReSharper disable once AssignNullToNotNullAttribute
                         null,
                         fileInfo => new AudioMetadata()));
@@ -74,7 +74,8 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddArgument(new AudioFile(
-                        new FileInfo("Foo"),
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
                         // ReSharper disable once AssignNullToNotNullAttribute
                         null,
                         fileInfo => new AudioMetadata()));
@@ -92,7 +93,8 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Set-Variable")
                     .AddArgument("audioFile")
                     .AddArgument(new AudioFile(
-                        new FileInfo("Foo"),
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
                         // ReSharper disable once AssignNullToNotNullAttribute
                         null,
                         fileInfo => new AudioMetadata()))
@@ -117,7 +119,8 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", new AudioFile(
-                        new FileInfo("Foo"),
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
                         // ReSharper disable once AssignNullToNotNullAttribute
                         null,
                         fileInfo => new AudioMetadata()))

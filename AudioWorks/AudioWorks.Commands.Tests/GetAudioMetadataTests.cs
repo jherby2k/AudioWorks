@@ -47,7 +47,8 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioMetadata")
                     .AddParameter("AudioFile", new AudioFile(
-                        new FileInfo("Foo"),
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
                         // ReSharper disable once AssignNullToNotNullAttribute
                         null,
                         fileInfo => new AudioMetadata()));
@@ -76,7 +77,8 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioMetadata")
                     .AddArgument(new AudioFile(
-                        new FileInfo("Foo"),
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
                         // ReSharper disable once AssignNullToNotNullAttribute
                         null,
                         fileInfo => new AudioMetadata()));
@@ -94,7 +96,8 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Set-Variable")
                     .AddArgument("audioFile")
                     .AddArgument(new AudioFile(
-                        new FileInfo("Foo"),
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
                         // ReSharper disable once AssignNullToNotNullAttribute
                         null,
                         fileInfo => new AudioMetadata()))

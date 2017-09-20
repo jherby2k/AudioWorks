@@ -47,7 +47,8 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioInfo")
                     .AddParameter("AudioFile", new AudioFile(
-                        new FileInfo("Foo"),
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
                         AudioInfo.CreateForLossless("Test", 2, 16, 44100),
                         // ReSharper disable once AssignNullToNotNullAttribute
                         null));
@@ -76,7 +77,8 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioInfo")
                     .AddArgument(new AudioFile(
-                        new FileInfo("Foo"),
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
                         AudioInfo.CreateForLossless("Test", 2, 16, 44100),
                         // ReSharper disable once AssignNullToNotNullAttribute
                         null));
@@ -94,7 +96,8 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Set-Variable")
                     .AddArgument("audioFile")
                     .AddArgument(new AudioFile(
-                        new FileInfo("Foo"),
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
                         AudioInfo.CreateForLossless("Test", 2, 16, 44100),
                         // ReSharper disable once AssignNullToNotNullAttribute
                         null))
