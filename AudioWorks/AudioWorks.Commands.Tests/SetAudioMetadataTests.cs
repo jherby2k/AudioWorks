@@ -53,5 +53,17 @@ namespace AudioWorks.Commands.Tests
                 Assert.True(true);
             }
         }
+
+        [Fact(DisplayName = "Set-AudioMetadata requires the AudioFile parameter")]
+        public void SetAudioMetadataRequiresAudioFileParameter()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata");
+                Assert.Throws<ParameterBindingException>(() =>
+                    ps.Invoke());
+            }
+        }
     }
 }
