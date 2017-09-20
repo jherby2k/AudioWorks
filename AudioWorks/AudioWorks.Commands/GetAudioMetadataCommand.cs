@@ -8,7 +8,7 @@ namespace AudioWorks.Commands
     [Cmdlet(VerbsCommon.Get, "AudioMetadata")]
     public sealed class GetAudioMetadataCommand : Cmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, Position = 0)]
         public AudioFile AudioFile { get; set; }
     }
 }

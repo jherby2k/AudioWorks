@@ -65,5 +65,22 @@ namespace AudioWorks.Commands.Tests
                     ps.Invoke());
             }
         }
+
+        [Fact(DisplayName = "Get-AudioMetadata accepts the AudioFile parameter as the first argument")]
+        public void GetAudioMetadataAcceptsAudioFileParameterAsFirstArgument()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Get-AudioMetadata")
+                    .AddArgument(new AudioFile(
+                        new FileInfo("Foo"),
+                        AudioInfo.CreateForLossless("Test", 2, 16, 44100),
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null));
+                ps.Invoke();
+                Assert.True(true);
+            }
+        }
     }
 }
