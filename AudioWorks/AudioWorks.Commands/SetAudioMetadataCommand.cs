@@ -12,5 +12,8 @@ namespace AudioWorks.Commands
         [NotNull, SuppressMessage("ReSharper", "NotNullMemberIsNotInitialized")]
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public AudioFile AudioFile { get; set; }
+
+        [Parameter]
+        public string Title { get; set; }
     }
 }

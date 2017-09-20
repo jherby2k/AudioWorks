@@ -108,5 +108,23 @@ namespace AudioWorks.Commands.Tests
                 Assert.True(true);
             }
         }
+
+        [Fact(DisplayName = "Set-AudioMetadata accepts a Title parameter")]
+        public void SetAudioMetadataAcceptsTitleParameter()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        new FileInfo("Foo"),
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => new AudioMetadata()))
+                    .AddParameter("Title", "Foo");
+                ps.Invoke();
+                Assert.True(true);
+            }
+        }
     }
 }
