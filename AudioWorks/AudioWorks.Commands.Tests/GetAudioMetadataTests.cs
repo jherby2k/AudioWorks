@@ -1,6 +1,8 @@
 ﻿using JetBrains.Annotations;
 using System;
+using System.IO;
 using System.Management.Automation;
+using AudioWorks.Common;
 using Xunit;
 
 namespace AudioWorks.Commands.Tests
@@ -31,6 +33,23 @@ namespace AudioWorks.Commands.Tests
                 {
                     // CommandNotFoundException is the only type we are testing for
                 }
+                Assert.True(true);
+            }
+        }
+
+        [Fact(DisplayName = "Get-AudioMetadata accepts an AudioFile parameter")]
+        public void GetAudioMetadataAcceptsAudioFileParameter()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Get-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        new FileInfo("Foo"),
+                        AudioInfo.CreateForLossless("Test", 2, 16, 44100),
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null));
+                ps.Invoke();
                 Assert.True(true);
             }
         }
