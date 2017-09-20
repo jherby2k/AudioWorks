@@ -61,8 +61,7 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata");
-                Assert.Throws<ParameterBindingException>(() =>
-                    ps.Invoke());
+                Assert.Throws<ParameterBindingException>(() => ps.Invoke());
             }
         }
 
@@ -73,12 +72,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
-                    .AddArgument(new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => new AudioMetadata()));
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddArgument(new AudioFile(null, null, null));
+                    // ReSharper restore AssignNullToNotNullAttribute
                 ps.Invoke();
                 Assert.True(true);
             }
@@ -92,12 +88,9 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-Variable")
                     .AddArgument("audioFile")
-                    .AddArgument(new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => new AudioMetadata()))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddArgument(new AudioFile(null, null, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("PassThru");
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Value");
@@ -153,17 +146,13 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName = "Set-AudioMetadata returns an error if Title is null")]
         public void SetAudioMetadataTitleNullReturnsError()
         {
-            var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => metadata))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Title", null);
                 // Actual exception type ParameterBindingValidationException is Internal
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
@@ -212,17 +201,13 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName = "Set-AudioMetadata returns an error if Artist is null")]
         public void SetAudioMetadataArtistNullReturnsError()
         {
-            var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => metadata))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Artist", null);
                 // Actual exception type ParameterBindingValidationException is Internal
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
@@ -271,17 +256,13 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName = "Set-AudioMetadata returns an error if Album is null")]
         public void SetAudioMetadataAlbumNullReturnsError()
         {
-            var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => metadata))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Album", null);
                 // Actual exception type ParameterBindingValidationException is Internal
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
@@ -330,17 +311,13 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName = "Set-AudioMetadata returns an error if Genre is null")]
         public void SetAudioMetadataGenreNullReturnsError()
         {
-            var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => metadata))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Genre", null);
                 // Actual exception type ParameterBindingValidationException is Internal
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
@@ -389,17 +366,13 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName = "Set-AudioMetadata returns an error if Comment is null")]
         public void SetAudioMetadataCommentNullReturnsError()
         {
-            var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => metadata))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Comment", null);
                 // Actual exception type ParameterBindingValidationException is Internal
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
@@ -448,17 +421,13 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName = "Set-AudioMetadata returns an error if Day is null")]
         public void SetAudioMetadataDayNullReturnsError()
         {
-            var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => metadata))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Day", null);
                 // Actual exception type ParameterBindingValidationException is Internal
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
@@ -507,17 +476,13 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName = "Set-AudioMetadata returns an error if Month is null")]
         public void SetAudioMetadataMonthNullReturnsError()
         {
-            var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => metadata))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Month", null);
                 // Actual exception type ParameterBindingValidationException is Internal
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
@@ -566,17 +531,13 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName = "Set-AudioMetadata returns an error if Year is null")]
         public void SetAudioMetadataYearNullReturnsError()
         {
-            var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => metadata))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Year", null);
                 // Actual exception type ParameterBindingValidationException is Internal
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
@@ -625,17 +586,13 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName = "Set-AudioMetadata returns an error if TrackNumber is null")]
         public void SetAudioMetadataTrackNumberNullReturnsError()
         {
-            var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => metadata))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("TrackNumber", null);
                 // Actual exception type ParameterBindingValidationException is Internal
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
@@ -684,17 +641,13 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName = "Set-AudioMetadata returns an error if TrackCount is null")]
         public void SetAudioMetadataTrackCountNullReturnsError()
         {
-            var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => metadata))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("TrackCount", null);
                 // Actual exception type ParameterBindingValidationException is Internal
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
@@ -713,8 +666,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", audioFile)
                     .AddParameter("PassThru");
-                var result = ps.Invoke();
-                Assert.Equal(audioFile, result[0].BaseObject);
+                Assert.Equal(audioFile, ps.Invoke()[0].BaseObject);
             }
         }
 
@@ -730,8 +682,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("ExpandProperty", "OutputType");
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Type");
-                var result = ps.Invoke();
-                Assert.Equal(typeof(AudioFile), (Type) result[0].BaseObject);
+                Assert.Equal(typeof(AudioFile), (Type) ps.Invoke()[0].BaseObject);
             }
         }
     }

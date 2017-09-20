@@ -46,12 +46,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioInfo")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        AudioInfo.CreateForLossless("Test", 2, 16, 44100),
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null));
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, null));
+                    // ReSharper restore AssignNullToNotNullAttribute
                 ps.Invoke();
                 Assert.True(true);
             }
@@ -64,8 +61,7 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioInfo");
-                Assert.Throws<ParameterBindingException>(() =>
-                    ps.Invoke());
+                Assert.Throws<ParameterBindingException>(() => ps.Invoke());
             }
         }
 
@@ -76,12 +72,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioInfo")
-                    .AddArgument(new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        AudioInfo.CreateForLossless("Test", 2, 16, 44100),
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null));
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddArgument(new AudioFile(null, null, null));
+                    // ReSharper restore AssignNullToNotNullAttribute
                 ps.Invoke();
                 Assert.True(true);
             }
@@ -95,12 +88,9 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-Variable")
                     .AddArgument("audioFile")
-                    .AddArgument(new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        AudioInfo.CreateForLossless("Test", 2, 16, 44100),
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddArgument(new AudioFile(null, null, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("PassThru");
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Value");
@@ -126,10 +116,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("ExpandProperty", "OutputType");
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Type");
-                var result = ps.Invoke();
-                Assert.True(
-                    result.Count == 1 &&
-                    (Type) result[0].BaseObject == typeof(AudioInfo));
+                Assert.Equal(typeof(AudioInfo), (Type) ps.Invoke()[0].BaseObject);
             }
         }
 
@@ -146,10 +133,7 @@ namespace AudioWorks.Commands.Tests
                         "TestFiles",
                         "Valid",
                         fileName)));
-                var result = ps.Invoke();
-                Assert.True(
-                    result.Count == 1 &&
-                    result[0].BaseObject is AudioInfo);
+                Assert.IsType<AudioInfo>(ps.Invoke()[0].BaseObject);
             }
         }
     }
