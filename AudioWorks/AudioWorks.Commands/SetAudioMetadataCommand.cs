@@ -10,7 +10,7 @@ namespace AudioWorks.Commands
     public sealed class SetAudioMetadataCommand : Cmdlet
     {
         [NotNull, SuppressMessage("ReSharper", "NotNullMemberIsNotInitialized")]
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, Position = 0)]
         public AudioFile AudioFile { get; set; }
     }
 }
