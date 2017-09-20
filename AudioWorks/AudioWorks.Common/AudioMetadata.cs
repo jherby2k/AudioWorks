@@ -67,7 +67,7 @@ namespace AudioWorks.Common
                 else
                 {
                     if (!int.TryParse(value, out var intValue) || intValue < 1 || intValue > 31)
-                        throw new ArgumentException("Month must be between 1 and 31.", nameof(value));
+                        throw new AudioMetadataInvalidException("Month must be between 1 and 31.");
                     _day = intValue.ToString("00", CultureInfo.InvariantCulture);
                 }
             }
@@ -86,7 +86,7 @@ namespace AudioWorks.Common
                 else
                 {
                     if (!int.TryParse(value, out var intValue) || intValue < 1 || intValue > 12)
-                        throw new ArgumentException("Month must be between 1 and 12.", nameof(value));
+                        throw new AudioMetadataInvalidException("Month must be between 1 and 12.");
                     _month = intValue.ToString("00", CultureInfo.InvariantCulture);
                 }
             }
@@ -105,7 +105,7 @@ namespace AudioWorks.Common
                 else
                 {
                     if (!Regex.IsMatch(value, "^[1-9][0-9]{3}$"))
-                        throw new ArgumentException("Year must be between 1000 and 9999.", nameof(value));
+                        throw new AudioMetadataInvalidException("Year must be between 1000 and 9999.");
                     _year = value;
                 }
             }
@@ -124,7 +124,7 @@ namespace AudioWorks.Common
                 else
                 {
                     if (!int.TryParse(value, out var intValue) || intValue < 1 || intValue > 99)
-                        throw new ArgumentException("TrackNumber must be between 1 and 99.", nameof(value));
+                        throw new AudioMetadataInvalidException("TrackNumber must be between 1 and 99.");
                     _trackNumber = intValue.ToString("00", CultureInfo.InvariantCulture);
                 }
             }
@@ -143,7 +143,7 @@ namespace AudioWorks.Common
                 else
                 {
                     if (!int.TryParse(value, out var intValue) || intValue < 1 || intValue > 99)
-                        throw new ArgumentException("TrackCount must be between 1 and 99.", nameof(value));
+                        throw new AudioMetadataInvalidException("TrackCount must be between 1 and 99.");
                     _trackCount = intValue.ToString("00", CultureInfo.InvariantCulture);
                 }
             }

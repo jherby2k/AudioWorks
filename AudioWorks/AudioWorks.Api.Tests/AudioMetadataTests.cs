@@ -170,21 +170,21 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "AudioMetadata throws an exception if the Day is zero")]
         public void AudioMetadataDayZeroThrowsException()
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { Day = "0" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Day is greater than 31")]
         public void AudioMetadataDayTooHighThrowsException()
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { Day = "32" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Day isn't numeric")]
         public void AudioMetadataDayNotNumericThrowsException()
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { Day = "##" });
         }
 
@@ -227,21 +227,21 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "AudioMetadata throws an exception if the Month is zero")]
         public void AudioMetadataMonthZeroThrowsException()
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { Month = "0" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Month is greater than 12")]
         public void AudioMetadataMonthTooHighThrowsException()
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { Month = "13" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Month isn't numeric")]
         public void AudioMetadataMonthNotNumericThrowsException()
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { Month = "##" });
         }
 
@@ -284,28 +284,28 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "AudioMetadata throws an exception if the Year is less than 4 characters")]
         public void AudioMetadataYearTooShortThrowsException()
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { Year = "999" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Year is more than 4 characters")]
         public void AudioMetadataYearTooLongThrowsException()
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { Year = "10000" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Year isn't numeric")]
         public void AudioMetadataYearNotNumericThrowsException()
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { Year = "Test" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Year starts with a zero")]
         public void AudioMetadataYearStartsWithZeroThrowsException()
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { Year = "0100" });
         }
 
@@ -342,21 +342,21 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "AudioMetadata throws an exception if the TrackNumber is zero")]
         public void AudioMetadataTrackNumberZeroThrowsException()
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { TrackNumber = "0" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the TrackNumber is more than 2 characters")]
         public void AudioMetadataTrackNumberTooLongThrowsException()
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { TrackNumber = "100" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the TrackNumber isn't numeric")]
         public void AudioMetadataTrackNumberNotNumericThrowsException()
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { TrackNumber = "##" });
         }
 
@@ -399,21 +399,21 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "AudioMetadata throws an exception if the TrackCount is zero")]
         public void AudioMetadataTrackCountZeroThrowsException()
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { TrackCount = "0" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the TrackCount is more than 2 characters")]
         public void AudioMetadataTrackCountTooLongThrowsException()
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { TrackCount = "100" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the TrackCount isn't numeric")]
         public void AudioMetadataTrackCountNotNumericThrowsException()
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { TrackCount = "##" });
         }
 
