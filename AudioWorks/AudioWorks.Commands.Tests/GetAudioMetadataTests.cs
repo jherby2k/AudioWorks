@@ -48,9 +48,9 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Get-AudioMetadata")
                     .AddParameter("AudioFile", new AudioFile(
                         new FileInfo("Foo"),
-                        AudioInfo.CreateForLossless("Test", 2, 16, 44100),
                         // ReSharper disable once AssignNullToNotNullAttribute
-                        null));
+                        null,
+                        fileInfo => new AudioMetadata()));
                 ps.Invoke();
                 Assert.True(true);
             }
@@ -77,9 +77,9 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Get-AudioMetadata")
                     .AddArgument(new AudioFile(
                         new FileInfo("Foo"),
-                        AudioInfo.CreateForLossless("Test", 2, 16, 44100),
                         // ReSharper disable once AssignNullToNotNullAttribute
-                        null));
+                        null,
+                        fileInfo => new AudioMetadata()));
                 ps.Invoke();
                 Assert.True(true);
             }
@@ -95,9 +95,9 @@ namespace AudioWorks.Commands.Tests
                     .AddArgument("audioFile")
                     .AddArgument(new AudioFile(
                         new FileInfo("Foo"),
-                        AudioInfo.CreateForLossless("Test", 2, 16, 44100),
                         // ReSharper disable once AssignNullToNotNullAttribute
-                        null))
+                        null,
+                        fileInfo => new AudioMetadata()))
                     .AddParameter("PassThru");
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Value");
