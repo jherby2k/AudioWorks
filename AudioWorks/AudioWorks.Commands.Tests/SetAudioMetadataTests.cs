@@ -717,5 +717,22 @@ namespace AudioWorks.Commands.Tests
                 Assert.Equal(audioFile, result[0].BaseObject);
             }
         }
+
+        [Fact(DisplayName = "Set-AudioMetadata has an OutputType of AudioFile")]
+        public void SetAudioMetadataOutputTypeIsAudioFile()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Get-Command")
+                    .AddArgument("Set-AudioMetadata");
+                ps.AddCommand("Select-Object")
+                    .AddParameter("ExpandProperty", "OutputType");
+                ps.AddCommand("Select-Object")
+                    .AddParameter("ExpandProperty", "Type");
+                var result = ps.Invoke();
+                Assert.Equal(typeof(AudioFile), (Type) result[0].BaseObject);
+            }
+        }
     }
 }
