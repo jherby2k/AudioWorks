@@ -13,7 +13,14 @@ namespace AudioWorks.Commands
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public AudioFile AudioFile { get; set; }
 
+        [CanBeNull]
         [Parameter]
         public string Title { get; set; }
+
+        protected override void ProcessRecord()
+        {
+            if (Title != null)
+                AudioFile.Metadata.Title = Title;
+        }
     }
 }

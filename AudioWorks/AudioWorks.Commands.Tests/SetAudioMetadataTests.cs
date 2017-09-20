@@ -129,5 +129,25 @@ namespace AudioWorks.Commands.Tests
                 Assert.True(true);
             }
         }
+
+        [Fact(DisplayName = "Set-AudioMetadata's Title Parameter sets the Title")]
+        public void SetAudioMetadataTitleParameterSetsTitle()
+        {
+            var metadata = new AudioMetadata();
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => metadata))
+                    .AddParameter("Title", "Foo");
+                ps.Invoke();
+                Assert.Equal("Foo", metadata.Title);
+            }
+        }
     }
 }
