@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AudioWorks.Common;
+using JetBrains.Annotations;
 using System.Management.Automation;
 
 namespace AudioWorks.Commands
@@ -7,5 +8,7 @@ namespace AudioWorks.Commands
     [Cmdlet(VerbsCommon.Set, "AudioMetadata")]
     public sealed class SetAudioMetadataCommand : Cmdlet
     {
+        [Parameter]
+        public AudioFile AudioFile { get; set; }
     }
 }
