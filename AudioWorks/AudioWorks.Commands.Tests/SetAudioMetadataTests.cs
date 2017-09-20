@@ -150,6 +150,26 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
+        [Fact(DisplayName = "Set-AudioMetadata returns an error if Title is null")]
+        public void SetAudioMetadataTitleNullReturnsError()
+        {
+            var metadata = new AudioMetadata();
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => metadata))
+                    .AddParameter("Title", null);
+                // Actual exception type ParameterBindingValidationException is Internal
+                Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
+            }
+        }
+
         [Fact(DisplayName = "Set-AudioMetadata accepts an Artist parameter")]
         public void SetAudioMetadataAcceptsArtistParameter()
         {
@@ -186,6 +206,26 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("Artist", "Test Artist");
                 ps.Invoke();
                 Assert.Equal("Test Artist", metadata.Artist);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata returns an error if Artist is null")]
+        public void SetAudioMetadataArtistNullReturnsError()
+        {
+            var metadata = new AudioMetadata();
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => metadata))
+                    .AddParameter("Artist", null);
+                // Actual exception type ParameterBindingValidationException is Internal
+                Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
         }
 
@@ -228,6 +268,26 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
+        [Fact(DisplayName = "Set-AudioMetadata returns an error if Album is null")]
+        public void SetAudioMetadataAlbumNullReturnsError()
+        {
+            var metadata = new AudioMetadata();
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => metadata))
+                    .AddParameter("Album", null);
+                // Actual exception type ParameterBindingValidationException is Internal
+                Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
+            }
+        }
+
         [Fact(DisplayName = "Set-AudioMetadata accepts a Genre parameter")]
         public void SetAudioMetadataAcceptsGenreParameter()
         {
@@ -264,6 +324,26 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("Genre", "Test Genre");
                 ps.Invoke();
                 Assert.Equal("Test Genre", metadata.Genre);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata returns an error if Genre is null")]
+        public void SetAudioMetadataGenreNullReturnsError()
+        {
+            var metadata = new AudioMetadata();
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => metadata))
+                    .AddParameter("Genre", null);
+                // Actual exception type ParameterBindingValidationException is Internal
+                Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
         }
 
@@ -306,6 +386,26 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
+        [Fact(DisplayName = "Set-AudioMetadata returns an error if Comment is null")]
+        public void SetAudioMetadataCommentNullReturnsError()
+        {
+            var metadata = new AudioMetadata();
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => metadata))
+                    .AddParameter("Comment", null);
+                // Actual exception type ParameterBindingValidationException is Internal
+                Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
+            }
+        }
+
         [Fact(DisplayName = "Set-AudioMetadata accepts a Day parameter")]
         public void SetAudioMetadataAcceptsDayParameter()
         {
@@ -342,6 +442,26 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("Day", "31");
                 ps.Invoke();
                 Assert.Equal("31", metadata.Day);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata returns an error if Day is null")]
+        public void SetAudioMetadataDayNullReturnsError()
+        {
+            var metadata = new AudioMetadata();
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => metadata))
+                    .AddParameter("Day", null);
+                // Actual exception type ParameterBindingValidationException is Internal
+                Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
         }
 
@@ -384,6 +504,26 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
+        [Fact(DisplayName = "Set-AudioMetadata returns an error if Month is null")]
+        public void SetAudioMetadataMonthNullReturnsError()
+        {
+            var metadata = new AudioMetadata();
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => metadata))
+                    .AddParameter("Month", null);
+                // Actual exception type ParameterBindingValidationException is Internal
+                Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
+            }
+        }
+
         [Fact(DisplayName = "Set-AudioMetadata accepts a Year parameter")]
         public void SetAudioMetadataAcceptsYearParameter()
         {
@@ -420,6 +560,26 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("Year", "2017");
                 ps.Invoke();
                 Assert.Equal("2017", metadata.Year);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata returns an error if Year is null")]
+        public void SetAudioMetadataYearNullReturnsError()
+        {
+            var metadata = new AudioMetadata();
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => metadata))
+                    .AddParameter("Year", null);
+                // Actual exception type ParameterBindingValidationException is Internal
+                Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
         }
 
@@ -462,6 +622,26 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
+        [Fact(DisplayName = "Set-AudioMetadata returns an error if TrackNumber is null")]
+        public void SetAudioMetadataTrackNumberNullReturnsError()
+        {
+            var metadata = new AudioMetadata();
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => metadata))
+                    .AddParameter("TrackNumber", null);
+                // Actual exception type ParameterBindingValidationException is Internal
+                Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
+            }
+        }
+
         [Fact(DisplayName = "Set-AudioMetadata accepts a TrackCount parameter")]
         public void SetAudioMetadataAcceptsTrackCountParameter()
         {
@@ -498,6 +678,26 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("TrackCount", "12");
                 ps.Invoke();
                 Assert.Equal("12", metadata.TrackCount);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata returns an error if TrackCount is null")]
+        public void SetAudioMetadataTrackCountNullReturnsError()
+        {
+            var metadata = new AudioMetadata();
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => metadata))
+                    .AddParameter("TrackCount", null);
+                // Actual exception type ParameterBindingValidationException is Internal
+                Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
         }
     }

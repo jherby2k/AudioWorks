@@ -14,43 +14,43 @@ namespace AudioWorks.Commands
         public AudioFile AudioFile { get; set; }
 
         [CanBeNull]
-        [Parameter]
+        [Parameter, ValidateNotNull]
         public string Title { get; set; }
 
         [CanBeNull]
-        [Parameter]
+        [Parameter, ValidateNotNull]
         public string Artist { get; set; }
 
         [CanBeNull]
-        [Parameter]
+        [Parameter, ValidateNotNull]
         public string Album { get; set; }
 
         [CanBeNull]
-        [Parameter]
+        [Parameter, ValidateNotNull]
         public string Genre { get; set; }
 
         [CanBeNull]
-        [Parameter]
+        [Parameter, ValidateNotNull]
         public string Comment { get; set; }
 
         [CanBeNull]
-        [Parameter]
+        [Parameter, ValidateNotNull]
         public string Day { get; set; }
 
         [CanBeNull]
-        [Parameter]
+        [Parameter, ValidateNotNull]
         public string Month { get; set; }
 
         [CanBeNull]
-        [Parameter]
+        [Parameter, ValidateNotNull]
         public string Year { get; set; }
 
         [CanBeNull]
-        [Parameter]
+        [Parameter, ValidateNotNull]
         public string TrackNumber { get; set; }
 
         [CanBeNull]
-        [Parameter]
+        [Parameter, ValidateNotNull]
         public string TrackCount { get; set; }
 
         protected override void ProcessRecord()
