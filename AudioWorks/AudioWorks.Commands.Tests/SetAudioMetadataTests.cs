@@ -124,7 +124,7 @@ namespace AudioWorks.Commands.Tests
                         // ReSharper disable once AssignNullToNotNullAttribute
                         null,
                         fileInfo => new AudioMetadata()))
-                    .AddParameter("Title", "Foo");
+                    .AddParameter("Title", "Test Title");
                 ps.Invoke();
                 Assert.True(true);
             }
@@ -144,9 +144,360 @@ namespace AudioWorks.Commands.Tests
                         // ReSharper disable once AssignNullToNotNullAttribute
                         null,
                         fileInfo => metadata))
-                    .AddParameter("Title", "Foo");
+                    .AddParameter("Title", "Test Title");
                 ps.Invoke();
-                Assert.Equal("Foo", metadata.Title);
+                Assert.Equal("Test Title", metadata.Title);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata accepts an Artist parameter")]
+        public void SetAudioMetadataAcceptsArtistParameter()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => new AudioMetadata()))
+                    .AddParameter("Artist", "Test Artist");
+                ps.Invoke();
+                Assert.True(true);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata's Artist Parameter sets the Artist")]
+        public void SetAudioMetadataArtistParameterSetsArtist()
+        {
+            var metadata = new AudioMetadata();
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => metadata))
+                    .AddParameter("Artist", "Test Artist");
+                ps.Invoke();
+                Assert.Equal("Test Artist", metadata.Artist);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata accepts an Album parameter")]
+        public void SetAudioMetadataAcceptsAlbumParameter()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => new AudioMetadata()))
+                    .AddParameter("Album", "Test Album");
+                ps.Invoke();
+                Assert.True(true);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata's Album Parameter sets the Album")]
+        public void SetAudioMetadataAlbumParameterSetsAlbum()
+        {
+            var metadata = new AudioMetadata();
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => metadata))
+                    .AddParameter("Album", "Test Album");
+                ps.Invoke();
+                Assert.Equal("Test Album", metadata.Album);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata accepts a Genre parameter")]
+        public void SetAudioMetadataAcceptsGenreParameter()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => new AudioMetadata()))
+                    .AddParameter("Genre", "Test Genre");
+                ps.Invoke();
+                Assert.True(true);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata's Genre Parameter sets the Genre")]
+        public void SetAudioMetadataGenreParameterSetsGenre()
+        {
+            var metadata = new AudioMetadata();
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => metadata))
+                    .AddParameter("Genre", "Test Genre");
+                ps.Invoke();
+                Assert.Equal("Test Genre", metadata.Genre);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata accepts a Comment parameter")]
+        public void SetAudioMetadataAcceptsCommentParameter()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => new AudioMetadata()))
+                    .AddParameter("Comment", "Test Comment");
+                ps.Invoke();
+                Assert.True(true);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata's Comment Parameter sets the Comment")]
+        public void SetAudioMetadataCommentParameterSetsComment()
+        {
+            var metadata = new AudioMetadata();
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => metadata))
+                    .AddParameter("Comment", "Test Comment");
+                ps.Invoke();
+                Assert.Equal("Test Comment", metadata.Comment);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata accepts a Day parameter")]
+        public void SetAudioMetadataAcceptsDayParameter()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => new AudioMetadata()))
+                    .AddParameter("Day", "31");
+                ps.Invoke();
+                Assert.True(true);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata's Day Parameter sets the Day")]
+        public void SetAudioMetadataDayParameterSetsDay()
+        {
+            var metadata = new AudioMetadata();
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => metadata))
+                    .AddParameter("Day", "31");
+                ps.Invoke();
+                Assert.Equal("31", metadata.Day);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata accepts a Month parameter")]
+        public void SetAudioMetadataAcceptsMonthParameter()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => new AudioMetadata()))
+                    .AddParameter("Month", "1");
+                ps.Invoke();
+                Assert.True(true);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata's Month Parameter sets the Month")]
+        public void SetAudioMetadataMonthParameterSetsMonth()
+        {
+            var metadata = new AudioMetadata();
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => metadata))
+                    .AddParameter("Month", "1");
+                ps.Invoke();
+                Assert.Equal("01", metadata.Month);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata accepts a Year parameter")]
+        public void SetAudioMetadataAcceptsYearParameter()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => new AudioMetadata()))
+                    .AddParameter("Month", "1");
+                ps.Invoke();
+                Assert.True(true);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata's Year Parameter sets the Year")]
+        public void SetAudioMetadataYearParameterSetsYear()
+        {
+            var metadata = new AudioMetadata();
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => metadata))
+                    .AddParameter("Year", "2017");
+                ps.Invoke();
+                Assert.Equal("2017", metadata.Year);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata accepts a TrackNumber parameter")]
+        public void SetAudioMetadataAcceptsTrackNumberParameter()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => new AudioMetadata()))
+                    .AddParameter("TrackNumber", "1");
+                ps.Invoke();
+                Assert.True(true);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata's TrackNumber Parameter sets the TrackNumber")]
+        public void SetAudioMetadataTrackNumberParameterSetsTrackNumber()
+        {
+            var metadata = new AudioMetadata();
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => metadata))
+                    .AddParameter("TrackNumber", "1");
+                ps.Invoke();
+                Assert.Equal("01", metadata.TrackNumber);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata accepts a TrackCount parameter")]
+        public void SetAudioMetadataAcceptsTrackCountParameter()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => new AudioMetadata()))
+                    .AddParameter("TrackCount", "12");
+                ps.Invoke();
+                Assert.True(true);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata's TrackCount Parameter sets the TrackCount")]
+        public void SetAudioMetadataTrackCountParameterSetsTrackCount()
+        {
+            var metadata = new AudioMetadata();
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => metadata))
+                    .AddParameter("TrackCount", "12");
+                ps.Invoke();
+                Assert.Equal("12", metadata.TrackCount);
             }
         }
     }
