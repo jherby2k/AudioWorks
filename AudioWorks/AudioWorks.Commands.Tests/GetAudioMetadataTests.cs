@@ -2,6 +2,8 @@
 using System;
 using System.IO;
 using System.Management.Automation;
+using AudioWorks.Api;
+using AudioWorks.Api.Tests;
 using AudioWorks.Common;
 using Xunit;
 
@@ -125,6 +127,26 @@ namespace AudioWorks.Commands.Tests
                 Assert.True(
                     result.Count == 1 &&
                     (Type)result[0].BaseObject == typeof(AudioMetadata));
+            }
+        }
+
+        [Theory(DisplayName = "Get-AudioMetadata returns an AudioMetadata")]
+        [MemberData(nameof(TestFilesValidDataSource.FileNames), MemberType = typeof(TestFilesValidDataSource))]
+        public void GetAudioMetadataReturnsAudioMetadata([NotNull] string fileName)
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Get-AudioMetadata")
+                    .AddArgument(AudioFileFactory.Create(Path.Combine(
+                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                        "TestFiles",
+                        "Valid",
+                        fileName)));
+                var result = ps.Invoke();
+                Assert.True(
+                    result.Count == 1 &&
+                    result[0].BaseObject is AudioMetadata);
             }
         }
     }
