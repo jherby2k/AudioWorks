@@ -700,5 +700,22 @@ namespace AudioWorks.Commands.Tests
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
         }
+
+        [Fact(DisplayName = "Set-AudioMetadata with PassThru returns the same AudioFile")]
+        public void SetAudioMetadataWithPassThruReturnsSameAudioFile()
+        {
+            // ReSharper disable AssignNullToNotNullAttribute
+            var audioFile = new AudioFile(null, null, null);
+            // ReSharper restore AssignNullToNotNullAttribute
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", audioFile)
+                    .AddParameter("PassThru");
+                var result = ps.Invoke();
+                Assert.Equal(audioFile, result[0].BaseObject);
+            }
+        }
     }
 }

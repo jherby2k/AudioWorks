@@ -53,6 +53,9 @@ namespace AudioWorks.Commands
         [Parameter, ValidateNotNull]
         public string TrackCount { get; set; }
 
+        [Parameter]
+        public SwitchParameter PassThru { get; set; }
+
         protected override void ProcessRecord()
         {
             if (Title != null)
@@ -75,6 +78,9 @@ namespace AudioWorks.Commands
                 AudioFile.Metadata.TrackNumber = TrackNumber;
             if (TrackCount != null)
                 AudioFile.Metadata.TrackCount = TrackCount;
+
+            if (PassThru)
+                WriteObject(AudioFile);
         }
     }
 }
