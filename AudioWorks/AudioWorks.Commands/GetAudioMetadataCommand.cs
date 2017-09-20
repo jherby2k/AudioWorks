@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace AudioWorks.Commands
 {
     [PublicAPI]
-    [Cmdlet(VerbsCommon.Get, "AudioMetadata")]
+    [Cmdlet(VerbsCommon.Get, "AudioMetadata"), OutputType(typeof(AudioMetadata))]
     public sealed class GetAudioMetadataCommand : Cmdlet
     {
         [NotNull, SuppressMessage("ReSharper", "NotNullMemberIsNotInitialized")]

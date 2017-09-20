@@ -108,5 +108,24 @@ namespace AudioWorks.Commands.Tests
                 Assert.True(true);
             }
         }
+
+        [Fact(DisplayName = "Get-AudioMetadata has an OutputType of AudioMetadata")]
+        public void GetAudioMetadataOutputTypeIsAudioMetadata()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Get-Command")
+                    .AddArgument("Get-AudioMetadata");
+                ps.AddCommand("Select-Object")
+                    .AddParameter("ExpandProperty", "OutputType");
+                ps.AddCommand("Select-Object")
+                    .AddParameter("ExpandProperty", "Type");
+                var result = ps.Invoke();
+                Assert.True(
+                    result.Count == 1 &&
+                    (Type)result[0].BaseObject == typeof(AudioMetadata));
+            }
+        }
     }
 }
