@@ -28,14 +28,24 @@ namespace AudioWorks.Extensions
 
         void Initialize()
         {
-            // Add a catalog for each subdirectory under Extensions:
-            new ContainerConfiguration().WithAssemblies(
-                    new DirectoryInfo(Path.Combine(
-                            Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath) ??
-                            string.Empty, "Extensions")).GetDirectories()
-                        .SelectMany(d => d.GetFiles("*.dll")).Select(f => f.FullName)
-                        .Select(AssemblyLoadContext.Default.LoadFromAssemblyPath))
-                .CreateContainer().SatisfyImports(this);
+            var extensionRoot = new DirectoryInfo(Path.Combine(
+                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath) ??
+                string.Empty, "Extensions"));
+
+            // Search all extension directories for any references that can't be resolved
+            AssemblyLoadContext.Default.Resolving += (context, name) =>
+                AssemblyLoadContext.Default.LoadFromAssemblyPath(extensionRoot
+                    .EnumerateFiles($"{name.Name}.dll", SearchOption.AllDirectories)
+                    .FirstOrDefault()?
+                    .FullName);
+
+            new ContainerConfiguration()
+                .WithAssemblies(extensionRoot
+                    .EnumerateFiles("AudioWorks.Extensions.*.dll", SearchOption.AllDirectories)
+                    .Select(f => f.FullName)
+                    .Select(AssemblyLoadContext.Default.LoadFromAssemblyPath))
+                .CreateContainer()
+                .SatisfyImports(this);
         }
     }
 }

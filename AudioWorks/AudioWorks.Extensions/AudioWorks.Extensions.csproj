@@ -13,7 +13,6 @@
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="11.0.0" />
     <PackageReference Include="System.Composition" Version="1.1.0" />
-    <PackageReference Include="System.Memory" Version="4.4.0-preview2-25405-01" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
   </ItemGroup>
 
