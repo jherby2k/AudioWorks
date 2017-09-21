@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Commands", "AudioWorks.Commands\AudioWorks.Commands.csproj", "{53605AC7-B464-478F-ABA4-EBE6CB8BC968}"
 EndProject
@@ -52,6 +52,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Valid", "Valid", "{F3EE5042
 		TestFiles\Valid\FLAC Level 5 16-bit 44100Hz Mono.flac = TestFiles\Valid\FLAC Level 5 16-bit 44100Hz Mono.flac
 		TestFiles\Valid\FLAC Level 5 16-bit 44100Hz Stereo (Tagged using COMMENT).flac = TestFiles\Valid\FLAC Level 5 16-bit 44100Hz Stereo (Tagged using COMMENT).flac
 		TestFiles\Valid\FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac = TestFiles\Valid\FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac
+		TestFiles\Valid\FLAC Level 5 16-bit 44100Hz Stereo (Tagged using invalid DATE).flac = TestFiles\Valid\FLAC Level 5 16-bit 44100Hz Stereo (Tagged using invalid DATE).flac
+		TestFiles\Valid\FLAC Level 5 16-bit 44100Hz Stereo (Tagged using invalid TRACKNUMBER).flac = TestFiles\Valid\FLAC Level 5 16-bit 44100Hz Stereo (Tagged using invalid TRACKNUMBER).flac
 		TestFiles\Valid\FLAC Level 5 16-bit 44100Hz Stereo (Tagged using mixed-case fields).flac = TestFiles\Valid\FLAC Level 5 16-bit 44100Hz Stereo (Tagged using mixed-case fields).flac
 		TestFiles\Valid\FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TOTALTRACKS).flac = TestFiles\Valid\FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TOTALTRACKS).flac
 		TestFiles\Valid\FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TRACKCOUNT).flac = TestFiles\Valid\FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TRACKCOUNT).flac

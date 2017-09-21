@@ -431,6 +431,42 @@ namespace AudioWorks.Api.Tests
                     TrackNumber = "01",
                     TrackCount = "12"
                 }
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using invalid DATE).flac",
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = string.Empty,
+                    Month = string.Empty,
+                    Year = string.Empty,
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using invalid TRACKNUMBER).flac",
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = string.Empty,
+                    TrackCount = string.Empty
+                }
             }
         };
 
