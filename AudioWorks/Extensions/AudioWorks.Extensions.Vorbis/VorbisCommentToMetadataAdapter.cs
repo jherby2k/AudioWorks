@@ -50,6 +50,8 @@ namespace AudioWorks.Extensions.Vorbis
 
                         case "DATE":
                         case "YEAR":
+                            // Descriptions are allowed after whitespace
+                            comment[1] = comment[1].Split(' ')[0];
                             // The DATE comment may contain a full date, or only the year
                             if (DateTime.TryParse(comment[1], CultureInfo.CurrentCulture,
                                 DateTimeStyles.NoCurrentDateDefault, out var result))

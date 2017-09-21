@@ -36,6 +36,8 @@ namespace AudioWorks.Extensions.Flac
 
                     case "DATE":
                     case "YEAR":
+                        // Descriptions are allowed after whitespace
+                        value = value.Split(' ')[0];
                         // The DATE comment may contain a full date, or only the year
                         if (DateTime.TryParse(value, CultureInfo.CurrentCulture,
                             DateTimeStyles.NoCurrentDateDefault, out var result))
