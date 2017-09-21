@@ -443,9 +443,6 @@ namespace AudioWorks.Api.Tests
                     Album = "Test Album",
                     Genre = "Test Genre",
                     Comment = "Test Comment",
-                    Day = string.Empty,
-                    Month = string.Empty,
-                    Year = string.Empty,
                     TrackNumber = "01",
                     TrackCount = "12"
                 }
@@ -463,9 +460,7 @@ namespace AudioWorks.Api.Tests
                     Comment = "Test Comment",
                     Day = "31",
                     Month = "01",
-                    Year = "2017",
-                    TrackNumber = string.Empty,
-                    TrackCount = string.Empty
+                    Year = "2017"
                 }
             }
         };
