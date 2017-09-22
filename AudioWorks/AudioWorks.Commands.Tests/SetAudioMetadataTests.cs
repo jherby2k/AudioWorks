@@ -43,12 +43,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => new AudioMetadata()));
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, null));
+                    // ReSharper restore AssignNullToNotNullAttribute
                 ps.Invoke();
                 Assert.True(true);
             }
@@ -654,8 +651,24 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
-        [Fact(DisplayName = "Set-AudioMetadata with PassThru returns the same AudioFile")]
-        public void SetAudioMetadataWithPassThruReturnsSameAudioFile()
+        [Fact(DisplayName = "Set-AudioMetadata accepts a PassThru switch")]
+        public void SetAudioMetadataAcceptsPassThruSwitch()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("PassThru");
+                ps.Invoke();
+                Assert.True(true);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata with PassThru switch returns the AudioFile")]
+        public void SetAudioMetadataPassThruSwitchReturnsAudioFile()
         {
             // ReSharper disable AssignNullToNotNullAttribute
             var audioFile = new AudioFile(null, null, null);
