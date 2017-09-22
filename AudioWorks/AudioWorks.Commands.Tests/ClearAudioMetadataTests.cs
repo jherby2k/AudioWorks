@@ -43,12 +43,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => new AudioMetadata()));
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null));
+                    // ReSharper restore AssignNullToNotNullAttribute
                 ps.Invoke();
                 Assert.True(true);
             }
@@ -72,12 +69,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddArgument(new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => new AudioMetadata()));
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddArgument(new AudioFile(null, null, fileInfo => new AudioMetadata(), null));
+                    // ReSharper restore AssignNullToNotNullAttribute
                 ps.Invoke();
                 Assert.True(true);
             }
@@ -91,12 +85,9 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-Variable")
                     .AddArgument("audioFile")
-                    .AddArgument(new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => new AudioMetadata()))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddArgument(new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("PassThru");
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Value");
@@ -117,12 +108,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => new AudioMetadata()))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Title");
                 ps.Invoke();
                 Assert.True(true);
@@ -136,12 +124,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => new AudioMetadata()))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Title");
                 ps.Invoke();
                 Assert.True(true);
@@ -156,12 +141,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => metadata))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => metadata, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Title");
                 ps.Invoke();
                 Assert.Equal(string.Empty, metadata.Title);
@@ -175,12 +157,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => new AudioMetadata()))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Artist");
                 ps.Invoke();
                 Assert.True(true);
@@ -195,12 +174,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => metadata))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => metadata, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Artist");
                 ps.Invoke();
                 Assert.Equal(string.Empty, metadata.Artist);
@@ -214,12 +190,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => new AudioMetadata()))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Album");
                 ps.Invoke();
                 Assert.True(true);
@@ -234,12 +207,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => metadata))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => metadata, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Album");
                 ps.Invoke();
                 Assert.Equal(string.Empty, metadata.Album);
@@ -253,12 +223,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => new AudioMetadata()))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Genre");
                 ps.Invoke();
                 Assert.True(true);
@@ -273,12 +240,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => metadata))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => metadata, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Genre");
                 ps.Invoke();
                 Assert.Equal(string.Empty, metadata.Genre);
@@ -292,12 +256,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => new AudioMetadata()))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Comment");
                 ps.Invoke();
                 Assert.True(true);
@@ -312,12 +273,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => metadata))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => metadata, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Comment");
                 ps.Invoke();
                 Assert.Equal(string.Empty, metadata.Comment);
@@ -331,12 +289,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => new AudioMetadata()))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Day");
                 ps.Invoke();
                 Assert.True(true);
@@ -351,12 +306,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => metadata))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => metadata, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Day");
                 ps.Invoke();
                 Assert.Equal(string.Empty, metadata.Day);
@@ -370,12 +322,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => new AudioMetadata()))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Month");
                 ps.Invoke();
                 Assert.True(true);
@@ -390,12 +339,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => metadata))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => metadata, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Month");
                 ps.Invoke();
                 Assert.Equal(string.Empty, metadata.Month);
@@ -409,12 +355,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => new AudioMetadata()))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Year");
                 ps.Invoke();
                 Assert.True(true);
@@ -429,12 +372,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => metadata))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => metadata, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("Year");
                 ps.Invoke();
                 Assert.Equal(string.Empty, metadata.Year);
@@ -448,12 +388,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => new AudioMetadata()))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("TrackNumber");
                 ps.Invoke();
                 Assert.True(true);
@@ -468,12 +405,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => metadata))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => metadata, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("TrackNumber");
                 ps.Invoke();
                 Assert.Equal(string.Empty, metadata.TrackNumber);
@@ -487,12 +421,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => new AudioMetadata()))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("TrackCount");
                 ps.Invoke();
                 Assert.True(true);
@@ -507,12 +438,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => metadata))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => metadata, null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("TrackCount");
                 ps.Invoke();
                 Assert.Equal(string.Empty, metadata.TrackCount);
@@ -526,12 +454,9 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", new AudioFile(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        null,
-                        fileInfo => new AudioMetadata()))
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
+                    // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("PassThru");
                 ps.Invoke();
                 Assert.True(true);
@@ -541,12 +466,9 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName = "Clear-AudioMetadata with PassThru switch returns the AudioFile")]
         public void ClearAudioMetadataPassThruSwitchReturnsAudioFile()
         {
-            var audioFile = new AudioFile(
-                // ReSharper disable once AssignNullToNotNullAttribute
-                null,
-                // ReSharper disable once AssignNullToNotNullAttribute
-                null,
-                fileInfo => new AudioMetadata());
+            // ReSharper disable AssignNullToNotNullAttribute
+            var audioFile = new AudioFile(null, null, fileInfo => new AudioMetadata(), null);
+            // ReSharper restore AssignNullToNotNullAttribute
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
