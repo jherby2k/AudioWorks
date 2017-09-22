@@ -148,5 +148,19 @@ namespace AudioWorks.Common
                 }
             }
         }
+
+        public void Clear()
+        {
+            _title = string.Empty;
+            _artist = string.Empty;
+            _album = string.Empty;
+            _genre = string.Empty;
+            _comment = string.Empty;
+            _day = string.Empty;
+            _month = string.Empty;
+            _year = string.Empty;
+            _trackNumber = string.Empty;
+            _trackCount = string.Empty;
+        }
     }
 }
