@@ -431,6 +431,30 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
+        [Fact(DisplayName = "Set-AudioMetadata returns an error if Day is invalid")]
+        public void SetAudioMetadataDayInvalidReturnsError()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => new AudioMetadata()))
+                    .AddParameter("Day", "0");
+                ps.Invoke();
+                var errors = ps.Streams.Error.ReadAll();
+                Assert.True(
+                    errors.Count == 1 &&
+                    errors[0].Exception is AudioMetadataInvalidException &&
+                    errors[0].FullyQualifiedErrorId == $"{nameof(AudioMetadataInvalidException)},AudioWorks.Commands.SetAudioMetadataCommand" &&
+                    errors[0].CategoryInfo.Category == ErrorCategory.InvalidData);
+            }
+        }
+
         [Fact(DisplayName = "Set-AudioMetadata accepts a Month parameter")]
         public void SetAudioMetadataAcceptsMonthParameter()
         {
@@ -483,6 +507,30 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("Month", null);
                 // Actual exception type ParameterBindingValidationException is Internal
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata returns an error if Month is invalid")]
+        public void SetAudioMetadataMonthInvalidReturnsError()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => new AudioMetadata()))
+                    .AddParameter("Month", "0");
+                ps.Invoke();
+                var errors = ps.Streams.Error.ReadAll();
+                Assert.True(
+                    errors.Count == 1 &&
+                    errors[0].Exception is AudioMetadataInvalidException &&
+                    errors[0].FullyQualifiedErrorId == $"{nameof(AudioMetadataInvalidException)},AudioWorks.Commands.SetAudioMetadataCommand" &&
+                    errors[0].CategoryInfo.Category == ErrorCategory.InvalidData);
             }
         }
 
@@ -541,6 +589,30 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
+        [Fact(DisplayName = "Set-AudioMetadata returns an error if Year is invalid")]
+        public void SetAudioMetadataYearInvalidReturnsError()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => new AudioMetadata()))
+                    .AddParameter("Year", "0");
+                ps.Invoke();
+                var errors = ps.Streams.Error.ReadAll();
+                Assert.True(
+                    errors.Count == 1 &&
+                    errors[0].Exception is AudioMetadataInvalidException &&
+                    errors[0].FullyQualifiedErrorId == $"{nameof(AudioMetadataInvalidException)},AudioWorks.Commands.SetAudioMetadataCommand" &&
+                    errors[0].CategoryInfo.Category == ErrorCategory.InvalidData);
+            }
+        }
+
         [Fact(DisplayName = "Set-AudioMetadata accepts a TrackNumber parameter")]
         public void SetAudioMetadataAcceptsTrackNumberParameter()
         {
@@ -596,6 +668,30 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
+        [Fact(DisplayName = "Set-AudioMetadata returns an error if TrackNumber is invalid")]
+        public void SetAudioMetadataTrackNumberInvalidReturnsError()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => new AudioMetadata()))
+                    .AddParameter("TrackNumber", "0");
+                ps.Invoke();
+                var errors = ps.Streams.Error.ReadAll();
+                Assert.True(
+                    errors.Count == 1 &&
+                    errors[0].Exception is AudioMetadataInvalidException &&
+                    errors[0].FullyQualifiedErrorId == $"{nameof(AudioMetadataInvalidException)},AudioWorks.Commands.SetAudioMetadataCommand" &&
+                    errors[0].CategoryInfo.Category == ErrorCategory.InvalidData);
+            }
+        }
+
         [Fact(DisplayName = "Set-AudioMetadata accepts a TrackCount parameter")]
         public void SetAudioMetadataAcceptsTrackCountParameter()
         {
@@ -648,6 +744,30 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("TrackCount", null);
                 // Actual exception type ParameterBindingValidationException is Internal
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata returns an error if TrackCount is invalid")]
+        public void SetAudioMetadataTrackCountInvalidReturnsError()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new AudioFile(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        null,
+                        fileInfo => new AudioMetadata()))
+                    .AddParameter("TrackCount", "0");
+                ps.Invoke();
+                var errors = ps.Streams.Error.ReadAll();
+                Assert.True(
+                    errors.Count == 1 &&
+                    errors[0].Exception is AudioMetadataInvalidException &&
+                    errors[0].FullyQualifiedErrorId == $"{nameof(AudioMetadataInvalidException)},AudioWorks.Commands.SetAudioMetadataCommand" &&
+                    errors[0].CategoryInfo.Category == ErrorCategory.InvalidData);
             }
         }
 

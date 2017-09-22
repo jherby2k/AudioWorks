@@ -58,26 +58,33 @@ namespace AudioWorks.Commands
 
         protected override void ProcessRecord()
         {
-            if (Title != null)
-                AudioFile.Metadata.Title = Title;
-            if (Artist != null)
-                AudioFile.Metadata.Artist = Artist;
-            if (Album != null)
-                AudioFile.Metadata.Album = Album;
-            if (Genre != null)
-                AudioFile.Metadata.Genre = Genre;
-            if (Comment != null)
-                AudioFile.Metadata.Comment = Comment;
-            if (Day != null)
-                AudioFile.Metadata.Day = Day;
-            if (Month != null)
-                AudioFile.Metadata.Month = Month;
-            if (Year != null)
-                AudioFile.Metadata.Year = Year;
-            if (TrackNumber != null)
-                AudioFile.Metadata.TrackNumber = TrackNumber;
-            if (TrackCount != null)
-                AudioFile.Metadata.TrackCount = TrackCount;
+            try
+            {
+                if (Title != null)
+                    AudioFile.Metadata.Title = Title;
+                if (Artist != null)
+                    AudioFile.Metadata.Artist = Artist;
+                if (Album != null)
+                    AudioFile.Metadata.Album = Album;
+                if (Genre != null)
+                    AudioFile.Metadata.Genre = Genre;
+                if (Comment != null)
+                    AudioFile.Metadata.Comment = Comment;
+                if (Day != null)
+                    AudioFile.Metadata.Day = Day;
+                if (Month != null)
+                    AudioFile.Metadata.Month = Month;
+                if (Year != null)
+                    AudioFile.Metadata.Year = Year;
+                if (TrackNumber != null)
+                    AudioFile.Metadata.TrackNumber = TrackNumber;
+                if (TrackCount != null)
+                    AudioFile.Metadata.TrackCount = TrackCount;
+            }
+            catch (AudioMetadataInvalidException e)
+            {
+                WriteError(new ErrorRecord(e, e.GetType().Name, ErrorCategory.InvalidData, AudioFile.Metadata));
+            }
 
             if (PassThru)
                 WriteObject(AudioFile);
