@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <Description>The AudioWorks PowerShell module. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
     <Authors>Jeremy Herbison</Authors>
     <Company />
@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="11.0.0" />
-    <PackageReference Include="Microsoft.PowerShell.SDK" Version="6.0.0-beta.7" />
+    <PackageReference Include="PowerShellStandard.Library" Version="3.0.0-preview-01" />
   </ItemGroup>
 
   <ItemGroup>
