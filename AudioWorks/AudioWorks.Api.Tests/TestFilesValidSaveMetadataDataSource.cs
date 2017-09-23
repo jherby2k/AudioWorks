@@ -94,6 +94,24 @@ namespace AudioWorks.Api.Tests
                     TrackCount = "12"
                 },
                 "3BA138E7E248A13ECEDEDCC9BAA5F00E"
+            },
+            new object[]
+            {
+                "Lame CBR 128 44100Hz Stereo (ID3v2.3 UTF16).mp3",
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                },
+                "31D7FA433DE238316E866C2F01438774"
             }
         };
 
