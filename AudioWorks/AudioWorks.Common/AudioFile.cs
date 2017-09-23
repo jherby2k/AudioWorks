@@ -9,7 +9,7 @@ namespace AudioWorks.Common
     {
         [NotNull] Func<FileInfo, AudioMetadata> _getMetadataFunc;
         [NotNull] Action<AudioMetadata, FileInfo> _saveMetadataAction;
-        AudioMetadata _metadata;
+        [CanBeNull] AudioMetadata _metadata;
 
         [NotNull]
         public FileInfo FileInfo { get; }
@@ -36,9 +36,6 @@ namespace AudioWorks.Common
             _saveMetadataAction = saveMetadataAction;
         }
 
-        public void SaveMetadata()
-        {
-            _saveMetadataAction(_metadata, FileInfo);
-        }
+        public void SaveMetadata() => _saveMetadataAction(_metadata, FileInfo);
     }
 }
