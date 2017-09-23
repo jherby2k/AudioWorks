@@ -51,7 +51,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioFile's SaveMetadata method creates the expected output")]
-        [MemberData(nameof(TestFilesSaveMetadataDataSource.Data), MemberType = typeof(TestFilesSaveMetadataDataSource))]
+        [MemberData(nameof(TestFilesValidSaveMetadataDataSource.Data), MemberType = typeof(TestFilesValidSaveMetadataDataSource))]
         public void AudioFileSaveMetadataCreatesExpectedOutput(
             [NotNull] string fileName,
             [NotNull] AudioMetadata metadata,
@@ -68,6 +68,22 @@ namespace AudioWorks.Api.Tests
             audioFile.Metadata = metadata;
             audioFile.SaveMetadata();
             Assert.Equal(expectedHash, CalculateHash(audioFile));
+        }
+
+        [Theory(DisplayName = "AudioFile's SaveMetadata method throws an exception if the file is unsupported")]
+        [MemberData(nameof(TestFilesUnsupportedSaveMetadataDataSource.Data), MemberType = typeof(TestFilesUnsupportedSaveMetadataDataSource))]
+        public void SaveMetadataUnsupportedFileThrowsException(
+            [NotNull] string fileName)
+        {
+            var path = Path.Combine("Output", fileName);
+            Directory.CreateDirectory("Output");
+            File.Copy(Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                "TestFiles",
+                "Valid",
+                fileName), path, true);
+            var audioFile = AudioFileFactory.Create(path);
+            Assert.Throws<AudioUnsupportedException>(() => audioFile.SaveMetadata());
         }
 
         [Pure, NotNull]

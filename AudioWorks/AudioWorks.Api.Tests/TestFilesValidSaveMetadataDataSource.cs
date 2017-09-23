@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace AudioWorks.Api.Tests
 {
-    public static class TestFilesSaveMetadataDataSource
+    public static class TestFilesValidSaveMetadataDataSource
     {
         [NotNull, ItemNotNull] static readonly List<object[]> _data = new List<object[]>
         {
