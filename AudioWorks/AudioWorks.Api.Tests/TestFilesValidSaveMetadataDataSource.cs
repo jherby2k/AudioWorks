@@ -26,6 +26,74 @@ namespace AudioWorks.Api.Tests
                     TrackCount = "12"
                 },
                 "31D7FA433DE238316E866C2F01438774"
+            },
+            new object[]
+            {
+                "Lame CBR 128 44100Hz Stereo.mp3",
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                },
+                "5A82FBCEC6956464CD6FF47CA01E1722"
+            },
+            new object[]
+            {
+                "Lame CBR 128 44100Hz Stereo.mp3",
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                },
+                "5A82FBCEC6956464CD6FF47CA01E1722"
+            },
+            new object[]
+            {
+                "Lame CBR 128 44100Hz Stereo.mp3",
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01"
+                },
+                "E2261D4647D4460A66A4D04504E09785"
+            },
+            new object[]
+            {
+                "Lame CBR 128 44100Hz Stereo.mp3",
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackCount = "12"
+                },
+                "3BA138E7E248A13ECEDEDCC9BAA5F00E"
             }
         };
 
