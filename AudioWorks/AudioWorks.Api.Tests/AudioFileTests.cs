@@ -53,12 +53,13 @@ namespace AudioWorks.Api.Tests
         [Theory(DisplayName = "AudioFile's SaveMetadata method creates the expected output")]
         [MemberData(nameof(TestFilesValidSaveMetadataDataSource.Data), MemberType = typeof(TestFilesValidSaveMetadataDataSource))]
         public void SaveMetadataCreatesExpectedOutput(
+            int index,
             [NotNull] string fileName,
             [NotNull] AudioMetadata metadata,
             [NotNull] string expectedHash)
         {
-            var path = Path.Combine("Output", fileName);
-            Directory.CreateDirectory("Output");
+            var path = Path.Combine("Output", "SaveMetadata", "Valid", $"{index:00} - {fileName}");
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
             File.Copy(Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
                 "TestFiles",
@@ -72,11 +73,10 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioFile's SaveMetadata method throws an exception if the file is unsupported")]
         [MemberData(nameof(TestFilesUnsupportedSaveMetadataDataSource.Data), MemberType = typeof(TestFilesUnsupportedSaveMetadataDataSource))]
-        public void SaveMetadataUnsupportedFileThrowsException(
-            [NotNull] string fileName)
+        public void SaveMetadataUnsupportedFileThrowsException(int index, [NotNull] string fileName)
         {
-            var path = Path.Combine("Output", fileName);
-            Directory.CreateDirectory("Output");
+            var path = Path.Combine("Output", "SaveMetadata", "Unsupported", $"{index:00} - {fileName}");
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
             File.Copy(Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
                 "TestFiles",

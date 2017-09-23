@@ -1,6 +1,6 @@
-﻿using AudioWorks.Common;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AudioWorks.Api.Tests
 {
@@ -14,7 +14,8 @@ namespace AudioWorks.Api.Tests
         [NotNull, ItemNotNull]
         public static IEnumerable<object[]> Data
         {
-            [UsedImplicitly] get => _data;
+            // Prepend an index to each row
+            [UsedImplicitly] get => _data.Select((item, index) => item.Prepend(index).ToArray());
         }
     }
 }
