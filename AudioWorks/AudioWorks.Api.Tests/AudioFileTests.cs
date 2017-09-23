@@ -12,7 +12,7 @@ namespace AudioWorks.Api.Tests
     {
         [Theory(DisplayName = "AudioFile has the expected FileInfo property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNames), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioFileHasExpectedFileInfo([NotNull] string fileName)
+        public void HasExpectedFileInfo([NotNull] string fileName)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -26,7 +26,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioFile's AudioInfo property is set")]
         [MemberData(nameof(TestFilesValidDataSource.FileNames), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioFileHasAudioInfo([NotNull] string fileName)
+        public void HasAudioInfo([NotNull] string fileName)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -39,7 +39,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioFile's Metadata property is set")]
         [MemberData(nameof(TestFilesValidDataSource.FileNames), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioFileHasMetadata([NotNull] string fileName)
+        public void HasMetadata([NotNull] string fileName)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -52,7 +52,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioFile's SaveMetadata method creates the expected output")]
         [MemberData(nameof(TestFilesValidSaveMetadataDataSource.Data), MemberType = typeof(TestFilesValidSaveMetadataDataSource))]
-        public void AudioFileSaveMetadataCreatesExpectedOutput(
+        public void SaveMetadataCreatesExpectedOutput(
             [NotNull] string fileName,
             [NotNull] AudioMetadata metadata,
             [NotNull] string expectedHash)

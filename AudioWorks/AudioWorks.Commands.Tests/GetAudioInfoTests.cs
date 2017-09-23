@@ -21,7 +21,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Get-AudioInfo command exists")]
-        public void GetAudioInfoCommandExists()
+        public void CommandExists()
         {
             using (var ps = PowerShell.Create())
             {
@@ -40,7 +40,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Get-AudioInfo accepts an AudioFile parameter")]
-        public void GetAudioInfoAcceptsAudioFileParameter()
+        public void AcceptsAudioFileParameter()
         {
             using (var ps = PowerShell.Create())
             {
@@ -55,7 +55,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Get-AudioInfo requires the AudioFile parameter")]
-        public void GetAudioInfoRequiresAudioFileParameter()
+        public void RequiresAudioFileParameter()
         {
             using (var ps = PowerShell.Create())
             {
@@ -66,7 +66,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Get-AudioInfo accepts the AudioFile parameter as the first argument")]
-        public void GetAudioInfoAcceptsAudioFileParameterAsFirstArgument()
+        public void AcceptsAudioFileParameterAsFirstArgument()
         {
             using (var ps = PowerShell.Create())
             {
@@ -81,7 +81,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Get-AudioInfo accepts the AudioFile parameter from the pipeline")]
-        public void GetAudioInfoAcceptsAudioFileParameterFromPipeline()
+        public void AcceptsAudioFileParameterFromPipeline()
         {
             using (var ps = PowerShell.Create())
             {
@@ -105,7 +105,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Get-AudioInfo has an OutputType of AudioInfo")]
-        public void GetAudioInfoOutputTypeIsAudioInfo()
+        public void OutputTypeIsAudioInfo()
         {
             using (var ps = PowerShell.Create())
             {
@@ -122,7 +122,7 @@ namespace AudioWorks.Commands.Tests
 
         [Theory(DisplayName = "Get-AudioInfo returns an AudioInfo")]
         [MemberData(nameof(TestFilesValidDataSource.FileNames), MemberType = typeof(TestFilesValidDataSource))]
-        public void GetAudioInfoReturnsAudioInfo([NotNull] string fileName)
+        public void ReturnsAudioInfo([NotNull] string fileName)
         {
             using (var ps = PowerShell.Create())
             {

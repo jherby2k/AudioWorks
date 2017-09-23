@@ -18,7 +18,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata command exists")]
-        public void SetAudioMetadataCommandExists()
+        public void CommandExists()
         {
             using (var ps = PowerShell.Create())
             {
@@ -37,7 +37,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata accepts an AudioFile parameter")]
-        public void SetAudioMetadataAcceptsAudioFileParameter()
+        public void AcceptsAudioFileParameter()
         {
             using (var ps = PowerShell.Create())
             {
@@ -52,7 +52,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata requires the AudioFile parameter")]
-        public void SetAudioMetadataRequiresAudioFileParameter()
+        public void RequiresAudioFileParameter()
         {
             using (var ps = PowerShell.Create())
             {
@@ -63,7 +63,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata accepts the AudioFile parameter as the first argument")]
-        public void SetAudioMetadataAcceptsAudioFileParameterAsFirstArgument()
+        public void AcceptsAudioFileParameterAsFirstArgument()
         {
             using (var ps = PowerShell.Create())
             {
@@ -78,7 +78,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata accepts the AudioFile parameter from the pipeline")]
-        public void SetAudioMetadataAcceptsAudioFileParameterFromPipeline()
+        public void AcceptsAudioFileParameterFromPipeline()
         {
             using (var ps = PowerShell.Create())
             {
@@ -102,7 +102,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata accepts a Title parameter")]
-        public void SetAudioMetadataAcceptsTitleParameter()
+        public void AcceptsTitleParameter()
         {
             using (var ps = PowerShell.Create())
             {
@@ -118,7 +118,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata's Title Parameter sets the Title")]
-        public void SetAudioMetadataTitleParameterSetsTitle()
+        public void TitleParameterSetsTitle()
         {
             var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
@@ -135,7 +135,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata returns an error if Title is null")]
-        public void SetAudioMetadataTitleNullReturnsError()
+        public void TitleNullReturnsError()
         {
             using (var ps = PowerShell.Create())
             {
@@ -151,7 +151,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata accepts an Artist parameter")]
-        public void SetAudioMetadataAcceptsArtistParameter()
+        public void AcceptsArtistParameter()
         {
             using (var ps = PowerShell.Create())
             {
@@ -167,7 +167,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata's Artist Parameter sets the Artist")]
-        public void SetAudioMetadataArtistParameterSetsArtist()
+        public void ArtistParameterSetsArtist()
         {
             var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
@@ -184,7 +184,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata returns an error if Artist is null")]
-        public void SetAudioMetadataArtistNullReturnsError()
+        public void ArtistNullReturnsError()
         {
             using (var ps = PowerShell.Create())
             {
@@ -200,7 +200,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata accepts an Album parameter")]
-        public void SetAudioMetadataAcceptsAlbumParameter()
+        public void AcceptsAlbumParameter()
         {
             using (var ps = PowerShell.Create())
             {
@@ -216,7 +216,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata's Album Parameter sets the Album")]
-        public void SetAudioMetadataAlbumParameterSetsAlbum()
+        public void AlbumParameterSetsAlbum()
         {
             var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
@@ -233,7 +233,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata returns an error if Album is null")]
-        public void SetAudioMetadataAlbumNullReturnsError()
+        public void AlbumNullReturnsError()
         {
             using (var ps = PowerShell.Create())
             {
@@ -249,7 +249,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata accepts a Genre parameter")]
-        public void SetAudioMetadataAcceptsGenreParameter()
+        public void AcceptsGenreParameter()
         {
             using (var ps = PowerShell.Create())
             {
@@ -265,7 +265,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata's Genre Parameter sets the Genre")]
-        public void SetAudioMetadataGenreParameterSetsGenre()
+        public void GenreParameterSetsGenre()
         {
             var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
@@ -282,7 +282,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata returns an error if Genre is null")]
-        public void SetAudioMetadataGenreNullReturnsError()
+        public void GenreNullReturnsError()
         {
             using (var ps = PowerShell.Create())
             {
@@ -298,7 +298,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata accepts a Comment parameter")]
-        public void SetAudioMetadataAcceptsCommentParameter()
+        public void AcceptsCommentParameter()
         {
             using (var ps = PowerShell.Create())
             {
@@ -314,7 +314,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata's Comment Parameter sets the Comment")]
-        public void SetAudioMetadataCommentParameterSetsComment()
+        public void CommentParameterSetsComment()
         {
             var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
@@ -331,7 +331,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata returns an error if Comment is null")]
-        public void SetAudioMetadataCommentNullReturnsError()
+        public void CommentNullReturnsError()
         {
             using (var ps = PowerShell.Create())
             {
@@ -347,7 +347,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata accepts a Day parameter")]
-        public void SetAudioMetadataAcceptsDayParameter()
+        public void AcceptsDayParameter()
         {
             using (var ps = PowerShell.Create())
             {
@@ -363,7 +363,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata's Day Parameter sets the Day")]
-        public void SetAudioMetadataDayParameterSetsDay()
+        public void DayParameterSetsDay()
         {
             var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
@@ -380,7 +380,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata returns an error if Day is null")]
-        public void SetAudioMetadataDayNullReturnsError()
+        public void DayNullReturnsError()
         {
             using (var ps = PowerShell.Create())
             {
@@ -396,7 +396,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata returns an error if Day is invalid")]
-        public void SetAudioMetadataDayInvalidReturnsError()
+        public void DayInvalidReturnsError()
         {
             using (var ps = PowerShell.Create())
             {
@@ -417,7 +417,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata accepts a Month parameter")]
-        public void SetAudioMetadataAcceptsMonthParameter()
+        public void AcceptsMonthParameter()
         {
             using (var ps = PowerShell.Create())
             {
@@ -433,7 +433,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata's Month Parameter sets the Month")]
-        public void SetAudioMetadataMonthParameterSetsMonth()
+        public void MonthParameterSetsMonth()
         {
             var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
@@ -450,7 +450,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata returns an error if Month is null")]
-        public void SetAudioMetadataMonthNullReturnsError()
+        public void MonthNullReturnsError()
         {
             using (var ps = PowerShell.Create())
             {
@@ -466,7 +466,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata returns an error if Month is invalid")]
-        public void SetAudioMetadataMonthInvalidReturnsError()
+        public void MonthInvalidReturnsError()
         {
             using (var ps = PowerShell.Create())
             {
@@ -487,7 +487,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata accepts a Year parameter")]
-        public void SetAudioMetadataAcceptsYearParameter()
+        public void AcceptsYearParameter()
         {
             using (var ps = PowerShell.Create())
             {
@@ -503,7 +503,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata's Year Parameter sets the Year")]
-        public void SetAudioMetadataYearParameterSetsYear()
+        public void YearParameterSetsYear()
         {
             var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
@@ -520,7 +520,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata returns an error if Year is null")]
-        public void SetAudioMetadataYearNullReturnsError()
+        public void YearNullReturnsError()
         {
             using (var ps = PowerShell.Create())
             {
@@ -536,7 +536,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata returns an error if Year is invalid")]
-        public void SetAudioMetadataYearInvalidReturnsError()
+        public void YearInvalidReturnsError()
         {
             using (var ps = PowerShell.Create())
             {
@@ -557,7 +557,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata accepts a TrackNumber parameter")]
-        public void SetAudioMetadataAcceptsTrackNumberParameter()
+        public void AcceptsTrackNumberParameter()
         {
             using (var ps = PowerShell.Create())
             {
@@ -573,7 +573,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata's TrackNumber Parameter sets the TrackNumber")]
-        public void SetAudioMetadataTrackNumberParameterSetsTrackNumber()
+        public void TrackNumberParameterSetsTrackNumber()
         {
             var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
@@ -590,7 +590,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata returns an error if TrackNumber is null")]
-        public void SetAudioMetadataTrackNumberNullReturnsError()
+        public void TrackNumberNullReturnsError()
         {
             using (var ps = PowerShell.Create())
             {
@@ -606,7 +606,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata returns an error if TrackNumber is invalid")]
-        public void SetAudioMetadataTrackNumberInvalidReturnsError()
+        public void TrackNumberInvalidReturnsError()
         {
             using (var ps = PowerShell.Create())
             {
@@ -627,7 +627,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata accepts a TrackCount parameter")]
-        public void SetAudioMetadataAcceptsTrackCountParameter()
+        public void AcceptsTrackCountParameter()
         {
             using (var ps = PowerShell.Create())
             {
@@ -643,7 +643,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata's TrackCount Parameter sets the TrackCount")]
-        public void SetAudioMetadataTrackCountParameterSetsTrackCount()
+        public void TrackCountParameterSetsTrackCount()
         {
             var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
@@ -660,7 +660,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata returns an error if TrackCount is null")]
-        public void SetAudioMetadataTrackCountNullReturnsError()
+        public void TrackCountNullReturnsError()
         {
             using (var ps = PowerShell.Create())
             {
@@ -676,7 +676,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata returns an error if TrackCount is invalid")]
-        public void SetAudioMetadataTrackCountInvalidReturnsError()
+        public void TrackCountInvalidReturnsError()
         {
             using (var ps = PowerShell.Create())
             {
@@ -697,7 +697,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata accepts a PassThru switch")]
-        public void SetAudioMetadataAcceptsPassThruSwitch()
+        public void AcceptsPassThruSwitch()
         {
             using (var ps = PowerShell.Create())
             {
@@ -713,7 +713,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata with PassThru switch returns the AudioFile")]
-        public void SetAudioMetadataPassThruSwitchReturnsAudioFile()
+        public void PassThruSwitchReturnsAudioFile()
         {
             // ReSharper disable AssignNullToNotNullAttribute
             var audioFile = new AudioFile(null, null, null, null);
@@ -729,7 +729,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Set-AudioMetadata has an OutputType of AudioFile")]
-        public void SetAudioMetadataOutputTypeIsAudioFile()
+        public void OutputTypeIsAudioFile()
         {
             using (var ps = PowerShell.Create())
             {

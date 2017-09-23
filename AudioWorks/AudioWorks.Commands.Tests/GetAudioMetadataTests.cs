@@ -21,7 +21,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Get-AudioMetadata command exists")]
-        public void GetAudioMetadataCommandExists()
+        public void CommandExists()
         {
             using (var ps = PowerShell.Create())
             {
@@ -40,7 +40,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Get-AudioMetadata accepts an AudioFile parameter")]
-        public void GetAudioMetadataAcceptsAudioFileParameter()
+        public void AcceptsAudioFileParameter()
         {
             using (var ps = PowerShell.Create())
             {
@@ -55,7 +55,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Get-AudioMetadata requires the AudioFile parameter")]
-        public void GetAudioMetadataRequiresAudioFileParameter()
+        public void RequiresAudioFileParameter()
         {
             using (var ps = PowerShell.Create())
             {
@@ -66,7 +66,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Get-AudioMetadata accepts the AudioFile parameter as the first argument")]
-        public void GetAudioMetadataAcceptsAudioFileParameterAsFirstArgument()
+        public void AcceptsAudioFileParameterAsFirstArgument()
         {
             using (var ps = PowerShell.Create())
             {
@@ -81,7 +81,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Get-AudioMetadata accepts the AudioFile parameter from the pipeline")]
-        public void GetAudioMetadataAcceptsAudioFileParameterFromPipeline()
+        public void AcceptsAudioFileParameterFromPipeline()
         {
             using (var ps = PowerShell.Create())
             {
@@ -105,7 +105,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Get-AudioMetadata has an OutputType of AudioMetadata")]
-        public void GetAudioMetadataOutputTypeIsAudioMetadata()
+        public void OutputTypeIsAudioMetadata()
         {
             using (var ps = PowerShell.Create())
             {
@@ -122,7 +122,7 @@ namespace AudioWorks.Commands.Tests
 
         [Theory(DisplayName = "Get-AudioMetadata returns an AudioMetadata")]
         [MemberData(nameof(TestFilesValidDataSource.FileNames), MemberType = typeof(TestFilesValidDataSource))]
-        public void GetAudioMetadataReturnsAudioMetadata([NotNull] string fileName)
+        public void ReturnsAudioMetadata([NotNull] string fileName)
         {
             using (var ps = PowerShell.Create())
             {

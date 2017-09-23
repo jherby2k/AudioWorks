@@ -10,7 +10,7 @@ namespace AudioWorks.Api.Tests
     public sealed class AudioMetadataTests
     {
         [Fact(DisplayName = "AudioMetadata throws an exception if the Title is null")]
-        public void AudioMetadataTitleNullThrowsException()
+        public void TitleNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() =>
@@ -18,7 +18,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Title")]
-        public void AudioMetadataAcceptsValidTitle()
+        public void AcceptsValidTitle()
         {
             // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Title = "Test Title" };
@@ -26,7 +26,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Title")]
-        public void AudioMetadataAcceptsEmptyTitle()
+        public void AcceptsEmptyTitle()
         {
             // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Title = string.Empty };
@@ -34,13 +34,13 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata's Title property defaults to an empty string")]
-        public void AudioMetadataTitleDefaultsToEmpty()
+        public void TitleDefaultsToEmpty()
         {
             Assert.Equal(string.Empty, new AudioMetadata().Title);
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Artist is null")]
-        public void AudioMetadataArtistNullThrowsException()
+        public void ArtistNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() =>
@@ -48,7 +48,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Artist")]
-        public void AudioMetadataAcceptsValidArtist()
+        public void AcceptsValidArtist()
         {
             // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Artist = "Test Artist" };
@@ -56,7 +56,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Artist")]
-        public void AudioMetadataAcceptsEmptyArtist()
+        public void AcceptsEmptyArtist()
         {
             // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Artist = string.Empty };
@@ -64,13 +64,13 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata's Artist property defaults to an empty string")]
-        public void AudioMetadataArtistDefaultsToEmpty()
+        public void ArtistDefaultsToEmpty()
         {
             Assert.Equal(string.Empty, new AudioMetadata().Artist);
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Album is null")]
-        public void AudioMetadataAlbumNullThrowsException()
+        public void AlbumNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() =>
@@ -78,7 +78,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Album")]
-        public void AudioMetadataAcceptsValidAlbum()
+        public void AcceptsValidAlbum()
         {
             // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Album = "Test Album" };
@@ -86,7 +86,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Album")]
-        public void AudioMetadataAcceptsEmptyAlbum()
+        public void AcceptsEmptyAlbum()
         {
             // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Album = string.Empty };
@@ -94,13 +94,13 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata's Album property defaults to an empty string")]
-        public void AudioMetadataAlbumDefaultsToEmpty()
+        public void AlbumDefaultsToEmpty()
         {
             Assert.Equal(string.Empty, new AudioMetadata().Album);
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Genre is null")]
-        public void AudioMetadataGenreNullThrowsException()
+        public void GenreNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() =>
@@ -108,7 +108,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Genre")]
-        public void AudioMetadataAcceptsValidGenre()
+        public void AcceptsValidGenre()
         {
             // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Genre = "Test Genre" };
@@ -116,7 +116,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Genre")]
-        public void AudioMetadataAcceptsEmptyGenre()
+        public void AcceptsEmptyGenre()
         {
             // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Genre = string.Empty };
@@ -124,13 +124,13 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata's Genre property defaults to an empty string")]
-        public void AudioMetadataGenreDefaultsToEmpty()
+        public void GenreDefaultsToEmpty()
         {
             Assert.Equal(string.Empty, new AudioMetadata().Genre);
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Comment is null")]
-        public void AudioMetadataCommentNullThrowsException()
+        public void CommentNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() =>
@@ -138,7 +138,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Comment")]
-        public void AudioMetadataAcceptsValidComment()
+        public void AcceptsValidComment()
         {
             // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Comment = "Test Comment" };
@@ -146,7 +146,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Comment")]
-        public void AudioMetadataAcceptsEmptyComment()
+        public void AcceptsEmptyComment()
         {
             // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Comment = string.Empty };
@@ -154,13 +154,13 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata's Comment property defaults to an empty string")]
-        public void AudioMetadataCommentDefaultsToEmpty()
+        public void CommentDefaultsToEmpty()
         {
             Assert.Equal(string.Empty, new AudioMetadata().Comment);
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Day is null")]
-        public void AudioMetadataDayNullThrowsException()
+        public void DayNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() =>
@@ -168,28 +168,28 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Day is zero")]
-        public void AudioMetadataDayZeroThrowsException()
+        public void DayZeroThrowsException()
         {
             Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { Day = "0" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Day is greater than 31")]
-        public void AudioMetadataDayTooHighThrowsException()
+        public void DayTooHighThrowsException()
         {
             Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { Day = "32" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Day isn't numeric")]
-        public void AudioMetadataDayNotNumericThrowsException()
+        public void DayNotNumericThrowsException()
         {
             Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { Day = "##" });
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Day")]
-        public void AudioMetadataAcceptsValidDay()
+        public void AcceptsValidDay()
         {
             // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Day = "31" };
@@ -197,7 +197,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Day")]
-        public void AudioMetadataAcceptsEmptyDay()
+        public void AcceptsEmptyDay()
         {
             // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Day = string.Empty };
@@ -205,19 +205,19 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata's Day property defaults to an empty string")]
-        public void AudioMetadataDayDefaultsToEmpty()
+        public void DayDefaultsToEmpty()
         {
             Assert.Equal(string.Empty, new AudioMetadata().Day);
         }
 
         [Fact(DisplayName = "AudioMetadata normalizes the Day property to 2 digits")]
-        public void AudioMetadataNormalizesDay()
+        public void NormalizesDay()
         {
             Assert.Equal("01", new AudioMetadata { Day = "1" }.Day);
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Month is null")]
-        public void AudioMetadataMonthNullThrowsException()
+        public void MonthNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() =>
@@ -225,28 +225,28 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Month is zero")]
-        public void AudioMetadataMonthZeroThrowsException()
+        public void MonthZeroThrowsException()
         {
             Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { Month = "0" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Month is greater than 12")]
-        public void AudioMetadataMonthTooHighThrowsException()
+        public void MonthTooHighThrowsException()
         {
             Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { Month = "13" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Month isn't numeric")]
-        public void AudioMetadataMonthNotNumericThrowsException()
+        public void MonthNotNumericThrowsException()
         {
             Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { Month = "##" });
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Month")]
-        public void AudioMetadataAcceptsValidMonth()
+        public void AcceptsValidMonth()
         {
             // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Month = "12" };
@@ -254,7 +254,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Month")]
-        public void AudioMetadataAcceptsEmptyMonth()
+        public void AcceptsEmptyMonth()
         {
             // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Month = string.Empty };
@@ -262,19 +262,19 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata's Month property defaults to an empty string")]
-        public void AudioMetadataMonthDefaultsToEmpty()
+        public void MonthDefaultsToEmpty()
         {
             Assert.Equal(string.Empty, new AudioMetadata().Month);
         }
 
         [Fact(DisplayName = "AudioMetadata normalizes the Month property to 2 digits")]
-        public void AudioMetadataNormalizesMonth()
+        public void NormalizesMonth()
         {
             Assert.Equal("01", new AudioMetadata { Month = "1" }.Month);
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Year is null")]
-        public void AudioMetadataYearNullThrowsException()
+        public void YearNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() =>
@@ -282,35 +282,35 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Year is less than 4 characters")]
-        public void AudioMetadataYearTooShortThrowsException()
+        public void YearTooShortThrowsException()
         {
             Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { Year = "999" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Year is more than 4 characters")]
-        public void AudioMetadataYearTooLongThrowsException()
+        public void YearTooLongThrowsException()
         {
             Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { Year = "10000" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Year isn't numeric")]
-        public void AudioMetadataYearNotNumericThrowsException()
+        public void YearNotNumericThrowsException()
         {
             Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { Year = "Test" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Year starts with a zero")]
-        public void AudioMetadataYearStartsWithZeroThrowsException()
+        public void YearStartsWithZeroThrowsException()
         {
             Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { Year = "0100" });
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Year")]
-        public void AudioMetadataAcceptsValidYear()
+        public void AcceptsValidYear()
         {
             // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Year = "2000" };
@@ -318,7 +318,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Year")]
-        public void AudioMetadataAcceptsEmptyYear()
+        public void AcceptsEmptyYear()
         {
             // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Year = string.Empty };
@@ -326,13 +326,13 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata's Year property defaults to an empty string")]
-        public void AudioMetadataYearDefaultsToEmpty()
+        public void YearDefaultsToEmpty()
         {
             Assert.Equal(string.Empty, new AudioMetadata().Year);
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the TrackNumber is null")]
-        public void AudioMetadataTrackNumberNullThrowsException()
+        public void TrackNumberNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() =>
@@ -340,28 +340,28 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the TrackNumber is zero")]
-        public void AudioMetadataTrackNumberZeroThrowsException()
+        public void TrackNumberZeroThrowsException()
         {
             Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { TrackNumber = "0" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the TrackNumber is more than 2 characters")]
-        public void AudioMetadataTrackNumberTooLongThrowsException()
+        public void TrackNumberTooLongThrowsException()
         {
             Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { TrackNumber = "100" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the TrackNumber isn't numeric")]
-        public void AudioMetadataTrackNumberNotNumericThrowsException()
+        public void TrackNumberNotNumericThrowsException()
         {
             Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { TrackNumber = "##" });
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid TrackNumber")]
-        public void AudioMetadataAcceptsValidTrackNumber()
+        public void AcceptsValidTrackNumber()
         {
             // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { TrackNumber = "1" };
@@ -369,13 +369,13 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata normalizes TrackNumber to 2 digits")]
-        public void AudioMetadataNormalizesTrackNumber()
+        public void NormalizesTrackNumber()
         {
             Assert.Equal("01", new AudioMetadata { TrackNumber = "1" }.TrackNumber);
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty TrackNumber")]
-        public void AudioMetadataAcceptsEmptyTrackNumber()
+        public void AcceptsEmptyTrackNumber()
         {
             // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { TrackNumber = string.Empty };
@@ -383,13 +383,13 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata's TrackNumber property defaults to an empty string")]
-        public void AudioMetadataTrackNumberDefaultsToEmpty()
+        public void TrackNumberDefaultsToEmpty()
         {
             Assert.Equal(string.Empty, new AudioMetadata().TrackNumber);
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the TrackCount is null")]
-        public void AudioMetadataTrackCountNullThrowsException()
+        public void TrackCountNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() =>
@@ -397,28 +397,28 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the TrackCount is zero")]
-        public void AudioMetadataTrackCountZeroThrowsException()
+        public void TrackCountZeroThrowsException()
         {
             Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { TrackCount = "0" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the TrackCount is more than 2 characters")]
-        public void AudioMetadataTrackCountTooLongThrowsException()
+        public void TrackCountTooLongThrowsException()
         {
             Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { TrackCount = "100" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the TrackCount isn't numeric")]
-        public void AudioMetadataTrackCountNotNumericThrowsException()
+        public void TrackCountNotNumericThrowsException()
         {
             Assert.Throws<AudioMetadataInvalidException>(() =>
                 new AudioMetadata { TrackCount = "##" });
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid TrackCount")]
-        public void AudioMetadataAcceptsValidTrackCount()
+        public void AcceptsValidTrackCount()
         {
             // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { TrackCount = "1" };
@@ -426,13 +426,13 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata normalizes TrackCount to 2 digits")]
-        public void AudioMetadataNormalizesTrackCount()
+        public void NormalizesTrackCount()
         {
             Assert.Equal("01", new AudioMetadata { TrackCount = "1" }.TrackCount);
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty TrackCount")]
-        public void AudioMetadataAcceptsEmptyTrackCount()
+        public void AcceptsEmptyTrackCount()
         {
             // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { TrackCount = string.Empty };
@@ -440,14 +440,14 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata's TrackCount property defaults to an empty string")]
-        public void AudioMetadataTrackCountDefaultsToEmpty()
+        public void TrackCountDefaultsToEmpty()
         {
             Assert.Equal(string.Empty, new AudioMetadata().TrackCount);
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Title property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioMetadataHasExpectedTitle([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        public void HasExpectedTitle([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -461,7 +461,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioMetadata has the expected Artist property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioMetadataHasExpectedArtist([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        public void HasExpectedArtist([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -475,7 +475,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioMetadata has the expected Album property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioMetadataHasExpectedAlbum([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        public void HasExpectedAlbum([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -489,7 +489,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioMetadata has the expected Genre property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioMetadataHasExpectedGenre([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        public void HasExpectedGenre([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -503,7 +503,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioMetadata has the expected Comment property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioMetadataHasExpectedComment([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        public void HasExpectedComment([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -517,7 +517,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioMetadata has the expected Day property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioMetadataHasExpectedDay([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        public void HasExpectedDay([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -531,7 +531,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioMetadata has the expected Month property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioMetadataHasExpectedMonth([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        public void HasExpectedMonth([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -545,7 +545,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioMetadata has the expected Year property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioMetadataHasExpectedYear([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        public void HasExpectedYear([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -559,7 +559,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioMetadata has the expected TrackNumber property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioMetadataHasExpectedTrackNumber([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        public void HasExpectedTrackNumber([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -573,7 +573,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioMetadata has the expected TrackCount property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioMetadataHasExpectedTrackCount([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        public void HasExpectedTrackCount([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,

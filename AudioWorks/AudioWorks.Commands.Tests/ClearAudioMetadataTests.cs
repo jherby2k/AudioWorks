@@ -18,7 +18,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata command exists")]
-        public void ClearAudioMetadataCommandExists()
+        public void CommandExists()
         {
             using (var ps = PowerShell.Create())
             {
@@ -37,7 +37,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts an AudioFile parameter")]
-        public void ClearAudioMetadataAcceptsAudioFileParameter()
+        public void AcceptsAudioFileParameter()
         {
             using (var ps = PowerShell.Create())
             {
@@ -52,7 +52,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata requires the AudioFile parameter")]
-        public void ClearAudioMetadataRequiresAudioFileParameter()
+        public void RequiresAudioFileParameter()
         {
             using (var ps = PowerShell.Create())
             {
@@ -63,7 +63,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts the AudioFile parameter as the first argument")]
-        public void ClearAudioMetadataAcceptsAudioFileParameterAsFirstArgument()
+        public void AcceptsAudioFileParameterAsFirstArgument()
         {
             using (var ps = PowerShell.Create())
             {
@@ -78,7 +78,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts the AudioFile parameter from the pipeline")]
-        public void ClearAudioMetadataAcceptsAudioFileParameterFromPipeline()
+        public void AcceptsAudioFileParameterFromPipeline()
         {
             using (var ps = PowerShell.Create())
             {
@@ -102,7 +102,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata with no switches clears all metadata fields")]
-        public void ClearAudioMetadataWithNoSwitchesClearsAll()
+        public void NoSwitchesClearsAll()
         {
             using (var ps = PowerShell.Create())
             {
@@ -118,7 +118,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a Title switch")]
-        public void ClearAudioMetadataAcceptsTitleSwitch()
+        public void AcceptsTitleSwitch()
         {
             using (var ps = PowerShell.Create())
             {
@@ -134,7 +134,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata with Title switch clears the Title")]
-        public void ClearAudioMetadataTitleSwitchClearsTitle()
+        public void TitleSwitchClearsTitle()
         {
             var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
@@ -151,7 +151,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a Artist switch")]
-        public void ClearAudioMetadataAcceptsArtistSwitch()
+        public void AcceptsArtistSwitch()
         {
             using (var ps = PowerShell.Create())
             {
@@ -167,7 +167,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata with Artist switch clears the Artist")]
-        public void ClearAudioMetadataArtistSwitchClearsArtist()
+        public void ArtistSwitchClearsArtist()
         {
             var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
@@ -184,7 +184,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts an Album switch")]
-        public void ClearAudioMetadataAcceptsAlbumSwitch()
+        public void AcceptsAlbumSwitch()
         {
             using (var ps = PowerShell.Create())
             {
@@ -200,7 +200,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata with Album switch clears the Album")]
-        public void ClearAudioMetadataAlbumSwitchClearsAlbum()
+        public void AlbumSwitchClearsAlbum()
         {
             var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
@@ -217,7 +217,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a Genre switch")]
-        public void ClearAudioMetadataAcceptsGenreSwitch()
+        public void AcceptsGenreSwitch()
         {
             using (var ps = PowerShell.Create())
             {
@@ -233,7 +233,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata with Genre switch clears the Genre")]
-        public void ClearAudioMetadataGenreSwitchClearsGenre()
+        public void GenreSwitchClearsGenre()
         {
             var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
@@ -250,7 +250,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a Comment switch")]
-        public void ClearAudioMetadataAcceptsCommentSwitch()
+        public void AcceptsCommentSwitch()
         {
             using (var ps = PowerShell.Create())
             {
@@ -266,7 +266,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata with Comment switch clears the Comment")]
-        public void ClearAudioMetadataCommentSwitchClearsComment()
+        public void CommentSwitchClearsComment()
         {
             var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
@@ -283,7 +283,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a Day switch")]
-        public void ClearAudioMetadataAcceptsDaySwitch()
+        public void AcceptsDaySwitch()
         {
             using (var ps = PowerShell.Create())
             {
@@ -299,7 +299,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata with Day switch clears the Day")]
-        public void ClearAudioMetadataDaySwitchClearsDay()
+        public void DaySwitchClearsDay()
         {
             var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
@@ -316,7 +316,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a Month switch")]
-        public void ClearAudioMetadataAcceptsMonthSwitch()
+        public void AcceptsMonthSwitch()
         {
             using (var ps = PowerShell.Create())
             {
@@ -332,7 +332,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata with Month switch clears the Month")]
-        public void ClearAudioMetadataMonthSwitchClearsMonth()
+        public void MonthSwitchClearsMonth()
         {
             var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
@@ -349,7 +349,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a Year switch")]
-        public void ClearAudioMetadataAcceptsYearSwitch()
+        public void AcceptsYearSwitch()
         {
             using (var ps = PowerShell.Create())
             {
@@ -365,7 +365,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata with Year switch clears the Year")]
-        public void ClearAudioMetadataYearSwitchClearsYear()
+        public void YearSwitchClearsYear()
         {
             var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
@@ -382,7 +382,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a TrackNumber switch")]
-        public void ClearAudioMetadataAcceptsTrackNumberSwitch()
+        public void AcceptsTrackNumberSwitch()
         {
             using (var ps = PowerShell.Create())
             {
@@ -398,7 +398,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata with TrackNumber switch clears the TrackNumber")]
-        public void ClearAudioMetadataTrackNumberSwitchClearsTrackNumber()
+        public void TrackNumberSwitchClearsTrackNumber()
         {
             var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
@@ -415,7 +415,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a TrackCount switch")]
-        public void ClearAudioMetadataAcceptsTrackCountSwitch()
+        public void AcceptsTrackCountSwitch()
         {
             using (var ps = PowerShell.Create())
             {
@@ -431,7 +431,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata with TrackCount switch clears the TrackCount")]
-        public void ClearAudioMetadataTrackCountSwitchClearsTrackCount()
+        public void TrackCountSwitchClearsTrackCount()
         {
             var metadata = new AudioMetadata();
             using (var ps = PowerShell.Create())
@@ -448,7 +448,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a PassThru switch")]
-        public void ClearAudioMetadataAcceptsPassThruSwitch()
+        public void AcceptsPassThruSwitch()
         {
             using (var ps = PowerShell.Create())
             {
@@ -464,7 +464,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata with PassThru switch returns the AudioFile")]
-        public void ClearAudioMetadataPassThruSwitchReturnsAudioFile()
+        public void PassThruSwitchReturnsAudioFile()
         {
             // ReSharper disable AssignNullToNotNullAttribute
             var audioFile = new AudioFile(null, null, fileInfo => new AudioMetadata(), null);
@@ -480,7 +480,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata has an OutputType of AudioFile")]
-        public void ClearAudioMetadataOutputTypeIsAudioFile()
+        public void OutputTypeIsAudioFile()
         {
             using (var ps = PowerShell.Create())
             {

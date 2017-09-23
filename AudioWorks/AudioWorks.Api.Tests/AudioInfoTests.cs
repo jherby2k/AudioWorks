@@ -10,7 +10,7 @@ namespace AudioWorks.Api.Tests
     public sealed class AudioInfoTests
     {
         [Fact(DisplayName = "AudioInfo throws an exception if the Description is null")]
-        public void AudioInfoDescriptionNullThrowsException()
+        public void DescriptionNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() =>
@@ -18,49 +18,49 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if Channels is less than 1")]
-        public void AudioInfoChannelsTooLowThrowsException()
+        public void ChannelsTooLowThrowsException()
         {
             Assert.Throws<AudioInvalidException>(() =>
                 AudioInfo.CreateForLossless("Test", 0, 16, 44100));
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if Channels is greater than 2")]
-        public void AudioInfoChannelsTooHighThrowsException()
+        public void ChannelsTooHighThrowsException()
         {
             Assert.Throws<AudioUnsupportedException>(() =>
                 AudioInfo.CreateForLossless("Test", 3, 16, 44100));
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if BitsPerSample is greater than 32")]
-        public void AudioInfoBitsPerSampleTooHighThrowsException()
+        public void BitsPerSampleTooHighThrowsException()
         {
             Assert.Throws<AudioUnsupportedException>(() =>
                 AudioInfo.CreateForLossless("Test", 2, 33, 44100));
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if BitsPerSample is less than 1")]
-        public void AudioInfoBitsPerSampleTooLowThrowsException()
+        public void BitsPerSampleTooLowThrowsException()
         {
             Assert.Throws<AudioInvalidException>(() =>
                 AudioInfo.CreateForLossless("Test", 2, 0, 44100));
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if SampleRate is less than 1")]
-        public void AudioInfoSampleRateTooLowThrowsException()
+        public void SampleRateTooLowThrowsException()
         {
             Assert.Throws<AudioInvalidException>(() =>
                 AudioInfo.CreateForLossless("Test", 2, 16, 0));
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if SampleCount is negative")]
-        public void AudioInfoSampleCountNegativeThrowsException()
+        public void SampleCountNegativeThrowsException()
         {
             Assert.Throws<AudioInvalidException>(() =>
                 AudioInfo.CreateForLossless("Test", 2, 16, 44100, -1));
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if BitRate is negative")]
-        public void AudioInfoBitRateNegativeThrowsException()
+        public void BitRateNegativeThrowsException()
         {
             Assert.Throws<AudioInvalidException>(() =>
                 AudioInfo.CreateForLossy("Test", 2, 44100, 0, -1));
@@ -68,7 +68,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioInfo has the expected Description property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndAudioInfo), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioInfoHasExpectedDescription([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        public void HasExpectedDescription([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -82,7 +82,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioInfo has the expected Channel property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndAudioInfo), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioInfoHasExpectedChannels([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        public void HasExpectedChannels([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -96,7 +96,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioInfo has the expected BitsPerSample property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndAudioInfo), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioInfoHasExpectedBitsPerSample([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        public void HasExpectedBitsPerSample([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -110,7 +110,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioInfo has the expected SampleRate property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndAudioInfo), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioInfoHasExpectedSampleRate([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        public void HasExpectedSampleRate([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -124,7 +124,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioInfo has the expected SampleCount property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndAudioInfo), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioInfoHasExpectedSampleCount([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        public void HasExpectedSampleCount([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -138,7 +138,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioInfo has the expected BitRate property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndAudioInfo), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioInfoHasExpectedBitRate([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        public void HasExpectedBitRate([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -152,7 +152,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioInfo has the expected PlayLength property value")]
         [MemberData(nameof(TestFilesValidDataSource.FileNamesAndAudioInfo), MemberType = typeof(TestFilesValidDataSource))]
-        public void AudioInfoHasExpectedPlayLength([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        public void HasExpectedPlayLength([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,

@@ -18,7 +18,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Save-AudioMetadata command exists")]
-        public void SaveAudioMetadataCommandExists()
+        public void CommandExists()
         {
             using (var ps = PowerShell.Create())
             {
@@ -37,7 +37,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Save-AudioMetadata accepts an AudioFile parameter")]
-        public void SaveAudioMetadataAcceptsAudioFileParameter()
+        public void AcceptsAudioFileParameter()
         {
             using (var ps = PowerShell.Create())
             {
@@ -52,7 +52,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Save-AudioMetadata requires the AudioFile parameter")]
-        public void SaveAudioMetadataRequiresAudioFileParameter()
+        public void RequiresAudioFileParameter()
         {
             using (var ps = PowerShell.Create())
             {
@@ -63,7 +63,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Save-AudioMetadata accepts the AudioFile parameter as the first argument")]
-        public void SaveAudioMetadataAcceptsAudioFileParameterAsFirstArgument()
+        public void AcceptsAudioFileParameterAsFirstArgument()
         {
             using (var ps = PowerShell.Create())
             {
@@ -78,7 +78,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Save-AudioMetadata accepts the AudioFile parameter from the pipeline")]
-        public void SaveAudioMetadataAcceptsAudioFileParameterFromPipeline()
+        public void AcceptsAudioFileParameterFromPipeline()
         {
             using (var ps = PowerShell.Create())
             {
@@ -102,7 +102,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Save-AudioMetadata accepts a PassThru switch")]
-        public void SaveAudioMetadataAcceptsPassThruSwitch()
+        public void AcceptsPassThruSwitch()
         {
             using (var ps = PowerShell.Create())
             {
@@ -118,7 +118,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Save-AudioMetadata with PassThru switch returns the AudioFile")]
-        public void SaveAudioMetadataPassThruSwitchReturnsAudioFile()
+        public void PassThruSwitchReturnsAudioFile()
         {
             // ReSharper disable AssignNullToNotNullAttribute
             var audioFile = new AudioFile(null, null, fileInfo => new AudioMetadata(), null);
@@ -134,7 +134,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Save-AudioMetadata has an OutputType of AudioFile")]
-        public void SaveAudioMetadataOutputTypeIsAudioFile()
+        public void OutputTypeIsAudioFile()
         {
             using (var ps = PowerShell.Create())
             {
