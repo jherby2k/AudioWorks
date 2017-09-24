@@ -97,7 +97,7 @@ namespace AudioWorks.Api.Tests
             },
             new object[]
             {
-                "Lame CBR 128 44100Hz Stereo (ID3v2.3 UTF16).mp3",
+                "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
                 new AudioMetadata
                 {
                     Title = "Test Title",
@@ -111,7 +111,7 @@ namespace AudioWorks.Api.Tests
                     TrackNumber = "01",
                     TrackCount = "12"
                 },
-                "31D7FA433DE238316E866C2F01438774"
+                "C3B980749573D1EC7F0BCDCCCCA18CAD"
             }
         };
 

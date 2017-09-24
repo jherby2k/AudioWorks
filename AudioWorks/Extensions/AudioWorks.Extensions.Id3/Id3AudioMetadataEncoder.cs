@@ -1,8 +1,8 @@
 ﻿using AudioWorks.Common;
 using Id3Lib;
 using Id3Lib.Exceptions;
-using System.IO;
 using JetBrains.Annotations;
+using System.IO;
 
 namespace AudioWorks.Extensions.Id3
 {
@@ -11,30 +11,43 @@ namespace AudioWorks.Extensions.Id3
     {
         public void WriteMetadata(FileStream stream, AudioMetadata metadata)
         {
-            // Determine how long the existing tag is, if present
-            var existingTagLength = 0u;
-            try
-            {
-                var existingTag = TagManager.Deserialize(stream);
-                existingTagLength = existingTag.Header.TagSizeWithHeaderFooter + existingTag.Header.PaddingSize;
-            }
-            catch (TagNotFoundException)
-            {
-            }
+            var existingTagLength = GetExistingTagLength(stream);
 
             var tagModel = new MetadataToTagModelAdapter(metadata);
             tagModel.Header.Version = 3;
             tagModel.UpdateSize();
 
-            // Seek just past the existing tag
-            stream.Seek(existingTagLength, SeekOrigin.Begin);
-
-            FullRewrite(stream, tagModel);
+            if (existingTagLength >= tagModel.Header.TagSizeWithHeaderFooter)
+                Overwrite(stream, existingTagLength, tagModel);
+            else
+                FullRewrite(stream, existingTagLength, tagModel);
         }
 
-        static void FullRewrite([NotNull] Stream stream, [NotNull] TagModel tagModel)
+        static uint GetExistingTagLength([NotNull] Stream stream)
+        {
+            try
+            {
+                var existingTag = TagManager.Deserialize(stream);
+                return existingTag.Header.TagSizeWithHeaderFooter + existingTag.Header.PaddingSize;
+            }
+            catch (TagNotFoundException)
+            {
+                return 0u;
+            }
+        }
+
+        static void Overwrite([NotNull] Stream stream, uint existingTagLength, [NotNull] TagModel tagModel)
+        {
+            // Write the new tag overtop of the old one, leaving unused space as padding
+            stream.Seek(0, SeekOrigin.Begin);
+            tagModel.Header.PaddingSize = existingTagLength - tagModel.Header.TagSizeWithHeaderFooter;
+            TagManager.Serialize(tagModel, stream);
+        }
+
+        static void FullRewrite([NotNull] Stream stream, uint existingTagLength, [NotNull] TagModel tagModel)
         {
             // Copy the audio to memory, then rewrite the whole stream
+            stream.Seek(existingTagLength, SeekOrigin.Begin);
             using (var tempStream = new MemoryStream())
             {
                 // Copy the MP3 portion to memory
