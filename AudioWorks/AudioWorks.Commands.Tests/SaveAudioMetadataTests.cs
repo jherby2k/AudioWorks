@@ -1,7 +1,11 @@
 ﻿using AudioWorks.Common;
 using JetBrains.Annotations;
 using System;
+using System.IO;
 using System.Management.Automation;
+using System.Security.Cryptography;
+using AudioWorks.Api;
+using AudioWorks.Api.Tests;
 using Xunit;
 
 namespace AudioWorks.Commands.Tests
@@ -44,7 +48,11 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata")
                     // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null));
+                    .AddParameter("AudioFile", new AudioFile(
+                        null,
+                        null,
+                        fileInfo => new AudioMetadata(),
+                        (fileInfo, metadata) => { }));
                     // ReSharper restore AssignNullToNotNullAttribute
                 ps.Invoke();
                 Assert.True(true);
@@ -70,7 +78,11 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata")
                     // ReSharper disable AssignNullToNotNullAttribute
-                    .AddArgument(new AudioFile(null, null, fileInfo => new AudioMetadata(), null));
+                    .AddArgument(new AudioFile(
+                        null,
+                        null,
+                        fileInfo => new AudioMetadata(),
+                        (fileInfo, metadata) => { }));
                     // ReSharper restore AssignNullToNotNullAttribute
                 ps.Invoke();
                 Assert.True(true);
@@ -86,7 +98,11 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Set-Variable")
                     .AddArgument("audioFile")
                     // ReSharper disable AssignNullToNotNullAttribute
-                    .AddArgument(new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
+                    .AddArgument(new AudioFile(
+                        null,
+                        null,
+                        fileInfo => new AudioMetadata(),
+                        (fileInfo, metadata) => { }))
                     // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("PassThru");
                 ps.AddCommand("Select-Object")
@@ -109,7 +125,11 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata")
                     // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
+                    .AddParameter("AudioFile", new AudioFile(
+                        null,
+                        null,
+                        fileInfo => new AudioMetadata(),
+                        (fileInfo, metadata) => { }))
                     // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("PassThru");
                 ps.Invoke();
@@ -121,7 +141,11 @@ namespace AudioWorks.Commands.Tests
         public void PassThruSwitchReturnsAudioFile()
         {
             // ReSharper disable AssignNullToNotNullAttribute
-            var audioFile = new AudioFile(null, null, fileInfo => new AudioMetadata(), null);
+            var audioFile = new AudioFile(
+                null,
+                null,
+                fileInfo => new AudioMetadata(),
+                (fileInfo, metadata) => { });
             // ReSharper restore AssignNullToNotNullAttribute
             using (var ps = PowerShell.Create())
             {
@@ -147,6 +171,68 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("ExpandProperty", "Type");
                 Assert.Equal(typeof(AudioFile), (Type)ps.Invoke()[0].BaseObject);
             }
+        }
+
+        [Theory(DisplayName = "Save-AudioMetadata creates the expected output")]
+        [MemberData(nameof(TestFilesValidSaveMetadataDataSource.Data), MemberType = typeof(TestFilesValidSaveMetadataDataSource))]
+        public void CreatesExpectedOutput(
+            int index,
+            [NotNull] string fileName,
+            [NotNull] AudioMetadata metadata,
+            [NotNull] string expectedHash)
+        {
+            var path = Path.Combine("Output", "Save-AudioMetadata", "Valid", $"{index:00} - {fileName}");
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            File.Copy(Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                "TestFiles",
+                "Valid",
+                fileName), path, true);
+            var audioFile = AudioFileFactory.Create(path);
+            audioFile.Metadata = metadata;
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Save-AudioMetadata")
+                    .AddArgument(audioFile);
+                ps.Invoke();
+            }
+            Assert.Equal(expectedHash, CalculateHash(audioFile));
+        }
+
+        [Theory(DisplayName = "Save-AudioMetadata method returns an error if the file is unsupported")]
+        [MemberData(nameof(TestFilesUnsupportedSaveMetadataDataSource.Data), MemberType = typeof(TestFilesUnsupportedSaveMetadataDataSource))]
+        public void UnsupportedFileReturnsError(int index, [NotNull] string fileName)
+        {
+            var path = Path.Combine("Output", "Save-AudioMetadata", "Unsupported", $"{index:00} - {fileName}");
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            File.Copy(Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                "TestFiles",
+                "Valid",
+                fileName), path, true);
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Save-AudioMetadata")
+                    .AddArgument(AudioFileFactory.Create(path));
+                ps.Invoke();
+                var errors = ps.Streams.Error.ReadAll();
+                Assert.True(
+                    errors.Count == 1 &&
+                    errors[0].Exception is AudioUnsupportedException &&
+                    errors[0].FullyQualifiedErrorId == $"{nameof(AudioUnsupportedException)},AudioWorks.Commands.SaveAudioMetadataCommand" &&
+                    errors[0].CategoryInfo.Category == ErrorCategory.InvalidData);
+            }
+        }
+
+        [Pure, NotNull]
+        static string CalculateHash([NotNull] AudioFile audioFile)
+        {
+            using (var md5 = MD5.Create())
+            using (var fileStream = audioFile.FileInfo.OpenRead())
+                return BitConverter.ToString(md5.ComputeHash(fileStream))
+                    .Replace("-", string.Empty);
         }
     }
 }

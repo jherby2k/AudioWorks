@@ -111,6 +111,7 @@ namespace AudioWorks.Api.Tests
                     TrackNumber = "01",
                     TrackCount = "12"
                 },
+                // "31D7FA433DE238316E866C2F01438774" expected without padding!
                 "C3B980749573D1EC7F0BCDCCCCA18CAD"
             }
         };

@@ -18,6 +18,15 @@ namespace AudioWorks.Commands
 
         protected override void ProcessRecord()
         {
+            try
+            {
+                AudioFile.SaveMetadata();
+            }
+            catch (AudioUnsupportedException e)
+            {
+                WriteError(new ErrorRecord(e, e.GetType().Name, ErrorCategory.InvalidData, AudioFile));
+            }
+
             if (PassThru)
                 WriteObject(AudioFile);
         }
