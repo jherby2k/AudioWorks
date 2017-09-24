@@ -2,6 +2,7 @@
 using Id3Lib;
 using Id3Lib.Exceptions;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Id3
 {
@@ -25,12 +26,17 @@ namespace AudioWorks.Extensions.Id3
             tagModel.Header.Version = 3;
             tagModel.UpdateSize();
 
+            // Seek just past the existing tag
+            stream.Seek(existingTagLength, SeekOrigin.Begin);
+
+            FullRewrite(stream, tagModel);
+        }
+
+        static void FullRewrite([NotNull] Stream stream, [NotNull] TagModel tagModel)
+        {
             // Copy the audio to memory, then rewrite the whole stream
             using (var tempStream = new MemoryStream())
             {
-                // Seek just past the existing tag
-                stream.Seek(existingTagLength, SeekOrigin.Begin);
-
                 // Copy the MP3 portion to memory
                 stream.CopyTo(tempStream);
 
