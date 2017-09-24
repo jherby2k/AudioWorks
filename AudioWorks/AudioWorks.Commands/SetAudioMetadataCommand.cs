@@ -83,7 +83,7 @@ namespace AudioWorks.Commands
             }
             catch (AudioMetadataInvalidException e)
             {
-                WriteError(new ErrorRecord(e, e.GetType().Name, ErrorCategory.InvalidData, AudioFile.Metadata));
+                WriteError(new ErrorRecord(e, e.GetType().Name, ErrorCategory.InvalidData, AudioFile));
             }
 
             if (PassThru)
