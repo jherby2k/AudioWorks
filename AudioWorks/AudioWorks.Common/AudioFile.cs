@@ -36,6 +36,6 @@ namespace AudioWorks.Common
             _saveMetadataAction = saveMetadataAction;
         }
 
-        public void SaveMetadata() => _saveMetadataAction(_metadata, FileInfo);
+        public void SaveMetadata() => _saveMetadataAction(Metadata, FileInfo);
     }
 }
