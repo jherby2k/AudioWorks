@@ -52,7 +52,7 @@ namespace AudioWorks.Commands.Tests
                         new FileInfo("Foo"),
                         null,
                         fileInfo => new AudioMetadata(),
-                        (fileInfo, metadata) => { }));
+                        (fileInfo, metadata, settings) => { }));
                     // ReSharper restore AssignNullToNotNullAttribute
                 ps.Invoke();
                 Assert.True(true);
@@ -82,7 +82,7 @@ namespace AudioWorks.Commands.Tests
                         new FileInfo("Foo"),
                         null,
                         fileInfo => new AudioMetadata(),
-                        (fileInfo, metadata) => { }));
+                        (fileInfo, metadata, settings) => { }));
                     // ReSharper restore AssignNullToNotNullAttribute
                 ps.Invoke();
                 Assert.True(true);
@@ -102,7 +102,7 @@ namespace AudioWorks.Commands.Tests
                         new FileInfo("Foo"),
                         null,
                         fileInfo => new AudioMetadata(),
-                        (fileInfo, metadata) => { }))
+                        (fileInfo, metadata, settings) => { }))
                     // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("PassThru");
                 ps.AddCommand("Select-Object")
@@ -129,7 +129,7 @@ namespace AudioWorks.Commands.Tests
                         new FileInfo("Foo"),
                         null,
                         fileInfo => new AudioMetadata(),
-                        (fileInfo, metadata) => { }))
+                        (fileInfo, metadata, settings) => { }))
                     // ReSharper restore AssignNullToNotNullAttribute
                     .AddParameter("PassThru");
                 ps.Invoke();
@@ -145,7 +145,7 @@ namespace AudioWorks.Commands.Tests
                 new FileInfo("Foo"),
                 null,
                 fileInfo => new AudioMetadata(),
-                (fileInfo, metadata) => { });
+                (fileInfo, metadata, settings) => { });
             // ReSharper restore AssignNullToNotNullAttribute
             using (var ps = PowerShell.Create())
             {
@@ -179,6 +179,7 @@ namespace AudioWorks.Commands.Tests
             int index,
             [NotNull] string fileName,
             [NotNull] AudioMetadata metadata,
+            [CanBeNull] SettingDictionary settings,
             [NotNull] string expectedHash)
         {
             var path = Path.Combine("Output", "Save-AudioMetadata", "Valid", $"{index:00} - {fileName}");
@@ -195,6 +196,9 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata")
                     .AddArgument(audioFile);
+                if (settings != null)
+                    foreach (var item in settings)
+                        ps.AddParameter(item.Key, item.Value);
                 ps.Invoke();
             }
             Assert.Equal(expectedHash, CalculateHash(audioFile));

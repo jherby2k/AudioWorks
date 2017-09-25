@@ -67,7 +67,7 @@ namespace AudioWorks.Api
             return new AudioMetadata();
         }
 
-        static void SaveMetadata([NotNull] AudioMetadata metadata, [NotNull] FileInfo fileInfo)
+        static void SaveMetadata([NotNull] AudioMetadata metadata, [NotNull] FileInfo fileInfo, [CanBeNull] SettingDictionary settings)
         {
             using (var fileStream = fileInfo.Open(FileMode.Open, FileAccess.ReadWrite))
             {
@@ -76,7 +76,7 @@ namespace AudioWorks.Api
                     "Extension", fileInfo.Extension))
                     using (var lifetimeContext = encoderFactory.CreateExport())
                     {
-                        lifetimeContext.Value.WriteMetadata(fileStream, metadata);
+                        lifetimeContext.Value.WriteMetadata(fileStream, metadata, settings);
                         return;
                     }
             }

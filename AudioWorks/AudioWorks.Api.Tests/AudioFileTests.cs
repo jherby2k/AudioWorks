@@ -56,6 +56,7 @@ namespace AudioWorks.Api.Tests
             int index,
             [NotNull] string fileName,
             [NotNull] AudioMetadata metadata,
+            [CanBeNull] SettingDictionary settings,
             [NotNull] string expectedHash)
         {
             var path = Path.Combine("Output", "SaveMetadata", "Valid", $"{index:00} - {fileName}");
@@ -67,7 +68,7 @@ namespace AudioWorks.Api.Tests
                 fileName), path, true);
             var audioFile = AudioFileFactory.Create(path);
             audioFile.Metadata = metadata;
-            audioFile.SaveMetadata();
+            audioFile.SaveMetadata(settings);
             Assert.Equal(expectedHash, CalculateHash(audioFile));
         }
 

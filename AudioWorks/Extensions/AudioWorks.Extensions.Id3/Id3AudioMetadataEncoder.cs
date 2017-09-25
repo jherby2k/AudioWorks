@@ -9,15 +9,25 @@ namespace AudioWorks.Extensions.Id3
     [AudioMetadataEncoderExport(".mp3")]
     sealed class Id3AudioMetadataEncoder : IAudioMetadataEncoder
     {
-        public void WriteMetadata(FileStream stream, AudioMetadata metadata)
+        public SettingInfoDictionary GetSettingInfo()
         {
+            return new SettingInfoDictionary
+            {
+                ["Padding"] = new SettingInfo(typeof(int))
+            };
+        }
+
+        public void WriteMetadata(FileStream stream, AudioMetadata metadata, SettingDictionary settings)
+        {
+            var sanitizedSettings = new SettingSanitizer(settings);
             var existingTagLength = GetExistingTagLength(stream);
 
             var tagModel = new MetadataToTagModelAdapter(metadata);
             tagModel.Header.Version = 3;
+            tagModel.Header.PaddingSize = sanitizedSettings.Padding;
             tagModel.UpdateSize();
 
-            if (existingTagLength >= tagModel.Header.TagSizeWithHeaderFooter)
+            if (!sanitizedSettings.ConfiguresPadding && existingTagLength >= tagModel.Header.TagSizeWithHeaderFooter)
                 Overwrite(stream, existingTagLength, tagModel);
             else
                 FullRewrite(stream, existingTagLength, tagModel);

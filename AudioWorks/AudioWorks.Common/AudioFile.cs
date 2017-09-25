@@ -8,7 +8,7 @@ namespace AudioWorks.Common
     public sealed class AudioFile
     {
         [NotNull] Func<FileInfo, AudioMetadata> _getMetadataFunc;
-        [NotNull] Action<AudioMetadata, FileInfo> _saveMetadataAction;
+        [NotNull] Action<AudioMetadata, FileInfo, SettingDictionary> _saveMetadataAction;
         [CanBeNull] AudioMetadata _metadata;
 
         [NotNull]
@@ -28,7 +28,7 @@ namespace AudioWorks.Common
             [NotNull] FileInfo fileInfo,
             [NotNull] AudioInfo audioInfo,
             [NotNull] Func<FileInfo, AudioMetadata> getMetadataFunc,
-            [NotNull] Action<AudioMetadata, FileInfo> saveMetadataAction)
+            [NotNull] Action<AudioMetadata, FileInfo, SettingDictionary> saveMetadataAction)
         {
             FileInfo = fileInfo;
             AudioInfo = audioInfo;
@@ -36,6 +36,7 @@ namespace AudioWorks.Common
             _saveMetadataAction = saveMetadataAction;
         }
 
-        public void SaveMetadata() => _saveMetadataAction(Metadata, FileInfo);
+        public void SaveMetadata([CanBeNull] SettingDictionary settings = null) =>
+            _saveMetadataAction(Metadata, FileInfo, settings);
     }
 }

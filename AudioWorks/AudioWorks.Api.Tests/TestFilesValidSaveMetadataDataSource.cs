@@ -25,6 +25,7 @@ namespace AudioWorks.Api.Tests
                     TrackNumber = "01",
                     TrackCount = "12"
                 },
+                null,
                 "31D7FA433DE238316E866C2F01438774"
             },
             new object[]
@@ -42,6 +43,7 @@ namespace AudioWorks.Api.Tests
                     TrackNumber = "01",
                     TrackCount = "12"
                 },
+                null,
                 "5A82FBCEC6956464CD6FF47CA01E1722"
             },
             new object[]
@@ -59,6 +61,7 @@ namespace AudioWorks.Api.Tests
                     TrackNumber = "01",
                     TrackCount = "12"
                 },
+                null,
                 "5A82FBCEC6956464CD6FF47CA01E1722"
             },
             new object[]
@@ -76,6 +79,7 @@ namespace AudioWorks.Api.Tests
                     Year = "2017",
                     TrackNumber = "01"
                 },
+                null,
                 "E2261D4647D4460A66A4D04504E09785"
             },
             new object[]
@@ -93,6 +97,7 @@ namespace AudioWorks.Api.Tests
                     Year = "2017",
                     TrackCount = "12"
                 },
+                null,
                 "3BA138E7E248A13ECEDEDCC9BAA5F00E"
             },
             new object[]
@@ -111,8 +116,30 @@ namespace AudioWorks.Api.Tests
                     TrackNumber = "01",
                     TrackCount = "12"
                 },
-                // "31D7FA433DE238316E866C2F01438774" expected without padding!
+                null,
                 "C3B980749573D1EC7F0BCDCCCCA18CAD"
+            },
+            new object[]
+            {
+                "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                },
+                new SettingDictionary
+                {
+                    ["Padding"] = 0
+                },
+                "31D7FA433DE238316E866C2F01438774"
             }
         };
 
