@@ -144,13 +144,7 @@ namespace AudioWorks.Api.Tests
         };
 
         [NotNull, ItemNotNull]
-        public static IEnumerable<object[]> FileNames
-        {
-            [UsedImplicitly] get => _data.Select((item, index) => new[] { index, item[0] });
-        }
-
-        [NotNull, ItemNotNull]
-        public static IEnumerable<object[]> Full
+        public static IEnumerable<object[]> Data
         {
             // Prepend an index to each row
             [UsedImplicitly] get => _data.Select((item, index) => item.Prepend(index).ToArray());
