@@ -60,7 +60,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioFile's SaveMetadata method creates the expected output")]
-        [MemberData(nameof(TestFilesValidSaveMetadataDataSource.Data), MemberType = typeof(TestFilesValidSaveMetadataDataSource))]
+        [MemberData(nameof(TestFilesValidSaveMetadataDataSource.Full), MemberType = typeof(TestFilesValidSaveMetadataDataSource))]
         public void SaveMetadataCreatesExpectedOutput(
             int index,
             [NotNull] string fileName,
@@ -93,7 +93,25 @@ namespace AudioWorks.Api.Tests
                 "Valid",
                 fileName), path, true);
             var audioFile = AudioFileFactory.Create(path);
-            Assert.Throws<AudioUnsupportedException>(() => audioFile.SaveMetadata());
+            Assert.Throws<AudioUnsupportedException>(() =>
+                audioFile.SaveMetadata());
+        }
+
+        [Theory(DisplayName = "AudioFile's SaveMetadata method throws an exception if an unexpected setting is provided")]
+        [MemberData(nameof(TestFilesValidSaveMetadataDataSource.FileNames), MemberType = typeof(TestFilesValidSaveMetadataDataSource))]
+        public void SaveMetadataUnexpectedSettingThrowsException(
+            int index,
+            [NotNull] string fileName)
+        {
+            var path = Path.Combine("Output", "SaveMetadata", "UnexpectedSetting", $"{index:00} - {fileName}");
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            File.Copy(Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                "TestFiles",
+                "Valid",
+                fileName), path, true);
+            Assert.Throws<ArgumentException>(() =>
+                AudioFileFactory.Create(path).SaveMetadata(new SettingDictionary { ["Foo"] = "Bar" }));
         }
 
         [Pure, NotNull]

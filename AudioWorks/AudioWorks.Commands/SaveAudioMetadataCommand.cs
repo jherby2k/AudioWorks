@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace AudioWorks.Commands
 {
     [PublicAPI]
-    [Cmdlet(VerbsData.Save, "AudioMetadata"), OutputType(typeof(AudioFile))]
+    [Cmdlet(VerbsData.Save, "AudioMetadata", SupportsShouldProcess = true), OutputType(typeof(AudioFile))]
     public sealed class SaveAudioMetadataCommand : Cmdlet, IDynamicParameters
     {
         [CanBeNull] RuntimeDefinedParameterDictionary _parameters;
@@ -21,7 +21,8 @@ namespace AudioWorks.Commands
         {
             try
             {
-                AudioFile.SaveMetadata(SettingAdapter.ParametersToSettings(_parameters));
+                if (ShouldProcess(AudioFile.FileInfo.Name))
+                    AudioFile.SaveMetadata(SettingAdapter.ParametersToSettings(_parameters));
             }
             catch (AudioUnsupportedException e)
             {

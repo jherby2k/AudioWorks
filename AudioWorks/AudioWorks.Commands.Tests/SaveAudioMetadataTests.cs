@@ -174,7 +174,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Theory(DisplayName = "Save-AudioMetadata creates the expected output")]
-        [MemberData(nameof(TestFilesValidSaveMetadataDataSource.Data), MemberType = typeof(TestFilesValidSaveMetadataDataSource))]
+        [MemberData(nameof(TestFilesValidSaveMetadataDataSource.Full), MemberType = typeof(TestFilesValidSaveMetadataDataSource))]
         public void CreatesExpectedOutput(
             int index,
             [NotNull] string fileName,

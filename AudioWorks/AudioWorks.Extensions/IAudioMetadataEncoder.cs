@@ -10,6 +10,6 @@ namespace AudioWorks.Extensions
         [NotNull]
         SettingInfoDictionary GetSettingInfo();
 
-        void WriteMetadata([NotNull] FileStream stream, [NotNull] AudioMetadata metadata, [CanBeNull] SettingDictionary settings);
+        void WriteMetadata([NotNull] FileStream stream, [NotNull] AudioMetadata metadata, [NotNull] SettingDictionary settings);
     }
 }

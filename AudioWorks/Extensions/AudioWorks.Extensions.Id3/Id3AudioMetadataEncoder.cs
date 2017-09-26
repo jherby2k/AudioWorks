@@ -19,15 +19,15 @@ namespace AudioWorks.Extensions.Id3
 
         public void WriteMetadata(FileStream stream, AudioMetadata metadata, SettingDictionary settings)
         {
-            var sanitizedSettings = new SettingSanitizer(settings);
             var existingTagLength = GetExistingTagLength(stream);
 
             var tagModel = new MetadataToTagModelAdapter(metadata);
             tagModel.Header.Version = 3;
-            tagModel.Header.PaddingSize = sanitizedSettings.Padding;
+            if (settings.TryGetValue("Padding", out var padding))
+                tagModel.Header.PaddingSize = (uint) (int) padding;
             tagModel.UpdateSize();
 
-            if (!sanitizedSettings.ConfiguresPadding && existingTagLength >= tagModel.Header.TagSizeWithHeaderFooter)
+            if (!settings.ContainsKey("Padding") && existingTagLength >= tagModel.Header.TagSizeWithHeaderFooter)
                 Overwrite(stream, existingTagLength, tagModel);
             else
                 FullRewrite(stream, existingTagLength, tagModel);

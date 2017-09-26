@@ -37,6 +37,6 @@ namespace AudioWorks.Common
         }
 
         public void SaveMetadata([CanBeNull] SettingDictionary settings = null) =>
-            _saveMetadataAction(Metadata, FileInfo, settings);
+            _saveMetadataAction(Metadata, FileInfo, settings ?? new SettingDictionary());
     }
 }

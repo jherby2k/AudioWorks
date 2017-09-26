@@ -3,6 +3,7 @@ using AudioWorks.Extensions;
 using JetBrains.Annotations;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace AudioWorks.Api
 {
@@ -26,7 +27,7 @@ namespace AudioWorks.Api
         {
             using (var fileStream = fileInfo.OpenRead())
             {
-                // Try each info decoder that supports this file extension:
+                // Try each info decoder that supports this file extension
                 foreach (var decoderFactory in ExtensionProvider.GetFactories<IAudioInfoDecoder>(
                     "Extension", fileInfo.Extension))
                     try
@@ -36,7 +37,7 @@ namespace AudioWorks.Api
                     }
                     catch (AudioUnsupportedException)
                     {
-                        // If a decoder wasn't supported, rewind the stream and try another:
+                        // If a decoder wasn't supported, rewind the stream and try another
                         fileStream.Position = 0;
                     }
             }
@@ -49,7 +50,7 @@ namespace AudioWorks.Api
         {
             using (var fileStream = fileInfo.OpenRead())
             {
-                // Try each decoder that supports this file extension:
+                // Try each decoder that supports this file extension
                 foreach (var decoderFactory in ExtensionProvider.GetFactories<IAudioMetadataDecoder>(
                     "Extension", fileInfo.Extension))
                     try
@@ -59,7 +60,7 @@ namespace AudioWorks.Api
                     }
                     catch (AudioUnsupportedException)
                     {
-                        // If a decoder wasn't supported, rewind the stream and try another:
+                        // If a decoder wasn't supported, rewind the stream and try another
                         fileStream.Position = 0;
                     }
             }
@@ -67,11 +68,14 @@ namespace AudioWorks.Api
             return new AudioMetadata();
         }
 
-        static void SaveMetadata([NotNull] AudioMetadata metadata, [NotNull] FileInfo fileInfo, [CanBeNull] SettingDictionary settings)
+        static void SaveMetadata([NotNull] AudioMetadata metadata, [NotNull] FileInfo fileInfo, [NotNull] SettingDictionary settings)
         {
+            // Make sure the provided settings are clean
+            AudioMetadataEncoderManager.GetSettingInfo(fileInfo.Extension).ValidateSettings(settings);
+
             using (var fileStream = fileInfo.Open(FileMode.Open, FileAccess.ReadWrite))
             {
-                // Try each encoder that supports this file extension:
+                // Try each encoder that supports this file extension
                 foreach (var encoderFactory in ExtensionProvider.GetFactories<IAudioMetadataEncoder>(
                     "Extension", fileInfo.Extension))
                     using (var lifetimeContext = encoderFactory.CreateExport())
