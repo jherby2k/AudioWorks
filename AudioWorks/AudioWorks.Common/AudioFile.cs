@@ -21,7 +21,7 @@ namespace AudioWorks.Common
         public AudioMetadata Metadata
         {
             get => _metadata ?? (_metadata = _getMetadataFunc(FileInfo));
-            set => _metadata = value;
+            set => _metadata = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         internal AudioFile(

@@ -50,6 +50,15 @@ namespace AudioWorks.Api.Tests
                 AudioFileFactory.Create(path).Metadata);
         }
 
+        [Fact(DisplayName = "AudioFile's Metadata property throws an exception when set to null")]
+        public void MetadataNullThrowsException()
+        {
+            // ReSharper disable AssignNullToNotNullAttribute
+            var audioFile = new AudioFile(null, null, null, null);
+            Assert.Throws<ArgumentNullException>(() => audioFile.Metadata = null);
+            // ReSharper restore AssignNullToNotNullAttribute
+        }
+
         [Theory(DisplayName = "AudioFile's SaveMetadata method creates the expected output")]
         [MemberData(nameof(TestFilesValidSaveMetadataDataSource.Data), MemberType = typeof(TestFilesValidSaveMetadataDataSource))]
         public void SaveMetadataCreatesExpectedOutput(
