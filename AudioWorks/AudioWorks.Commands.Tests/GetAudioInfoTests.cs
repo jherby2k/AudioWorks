@@ -1,5 +1,5 @@
 ﻿using AudioWorks.Api;
-using AudioWorks.Api.Tests;
+using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 using System;
@@ -121,7 +121,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Theory(DisplayName = "Get-AudioInfo returns an AudioInfo")]
-        [MemberData(nameof(TestFilesValidDataSource.FileNames), MemberType = typeof(TestFilesValidDataSource))]
+        [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
         public void ReturnsAudioInfo([NotNull] string fileName)
         {
             using (var ps = PowerShell.Create())

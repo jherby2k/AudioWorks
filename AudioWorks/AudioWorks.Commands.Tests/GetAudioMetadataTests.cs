@@ -1,10 +1,10 @@
-﻿using JetBrains.Annotations;
+﻿using AudioWorks.Api;
+using AudioWorks.Api.Tests.DataSources;
+using AudioWorks.Common;
+using JetBrains.Annotations;
 using System;
 using System.IO;
 using System.Management.Automation;
-using AudioWorks.Api;
-using AudioWorks.Api.Tests;
-using AudioWorks.Common;
 using Xunit;
 
 namespace AudioWorks.Commands.Tests
@@ -121,7 +121,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Theory(DisplayName = "Get-AudioMetadata returns an AudioMetadata")]
-        [MemberData(nameof(TestFilesValidDataSource.FileNames), MemberType = typeof(TestFilesValidDataSource))]
+        [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
         public void ReturnsAudioMetadata([NotNull] string fileName)
         {
             using (var ps = PowerShell.Create())

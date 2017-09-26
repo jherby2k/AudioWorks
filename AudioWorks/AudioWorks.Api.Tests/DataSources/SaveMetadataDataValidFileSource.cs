@@ -3,9 +3,9 @@ using JetBrains.Annotations;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AudioWorks.Api.Tests
+namespace AudioWorks.Api.Tests.DataSources
 {
-    public static class TestFilesValidSaveMetadataDataSource
+    public static class SaveMetadataDataValidFileSource
     {
         [NotNull, ItemNotNull] static readonly List<object[]> _data = new List<object[]>
         {

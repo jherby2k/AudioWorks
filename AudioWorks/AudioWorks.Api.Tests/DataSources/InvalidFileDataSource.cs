@@ -1,9 +1,9 @@
-﻿using JetBrains.Annotations;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 
-namespace AudioWorks.Api.Tests
+namespace AudioWorks.Api.Tests.DataSources
 {
-    public static class TestFilesInvalidDataSource
+    public static class InvalidFileDataSource
     {
         [NotNull, ItemNotNull] static readonly List<object[]> _data = new List<object[]>
         {
@@ -19,7 +19,7 @@ namespace AudioWorks.Api.Tests
         };
 
         [NotNull, ItemNotNull]
-        public static IEnumerable<object[]> FileNames
+        public static IEnumerable<object[]> Data
         {
             [UsedImplicitly] get => _data;
         }

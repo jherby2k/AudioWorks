@@ -1,3 +1,4 @@
+using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 using System;
@@ -11,7 +12,7 @@ namespace AudioWorks.Api.Tests
     public sealed class AudioFileTests
     {
         [Theory(DisplayName = "AudioFile has the expected FileInfo property value")]
-        [MemberData(nameof(TestFilesValidDataSource.FileNames), MemberType = typeof(TestFilesValidDataSource))]
+        [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
         public void HasExpectedFileInfo([NotNull] string fileName)
         {
             var path = Path.Combine(
@@ -25,7 +26,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioFile's AudioInfo property is set")]
-        [MemberData(nameof(TestFilesValidDataSource.FileNames), MemberType = typeof(TestFilesValidDataSource))]
+        [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
         public void HasAudioInfo([NotNull] string fileName)
         {
             var path = Path.Combine(
@@ -38,7 +39,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioFile's Metadata property is set")]
-        [MemberData(nameof(TestFilesValidDataSource.FileNames), MemberType = typeof(TestFilesValidDataSource))]
+        [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
         public void HasMetadata([NotNull] string fileName)
         {
             var path = Path.Combine(
@@ -60,7 +61,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioFile's SaveMetadata method creates the expected output")]
-        [MemberData(nameof(TestFilesValidSaveMetadataDataSource.Data), MemberType = typeof(TestFilesValidSaveMetadataDataSource))]
+        [MemberData(nameof(SaveMetadataDataValidFileSource.Data), MemberType = typeof(SaveMetadataDataValidFileSource))]
         public void SaveMetadataCreatesExpectedOutput(
             int index,
             [NotNull] string fileName,
@@ -82,7 +83,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioFile's SaveMetadata method throws an exception if the file is unsupported")]
-        [MemberData(nameof(TestFilesUnsupportedSaveMetadataDataSource.Data), MemberType = typeof(TestFilesUnsupportedSaveMetadataDataSource))]
+        [MemberData(nameof(SaveMetadataUnsupportedFileDataSource.Data), MemberType = typeof(SaveMetadataUnsupportedFileDataSource))]
         public void SaveMetadataUnsupportedFileThrowsException(int index, [NotNull] string fileName)
         {
             var path = Path.Combine("Output", "SaveMetadata", "Unsupported", $"{index:00} - {fileName}");
@@ -98,7 +99,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioFile's SaveMetadata method throws an exception if an unexpected setting is provided")]
-        [MemberData(nameof(TestFilesValidSettingsInvalidSaveMetadataDataSource.Data), MemberType = typeof(TestFilesValidSettingsInvalidSaveMetadataDataSource))]
+        [MemberData(nameof(SaveMetadataInvalidSettingsDataSource.Data), MemberType = typeof(SaveMetadataInvalidSettingsDataSource))]
         public void SaveMetadataUnexpectedSettingThrowsException(
             int index,
             [NotNull] string fileName,

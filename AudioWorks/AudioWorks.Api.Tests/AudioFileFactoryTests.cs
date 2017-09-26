@@ -2,6 +2,7 @@ using AudioWorks.Common;
 using JetBrains.Annotations;
 using System;
 using System.IO;
+using AudioWorks.Api.Tests.DataSources;
 using Xunit;
 
 namespace AudioWorks.Api.Tests
@@ -25,7 +26,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioFileFactory.Create throws an exception if the Path is an unsupported file")]
-        [MemberData(nameof(TestFilesUnsupportedDataSource.FileNames), MemberType = typeof(TestFilesUnsupportedDataSource))]
+        [MemberData(nameof(UnsupportedFileDataSource.Data), MemberType = typeof(UnsupportedFileDataSource))]
         public void CreatePathUnsupportedThrowsException([NotNull] string fileName)
         {
             Assert.Throws<AudioUnsupportedException>(() =>
@@ -37,7 +38,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioFileFactory.Create throws an exception if the Path is an invalid file")]
-        [MemberData(nameof(TestFilesInvalidDataSource.FileNames), MemberType = typeof(TestFilesInvalidDataSource))]
+        [MemberData(nameof(InvalidFileDataSource.Data), MemberType = typeof(InvalidFileDataSource))]
         public void CreatePathInvalidThrowsException([NotNull] string fileName)
         {
             Assert.Throws<AudioInvalidException>(() =>
@@ -49,7 +50,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioFileFactory.Create returns an AudioFile")]
-        [MemberData(nameof(TestFilesValidDataSource.FileNames), MemberType = typeof(TestFilesValidDataSource))]
+        [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
         public void CreateReturnsAudioFile([NotNull] string fileName)
         {
             Assert.IsAssignableFrom<AudioFile>(
