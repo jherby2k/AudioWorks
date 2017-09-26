@@ -13,7 +13,7 @@ namespace AudioWorks.Extensions.Id3
         {
             return new SettingInfoDictionary
             {
-                ["Padding"] = new SettingInfo(typeof(int))
+                ["Padding"] = new IntSettingInfo(0, 268_435_456)
             };
         }
 
