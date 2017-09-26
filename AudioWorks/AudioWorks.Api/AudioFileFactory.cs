@@ -3,7 +3,6 @@ using AudioWorks.Extensions;
 using JetBrains.Annotations;
 using System;
 using System.IO;
-using System.Linq;
 
 namespace AudioWorks.Api
 {
