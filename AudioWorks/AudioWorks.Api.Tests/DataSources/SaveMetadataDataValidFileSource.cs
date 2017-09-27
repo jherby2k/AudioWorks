@@ -3,9 +3,9 @@ using JetBrains.Annotations;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AudioWorks.Api.Tests
+namespace AudioWorks.Api.Tests.DataSources
 {
-    public static class TestFilesValidSaveMetadataDataSource
+    public static class SaveMetadataDataValidFileSource
     {
         [NotNull, ItemNotNull] static readonly List<object[]> _data = new List<object[]>
         {
@@ -144,13 +144,7 @@ namespace AudioWorks.Api.Tests
         };
 
         [NotNull, ItemNotNull]
-        public static IEnumerable<object[]> FileNames
-        {
-            [UsedImplicitly] get => _data.Select((item, index) => new[] { index, item[0] });
-        }
-
-        [NotNull, ItemNotNull]
-        public static IEnumerable<object[]> Full
+        public static IEnumerable<object[]> Data
         {
             // Prepend an index to each row
             [UsedImplicitly] get => _data.Select((item, index) => item.Prepend(index).ToArray());

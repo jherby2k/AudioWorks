@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AudioWorks.Api.Tests
+namespace AudioWorks.Api.Tests.DataSources
 {
-    public static class TestFilesUnsupportedSaveMetadataDataSource
+    public static class SaveMetadataUnsupportedFileDataSource
     {
         [NotNull, ItemNotNull] static readonly List<object[]> _data = new List<object[]>
         {

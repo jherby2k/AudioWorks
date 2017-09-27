@@ -1,4 +1,4 @@
-using AudioWorks.Api.Tests;
+using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 using System;
@@ -133,7 +133,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Theory(DisplayName = "Get-AudioFile returns an error if the Path is an unsupported file")]
-        [MemberData(nameof(TestFilesUnsupportedDataSource.FileNames), MemberType = typeof(TestFilesUnsupportedDataSource))]
+        [MemberData(nameof(UnsupportedFileDataSource.Data), MemberType = typeof(UnsupportedFileDataSource))]
         public void PathUnsupportedReturnsError([NotNull] string fileName)
         {
             using (var ps = PowerShell.Create())
@@ -156,7 +156,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Theory(DisplayName = "Get-AudioFile returns an error if the Path is an invalid file")]
-        [MemberData(nameof(TestFilesInvalidDataSource.FileNames), MemberType = typeof(TestFilesInvalidDataSource))]
+        [MemberData(nameof(InvalidFileDataSource.Data), MemberType = typeof(InvalidFileDataSource))]
         public void PathInvalidReturnsError([NotNull] string fileName)
         {
             using (var ps = PowerShell.Create())
@@ -179,7 +179,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Theory(DisplayName = "Get-AudioFile returns an AudioFile")]
-        [MemberData(nameof(TestFilesValidDataSource.FileNames), MemberType = typeof(TestFilesValidDataSource))]
+        [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
         public void ReturnsAudioFile([NotNull] string fileName)
         {
             using (var ps = PowerShell.Create())
@@ -196,7 +196,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Theory(DisplayName = "Get-AudioFile returns an AudioFile using a relative path")]
-        [MemberData(nameof(TestFilesValidDataSource.FileNames), MemberType = typeof(TestFilesValidDataSource))]
+        [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
         public void RelativePathReturnsAudioFile([NotNull] string fileName)
         {
             using (var ps = PowerShell.Create())

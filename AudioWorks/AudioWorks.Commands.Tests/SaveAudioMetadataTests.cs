@@ -1,11 +1,11 @@
-﻿using AudioWorks.Common;
+﻿using AudioWorks.Api;
+using AudioWorks.Api.Tests.DataSources;
+using AudioWorks.Common;
 using JetBrains.Annotations;
 using System;
 using System.IO;
 using System.Management.Automation;
 using System.Security.Cryptography;
-using AudioWorks.Api;
-using AudioWorks.Api.Tests;
 using Xunit;
 
 namespace AudioWorks.Commands.Tests
@@ -174,7 +174,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Theory(DisplayName = "Save-AudioMetadata creates the expected output")]
-        [MemberData(nameof(TestFilesValidSaveMetadataDataSource.Full), MemberType = typeof(TestFilesValidSaveMetadataDataSource))]
+        [MemberData(nameof(SaveMetadataDataValidFileSource.Data), MemberType = typeof(SaveMetadataDataValidFileSource))]
         public void CreatesExpectedOutput(
             int index,
             [NotNull] string fileName,
@@ -205,7 +205,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Theory(DisplayName = "Save-AudioMetadata method returns an error if the file is unsupported")]
-        [MemberData(nameof(TestFilesUnsupportedSaveMetadataDataSource.Data), MemberType = typeof(TestFilesUnsupportedSaveMetadataDataSource))]
+        [MemberData(nameof(SaveMetadataUnsupportedFileDataSource.Data), MemberType = typeof(SaveMetadataUnsupportedFileDataSource))]
         public void UnsupportedFileReturnsError(int index, [NotNull] string fileName)
         {
             var path = Path.Combine("Output", "Save-AudioMetadata", "Unsupported", $"{index:00} - {fileName}");

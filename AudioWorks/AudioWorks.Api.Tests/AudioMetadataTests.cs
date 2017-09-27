@@ -1,4 +1,5 @@
-﻿using AudioWorks.Common;
+﻿using AudioWorks.Api.Tests.DataSources;
+using AudioWorks.Common;
 using JetBrains.Annotations;
 using System;
 using System.IO;
@@ -446,7 +447,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Title property value")]
-        [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
+        [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
         public void HasExpectedTitle([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
@@ -460,7 +461,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Artist property value")]
-        [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
+        [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
         public void HasExpectedArtist([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
@@ -474,7 +475,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Album property value")]
-        [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
+        [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
         public void HasExpectedAlbum([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
@@ -488,7 +489,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Genre property value")]
-        [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
+        [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
         public void HasExpectedGenre([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
@@ -502,7 +503,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Comment property value")]
-        [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
+        [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
         public void HasExpectedComment([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
@@ -516,7 +517,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Day property value")]
-        [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
+        [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
         public void HasExpectedDay([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
@@ -530,7 +531,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Month property value")]
-        [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
+        [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
         public void HasExpectedMonth([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
@@ -544,7 +545,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Year property value")]
-        [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
+        [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
         public void HasExpectedYear([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
@@ -558,7 +559,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected TrackNumber property value")]
-        [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
+        [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
         public void HasExpectedTrackNumber([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
@@ -572,7 +573,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected TrackCount property value")]
-        [MemberData(nameof(TestFilesValidDataSource.FileNamesAndMetadata), MemberType = typeof(TestFilesValidDataSource))]
+        [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
         public void HasExpectedTrackCount([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
