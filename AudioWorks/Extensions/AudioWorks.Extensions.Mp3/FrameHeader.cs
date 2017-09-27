@@ -1,17 +1,20 @@
 ﻿using AudioWorks.Common;
 using JetBrains.Annotations;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AudioWorks.Extensions.Mp3
 {
     sealed class FrameHeader
     {
+        [SuppressMessage("Performance", "CA1814:Prefer jagged arrays over multidimensional", Justification = "Does not waste space.")]
         static readonly int[,] _bitRateTable =
         {
             { 0, 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320 },
             { 0, 8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 112, 128, 144, 160 }
         };
 
+        [SuppressMessage("Performance", "CA1814:Prefer jagged arrays over multidimensional", Justification = "Does not waste space.")]
         static readonly int[,] _sampleRateTable =
         {
             { 44100, 48000, 32000 },
