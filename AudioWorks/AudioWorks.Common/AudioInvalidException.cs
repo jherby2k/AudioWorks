@@ -9,20 +9,22 @@ namespace AudioWorks.Common
     [Serializable]
     public sealed class AudioInvalidException : AudioException
     {
+        [CanBeNull, NonSerialized] readonly FileInfo _fileInfo;
+
         [CanBeNull]
-        public FileInfo FileInfo { get; }
+        public FileInfo FileInfo => _fileInfo;
 
         public AudioInvalidException([CanBeNull] string message, [CanBeNull] string fileName)
             : base(message)
         {
             if (fileName != null)
-                FileInfo = new FileInfo(fileName);
+                _fileInfo = new FileInfo(fileName);
         }
 
         public AudioInvalidException([CanBeNull] string message, [CanBeNull] FileInfo fileInfo)
             : base(message)
         {
-            FileInfo = fileInfo;
+            _fileInfo = fileInfo;
         }
 
         public AudioInvalidException()
@@ -42,6 +44,15 @@ namespace AudioWorks.Common
         AudioInvalidException([NotNull] SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
+            var fileName = info.GetString("fileName");
+            if (fileName != null)
+                _fileInfo = new FileInfo(fileName);
+        }
+
+        public override void GetObjectData([NotNull] SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue("fileName", _fileInfo?.FullName);
         }
     }
 }
