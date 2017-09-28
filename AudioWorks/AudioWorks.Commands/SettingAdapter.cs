@@ -30,7 +30,7 @@ namespace AudioWorks.Commands
                 if (item.Value is IntSettingInfo intValue)
                     attributes.Add(new ValidateRangeAttribute(intValue.MinValue, intValue.MaxValue));
 
-                result.Add(item.Key, new RuntimeDefinedParameter(item.Key, item.Value.Type, attributes));
+                result.Add(item.Key, new RuntimeDefinedParameter(item.Key, item.Value.SettingType, attributes));
             }
             return result;
         }

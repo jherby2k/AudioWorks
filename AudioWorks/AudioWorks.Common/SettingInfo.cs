@@ -7,11 +7,11 @@ namespace AudioWorks.Common
     public abstract class SettingInfo
     {
         [NotNull]
-        public Type Type { get; }
+        public Type SettingType { get; }
 
-        protected SettingInfo([NotNull] Type type)
+        protected SettingInfo([NotNull] Type settingType)
         {
-            Type = type ?? throw new ArgumentNullException(nameof(type));
+            SettingType = settingType ?? throw new ArgumentNullException(nameof(settingType));
         }
     }
 }

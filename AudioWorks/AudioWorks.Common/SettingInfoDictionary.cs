@@ -13,8 +13,8 @@ namespace AudioWorks.Common
             {
                 if (!TryGetValue(setting.Key, out var settingInfo))
                     throw new ArgumentException($"{setting.Key} is not a supported setting.");
-                if (setting.Value.GetType() != settingInfo.Type)
-                    throw new ArgumentException($"{setting.Key} expects a value of type {settingInfo.Type}.");
+                if (setting.Value.GetType() != settingInfo.SettingType)
+                    throw new ArgumentException($"{setting.Key} expects a value of type {settingInfo.SettingType}.");
                 if (settingInfo is IntSettingInfo intSettingInfo)
                 {
                     if ((int) setting.Value > intSettingInfo.MaxValue)
