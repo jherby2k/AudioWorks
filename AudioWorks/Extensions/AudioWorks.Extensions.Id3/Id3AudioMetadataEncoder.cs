@@ -3,6 +3,7 @@ using Id3Lib;
 using Id3Lib.Exceptions;
 using JetBrains.Annotations;
 using System.IO;
+using System.Text;
 
 namespace AudioWorks.Extensions.Id3
 {
@@ -40,6 +41,12 @@ namespace AudioWorks.Extensions.Id3
                 Overwrite(stream, existingTagLength, tagModel);
             else
                 FullRewrite(stream, existingTagLength, tagModel);
+
+            // Remove the ID3v1 tag, if present
+            stream.Seek(-128, SeekOrigin.End);
+            using (var reader = new BinaryReader(stream, Encoding.ASCII, true))
+                if (new string(reader.ReadChars(3)) == "TAG")
+                    stream.SetLength(stream.Length - 128);
         }
 
         static uint GetExistingTagLength([NotNull] Stream stream)
