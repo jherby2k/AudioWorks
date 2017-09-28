@@ -8,10 +8,10 @@ namespace AudioWorks.Api.Tests
 {
     public sealed class AudioInvalidExceptionTests
     {
-        [Fact(DisplayName = "AudioInvalidException is an Exception")]
+        [Fact(DisplayName = "AudioInvalidException is an AudioException")]
         public void IsException()
         {
-            Assert.IsAssignableFrom<Exception>(new AudioInvalidException());
+            Assert.IsAssignableFrom<AudioException>(new AudioInvalidException());
         }
 
         [Fact(DisplayName = "AudioInvalidException's FileInfo property is properly serialized")]
