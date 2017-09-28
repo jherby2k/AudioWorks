@@ -6,7 +6,7 @@ namespace AudioWorks.Common
 {
     [PublicAPI]
     [Serializable]
-    public sealed class AudioMetadataInvalidException : Exception
+    public sealed class AudioMetadataInvalidException : AudioException
     {
         public AudioMetadataInvalidException()
         {
