@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Composition.Hosting;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -8,15 +9,31 @@ namespace AudioWorks.Extensions
 {
     abstract class ExtensionContainerBase
     {
-        protected static readonly DirectoryInfo ExtensionRoot = new DirectoryInfo(Path.Combine(
-            Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath) ??
-            string.Empty, "Extensions"));
+        static readonly DirectoryInfo _extensionRoot = new DirectoryInfo(Path.Combine(
+            Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath) ?? string.Empty,
+            "Extensions"));
+
+        protected static CompositionHost CompositionHost { get; } = new ContainerConfiguration()
+            .WithAssemblies(_extensionRoot
+                .EnumerateFiles("AudioWorks.Extensions.*.dll", SearchOption.AllDirectories)
+                .Select(f => f.FullName)
+                .Select(Assembly.LoadFrom))
+            .CreateContainer();
 
         static ExtensionContainerBase()
         {
-            // Search all extension directories for any references that can't be resolved
+            // Search all extension directories for unresolved references
+
+            // .NET Core
             AssemblyLoadContext.Default.Resolving += (context, name) =>
-                AssemblyLoadContext.Default.LoadFromAssemblyPath(ExtensionRoot
+                AssemblyLoadContext.Default.LoadFromAssemblyPath(_extensionRoot
+                    .EnumerateFiles($"{name.Name}.dll", SearchOption.AllDirectories)
+                    .FirstOrDefault()?
+                    .FullName);
+
+            // Full Framework
+            AppDomain.CurrentDomain.AssemblyResolve += (context, name) =>
+                Assembly.LoadFrom(_extensionRoot
                     .EnumerateFiles($"{name.Name}.dll", SearchOption.AllDirectories)
                     .FirstOrDefault()?
                     .FullName);
