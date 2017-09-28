@@ -22,6 +22,14 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Lame CBR 128 44100Hz Stereo.mp3",
                 new SettingDictionary
                 {
+                    ["Version"] = "1.5"
+                }
+            },
+            new object[]
+            {
+                "Lame CBR 128 44100Hz Stereo.mp3",
+                new SettingDictionary
+                {
                     ["Padding"] = "Foo"
                 }
             },

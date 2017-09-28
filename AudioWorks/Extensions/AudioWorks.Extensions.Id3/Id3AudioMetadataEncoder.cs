@@ -13,6 +13,7 @@ namespace AudioWorks.Extensions.Id3
         {
             return new SettingInfoDictionary
             {
+                ["Version"] = new StringSettingInfo("2.3", "2.4"),
                 ["Padding"] = new IntSettingInfo(0, 268_435_456)
             };
         }
@@ -22,9 +23,17 @@ namespace AudioWorks.Extensions.Id3
             var existingTagLength = GetExistingTagLength(stream);
 
             var tagModel = new MetadataToTagModelAdapter(metadata);
-            tagModel.Header.Version = 3;
+
+            // Set the version (default to 3)
+            if (settings.TryGetValue("Version", out var version) && (string) version == "2.4")
+                tagModel.Header.Version = 4;
+            else
+                tagModel.Header.Version = 3;
+
+            // Set the padding (default to 0)
             if (settings.TryGetValue("Padding", out var padding))
                 tagModel.Header.PaddingSize = (uint) (int) padding;
+
             tagModel.UpdateSize();
 
             if (!settings.ContainsKey("Padding") && existingTagLength >= tagModel.Header.TagSizeWithHeaderFooter)

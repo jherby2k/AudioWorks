@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AudioWorks.Common
 {
@@ -15,14 +16,21 @@ namespace AudioWorks.Common
                     throw new ArgumentException($"{setting.Key} is not a supported setting.");
                 if (setting.Value.GetType() != settingInfo.SettingType)
                     throw new ArgumentException($"{setting.Key} expects a value of type {settingInfo.SettingType}.");
-                if (settingInfo is IntSettingInfo intSettingInfo)
+
+                switch (settingInfo)
                 {
-                    if ((int) setting.Value > intSettingInfo.MaxValue)
-                        throw new ArgumentException(
-                            $"{setting.Key} is out of range (maximum is {intSettingInfo.MaxValue}).");
-                    if ((int) setting.Value < intSettingInfo.MinValue)
-                        throw new ArgumentException(
-                            $"{setting.Key} is out of range (minimum is {intSettingInfo.MinValue}).");
+                    case IntSettingInfo intSettingInfo:
+                        if ((int) setting.Value > intSettingInfo.MaxValue)
+                            throw new ArgumentException(
+                                $"{setting.Key} is out of range (maximum is {intSettingInfo.MaxValue}).");
+                        if ((int) setting.Value < intSettingInfo.MinValue)
+                            throw new ArgumentException(
+                                $"{setting.Key} is out of range (minimum is {intSettingInfo.MinValue}).");
+                        break;
+                    case StringSettingInfo stringSettingInfo:
+                        if (!stringSettingInfo.ValidSettings.Contains(setting.Value))
+                            throw new ArgumentException($"{setting.Value} is not a valid {setting.Key} value.");
+                        break;
                 }
             }
         }

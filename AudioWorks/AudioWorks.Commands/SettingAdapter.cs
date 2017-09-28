@@ -27,9 +27,15 @@ namespace AudioWorks.Commands
             foreach (var item in settingInfo)
             {
                 var attributes = new Collection<Attribute> { new ParameterAttribute() };
-                if (item.Value is IntSettingInfo intValue)
-                    attributes.Add(new ValidateRangeAttribute(intValue.MinValue, intValue.MaxValue));
-
+                switch (item.Value)
+                {
+                    case IntSettingInfo intValue:
+                        attributes.Add(new ValidateRangeAttribute(intValue.MinValue, intValue.MaxValue));
+                        break;
+                    case StringSettingInfo stringValue:
+                        attributes.Add(new ValidateSetAttribute(stringValue.ValidSettings));
+                        break;
+                }
                 result.Add(item.Key, new RuntimeDefinedParameter(item.Key, item.Value.SettingType, attributes));
             }
             return result;
