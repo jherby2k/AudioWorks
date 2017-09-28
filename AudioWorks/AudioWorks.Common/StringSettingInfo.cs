@@ -5,12 +5,12 @@ namespace AudioWorks.Common
     public sealed class StringSettingInfo : SettingInfo
     {
         [NotNull, ItemNotNull]
-        public string[] ValidSettings { get; set; }
+        public string[] AcceptedValues { get; set; }
 
-        public StringSettingInfo([NotNull, ItemNotNull] params string[] validSettings)
+        public StringSettingInfo([NotNull, ItemNotNull] params string[] acceptedValues)
             : base(typeof(string))
         {
-            ValidSettings = validSettings;
+            AcceptedValues = acceptedValues;
         }
     }
 }

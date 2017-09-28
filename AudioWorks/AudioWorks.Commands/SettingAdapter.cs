@@ -21,22 +21,22 @@ namespace AudioWorks.Commands
         }
 
         [NotNull]
-        internal static RuntimeDefinedParameterDictionary SettingInfoToParameters([NotNull] SettingInfoDictionary settingInfo)
+        internal static RuntimeDefinedParameterDictionary SettingInfoToParameters([NotNull] SettingInfoDictionary settingInfos)
         {
             var result = new RuntimeDefinedParameterDictionary();
-            foreach (var item in settingInfo)
+            foreach (var item in settingInfos)
             {
                 var attributes = new Collection<Attribute> { new ParameterAttribute() };
                 switch (item.Value)
                 {
-                    case IntSettingInfo intValue:
-                        attributes.Add(new ValidateRangeAttribute(intValue.MinValue, intValue.MaxValue));
+                    case IntSettingInfo intSettingInfo:
+                        attributes.Add(new ValidateRangeAttribute(intSettingInfo.MinValue, intSettingInfo.MaxValue));
                         break;
-                    case StringSettingInfo stringValue:
-                        attributes.Add(new ValidateSetAttribute(stringValue.ValidSettings));
+                    case StringSettingInfo stringSettingInfo:
+                        attributes.Add(new ValidateSetAttribute(stringSettingInfo.AcceptedValues));
                         break;
                 }
-                result.Add(item.Key, new RuntimeDefinedParameter(item.Key, item.Value.SettingType, attributes));
+                result.Add(item.Key, new RuntimeDefinedParameter(item.Key, item.Value.ValueType, attributes));
             }
             return result;
         }

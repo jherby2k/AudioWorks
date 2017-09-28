@@ -14,8 +14,8 @@ namespace AudioWorks.Common
             {
                 if (!TryGetValue(setting.Key, out var settingInfo))
                     throw new ArgumentException($"{setting.Key} is not a supported setting.");
-                if (setting.Value.GetType() != settingInfo.SettingType)
-                    throw new ArgumentException($"{setting.Key} expects a value of type {settingInfo.SettingType}.");
+                if (setting.Value.GetType() != settingInfo.ValueType)
+                    throw new ArgumentException($"{setting.Key} expects a value of type {settingInfo.ValueType}.");
 
                 switch (settingInfo)
                 {
@@ -28,7 +28,7 @@ namespace AudioWorks.Common
                                 $"{setting.Key} is out of range (minimum is {intSettingInfo.MinValue}).");
                         break;
                     case StringSettingInfo stringSettingInfo:
-                        if (!stringSettingInfo.ValidSettings.Contains(setting.Value))
+                        if (!stringSettingInfo.AcceptedValues.Contains(setting.Value))
                             throw new ArgumentException($"{setting.Value} is not a valid {setting.Key} value.");
                         break;
                 }
