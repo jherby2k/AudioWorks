@@ -143,7 +143,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             new object[]
             {
-                "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
+                "Lame CBR 128 44100Hz Stereo.mp3",
                 new AudioMetadata
                 {
                     Title = "Test Title",
@@ -162,6 +162,28 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["Padding"] = 0
                 },
                 "31D7FA433DE238316E866C2F01438774"
+            },
+            new object[]
+            {
+                "Lame CBR 128 44100Hz Stereo.mp3",
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                },
+                new SettingDictionary
+                {
+                    ["Padding"] = 100
+                },
+                "A9B135DF83B1C5B1B661EA01A01F5309"
             },
             new object[]
             {
