@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Flac
@@ -28,5 +29,23 @@ namespace AudioWorks.Extensions.Flac
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate void StreamDecoderErrorCallback(IntPtr handle, DecoderErrorStatus error, IntPtr userData);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate IntPtr IoCallbacksReadCallback(IntPtr readBuffer, IntPtr bufferSize, IntPtr numberOfRecords, IntPtr handle);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate IntPtr IoCallbacksWriteCallback(IntPtr writeBuffer, IntPtr bufferSize, IntPtr numberOfRecords, IntPtr handle);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate int IoCallbacksSeekCallback(IntPtr handle, long offset, SeekOrigin whence);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate long IoCallbacksTellCallback(IntPtr handle);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate int IoCallbacksEofCallback(IntPtr handle);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate int IoCallbacksCloseCallback(IntPtr handle);
     }
 }
