@@ -19,40 +19,30 @@ namespace AudioWorks.Extensions.Flac
         public void WriteMetadata(FileStream stream, AudioMetadata metadata, SettingDictionary settings)
         {
             var padding = GetPadding(settings);
-            NativeVorbisCommentBlock vorbisCommentBlock = null;
 
-            try
+            using (var chain = new NativeMetadataChain(stream))
+            using (var comments = new MetadataToVorbisCommentAdapter(metadata))
             {
-                using (var chain = new NativeMetadataChain(stream))
-                {
-                    chain.Read();
+                chain.Read();
 
-                    vorbisCommentBlock = new MetadataToVorbisCommentAdapter(metadata);
+                // Iterate over the existing blocks, replacing and deleting as needed:
+                using (var iterator = chain.GetIterator())
+                    UpdateChain(iterator, comments, padding);
 
-                    // Iterate over the existing blocks, replacing and deleting as needed:
-                    using (var iterator = chain.GetIterator())
-                        UpdateChain(iterator, vorbisCommentBlock, padding);
+                // If FLAC requests a temporary file, use a MemoryStream instead. Then overwrite the original:
+                if (chain.CheckIfTempFileNeeded(!padding.HasValue))
+                    using (var tempStream = new MemoryStream())
+                    {
+                        chain.WriteWithTempFile(!padding.HasValue, tempStream);
 
-                    // If FLAC requests a temporary file, use a MemoryStream instead. Then overwrite the original:
-                    if (chain.CheckIfTempFileNeeded(!padding.HasValue))
-                        using (var tempStream = new MemoryStream())
-                        {
-                            chain.WriteWithTempFile(!padding.HasValue, tempStream);
-
-                            // Clear the original stream, and copy the temporary one over it:
-                            stream.SetLength(tempStream.Length);
-                            stream.Position = 0;
-                            tempStream.WriteTo(stream);
-                        }
-                    else
-                        chain.Write(!padding.HasValue);
-                }
+                        // Clear the original stream, and copy the temporary one over it:
+                        stream.SetLength(tempStream.Length);
+                        stream.Position = 0;
+                        tempStream.WriteTo(stream);
+                    }
+                else
+                    chain.Write(!padding.HasValue);
             }
-            finally
-            {
-                vorbisCommentBlock?.Dispose();
-            }
-
         }
 
         [Pure]
