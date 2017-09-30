@@ -199,7 +199,79 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackCount = "12"
                 },
                 null,
-                "FA8A1F104D3D15BD698AE3F9C8D733D0"
+                "98350CA7615C73841CAF148CDB7DE496"
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo.flac",
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                },
+                null,
+                "48AF7FF63B3013026C5F52B0583E2A47"
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo.flac",
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                },
+                null,
+                "48AF7FF63B3013026C5F52B0583E2A47"
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo.flac",
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                },
+                null,
+                "C71F8BFCD9CFC110D8917EC65FCC1591"
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo.flac",
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackCount = "12"
+                },
+                null,
+                "5970D8A15E2A1F1DE56502167BF31130"
             },
             new object[]
             {
@@ -218,7 +290,51 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackCount = "12"
                 },
                 null,
-                "FA8A1F104D3D15BD698AE3F9C8D733D0"
+                "98350CA7615C73841CAF148CDB7DE496"
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo.flac",
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                },
+                new SettingDictionary
+                {
+                    ["Padding"] = 0
+                },
+                "125A73BB863C358B6A1CCF0C89C13C63"
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo.flac",
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                },
+                new SettingDictionary
+                {
+                    ["Padding"] = 100
+                },
+                "0E0E483A3B65B264F6E5FA8EC27112E5"
             }
         };
 
