@@ -23,7 +23,7 @@ namespace AudioWorks.Extensions.Vorbis
 
                     do
                     {
-                        // Read from the buffer into a page:
+                        // Read from the buffer into a page
                         while (!sync.PageOut(out page))
                         {
                             var bytesRead = stream.Read(buffer, 0, buffer.Length);

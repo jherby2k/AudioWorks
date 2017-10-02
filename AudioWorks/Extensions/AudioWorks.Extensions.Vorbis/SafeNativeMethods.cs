@@ -115,10 +115,37 @@ namespace AudioWorks.Extensions.Vorbis
             throw new NotImplementedException();
         }
 
+        internal static bool OggStreamPageOut(IntPtr streamState, out OggPage page)
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                return WinOggStreamPageOut(streamState, out page) != 0;
+
+            throw new NotImplementedException();
+        }
+
+        internal static void OggStreamPacketIn(IntPtr streamState, ref OggPacket packet)
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                WinOggStreamPacketIn(streamState, ref packet);
+                return;
+            }
+
+            throw new NotImplementedException();
+        }
+
         internal static bool OggStreamPacketOut(IntPtr streamState, out OggPacket packet)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 return WinOggStreamPacketOut(streamState, out packet) == 1;
+
+            throw new NotImplementedException();
+        }
+
+        internal static bool OggStreamFlush(IntPtr streamState, out OggPage page)
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                return WinOggStreamFlush(streamState, out page) != 0;
 
             throw new NotImplementedException();
         }
@@ -145,11 +172,33 @@ namespace AudioWorks.Extensions.Vorbis
             throw new NotImplementedException();
         }
 
+        internal static void VorbisCommentAddTag(ref VorbisComment comment, byte[] tag, byte[] contents)
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                WinVorbisCommentAddTag(ref comment, tag, contents);
+                return;
+            }
+
+            throw new NotImplementedException();
+        }
+
         internal static void VorbisCommentClear(ref VorbisComment comment)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 WinVorbisCommentClear(ref comment);
+                return;
+            }
+
+            throw new NotImplementedException();
+        }
+
+        internal static void VorbisCommentHeaderOut(ref VorbisComment comment, out OggPacket packet)
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                WinVorbisCommentHeaderOut(ref comment, out packet);
                 return;
             }
 
@@ -228,8 +277,17 @@ namespace AudioWorks.Extensions.Vorbis
         [DllImport(_winOggLibrary, EntryPoint = "ogg_stream_pagein", CallingConvention = CallingConvention.Cdecl)]
         static extern int WinOggStreamPageIn(IntPtr streamState, ref OggPage page);
 
+        [DllImport(_winOggLibrary, EntryPoint = "ogg_stream_pageout", CallingConvention = CallingConvention.Cdecl)]
+        static extern int WinOggStreamPageOut(IntPtr streamState, out OggPage page);
+
+        [DllImport(_winOggLibrary, EntryPoint = "ogg_stream_packetin", CallingConvention = CallingConvention.Cdecl)]
+        static extern int WinOggStreamPacketIn(IntPtr streamState, ref OggPacket packet);
+
         [DllImport(_winOggLibrary, EntryPoint = "ogg_stream_packetout", CallingConvention = CallingConvention.Cdecl)]
         static extern int WinOggStreamPacketOut(IntPtr streamState, out OggPacket packet);
+
+        [DllImport(_winOggLibrary, EntryPoint = "ogg_stream_flush", CallingConvention = CallingConvention.Cdecl)]
+        static extern int WinOggStreamFlush(IntPtr streamState, out OggPage page);
 
         [DllImport(_winOggLibrary, EntryPoint = "ogg_stream_clear", CallingConvention = CallingConvention.Cdecl)]
         static extern void WinOggStreamClear(IntPtr streamState);
@@ -237,8 +295,14 @@ namespace AudioWorks.Extensions.Vorbis
         [DllImport(_winVorbisLibrary, EntryPoint = "vorbis_comment_init", CallingConvention = CallingConvention.Cdecl)]
         static extern void WinVorbisCommentInit(out VorbisComment comment);
 
+        [DllImport(_winVorbisLibrary, EntryPoint = "vorbis_comment_add_tag", CallingConvention = CallingConvention.Cdecl)]
+        static extern void WinVorbisCommentAddTag(ref VorbisComment comment, byte[] tag, byte[] contents);
+
         [DllImport(_winVorbisLibrary, EntryPoint = "vorbis_comment_clear", CallingConvention = CallingConvention.Cdecl)]
         static extern void WinVorbisCommentClear(ref VorbisComment comment);
+
+        [DllImport(_winVorbisLibrary, EntryPoint = "vorbis_commentheader_out", CallingConvention = CallingConvention.Cdecl)]
+        static extern int WinVorbisCommentHeaderOut(ref VorbisComment comment, out OggPacket packet);
 
         [DllImport(_winVorbisLibrary, EntryPoint = "vorbis_info_init", CallingConvention = CallingConvention.Cdecl)]
         static extern void WinVorbisInfoInit(IntPtr info);

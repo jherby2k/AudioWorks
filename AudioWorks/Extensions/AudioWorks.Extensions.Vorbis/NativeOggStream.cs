@@ -7,6 +7,8 @@ namespace AudioWorks.Extensions.Vorbis
     {
         readonly IntPtr _state;
 
+        internal int SerialNumber => Marshal.PtrToStructure<OggStreamState>(_state).SerialNumber;
+
         internal NativeOggStream(int serialNumber)
         {
             _state = Marshal.AllocHGlobal(Marshal.SizeOf<OggStreamState>());
@@ -18,9 +20,24 @@ namespace AudioWorks.Extensions.Vorbis
             SafeNativeMethods.OggStreamPageIn(_state, ref page);
         }
 
+        internal bool PageOut(out OggPage page)
+        {
+            return SafeNativeMethods.OggStreamPageOut(_state, out page);
+        }
+
+        internal void PacketIn(ref OggPacket packet)
+        {
+            SafeNativeMethods.OggStreamPacketIn(_state, ref packet);
+        }
+
         internal bool PacketOut(out OggPacket packet)
         {
             return SafeNativeMethods.OggStreamPacketOut(_state, out packet);
+        }
+
+        internal bool Flush(out OggPage page)
+        {
+            return SafeNativeMethods.OggStreamFlush(_state, out page);
         }
 
         public void Dispose()

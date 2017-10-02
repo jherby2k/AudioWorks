@@ -357,6 +357,44 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["Padding"] = 100
                 },
                 "0E0E483A3B65B264F6E5FA8EC27112E5"
+            },
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo.ogg",
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                },
+                null,
+                "BCE37102012B373E38A33BA3C86D1472"
+            },
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo (Tagged).ogg",
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                },
+                null,
+                "2FEC62D58AD2D2326D00E670387AE3F7"
             }
         };
 

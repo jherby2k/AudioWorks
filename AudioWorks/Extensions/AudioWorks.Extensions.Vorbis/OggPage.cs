@@ -6,12 +6,12 @@ namespace AudioWorks.Extensions.Vorbis
     [StructLayout(LayoutKind.Sequential)]
     struct OggPage
     {
-        readonly IntPtr Header;
+        internal readonly IntPtr Header;
 
-        readonly int HeaderLength;
+        internal readonly int HeaderLength;
 
-        readonly IntPtr Body;
+        internal readonly IntPtr Body;
 
-        readonly int BodyLength;
+        internal readonly int BodyLength;
     }
 }

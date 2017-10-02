@@ -35,7 +35,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         readonly int BeginningOfStream;
 
-        readonly int SerialNumber;
+        internal readonly int SerialNumber;
 
         readonly int PageNumber;
 
