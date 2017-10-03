@@ -272,10 +272,10 @@ namespace AudioWorks.Api.Tests.DataSources
                     Day = "31",
                     Month = "01",
                     Year = "2017",
-                    TrackNumber = "01",
+                    TrackCount = "12"
                 },
                 null,
-                "C71F8BFCD9CFC110D8917EC65FCC1591"
+                "5970D8A15E2A1F1DE56502167BF31130"
             },
             new object[]
             {
@@ -290,10 +290,10 @@ namespace AudioWorks.Api.Tests.DataSources
                     Day = "31",
                     Month = "01",
                     Year = "2017",
-                    TrackCount = "12"
+                    TrackNumber = "01",
                 },
                 null,
-                "5970D8A15E2A1F1DE56502167BF31130"
+                "C71F8BFCD9CFC110D8917EC65FCC1591"
             },
             new object[]
             {
@@ -376,6 +376,78 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 "BCE37102012B373E38A33BA3C86D1472"
+            },
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo.ogg",
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                },
+                null,
+                "D38AA6C008279B0C45454879289AB804"
+            },
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo.ogg",
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                },
+                null,
+                "D38AA6C008279B0C45454879289AB804"
+            },
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo.ogg",
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackCount = "12"
+                },
+                null,
+                "12C1F8EC359366D56B8E4C2D8CC06F27"
+            },
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo.ogg",
+                new AudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01"
+                },
+                null,
+                "D5A910F428B9D1DD7A95665D287D9FFE"
             },
             new object[]
             {
