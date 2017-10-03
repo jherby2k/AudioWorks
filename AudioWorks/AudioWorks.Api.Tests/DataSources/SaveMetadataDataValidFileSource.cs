@@ -394,7 +394,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackCount = "12"
                 },
                 null,
-                "2FEC62D58AD2D2326D00E670387AE3F7"
+                "BCE37102012B373E38A33BA3C86D1472"
             }
         };
 
