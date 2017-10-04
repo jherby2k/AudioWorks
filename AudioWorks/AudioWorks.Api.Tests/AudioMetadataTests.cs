@@ -3,6 +3,7 @@ using AudioWorks.Common;
 using JetBrains.Annotations;
 using System;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using Xunit;
 
 namespace AudioWorks.Api.Tests
@@ -40,6 +41,18 @@ namespace AudioWorks.Api.Tests
             Assert.Equal(string.Empty, new AudioMetadata().Title);
         }
 
+        [Fact(DisplayName = "AudioMetadata's Title property is properly serialized")]
+        public void TitleIsSerialized()
+        {
+            using (var stream = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, new AudioMetadata { Title = "Test Title" });
+                stream.Seek(0, SeekOrigin.Begin);
+                Assert.Equal("Test Title", ((AudioMetadata) formatter.Deserialize(stream)).Title);
+            }
+        }
+
         [Fact(DisplayName = "AudioMetadata throws an exception if the Artist is null")]
         public void ArtistNullThrowsException()
         {
@@ -68,6 +81,18 @@ namespace AudioWorks.Api.Tests
         public void ArtistDefaultsToEmpty()
         {
             Assert.Equal(string.Empty, new AudioMetadata().Artist);
+        }
+
+        [Fact(DisplayName = "AudioMetadata's Artist property is properly serialized")]
+        public void ArtistIsSerialized()
+        {
+            using (var stream = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, new AudioMetadata { Artist = "Test Artist" });
+                stream.Seek(0, SeekOrigin.Begin);
+                Assert.Equal("Test Artist", ((AudioMetadata) formatter.Deserialize(stream)).Artist);
+            }
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Album is null")]
@@ -100,6 +125,18 @@ namespace AudioWorks.Api.Tests
             Assert.Equal(string.Empty, new AudioMetadata().Album);
         }
 
+        [Fact(DisplayName = "AudioMetadata's Album property is properly serialized")]
+        public void AlbumIsSerialized()
+        {
+            using (var stream = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, new AudioMetadata { Album = "Test Album" });
+                stream.Seek(0, SeekOrigin.Begin);
+                Assert.Equal("Test Album", ((AudioMetadata) formatter.Deserialize(stream)).Album);
+            }
+        }
+
         [Fact(DisplayName = "AudioMetadata throws an exception if the Genre is null")]
         public void GenreNullThrowsException()
         {
@@ -130,6 +167,18 @@ namespace AudioWorks.Api.Tests
             Assert.Equal(string.Empty, new AudioMetadata().Genre);
         }
 
+        [Fact(DisplayName = "AudioMetadata's Genre property is properly serialized")]
+        public void GenreIsSerialized()
+        {
+            using (var stream = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, new AudioMetadata { Genre = "Test Genre" });
+                stream.Seek(0, SeekOrigin.Begin);
+                Assert.Equal("Test Genre", ((AudioMetadata) formatter.Deserialize(stream)).Genre);
+            }
+        }
+
         [Fact(DisplayName = "AudioMetadata throws an exception if the Comment is null")]
         public void CommentNullThrowsException()
         {
@@ -158,6 +207,18 @@ namespace AudioWorks.Api.Tests
         public void CommentDefaultsToEmpty()
         {
             Assert.Equal(string.Empty, new AudioMetadata().Comment);
+        }
+
+        [Fact(DisplayName = "AudioMetadata's Comment property is properly serialized")]
+        public void CommentIsSerialized()
+        {
+            using (var stream = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, new AudioMetadata { Comment = "Test Comment" });
+                stream.Seek(0, SeekOrigin.Begin);
+                Assert.Equal("Test Comment", ((AudioMetadata) formatter.Deserialize(stream)).Comment);
+            }
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Day is null")]
@@ -217,6 +278,18 @@ namespace AudioWorks.Api.Tests
             Assert.Equal("01", new AudioMetadata { Day = "1" }.Day);
         }
 
+        [Fact(DisplayName = "AudioMetadata's Day property is properly serialized")]
+        public void DayIsSerialized()
+        {
+            using (var stream = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, new AudioMetadata { Day = "31" });
+                stream.Seek(0, SeekOrigin.Begin);
+                Assert.Equal("31", ((AudioMetadata) formatter.Deserialize(stream)).Day);
+            }
+        }
+
         [Fact(DisplayName = "AudioMetadata throws an exception if the Month is null")]
         public void MonthNullThrowsException()
         {
@@ -272,6 +345,18 @@ namespace AudioWorks.Api.Tests
         public void NormalizesMonth()
         {
             Assert.Equal("01", new AudioMetadata { Month = "1" }.Month);
+        }
+
+        [Fact(DisplayName = "AudioMetadata's Month property is properly serialized")]
+        public void MonthIsSerialized()
+        {
+            using (var stream = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, new AudioMetadata { Month = "01" });
+                stream.Seek(0, SeekOrigin.Begin);
+                Assert.Equal("01", ((AudioMetadata) formatter.Deserialize(stream)).Month);
+            }
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Year is null")]
@@ -332,6 +417,18 @@ namespace AudioWorks.Api.Tests
             Assert.Equal(string.Empty, new AudioMetadata().Year);
         }
 
+        [Fact(DisplayName = "AudioMetadata's Year property is properly serialized")]
+        public void YearIsSerialized()
+        {
+            using (var stream = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, new AudioMetadata { Year = "2017" });
+                stream.Seek(0, SeekOrigin.Begin);
+                Assert.Equal("2017", ((AudioMetadata) formatter.Deserialize(stream)).Year);
+            }
+        }
+
         [Fact(DisplayName = "AudioMetadata throws an exception if the TrackNumber is null")]
         public void TrackNumberNullThrowsException()
         {
@@ -389,6 +486,18 @@ namespace AudioWorks.Api.Tests
             Assert.Equal(string.Empty, new AudioMetadata().TrackNumber);
         }
 
+        [Fact(DisplayName = "AudioMetadata's TrackNumber property is properly serialized")]
+        public void TrackNumberIsSerialized()
+        {
+            using (var stream = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, new AudioMetadata { TrackNumber = "01" });
+                stream.Seek(0, SeekOrigin.Begin);
+                Assert.Equal("01", ((AudioMetadata)formatter.Deserialize(stream)).TrackNumber);
+            }
+        }
+
         [Fact(DisplayName = "AudioMetadata throws an exception if the TrackCount is null")]
         public void TrackCountNullThrowsException()
         {
@@ -444,6 +553,18 @@ namespace AudioWorks.Api.Tests
         public void TrackCountDefaultsToEmpty()
         {
             Assert.Equal(string.Empty, new AudioMetadata().TrackCount);
+        }
+
+        [Fact(DisplayName = "AudioMetadata's TrackCount property is properly serialized")]
+        public void TrackCountIsSerialized()
+        {
+            using (var stream = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, new AudioMetadata { TrackCount = "12" });
+                stream.Seek(0, SeekOrigin.Begin);
+                Assert.Equal("12", ((AudioMetadata) formatter.Deserialize(stream)).TrackCount);
+            }
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Title property value")]
