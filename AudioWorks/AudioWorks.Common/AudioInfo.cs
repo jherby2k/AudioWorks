@@ -4,6 +4,7 @@ using System;
 namespace AudioWorks.Common
 {
     [PublicAPI]
+    [Serializable]
     public sealed class AudioInfo
     {
         [NotNull]

@@ -3,6 +3,7 @@ using AudioWorks.Common;
 using JetBrains.Annotations;
 using System;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using Xunit;
 
 namespace AudioWorks.Api.Tests
@@ -16,6 +17,18 @@ namespace AudioWorks.Api.Tests
             // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() =>
                 AudioInfo.CreateForLossless(null, 2, 16, 44100));
+        }
+
+        [Fact(DisplayName = "AudioInfo's Description property is properly serialized")]
+        public void DescriptionIsSerialized()
+        {
+            using (var stream = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, AudioInfo.CreateForLossless("Test", 2, 16, 44100));
+                stream.Seek(0, SeekOrigin.Begin);
+                Assert.Equal("Test", ((AudioInfo) formatter.Deserialize(stream)).Description);
+            }
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if Channels is less than 1")]
@@ -32,6 +45,18 @@ namespace AudioWorks.Api.Tests
                 AudioInfo.CreateForLossless("Test", 3, 16, 44100));
         }
 
+        [Fact(DisplayName = "AudioInfo's Channels property is properly serialized")]
+        public void ChannelsIsSerialized()
+        {
+            using (var stream = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, AudioInfo.CreateForLossless("Test", 2, 16, 44100));
+                stream.Seek(0, SeekOrigin.Begin);
+                Assert.Equal(2, ((AudioInfo) formatter.Deserialize(stream)).Channels);
+            }
+        }
+
         [Fact(DisplayName = "AudioInfo throws an exception if BitsPerSample is greater than 32")]
         public void BitsPerSampleTooHighThrowsException()
         {
@@ -46,11 +71,35 @@ namespace AudioWorks.Api.Tests
                 AudioInfo.CreateForLossless("Test", 2, 0, 44100));
         }
 
+        [Fact(DisplayName = "AudioInfo's BitsPerSample property is properly serialized")]
+        public void BitsPerSampleIsSerialized()
+        {
+            using (var stream = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, AudioInfo.CreateForLossless("Test", 2, 16, 44100));
+                stream.Seek(0, SeekOrigin.Begin);
+                Assert.Equal(16, ((AudioInfo) formatter.Deserialize(stream)).BitsPerSample);
+            }
+        }
+
         [Fact(DisplayName = "AudioInfo throws an exception if SampleRate is less than 1")]
         public void SampleRateTooLowThrowsException()
         {
             Assert.Throws<AudioInvalidException>(() =>
                 AudioInfo.CreateForLossless("Test", 2, 16, 0));
+        }
+
+        [Fact(DisplayName = "AudioInfo's SampleRate property is properly serialized")]
+        public void SampleRateIsSerialized()
+        {
+            using (var stream = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, AudioInfo.CreateForLossless("Test", 2, 16, 44100));
+                stream.Seek(0, SeekOrigin.Begin);
+                Assert.Equal(44100, ((AudioInfo) formatter.Deserialize(stream)).SampleRate);
+            }
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if SampleCount is negative")]
@@ -60,11 +109,35 @@ namespace AudioWorks.Api.Tests
                 AudioInfo.CreateForLossless("Test", 2, 16, 44100, -1));
         }
 
+        [Fact(DisplayName = "AudioInfo's SampleCount property is properly serialized")]
+        public void SampleCountIsSerialized()
+        {
+            using (var stream = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, AudioInfo.CreateForLossless("Test", 2, 16, 44100, 1000));
+                stream.Seek(0, SeekOrigin.Begin);
+                Assert.Equal(1000, ((AudioInfo) formatter.Deserialize(stream)).SampleCount);
+            }
+        }
+
         [Fact(DisplayName = "AudioInfo throws an exception if BitRate is negative")]
         public void BitRateNegativeThrowsException()
         {
             Assert.Throws<AudioInvalidException>(() =>
                 AudioInfo.CreateForLossy("Test", 2, 44100, 0, -1));
+        }
+
+        [Fact(DisplayName = "AudioInfo's BitRate property is properly serialized")]
+        public void BitRateIsSerialized()
+        {
+            using (var stream = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, AudioInfo.CreateForLossy("Test", 2, 44100, 0, 1000));
+                stream.Seek(0, SeekOrigin.Begin);
+                Assert.Equal(1000, ((AudioInfo) formatter.Deserialize(stream)).BitRate);
+            }
         }
 
         [Theory(DisplayName = "AudioInfo has the expected Description property value")]
