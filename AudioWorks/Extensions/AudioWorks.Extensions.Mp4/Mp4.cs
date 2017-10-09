@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace AudioWorks.Extensions.Mp4
         }
 
         [NotNull, ItemNotNull]
-        internal IEnumerable<AtomInfo> GetChildAtomInfo()
+        internal AtomInfo[] GetChildAtomInfo()
         {
             var result = new List<AtomInfo>();
 
@@ -98,6 +99,56 @@ namespace AudioWorks.Extensions.Mp4
 
             using (var reader = new Mp4Reader(_stream))
                 return reader.ReadBytes((int)atom.Size);
+        }
+
+        internal void CopyAtom([NotNull] AtomInfo atom, [NotNull] Stream output)
+        {
+            _stream.Position = atom.Start;
+
+            var count = (int) atom.Size;
+            var buffer = new byte[1024];
+            do
+            {
+                var read = _stream.Read(buffer, 0, Math.Min(buffer.Length, count));
+                output.Write(buffer, 0, read);
+                count -= read;
+            } while (count > 0);
+        }
+
+        internal void UpdateAtomSizes(uint increase)
+        {
+            if (_atomInfoStack.Count <= 0) return;
+
+            using (var writer = new Mp4Writer(_stream))
+            {
+                do
+                {
+                    var currentAtom = _atomInfoStack.Pop();
+                    _stream.Position = currentAtom.Start;
+                    writer.WriteBigEndian(currentAtom.Size + increase);
+                } while (_atomInfoStack.Count > 0);
+            }
+        }
+
+        internal void UpdateStco(uint offset)
+        {
+            DescendToAtom("moov", "trak", "mdia", "minf", "stbl", "stco");
+            _stream.Seek(4, SeekOrigin.Current);
+
+            using (var reader = new Mp4Reader(_stream))
+            using (var writer = new Mp4Writer(_stream))
+            {
+                var count = reader.ReadUInt32BigEndian();
+                var dataStart = _stream.Position;
+
+                for (var i = 0; i < count; i++)
+                {
+                    _stream.Position = dataStart + i * 4;
+                    var value = reader.ReadUInt32BigEndian();
+                    _stream.Seek(-4, SeekOrigin.Current);
+                    writer.WriteBigEndian(value + offset);
+                }
+            }
         }
     }
 }

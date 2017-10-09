@@ -467,6 +467,25 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 "BCE37102012B373E38A33BA3C86D1472"
+            },
+            new object[]
+            {
+                "QAAC TVBR 91 44100Hz Stereo.m4a",
+                new SerializableAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                },
+                null,
+                "D4DF89FD398D7B71B484B9862E6565A8"
             }
         };
 
