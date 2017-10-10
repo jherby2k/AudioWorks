@@ -30,8 +30,7 @@ namespace AudioWorks.Extensions.Mp4
             else if (!string.IsNullOrEmpty(metadata.Year))
                 _atoms.Add(new TextAtom("©day", metadata.Year));
 
-            if (!string.IsNullOrEmpty(metadata.TrackNumber))
-                _atoms.Add(new TrackNumberAtom(metadata.TrackNumber, metadata.TrackCount));
+            _atoms.Add(new TrackNumberAtom(metadata.TrackNumber, metadata.TrackCount));
         }
 
         [Pure, NotNull]

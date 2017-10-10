@@ -486,6 +486,97 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 "D4DF89FD398D7B71B484B9862E6565A8"
+            },
+            new object[]
+            {
+                "QAAC TVBR 91 44100Hz Stereo.m4a",
+                new SerializableAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                },
+                null,
+                "F55EA657346A062BB5E1C45D285AE53F"
+            },
+            new object[]
+            {
+                "QAAC TVBR 91 44100Hz Stereo.m4a",
+                new SerializableAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                },
+                null,
+                "F55EA657346A062BB5E1C45D285AE53F"
+            },
+            new object[]
+            {
+                "QAAC TVBR 91 44100Hz Stereo.m4a",
+                new SerializableAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackCount = "12"
+                },
+                null,
+                "36A30F8B33875D2E04317C04DC373B96"
+            },
+            new object[]
+            {
+                "QAAC TVBR 91 44100Hz Stereo.m4a",
+                new SerializableAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01"
+                },
+                null,
+                "552F66D763FE4D062A7CB9FF070D3376"
+            },
+            new object[]
+            {
+                "QAAC TVBR 91 44100Hz Stereo (Tagged).m4a",
+                new SerializableAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                },
+                null,
+                "D4DF89FD398D7B71B484B9862E6565A8"
             }
         };
 

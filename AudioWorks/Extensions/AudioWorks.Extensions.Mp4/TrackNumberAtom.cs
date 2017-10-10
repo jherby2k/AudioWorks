@@ -18,12 +18,15 @@ namespace AudioWorks.Extensions.Mp4
 
         internal TrackNumberAtom([NotNull] string trackNumber, [NotNull] string trackCount)
         {
-            TrackNumber = byte.Parse(trackNumber);
-            TrackCount = byte.Parse(trackCount);
+            TrackNumber = !string.IsNullOrEmpty(trackNumber) ? byte.Parse(trackNumber) : (byte) 0;
+            TrackCount = !string.IsNullOrEmpty(trackCount) ? byte.Parse(trackCount) : (byte) 0;
         }
 
         internal override byte[] GetBytes()
         {
+            // This atom needs a track number at minimum
+            if (TrackNumber == 0) return new byte[0];
+
             var result = new byte[32];
 
             // Write the atom header:
