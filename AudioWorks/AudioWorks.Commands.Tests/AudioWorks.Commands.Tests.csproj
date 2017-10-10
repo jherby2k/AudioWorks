@@ -18,8 +18,8 @@
     <PackageReference Include="Microsoft.PowerShell.SDK" Version="6.0.0-beta.8" />
     <PackageReference Include="Microsoft.WSMan.Management" Version="6.0.0-beta.8" />
     <PackageReference Include="xunit" Version="2.3.0" />
-    <PackageReference Include="xunit.runner.console" Version="2.3.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.0" />
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>
