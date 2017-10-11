@@ -1,5 +1,4 @@
 ﻿using AudioWorks.Api.Tests.DataTypes;
-using AudioWorks.Common;
 using JetBrains.Annotations;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,98 +12,213 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
-                AudioInfo.CreateForLossless("LPCM", 2, 8, 8000, 22515),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "LPCM",
+                    Channels = 2,
+                    BitsPerSample = 8,
+                    SampleRate = 8000,
+                    SampleCount = 22515,
+                    BitRate = 128000
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
-                AudioInfo.CreateForLossless("LPCM", 1, 16, 44100, 124112),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "LPCM",
+                    Channels = 1,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 124112,
+                    BitRate = 705600
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
-                AudioInfo.CreateForLossless("LPCM", 2, 16, 44100, 124112),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "LPCM",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 124112,
+                    BitRate = 1411200
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
-                AudioInfo.CreateForLossless("LPCM", 2, 16, 48000, 135087),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "LPCM",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 48000,
+                    SampleCount = 135087,
+                    BitRate = 1536000
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
-                AudioInfo.CreateForLossless("LPCM", 2, 24, 96000, 270174),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "LPCM",
+                    Channels = 2,
+                    BitsPerSample = 24,
+                    SampleRate = 96000,
+                    SampleCount = 270174,
+                    BitRate = 4608000
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo (extensible).wav",
-                AudioInfo.CreateForLossless("LPCM", 2, 16, 44100, 124112),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "LPCM",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 124112,
+                    BitRate = 1411200
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "Lame CBR 24 8000Hz Stereo.mp3",
-                AudioInfo.CreateForLossy("MP3", 2, 8000, 24192, 24571),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "MP3",
+                    Channels = 2,
+                    SampleRate = 8000,
+                    SampleCount = 24192,
+                    BitRate = 24571
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "Lame CBR 64 44100Hz Mono.mp3",
-                AudioInfo.CreateForLossy("MP3", 1, 44100, 125568, 64582),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "MP3",
+                    Channels = 1,
+                    SampleRate = 44100,
+                    SampleCount = 125568,
+                    BitRate = 64582
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568, 129170),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "MP3",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 125568,
+                    BitRate = 129170
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo (no header).mp3",
-                AudioInfo.CreateForLossy("MP3", 2, 44100, 0, 128000),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "MP3",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 128000
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "Lame CBR 128 48000Hz Stereo.mp3",
-                AudioInfo.CreateForLossy("MP3", 2, 48000, 137088, 129076),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "MP3",
+                    Channels = 2,
+                    SampleRate = 48000,
+                    SampleCount = 137088,
+                    BitRate = 129076
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "Lame VBR Standard 44100Hz Stereo.mp3",
-                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568, 213358),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "MP3",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 125568,
+                    BitRate = 213358
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "Fraunhofer CBR 128 44100Hz Stereo.mp3",
-                AudioInfo.CreateForLossy("MP3", 2, 44100, 0, 128000),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "MP3",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 128000
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "Fraunhofer VBR 44100Hz Stereo.mp3",
-                AudioInfo.CreateForLossy("MP3", 2, 44100, 0, 160000),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "MP3",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 160000
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "Fraunhofer VBR 44100Hz Stereo (with header).mp3",
-                AudioInfo.CreateForLossy("MP3", 2, 44100, 126720, 143200),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "MP3",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 126720,
+                    BitRate = 143200
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v1).mp3",
-                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568, 129170),
-                new SerializableAudioMetadata
+                new TestAudioInfo
+                {
+                    Description = "MP3",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 125568,
+                    BitRate = 129170
+                },
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -118,8 +232,15 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
-                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568, 129170),
-                new SerializableAudioMetadata
+                new TestAudioInfo
+                {
+                    Description = "MP3",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 125568,
+                    BitRate = 129170
+                },
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -134,8 +255,15 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 UTF16).mp3",
-                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568, 129170),
-                new SerializableAudioMetadata
+                new TestAudioInfo
+                {
+                    Description = "MP3",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 125568,
+                    BitRate = 129170
+                },
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -150,32 +278,67 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "QAAC TVBR 91 8000Hz Stereo.m4a",
-                AudioInfo.CreateForLossy("AAC", 2, 8000, 25600, 50795),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "AAC",
+                    Channels = 2,
+                    SampleRate = 8000,
+                    SampleCount = 25600,
+                    BitRate = 50795
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "QAAC TVBR 91 44100Hz Mono.m4a",
-                AudioInfo.CreateForLossy("AAC", 1, 44100, 126976, 93207),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "AAC",
+                    Channels = 1,
+                    SampleRate = 44100,
+                    SampleCount = 126976,
+                    BitRate = 93207
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "QAAC TVBR 91 44100Hz Stereo.m4a",
-                AudioInfo.CreateForLossy("AAC", 2, 44100, 126976, 183702),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "AAC",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 126976,
+                    BitRate = 183702
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "QAAC TVBR 91 48000Hz Stereo.m4a",
-                AudioInfo.CreateForLossy("AAC", 2, 48000, 137216, 197757),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "AAC",
+                    Channels = 2,
+                    SampleRate = 48000,
+                    SampleCount = 137216,
+                    BitRate = 197757
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "QAAC TVBR 91 44100Hz Stereo (Tagged).m4a",
-                AudioInfo.CreateForLossy("AAC", 2, 44100, 126976, 183702),
-                new SerializableAudioMetadata
+                new TestAudioInfo
+                {
+                    Description = "AAC",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 126976,
+                    BitRate = 183702
+                },
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -192,32 +355,72 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "ALAC 16-bit 44100Hz Mono.m4a",
-                AudioInfo.CreateForLossless("ALAC", 1, 16, 44100, 122880),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "ALAC",
+                    Channels = 1,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 122880,
+                    BitRate = 705600
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
-                AudioInfo.CreateForLossless("ALAC", 2, 16, 44100, 122880),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "ALAC",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 122880,
+                    BitRate = 1411200
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "ALAC 16-bit 48000Hz Stereo.m4a",
-                AudioInfo.CreateForLossless("ALAC", 2, 16, 48000, 131072),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "ALAC",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 48000,
+                    SampleCount = 131072,
+                    BitRate = 1536000
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "ALAC 24-bit 96000Hz Stereo.m4a",
-                AudioInfo.CreateForLossless("ALAC", 2, 24, 96000, 266240),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "ALAC",
+                    Channels = 2,
+                    BitsPerSample = 24,
+                    SampleRate = 96000,
+                    SampleCount = 266240,
+                    BitRate = 4608000
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "ALAC 16-bit 44100Hz Stereo (Tagged).m4a",
-                AudioInfo.CreateForLossless("ALAC", 2, 16, 44100, 122880),
-                new SerializableAudioMetadata
+                new TestAudioInfo
+                {
+                    Description = "ALAC",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 122880,
+                    BitRate = 1411200
+                },
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -234,38 +437,73 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Vorbis Quality 3 8000Hz Stereo.ogg",
-                AudioInfo.CreateForLossy("Vorbis", 2, 8000, 0, 31800),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 8000,
+                    BitRate = 31800
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "Vorbis Quality 3 44100Hz Mono.ogg",
-                AudioInfo.CreateForLossy("Vorbis", 1, 44100, 0, 80000),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "Vorbis",
+                    Channels = 1,
+                    SampleRate = 44100,
+                    BitRate = 80000
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
-                AudioInfo.CreateForLossy("Vorbis", 2, 44100, 0, 112000),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 112000
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "Vorbis Quality 3 48000Hz Stereo.ogg",
-                AudioInfo.CreateForLossy("Vorbis", 2, 48000, 0, 112000),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 48000,
+                    BitRate = 112000
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "Vorbis Quality 3 96000Hz Stereo.ogg",
-                AudioInfo.CreateForLossy("Vorbis", 2, 96000),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 96000
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged).ogg",
-                AudioInfo.CreateForLossy("Vorbis", 2, 44100, 0, 112000),
-                new SerializableAudioMetadata
+                new TestAudioInfo
+                {
+                    Description = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 112000
+                },
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -282,8 +520,14 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using extended DATE).ogg",
-                AudioInfo.CreateForLossy("Vorbis", 2, 44100, 0, 112000),
-                new SerializableAudioMetadata
+                new TestAudioInfo
+                {
+                    Description = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 112000
+                },
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -300,8 +544,14 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using invalid DATE).ogg",
-                AudioInfo.CreateForLossy("Vorbis", 2, 44100, 0, 112000),
-                new SerializableAudioMetadata
+                new TestAudioInfo
+                {
+                    Description = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 112000
+                },
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -315,8 +565,14 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using invalid TRACKNUMBER).ogg",
-                AudioInfo.CreateForLossy("Vorbis", 2, 44100, 0, 112000),
-                new SerializableAudioMetadata
+                new TestAudioInfo
+                {
+                    Description = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 112000
+                },
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -331,38 +587,86 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "FLAC Level 5 8-bit 8000Hz Stereo.flac",
-                AudioInfo.CreateForLossless("FLAC", 2, 8, 8000, 22515),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "FLAC",
+                    Channels = 2,
+                    BitsPerSample = 8,
+                    SampleRate = 8000,
+                    SampleCount = 22515,
+                    BitRate = 128000
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Mono.flac",
-                AudioInfo.CreateForLossless("FLAC", 1, 16, 44100, 124112),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "FLAC",
+                    Channels = 1,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 124112,
+                    BitRate = 705600
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
-                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "FLAC",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 124112,
+                    BitRate = 1411200
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "FLAC Level 5 16-bit 48000Hz Stereo.flac",
-                AudioInfo.CreateForLossless("FLAC", 2, 16, 48000, 135087),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "FLAC",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 48000,
+                    SampleCount = 135087,
+                    BitRate = 1536000
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "FLAC Level 5 24-bit 96000Hz Stereo.flac",
-                AudioInfo.CreateForLossless("FLAC", 2, 24, 96000, 270174),
-                new SerializableAudioMetadata()
+                new TestAudioInfo
+                {
+                    Description = "FLAC",
+                    Channels = 2,
+                    BitsPerSample = 24,
+                    SampleRate = 96000,
+                    SampleCount = 270174,
+                    BitRate = 4608000
+                },
+                new TestAudioMetadata()
             },
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
-                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
-                new SerializableAudioMetadata
+                new TestAudioInfo
+                {
+                    Description = "FLAC",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 124112,
+                    BitRate = 1411200
+                },
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -379,8 +683,16 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using mixed-case fields).flac",
-                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
-                new SerializableAudioMetadata
+                new TestAudioInfo
+                {
+                    Description = "FLAC",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 124112,
+                    BitRate = 1411200
+                },
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -397,8 +709,16 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using COMMENT).flac",
-                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
-                new SerializableAudioMetadata
+                new TestAudioInfo
+                {
+                    Description = "FLAC",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 124112,
+                    BitRate = 1411200
+                },
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -415,8 +735,16 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TOTALTRACKS).flac",
-                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
-                new SerializableAudioMetadata
+                new TestAudioInfo
+                {
+                    Description = "FLAC",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 124112,
+                    BitRate = 1411200
+                },
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -433,8 +761,16 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TRACKCOUNT).flac",
-                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
-                new SerializableAudioMetadata
+                new TestAudioInfo
+                {
+                    Description = "FLAC",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 124112,
+                    BitRate = 1411200
+                },
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -451,8 +787,16 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TRACKTOTAL).flac",
-                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
-                new SerializableAudioMetadata
+                new TestAudioInfo
+                {
+                    Description = "FLAC",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 124112,
+                    BitRate = 1411200
+                },
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -469,8 +813,16 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using YEAR).flac",
-                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
-                new SerializableAudioMetadata
+                new TestAudioInfo
+                {
+                    Description = "FLAC",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 124112,
+                    BitRate = 1411200
+                },
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -485,8 +837,16 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using extended DATE).flac",
-                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
-                new SerializableAudioMetadata
+                new TestAudioInfo
+                {
+                    Description = "FLAC",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 124112,
+                    BitRate = 1411200
+                },
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -503,8 +863,16 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using invalid DATE).flac",
-                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
-                new SerializableAudioMetadata
+                new TestAudioInfo
+                {
+                    Description = "FLAC",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 124112,
+                    BitRate = 1411200
+                },
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -518,8 +886,16 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using invalid TRACKNUMBER).flac",
-                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
-                new SerializableAudioMetadata
+                new TestAudioInfo
+                {
+                    Description = "FLAC",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 124112,
+                    BitRate = 1411200
+                },
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",

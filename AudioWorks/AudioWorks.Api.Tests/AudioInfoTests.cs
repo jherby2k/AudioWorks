@@ -1,4 +1,5 @@
 using AudioWorks.Api.Tests.DataSources;
+using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 using System;
@@ -142,7 +143,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioInfo has the expected Description property value")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndAudioInfo), MemberType = typeof(ValidFileDataSource))]
-        public void HasExpectedDescription([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        public void HasExpectedDescription([NotNull] string fileName, [NotNull] TestAudioInfo expectedAudioInfo)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -156,7 +157,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioInfo has the expected Channel property value")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndAudioInfo), MemberType = typeof(ValidFileDataSource))]
-        public void HasExpectedChannels([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        public void HasExpectedChannels([NotNull] string fileName, [NotNull] TestAudioInfo expectedAudioInfo)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -170,7 +171,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioInfo has the expected BitsPerSample property value")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndAudioInfo), MemberType = typeof(ValidFileDataSource))]
-        public void HasExpectedBitsPerSample([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        public void HasExpectedBitsPerSample([NotNull] string fileName, [NotNull] TestAudioInfo expectedAudioInfo)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -184,7 +185,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioInfo has the expected SampleRate property value")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndAudioInfo), MemberType = typeof(ValidFileDataSource))]
-        public void HasExpectedSampleRate([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        public void HasExpectedSampleRate([NotNull] string fileName, [NotNull] TestAudioInfo expectedAudioInfo)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -198,7 +199,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioInfo has the expected SampleCount property value")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndAudioInfo), MemberType = typeof(ValidFileDataSource))]
-        public void HasExpectedSampleCount([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        public void HasExpectedSampleCount([NotNull] string fileName, [NotNull] TestAudioInfo expectedAudioInfo)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -212,7 +213,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioInfo has the expected BitRate property value")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndAudioInfo), MemberType = typeof(ValidFileDataSource))]
-        public void HasExpectedBitRate([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        public void HasExpectedBitRate([NotNull] string fileName, [NotNull] TestAudioInfo expectedAudioInfo)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -226,7 +227,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioInfo has the expected PlayLength property value")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndAudioInfo), MemberType = typeof(ValidFileDataSource))]
-        public void HasExpectedPlayLength([NotNull] string fileName, [NotNull] AudioInfo expectedAudioInfo)
+        public void HasExpectedPlayLength([NotNull] string fileName, [NotNull] TestAudioInfo expectedAudioInfo)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -234,7 +235,10 @@ namespace AudioWorks.Api.Tests
                 "Valid",
                 fileName);
             Assert.Equal(
-                expectedAudioInfo.PlayLength,
+                expectedAudioInfo.SampleCount == 0
+                    ? TimeSpan.Zero
+                    : new TimeSpan(0, 0,
+                        (int) Math.Round(expectedAudioInfo.SampleCount / (double) expectedAudioInfo.SampleRate)),
                 AudioFileFactory.Create(path).AudioInfo.PlayLength);
         }
     }

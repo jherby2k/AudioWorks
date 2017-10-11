@@ -12,7 +12,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -31,7 +31,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -49,7 +49,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -67,7 +67,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -85,7 +85,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -103,7 +103,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -122,7 +122,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -135,7 +135,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackNumber = "01",
                     TrackCount = "12"
                 },
-                new SerializableSettingDictionary
+                new TestSettingDictionary
                 {
                     ["Version"] = "2.4"
                 },
@@ -144,7 +144,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -157,7 +157,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackNumber = "01",
                     TrackCount = "12"
                 },
-                new SerializableSettingDictionary
+                new TestSettingDictionary
                 {
                     ["Padding"] = 0
                 },
@@ -166,7 +166,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -179,7 +179,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackNumber = "01",
                     TrackCount = "12"
                 },
-                new SerializableSettingDictionary
+                new TestSettingDictionary
                 {
                     ["Padding"] = 100
                 },
@@ -188,7 +188,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v1).mp3",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -207,7 +207,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -226,7 +226,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -244,7 +244,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -262,7 +262,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -280,7 +280,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -298,7 +298,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -317,7 +317,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -330,7 +330,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackNumber = "01",
                     TrackCount = "12"
                 },
-                new SerializableSettingDictionary
+                new TestSettingDictionary
                 {
                     ["Padding"] = 0
                 },
@@ -339,7 +339,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -352,7 +352,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackNumber = "01",
                     TrackCount = "12"
                 },
-                new SerializableSettingDictionary
+                new TestSettingDictionary
                 {
                     ["Padding"] = 100
                 },
@@ -361,7 +361,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -380,7 +380,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -398,7 +398,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -416,7 +416,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -434,7 +434,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -452,7 +452,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged).ogg",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -471,7 +471,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "QAAC TVBR 91 44100Hz Stereo.m4a",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -490,7 +490,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "QAAC TVBR 91 44100Hz Stereo.m4a",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -508,7 +508,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "QAAC TVBR 91 44100Hz Stereo.m4a",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -526,7 +526,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "QAAC TVBR 91 44100Hz Stereo.m4a",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -544,7 +544,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "QAAC TVBR 91 44100Hz Stereo.m4a",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -562,7 +562,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "QAAC TVBR 91 44100Hz Stereo (Tagged).m4a",
-                new SerializableAudioMetadata
+                new TestAudioMetadata
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",

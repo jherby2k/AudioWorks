@@ -12,7 +12,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new SerializableSettingDictionary
+                new TestSettingDictionary
                 {
                     ["Foo"] = "Bar"
                 }
@@ -20,7 +20,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new SerializableSettingDictionary
+                new TestSettingDictionary
                 {
                     ["Version"] = "1.5"
                 }
@@ -28,7 +28,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new SerializableSettingDictionary
+                new TestSettingDictionary
                 {
                     ["Padding"] = "Foo"
                 }
@@ -36,7 +36,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new SerializableSettingDictionary
+                new TestSettingDictionary
                 {
                     ["Padding"] = -1
                 }
@@ -44,7 +44,7 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new SerializableSettingDictionary
+                new TestSettingDictionary
                 {
                     ["Padding"] = int.MaxValue
                 }
