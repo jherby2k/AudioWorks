@@ -93,7 +93,9 @@ namespace AudioWorks.Api.Tests
                 var formatter = new BinaryFormatter();
                 formatter.Serialize(stream, audioFile);
                 stream.Seek(0, SeekOrigin.Begin);
-                Assert.Equal(audioFile.FileInfo.FullName, ((AudioFile)formatter.Deserialize(stream)).FileInfo.FullName);
+                Assert.True(new Comparer<FileInfo>().Compare(
+                    audioFile.FileInfo,
+                    ((AudioFile) formatter.Deserialize(stream)).FileInfo));
             }
         }
 
