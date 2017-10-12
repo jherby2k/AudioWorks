@@ -2,6 +2,7 @@
 
 namespace AudioWorks.Common
 {
+    [PublicAPI]
     public sealed class StringSettingInfo : SettingInfo
     {
         [NotNull, ItemNotNull]
