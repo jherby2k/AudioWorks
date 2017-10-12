@@ -578,7 +578,7 @@ namespace AudioWorks.Api.Tests
                 fileName);
             Assert.Equal(
                 expectedMetadata.Title,
-                AudioFileFactory.Create(path).Metadata.Title);
+                new TaggedAudioFile(path).Metadata.Title);
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Artist property value")]
@@ -592,7 +592,7 @@ namespace AudioWorks.Api.Tests
                 fileName);
             Assert.Equal(
                 expectedMetadata.Artist,
-                AudioFileFactory.Create(path).Metadata.Artist);
+                new TaggedAudioFile(path).Metadata.Artist);
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Album property value")]
@@ -606,7 +606,7 @@ namespace AudioWorks.Api.Tests
                 fileName);
             Assert.Equal(
                 expectedMetadata.Album,
-                AudioFileFactory.Create(path).Metadata.Album);
+                new TaggedAudioFile(path).Metadata.Album);
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Genre property value")]
@@ -620,7 +620,7 @@ namespace AudioWorks.Api.Tests
                 fileName);
             Assert.Equal(
                 expectedMetadata.Genre,
-                AudioFileFactory.Create(path).Metadata.Genre);
+                new TaggedAudioFile(path).Metadata.Genre);
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Comment property value")]
@@ -634,7 +634,7 @@ namespace AudioWorks.Api.Tests
                 fileName);
             Assert.Equal(
                 expectedMetadata.Comment,
-                AudioFileFactory.Create(path).Metadata.Comment);
+                new TaggedAudioFile(path).Metadata.Comment);
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Day property value")]
@@ -648,7 +648,7 @@ namespace AudioWorks.Api.Tests
                 fileName);
             Assert.Equal(
                 expectedMetadata.Day,
-                AudioFileFactory.Create(path).Metadata.Day);
+                new TaggedAudioFile(path).Metadata.Day);
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Month property value")]
@@ -662,7 +662,7 @@ namespace AudioWorks.Api.Tests
                 fileName);
             Assert.Equal(
                 expectedMetadata.Month,
-                AudioFileFactory.Create(path).Metadata.Month);
+                new TaggedAudioFile(path).Metadata.Month);
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Year property value")]
@@ -676,7 +676,7 @@ namespace AudioWorks.Api.Tests
                 fileName);
             Assert.Equal(
                 expectedMetadata.Year,
-                AudioFileFactory.Create(path).Metadata.Year);
+                new TaggedAudioFile(path).Metadata.Year);
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected TrackNumber property value")]
@@ -690,7 +690,7 @@ namespace AudioWorks.Api.Tests
                 fileName);
             Assert.Equal(
                 expectedMetadata.TrackNumber,
-                AudioFileFactory.Create(path).Metadata.TrackNumber);
+                new TaggedAudioFile(path).Metadata.TrackNumber);
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected TrackCount property value")]
@@ -704,7 +704,7 @@ namespace AudioWorks.Api.Tests
                 fileName);
             Assert.Equal(
                 expectedMetadata.TrackCount,
-                AudioFileFactory.Create(path).Metadata.TrackCount);
+                new TaggedAudioFile(path).Metadata.TrackCount);
         }
     }
 }

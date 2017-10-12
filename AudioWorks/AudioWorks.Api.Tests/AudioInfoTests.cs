@@ -152,7 +152,7 @@ namespace AudioWorks.Api.Tests
                 fileName);
             Assert.Equal(
                 expectedAudioInfo.Description,
-                AudioFileFactory.Create(path).AudioInfo.Description);
+                new AudioFile(path).AudioInfo.Description);
         }
 
         [Theory(DisplayName = "AudioInfo has the expected Channel property value")]
@@ -166,7 +166,7 @@ namespace AudioWorks.Api.Tests
                 fileName);
             Assert.Equal(
                 expectedAudioInfo.Channels,
-                AudioFileFactory.Create(path).AudioInfo.Channels);
+                new AudioFile(path).AudioInfo.Channels);
         }
 
         [Theory(DisplayName = "AudioInfo has the expected BitsPerSample property value")]
@@ -180,7 +180,7 @@ namespace AudioWorks.Api.Tests
                 fileName);
             Assert.Equal(
                 expectedAudioInfo.BitsPerSample,
-                AudioFileFactory.Create(path).AudioInfo.BitsPerSample);
+                new AudioFile(path).AudioInfo.BitsPerSample);
         }
 
         [Theory(DisplayName = "AudioInfo has the expected SampleRate property value")]
@@ -194,7 +194,7 @@ namespace AudioWorks.Api.Tests
                 fileName);
             Assert.Equal(
                 expectedAudioInfo.SampleRate,
-                AudioFileFactory.Create(path).AudioInfo.SampleRate);
+                new AudioFile(path).AudioInfo.SampleRate);
         }
 
         [Theory(DisplayName = "AudioInfo has the expected SampleCount property value")]
@@ -208,7 +208,7 @@ namespace AudioWorks.Api.Tests
                 fileName);
             Assert.Equal(
                 expectedAudioInfo.SampleCount,
-                AudioFileFactory.Create(path).AudioInfo.SampleCount);
+                new AudioFile(path).AudioInfo.SampleCount);
         }
 
         [Theory(DisplayName = "AudioInfo has the expected BitRate property value")]
@@ -222,7 +222,7 @@ namespace AudioWorks.Api.Tests
                 fileName);
             Assert.Equal(
                 expectedAudioInfo.BitRate,
-                AudioFileFactory.Create(path).AudioInfo.BitRate);
+                new AudioFile(path).AudioInfo.BitRate);
         }
 
         [Theory(DisplayName = "AudioInfo has the expected PlayLength property value")]
@@ -239,7 +239,7 @@ namespace AudioWorks.Api.Tests
                     ? TimeSpan.Zero
                     : new TimeSpan(0, 0,
                         (int) Math.Round(expectedAudioInfo.SampleCount / (double) expectedAudioInfo.SampleRate)),
-                AudioFileFactory.Create(path).AudioInfo.PlayLength);
+                new AudioFile(path).AudioInfo.PlayLength);
         }
     }
 }

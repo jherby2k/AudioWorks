@@ -6,13 +6,13 @@ using System.Management.Automation;
 namespace AudioWorks.Commands
 {
     [PublicAPI]
-    [Cmdlet(VerbsData.Save, "AudioMetadata", SupportsShouldProcess = true), OutputType(typeof(AudioFile))]
+    [Cmdlet(VerbsData.Save, "AudioMetadata", SupportsShouldProcess = true), OutputType(typeof(ITaggedAudioFile))]
     public sealed class SaveAudioMetadataCommand : Cmdlet, IDynamicParameters
     {
         [CanBeNull] RuntimeDefinedParameterDictionary _parameters;
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
-        public AudioFile AudioFile { get; set; }
+        public ITaggedAudioFile AudioFile { get; set; }
 
         [Parameter]
         public SwitchParameter PassThru { get; set; }

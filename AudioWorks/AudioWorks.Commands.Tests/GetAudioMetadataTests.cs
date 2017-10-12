@@ -2,6 +2,7 @@
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Common;
 using JetBrains.Annotations;
+using Moq;
 using System;
 using System.IO;
 using System.Management.Automation;
@@ -46,9 +47,7 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null));
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object);
                 ps.Invoke();
                 Assert.True(true);
             }
@@ -72,9 +71,7 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddArgument(new AudioFile(null, null, fileInfo => new AudioMetadata(), null));
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddArgument(new Mock<ITaggedAudioFile>().Object);
                 ps.Invoke();
                 Assert.True(true);
             }
@@ -88,9 +85,7 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-Variable")
                     .AddArgument("audioFile")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddArgument(new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddArgument(new Mock<ITaggedAudioFile>().Object)
                     .AddParameter("PassThru");
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Value");
@@ -128,7 +123,7 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioMetadata")
-                    .AddArgument(AudioFileFactory.Create(Path.Combine(
+                    .AddArgument(new TaggedAudioFile(Path.Combine(
                         new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
                         "TestFiles",
                         "Valid",

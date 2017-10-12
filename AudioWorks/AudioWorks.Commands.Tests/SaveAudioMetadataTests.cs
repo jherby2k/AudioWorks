@@ -2,6 +2,7 @@
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Common;
 using JetBrains.Annotations;
+using Moq;
 using System;
 using System.IO;
 using System.Management.Automation;
@@ -43,17 +44,15 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName = "Save-AudioMetadata accepts an AudioFile parameter")]
         public void AcceptsAudioFileParameter()
         {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.FileInfo).Returns(new FileInfo("Foo"));
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(
-                        new FileInfo("Foo"),
-                        null,
-                        fileInfo => new AudioMetadata(),
-                        (fileInfo, metadata, settings) => { }));
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object);
                 ps.Invoke();
                 Assert.True(true);
             }
@@ -73,17 +72,16 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName = "Save-AudioMetadata accepts the AudioFile parameter as the first argument")]
         public void AcceptsAudioFileParameterAsFirstArgument()
         {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.FileInfo).Returns(new FileInfo("Foo"));
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddArgument(new AudioFile(
-                        new FileInfo("Foo"),
-                        null,
-                        fileInfo => new AudioMetadata(),
-                        (fileInfo, metadata, settings) => { }));
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddArgument(mock.Object);
                 ps.Invoke();
                 Assert.True(true);
             }
@@ -92,18 +90,16 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName = "Save-AudioMetadata accepts the AudioFile parameter from the pipeline")]
         public void AcceptsAudioFileParameterFromPipeline()
         {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.FileInfo).Returns(new FileInfo("Foo"));
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-Variable")
                     .AddArgument("audioFile")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddArgument(new AudioFile(
-                        new FileInfo("Foo"),
-                        null,
-                        fileInfo => new AudioMetadata(),
-                        (fileInfo, metadata, settings) => { }))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddArgument(mock.Object)
                     .AddParameter("PassThru");
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Value");
@@ -120,17 +116,15 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName = "Save-AudioMetadata accepts a PassThru switch")]
         public void AcceptsPassThruSwitch()
         {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.FileInfo).Returns(new FileInfo("Foo"));
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(
-                        new FileInfo("Foo"),
-                        null,
-                        fileInfo => new AudioMetadata(),
-                        (fileInfo, metadata, settings) => { }))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("PassThru");
                 ps.Invoke();
                 Assert.True(true);
@@ -140,24 +134,21 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName = "Save-AudioMetadata with PassThru switch returns the AudioFile")]
         public void PassThruSwitchReturnsAudioFile()
         {
-            // ReSharper disable AssignNullToNotNullAttribute
-            var audioFile = new AudioFile(
-                new FileInfo("Foo"),
-                null,
-                fileInfo => new AudioMetadata(),
-                (fileInfo, metadata, settings) => { });
-            // ReSharper restore AssignNullToNotNullAttribute
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.FileInfo).Returns(new FileInfo("Foo"));
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata")
-                    .AddParameter("AudioFile", audioFile)
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("PassThru");
-                Assert.Equal(audioFile, ps.Invoke()[0].BaseObject);
+                Assert.Equal(mock.Object, ps.Invoke()[0].BaseObject);
             }
         }
 
-        [Fact(DisplayName = "Save-AudioMetadata has an OutputType of AudioFile")]
+        [Fact(DisplayName = "Save-AudioMetadata has an OutputType of ITaggedAudioFile")]
         public void OutputTypeIsAudioFile()
         {
             using (var ps = PowerShell.Create())
@@ -169,7 +160,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("ExpandProperty", "OutputType");
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Type");
-                Assert.Equal(typeof(AudioFile), (Type)ps.Invoke()[0].BaseObject);
+                Assert.Equal(typeof(ITaggedAudioFile), (Type) ps.Invoke()[0].BaseObject);
             }
         }
 
@@ -189,8 +180,7 @@ namespace AudioWorks.Commands.Tests
                 "TestFiles",
                 "Valid",
                 fileName), path, true);
-            var audioFile = AudioFileFactory.Create(path);
-            audioFile.Metadata = metadata;
+            var audioFile = new TaggedAudioFile(path) { Metadata = metadata };
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
@@ -219,7 +209,7 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata")
-                    .AddArgument(AudioFileFactory.Create(path));
+                    .AddArgument(new TaggedAudioFile(path));
                 ps.Invoke();
                 var errors = ps.Streams.Error.ReadAll();
                 Assert.True(
@@ -231,7 +221,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Pure, NotNull]
-        static string CalculateHash([NotNull] AudioFile audioFile)
+        static string CalculateHash([NotNull] IAudioFile audioFile)
         {
             using (var md5 = MD5.Create())
             using (var fileStream = audioFile.FileInfo.OpenRead())

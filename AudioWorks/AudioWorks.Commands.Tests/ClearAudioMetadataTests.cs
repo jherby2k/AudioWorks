@@ -1,5 +1,6 @@
 ﻿using AudioWorks.Common;
 using JetBrains.Annotations;
+using Moq;
 using System;
 using System.Management.Automation;
 using Xunit;
@@ -39,13 +40,14 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName = "Clear-AudioMetadata accepts an AudioFile parameter")]
         public void AcceptsAudioFileParameter()
         {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null));
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object);
                 ps.Invoke();
                 Assert.True(true);
             }
@@ -65,13 +67,14 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName = "Clear-AudioMetadata accepts the AudioFile parameter as the first argument")]
         public void AcceptsAudioFileParameterAsFirstArgument()
         {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddArgument(new AudioFile(null, null, fileInfo => new AudioMetadata(), null));
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddArgument(mock.Object);
                 ps.Invoke();
                 Assert.True(true);
             }
@@ -80,14 +83,15 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName = "Clear-AudioMetadata accepts the AudioFile parameter from the pipeline")]
         public void AcceptsAudioFileParameterFromPipeline()
         {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-Variable")
                     .AddArgument("audioFile")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddArgument(new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddArgument(mock.Object)
                     .AddParameter("PassThru");
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Value");
@@ -104,359 +108,623 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName = "Clear-AudioMetadata with no switches clears all metadata fields")]
         public void NoSwitchesClearsAll()
         {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata
+            {
+                Title = "Test Title",
+                Artist = "Test Artist",
+                Album = "Test Album",
+                Genre = "Test Genre",
+                Comment = "Test Comment",
+                Day = "31",
+                Month = "01",
+                Year = "2017",
+                TrackNumber = "01",
+                TrackCount = "12"
+            });
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
-                    // ReSharper restore AssignNullToNotNullAttribute
-                    .AddParameter("Title");
+                    .AddParameter("AudioFile", mock.Object);
                 ps.Invoke();
-                Assert.True(true);
             }
+
+            Assert.True(
+                mock.Object.Metadata.Title == string.Empty &&
+                mock.Object.Metadata.Artist == string.Empty &&
+                mock.Object.Metadata.Album == string.Empty &&
+                mock.Object.Metadata.Genre == string.Empty &&
+                mock.Object.Metadata.Comment == string.Empty &&
+                mock.Object.Metadata.Day == string.Empty &&
+                mock.Object.Metadata.Month == string.Empty &&
+                mock.Object.Metadata.Year == string.Empty &&
+                mock.Object.Metadata.TrackNumber == string.Empty &&
+                mock.Object.Metadata.TrackCount == string.Empty);
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a Title switch")]
         public void AcceptsTitleSwitch()
         {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Title");
                 ps.Invoke();
                 Assert.True(true);
             }
         }
 
-        [Fact(DisplayName = "Clear-AudioMetadata with Title switch clears the Title")]
+        [Fact(DisplayName = "Clear-AudioMetadata with Title switch clears only the Title")]
         public void TitleSwitchClearsTitle()
         {
-            var metadata = new AudioMetadata();
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata
+            {
+                Title = "Test Title",
+                Artist = "Test Artist",
+                Album = "Test Album",
+                Genre = "Test Genre",
+                Comment = "Test Comment",
+                Day = "31",
+                Month = "01",
+                Year = "2017",
+                TrackNumber = "01",
+                TrackCount = "12"
+            });
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => metadata, null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Title");
                 ps.Invoke();
-                Assert.Equal(string.Empty, metadata.Title);
             }
+
+            Assert.True(
+                mock.Object.Metadata.Title == string.Empty &&
+                mock.Object.Metadata.Artist == "Test Artist" &&
+                mock.Object.Metadata.Album == "Test Album" &&
+                mock.Object.Metadata.Genre == "Test Genre" &&
+                mock.Object.Metadata.Comment == "Test Comment" &&
+                mock.Object.Metadata.Day == "31" &&
+                mock.Object.Metadata.Month == "01" &&
+                mock.Object.Metadata.Year == "2017" &&
+                mock.Object.Metadata.TrackNumber == "01" &&
+                mock.Object.Metadata.TrackCount == "12");
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a Artist switch")]
         public void AcceptsArtistSwitch()
         {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Artist");
                 ps.Invoke();
                 Assert.True(true);
             }
         }
 
-        [Fact(DisplayName = "Clear-AudioMetadata with Artist switch clears the Artist")]
+        [Fact(DisplayName = "Clear-AudioMetadata with Artist switch clears only the Artist")]
         public void ArtistSwitchClearsArtist()
         {
-            var metadata = new AudioMetadata();
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata
+            {
+                Title = "Test Title",
+                Artist = "Test Artist",
+                Album = "Test Album",
+                Genre = "Test Genre",
+                Comment = "Test Comment",
+                Day = "31",
+                Month = "01",
+                Year = "2017",
+                TrackNumber = "01",
+                TrackCount = "12"
+            });
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => metadata, null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Artist");
                 ps.Invoke();
-                Assert.Equal(string.Empty, metadata.Artist);
             }
+
+            Assert.True(
+                mock.Object.Metadata.Title == "Test Title" &&
+                mock.Object.Metadata.Artist == string.Empty &&
+                mock.Object.Metadata.Album == "Test Album" &&
+                mock.Object.Metadata.Genre == "Test Genre" &&
+                mock.Object.Metadata.Comment == "Test Comment" &&
+                mock.Object.Metadata.Day == "31" &&
+                mock.Object.Metadata.Month == "01" &&
+                mock.Object.Metadata.Year == "2017" &&
+                mock.Object.Metadata.TrackNumber == "01" &&
+                mock.Object.Metadata.TrackCount == "12");
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts an Album switch")]
         public void AcceptsAlbumSwitch()
         {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Album");
                 ps.Invoke();
                 Assert.True(true);
             }
         }
 
-        [Fact(DisplayName = "Clear-AudioMetadata with Album switch clears the Album")]
+        [Fact(DisplayName = "Clear-AudioMetadata with Album switch clears only the Album")]
         public void AlbumSwitchClearsAlbum()
         {
-            var metadata = new AudioMetadata();
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata
+            {
+                Title = "Test Title",
+                Artist = "Test Artist",
+                Album = "Test Album",
+                Genre = "Test Genre",
+                Comment = "Test Comment",
+                Day = "31",
+                Month = "01",
+                Year = "2017",
+                TrackNumber = "01",
+                TrackCount = "12"
+            });
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => metadata, null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Album");
                 ps.Invoke();
-                Assert.Equal(string.Empty, metadata.Album);
             }
+
+            Assert.True(
+                mock.Object.Metadata.Title == "Test Title" &&
+                mock.Object.Metadata.Artist == "Test Artist" &&
+                mock.Object.Metadata.Album == string.Empty &&
+                mock.Object.Metadata.Genre == "Test Genre" &&
+                mock.Object.Metadata.Comment == "Test Comment" &&
+                mock.Object.Metadata.Day == "31" &&
+                mock.Object.Metadata.Month == "01" &&
+                mock.Object.Metadata.Year == "2017" &&
+                mock.Object.Metadata.TrackNumber == "01" &&
+                mock.Object.Metadata.TrackCount == "12");
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a Genre switch")]
         public void AcceptsGenreSwitch()
         {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Genre");
                 ps.Invoke();
                 Assert.True(true);
             }
         }
 
-        [Fact(DisplayName = "Clear-AudioMetadata with Genre switch clears the Genre")]
+        [Fact(DisplayName = "Clear-AudioMetadata with Genre switch clears only the Genre")]
         public void GenreSwitchClearsGenre()
         {
-            var metadata = new AudioMetadata();
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata
+            {
+                Title = "Test Title",
+                Artist = "Test Artist",
+                Album = "Test Album",
+                Genre = "Test Genre",
+                Comment = "Test Comment",
+                Day = "31",
+                Month = "01",
+                Year = "2017",
+                TrackNumber = "01",
+                TrackCount = "12"
+            });
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => metadata, null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Genre");
                 ps.Invoke();
-                Assert.Equal(string.Empty, metadata.Genre);
             }
+
+            Assert.True(
+                mock.Object.Metadata.Title == "Test Title" &&
+                mock.Object.Metadata.Artist == "Test Artist" &&
+                mock.Object.Metadata.Album == "Test Album" &&
+                mock.Object.Metadata.Genre == string.Empty &&
+                mock.Object.Metadata.Comment == "Test Comment" &&
+                mock.Object.Metadata.Day == "31" &&
+                mock.Object.Metadata.Month == "01" &&
+                mock.Object.Metadata.Year == "2017" &&
+                mock.Object.Metadata.TrackNumber == "01" &&
+                mock.Object.Metadata.TrackCount == "12");
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a Comment switch")]
         public void AcceptsCommentSwitch()
         {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Comment");
                 ps.Invoke();
                 Assert.True(true);
             }
         }
 
-        [Fact(DisplayName = "Clear-AudioMetadata with Comment switch clears the Comment")]
+        [Fact(DisplayName = "Clear-AudioMetadata with Comment switch clears only the Comment")]
         public void CommentSwitchClearsComment()
         {
-            var metadata = new AudioMetadata();
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata
+            {
+                Title = "Test Title",
+                Artist = "Test Artist",
+                Album = "Test Album",
+                Genre = "Test Genre",
+                Comment = "Test Comment",
+                Day = "31",
+                Month = "01",
+                Year = "2017",
+                TrackNumber = "01",
+                TrackCount = "12"
+            });
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => metadata, null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Comment");
                 ps.Invoke();
-                Assert.Equal(string.Empty, metadata.Comment);
             }
+
+            Assert.True(
+                mock.Object.Metadata.Title == "Test Title" &&
+                mock.Object.Metadata.Artist == "Test Artist" &&
+                mock.Object.Metadata.Album == "Test Album" &&
+                mock.Object.Metadata.Genre == "Test Genre" &&
+                mock.Object.Metadata.Comment == string.Empty &&
+                mock.Object.Metadata.Day == "31" &&
+                mock.Object.Metadata.Month == "01" &&
+                mock.Object.Metadata.Year == "2017" &&
+                mock.Object.Metadata.TrackNumber == "01" &&
+                mock.Object.Metadata.TrackCount == "12");
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a Day switch")]
         public void AcceptsDaySwitch()
         {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Day");
                 ps.Invoke();
                 Assert.True(true);
             }
         }
 
-        [Fact(DisplayName = "Clear-AudioMetadata with Day switch clears the Day")]
+        [Fact(DisplayName = "Clear-AudioMetadata with Day switch clears only the Day")]
         public void DaySwitchClearsDay()
         {
-            var metadata = new AudioMetadata();
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata
+            {
+                Title = "Test Title",
+                Artist = "Test Artist",
+                Album = "Test Album",
+                Genre = "Test Genre",
+                Comment = "Test Comment",
+                Day = "31",
+                Month = "01",
+                Year = "2017",
+                TrackNumber = "01",
+                TrackCount = "12"
+            });
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => metadata, null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Day");
                 ps.Invoke();
-                Assert.Equal(string.Empty, metadata.Day);
             }
+
+            Assert.True(
+                mock.Object.Metadata.Title == "Test Title" &&
+                mock.Object.Metadata.Artist == "Test Artist" &&
+                mock.Object.Metadata.Album == "Test Album" &&
+                mock.Object.Metadata.Genre == "Test Genre" &&
+                mock.Object.Metadata.Comment == "Test Comment" &&
+                mock.Object.Metadata.Day == string.Empty &&
+                mock.Object.Metadata.Month == "01" &&
+                mock.Object.Metadata.Year == "2017" &&
+                mock.Object.Metadata.TrackNumber == "01" &&
+                mock.Object.Metadata.TrackCount == "12");
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a Month switch")]
         public void AcceptsMonthSwitch()
         {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Month");
                 ps.Invoke();
                 Assert.True(true);
             }
         }
 
-        [Fact(DisplayName = "Clear-AudioMetadata with Month switch clears the Month")]
+        [Fact(DisplayName = "Clear-AudioMetadata with Month switch clears only the Month")]
         public void MonthSwitchClearsMonth()
         {
-            var metadata = new AudioMetadata();
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata
+            {
+                Title = "Test Title",
+                Artist = "Test Artist",
+                Album = "Test Album",
+                Genre = "Test Genre",
+                Comment = "Test Comment",
+                Day = "31",
+                Month = "01",
+                Year = "2017",
+                TrackNumber = "01",
+                TrackCount = "12"
+            });
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => metadata, null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Month");
                 ps.Invoke();
-                Assert.Equal(string.Empty, metadata.Month);
             }
+
+            Assert.True(
+                mock.Object.Metadata.Title == "Test Title" &&
+                mock.Object.Metadata.Artist == "Test Artist" &&
+                mock.Object.Metadata.Album == "Test Album" &&
+                mock.Object.Metadata.Genre == "Test Genre" &&
+                mock.Object.Metadata.Comment == "Test Comment" &&
+                mock.Object.Metadata.Day == "31" &&
+                mock.Object.Metadata.Month == string.Empty &&
+                mock.Object.Metadata.Year == "2017" &&
+                mock.Object.Metadata.TrackNumber == "01" &&
+                mock.Object.Metadata.TrackCount == "12");
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a Year switch")]
         public void AcceptsYearSwitch()
         {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Year");
                 ps.Invoke();
                 Assert.True(true);
             }
         }
 
-        [Fact(DisplayName = "Clear-AudioMetadata with Year switch clears the Year")]
+        [Fact(DisplayName = "Clear-AudioMetadata with Year switch clears only the Year")]
         public void YearSwitchClearsYear()
         {
-            var metadata = new AudioMetadata();
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata
+            {
+                Title = "Test Title",
+                Artist = "Test Artist",
+                Album = "Test Album",
+                Genre = "Test Genre",
+                Comment = "Test Comment",
+                Day = "31",
+                Month = "01",
+                Year = "2017",
+                TrackNumber = "01",
+                TrackCount = "12"
+            });
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => metadata, null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Year");
                 ps.Invoke();
-                Assert.Equal(string.Empty, metadata.Year);
             }
+
+            Assert.True(
+                mock.Object.Metadata.Title == "Test Title" &&
+                mock.Object.Metadata.Artist == "Test Artist" &&
+                mock.Object.Metadata.Album == "Test Album" &&
+                mock.Object.Metadata.Genre == "Test Genre" &&
+                mock.Object.Metadata.Comment == "Test Comment" &&
+                mock.Object.Metadata.Day == "31" &&
+                mock.Object.Metadata.Month == "01" &&
+                mock.Object.Metadata.Year == string.Empty &&
+                mock.Object.Metadata.TrackNumber == "01" &&
+                mock.Object.Metadata.TrackCount == "12");
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a TrackNumber switch")]
         public void AcceptsTrackNumberSwitch()
         {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("TrackNumber");
                 ps.Invoke();
                 Assert.True(true);
             }
         }
 
-        [Fact(DisplayName = "Clear-AudioMetadata with TrackNumber switch clears the TrackNumber")]
+        [Fact(DisplayName = "Clear-AudioMetadata with TrackNumber switch clears only the TrackNumber")]
         public void TrackNumberSwitchClearsTrackNumber()
         {
-            var metadata = new AudioMetadata();
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata
+            {
+                Title = "Test Title",
+                Artist = "Test Artist",
+                Album = "Test Album",
+                Genre = "Test Genre",
+                Comment = "Test Comment",
+                Day = "31",
+                Month = "01",
+                Year = "2017",
+                TrackNumber = "01",
+                TrackCount = "12"
+            });
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => metadata, null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("TrackNumber");
                 ps.Invoke();
-                Assert.Equal(string.Empty, metadata.TrackNumber);
             }
+
+            Assert.True(
+                mock.Object.Metadata.Title == "Test Title" &&
+                mock.Object.Metadata.Artist == "Test Artist" &&
+                mock.Object.Metadata.Album == "Test Album" &&
+                mock.Object.Metadata.Genre == "Test Genre" &&
+                mock.Object.Metadata.Comment == "Test Comment" &&
+                mock.Object.Metadata.Day == "31" &&
+                mock.Object.Metadata.Month == "01" &&
+                mock.Object.Metadata.Year == "2017" &&
+                mock.Object.Metadata.TrackNumber == string.Empty &&
+                mock.Object.Metadata.TrackCount == "12");
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a TrackCount switch")]
         public void AcceptsTrackCountSwitch()
         {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("TrackCount");
                 ps.Invoke();
                 Assert.True(true);
             }
         }
 
-        [Fact(DisplayName = "Clear-AudioMetadata with TrackCount switch clears the TrackCount")]
+        [Fact(DisplayName = "Clear-AudioMetadata with TrackCount switch clears only the TrackCount")]
         public void TrackCountSwitchClearsTrackCount()
         {
-            var metadata = new AudioMetadata();
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata
+            {
+                Title = "Test Title",
+                Artist = "Test Artist",
+                Album = "Test Album",
+                Genre = "Test Genre",
+                Comment = "Test Comment",
+                Day = "31",
+                Month = "01",
+                Year = "2017",
+                TrackNumber = "01",
+                TrackCount = "12"
+            });
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => metadata, null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("TrackCount");
                 ps.Invoke();
-                Assert.Equal(string.Empty, metadata.TrackCount);
             }
+
+            Assert.True(
+                mock.Object.Metadata.Title == "Test Title" &&
+                mock.Object.Metadata.Artist == "Test Artist" &&
+                mock.Object.Metadata.Album == "Test Album" &&
+                mock.Object.Metadata.Genre == "Test Genre" &&
+                mock.Object.Metadata.Comment == "Test Comment" &&
+                mock.Object.Metadata.Day == "31" &&
+                mock.Object.Metadata.Month == "01" &&
+                mock.Object.Metadata.Year == "2017" &&
+                mock.Object.Metadata.TrackNumber == "01" &&
+                mock.Object.Metadata.TrackCount == string.Empty);
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a PassThru switch")]
         public void AcceptsPassThruSwitch()
         {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    .AddParameter("AudioFile", new AudioFile(null, null, fileInfo => new AudioMetadata(), null))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("PassThru");
                 ps.Invoke();
                 Assert.True(true);
@@ -466,20 +734,20 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName = "Clear-AudioMetadata with PassThru switch returns the AudioFile")]
         public void PassThruSwitchReturnsAudioFile()
         {
-            // ReSharper disable AssignNullToNotNullAttribute
-            var audioFile = new AudioFile(null, null, fileInfo => new AudioMetadata(), null);
-            // ReSharper restore AssignNullToNotNullAttribute
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
-                    .AddParameter("AudioFile", audioFile)
+                    .AddParameter("AudioFile", mock.Object)
                     .AddParameter("PassThru");
-                Assert.Equal(audioFile, ps.Invoke()[0].BaseObject);
+                Assert.Equal(mock.Object, ps.Invoke()[0].BaseObject);
             }
         }
 
-        [Fact(DisplayName = "Clear-AudioMetadata has an OutputType of AudioFile")]
+        [Fact(DisplayName = "Clear-AudioMetadata has an OutputType of ITaggedAudioFile")]
         public void OutputTypeIsAudioFile()
         {
             using (var ps = PowerShell.Create())
@@ -491,7 +759,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("ExpandProperty", "OutputType");
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Type");
-                Assert.Equal(typeof(AudioFile), (Type)ps.Invoke()[0].BaseObject);
+                Assert.Equal(typeof(ITaggedAudioFile), (Type) ps.Invoke()[0].BaseObject);
             }
         }
     }

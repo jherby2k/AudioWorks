@@ -6,12 +6,12 @@ using System.Management.Automation;
 namespace AudioWorks.Commands
 {
     [PublicAPI]
-    [Cmdlet(VerbsCommon.Set, "AudioMetadata"), OutputType(typeof(AudioFile))]
+    [Cmdlet(VerbsCommon.Set, "AudioMetadata"), OutputType(typeof(ITaggedAudioFile))]
     public sealed class SetAudioMetadataCommand : Cmdlet
     {
         [NotNull, SuppressMessage("ReSharper", "NotNullMemberIsNotInitialized")]
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
-        public AudioFile AudioFile { get; set; }
+        public ITaggedAudioFile AudioFile { get; set; }
 
         [CanBeNull]
         [Parameter, ValidateNotNull]

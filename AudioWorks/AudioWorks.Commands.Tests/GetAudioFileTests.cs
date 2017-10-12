@@ -97,8 +97,8 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
-        [Fact(DisplayName = "Get-AudioFile has an OutputType of AudioFile")]
-        public void OutputTypeIsAudioFile()
+        [Fact(DisplayName = "Get-AudioFile has an OutputType of IAudioFile")]
+        public void OutputTypeIsIAudioFile()
         {
             using (var ps = PowerShell.Create())
             {
@@ -110,7 +110,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Type");
                 var result = ps.Invoke();
-                Assert.Equal(typeof(AudioFile), (Type) result[0].BaseObject);
+                Assert.Equal(typeof(IAudioFile), (Type) result[0].BaseObject);
             }
         }
 
@@ -178,9 +178,9 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
-        [Theory(DisplayName = "Get-AudioFile returns an AudioFile")]
+        [Theory(DisplayName = "Get-AudioFile returns an IAudioFile")]
         [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
-        public void ReturnsAudioFile([NotNull] string fileName)
+        public void ReturnsIAudioFile([NotNull] string fileName)
         {
             using (var ps = PowerShell.Create())
             {
@@ -191,13 +191,13 @@ namespace AudioWorks.Commands.Tests
                         "TestFiles",
                         "Valid",
                         fileName));
-                Assert.IsType<AudioFile>(ps.Invoke()[0].BaseObject);
+                Assert.IsAssignableFrom<IAudioFile>(ps.Invoke()[0].BaseObject);
             }
         }
 
-        [Theory(DisplayName = "Get-AudioFile returns an AudioFile using a relative path")]
+        [Theory(DisplayName = "Get-AudioFile returns an IAudioFile using a relative path")]
         [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
-        public void RelativePathReturnsAudioFile([NotNull] string fileName)
+        public void RelativePathReturnsIAudioFile([NotNull] string fileName)
         {
             using (var ps = PowerShell.Create())
             {
@@ -214,7 +214,7 @@ namespace AudioWorks.Commands.Tests
                 ps.Commands.Clear();
                 ps.AddCommand("Pop-Location");
                 ps.Invoke();
-                Assert.IsType<AudioFile>(result[0].BaseObject);
+                Assert.IsAssignableFrom<IAudioFile>(result[0].BaseObject);
             }
         }
     }
