@@ -7,6 +7,7 @@ using System.IO;
 namespace AudioWorks.Api
 {
     [PublicAPI]
+    [Serializable]
     public sealed class TaggedAudioFile : AudioFile, ITaggedAudioFile
     {
         [CanBeNull] AudioMetadata _metadata;

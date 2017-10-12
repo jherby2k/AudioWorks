@@ -1,8 +1,10 @@
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Common;
 using JetBrains.Annotations;
+using ObjectsComparer;
 using System;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using Xunit;
 
 namespace AudioWorks.Api.Tests
@@ -74,6 +76,46 @@ namespace AudioWorks.Api.Tests
                 fileName);
             Assert.IsAssignableFrom<AudioInfo>(
                 new AudioFile(path).AudioInfo);
+        }
+
+        [Theory(DisplayName = "AudioFile's FileInfo property is properly serialized")]
+        [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
+        public void FileInfoIsSerialized([NotNull] string fileName)
+        {
+            var audioFile = new AudioFile(Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                "TestFiles",
+                "Valid",
+                fileName));
+
+            using (var stream = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, audioFile);
+                stream.Seek(0, SeekOrigin.Begin);
+                Assert.Equal(audioFile.FileInfo.FullName, ((AudioFile)formatter.Deserialize(stream)).FileInfo.FullName);
+            }
+        }
+
+        [Theory(DisplayName = "AudioFile's AudioInfo property is properly serialized")]
+        [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
+        public void AudioInfoIsSerialized([NotNull] string fileName)
+        {
+            var audioFile = new AudioFile(Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                "TestFiles",
+                "Valid",
+                fileName));
+
+            using (var stream = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, audioFile);
+                stream.Seek(0, SeekOrigin.Begin);
+                Assert.True(new Comparer<AudioInfo>().Compare(
+                    audioFile.AudioInfo,
+                    ((AudioFile) formatter.Deserialize(stream)).AudioInfo));
+            }
         }
     }
 }

@@ -3,7 +3,9 @@ using AudioWorks.Common;
 using JetBrains.Annotations;
 using System;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
+using ObjectsComparer;
 using Xunit;
 
 namespace AudioWorks.Api.Tests
@@ -128,6 +130,27 @@ namespace AudioWorks.Api.Tests
                 fileName), path, true);
             Assert.Throws<ArgumentException>(() =>
                 new TaggedAudioFile(path).SaveMetadata(settings));
+        }
+
+        [Theory(DisplayName = "TaggedAudioFile's Metadata property is properly serialized")]
+        [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
+        public void MetadataIsSerialized([NotNull] string fileName)
+        {
+            var audioFile = new TaggedAudioFile(Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                "TestFiles",
+                "Valid",
+                fileName));
+
+            using (var stream = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, audioFile);
+                stream.Seek(0, SeekOrigin.Begin);
+                Assert.True(new Comparer<AudioMetadata>().Compare(
+                    audioFile.Metadata,
+                    ((TaggedAudioFile) formatter.Deserialize(stream)).Metadata));
+            }
         }
 
         [Pure, NotNull]

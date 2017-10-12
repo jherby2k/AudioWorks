@@ -3,13 +3,18 @@ using AudioWorks.Extensions;
 using JetBrains.Annotations;
 using System;
 using System.IO;
+using System.Runtime.Serialization;
 
 namespace AudioWorks.Api
 {
     [PublicAPI]
+    [Serializable]
     public class AudioFile : IAudioFile
     {
-        public FileInfo FileInfo { get; }
+        [NotNull, NonSerialized] FileInfo _fileInfo;
+        [NotNull] string _serializedPath;
+
+        public FileInfo FileInfo => _fileInfo;
 
         public AudioInfo AudioInfo { get; }
 
@@ -20,18 +25,20 @@ namespace AudioWorks.Api
             if (!File.Exists(path))
                 throw new FileNotFoundException($"The file '{path}' cannot be found.", path);
 
-            FileInfo = new FileInfo(path);
+            _fileInfo = new FileInfo(path);
+            _serializedPath = _fileInfo.FullName;
+
             AudioInfo = LoadAudioInfo();
         }
 
         [NotNull]
         AudioInfo LoadAudioInfo()
         {
-            using (var fileStream = FileInfo.OpenRead())
+            using (var fileStream = _fileInfo.OpenRead())
             {
                 // Try each info decoder that supports this file extension
                 foreach (var decoderFactory in ExtensionProvider.GetFactories<IAudioInfoDecoder>(
-                    "Extension", FileInfo.Extension))
+                    "Extension", _fileInfo.Extension))
                     try
                     {
                         using (var lifetimeContext = decoderFactory.CreateExport())
@@ -45,6 +52,12 @@ namespace AudioWorks.Api
             }
 
             throw new AudioUnsupportedException("No supporting extensions are available.");
+        }
+
+        [OnDeserialized]
+        void OnDeserialized(StreamingContext context)
+        {
+            _fileInfo = new FileInfo(_serializedPath);
         }
     }
 }
