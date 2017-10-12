@@ -83,7 +83,7 @@ namespace AudioWorks.Common
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 if (value == string.Empty)
-                    _day = string.Empty;
+                    _month = string.Empty;
                 else
                 {
                     if (!int.TryParse(value, out var intValue) || intValue < 1 || intValue > 12)
@@ -102,7 +102,7 @@ namespace AudioWorks.Common
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 if (value == string.Empty)
-                    _day = string.Empty;
+                    _year = string.Empty;
                 else
                 {
                     if (!Regex.IsMatch(value, "^[1-9][0-9]{3}$"))
