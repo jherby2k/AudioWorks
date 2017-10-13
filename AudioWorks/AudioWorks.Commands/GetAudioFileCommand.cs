@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace AudioWorks.Commands
 {
     [PublicAPI]
-    [Cmdlet(VerbsCommon.Get, "AudioFile", DefaultParameterSetName = "ByPath"), OutputType(typeof(IAudioFile))]
+    [Cmdlet(VerbsCommon.Get, "AudioFile", DefaultParameterSetName = "ByPath"), OutputType(typeof(ITaggedAudioFile))]
     public sealed class GetAudioFileCommand : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByPath")]
@@ -20,7 +20,7 @@ namespace AudioWorks.Commands
             try
             {
                 foreach (var path in this.GetFileSystemPaths(Path, LiteralPath))
-                    WriteObject(new AudioFile(path));
+                    WriteObject(new TaggedAudioFile(path));
             }
             catch (ItemNotFoundException e)
             {
