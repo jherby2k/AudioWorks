@@ -4,7 +4,7 @@ using System.IO;
 namespace AudioWorks.Extensions.Flac
 {
     [AudioMetadataDecoderExport(".flac")]
-    sealed class FlacAudioMetadataDecoder : IAudioMetadataDecoder
+    public sealed class FlacAudioMetadataDecoder : IAudioMetadataDecoder
     {
         public AudioMetadata ReadMetadata(FileStream stream)
         {

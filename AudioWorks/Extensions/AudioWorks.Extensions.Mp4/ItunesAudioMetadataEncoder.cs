@@ -6,7 +6,7 @@ using System.Linq;
 namespace AudioWorks.Extensions.Mp4
 {
     [AudioMetadataEncoderExport(".m4a")]
-    sealed class ItunesAudioMetadataEncoder : IAudioMetadataEncoder
+    public sealed class ItunesAudioMetadataEncoder : IAudioMetadataEncoder
     {
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary();
 

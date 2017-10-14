@@ -4,7 +4,7 @@ using System.IO;
 namespace AudioWorks.Extensions.Mp4
 {
     [AudioMetadataDecoderExport(".m4a")]
-    sealed class ItunesAudioMetadataDecoder : IAudioMetadataDecoder
+    public sealed class ItunesAudioMetadataDecoder : IAudioMetadataDecoder
     {
         public AudioMetadata ReadMetadata(FileStream stream)
         {

@@ -6,7 +6,7 @@ using System.IO;
 namespace AudioWorks.Extensions.Id3
 {
     [AudioMetadataDecoderExport(".mp3")]
-    sealed class Id3AudioMetadataDecoder : IAudioMetadataDecoder
+    public sealed class Id3AudioMetadataDecoder : IAudioMetadataDecoder
     {
         public AudioMetadata ReadMetadata(FileStream stream)
         {

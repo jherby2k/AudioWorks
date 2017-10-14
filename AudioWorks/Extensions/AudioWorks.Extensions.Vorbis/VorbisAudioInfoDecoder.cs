@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 namespace AudioWorks.Extensions.Vorbis
 {
     [AudioInfoDecoderExport(".ogg")]
-    sealed class VorbisAudioInfoDecoder : IAudioInfoDecoder
+    public sealed class VorbisAudioInfoDecoder : IAudioInfoDecoder
     {
         public AudioInfo ReadAudioInfo(FileStream stream)
         {

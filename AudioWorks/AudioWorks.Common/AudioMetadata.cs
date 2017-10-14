@@ -63,7 +63,7 @@ namespace AudioWorks.Common
             {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
-                if (value == string.Empty)
+                if (string.IsNullOrEmpty(value))
                     _day = string.Empty;
                 else
                 {
@@ -82,7 +82,7 @@ namespace AudioWorks.Common
             {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
-                if (value == string.Empty)
+                if (string.IsNullOrEmpty(value))
                     _month = string.Empty;
                 else
                 {
@@ -101,7 +101,7 @@ namespace AudioWorks.Common
             {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
-                if (value == string.Empty)
+                if (string.IsNullOrEmpty(value))
                     _year = string.Empty;
                 else
                 {
@@ -120,7 +120,7 @@ namespace AudioWorks.Common
             {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
-                if (value == string.Empty)
+                if (string.IsNullOrEmpty(value))
                     _trackNumber = string.Empty;
                 else
                 {
@@ -139,7 +139,7 @@ namespace AudioWorks.Common
             {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
-                if (value == string.Empty)
+                if (string.IsNullOrEmpty(value))
                     _trackCount = string.Empty;
                 else
                 {

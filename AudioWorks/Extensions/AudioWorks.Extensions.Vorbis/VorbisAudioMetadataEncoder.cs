@@ -8,7 +8,7 @@ using System.Text;
 namespace AudioWorks.Extensions.Vorbis
 {
     [AudioMetadataEncoderExport(".ogg")]
-    sealed class VorbisAudioMetadataEncoder : IAudioMetadataEncoder
+    public sealed class VorbisAudioMetadataEncoder : IAudioMetadataEncoder
     {
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary();
 

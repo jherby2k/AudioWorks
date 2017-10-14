@@ -33,7 +33,7 @@ namespace AudioWorks.Commands
                         attributes.Add(new ValidateRangeAttribute(intSettingInfo.MinValue, intSettingInfo.MaxValue));
                         break;
                     case StringSettingInfo stringSettingInfo:
-                        attributes.Add(new ValidateSetAttribute(stringSettingInfo.AcceptedValues));
+                        attributes.Add(new ValidateSetAttribute(stringSettingInfo.AcceptedValues.ToArray()));
                         break;
                 }
                 result.Add(item.Key, new RuntimeDefinedParameter(item.Key, item.Value.ValueType, attributes));

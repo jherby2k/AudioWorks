@@ -3,7 +3,7 @@ using System.Text;
 
 namespace AudioWorks.Extensions.Flac
 {
-    class NativeVorbisCommentBlock : NativeMetadataBlock
+    abstract class NativeVorbisCommentBlock : NativeMetadataBlock
     {
         internal NativeVorbisCommentBlock()
             : base(MetadataType.VorbisComment)

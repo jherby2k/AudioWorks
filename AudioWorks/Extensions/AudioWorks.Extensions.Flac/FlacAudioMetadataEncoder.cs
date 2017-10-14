@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 namespace AudioWorks.Extensions.Flac
 {
     [AudioMetadataEncoderExport(".flac")]
-    sealed class FlacAudioMetadataEncoder : IAudioMetadataEncoder
+    public sealed class FlacAudioMetadataEncoder : IAudioMetadataEncoder
     {
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
         {

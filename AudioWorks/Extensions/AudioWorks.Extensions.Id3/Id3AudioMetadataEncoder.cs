@@ -8,7 +8,7 @@ using System.Text;
 namespace AudioWorks.Extensions.Id3
 {
     [AudioMetadataEncoderExport(".mp3")]
-    sealed class Id3AudioMetadataEncoder : IAudioMetadataEncoder
+    public sealed class Id3AudioMetadataEncoder : IAudioMetadataEncoder
     {
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
         {

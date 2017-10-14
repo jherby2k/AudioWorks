@@ -4,7 +4,7 @@ using System.IO;
 namespace AudioWorks.Extensions.Wave
 {
     [AudioInfoDecoderExport(".wav")]
-    sealed class WaveAudioInfoDecoder : IAudioInfoDecoder
+    public sealed class WaveAudioInfoDecoder : IAudioInfoDecoder
     {
         public AudioInfo ReadAudioInfo(FileStream stream)
         {

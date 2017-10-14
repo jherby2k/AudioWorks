@@ -6,7 +6,7 @@ using System.IO;
 namespace AudioWorks.Extensions.Mp3
 {
     [AudioInfoDecoderExport(".mp3")]
-    sealed class Mp3AudioInfoDecoder : IAudioInfoDecoder
+    public sealed class Mp3AudioInfoDecoder : IAudioInfoDecoder
     {
         public AudioInfo ReadAudioInfo(FileStream stream)
         {
