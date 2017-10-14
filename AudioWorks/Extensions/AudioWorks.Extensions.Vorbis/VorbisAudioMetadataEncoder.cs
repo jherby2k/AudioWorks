@@ -10,10 +10,7 @@ namespace AudioWorks.Extensions.Vorbis
     [AudioMetadataEncoderExport(".ogg")]
     sealed class VorbisAudioMetadataEncoder : IAudioMetadataEncoder
     {
-        public SettingInfoDictionary GetSettingInfo()
-        {
-            return new SettingInfoDictionary();
-        }
+        public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary();
 
         public void WriteMetadata(FileStream stream, AudioMetadata metadata, SettingDictionary settings)
         {

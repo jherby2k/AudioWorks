@@ -62,7 +62,10 @@ namespace AudioWorks.Common
 
         public int BitRate { get; }
 
-        public TimeSpan PlayLength { get; }
+        public TimeSpan PlayLength =>
+            SampleCount == 0
+                ? TimeSpan.Zero
+                : new TimeSpan(0, 0, (int) Math.Round(SampleCount / (double) SampleRate));
 
         AudioInfo(
             [NotNull] string description,
@@ -89,9 +92,6 @@ namespace AudioWorks.Common
             SampleRate = sampleRate;
             SampleCount = sampleCount;
             BitRate = bitRate;
-            PlayLength = SampleCount == 0
-                ? TimeSpan.Zero
-                : new TimeSpan(0, 0, (int) Math.Round(SampleCount / (double) SampleRate));
         }
     }
 }

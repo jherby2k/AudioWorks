@@ -1,7 +1,10 @@
 ﻿using AudioWorks.Common;
+using AutoMapper;
 using JetBrains.Annotations;
 using Moq;
+using ObjectsComparer;
 using System;
+using System.Linq;
 using System.Management.Automation;
 using Xunit;
 
@@ -11,11 +14,26 @@ namespace AudioWorks.Commands.Tests
     public sealed class ClearAudioMetadataTests
     {
         [NotNull] readonly ModuleFixture _moduleFixture;
+        [NotNull] readonly AudioMetadata _testMetadata = new AudioMetadata
+        {
+            Title = "Test Title",
+            Artist = "Test Artist",
+            Album = "Test Album",
+            Genre = "Test Genre",
+            Comment = "Test Comment",
+            Day = "31",
+            Month = "01",
+            Year = "2017",
+            TrackNumber = "01",
+            TrackCount = "12"
+        };
 
         public ClearAudioMetadataTests(
             [NotNull] ModuleFixture moduleFixture)
         {
             _moduleFixture = moduleFixture;
+
+            Mapper.Initialize(config => config.CreateMap<AudioMetadata, AudioMetadata>());
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata command exists")]
@@ -99,7 +117,8 @@ namespace AudioWorks.Commands.Tests
                 ps.Invoke();
                 foreach (var error in ps.Streams.Error)
                     if (error.Exception is ParameterBindingException &&
-                        error.FullyQualifiedErrorId.StartsWith("InputObjectNotBound"))
+                        error.FullyQualifiedErrorId.StartsWith("InputObjectNotBound",
+                            StringComparison.InvariantCulture))
                         throw error.Exception;
                 Assert.True(true);
             }
@@ -109,19 +128,7 @@ namespace AudioWorks.Commands.Tests
         public void NoSwitchesClearsAll()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata
-            {
-                Title = "Test Title",
-                Artist = "Test Artist",
-                Album = "Test Album",
-                Genre = "Test Genre",
-                Comment = "Test Comment",
-                Day = "31",
-                Month = "01",
-                Year = "2017",
-                TrackNumber = "01",
-                TrackCount = "12"
-            });
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
 
             using (var ps = PowerShell.Create())
             {
@@ -131,17 +138,12 @@ namespace AudioWorks.Commands.Tests
                 ps.Invoke();
             }
 
-            Assert.True(
-                mock.Object.Metadata.Title == string.Empty &&
-                mock.Object.Metadata.Artist == string.Empty &&
-                mock.Object.Metadata.Album == string.Empty &&
-                mock.Object.Metadata.Genre == string.Empty &&
-                mock.Object.Metadata.Comment == string.Empty &&
-                mock.Object.Metadata.Day == string.Empty &&
-                mock.Object.Metadata.Month == string.Empty &&
-                mock.Object.Metadata.Year == string.Empty &&
-                mock.Object.Metadata.TrackNumber == string.Empty &&
-                mock.Object.Metadata.TrackCount == string.Empty);
+            new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
+            var differences = differenceEnumerable.ToArray();
+
+            Assert.True(differences.Length == 10);
+            foreach (var difference in differences)
+                Assert.True(string.IsNullOrEmpty(difference.Value2));
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a Title switch")]
@@ -165,19 +167,7 @@ namespace AudioWorks.Commands.Tests
         public void TitleSwitchClearsTitle()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata
-            {
-                Title = "Test Title",
-                Artist = "Test Artist",
-                Album = "Test Album",
-                Genre = "Test Genre",
-                Comment = "Test Comment",
-                Day = "31",
-                Month = "01",
-                Year = "2017",
-                TrackNumber = "01",
-                TrackCount = "12"
-            });
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
 
             using (var ps = PowerShell.Create())
             {
@@ -188,17 +178,12 @@ namespace AudioWorks.Commands.Tests
                 ps.Invoke();
             }
 
-            Assert.True(
-                mock.Object.Metadata.Title == string.Empty &&
-                mock.Object.Metadata.Artist == "Test Artist" &&
-                mock.Object.Metadata.Album == "Test Album" &&
-                mock.Object.Metadata.Genre == "Test Genre" &&
-                mock.Object.Metadata.Comment == "Test Comment" &&
-                mock.Object.Metadata.Day == "31" &&
-                mock.Object.Metadata.Month == "01" &&
-                mock.Object.Metadata.Year == "2017" &&
-                mock.Object.Metadata.TrackNumber == "01" &&
-                mock.Object.Metadata.TrackCount == "12");
+            new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
+            var differences = differenceEnumerable.ToArray();
+
+            Assert.Single(differences);
+            Assert.Equal("Title", differences[0].MemberPath);
+            Assert.True(string.IsNullOrEmpty(differences[0].Value2));
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a Artist switch")]
@@ -222,19 +207,7 @@ namespace AudioWorks.Commands.Tests
         public void ArtistSwitchClearsArtist()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata
-            {
-                Title = "Test Title",
-                Artist = "Test Artist",
-                Album = "Test Album",
-                Genre = "Test Genre",
-                Comment = "Test Comment",
-                Day = "31",
-                Month = "01",
-                Year = "2017",
-                TrackNumber = "01",
-                TrackCount = "12"
-            });
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
 
             using (var ps = PowerShell.Create())
             {
@@ -245,17 +218,12 @@ namespace AudioWorks.Commands.Tests
                 ps.Invoke();
             }
 
-            Assert.True(
-                mock.Object.Metadata.Title == "Test Title" &&
-                mock.Object.Metadata.Artist == string.Empty &&
-                mock.Object.Metadata.Album == "Test Album" &&
-                mock.Object.Metadata.Genre == "Test Genre" &&
-                mock.Object.Metadata.Comment == "Test Comment" &&
-                mock.Object.Metadata.Day == "31" &&
-                mock.Object.Metadata.Month == "01" &&
-                mock.Object.Metadata.Year == "2017" &&
-                mock.Object.Metadata.TrackNumber == "01" &&
-                mock.Object.Metadata.TrackCount == "12");
+            new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
+            var differences = differenceEnumerable.ToArray();
+
+            Assert.Single(differences);
+            Assert.Equal("Artist", differences[0].MemberPath);
+            Assert.True(string.IsNullOrEmpty(differences[0].Value2));
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts an Album switch")]
@@ -279,19 +247,7 @@ namespace AudioWorks.Commands.Tests
         public void AlbumSwitchClearsAlbum()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata
-            {
-                Title = "Test Title",
-                Artist = "Test Artist",
-                Album = "Test Album",
-                Genre = "Test Genre",
-                Comment = "Test Comment",
-                Day = "31",
-                Month = "01",
-                Year = "2017",
-                TrackNumber = "01",
-                TrackCount = "12"
-            });
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
 
             using (var ps = PowerShell.Create())
             {
@@ -302,17 +258,12 @@ namespace AudioWorks.Commands.Tests
                 ps.Invoke();
             }
 
-            Assert.True(
-                mock.Object.Metadata.Title == "Test Title" &&
-                mock.Object.Metadata.Artist == "Test Artist" &&
-                mock.Object.Metadata.Album == string.Empty &&
-                mock.Object.Metadata.Genre == "Test Genre" &&
-                mock.Object.Metadata.Comment == "Test Comment" &&
-                mock.Object.Metadata.Day == "31" &&
-                mock.Object.Metadata.Month == "01" &&
-                mock.Object.Metadata.Year == "2017" &&
-                mock.Object.Metadata.TrackNumber == "01" &&
-                mock.Object.Metadata.TrackCount == "12");
+            new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
+            var differences = differenceEnumerable.ToArray();
+
+            Assert.Single(differences);
+            Assert.Equal("Album", differences[0].MemberPath);
+            Assert.True(string.IsNullOrEmpty(differences[0].Value2));
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a Genre switch")]
@@ -336,19 +287,7 @@ namespace AudioWorks.Commands.Tests
         public void GenreSwitchClearsGenre()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata
-            {
-                Title = "Test Title",
-                Artist = "Test Artist",
-                Album = "Test Album",
-                Genre = "Test Genre",
-                Comment = "Test Comment",
-                Day = "31",
-                Month = "01",
-                Year = "2017",
-                TrackNumber = "01",
-                TrackCount = "12"
-            });
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
 
             using (var ps = PowerShell.Create())
             {
@@ -359,17 +298,12 @@ namespace AudioWorks.Commands.Tests
                 ps.Invoke();
             }
 
-            Assert.True(
-                mock.Object.Metadata.Title == "Test Title" &&
-                mock.Object.Metadata.Artist == "Test Artist" &&
-                mock.Object.Metadata.Album == "Test Album" &&
-                mock.Object.Metadata.Genre == string.Empty &&
-                mock.Object.Metadata.Comment == "Test Comment" &&
-                mock.Object.Metadata.Day == "31" &&
-                mock.Object.Metadata.Month == "01" &&
-                mock.Object.Metadata.Year == "2017" &&
-                mock.Object.Metadata.TrackNumber == "01" &&
-                mock.Object.Metadata.TrackCount == "12");
+            new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
+            var differences = differenceEnumerable.ToArray();
+
+            Assert.Single(differences);
+            Assert.Equal("Genre", differences[0].MemberPath);
+            Assert.True(string.IsNullOrEmpty(differences[0].Value2));
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a Comment switch")]
@@ -393,19 +327,7 @@ namespace AudioWorks.Commands.Tests
         public void CommentSwitchClearsComment()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata
-            {
-                Title = "Test Title",
-                Artist = "Test Artist",
-                Album = "Test Album",
-                Genre = "Test Genre",
-                Comment = "Test Comment",
-                Day = "31",
-                Month = "01",
-                Year = "2017",
-                TrackNumber = "01",
-                TrackCount = "12"
-            });
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
 
             using (var ps = PowerShell.Create())
             {
@@ -416,17 +338,12 @@ namespace AudioWorks.Commands.Tests
                 ps.Invoke();
             }
 
-            Assert.True(
-                mock.Object.Metadata.Title == "Test Title" &&
-                mock.Object.Metadata.Artist == "Test Artist" &&
-                mock.Object.Metadata.Album == "Test Album" &&
-                mock.Object.Metadata.Genre == "Test Genre" &&
-                mock.Object.Metadata.Comment == string.Empty &&
-                mock.Object.Metadata.Day == "31" &&
-                mock.Object.Metadata.Month == "01" &&
-                mock.Object.Metadata.Year == "2017" &&
-                mock.Object.Metadata.TrackNumber == "01" &&
-                mock.Object.Metadata.TrackCount == "12");
+            new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
+            var differences = differenceEnumerable.ToArray();
+
+            Assert.Single(differences);
+            Assert.Equal("Comment", differences[0].MemberPath);
+            Assert.True(string.IsNullOrEmpty(differences[0].Value2));
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a Day switch")]
@@ -450,19 +367,7 @@ namespace AudioWorks.Commands.Tests
         public void DaySwitchClearsDay()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata
-            {
-                Title = "Test Title",
-                Artist = "Test Artist",
-                Album = "Test Album",
-                Genre = "Test Genre",
-                Comment = "Test Comment",
-                Day = "31",
-                Month = "01",
-                Year = "2017",
-                TrackNumber = "01",
-                TrackCount = "12"
-            });
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
 
             using (var ps = PowerShell.Create())
             {
@@ -473,17 +378,12 @@ namespace AudioWorks.Commands.Tests
                 ps.Invoke();
             }
 
-            Assert.True(
-                mock.Object.Metadata.Title == "Test Title" &&
-                mock.Object.Metadata.Artist == "Test Artist" &&
-                mock.Object.Metadata.Album == "Test Album" &&
-                mock.Object.Metadata.Genre == "Test Genre" &&
-                mock.Object.Metadata.Comment == "Test Comment" &&
-                mock.Object.Metadata.Day == string.Empty &&
-                mock.Object.Metadata.Month == "01" &&
-                mock.Object.Metadata.Year == "2017" &&
-                mock.Object.Metadata.TrackNumber == "01" &&
-                mock.Object.Metadata.TrackCount == "12");
+            new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
+            var differences = differenceEnumerable.ToArray();
+
+            Assert.Single(differences);
+            Assert.Equal("Day", differences[0].MemberPath);
+            Assert.True(string.IsNullOrEmpty(differences[0].Value2));
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a Month switch")]
@@ -507,19 +407,7 @@ namespace AudioWorks.Commands.Tests
         public void MonthSwitchClearsMonth()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata
-            {
-                Title = "Test Title",
-                Artist = "Test Artist",
-                Album = "Test Album",
-                Genre = "Test Genre",
-                Comment = "Test Comment",
-                Day = "31",
-                Month = "01",
-                Year = "2017",
-                TrackNumber = "01",
-                TrackCount = "12"
-            });
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
 
             using (var ps = PowerShell.Create())
             {
@@ -530,17 +418,12 @@ namespace AudioWorks.Commands.Tests
                 ps.Invoke();
             }
 
-            Assert.True(
-                mock.Object.Metadata.Title == "Test Title" &&
-                mock.Object.Metadata.Artist == "Test Artist" &&
-                mock.Object.Metadata.Album == "Test Album" &&
-                mock.Object.Metadata.Genre == "Test Genre" &&
-                mock.Object.Metadata.Comment == "Test Comment" &&
-                mock.Object.Metadata.Day == "31" &&
-                mock.Object.Metadata.Month == string.Empty &&
-                mock.Object.Metadata.Year == "2017" &&
-                mock.Object.Metadata.TrackNumber == "01" &&
-                mock.Object.Metadata.TrackCount == "12");
+            new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
+            var differences = differenceEnumerable.ToArray();
+
+            Assert.Single(differences);
+            Assert.Equal("Month", differences[0].MemberPath);
+            Assert.True(string.IsNullOrEmpty(differences[0].Value2));
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a Year switch")]
@@ -564,19 +447,7 @@ namespace AudioWorks.Commands.Tests
         public void YearSwitchClearsYear()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata
-            {
-                Title = "Test Title",
-                Artist = "Test Artist",
-                Album = "Test Album",
-                Genre = "Test Genre",
-                Comment = "Test Comment",
-                Day = "31",
-                Month = "01",
-                Year = "2017",
-                TrackNumber = "01",
-                TrackCount = "12"
-            });
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
 
             using (var ps = PowerShell.Create())
             {
@@ -587,17 +458,12 @@ namespace AudioWorks.Commands.Tests
                 ps.Invoke();
             }
 
-            Assert.True(
-                mock.Object.Metadata.Title == "Test Title" &&
-                mock.Object.Metadata.Artist == "Test Artist" &&
-                mock.Object.Metadata.Album == "Test Album" &&
-                mock.Object.Metadata.Genre == "Test Genre" &&
-                mock.Object.Metadata.Comment == "Test Comment" &&
-                mock.Object.Metadata.Day == "31" &&
-                mock.Object.Metadata.Month == "01" &&
-                mock.Object.Metadata.Year == string.Empty &&
-                mock.Object.Metadata.TrackNumber == "01" &&
-                mock.Object.Metadata.TrackCount == "12");
+            new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
+            var differences = differenceEnumerable.ToArray();
+
+            Assert.Single(differences);
+            Assert.Equal("Year", differences[0].MemberPath);
+            Assert.True(string.IsNullOrEmpty(differences[0].Value2));
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a TrackNumber switch")]
@@ -621,19 +487,7 @@ namespace AudioWorks.Commands.Tests
         public void TrackNumberSwitchClearsTrackNumber()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata
-            {
-                Title = "Test Title",
-                Artist = "Test Artist",
-                Album = "Test Album",
-                Genre = "Test Genre",
-                Comment = "Test Comment",
-                Day = "31",
-                Month = "01",
-                Year = "2017",
-                TrackNumber = "01",
-                TrackCount = "12"
-            });
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
 
             using (var ps = PowerShell.Create())
             {
@@ -644,17 +498,12 @@ namespace AudioWorks.Commands.Tests
                 ps.Invoke();
             }
 
-            Assert.True(
-                mock.Object.Metadata.Title == "Test Title" &&
-                mock.Object.Metadata.Artist == "Test Artist" &&
-                mock.Object.Metadata.Album == "Test Album" &&
-                mock.Object.Metadata.Genre == "Test Genre" &&
-                mock.Object.Metadata.Comment == "Test Comment" &&
-                mock.Object.Metadata.Day == "31" &&
-                mock.Object.Metadata.Month == "01" &&
-                mock.Object.Metadata.Year == "2017" &&
-                mock.Object.Metadata.TrackNumber == string.Empty &&
-                mock.Object.Metadata.TrackCount == "12");
+            new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
+            var differences = differenceEnumerable.ToArray();
+
+            Assert.Single(differences);
+            Assert.Equal("TrackNumber", differences[0].MemberPath);
+            Assert.True(string.IsNullOrEmpty(differences[0].Value2));
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a TrackCount switch")]
@@ -678,19 +527,7 @@ namespace AudioWorks.Commands.Tests
         public void TrackCountSwitchClearsTrackCount()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata
-            {
-                Title = "Test Title",
-                Artist = "Test Artist",
-                Album = "Test Album",
-                Genre = "Test Genre",
-                Comment = "Test Comment",
-                Day = "31",
-                Month = "01",
-                Year = "2017",
-                TrackNumber = "01",
-                TrackCount = "12"
-            });
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
 
             using (var ps = PowerShell.Create())
             {
@@ -701,17 +538,12 @@ namespace AudioWorks.Commands.Tests
                 ps.Invoke();
             }
 
-            Assert.True(
-                mock.Object.Metadata.Title == "Test Title" &&
-                mock.Object.Metadata.Artist == "Test Artist" &&
-                mock.Object.Metadata.Album == "Test Album" &&
-                mock.Object.Metadata.Genre == "Test Genre" &&
-                mock.Object.Metadata.Comment == "Test Comment" &&
-                mock.Object.Metadata.Day == "31" &&
-                mock.Object.Metadata.Month == "01" &&
-                mock.Object.Metadata.Year == "2017" &&
-                mock.Object.Metadata.TrackNumber == "01" &&
-                mock.Object.Metadata.TrackCount == string.Empty);
+            new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
+            var differences = differenceEnumerable.ToArray();
+
+            Assert.Single(differences);
+            Assert.Equal("TrackCount", differences[0].MemberPath);
+            Assert.True(string.IsNullOrEmpty(differences[0].Value2));
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a PassThru switch")]

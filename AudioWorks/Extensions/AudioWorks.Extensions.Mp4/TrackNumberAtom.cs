@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace AudioWorks.Extensions.Mp4
 {
@@ -18,14 +19,21 @@ namespace AudioWorks.Extensions.Mp4
 
         internal TrackNumberAtom([NotNull] string trackNumber, [NotNull] string trackCount)
         {
-            TrackNumber = !string.IsNullOrEmpty(trackNumber) ? byte.Parse(trackNumber) : (byte) 0;
-            TrackCount = !string.IsNullOrEmpty(trackCount) ? byte.Parse(trackCount) : (byte) 0;
+            TrackNumber =
+                !string.IsNullOrEmpty(trackNumber)
+                    ? byte.Parse(trackNumber, CultureInfo.InvariantCulture)
+                    : (byte) 0;
+
+            TrackCount =
+                !string.IsNullOrEmpty(trackCount)
+                    ? byte.Parse(trackCount, CultureInfo.InvariantCulture)
+                    : (byte) 0;
         }
 
         internal override byte[] GetBytes()
         {
             // This atom needs a track number at minimum
-            if (TrackNumber == 0) return new byte[0];
+            if (TrackNumber == 0) return Array.Empty<byte>();
 
             var result = new byte[32];
 

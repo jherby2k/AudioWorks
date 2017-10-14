@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.PowerShell.Commands;
+using System;
 using System.Collections.Generic;
 using System.Management.Automation;
 
@@ -27,7 +28,7 @@ namespace AudioWorks.Commands
                     return new[] { providerPath };
             }
 
-            return new string[0];
+            return Array.Empty<string>();
         }
     }
 }

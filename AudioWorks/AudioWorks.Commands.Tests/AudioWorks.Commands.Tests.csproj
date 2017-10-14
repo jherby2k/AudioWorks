@@ -9,10 +9,14 @@
     <Product>AudioWorks</Product>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Copyright>Copyright © 2017 Jeremy Herbison</Copyright>
+    <CodeAnalysisRuleSet>CodeAnalysis.ruleset</CodeAnalysisRuleSet>
+    <Features>IOperation</Features>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.1.1" />
     <PackageReference Include="JetBrains.Annotations" Version="11.0.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.3.0-beta1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
     <PackageReference Include="Microsoft.PowerShell.Commands.Diagnostics" Version="6.0.0-beta.8" />
     <PackageReference Include="Microsoft.PowerShell.SDK" Version="6.0.0-beta.8" />

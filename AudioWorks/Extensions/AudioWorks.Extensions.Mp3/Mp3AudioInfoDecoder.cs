@@ -64,7 +64,7 @@ namespace AudioWorks.Extensions.Mp3
             var result = new OptionalHeaderInfo();
 
             var headerId = new string(reader.ReadChars(4));
-            if (headerId != "Xing" && headerId != "Info") return result;
+            if (string.CompareOrdinal("Xing", headerId) != 0 && string.CompareOrdinal("Info", headerId) != 0) return result;
 
             // Both fields are optional, even if the header is present
             var flags = reader.ReadUInt32BigEndian();
@@ -84,7 +84,7 @@ namespace AudioWorks.Extensions.Mp3
             var result = new OptionalHeaderInfo();
 
             var headerId = new string(reader.ReadChars(4));
-            if (headerId != "VBRI") return result;
+            if (string.CompareOrdinal("VBRI", headerId) != 0) return result;
 
             reader.BaseStream.Seek(6, SeekOrigin.Current);
             result.ByteCount = reader.ReadUInt32BigEndian();

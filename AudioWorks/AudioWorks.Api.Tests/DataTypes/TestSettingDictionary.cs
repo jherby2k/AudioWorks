@@ -1,6 +1,7 @@
 ﻿using AudioWorks.Common;
 using JetBrains.Annotations;
 using System;
+using System.Globalization;
 using System.Linq;
 using Xunit.Abstractions;
 
@@ -13,7 +14,8 @@ namespace AudioWorks.Api.Tests.DataTypes
             foreach (var item in info.GetValue<string[]>("Items"))
             {
                 var splitItem = item.Split('|');
-                Add(splitItem[0], Convert.ChangeType(splitItem[1], Type.GetType(splitItem[2])));
+                Add(splitItem[0],
+                    Convert.ChangeType(splitItem[1], Type.GetType(splitItem[2]), CultureInfo.InvariantCulture));
             }
         }
 

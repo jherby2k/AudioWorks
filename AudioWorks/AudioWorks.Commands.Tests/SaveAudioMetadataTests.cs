@@ -4,6 +4,7 @@ using AudioWorks.Common;
 using JetBrains.Annotations;
 using Moq;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Management.Automation;
 using System.Security.Cryptography;
@@ -107,7 +108,8 @@ namespace AudioWorks.Commands.Tests
                 ps.Invoke();
                 foreach (var error in ps.Streams.Error)
                     if (error.Exception is ParameterBindingException &&
-                        error.FullyQualifiedErrorId.StartsWith("InputObjectNotBound"))
+                        error.FullyQualifiedErrorId.StartsWith("InputObjectNotBound",
+                            StringComparison.InvariantCulture))
                         throw error.Exception;
                 Assert.True(true);
             }
@@ -212,21 +214,23 @@ namespace AudioWorks.Commands.Tests
                     .AddArgument(new TaggedAudioFile(path));
                 ps.Invoke();
                 var errors = ps.Streams.Error.ReadAll();
-                Assert.True(
-                    errors.Count == 1 &&
-                    errors[0].Exception is AudioUnsupportedException &&
-                    errors[0].FullyQualifiedErrorId == $"{nameof(AudioUnsupportedException)},AudioWorks.Commands.SaveAudioMetadataCommand" &&
-                    errors[0].CategoryInfo.Category == ErrorCategory.InvalidData);
+                Assert.Single(errors);
+                Assert.IsType<AudioUnsupportedException>(errors[0].Exception);
+                Assert.Equal($"{nameof(AudioUnsupportedException)},AudioWorks.Commands.SaveAudioMetadataCommand",
+                    errors[0].FullyQualifiedErrorId);
+                Assert.Equal(ErrorCategory.InvalidData, errors[0].CategoryInfo.Category);
             }
         }
 
         [Pure, NotNull]
+        [SuppressMessage("Microsoft.Security", "CA5351:Do not use insecure cryptographic algorithm MD5.",
+            Justification = "This method is not security critical")]
         static string CalculateHash([NotNull] IAudioFile audioFile)
         {
             using (var md5 = MD5.Create())
             using (var fileStream = audioFile.FileInfo.OpenRead())
                 return BitConverter.ToString(md5.ComputeHash(fileStream))
-                    .Replace("-", string.Empty);
+                    .Replace("-", string.Empty, StringComparison.InvariantCulture);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace AudioWorks.Api
             foreach (var encoderFactory in ExtensionProvider.GetFactories<IAudioMetadataEncoder>(
                 "Extension", extension))
                 using (var lifetimeContext = encoderFactory.CreateExport())
-                    return lifetimeContext.Value.GetSettingInfo();
+                    return lifetimeContext.Value.SettingInfo;
 
             return new SettingInfoDictionary();
         }

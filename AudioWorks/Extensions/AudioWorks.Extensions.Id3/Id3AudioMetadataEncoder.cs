@@ -10,14 +10,11 @@ namespace AudioWorks.Extensions.Id3
     [AudioMetadataEncoderExport(".mp3")]
     sealed class Id3AudioMetadataEncoder : IAudioMetadataEncoder
     {
-        public SettingInfoDictionary GetSettingInfo()
+        public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
         {
-            return new SettingInfoDictionary
-            {
-                ["Version"] = new StringSettingInfo("2.3", "2.4"),
-                ["Padding"] = new IntSettingInfo(0, 268_435_456)
-            };
-        }
+            ["Version"] = new StringSettingInfo("2.3", "2.4"),
+            ["Padding"] = new IntSettingInfo(0, 268_435_456)
+        };
 
         public void WriteMetadata(FileStream stream, AudioMetadata metadata, SettingDictionary settings)
         {
@@ -26,7 +23,7 @@ namespace AudioWorks.Extensions.Id3
             var tagModel = new MetadataToTagModelAdapter(metadata);
 
             // Set the version (default to 3)
-            if (settings.TryGetValue("Version", out var version) && (string) version == "2.4")
+            if (settings.TryGetValue("Version", out var version) && string.CompareOrdinal("2.4", (string) version) == 0)
                 tagModel.Header.Version = 4;
             else
                 tagModel.Header.Version = 3;
@@ -45,7 +42,7 @@ namespace AudioWorks.Extensions.Id3
             // Remove the ID3v1 tag, if present
             stream.Seek(-128, SeekOrigin.End);
             using (var reader = new BinaryReader(stream, Encoding.ASCII, true))
-                if (new string(reader.ReadChars(3)) == "TAG")
+                if (string.CompareOrdinal("TAG", new string(reader.ReadChars(3))) == 0)
                     stream.SetLength(stream.Length - 128);
         }
 

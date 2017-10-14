@@ -1,11 +1,12 @@
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Common;
 using JetBrains.Annotations;
+using ObjectsComparer;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
-using ObjectsComparer;
 using Xunit;
 
 namespace AudioWorks.Api.Tests
@@ -154,12 +155,14 @@ namespace AudioWorks.Api.Tests
         }
 
         [Pure, NotNull]
+        [SuppressMessage("Microsoft.Security", "CA5351:Do not use insecure cryptographic algorithm MD5.",
+            Justification = "This method is not security critical")]
         static string CalculateHash([NotNull] IAudioFile audioFile)
         {
             using (var md5 = MD5.Create())
             using (var fileStream = audioFile.FileInfo.OpenRead())
                 return BitConverter.ToString(md5.ComputeHash(fileStream))
-                    .Replace("-", string.Empty);
+                    .Replace("-", string.Empty, StringComparison.InvariantCulture);
         }
     }
 }

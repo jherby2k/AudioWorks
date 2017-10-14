@@ -93,7 +93,8 @@ namespace AudioWorks.Commands.Tests
                 ps.Invoke();
                 foreach (var error in ps.Streams.Error)
                     if (error.Exception is ParameterBindingException &&
-                        error.FullyQualifiedErrorId.StartsWith("InputObjectNotBound"))
+                        error.FullyQualifiedErrorId.StartsWith("InputObjectNotBound",
+                            StringComparison.InvariantCulture))
                         throw error.Exception;
                 Assert.True(true);
             }

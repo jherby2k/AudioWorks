@@ -91,7 +91,8 @@ namespace AudioWorks.Commands.Tests
                 ps.Invoke();
                 foreach (var error in ps.Streams.Error)
                     if (error.Exception is ParameterBindingException &&
-                        error.FullyQualifiedErrorId.StartsWith("InputObjectNotBound"))
+                        error.FullyQualifiedErrorId.StartsWith("InputObjectNotBound",
+                            StringComparison.InvariantCulture))
                         throw error.Exception;
                 Assert.True(true);
             }
@@ -124,11 +125,11 @@ namespace AudioWorks.Commands.Tests
                     .AddArgument("Foo");
                 ps.Invoke();
                 var errors = ps.Streams.Error.ReadAll();
-                Assert.True(
-                    errors.Count == 1 &&
-                    errors[0].Exception is ItemNotFoundException &&
-                    errors[0].FullyQualifiedErrorId == $"{nameof(ItemNotFoundException)},AudioWorks.Commands.GetAudioFileCommand" &&
-                    errors[0].CategoryInfo.Category == ErrorCategory.ObjectNotFound);
+                Assert.Single(errors);
+                Assert.IsType<ItemNotFoundException>(errors[0].Exception);
+                Assert.Equal($"{nameof(ItemNotFoundException)},AudioWorks.Commands.GetAudioFileCommand",
+                    errors[0].FullyQualifiedErrorId);
+                Assert.Equal(ErrorCategory.ObjectNotFound, errors[0].CategoryInfo.Category);
             }
         }
 
@@ -147,11 +148,11 @@ namespace AudioWorks.Commands.Tests
                         fileName));
                 ps.Invoke();
                 var errors = ps.Streams.Error.ReadAll();
-                Assert.True(
-                    errors.Count == 1 &&
-                    errors[0].Exception is AudioUnsupportedException &&
-                    errors[0].FullyQualifiedErrorId == $"{nameof(AudioUnsupportedException)},AudioWorks.Commands.GetAudioFileCommand" &&
-                    errors[0].CategoryInfo.Category == ErrorCategory.InvalidData);
+                Assert.Single(errors);
+                Assert.IsType<AudioUnsupportedException>(errors[0].Exception);
+                Assert.Equal($"{nameof(AudioUnsupportedException)},AudioWorks.Commands.GetAudioFileCommand",
+                    errors[0].FullyQualifiedErrorId);
+                Assert.Equal(ErrorCategory.InvalidData, errors[0].CategoryInfo.Category);
             }
         }
 
@@ -170,11 +171,11 @@ namespace AudioWorks.Commands.Tests
                         fileName));
                 ps.Invoke();
                 var errors = ps.Streams.Error.ReadAll();
-                Assert.True(
-                    errors.Count == 1 &&
-                    errors[0].Exception is AudioInvalidException &&
-                    errors[0].FullyQualifiedErrorId == $"{nameof(AudioInvalidException)},AudioWorks.Commands.GetAudioFileCommand" &&
-                    errors[0].CategoryInfo.Category == ErrorCategory.InvalidData);
+                Assert.Single(errors);
+                Assert.IsType<AudioInvalidException>(errors[0].Exception);
+                Assert.Equal($"{nameof(AudioInvalidException)},AudioWorks.Commands.GetAudioFileCommand",
+                    errors[0].FullyQualifiedErrorId);
+                Assert.Equal(ErrorCategory.InvalidData, errors[0].CategoryInfo.Category);
             }
         }
 

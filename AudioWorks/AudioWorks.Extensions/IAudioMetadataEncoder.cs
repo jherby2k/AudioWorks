@@ -8,7 +8,7 @@ namespace AudioWorks.Extensions
     public interface IAudioMetadataEncoder
     {
         [NotNull]
-        SettingInfoDictionary GetSettingInfo();
+        SettingInfoDictionary SettingInfo { get; }
 
         void WriteMetadata([NotNull] FileStream stream, [NotNull] AudioMetadata metadata, [NotNull] SettingDictionary settings);
     }

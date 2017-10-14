@@ -6,12 +6,6 @@ namespace AudioWorks.Extensions.Wave
     [AudioInfoDecoderExport(".wav")]
     sealed class WaveAudioInfoDecoder : IAudioInfoDecoder
     {
-        enum FormatTag : ushort
-        {
-            WaveFormatPcm = 1,
-            WaveFormatExtensible = 0xFFFE
-        }
-
         public AudioInfo ReadAudioInfo(FileStream stream)
         {
             using (var reader = new RiffReader(stream))
@@ -23,7 +17,7 @@ namespace AudioWorks.Extensions.Wave
                     if (stream.Length != reader.RiffChunkSize + 8)
                         throw new AudioInvalidException("File is unexpectedly truncated.", stream.Name);
 
-                    if (reader.ReadFourCc() != "WAVE")
+                    if (string.CompareOrdinal("WAVE", reader.ReadFourCc()) != 0)
                         throw new AudioInvalidException("Not a Wave file.", stream.Name);
 
                     var fmtChunkSize = reader.SeekToChunk("fmt ");
@@ -31,13 +25,17 @@ namespace AudioWorks.Extensions.Wave
                         throw new AudioInvalidException("Missing 'fmt' chunk.", stream.Name);
 
                     var isExtensible = false;
-                    switch ((FormatTag) reader.ReadUInt16())
+                    switch (reader.ReadUInt16())
                     {
-                        case FormatTag.WaveFormatPcm:
+                        // WAVE_FORMAT_PCM
+                        case 1:
                             break;
-                        case FormatTag.WaveFormatExtensible:
+
+                        // WAVE_FORMAT_EXTENSIBLE
+                        case 0xFFFE:
                             isExtensible = true;
                             break;
+
                         default:
                             throw new AudioUnsupportedException("Only PCM wave files are supported.", stream.Name);
                     }

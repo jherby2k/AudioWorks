@@ -80,7 +80,7 @@ namespace AudioWorks.Extensions.Mp3
             if (column == 0b00001111)
                 throw new AudioInvalidException("Not a valid MPEG header.");
 
-            return _bitRateTable[mpegVersion == "1" ? 0 : 1, column];
+            return _bitRateTable[string.CompareOrdinal("1", mpegVersion) == 0 ? 0 : 1, column];
         }
 
         [Pure]
@@ -128,15 +128,15 @@ namespace AudioWorks.Extensions.Mp3
         [Pure]
         static int CalculateSamplesPerFrame([NotNull] string mpegVersion)
         {
-            return mpegVersion == "1" ? 1152 : 576;
+            return string.CompareOrdinal("1", mpegVersion) == 0 ? 1152 : 576;
         }
 
         [Pure]
         static int CalculateSideInfoLength([NotNull] string mpegVersion, int channels)
         {
             if (channels == 1)
-                return mpegVersion == "1" ? 17 : 9;
-            return mpegVersion == "1" ? 32 : 17;
+                return string.CompareOrdinal("1", mpegVersion) == 0 ? 17 : 9;
+            return string.CompareOrdinal("1", mpegVersion) == 0 ? 32 : 17;
         }
     }
 }

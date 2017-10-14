@@ -2,6 +2,7 @@
 using AudioWorks.Common;
 using JetBrains.Annotations;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Xunit;
@@ -20,17 +21,19 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Title")]
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidTitle()
         {
-            // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Title = "Test Title" };
             Assert.True(true);
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Title")]
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyTitle()
         {
-            // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Title = string.Empty };
             Assert.True(true);
         }
@@ -62,17 +65,19 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Artist")]
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidArtist()
         {
-            // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Artist = "Test Artist" };
             Assert.True(true);
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Artist")]
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyArtist()
         {
-            // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Artist = string.Empty };
             Assert.True(true);
         }
@@ -104,17 +109,19 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Album")]
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidAlbum()
         {
-            // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Album = "Test Album" };
             Assert.True(true);
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Album")]
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyAlbum()
         {
-            // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Album = string.Empty };
             Assert.True(true);
         }
@@ -146,17 +153,19 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Genre")]
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidGenre()
         {
-            // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Genre = "Test Genre" };
             Assert.True(true);
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Genre")]
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyGenre()
         {
-            // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Genre = string.Empty };
             Assert.True(true);
         }
@@ -188,17 +197,19 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Comment")]
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidComment()
         {
-            // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Comment = "Test Comment" };
             Assert.True(true);
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Comment")]
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyComment()
         {
-            // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Comment = string.Empty };
             Assert.True(true);
         }
@@ -251,17 +262,19 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Day")]
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidDay()
         {
-            // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Day = "31" };
             Assert.True(true);
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Day")]
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyDay()
         {
-            // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Day = string.Empty };
             Assert.True(true);
         }
@@ -320,17 +333,19 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Month")]
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidMonth()
         {
-            // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Month = "12" };
             Assert.True(true);
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Month")]
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyMonth()
         {
-            // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Month = string.Empty };
             Assert.True(true);
         }
@@ -396,17 +411,19 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Year")]
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidYear()
         {
-            // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Year = "2000" };
             Assert.True(true);
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Year")]
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyYear()
         {
-            // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { Year = string.Empty };
             Assert.True(true);
         }
@@ -459,9 +476,10 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid TrackNumber")]
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidTrackNumber()
         {
-            // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { TrackNumber = "1" };
             Assert.True(true);
         }
@@ -473,9 +491,10 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty TrackNumber")]
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyTrackNumber()
         {
-            // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { TrackNumber = string.Empty };
             Assert.True(true);
         }
@@ -528,9 +547,10 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid TrackCount")]
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidTrackCount()
         {
-            // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { TrackCount = "1" };
             Assert.True(true);
         }
@@ -542,9 +562,10 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty TrackCount")]
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyTrackCount()
         {
-            // ReSharper disable once ObjectCreationAsStatement
             new AudioMetadata { TrackCount = string.Empty };
             Assert.True(true);
         }

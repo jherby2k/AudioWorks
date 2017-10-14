@@ -8,13 +8,10 @@ namespace AudioWorks.Extensions.Flac
     [AudioMetadataEncoderExport(".flac")]
     sealed class FlacAudioMetadataEncoder : IAudioMetadataEncoder
     {
-        public SettingInfoDictionary GetSettingInfo()
+        public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
         {
-            return new SettingInfoDictionary
-            {
-                ["Padding"] = new IntSettingInfo(0, 16_777_216)
-            };
-        }
+            ["Padding"] = new IntSettingInfo(0, 16_777_216)
+        };
 
         public void WriteMetadata(FileStream stream, AudioMetadata metadata, SettingDictionary settings)
         {
@@ -46,7 +43,7 @@ namespace AudioWorks.Extensions.Flac
         }
 
         [Pure]
-        int? GetPadding([NotNull] SettingDictionary settings)
+        static int? GetPadding([NotNull] SettingDictionary settings)
         {
             if (!settings.TryGetValue("Padding", out var stringValue))
                 return null;

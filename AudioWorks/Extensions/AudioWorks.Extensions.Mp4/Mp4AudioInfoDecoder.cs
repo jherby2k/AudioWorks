@@ -30,7 +30,7 @@ namespace AudioWorks.Extensions.Mp4
                         (int) esds.SampleRate,
                         sampleCount,
                         CalculateBitRate(
-                            mp4.GetChildAtomInfo().Single(atom => atom.FourCc == "mdat").Size,
+                            mp4.GetChildAtomInfo().Single(atom => string.CompareOrdinal("mdat", atom.FourCc) == 0).Size,
                             sampleCount,
                             esds.SampleRate));
                 }
