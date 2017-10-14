@@ -52,7 +52,7 @@ namespace AudioWorks.Extensions.Id3
                         break;
 
                     case FrameFullText frameFullText:
-                        if (frameFullText.FrameId == "COMM" && string.IsNullOrEmpty(frameFullText.Description))
+                        if (string.CompareOrdinal("COMM", frameFullText.FrameId) == 0 && string.IsNullOrEmpty(frameFullText.Description))
                             Comment = frameFullText.Text;
                         break;
                 }
