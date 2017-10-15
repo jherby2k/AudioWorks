@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace AudioWorks.Extensions.Mp4
 {
-    sealed class Mp4
+    sealed class Mp4Model
     {
         [NotNull] readonly Stream _stream;
         [NotNull] readonly Stack<AtomInfo> _atomInfoStack = new Stack<AtomInfo>();
@@ -14,7 +14,7 @@ namespace AudioWorks.Extensions.Mp4
         [NotNull]
         internal AtomInfo CurrentAtom => _atomInfoStack.Peek();
 
-        internal Mp4([NotNull] Stream stream)
+        internal Mp4Model([NotNull] Stream stream)
         {
             _stream = stream;
         }

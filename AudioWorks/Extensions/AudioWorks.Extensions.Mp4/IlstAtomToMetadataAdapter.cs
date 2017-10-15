@@ -9,7 +9,7 @@ namespace AudioWorks.Extensions.Mp4
     sealed class IlstAtomToMetadataAdapter : AudioMetadata
     {
         internal IlstAtomToMetadataAdapter(
-            [NotNull] Mp4 mp4,
+            [NotNull] Mp4Model mp4,
             [NotNull, ItemNotNull] IEnumerable<AtomInfo> atoms)
         {
             foreach (var atom in atoms)

@@ -15,8 +15,8 @@ namespace AudioWorks.Extensions.Mp4
             // Create a temporary stream to hold the new atom structure
             using (var tempStream = new MemoryStream())
             {
-                var originalMp4 = new Mp4(stream);
-                var tempMp4 = new Mp4(tempStream);
+                var originalMp4 = new Mp4Model(stream);
+                var tempMp4 = new Mp4Model(tempStream);
 
                 var topAtoms = originalMp4.GetChildAtomInfo();
 
@@ -58,7 +58,7 @@ namespace AudioWorks.Extensions.Mp4
 
         [NotNull]
         static byte[] GenerateIlst(
-            [NotNull] Mp4 originalMp4,
+            [NotNull] Mp4Model originalMp4,
             [NotNull] AudioMetadata metadata)
         {
             using (var resultStream = new MemoryStream())

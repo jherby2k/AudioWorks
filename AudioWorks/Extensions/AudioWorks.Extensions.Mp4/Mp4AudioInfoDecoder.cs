@@ -12,7 +12,7 @@ namespace AudioWorks.Extensions.Mp4
         {
             try
             {
-                var mp4 = new Mp4(stream);
+                var mp4 = new Mp4Model(stream);
 
                 mp4.DescendToAtom("moov", "trak", "mdia", "minf", "stbl", "stts");
                 var stts = new SttsAtom(mp4.ReadAtom(mp4.CurrentAtom));
