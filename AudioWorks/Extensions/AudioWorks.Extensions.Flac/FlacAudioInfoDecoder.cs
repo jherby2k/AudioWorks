@@ -1,8 +1,10 @@
 ﻿using AudioWorks.Common;
+using System.Composition;
 using System.IO;
 
 namespace AudioWorks.Extensions.Flac
 {
+    [Shared]
     [AudioInfoDecoderExport(".flac")]
     public sealed class FlacAudioInfoDecoder : IAudioInfoDecoder
     {

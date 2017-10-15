@@ -1,10 +1,12 @@
 ﻿using AudioWorks.Common;
 using JetBrains.Annotations;
+using System.Composition;
 using System.IO;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Flac
 {
+    [Shared]
     [AudioMetadataEncoderExport(".flac")]
     public sealed class FlacAudioMetadataEncoder : IAudioMetadataEncoder
     {

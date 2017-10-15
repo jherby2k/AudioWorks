@@ -1,9 +1,11 @@
 ﻿using AudioWorks.Common;
+using System.Composition;
 using System.IO;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
 {
+    [Shared]
     [AudioMetadataDecoderExport(".ogg")]
     public sealed class VorbisAudioMetadataDecoder : IAudioMetadataDecoder
     {

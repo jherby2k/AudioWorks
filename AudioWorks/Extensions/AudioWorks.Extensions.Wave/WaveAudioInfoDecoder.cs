@@ -1,8 +1,10 @@
 ﻿using AudioWorks.Common;
+using System.Composition;
 using System.IO;
 
 namespace AudioWorks.Extensions.Wave
 {
+    [Shared]
     [AudioInfoDecoderExport(".wav")]
     public sealed class WaveAudioInfoDecoder : IAudioInfoDecoder
     {

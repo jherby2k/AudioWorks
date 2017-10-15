@@ -1,10 +1,12 @@
 ﻿using AudioWorks.Common;
 using System;
+using System.Composition;
 using System.IO;
 using System.Linq;
 
 namespace AudioWorks.Extensions.Mp4
 {
+    [Shared]
     [AudioInfoDecoderExport(".m4a")]
     public sealed class Mp4AudioInfoDecoder : IAudioInfoDecoder
     {
