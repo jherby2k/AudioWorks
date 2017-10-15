@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using System.Runtime.ConstrainedExecution;
@@ -35,6 +36,8 @@ namespace AudioWorks.Extensions.Flac
             throw new NotImplementedException();
         }
 
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Native method is always expected to return 0")]
         internal static void StreamDecoderInitializeStream(
             [NotNull] NativeStreamDecoderHandle handle,
             [NotNull] NativeCallbacks.StreamDecoderReadCallback readCallback,
@@ -48,7 +51,7 @@ namespace AudioWorks.Extensions.Flac
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                WinStreamDecoderInitializeStream(
+                WinStreamDecoderInitStream(
                     handle,
                     readCallback,
                     seekCallback,
@@ -317,7 +320,7 @@ namespace AudioWorks.Extensions.Flac
         static extern NativeStreamDecoderHandle WinStreamDecoderNew();
 
         [DllImport(_winFlacLibrary, EntryPoint = "FLAC__stream_decoder_init_stream", CallingConvention = CallingConvention.Cdecl)]
-        static extern int WinStreamDecoderInitializeStream(
+        static extern int WinStreamDecoderInitStream(
             [NotNull] NativeStreamDecoderHandle handle,
             [NotNull] NativeCallbacks.StreamDecoderReadCallback readCallback,
             [NotNull] NativeCallbacks.StreamDecoderSeekCallback seekCallback,

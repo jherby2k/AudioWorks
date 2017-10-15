@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -44,6 +45,8 @@ namespace AudioWorks.Extensions.Vorbis
             throw new NotImplementedException();
         }
 
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Native method always returns 0")]
         internal static void OggSyncInitialize(IntPtr syncState)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -71,6 +74,8 @@ namespace AudioWorks.Extensions.Vorbis
             throw new NotImplementedException();
         }
 
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Native method is always expected to return 0")]
         internal static void OggSyncWrote(IntPtr syncState, int bytes)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -82,6 +87,8 @@ namespace AudioWorks.Extensions.Vorbis
             throw new NotImplementedException();
         }
 
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Native method always returns 0")]
         internal static void OggSyncClear(IntPtr syncState)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -93,6 +100,8 @@ namespace AudioWorks.Extensions.Vorbis
             throw new NotImplementedException();
         }
 
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Native method is always expected to return 0")]
         internal static void OggStreamInitialize(IntPtr streamState, int serialNumber)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -104,6 +113,8 @@ namespace AudioWorks.Extensions.Vorbis
             throw new NotImplementedException();
         }
 
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Native method is always expected to return 0")]
         internal static void OggStreamPageIn(IntPtr streamState, ref OggPage page)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -123,6 +134,8 @@ namespace AudioWorks.Extensions.Vorbis
             throw new NotImplementedException();
         }
 
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Native method is always expected to return 0")]
         internal static void OggStreamPacketIn(IntPtr streamState, ref OggPacket packet)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -194,6 +207,8 @@ namespace AudioWorks.Extensions.Vorbis
             throw new NotImplementedException();
         }
 
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Native method is always expected to return 0")]
         internal static void VorbisCommentHeaderOut(ref VorbisComment comment, out OggPacket packet)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -236,6 +251,8 @@ namespace AudioWorks.Extensions.Vorbis
             throw new NotImplementedException();
         }
 
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Native method is always expected to return 0")]
         internal static void VorbisSynthesisHeaderIn(IntPtr info, ref VorbisComment comment, ref OggPacket packet)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
