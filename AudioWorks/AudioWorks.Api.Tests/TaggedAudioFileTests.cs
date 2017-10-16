@@ -3,10 +3,8 @@ using AudioWorks.Common;
 using JetBrains.Annotations;
 using ObjectsComparer;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Security.Cryptography;
 using Xunit;
 
 namespace AudioWorks.Api.Tests
@@ -96,7 +94,7 @@ namespace AudioWorks.Api.Tests
                 fileName), path, true);
             var audioFile = new TaggedAudioFile(path) { Metadata = metadata };
             audioFile.SaveMetadata(settings);
-            Assert.Equal(expectedHash, CalculateHash(audioFile));
+            Assert.Equal(expectedHash, HashUtility.CalculateHash(audioFile));
         }
 
         [Theory(DisplayName = "TaggedAudioFile's SaveMetadata method throws an exception if the file is unsupported")]
@@ -152,17 +150,6 @@ namespace AudioWorks.Api.Tests
                     audioFile.Metadata,
                     ((TaggedAudioFile) formatter.Deserialize(stream)).Metadata));
             }
-        }
-
-        [Pure, NotNull]
-        [SuppressMessage("Microsoft.Security", "CA5351:Do not use insecure cryptographic algorithm MD5.",
-            Justification = "This method is not security critical")]
-        static string CalculateHash([NotNull] IAudioFile audioFile)
-        {
-            using (var md5 = MD5.Create())
-            using (var fileStream = audioFile.FileInfo.OpenRead())
-                return BitConverter.ToString(md5.ComputeHash(fileStream))
-                    .Replace("-", string.Empty, StringComparison.InvariantCulture);
         }
     }
 }
