@@ -6,28 +6,42 @@ using System.IO;
 
 namespace AudioWorks.Api
 {
+    /// <summary>
+    /// Represents a single track of audio on the filesystem that may or may not contain a metadata "tag".
+    /// </summary>
+    /// <seealso cref="AudioFile" />
+    /// <seealso cref="ITaggedAudioFile" />
     [PublicAPI]
     [Serializable]
     public sealed class TaggedAudioFile : AudioFile, ITaggedAudioFile
     {
         [CanBeNull] AudioMetadata _metadata;
 
+        /// <inheritdoc />
         public AudioMetadata Metadata
         {
             get => _metadata ?? (_metadata = LoadMetadata(FileInfo));
             set => _metadata = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TaggedAudioFile"/> class.
+        /// </summary>
+        /// <param name="path">The fully-qualified path to the file.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="path"/> is null or empty.</exception>
+        /// <exception cref="FileNotFoundException">Thrown if <paramref name="path"/> does not exist.</exception>
         public TaggedAudioFile([NotNull] string path)
             : base(path)
         {
         }
 
+        /// <inheritdoc />
         public void LoadMetadata()
         {
             _metadata = LoadMetadata(FileInfo);
         }
 
+        /// <inheritdoc />
         public void SaveMetadata(SettingDictionary settings = null)
         {
             if (settings == null)

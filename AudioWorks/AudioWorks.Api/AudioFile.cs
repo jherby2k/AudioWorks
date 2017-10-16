@@ -7,6 +7,10 @@ using System.Runtime.Serialization;
 
 namespace AudioWorks.Api
 {
+    /// <summary>
+    /// The primary base type for working with AudioWorks. Represents a single track of audio within the filesystem.
+    /// </summary>
+    /// <seealso cref="IAudioFile" />
     [PublicAPI]
     [Serializable]
     public class AudioFile : IAudioFile
@@ -14,10 +18,18 @@ namespace AudioWorks.Api
         [NotNull, NonSerialized] FileInfo _fileInfo;
         [NotNull] string _serializedPath;
 
+        /// <inheritdoc />
         public FileInfo FileInfo => _fileInfo;
 
+        /// <inheritdoc />
         public AudioInfo AudioInfo { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AudioFile"/> class.
+        /// </summary>
+        /// <param name="path">The fully-qualified path to the file.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="path"/> is null or empty.</exception>
+        /// <exception cref="FileNotFoundException">Thrown if <paramref name="path"/> does not exist.</exception>
         public AudioFile([NotNull] string path)
         {
             if (string.IsNullOrEmpty(path))
