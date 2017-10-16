@@ -1,5 +1,6 @@
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Common;
+using AutoMapper;
 using JetBrains.Annotations;
 using ObjectsComparer;
 using System;
@@ -12,6 +13,11 @@ namespace AudioWorks.Api.Tests
     [Collection("Extensions")]
     public sealed class TaggedAudioFileTests
     {
+        public TaggedAudioFileTests()
+        {
+            Mapper.Initialize(config => config.CreateMap<AudioMetadata, AudioMetadata>());
+        }
+
         [Fact(DisplayName = "TaggedAudioFile's constructor throws an exception if the path is null")]
         public void ConstructorPathNullThrowsException()
         {
@@ -74,6 +80,23 @@ namespace AudioWorks.Api.Tests
                     "TestFiles",
                     "Valid",
                     fileName)).Metadata = null);
+        }
+
+        [Theory(DisplayName = "TaggedAudioFile's LoadMetadata method refreshes the Metadata property")]
+        [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
+        public void LoadMetadataRefreshesMetadata([NotNull] string fileName)
+        {
+            var audioFile = new TaggedAudioFile(Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                "TestFiles",
+                "Valid",
+                fileName));
+            var expectedMetadata = Mapper.Map<AudioMetadata>(audioFile.Metadata);
+
+            audioFile.Metadata = new AudioMetadata { Title = "Modified" };
+            audioFile.LoadMetadata();
+
+            Assert.True(new Comparer().Compare(expectedMetadata, audioFile.Metadata));
         }
 
         [Theory(DisplayName = "TaggedAudioFile's SaveMetadata method creates the expected output")]

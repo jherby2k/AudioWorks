@@ -14,13 +14,18 @@ namespace AudioWorks.Api
 
         public AudioMetadata Metadata
         {
-            get => _metadata ?? (_metadata = LoadMetadata());
+            get => _metadata ?? (_metadata = LoadMetadata(FileInfo));
             set => _metadata = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         public TaggedAudioFile([NotNull] string path)
             : base(path)
         {
+        }
+
+        public void LoadMetadata()
+        {
+            _metadata = LoadMetadata(FileInfo);
         }
 
         public void SaveMetadata(SettingDictionary settings = null)
@@ -47,13 +52,13 @@ namespace AudioWorks.Api
         }
 
         [NotNull]
-        AudioMetadata LoadMetadata()
+        static AudioMetadata LoadMetadata([NotNull] FileInfo fileInfo)
         {
-            using (var fileStream = FileInfo.OpenRead())
+            using (var fileStream = fileInfo.OpenRead())
             {
                 // Try each decoder that supports this file extension
                 foreach (var decoderFactory in ExtensionProvider.GetFactories<IAudioMetadataDecoder>(
-                    "Extension", FileInfo.Extension))
+                    "Extension", fileInfo.Extension))
                     try
                     {
                         using (var lifetimeContext = decoderFactory.CreateExport())
