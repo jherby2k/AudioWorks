@@ -33,6 +33,7 @@ namespace AudioWorks.Commands.Tests
                 {
                     // CommandNotFoundException is the only type we are testing for
                 }
+
                 Assert.True(true);
             }
         }
@@ -45,7 +46,9 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object);
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -57,6 +60,7 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata");
+
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
             }
         }
@@ -69,7 +73,9 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddArgument(new Mock<ITaggedAudioFile>().Object);
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -87,12 +93,14 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Value");
                 ps.AddCommand("Set-AudioMetadata");
+
                 ps.Invoke();
                 foreach (var error in ps.Streams.Error)
                     if (error.Exception is ParameterBindingException &&
                         error.FullyQualifiedErrorId.StartsWith("InputObjectNotBound",
                             StringComparison.InvariantCulture))
                         throw error.Exception;
+
                 Assert.True(true);
             }
         }
@@ -102,14 +110,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Title", "Test Title");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -119,14 +128,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Title", "Test Title");
+
                 ps.Invoke();
+
                 Assert.Equal("Test Title", mock.Object.Metadata.Title);
             }
         }
@@ -140,6 +150,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object)
                     .AddParameter("Title", null);
+
                 // Actual exception type ParameterBindingValidationException is Internal
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
@@ -150,14 +161,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Artist", "Test Artist");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -167,14 +179,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Artist", "Test Artist");
+
                 ps.Invoke();
+
                 Assert.Equal("Test Artist", mock.Object.Metadata.Artist);
             }
         }
@@ -188,6 +201,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object)
                     .AddParameter("Artist", null);
+
                 // Actual exception type ParameterBindingValidationException is Internal
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
@@ -198,14 +212,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Album", "Test Album");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -215,14 +230,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Album", "Test Album");
+
                 ps.Invoke();
+
                 Assert.Equal("Test Album", mock.Object.Metadata.Album);
             }
         }
@@ -236,6 +252,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object)
                     .AddParameter("Album", null);
+
                 // Actual exception type ParameterBindingValidationException is Internal
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
@@ -246,14 +263,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Genre", "Test Genre");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -263,14 +281,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Genre", "Test Genre");
+
                 ps.Invoke();
+
                 Assert.Equal("Test Genre", mock.Object.Metadata.Genre);
             }
         }
@@ -284,6 +303,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object)
                     .AddParameter("Genre", null);
+
                 // Actual exception type ParameterBindingValidationException is Internal
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
@@ -294,14 +314,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Comment", "Test Comment");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -311,14 +332,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Comment", "Test Comment");
+
                 ps.Invoke();
+
                 Assert.Equal("Test Comment", mock.Object.Metadata.Comment);
             }
         }
@@ -332,6 +354,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object)
                     .AddParameter("Comment", null);
+
                 // Actual exception type ParameterBindingValidationException is Internal
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
@@ -342,14 +365,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Day", "31");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -366,7 +390,9 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Day", "31");
+
                 ps.Invoke();
+
                 Assert.Equal("31", mock.Object.Metadata.Day);
             }
         }
@@ -380,6 +406,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object)
                     .AddParameter("Day", null);
+
                 // Actual exception type ParameterBindingValidationException is Internal
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
@@ -390,14 +417,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Day", "0");
+
                 ps.Invoke();
+
                 var errors = ps.Streams.Error.ReadAll();
                 Assert.Single(errors);
                 Assert.IsType<AudioMetadataInvalidException>(errors[0].Exception);
@@ -412,14 +440,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Month", "1");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -429,14 +458,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Month", "1");
+
                 ps.Invoke();
+
                 Assert.Equal("01", mock.Object.Metadata.Month);
             }
         }
@@ -450,6 +480,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object)
                     .AddParameter("Month", null);
+
                 // Actual exception type ParameterBindingValidationException is Internal
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
@@ -460,14 +491,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Month", "0");
+
                 ps.Invoke();
+
                 var errors = ps.Streams.Error.ReadAll();
                 Assert.Single(errors);
                 Assert.IsType<AudioMetadataInvalidException>(errors[0].Exception);
@@ -482,14 +514,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Month", "1");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -499,14 +532,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Year", "2017");
+
                 ps.Invoke();
+
                 Assert.Equal("2017", mock.Object.Metadata.Year);
             }
         }
@@ -520,6 +554,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object)
                     .AddParameter("Year", null);
+
                 // Actual exception type ParameterBindingValidationException is Internal
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
@@ -530,14 +565,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Year", "0");
+
                 ps.Invoke();
+
                 var errors = ps.Streams.Error.ReadAll();
                 Assert.Single(errors);
                 Assert.IsType<AudioMetadataInvalidException>(errors[0].Exception);
@@ -552,14 +588,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("TrackNumber", "1");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -569,14 +606,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("TrackNumber", "1");
+
                 ps.Invoke();
+
                 Assert.Equal("01", mock.Object.Metadata.TrackNumber);
             }
         }
@@ -590,6 +628,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object)
                     .AddParameter("TrackNumber", null);
+
                 // Actual exception type ParameterBindingValidationException is Internal
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
@@ -600,14 +639,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("TrackNumber", "0");
+
                 ps.Invoke();
+
                 var errors = ps.Streams.Error.ReadAll();
                 Assert.Single(errors);
                 Assert.IsType<AudioMetadataInvalidException>(errors[0].Exception);
@@ -622,14 +662,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("TrackCount", "12");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -639,14 +680,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("TrackCount", "12");
+
                 ps.Invoke();
+
                 Assert.Equal("12", mock.Object.Metadata.TrackCount);
             }
         }
@@ -660,6 +702,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object)
                     .AddParameter("TrackCount", null);
+
                 // Actual exception type ParameterBindingValidationException is Internal
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
@@ -670,14 +713,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("TrackCount", "0");
+
                 ps.Invoke();
+
                 var errors = ps.Streams.Error.ReadAll();
                 Assert.Single(errors);
                 Assert.IsType<AudioMetadataInvalidException>(errors[0].Exception);
@@ -696,7 +740,9 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object)
                     .AddParameter("PassThru");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -711,6 +757,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Set-AudioMetadata")
                     .AddParameter("AudioFile", audioFile)
                     .AddParameter("PassThru");
+
                 Assert.Equal(audioFile, ps.Invoke()[0].BaseObject);
             }
         }
@@ -727,6 +774,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("ExpandProperty", "OutputType");
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Type");
+
                 Assert.Equal(typeof(ITaggedAudioFile), (Type) ps.Invoke()[0].BaseObject);
             }
         }

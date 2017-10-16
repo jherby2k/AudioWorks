@@ -51,6 +51,7 @@ namespace AudioWorks.Commands.Tests
                 {
                     // CommandNotFoundException is the only type we are testing for
                 }
+
                 Assert.True(true);
             }
         }
@@ -60,13 +61,14 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object);
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -78,6 +80,7 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata");
+
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
             }
         }
@@ -87,13 +90,14 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddArgument(mock.Object);
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -103,7 +107,6 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
@@ -114,12 +117,14 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Value");
                 ps.AddCommand("Clear-AudioMetadata");
+
                 ps.Invoke();
                 foreach (var error in ps.Streams.Error)
                     if (error.Exception is ParameterBindingException &&
                         error.FullyQualifiedErrorId.StartsWith("InputObjectNotBound",
                             StringComparison.InvariantCulture))
                         throw error.Exception;
+
                 Assert.True(true);
             }
         }
@@ -129,18 +134,17 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object);
+
                 ps.Invoke();
             }
 
             new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
             var differences = differenceEnumerable.ToArray();
-
             Assert.True(differences.Length == 10);
             foreach (var difference in differences)
                 Assert.True(string.IsNullOrEmpty(difference.Value2));
@@ -151,14 +155,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Title");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -168,19 +173,18 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Title");
+
                 ps.Invoke();
             }
 
             new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
             var differences = differenceEnumerable.ToArray();
-
             Assert.Single(differences);
             Assert.Equal("Title", differences[0].MemberPath);
             Assert.True(string.IsNullOrEmpty(differences[0].Value2));
@@ -191,14 +195,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Artist");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -208,19 +213,18 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Artist");
+
                 ps.Invoke();
             }
 
             new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
             var differences = differenceEnumerable.ToArray();
-
             Assert.Single(differences);
             Assert.Equal("Artist", differences[0].MemberPath);
             Assert.True(string.IsNullOrEmpty(differences[0].Value2));
@@ -231,14 +235,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Album");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -248,19 +253,18 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Album");
+
                 ps.Invoke();
             }
 
             new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
             var differences = differenceEnumerable.ToArray();
-
             Assert.Single(differences);
             Assert.Equal("Album", differences[0].MemberPath);
             Assert.True(string.IsNullOrEmpty(differences[0].Value2));
@@ -271,14 +275,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Genre");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -288,19 +293,18 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Genre");
+
                 ps.Invoke();
             }
 
             new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
             var differences = differenceEnumerable.ToArray();
-
             Assert.Single(differences);
             Assert.Equal("Genre", differences[0].MemberPath);
             Assert.True(string.IsNullOrEmpty(differences[0].Value2));
@@ -311,14 +315,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Comment");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -328,19 +333,18 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Comment");
+
                 ps.Invoke();
             }
 
             new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
             var differences = differenceEnumerable.ToArray();
-
             Assert.Single(differences);
             Assert.Equal("Comment", differences[0].MemberPath);
             Assert.True(string.IsNullOrEmpty(differences[0].Value2));
@@ -351,14 +355,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Day");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -368,19 +373,18 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Day");
+
                 ps.Invoke();
             }
 
             new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
             var differences = differenceEnumerable.ToArray();
-
             Assert.Single(differences);
             Assert.Equal("Day", differences[0].MemberPath);
             Assert.True(string.IsNullOrEmpty(differences[0].Value2));
@@ -391,14 +395,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Month");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -408,19 +413,18 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Month");
+
                 ps.Invoke();
             }
 
             new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
             var differences = differenceEnumerable.ToArray();
-
             Assert.Single(differences);
             Assert.Equal("Month", differences[0].MemberPath);
             Assert.True(string.IsNullOrEmpty(differences[0].Value2));
@@ -431,14 +435,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Year");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -448,19 +453,18 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Year");
+
                 ps.Invoke();
             }
 
             new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
             var differences = differenceEnumerable.ToArray();
-
             Assert.Single(differences);
             Assert.Equal("Year", differences[0].MemberPath);
             Assert.True(string.IsNullOrEmpty(differences[0].Value2));
@@ -471,14 +475,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("TrackNumber");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -488,19 +493,18 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("TrackNumber");
+
                 ps.Invoke();
             }
 
             new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
             var differences = differenceEnumerable.ToArray();
-
             Assert.Single(differences);
             Assert.Equal("TrackNumber", differences[0].MemberPath);
             Assert.True(string.IsNullOrEmpty(differences[0].Value2));
@@ -511,14 +515,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("TrackCount");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -528,19 +533,18 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("TrackCount");
+
                 ps.Invoke();
             }
 
             new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
             var differences = differenceEnumerable.ToArray();
-
             Assert.Single(differences);
             Assert.Equal("TrackCount", differences[0].MemberPath);
             Assert.True(string.IsNullOrEmpty(differences[0].Value2));
@@ -551,14 +555,15 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("PassThru");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -568,13 +573,13 @@ namespace AudioWorks.Commands.Tests
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("PassThru");
+
                 Assert.Equal(mock.Object, ps.Invoke()[0].BaseObject);
             }
         }
@@ -591,6 +596,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("ExpandProperty", "OutputType");
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Type");
+
                 Assert.Equal(typeof(ITaggedAudioFile), (Type) ps.Invoke()[0].BaseObject);
             }
         }

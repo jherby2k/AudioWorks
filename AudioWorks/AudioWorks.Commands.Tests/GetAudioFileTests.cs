@@ -34,6 +34,7 @@ namespace AudioWorks.Commands.Tests
                 {
                     // CommandNotFoundException is the only type we are testing for
                 }
+
                 Assert.True(true);
             }
         }
@@ -46,7 +47,9 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioFile")
                     .AddParameter("Path", "Foo");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -58,6 +61,7 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioFile");
+
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
             }
         }
@@ -70,7 +74,9 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioFile")
                     .AddArgument("Foo");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -88,12 +94,14 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Value");
                 ps.AddCommand("Get-AudioFile");
+
                 ps.Invoke();
                 foreach (var error in ps.Streams.Error)
                     if (error.Exception is ParameterBindingException &&
                         error.FullyQualifiedErrorId.StartsWith("InputObjectNotBound",
                             StringComparison.InvariantCulture))
                         throw error.Exception;
+
                 Assert.True(true);
             }
         }
@@ -110,7 +118,9 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("ExpandProperty", "OutputType");
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Type");
+
                 var result = ps.Invoke();
+
                 Assert.Equal(typeof(ITaggedAudioFile), (Type) result[0].BaseObject);
             }
         }
@@ -123,7 +133,9 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioFile")
                     .AddArgument("Foo");
+
                 ps.Invoke();
+
                 var errors = ps.Streams.Error.ReadAll();
                 Assert.Single(errors);
                 Assert.IsType<ItemNotFoundException>(errors[0].Exception);
@@ -146,7 +158,9 @@ namespace AudioWorks.Commands.Tests
                         "TestFiles",
                         "Unsupported",
                         fileName));
+
                 ps.Invoke();
+
                 var errors = ps.Streams.Error.ReadAll();
                 Assert.Single(errors);
                 Assert.IsType<AudioUnsupportedException>(errors[0].Exception);
@@ -169,7 +183,9 @@ namespace AudioWorks.Commands.Tests
                         "TestFiles",
                         "Invalid",
                         fileName));
+
                 ps.Invoke();
+
                 var errors = ps.Streams.Error.ReadAll();
                 Assert.Single(errors);
                 Assert.IsType<AudioInvalidException>(errors[0].Exception);
@@ -192,6 +208,7 @@ namespace AudioWorks.Commands.Tests
                         "TestFiles",
                         "Valid",
                         fileName));
+
                 Assert.IsAssignableFrom<ITaggedAudioFile>(ps.Invoke()[0].BaseObject);
             }
         }
@@ -214,7 +231,9 @@ namespace AudioWorks.Commands.Tests
                 var result = ps.Invoke();
                 ps.Commands.Clear();
                 ps.AddCommand("Pop-Location");
+
                 ps.Invoke();
+
                 Assert.IsAssignableFrom<ITaggedAudioFile>(result[0].BaseObject);
             }
         }

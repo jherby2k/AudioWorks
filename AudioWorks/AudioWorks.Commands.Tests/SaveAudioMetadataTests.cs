@@ -37,6 +37,7 @@ namespace AudioWorks.Commands.Tests
                 {
                     // CommandNotFoundException is the only type we are testing for
                 }
+
                 Assert.True(true);
             }
         }
@@ -53,7 +54,9 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object);
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -65,6 +68,7 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata");
+
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
             }
         }
@@ -75,14 +79,14 @@ namespace AudioWorks.Commands.Tests
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.FileInfo).Returns(new FileInfo("Foo"));
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata")
                     .AddArgument(mock.Object);
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -93,7 +97,6 @@ namespace AudioWorks.Commands.Tests
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.FileInfo).Returns(new FileInfo("Foo"));
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
@@ -104,12 +107,14 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Value");
                 ps.AddCommand("Save-AudioMetadata");
+
                 ps.Invoke();
                 foreach (var error in ps.Streams.Error)
                     if (error.Exception is ParameterBindingException &&
                         error.FullyQualifiedErrorId.StartsWith("InputObjectNotBound",
                             StringComparison.InvariantCulture))
                         throw error.Exception;
+
                 Assert.True(true);
             }
         }
@@ -120,14 +125,15 @@ namespace AudioWorks.Commands.Tests
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.FileInfo).Returns(new FileInfo("Foo"));
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("PassThru");
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -138,13 +144,13 @@ namespace AudioWorks.Commands.Tests
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.FileInfo).Returns(new FileInfo("Foo"));
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
-
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("PassThru");
+
                 Assert.Equal(mock.Object, ps.Invoke()[0].BaseObject);
             }
         }
@@ -161,6 +167,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("ExpandProperty", "OutputType");
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Type");
+
                 Assert.Equal(typeof(ITaggedAudioFile), (Type) ps.Invoke()[0].BaseObject);
             }
         }
@@ -190,8 +197,10 @@ namespace AudioWorks.Commands.Tests
                 if (settings != null)
                     foreach (var item in settings)
                         ps.AddParameter(item.Key, item.Value);
+
                 ps.Invoke();
             }
+
             Assert.Equal(expectedHash, HashUtility.CalculateHash(audioFile));
         }
 
@@ -211,7 +220,9 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata")
                     .AddArgument(new TaggedAudioFile(path));
+
                 ps.Invoke();
+
                 var errors = ps.Streams.Error.ReadAll();
                 Assert.Single(errors);
                 Assert.IsType<AudioUnsupportedException>(errors[0].Exception);

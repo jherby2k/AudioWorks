@@ -22,15 +22,13 @@ namespace AudioWorks.Api.Tests
         public void ConstructorPathNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() =>
-                new TaggedAudioFile(null));
+            Assert.Throws<ArgumentNullException>(() => new TaggedAudioFile(null));
         }
 
         [Fact(DisplayName = "TaggedAudioFile's constructor throws an exception if the path cannot be found")]
         public void ConstructorPathNotFoundThrowsException()
         {
-            Assert.Throws<FileNotFoundException>(() =>
-                new TaggedAudioFile("Foo"));
+            Assert.Throws<FileNotFoundException>(() => new TaggedAudioFile("Foo"));
         }
 
         [Theory(DisplayName = "TaggedAudioFile's constructor throws an exception if the path is an unsupported file")]
@@ -116,7 +114,9 @@ namespace AudioWorks.Api.Tests
                 "Valid",
                 fileName), path, true);
             var audioFile = new TaggedAudioFile(path) { Metadata = metadata };
+
             audioFile.SaveMetadata(settings);
+
             Assert.Equal(expectedHash, HashUtility.CalculateHash(audioFile));
         }
 
@@ -132,8 +132,8 @@ namespace AudioWorks.Api.Tests
                 "Valid",
                 fileName), path, true);
             var audioFile = new TaggedAudioFile(path);
-            Assert.Throws<AudioUnsupportedException>(() =>
-                audioFile.SaveMetadata());
+
+            Assert.Throws<AudioUnsupportedException>(() => audioFile.SaveMetadata());
         }
 
         [Theory(DisplayName = "TaggedAudioFile's SaveMetadata method throws an exception if an unexpected setting is provided")]
@@ -150,8 +150,8 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName), path, true);
-            Assert.Throws<ArgumentException>(() =>
-                new TaggedAudioFile(path).SaveMetadata(settings));
+
+            Assert.Throws<ArgumentException>(() => new TaggedAudioFile(path).SaveMetadata(settings));
         }
 
         [Theory(DisplayName = "TaggedAudioFile's Metadata property is properly serialized")]
@@ -163,12 +163,12 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName));
-
+            var formatter = new BinaryFormatter();
             using (var stream = new MemoryStream())
             {
-                var formatter = new BinaryFormatter();
                 formatter.Serialize(stream, audioFile);
                 stream.Seek(0, SeekOrigin.Begin);
+
                 Assert.True(new Comparer<AudioMetadata>().Compare(
                     audioFile.Metadata,
                     ((TaggedAudioFile) formatter.Deserialize(stream)).Metadata));

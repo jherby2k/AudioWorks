@@ -16,8 +16,7 @@ namespace AudioWorks.Api.Tests
         public void TitleNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() =>
-                new AudioMetadata{ Title = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata{ Title = null });
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Title")]
@@ -47,11 +46,12 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "AudioMetadata's Title property is properly serialized")]
         public void TitleIsSerialized()
         {
+            var formatter = new BinaryFormatter();
             using (var stream = new MemoryStream())
             {
-                var formatter = new BinaryFormatter();
                 formatter.Serialize(stream, new AudioMetadata { Title = "Test Title" });
                 stream.Seek(0, SeekOrigin.Begin);
+
                 Assert.Equal("Test Title", ((AudioMetadata) formatter.Deserialize(stream)).Title);
             }
         }
@@ -60,8 +60,7 @@ namespace AudioWorks.Api.Tests
         public void ArtistNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() =>
-                new AudioMetadata { Artist = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Artist = null });
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Artist")]
@@ -91,11 +90,12 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "AudioMetadata's Artist property is properly serialized")]
         public void ArtistIsSerialized()
         {
+            var formatter = new BinaryFormatter();
             using (var stream = new MemoryStream())
             {
-                var formatter = new BinaryFormatter();
                 formatter.Serialize(stream, new AudioMetadata { Artist = "Test Artist" });
                 stream.Seek(0, SeekOrigin.Begin);
+
                 Assert.Equal("Test Artist", ((AudioMetadata) formatter.Deserialize(stream)).Artist);
             }
         }
@@ -104,8 +104,7 @@ namespace AudioWorks.Api.Tests
         public void AlbumNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() =>
-                new AudioMetadata { Album = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Album = null });
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Album")]
@@ -135,11 +134,12 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "AudioMetadata's Album property is properly serialized")]
         public void AlbumIsSerialized()
         {
+            var formatter = new BinaryFormatter();
             using (var stream = new MemoryStream())
             {
-                var formatter = new BinaryFormatter();
                 formatter.Serialize(stream, new AudioMetadata { Album = "Test Album" });
                 stream.Seek(0, SeekOrigin.Begin);
+
                 Assert.Equal("Test Album", ((AudioMetadata) formatter.Deserialize(stream)).Album);
             }
         }
@@ -148,8 +148,7 @@ namespace AudioWorks.Api.Tests
         public void GenreNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() =>
-                new AudioMetadata { Genre = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Genre = null });
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Genre")]
@@ -179,11 +178,12 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "AudioMetadata's Genre property is properly serialized")]
         public void GenreIsSerialized()
         {
+            var formatter = new BinaryFormatter();
             using (var stream = new MemoryStream())
             {
-                var formatter = new BinaryFormatter();
                 formatter.Serialize(stream, new AudioMetadata { Genre = "Test Genre" });
                 stream.Seek(0, SeekOrigin.Begin);
+
                 Assert.Equal("Test Genre", ((AudioMetadata) formatter.Deserialize(stream)).Genre);
             }
         }
@@ -192,8 +192,7 @@ namespace AudioWorks.Api.Tests
         public void CommentNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() =>
-                new AudioMetadata { Comment = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Comment = null });
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Comment")]
@@ -223,11 +222,12 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "AudioMetadata's Comment property is properly serialized")]
         public void CommentIsSerialized()
         {
+            var formatter = new BinaryFormatter();
             using (var stream = new MemoryStream())
             {
-                var formatter = new BinaryFormatter();
                 formatter.Serialize(stream, new AudioMetadata { Comment = "Test Comment" });
                 stream.Seek(0, SeekOrigin.Begin);
+
                 Assert.Equal("Test Comment", ((AudioMetadata) formatter.Deserialize(stream)).Comment);
             }
         }
@@ -236,29 +236,25 @@ namespace AudioWorks.Api.Tests
         public void DayNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() =>
-                new AudioMetadata { Day = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Day = null });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Day is zero")]
         public void DayZeroThrowsException()
         {
-            Assert.Throws<AudioMetadataInvalidException>(() =>
-                new AudioMetadata { Day = "0" });
+            Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { Day = "0" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Day is greater than 31")]
         public void DayTooHighThrowsException()
         {
-            Assert.Throws<AudioMetadataInvalidException>(() =>
-                new AudioMetadata { Day = "32" });
+            Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { Day = "32" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Day isn't numeric")]
         public void DayNotNumericThrowsException()
         {
-            Assert.Throws<AudioMetadataInvalidException>(() =>
-                new AudioMetadata { Day = "##" });
+            Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { Day = "##" });
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Day")]
@@ -294,11 +290,12 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "AudioMetadata's Day property is properly serialized")]
         public void DayIsSerialized()
         {
+            var formatter = new BinaryFormatter();
             using (var stream = new MemoryStream())
             {
-                var formatter = new BinaryFormatter();
                 formatter.Serialize(stream, new AudioMetadata { Day = "31" });
                 stream.Seek(0, SeekOrigin.Begin);
+
                 Assert.Equal("31", ((AudioMetadata) formatter.Deserialize(stream)).Day);
             }
         }
@@ -307,29 +304,25 @@ namespace AudioWorks.Api.Tests
         public void MonthNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() =>
-                new AudioMetadata { Month = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Month = null });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Month is zero")]
         public void MonthZeroThrowsException()
         {
-            Assert.Throws<AudioMetadataInvalidException>(() =>
-                new AudioMetadata { Month = "0" });
+            Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { Month = "0" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Month is greater than 12")]
         public void MonthTooHighThrowsException()
         {
-            Assert.Throws<AudioMetadataInvalidException>(() =>
-                new AudioMetadata { Month = "13" });
+            Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { Month = "13" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Month isn't numeric")]
         public void MonthNotNumericThrowsException()
         {
-            Assert.Throws<AudioMetadataInvalidException>(() =>
-                new AudioMetadata { Month = "##" });
+            Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { Month = "##" });
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Month")]
@@ -365,11 +358,12 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "AudioMetadata's Month property is properly serialized")]
         public void MonthIsSerialized()
         {
+            var formatter = new BinaryFormatter();
             using (var stream = new MemoryStream())
             {
-                var formatter = new BinaryFormatter();
                 formatter.Serialize(stream, new AudioMetadata { Month = "01" });
                 stream.Seek(0, SeekOrigin.Begin);
+
                 Assert.Equal("01", ((AudioMetadata) formatter.Deserialize(stream)).Month);
             }
         }
@@ -378,36 +372,31 @@ namespace AudioWorks.Api.Tests
         public void YearNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() =>
-                new AudioMetadata { Year = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Year = null });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Year is less than 4 characters")]
         public void YearTooShortThrowsException()
         {
-            Assert.Throws<AudioMetadataInvalidException>(() =>
-                new AudioMetadata { Year = "999" });
+            Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { Year = "999" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Year is more than 4 characters")]
         public void YearTooLongThrowsException()
         {
-            Assert.Throws<AudioMetadataInvalidException>(() =>
-                new AudioMetadata { Year = "10000" });
+            Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { Year = "10000" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Year isn't numeric")]
         public void YearNotNumericThrowsException()
         {
-            Assert.Throws<AudioMetadataInvalidException>(() =>
-                new AudioMetadata { Year = "Test" });
+            Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { Year = "Test" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the Year starts with a zero")]
         public void YearStartsWithZeroThrowsException()
         {
-            Assert.Throws<AudioMetadataInvalidException>(() =>
-                new AudioMetadata { Year = "0100" });
+            Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { Year = "0100" });
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Year")]
@@ -437,11 +426,12 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "AudioMetadata's Year property is properly serialized")]
         public void YearIsSerialized()
         {
+            var formatter = new BinaryFormatter();
             using (var stream = new MemoryStream())
             {
-                var formatter = new BinaryFormatter();
                 formatter.Serialize(stream, new AudioMetadata { Year = "2017" });
                 stream.Seek(0, SeekOrigin.Begin);
+
                 Assert.Equal("2017", ((AudioMetadata) formatter.Deserialize(stream)).Year);
             }
         }
@@ -450,29 +440,25 @@ namespace AudioWorks.Api.Tests
         public void TrackNumberNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() =>
-                new AudioMetadata { TrackNumber = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { TrackNumber = null });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the TrackNumber is zero")]
         public void TrackNumberZeroThrowsException()
         {
-            Assert.Throws<AudioMetadataInvalidException>(() =>
-                new AudioMetadata { TrackNumber = "0" });
+            Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { TrackNumber = "0" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the TrackNumber is more than 2 characters")]
         public void TrackNumberTooLongThrowsException()
         {
-            Assert.Throws<AudioMetadataInvalidException>(() =>
-                new AudioMetadata { TrackNumber = "100" });
+            Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { TrackNumber = "100" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the TrackNumber isn't numeric")]
         public void TrackNumberNotNumericThrowsException()
         {
-            Assert.Throws<AudioMetadataInvalidException>(() =>
-                new AudioMetadata { TrackNumber = "##" });
+            Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { TrackNumber = "##" });
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid TrackNumber")]
@@ -508,11 +494,12 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "AudioMetadata's TrackNumber property is properly serialized")]
         public void TrackNumberIsSerialized()
         {
+            var formatter = new BinaryFormatter();
             using (var stream = new MemoryStream())
             {
-                var formatter = new BinaryFormatter();
                 formatter.Serialize(stream, new AudioMetadata { TrackNumber = "01" });
                 stream.Seek(0, SeekOrigin.Begin);
+
                 Assert.Equal("01", ((AudioMetadata)formatter.Deserialize(stream)).TrackNumber);
             }
         }
@@ -521,29 +508,25 @@ namespace AudioWorks.Api.Tests
         public void TrackCountNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() =>
-                new AudioMetadata { TrackCount = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { TrackCount = null });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the TrackCount is zero")]
         public void TrackCountZeroThrowsException()
         {
-            Assert.Throws<AudioMetadataInvalidException>(() =>
-                new AudioMetadata { TrackCount = "0" });
+            Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { TrackCount = "0" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the TrackCount is more than 2 characters")]
         public void TrackCountTooLongThrowsException()
         {
-            Assert.Throws<AudioMetadataInvalidException>(() =>
-                new AudioMetadata { TrackCount = "100" });
+            Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { TrackCount = "100" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if the TrackCount isn't numeric")]
         public void TrackCountNotNumericThrowsException()
         {
-            Assert.Throws<AudioMetadataInvalidException>(() =>
-                new AudioMetadata { TrackCount = "##" });
+            Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { TrackCount = "##" });
         }
 
         [Fact(DisplayName = "AudioMetadata accepts a valid TrackCount")]
@@ -579,11 +562,12 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "AudioMetadata's TrackCount property is properly serialized")]
         public void TrackCountIsSerialized()
         {
+            var formatter = new BinaryFormatter();
             using (var stream = new MemoryStream())
             {
-                var formatter = new BinaryFormatter();
                 formatter.Serialize(stream, new AudioMetadata { TrackCount = "12" });
                 stream.Seek(0, SeekOrigin.Begin);
+
                 Assert.Equal("12", ((AudioMetadata) formatter.Deserialize(stream)).TrackCount);
             }
         }
@@ -597,9 +581,8 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName);
-            Assert.Equal(
-                expectedMetadata.Title,
-                new TaggedAudioFile(path).Metadata.Title);
+
+            Assert.Equal(expectedMetadata.Title, new TaggedAudioFile(path).Metadata.Title);
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Artist property value")]
@@ -611,9 +594,8 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName);
-            Assert.Equal(
-                expectedMetadata.Artist,
-                new TaggedAudioFile(path).Metadata.Artist);
+
+            Assert.Equal(expectedMetadata.Artist, new TaggedAudioFile(path).Metadata.Artist);
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Album property value")]
@@ -625,9 +607,8 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName);
-            Assert.Equal(
-                expectedMetadata.Album,
-                new TaggedAudioFile(path).Metadata.Album);
+
+            Assert.Equal(expectedMetadata.Album, new TaggedAudioFile(path).Metadata.Album);
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Genre property value")]
@@ -639,9 +620,8 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName);
-            Assert.Equal(
-                expectedMetadata.Genre,
-                new TaggedAudioFile(path).Metadata.Genre);
+
+            Assert.Equal(expectedMetadata.Genre, new TaggedAudioFile(path).Metadata.Genre);
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Comment property value")]
@@ -653,9 +633,8 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName);
-            Assert.Equal(
-                expectedMetadata.Comment,
-                new TaggedAudioFile(path).Metadata.Comment);
+
+            Assert.Equal(expectedMetadata.Comment, new TaggedAudioFile(path).Metadata.Comment);
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Day property value")]
@@ -667,9 +646,8 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName);
-            Assert.Equal(
-                expectedMetadata.Day,
-                new TaggedAudioFile(path).Metadata.Day);
+
+            Assert.Equal(expectedMetadata.Day, new TaggedAudioFile(path).Metadata.Day);
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Month property value")]
@@ -681,9 +659,8 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName);
-            Assert.Equal(
-                expectedMetadata.Month,
-                new TaggedAudioFile(path).Metadata.Month);
+
+            Assert.Equal(expectedMetadata.Month, new TaggedAudioFile(path).Metadata.Month);
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected Year property value")]
@@ -695,9 +672,8 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName);
-            Assert.Equal(
-                expectedMetadata.Year,
-                new TaggedAudioFile(path).Metadata.Year);
+
+            Assert.Equal(expectedMetadata.Year, new TaggedAudioFile(path).Metadata.Year);
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected TrackNumber property value")]
@@ -709,9 +685,7 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName);
-            Assert.Equal(
-                expectedMetadata.TrackNumber,
-                new TaggedAudioFile(path).Metadata.TrackNumber);
+            Assert.Equal(expectedMetadata.TrackNumber, new TaggedAudioFile(path).Metadata.TrackNumber);
         }
 
         [Theory(DisplayName = "AudioMetadata has the expected TrackCount property value")]
@@ -723,9 +697,7 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName);
-            Assert.Equal(
-                expectedMetadata.TrackCount,
-                new TaggedAudioFile(path).Metadata.TrackCount);
+            Assert.Equal(expectedMetadata.TrackCount, new TaggedAudioFile(path).Metadata.TrackCount);
         }
     }
 }

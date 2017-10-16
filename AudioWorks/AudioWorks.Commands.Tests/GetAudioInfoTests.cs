@@ -36,6 +36,7 @@ namespace AudioWorks.Commands.Tests
                 {
                     // CommandNotFoundException is the only type we are testing for
                 }
+
                 Assert.True(true);
             }
         }
@@ -48,7 +49,9 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioInfo")
                     .AddParameter("AudioFile", new Mock<IAudioFile>().Object);
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -60,6 +63,7 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioInfo");
+
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
             }
         }
@@ -72,7 +76,9 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioInfo")
                     .AddArgument(new Mock<IAudioFile>().Object);
+
                 ps.Invoke();
+
                 Assert.True(true);
             }
         }
@@ -90,12 +96,14 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Value");
                 ps.AddCommand("Get-AudioInfo");
+
                 ps.Invoke();
                 foreach (var error in ps.Streams.Error)
                     if (error.Exception is ParameterBindingException &&
                         error.FullyQualifiedErrorId.StartsWith("InputObjectNotBound",
                             StringComparison.InvariantCulture))
                         throw error.Exception;
+
                 Assert.True(true);
             }
         }
@@ -112,6 +120,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("ExpandProperty", "OutputType");
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Type");
+
                 Assert.Equal(typeof(AudioInfo), (Type) ps.Invoke()[0].BaseObject);
             }
         }
@@ -129,6 +138,7 @@ namespace AudioWorks.Commands.Tests
                         "TestFiles",
                         "Valid",
                         fileName)));
+
                 Assert.IsAssignableFrom<AudioInfo>(ps.Invoke()[0].BaseObject);
             }
         }

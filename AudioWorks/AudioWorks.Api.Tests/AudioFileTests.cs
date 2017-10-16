@@ -16,15 +16,13 @@ namespace AudioWorks.Api.Tests
         public void ConstructorPathNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() =>
-                new AudioFile(null));
+            Assert.Throws<ArgumentNullException>(() => new AudioFile(null));
         }
 
         [Fact(DisplayName = "AudioFile's constructor throws an exception if the path cannot be found")]
         public void ConstructorPathNotFoundThrowsException()
         {
-            Assert.Throws<FileNotFoundException>(() =>
-                new AudioFile("Foo"));
+            Assert.Throws<FileNotFoundException>(() => new AudioFile("Foo"));
         }
 
         [Theory(DisplayName = "AudioFile's constructor throws an exception if the path is an unsupported file")]
@@ -60,9 +58,8 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName);
-            Assert.Equal(
-                path,
-                new AudioFile(path).FileInfo.FullName);
+
+            Assert.Equal(path, new AudioFile(path).FileInfo.FullName);
         }
 
         [Theory(DisplayName = "AudioFile's AudioInfo property is set")]
@@ -74,8 +71,8 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName);
-            Assert.IsAssignableFrom<AudioInfo>(
-                new AudioFile(path).AudioInfo);
+
+            Assert.IsAssignableFrom<AudioInfo>(new AudioFile(path).AudioInfo);
         }
 
         [Theory(DisplayName = "AudioFile's FileInfo property is properly serialized")]
@@ -87,13 +84,15 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName));
-
+            var formatter = new BinaryFormatter();
             using (var stream = new MemoryStream())
             {
-                var formatter = new BinaryFormatter();
                 formatter.Serialize(stream, audioFile);
                 stream.Seek(0, SeekOrigin.Begin);
-                Assert.Equal(audioFile.FileInfo.FullName, ((AudioFile)formatter.Deserialize(stream)).FileInfo.FullName);
+
+                Assert.Equal(
+                    audioFile.FileInfo.FullName,
+                    ((AudioFile) formatter.Deserialize(stream)).FileInfo.FullName);
             }
         }
 
@@ -106,12 +105,12 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName));
-
+            var formatter = new BinaryFormatter();
             using (var stream = new MemoryStream())
             {
-                var formatter = new BinaryFormatter();
                 formatter.Serialize(stream, audioFile);
                 stream.Seek(0, SeekOrigin.Begin);
+
                 Assert.True(new Comparer<AudioInfo>().Compare(
                     audioFile.AudioInfo,
                     ((AudioFile) formatter.Deserialize(stream)).AudioInfo));
