@@ -6,13 +6,35 @@ using System.Linq;
 
 namespace AudioWorks.Extensions
 {
+    /// <summary>
+    /// Classes marked with this attribute will be loaded by AudioWorks when attempting to save metadata to an audio
+    /// file, if the file extension matches.
+    /// </summary>
+    /// <remarks>
+    /// Classes marked with this attribute should implement <see cref="IAudioMetadataEncoder"/> and also be marked with
+    /// the <see cref="SharedAttribute"/> attribute.
+    /// </remarks>
+    /// <seealso cref="ExportAttribute"/>
     [PublicAPI, MeansImplicitUse, BaseTypeRequired(typeof(IAudioMetadataEncoder))]
     [MetadataAttribute, AttributeUsage(AttributeTargets.Class)]
     public sealed class AudioMetadataEncoderExportAttribute : ExportAttribute
     {
+        /// <summary>
+        /// Gets the file extension.
+        /// </summary>
+        /// <value>
+        /// The file extension.
+        /// </value>
         [NotNull]
         public string Extension { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AudioMetadataEncoderExportAttribute"/> class.
+        /// </summary>
+        /// <param name="extension">The file extension.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="extension"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="extension"/> is not a valid file extension.
+        /// </exception>
         public AudioMetadataEncoderExportAttribute([NotNull] string extension)
             : base(typeof(IAudioMetadataEncoder))
         {

@@ -10,10 +10,10 @@ namespace AudioWorks.Common
     public abstract class SettingInfo
     {
         /// <summary>
-        /// Gets the type of the setting.
+        /// Gets the type of the setting value.
         /// </summary>
         /// <value>
-        /// The type of the setting.
+        /// The type of the setting value.
         /// </value>
         [NotNull]
         public Type ValueType { get; }
@@ -21,7 +21,7 @@ namespace AudioWorks.Common
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingInfo"/> class.
         /// </summary>
-        /// <param name="valueType">Type of the setting.</param>
+        /// <param name="valueType">Type of the setting value.</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="valueType"/> is null.</exception>
         protected SettingInfo([NotNull] Type valueType)
         {

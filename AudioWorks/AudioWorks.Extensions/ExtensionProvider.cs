@@ -6,9 +6,18 @@ using System.Linq;
 
 namespace AudioWorks.Extensions
 {
+    /// <summary>
+    /// Provides methods for accessing extensions of various types.
+    /// </summary>
     [PublicAPI]
     public static class ExtensionProvider
     {
+        /// <summary>
+        /// Gets an <see cref="IEnumerable{T}"/> of extensions wrapped in <see cref="ExportFactory{T}"/> objects to
+        /// control their lifetime.
+        /// </summary>
+        /// <typeparam name="T">The type of extension.</typeparam>
+        /// <returns>The extension factories.</returns>
         [NotNull]
         public static IEnumerable<ExportFactory<T>> GetFactories<T>()
             where T : class
@@ -16,6 +25,14 @@ namespace AudioWorks.Extensions
             return ExtensionContainer<T>.Instance.Factories;
         }
 
+        /// <summary>
+        /// Gets an <see cref="IEnumerable{T}"/> of extensions wrapped in <see cref="ExportFactory{T}"/> objects to
+        /// control their lifetime, filtered by metadata.
+        /// </summary>
+        /// <typeparam name="T">The type of extension.</typeparam>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>The extension factories.</returns>
         [NotNull]
         public static IEnumerable<ExportFactory<T>> GetFactories<T>([NotNull] string key, [NotNull] string value)
             where T : class
