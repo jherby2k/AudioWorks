@@ -49,12 +49,12 @@ namespace AudioWorks.Api
             using (var fileStream = _fileInfo.OpenRead())
             {
                 // Try each info decoder that supports this file extension
-                foreach (var decoderFactory in ExtensionProvider.GetFactories<IAudioInfoDecoder>(
+                foreach (var factory in ExtensionProvider.GetFactories<IAudioInfoDecoder>(
                     "Extension", _fileInfo.Extension))
                     try
                     {
-                        using (var lifetimeContext = decoderFactory.CreateExport())
-                            return lifetimeContext.Value.ReadAudioInfo(fileStream);
+                        using (var export = factory.CreateExport())
+                            return export.Value.ReadAudioInfo(fileStream);
                     }
                     catch (AudioUnsupportedException)
                     {

@@ -53,11 +53,11 @@ namespace AudioWorks.Api
             using (var fileStream = FileInfo.Open(FileMode.Open, FileAccess.ReadWrite))
             {
                 // Try each encoder that supports this file extension
-                foreach (var encoderFactory in ExtensionProvider.GetFactories<IAudioMetadataEncoder>(
+                foreach (var factory in ExtensionProvider.GetFactories<IAudioMetadataEncoder>(
                     "Extension", FileInfo.Extension))
-                    using (var lifetimeContext = encoderFactory.CreateExport())
+                    using (var export = factory.CreateExport())
                     {
-                        lifetimeContext.Value.WriteMetadata(fileStream, Metadata, settings);
+                        export.Value.WriteMetadata(fileStream, Metadata, settings);
                         return;
                     }
             }
