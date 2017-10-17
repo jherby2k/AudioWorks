@@ -3,6 +3,7 @@ using AudioWorks.Extensions;
 using JetBrains.Annotations;
 using System;
 using System.IO;
+using System.Runtime.Serialization;
 
 namespace AudioWorks.Api
 {
@@ -32,6 +33,11 @@ namespace AudioWorks.Api
         /// <exception cref="FileNotFoundException">Thrown if <paramref name="path"/> does not exist.</exception>
         public TaggedAudioFile([NotNull] string path)
             : base(path)
+        {
+        }
+
+        TaggedAudioFile([NotNull] SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
         }
 

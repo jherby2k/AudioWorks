@@ -2,6 +2,7 @@
 using AudioWorks.Extensions;
 using JetBrains.Annotations;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.Serialization;
 
@@ -13,13 +14,12 @@ namespace AudioWorks.Api
     /// <seealso cref="IAudioFile"/>
     [PublicAPI]
     [Serializable]
-    public class AudioFile : IAudioFile
+    public class AudioFile : IAudioFile, ISerializable
     {
-        [NotNull, NonSerialized] FileInfo _fileInfo;
-        [NotNull] string _serializedPath;
-
         /// <inheritdoc />
-        public FileInfo FileInfo => _fileInfo;
+        [SuppressMessage("Usage", "CA2235:Mark all non-serializable fields",
+            Justification = "Properties are serialized manually")]
+        public FileInfo FileInfo { get; }
 
         /// <inheritdoc />
         public AudioInfo AudioInfo { get; }
@@ -37,20 +37,31 @@ namespace AudioWorks.Api
             if (!File.Exists(path))
                 throw new FileNotFoundException($"The file '{path}' cannot be found.", path);
 
-            _fileInfo = new FileInfo(path);
-            _serializedPath = _fileInfo.FullName;
-
+            FileInfo = new FileInfo(path);
             AudioInfo = LoadAudioInfo();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AudioFile"/> class.
+        /// </summary>
+        /// <param name="info">The serialization information.</param>
+        /// <param name="context">The streaming context.</param>
+        [SuppressMessage("Performance", "CA1801:Review unused parameters",
+            Justification = "Required for ISerializable implementation")]
+        protected AudioFile([NotNull] SerializationInfo info, StreamingContext context)
+        {
+            FileInfo = new FileInfo(info.GetString("fileName"));
+            AudioInfo = (AudioInfo) info.GetValue("audioInfo", typeof(AudioInfo));
         }
 
         [NotNull]
         AudioInfo LoadAudioInfo()
         {
-            using (var fileStream = _fileInfo.OpenRead())
+            using (var fileStream = FileInfo.OpenRead())
             {
                 // Try each info decoder that supports this file extension
                 foreach (var factory in ExtensionProvider.GetFactories<IAudioInfoDecoder>(
-                    "Extension", _fileInfo.Extension))
+                    "Extension", FileInfo.Extension))
                     try
                     {
                         using (var export = factory.CreateExport())
@@ -66,10 +77,11 @@ namespace AudioWorks.Api
             throw new AudioUnsupportedException("No supporting extensions are available.");
         }
 
-        [OnDeserialized]
-        void OnDeserialized(StreamingContext context)
+        /// <inheritdoc />
+        public virtual void GetObjectData([NotNull] SerializationInfo info, StreamingContext context)
         {
-            _fileInfo = new FileInfo(_serializedPath);
+            info.AddValue("fileName", FileInfo.FullName);
+            info.AddValue("audioInfo", AudioInfo);
         }
     }
 }
