@@ -5,57 +5,102 @@ using System.Management.Automation;
 
 namespace AudioWorks.Commands
 {
+    /// <summary>
+    /// <para type="synopsis">Sets one or more metadata fields on an audio file.</para>
+    /// <para type="description">The Set-AudioMetadata cmdlet changes the value of one or more metadata fields. Note
+    /// that these changes are not persisted to disk unless followed by a call to Save-AudioMetadata.</para>
+    /// </summary>
     [PublicAPI]
     [Cmdlet(VerbsCommon.Set, "AudioMetadata"), OutputType(typeof(ITaggedAudioFile))]
     public sealed class SetAudioMetadataCommand : Cmdlet
     {
+        /// <summary>
+        /// <para type="description">Specifies the audio file.</para>
+        /// </summary>
         [NotNull, SuppressMessage("ReSharper", "NotNullMemberIsNotInitialized")]
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public ITaggedAudioFile AudioFile { get; set; }
 
+        /// <summary>
+        /// <para type="description">Sets the title.</para>
+        /// </summary>
         [CanBeNull]
         [Parameter, ValidateNotNull]
         public string Title { get; set; }
 
+        /// <summary>
+        /// <para type="description">Sets the artist.</para>
+        /// </summary>
         [CanBeNull]
         [Parameter, ValidateNotNull]
         public string Artist { get; set; }
 
+        /// <summary>
+        /// <para type="description">Sets the album.</para>
+        /// </summary>
         [CanBeNull]
         [Parameter, ValidateNotNull]
         public string Album { get; set; }
 
+        /// <summary>
+        /// <para type="description">Sets the genre.</para>
+        /// </summary>
         [CanBeNull]
         [Parameter, ValidateNotNull]
         public string Genre { get; set; }
 
+        /// <summary>
+        /// <para type="description">Sets the comment.</para>
+        /// </summary>
         [CanBeNull]
         [Parameter, ValidateNotNull]
         public string Comment { get; set; }
 
+        /// <summary>
+        /// <para type="description">Sets the day of the month.</para>
+        /// <para type="description">Should be a number between 1 and 31.</para>
+        /// </summary>
         [CanBeNull]
         [Parameter, ValidateNotNull]
         public string Day { get; set; }
 
+        /// <summary>
+        /// <para type="description">Sets the month.</para>
+        /// <para type="description">Should be a number between 1 and 12.</para>
+        /// </summary>
         [CanBeNull]
         [Parameter, ValidateNotNull]
         public string Month { get; set; }
 
+        /// <summary>
+        /// <para type="description">Sets the year.</para>
+        /// </summary>
         [CanBeNull]
         [Parameter, ValidateNotNull]
         public string Year { get; set; }
 
+        /// <summary>
+        /// <para type="description">Sets the track number.</para>
+        /// </summary>
         [CanBeNull]
         [Parameter, ValidateNotNull]
         public string TrackNumber { get; set; }
 
+        /// <summary>
+        /// <para type="description">Sets the track number.</para>
+        /// </summary>
         [CanBeNull]
         [Parameter, ValidateNotNull]
         public string TrackCount { get; set; }
 
+        /// <summary>
+        /// <para type="description">Returns an object representing the item with which you are working. By default,
+        /// this cmdlet does not generate any output.</para>
+        /// </summary>
         [Parameter]
         public SwitchParameter PassThru { get; set; }
 
+        /// <inheritdoc/>
         protected override void ProcessRecord()
         {
             try
