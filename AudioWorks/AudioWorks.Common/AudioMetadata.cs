@@ -214,20 +214,12 @@ namespace AudioWorks.Common
         }
 
         /// <summary>
-        /// Clears all metadata properties by setting each to null.
+        /// Clears all metadata properties by setting each to an empty string.
         /// </summary>
         public void Clear()
         {
-            _title = string.Empty;
-            _artist = string.Empty;
-            _album = string.Empty;
-            _genre = string.Empty;
-            _comment = string.Empty;
-            _day = string.Empty;
-            _month = string.Empty;
-            _year = string.Empty;
-            _trackNumber = string.Empty;
-            _trackCount = string.Empty;
+            foreach (var property in GetType().GetProperties())
+                property.SetValue(this, string.Empty);
         }
     }
 }
