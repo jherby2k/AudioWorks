@@ -7,7 +7,7 @@ namespace AudioWorks.Common
     /// <summary>
     /// Represents errors that occur during the reading of an <see cref="IAudioFile"/>.
     /// </summary>
-    /// <seealso cref="Exception" />
+    /// <seealso cref="Exception"/>
     [PublicAPI]
     [Serializable]
     public abstract class AudioException : Exception

@@ -6,7 +6,7 @@ namespace AudioWorks.Common
     /// <summary>
     /// Represents a single track of audio on the filesystem that may or may not contain a metadata "tag".
     /// </summary>
-    /// <seealso cref="IAudioFile" />
+    /// <seealso cref="IAudioFile"/>
     [PublicAPI]
     public interface ITaggedAudioFile : IAudioFile
     {

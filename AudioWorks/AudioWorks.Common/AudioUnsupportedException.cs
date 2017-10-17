@@ -9,7 +9,7 @@ namespace AudioWorks.Common
     /// Represents errors that occur during the reading of an <see cref="IAudioFile"/> that are the result of
     /// encountered unsupported data.
     /// </summary>
-    /// <seealso cref="AudioException" />
+    /// <seealso cref="AudioException"/>
     [PublicAPI]
     [Serializable]
     public sealed class AudioUnsupportedException : AudioException

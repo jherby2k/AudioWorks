@@ -10,7 +10,7 @@ namespace AudioWorks.Api
     /// <summary>
     /// The primary base type for working with AudioWorks. Represents a single track of audio within the filesystem.
     /// </summary>
-    /// <seealso cref="IAudioFile" />
+    /// <seealso cref="IAudioFile"/>
     [PublicAPI]
     [Serializable]
     public class AudioFile : IAudioFile

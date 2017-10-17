@@ -5,9 +5,19 @@ using System.Linq;
 
 namespace AudioWorks.Common
 {
+    /// <summary>
+    /// Represents a dictionary of strings and <see cref="SettingInfo"/> objects describing the settings which you can
+    /// pass to various methods.
+    /// </summary>
+    /// <seealso cref="Dictionary{String, SettingInfo}"/>
     [PublicAPI]
     public sealed class SettingInfoDictionary : Dictionary<string, SettingInfo>
     {
+        /// <summary>
+        /// Validates a settings dictionary against this <see cref="SettingInfoDictionary"/>.
+        /// </summary>
+        /// <param name="settings">The settings.</param>
+        /// <exception cref="ArgumentException">Thrown if one or more settings are not valid.</exception>
         public void ValidateSettings([NotNull] SettingDictionary settings)
         {
             foreach (var setting in settings)

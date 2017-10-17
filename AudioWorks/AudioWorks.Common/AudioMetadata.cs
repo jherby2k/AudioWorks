@@ -5,6 +5,9 @@ using System.Text.RegularExpressions;
 
 namespace AudioWorks.Common
 {
+    /// <summary>
+    /// Contains mutable metadata about the audio file.
+    /// </summary>
     [PublicAPI]
     [Serializable]
     public class AudioMetadata
@@ -20,6 +23,11 @@ namespace AudioWorks.Common
         [NotNull] string _trackNumber = string.Empty;
         [NotNull] string _trackCount = string.Empty;
 
+        /// <summary>
+        /// Gets or sets the title. To clear the title, set an empty <paramref name="value"/>.
+        /// </summary>
+        /// <value>The title.</value>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
         [NotNull]
         public string Title
         {
@@ -27,6 +35,11 @@ namespace AudioWorks.Common
             set => _title = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        /// <summary>
+        /// Gets or sets the artist. To clear the artist, set an empty <paramref name="value"/>.
+        /// </summary>
+        /// <value>The artist.</value>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
         [NotNull]
         public string Artist
         {
@@ -34,6 +47,11 @@ namespace AudioWorks.Common
             set => _artist = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        /// <summary>
+        /// Gets or sets the album. To clear the album, set an empty <paramref name="value"/>.
+        /// </summary>
+        /// <value>The album.</value>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
         [NotNull]
         public string Album
         {
@@ -41,6 +59,11 @@ namespace AudioWorks.Common
             set => _album = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        /// <summary>
+        /// Gets or sets the genre. To clear the genre, set an empty <paramref name="value"/>.
+        /// </summary>
+        /// <value>The genre.</value>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
         [NotNull]
         public string Genre
         {
@@ -48,6 +71,11 @@ namespace AudioWorks.Common
             set => _genre = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        /// <summary>
+        /// Gets or sets the comment. To clear the comment, set an empty <paramref name="value"/>.
+        /// </summary>
+        /// <value>The comment.</value>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
         [NotNull]
         public string Comment
         {
@@ -55,6 +83,14 @@ namespace AudioWorks.Common
             set => _comment = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        /// <summary>
+        /// Gets or sets the day of the month as a number from 1 to 31. To clear the day, set an empty
+        /// <paramref name="value"/>.
+        /// </summary>
+        /// <value>The day of the month.</value>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
+        /// <exception cref="AudioMetadataInvalidException">Thrown if <paramref name="value"/> is not valid.
+        /// </exception>
         [NotNull]
         public string Day
         {
@@ -74,6 +110,13 @@ namespace AudioWorks.Common
             }
         }
 
+        /// <summary>
+        /// Gets or sets the month as a number from 1 to 12. To clear the month, set an empty <paramref name="value"/>.
+        /// </summary>
+        /// <value>The month.</value>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
+        /// <exception cref="AudioMetadataInvalidException">Thrown if <paramref name="value"/> is not valid.
+        /// </exception>
         [NotNull]
         public string Month
         {
@@ -93,6 +136,13 @@ namespace AudioWorks.Common
             }
         }
 
+        /// <summary>
+        /// Gets or sets the year. To clear the year, set an empty <paramref name="value"/>.
+        /// </summary>
+        /// <value>The year.</value>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
+        /// <exception cref="AudioMetadataInvalidException">Thrown if <paramref name="value"/> is not valid.
+        /// </exception>
         [NotNull]
         public string Year
         {
@@ -112,6 +162,13 @@ namespace AudioWorks.Common
             }
         }
 
+        /// <summary>
+        /// Gets or sets the track number. To clear the track number, set an empty <paramref name="value"/>.
+        /// </summary>
+        /// <value>The track number.</value>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
+        /// <exception cref="AudioMetadataInvalidException">Thrown if <paramref name="value"/> is not valid.
+        /// </exception>
         [NotNull]
         public string TrackNumber
         {
@@ -131,6 +188,12 @@ namespace AudioWorks.Common
             }
         }
 
+        /// <summary>
+        /// Gets or sets the track count. To clear the track count, set an empty <paramref name="value"/>.
+        /// </summary>
+        /// <value>The track count.</value>
+        /// <exception cref="ArgumentNullException">value</exception>
+        /// <exception cref="AudioMetadataInvalidException">TrackCount must be between 1 and 99.</exception>
         [NotNull]
         public string TrackCount
         {
@@ -150,6 +213,9 @@ namespace AudioWorks.Common
             }
         }
 
+        /// <summary>
+        /// Clears all metadata properties by setting each to null.
+        /// </summary>
         public void Clear()
         {
             _title = string.Empty;

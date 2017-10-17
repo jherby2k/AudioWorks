@@ -4,7 +4,7 @@ using System;
 namespace AudioWorks.Common
 {
     /// <summary>
-    /// Contains information about the audio itself. Cannot be modified without re-encoding.
+    /// Contains information about the audio itself, which cannot be modified without re-encoding.
     /// </summary>
     [PublicAPI]
     [Serializable]
