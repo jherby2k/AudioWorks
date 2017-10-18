@@ -1,6 +1,5 @@
 ﻿using JetBrains.Annotations;
 using System;
-using System.IO;
 using System.Runtime.Serialization;
 
 namespace AudioWorks.Common
@@ -14,40 +13,6 @@ namespace AudioWorks.Common
     [Serializable]
     public sealed class AudioUnsupportedException : AudioException
     {
-        [CanBeNull, NonSerialized] readonly FileInfo _fileInfo;
-
-        /// <summary>
-        /// Gets the file information.
-        /// </summary>
-        /// <value>
-        /// The file information.
-        /// </value>
-        [CanBeNull]
-        public FileInfo FileInfo => _fileInfo;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AudioUnsupportedException"/> class.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        /// <param name="fileName">Name of the file.</param>
-        public AudioUnsupportedException([CanBeNull] string message, [CanBeNull] string fileName)
-            : base(message)
-        {
-            if (fileName != null)
-                _fileInfo = new FileInfo(fileName);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AudioUnsupportedException"/> class.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        /// <param name="fileInfo">The file information.</param>
-        public AudioUnsupportedException([CanBeNull] string message, [CanBeNull] FileInfo fileInfo)
-            : base(message)
-        {
-            _fileInfo = fileInfo;
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioUnsupportedException"/> class.
         /// </summary>
@@ -61,6 +26,16 @@ namespace AudioWorks.Common
         /// <param name="message">The message that describes the error.</param>
         public AudioUnsupportedException([CanBeNull] string message)
             : base(message)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AudioUnsupportedException"/> class.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="path">The file path.</param>
+        public AudioUnsupportedException([CanBeNull] string message, [CanBeNull] string path)
+            : base(message, path)
         {
         }
 
@@ -85,16 +60,6 @@ namespace AudioWorks.Common
         AudioUnsupportedException([NotNull] SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            var fileName = info.GetString("fileName");
-            if (fileName != null)
-                _fileInfo = new FileInfo(fileName);
-        }
-
-        /// <inheritdoc />
-        public override void GetObjectData([NotNull] SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddValue("fileName", _fileInfo?.FullName);
         }
     }
 }

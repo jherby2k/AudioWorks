@@ -1,5 +1,4 @@
 ﻿using JetBrains.Annotations;
-using System.IO;
 
 namespace AudioWorks.Common
 {
@@ -10,13 +9,13 @@ namespace AudioWorks.Common
     public interface IAudioFile
     {
         /// <summary>
-        /// Gets the file information.
+        /// Gets the fully-qualified file path.
         /// </summary>
         /// <value>
-        /// The file information.
+        /// The file path.
         /// </value>
         [NotNull]
-        FileInfo FileInfo { get; }
+        string Path { get; }
 
         /// <summary>
         /// Gets the audio information.
@@ -25,6 +24,6 @@ namespace AudioWorks.Common
         /// The audio information.
         /// </value>
         [NotNull]
-        AudioInfo AudioInfo { get; }
+        AudioInfo Info { get; }
     }
 }

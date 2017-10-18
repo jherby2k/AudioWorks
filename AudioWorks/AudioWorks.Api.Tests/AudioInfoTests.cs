@@ -149,7 +149,7 @@ namespace AudioWorks.Api.Tests
                 "Valid",
                 fileName);
 
-            Assert.Equal(expectedAudioInfo.Description, new AudioFile(path).AudioInfo.Description);
+            Assert.Equal(expectedAudioInfo.Description, new AudioFile(path).Info.Description);
         }
 
         [Theory(DisplayName = "AudioInfo has the expected Channel property value")]
@@ -162,7 +162,7 @@ namespace AudioWorks.Api.Tests
                 "Valid",
                 fileName);
 
-            Assert.Equal(expectedAudioInfo.Channels, new AudioFile(path).AudioInfo.Channels);
+            Assert.Equal(expectedAudioInfo.Channels, new AudioFile(path).Info.Channels);
         }
 
         [Theory(DisplayName = "AudioInfo has the expected BitsPerSample property value")]
@@ -175,7 +175,7 @@ namespace AudioWorks.Api.Tests
                 "Valid",
                 fileName);
 
-            Assert.Equal(expectedAudioInfo.BitsPerSample, new AudioFile(path).AudioInfo.BitsPerSample);
+            Assert.Equal(expectedAudioInfo.BitsPerSample, new AudioFile(path).Info.BitsPerSample);
         }
 
         [Theory(DisplayName = "AudioInfo has the expected SampleRate property value")]
@@ -188,7 +188,7 @@ namespace AudioWorks.Api.Tests
                 "Valid",
                 fileName);
 
-            Assert.Equal(expectedAudioInfo.SampleRate, new AudioFile(path).AudioInfo.SampleRate);
+            Assert.Equal(expectedAudioInfo.SampleRate, new AudioFile(path).Info.SampleRate);
         }
 
         [Theory(DisplayName = "AudioInfo has the expected SampleCount property value")]
@@ -201,7 +201,7 @@ namespace AudioWorks.Api.Tests
                 "Valid",
                 fileName);
 
-            Assert.Equal(expectedAudioInfo.SampleCount, new AudioFile(path).AudioInfo.SampleCount);
+            Assert.Equal(expectedAudioInfo.SampleCount, new AudioFile(path).Info.SampleCount);
         }
 
         [Theory(DisplayName = "AudioInfo has the expected BitRate property value")]
@@ -214,7 +214,7 @@ namespace AudioWorks.Api.Tests
                 "Valid",
                 fileName);
 
-            Assert.Equal(expectedAudioInfo.BitRate, new AudioFile(path).AudioInfo.BitRate);
+            Assert.Equal(expectedAudioInfo.BitRate, new AudioFile(path).Info.BitRate);
         }
 
         [Theory(DisplayName = "AudioInfo has the expected PlayLength property value")]
@@ -232,7 +232,7 @@ namespace AudioWorks.Api.Tests
                     ? TimeSpan.Zero
                     : new TimeSpan(0, 0,
                         (int) Math.Round(expectedAudioInfo.SampleCount / (double) expectedAudioInfo.SampleRate)),
-                new AudioFile(path).AudioInfo.PlayLength);
+                new AudioFile(path).Info.PlayLength);
         }
     }
 }

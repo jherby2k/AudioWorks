@@ -3,7 +3,6 @@ using AudioWorks.Extensions;
 using JetBrains.Annotations;
 using System;
 using System.IO;
-using System.Runtime.Serialization;
 
 namespace AudioWorks.Api
 {
@@ -21,7 +20,7 @@ namespace AudioWorks.Api
         /// <inheritdoc />
         public AudioMetadata Metadata
         {
-            get => _metadata ?? (_metadata = LoadMetadata(FileInfo));
+            get => _metadata ?? (_metadata = LoadMetadata(Path));
             set => _metadata = value ?? throw new ArgumentNullException(nameof(value));
         }
 
@@ -36,31 +35,27 @@ namespace AudioWorks.Api
         {
         }
 
-        TaggedAudioFile([NotNull] SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
-
         /// <inheritdoc />
         public void LoadMetadata()
         {
-            _metadata = LoadMetadata(FileInfo);
+            _metadata = LoadMetadata(Path);
         }
 
         /// <inheritdoc />
         public void SaveMetadata(SettingDictionary settings = null)
         {
+            var fileInfo = new FileInfo(Path);
             if (settings == null)
                 settings = new SettingDictionary();
 
             // Make sure the provided settings are clean
-            AudioMetadataEncoderManager.GetSettingInfo(FileInfo.Extension).ValidateSettings(settings);
+            AudioMetadataEncoderManager.GetSettingInfo(fileInfo.Extension).ValidateSettings(settings);
 
-            using (var fileStream = FileInfo.Open(FileMode.Open, FileAccess.ReadWrite))
+            using (var fileStream = fileInfo.Open(FileMode.Open, FileAccess.ReadWrite))
             {
                 // Try each encoder that supports this file extension
                 foreach (var factory in ExtensionProvider.GetFactories<IAudioMetadataEncoder>(
-                    "Extension", FileInfo.Extension))
+                    "Extension", fileInfo.Extension))
                     using (var export = factory.CreateExport())
                     {
                         export.Value.WriteMetadata(fileStream, Metadata, settings);
@@ -72,8 +67,9 @@ namespace AudioWorks.Api
         }
 
         [NotNull]
-        static AudioMetadata LoadMetadata([NotNull] FileInfo fileInfo)
+        static AudioMetadata LoadMetadata([NotNull] string path)
         {
+            var fileInfo = new FileInfo(path);
             using (var fileStream = fileInfo.OpenRead())
             {
                 // Try each decoder that supports this file extension

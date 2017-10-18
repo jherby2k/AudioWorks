@@ -2,6 +2,7 @@
 using JetBrains.Annotations;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Security.Cryptography;
 
 namespace AudioWorks.Api.Tests
@@ -14,7 +15,7 @@ namespace AudioWorks.Api.Tests
         public static string CalculateHash([NotNull] IAudioFile audioFile)
         {
             using (var md5 = MD5.Create())
-            using (var fileStream = audioFile.FileInfo.OpenRead())
+            using (var fileStream = File.OpenRead(audioFile.Path))
                 return BitConverter.ToString(md5.ComputeHash(fileStream))
                     .Replace("-", string.Empty, StringComparison.InvariantCulture);
         }

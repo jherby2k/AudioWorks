@@ -1,6 +1,7 @@
 ﻿using AudioWorks.Api;
 using AudioWorks.Common;
 using JetBrains.Annotations;
+using System.IO;
 using System.Management.Automation;
 
 namespace AudioWorks.Commands
@@ -34,7 +35,7 @@ namespace AudioWorks.Commands
         {
             try
             {
-                if (ShouldProcess(AudioFile.FileInfo.Name))
+                if (ShouldProcess(AudioFile.Path))
                     AudioFile.SaveMetadata(SettingAdapter.ParametersToSettings(_parameters));
             }
             catch (AudioUnsupportedException e)
@@ -54,7 +55,7 @@ namespace AudioWorks.Commands
             if (AudioFile == null) return null;
 
             _parameters = SettingAdapter.SettingInfoToParameters(
-                AudioMetadataEncoderManager.GetSettingInfo(AudioFile.FileInfo.Extension));
+                AudioMetadataEncoderManager.GetSettingInfo(new FileInfo(AudioFile.Path).Extension));
             return _parameters;
         }
     }

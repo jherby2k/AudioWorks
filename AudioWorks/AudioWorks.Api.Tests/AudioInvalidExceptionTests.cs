@@ -8,32 +8,20 @@ namespace AudioWorks.Api.Tests
     public sealed class AudioInvalidExceptionTests
     {
         [Fact(DisplayName = "AudioInvalidException is an AudioException")]
-        public void IsException()
+        public void IsAudioException()
         {
             Assert.IsAssignableFrom<AudioException>(new AudioInvalidException());
         }
 
-        [Fact(DisplayName = "AudioInvalidException's FileInfo property is properly serialized")]
-        public void FileInfoIsSerialized()
+        [Fact(DisplayName = "AudioInvalidException's Path property is properly serialized")]
+        public void PathIsSerialized()
         {
             using (var stream = new MemoryStream())
             {
                 var formatter = new BinaryFormatter();
-                formatter.Serialize(stream, new AudioInvalidException(null, new FileInfo("Foo")));
+                formatter.Serialize(stream, new AudioInvalidException(null, "Foo"));
                 stream.Seek(0, SeekOrigin.Begin);
-                Assert.Equal("Foo", ((AudioInvalidException) formatter.Deserialize(stream)).FileInfo?.Name);
-            }
-        }
-
-        [Fact(DisplayName = "AudioInvalidException serializes correctly when FileInfo is null")]
-        public void FileInfoNullSerializesCorrectly()
-        {
-            using (var stream = new MemoryStream())
-            {
-                var formatter = new BinaryFormatter();
-                formatter.Serialize(stream, new AudioInvalidException());
-                stream.Seek(0, SeekOrigin.Begin);
-                Assert.Null(((AudioInvalidException) formatter.Deserialize(stream)).FileInfo);
+                Assert.Equal("Foo", ((AudioInvalidException) formatter.Deserialize(stream)).Path);
             }
         }
     }

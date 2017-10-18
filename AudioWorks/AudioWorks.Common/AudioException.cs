@@ -13,6 +13,15 @@ namespace AudioWorks.Common
     public abstract class AudioException : Exception
     {
         /// <summary>
+        /// Gets or sets the file path.
+        /// </summary>
+        /// <value>
+        /// The file path.
+        /// </value>
+        [CanBeNull]
+        public string Path { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AudioException"/> class.
         /// </summary>
         protected AudioException()
@@ -26,6 +35,17 @@ namespace AudioWorks.Common
         protected AudioException([CanBeNull] string message)
             : base(message)
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AudioException"/> class.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="path">The file path.</param>
+        protected AudioException([CanBeNull] string message, [CanBeNull] string path)
+            : base(message)
+        {
+            Path = path;
         }
 
         /// <summary>
@@ -49,6 +69,14 @@ namespace AudioWorks.Common
         protected AudioException([NotNull] SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
+            Path = info.GetString("Path");
+        }
+
+        /// <inheritdoc />
+        public override void GetObjectData([NotNull] SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue("Path", Path);
         }
     }
 }

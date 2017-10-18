@@ -46,7 +46,7 @@ namespace AudioWorks.Commands.Tests
         public void AcceptsAudioFileParameter()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.FileInfo).Returns(new FileInfo("Foo"));
+            mock.SetupGet(audioFile => audioFile.Path).Returns("Foo");
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
 
             using (var ps = PowerShell.Create())
@@ -77,7 +77,7 @@ namespace AudioWorks.Commands.Tests
         public void AcceptsAudioFileParameterAsFirstArgument()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.FileInfo).Returns(new FileInfo("Foo"));
+            mock.SetupGet(audioFile => audioFile.Path).Returns("Foo");
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
@@ -95,7 +95,7 @@ namespace AudioWorks.Commands.Tests
         public void AcceptsAudioFileParameterFromPipeline()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.FileInfo).Returns(new FileInfo("Foo"));
+            mock.SetupGet(audioFile => audioFile.Path).Returns("Foo");
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
@@ -123,7 +123,7 @@ namespace AudioWorks.Commands.Tests
         public void AcceptsPassThruSwitch()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.FileInfo).Returns(new FileInfo("Foo"));
+            mock.SetupGet(audioFile => audioFile.Path).Returns("Foo");
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
@@ -142,7 +142,7 @@ namespace AudioWorks.Commands.Tests
         public void PassThruSwitchReturnsAudioFile()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.FileInfo).Returns(new FileInfo("Foo"));
+            mock.SetupGet(audioFile => audioFile.Path).Returns("Foo");
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {

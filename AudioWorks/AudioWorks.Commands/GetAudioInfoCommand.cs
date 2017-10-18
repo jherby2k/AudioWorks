@@ -24,7 +24,7 @@ namespace AudioWorks.Commands
         /// <inheritdoc/>
         protected override void ProcessRecord()
         {
-            WriteObject(AudioFile.AudioInfo);
+            WriteObject(AudioFile.Info);
         }
     }
 }

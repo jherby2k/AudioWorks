@@ -49,9 +49,9 @@ namespace AudioWorks.Api.Tests
                     fileName)));
         }
 
-        [Theory(DisplayName = "AudioFile has the expected FileInfo property value")]
+        [Theory(DisplayName = "AudioFile has the expected Path property value")]
         [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
-        public void HasExpectedFileInfo([NotNull] string fileName)
+        public void HasExpectedPath([NotNull] string fileName)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -59,12 +59,12 @@ namespace AudioWorks.Api.Tests
                 "Valid",
                 fileName);
 
-            Assert.Equal(path, new AudioFile(path).FileInfo.FullName);
+            Assert.Equal(path, new AudioFile(path).Path);
         }
 
-        [Theory(DisplayName = "AudioFile's AudioInfo property is set")]
+        [Theory(DisplayName = "AudioFile's Info property is set")]
         [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
-        public void HasAudioInfo([NotNull] string fileName)
+        public void HasInfo([NotNull] string fileName)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -72,12 +72,12 @@ namespace AudioWorks.Api.Tests
                 "Valid",
                 fileName);
 
-            Assert.IsAssignableFrom<AudioInfo>(new AudioFile(path).AudioInfo);
+            Assert.IsAssignableFrom<AudioInfo>(new AudioFile(path).Info);
         }
 
-        [Theory(DisplayName = "AudioFile's FileInfo property is properly serialized")]
+        [Theory(DisplayName = "AudioFile's Path property is properly serialized")]
         [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
-        public void FileInfoIsSerialized([NotNull] string fileName)
+        public void PathIsSerialized([NotNull] string fileName)
         {
             var audioFile = new AudioFile(Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -90,15 +90,13 @@ namespace AudioWorks.Api.Tests
                 formatter.Serialize(stream, audioFile);
                 stream.Seek(0, SeekOrigin.Begin);
 
-                Assert.Equal(
-                    audioFile.FileInfo.FullName,
-                    ((AudioFile) formatter.Deserialize(stream)).FileInfo.FullName);
+                Assert.Equal(audioFile.Path, ((AudioFile) formatter.Deserialize(stream)).Path);
             }
         }
 
-        [Theory(DisplayName = "AudioFile's AudioInfo property is properly serialized")]
+        [Theory(DisplayName = "AudioFile's Info property is properly serialized")]
         [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
-        public void AudioInfoIsSerialized([NotNull] string fileName)
+        public void InfoIsSerialized([NotNull] string fileName)
         {
             var audioFile = new AudioFile(Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -112,8 +110,8 @@ namespace AudioWorks.Api.Tests
                 stream.Seek(0, SeekOrigin.Begin);
 
                 Assert.True(new Comparer<AudioInfo>().Compare(
-                    audioFile.AudioInfo,
-                    ((AudioFile) formatter.Deserialize(stream)).AudioInfo));
+                    audioFile.Info,
+                    ((AudioFile) formatter.Deserialize(stream)).Info));
             }
         }
     }
