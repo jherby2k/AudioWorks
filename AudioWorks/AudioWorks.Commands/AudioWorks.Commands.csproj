@@ -31,4 +31,13 @@
     <ProjectReference Include="..\AudioWorks.Api\AudioWorks.Api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="AudioWorks.Commands.format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="AudioWorks.Commands.psd1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
