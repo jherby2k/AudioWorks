@@ -2,7 +2,45 @@
 <Configuration>
   <ViewDefinitions>
     <View>
-      <Name>AudioWorks.Common.ITaggedAudioFile</Name>
+      <Name>AudioFile</Name>
+      <ViewSelectedBy>
+        <TypeName>AudioWorks.Common.IAudioFile</TypeName>
+        <TypeName>AudioWorks.Api.AudioFile</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <PropertyName>Path</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Description</Label>
+                <ScriptBlock>$_.Info.Description</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>Channels</Label>
+                <ScriptBlock>$_.Info.Channels</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>SampleRate</Label>
+                <ScriptBlock>"$($_.Info.SampleRate / 1000) kHz"</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>BitRate</Label>
+                <ScriptBlock>"{0:f0} kbps" -f ($_.Info.BitRate / 1000)</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>PlayLength</Label>
+                <ScriptBlock>$_.Info.PlayLength</ScriptBlock>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+    <View>
+      <Name>TaggedAudioFile</Name>
       <ViewSelectedBy>
         <TypeName>AudioWorks.Common.ITaggedAudioFile</TypeName>
         <TypeName>AudioWorks.Api.TaggedAudioFile</TypeName>
@@ -36,11 +74,48 @@
               </ListItem>
               <ListItem>
                 <Label>BitRate</Label>
-                <ScriptBlock>"$($_.Info.BitRate / 1000) kbps"</ScriptBlock>
+                <ScriptBlock>"{0:f0} kbps" -f ($_.Info.BitRate / 1000)</ScriptBlock>
               </ListItem>
               <ListItem>
                 <Label>PlayLength</Label>
                 <ScriptBlock>$_.Info.PlayLength</ScriptBlock>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+    <View>
+      <Name>AudioInfo</Name>
+      <ViewSelectedBy>
+        <TypeName>AudioWorks.Common.AudioInfo</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <PropertyName>Description</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Channels</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>BitsPerSample</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>SampleRate</Label>
+                <ScriptBlock>"$($_.SampleRate / 1000) kHz"</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>BitRate</Label>
+                <ScriptBlock>"{0:f0} kbps" -f ($_.BitRate / 1000)</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <PropertyName>SampleCount</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>PlayLength</PropertyName>
               </ListItem>
             </ListItems>
           </ListEntry>
