@@ -14,9 +14,9 @@ namespace AudioWorks.Api.Tests.DataTypes
 
         public int SampleRate { get; set; }
 
-        public long SampleCount { get; set; }
-
         public int BitRate { get; set; }
+
+        public long SampleCount { get; set; }
 
         public void Deserialize([NotNull] IXunitSerializationInfo info)
         {

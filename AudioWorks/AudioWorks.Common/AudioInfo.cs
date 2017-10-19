@@ -41,8 +41,8 @@ namespace AudioWorks.Common
                 channels,
                 bitsPerSample,
                 sampleRate,
-                sampleCount,
-                channels * bitsPerSample * sampleRate);
+                channels * bitsPerSample * sampleRate,
+                sampleCount);
         }
 
         /// <summary>
@@ -74,8 +74,8 @@ namespace AudioWorks.Common
                 channels,
                 0,
                 sampleRate,
-                sampleCount,
-                bitRate);
+                bitRate,
+                sampleCount);
         }
 
         /// <summary>
@@ -112,20 +112,20 @@ namespace AudioWorks.Common
         public int SampleRate { get; }
 
         /// <summary>
-        /// Gets the sample count, or 0 if unknown.
-        /// </summary>
-        /// <value>
-        /// The sample count.
-        /// </value>
-        public long SampleCount { get; }
-
-        /// <summary>
         /// Gets the bit rate (in bits per second).
         /// </summary>
         /// <value>
         /// The bit rate.
         /// </value>
         public int BitRate { get; }
+
+        /// <summary>
+        /// Gets the sample count, or 0 if unknown.
+        /// </summary>
+        /// <value>
+        /// The sample count.
+        /// </value>
+        public long SampleCount { get; }
 
         /// <summary>
         /// Gets the play length, which is 0 if the sample count is unknown.
@@ -143,8 +143,8 @@ namespace AudioWorks.Common
             int channels,
             int bitsPerSample,
             int sampleRate,
-            long sampleCount,
-            int bitRate)
+            int bitRate,
+            long sampleCount)
         {
             if (string.IsNullOrEmpty(description))
                 throw new ArgumentNullException(nameof(description), "The description cannot be null or empty.");
@@ -161,8 +161,8 @@ namespace AudioWorks.Common
             Channels = channels;
             BitsPerSample = bitsPerSample;
             SampleRate = sampleRate;
-            SampleCount = sampleCount;
             BitRate = bitRate;
+            SampleCount = sampleCount;
         }
     }
 }

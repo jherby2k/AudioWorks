@@ -191,19 +191,6 @@ namespace AudioWorks.Api.Tests
             Assert.Equal(expectedAudioInfo.SampleRate, new AudioFile(path).Info.SampleRate);
         }
 
-        [Theory(DisplayName = "AudioInfo has the expected SampleCount property value")]
-        [MemberData(nameof(ValidFileDataSource.FileNamesAndAudioInfo), MemberType = typeof(ValidFileDataSource))]
-        public void HasExpectedSampleCount([NotNull] string fileName, [NotNull] TestAudioInfo expectedAudioInfo)
-        {
-            var path = Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
-                "TestFiles",
-                "Valid",
-                fileName);
-
-            Assert.Equal(expectedAudioInfo.SampleCount, new AudioFile(path).Info.SampleCount);
-        }
-
         [Theory(DisplayName = "AudioInfo has the expected BitRate property value")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndAudioInfo), MemberType = typeof(ValidFileDataSource))]
         public void HasExpectedBitRate([NotNull] string fileName, [NotNull] TestAudioInfo expectedAudioInfo)
@@ -215,6 +202,19 @@ namespace AudioWorks.Api.Tests
                 fileName);
 
             Assert.Equal(expectedAudioInfo.BitRate, new AudioFile(path).Info.BitRate);
+        }
+
+        [Theory(DisplayName = "AudioInfo has the expected SampleCount property value")]
+        [MemberData(nameof(ValidFileDataSource.FileNamesAndAudioInfo), MemberType = typeof(ValidFileDataSource))]
+        public void HasExpectedSampleCount([NotNull] string fileName, [NotNull] TestAudioInfo expectedAudioInfo)
+        {
+            var path = Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                "TestFiles",
+                "Valid",
+                fileName);
+
+            Assert.Equal(expectedAudioInfo.SampleCount, new AudioFile(path).Info.SampleCount);
         }
 
         [Theory(DisplayName = "AudioInfo has the expected PlayLength property value")]
