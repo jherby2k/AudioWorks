@@ -12,15 +12,15 @@ namespace AudioWorks.Api.Tests
     [Collection("Extensions")]
     public sealed class AudioInfoTests
     {
-        [Fact(DisplayName = "AudioInfo throws an exception if the Description is null")]
-        public void DescriptionNullThrowsException()
+        [Fact(DisplayName = "AudioInfo throws an exception if the Format is null")]
+        public void FormatNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => AudioInfo.CreateForLossless(null, 2, 16, 44100));
         }
 
-        [Fact(DisplayName = "AudioInfo's Description property is properly serialized")]
-        public void DescriptionIsSerialized()
+        [Fact(DisplayName = "AudioInfo's Format property is properly serialized")]
+        public void FormatIsSerialized()
         {
             var formatter = new BinaryFormatter();
             using (var stream = new MemoryStream())
@@ -28,7 +28,7 @@ namespace AudioWorks.Api.Tests
                 formatter.Serialize(stream, AudioInfo.CreateForLossless("Test", 2, 16, 44100));
                 stream.Seek(0, SeekOrigin.Begin);
 
-                Assert.Equal("Test", ((AudioInfo) formatter.Deserialize(stream)).Description);
+                Assert.Equal("Test", ((AudioInfo) formatter.Deserialize(stream)).Format);
             }
         }
 
@@ -139,9 +139,9 @@ namespace AudioWorks.Api.Tests
             }
         }
 
-        [Theory(DisplayName = "AudioInfo has the expected Description property value")]
+        [Theory(DisplayName = "AudioInfo has the expected Format property value")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndAudioInfo), MemberType = typeof(ValidFileDataSource))]
-        public void HasExpectedDescription([NotNull] string fileName, [NotNull] TestAudioInfo expectedAudioInfo)
+        public void HasExpectedFormat([NotNull] string fileName, [NotNull] TestAudioInfo expectedAudioInfo)
         {
             var path = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
@@ -149,7 +149,7 @@ namespace AudioWorks.Api.Tests
                 "Valid",
                 fileName);
 
-            Assert.Equal(expectedAudioInfo.Description, new AudioFile(path).Info.Description);
+            Assert.Equal(expectedAudioInfo.Format, new AudioFile(path).Info.Format);
         }
 
         [Theory(DisplayName = "AudioInfo has the expected Channel property value")]

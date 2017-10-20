@@ -6,7 +6,7 @@ namespace AudioWorks.Api.Tests.DataTypes
     public sealed class TestAudioInfo : IXunitSerializable
     {
         [NotNull]
-        public string Description { get; set; } = string.Empty;
+        public string Format { get; set; } = string.Empty;
 
         public int Channels { get; set; }
 

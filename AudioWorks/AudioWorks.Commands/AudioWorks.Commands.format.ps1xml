@@ -15,8 +15,8 @@
                 <PropertyName>Path</PropertyName>
               </ListItem>
               <ListItem>
-                <Label>Description</Label>
-                <ScriptBlock>$_.Info.Description</ScriptBlock>
+                <Label>Format</Label>
+                <ScriptBlock>$_.Info.Format</ScriptBlock>
               </ListItem>
               <ListItem>
                 <Label>Channels</Label>
@@ -61,8 +61,8 @@
                 <ScriptBlock>$_.Metadata.Artist</ScriptBlock>
               </ListItem>
               <ListItem>
-                <Label>Description</Label>
-                <ScriptBlock>$_.Info.Description</ScriptBlock>
+                <Label>Format</Label>
+                <ScriptBlock>$_.Info.Format</ScriptBlock>
               </ListItem>
               <ListItem>
                 <Label>Channels</Label>
@@ -95,7 +95,7 @@
           <ListEntry>
             <ListItems>
               <ListItem>
-                <PropertyName>Description</PropertyName>
+                <PropertyName>Format</PropertyName>
               </ListItem>
               <ListItem>
                 <PropertyName>Channels</PropertyName>

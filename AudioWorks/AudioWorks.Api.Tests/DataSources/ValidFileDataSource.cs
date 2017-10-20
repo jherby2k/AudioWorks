@@ -14,7 +14,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 new TestAudioInfo
                 {
-                    Description = "LPCM",
+                    Format = "LPCM",
                     Channels = 2,
                     BitsPerSample = 8,
                     SampleRate = 8000,
@@ -28,7 +28,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LPCM 16-bit 44100Hz Mono.wav",
                 new TestAudioInfo
                 {
-                    Description = "LPCM",
+                    Format = "LPCM",
                     Channels = 1,
                     BitsPerSample = 16,
                     SampleRate = 44100,
@@ -42,7 +42,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 new TestAudioInfo
                 {
-                    Description = "LPCM",
+                    Format = "LPCM",
                     Channels = 2,
                     BitsPerSample = 16,
                     SampleRate = 44100,
@@ -56,7 +56,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 new TestAudioInfo
                 {
-                    Description = "LPCM",
+                    Format = "LPCM",
                     Channels = 2,
                     BitsPerSample = 16,
                     SampleRate = 48000,
@@ -70,7 +70,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 new TestAudioInfo
                 {
-                    Description = "LPCM",
+                    Format = "LPCM",
                     Channels = 2,
                     BitsPerSample = 24,
                     SampleRate = 96000,
@@ -84,7 +84,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LPCM 16-bit 44100Hz Stereo (extensible).wav",
                 new TestAudioInfo
                 {
-                    Description = "LPCM",
+                    Format = "LPCM",
                     Channels = 2,
                     BitsPerSample = 16,
                     SampleRate = 44100,
@@ -98,7 +98,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Lame CBR 24 8000Hz Stereo.mp3",
                 new TestAudioInfo
                 {
-                    Description = "MP3",
+                    Format = "MP3",
                     Channels = 2,
                     SampleRate = 8000,
                     SampleCount = 24192,
@@ -111,7 +111,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Lame CBR 64 44100Hz Mono.mp3",
                 new TestAudioInfo
                 {
-                    Description = "MP3",
+                    Format = "MP3",
                     Channels = 1,
                     SampleRate = 44100,
                     SampleCount = 125568,
@@ -124,7 +124,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Lame CBR 128 44100Hz Stereo.mp3",
                 new TestAudioInfo
                 {
-                    Description = "MP3",
+                    Format = "MP3",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 125568,
@@ -137,7 +137,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Lame CBR 128 44100Hz Stereo (no header).mp3",
                 new TestAudioInfo
                 {
-                    Description = "MP3",
+                    Format = "MP3",
                     Channels = 2,
                     SampleRate = 44100,
                     BitRate = 128000
@@ -149,7 +149,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Lame CBR 128 48000Hz Stereo.mp3",
                 new TestAudioInfo
                 {
-                    Description = "MP3",
+                    Format = "MP3",
                     Channels = 2,
                     SampleRate = 48000,
                     SampleCount = 137088,
@@ -162,7 +162,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Lame VBR Standard 44100Hz Stereo.mp3",
                 new TestAudioInfo
                 {
-                    Description = "MP3",
+                    Format = "MP3",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 125568,
@@ -175,7 +175,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Fraunhofer CBR 128 44100Hz Stereo.mp3",
                 new TestAudioInfo
                 {
-                    Description = "MP3",
+                    Format = "MP3",
                     Channels = 2,
                     SampleRate = 44100,
                     BitRate = 128000
@@ -187,7 +187,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Fraunhofer VBR 44100Hz Stereo.mp3",
                 new TestAudioInfo
                 {
-                    Description = "MP3",
+                    Format = "MP3",
                     Channels = 2,
                     SampleRate = 44100,
                     BitRate = 160000
@@ -199,7 +199,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Fraunhofer VBR 44100Hz Stereo (with header).mp3",
                 new TestAudioInfo
                 {
-                    Description = "MP3",
+                    Format = "MP3",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 126720,
@@ -212,7 +212,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Lame CBR 128 44100Hz Stereo (ID3v1).mp3",
                 new TestAudioInfo
                 {
-                    Description = "MP3",
+                    Format = "MP3",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 125568,
@@ -234,7 +234,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
                 new TestAudioInfo
                 {
-                    Description = "MP3",
+                    Format = "MP3",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 125568,
@@ -257,7 +257,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 UTF16).mp3",
                 new TestAudioInfo
                 {
-                    Description = "MP3",
+                    Format = "MP3",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 125568,
@@ -280,7 +280,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "QAAC TVBR 91 8000Hz Stereo.m4a",
                 new TestAudioInfo
                 {
-                    Description = "AAC",
+                    Format = "AAC",
                     Channels = 2,
                     SampleRate = 8000,
                     SampleCount = 25600,
@@ -293,7 +293,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "QAAC TVBR 91 44100Hz Mono.m4a",
                 new TestAudioInfo
                 {
-                    Description = "AAC",
+                    Format = "AAC",
                     Channels = 1,
                     SampleRate = 44100,
                     SampleCount = 126976,
@@ -306,7 +306,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "QAAC TVBR 91 44100Hz Stereo.m4a",
                 new TestAudioInfo
                 {
-                    Description = "AAC",
+                    Format = "AAC",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 126976,
@@ -319,7 +319,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "QAAC TVBR 91 48000Hz Stereo.m4a",
                 new TestAudioInfo
                 {
-                    Description = "AAC",
+                    Format = "AAC",
                     Channels = 2,
                     SampleRate = 48000,
                     SampleCount = 137216,
@@ -332,7 +332,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "QAAC TVBR 91 44100Hz Stereo (Tagged).m4a",
                 new TestAudioInfo
                 {
-                    Description = "AAC",
+                    Format = "AAC",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 126976,
@@ -357,7 +357,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "ALAC 16-bit 44100Hz Mono.m4a",
                 new TestAudioInfo
                 {
-                    Description = "ALAC",
+                    Format = "ALAC",
                     Channels = 1,
                     BitsPerSample = 16,
                     SampleRate = 44100,
@@ -371,7 +371,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 new TestAudioInfo
                 {
-                    Description = "ALAC",
+                    Format = "ALAC",
                     Channels = 2,
                     BitsPerSample = 16,
                     SampleRate = 44100,
@@ -385,7 +385,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "ALAC 16-bit 48000Hz Stereo.m4a",
                 new TestAudioInfo
                 {
-                    Description = "ALAC",
+                    Format = "ALAC",
                     Channels = 2,
                     BitsPerSample = 16,
                     SampleRate = 48000,
@@ -399,7 +399,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "ALAC 24-bit 96000Hz Stereo.m4a",
                 new TestAudioInfo
                 {
-                    Description = "ALAC",
+                    Format = "ALAC",
                     Channels = 2,
                     BitsPerSample = 24,
                     SampleRate = 96000,
@@ -413,7 +413,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "ALAC 16-bit 44100Hz Stereo (Tagged).m4a",
                 new TestAudioInfo
                 {
-                    Description = "ALAC",
+                    Format = "ALAC",
                     Channels = 2,
                     BitsPerSample = 16,
                     SampleRate = 44100,
@@ -439,7 +439,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Vorbis Quality 3 8000Hz Stereo.ogg",
                 new TestAudioInfo
                 {
-                    Description = "Vorbis",
+                    Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 8000,
                     BitRate = 31800
@@ -451,7 +451,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Vorbis Quality 3 44100Hz Mono.ogg",
                 new TestAudioInfo
                 {
-                    Description = "Vorbis",
+                    Format = "Vorbis",
                     Channels = 1,
                     SampleRate = 44100,
                     BitRate = 80000
@@ -463,7 +463,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
                 new TestAudioInfo
                 {
-                    Description = "Vorbis",
+                    Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 44100,
                     BitRate = 112000
@@ -475,7 +475,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Vorbis Quality 3 48000Hz Stereo.ogg",
                 new TestAudioInfo
                 {
-                    Description = "Vorbis",
+                    Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 48000,
                     BitRate = 112000
@@ -487,7 +487,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Vorbis Quality 3 96000Hz Stereo.ogg",
                 new TestAudioInfo
                 {
-                    Description = "Vorbis",
+                    Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 96000
                 },
@@ -498,7 +498,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Vorbis Quality 3 44100Hz Stereo (Tagged).ogg",
                 new TestAudioInfo
                 {
-                    Description = "Vorbis",
+                    Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 44100,
                     BitRate = 112000
@@ -522,7 +522,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using extended DATE).ogg",
                 new TestAudioInfo
                 {
-                    Description = "Vorbis",
+                    Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 44100,
                     BitRate = 112000
@@ -546,7 +546,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using invalid DATE).ogg",
                 new TestAudioInfo
                 {
-                    Description = "Vorbis",
+                    Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 44100,
                     BitRate = 112000
@@ -567,7 +567,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using invalid TRACKNUMBER).ogg",
                 new TestAudioInfo
                 {
-                    Description = "Vorbis",
+                    Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 44100,
                     BitRate = 112000
@@ -589,7 +589,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 8-bit 8000Hz Stereo.flac",
                 new TestAudioInfo
                 {
-                    Description = "FLAC",
+                    Format = "FLAC",
                     Channels = 2,
                     BitsPerSample = 8,
                     SampleRate = 8000,
@@ -603,7 +603,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Mono.flac",
                 new TestAudioInfo
                 {
-                    Description = "FLAC",
+                    Format = "FLAC",
                     Channels = 1,
                     BitsPerSample = 16,
                     SampleRate = 44100,
@@ -617,7 +617,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 new TestAudioInfo
                 {
-                    Description = "FLAC",
+                    Format = "FLAC",
                     Channels = 2,
                     BitsPerSample = 16,
                     SampleRate = 44100,
@@ -631,7 +631,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 48000Hz Stereo.flac",
                 new TestAudioInfo
                 {
-                    Description = "FLAC",
+                    Format = "FLAC",
                     Channels = 2,
                     BitsPerSample = 16,
                     SampleRate = 48000,
@@ -645,7 +645,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 24-bit 96000Hz Stereo.flac",
                 new TestAudioInfo
                 {
-                    Description = "FLAC",
+                    Format = "FLAC",
                     Channels = 2,
                     BitsPerSample = 24,
                     SampleRate = 96000,
@@ -659,7 +659,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 new TestAudioInfo
                 {
-                    Description = "FLAC",
+                    Format = "FLAC",
                     Channels = 2,
                     BitsPerSample = 16,
                     SampleRate = 44100,
@@ -685,7 +685,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using mixed-case fields).flac",
                 new TestAudioInfo
                 {
-                    Description = "FLAC",
+                    Format = "FLAC",
                     Channels = 2,
                     BitsPerSample = 16,
                     SampleRate = 44100,
@@ -711,7 +711,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using COMMENT).flac",
                 new TestAudioInfo
                 {
-                    Description = "FLAC",
+                    Format = "FLAC",
                     Channels = 2,
                     BitsPerSample = 16,
                     SampleRate = 44100,
@@ -737,7 +737,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TOTALTRACKS).flac",
                 new TestAudioInfo
                 {
-                    Description = "FLAC",
+                    Format = "FLAC",
                     Channels = 2,
                     BitsPerSample = 16,
                     SampleRate = 44100,
@@ -763,7 +763,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TRACKCOUNT).flac",
                 new TestAudioInfo
                 {
-                    Description = "FLAC",
+                    Format = "FLAC",
                     Channels = 2,
                     BitsPerSample = 16,
                     SampleRate = 44100,
@@ -789,7 +789,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TRACKTOTAL).flac",
                 new TestAudioInfo
                 {
-                    Description = "FLAC",
+                    Format = "FLAC",
                     Channels = 2,
                     BitsPerSample = 16,
                     SampleRate = 44100,
@@ -815,7 +815,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using YEAR).flac",
                 new TestAudioInfo
                 {
-                    Description = "FLAC",
+                    Format = "FLAC",
                     Channels = 2,
                     BitsPerSample = 16,
                     SampleRate = 44100,
@@ -839,7 +839,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using extended DATE).flac",
                 new TestAudioInfo
                 {
-                    Description = "FLAC",
+                    Format = "FLAC",
                     Channels = 2,
                     BitsPerSample = 16,
                     SampleRate = 44100,
@@ -865,7 +865,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using invalid DATE).flac",
                 new TestAudioInfo
                 {
-                    Description = "FLAC",
+                    Format = "FLAC",
                     Channels = 2,
                     BitsPerSample = 16,
                     SampleRate = 44100,
@@ -888,7 +888,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using invalid TRACKNUMBER).flac",
                 new TestAudioInfo
                 {
-                    Description = "FLAC",
+                    Format = "FLAC",
                     Channels = 2,
                     BitsPerSample = 16,
                     SampleRate = 44100,

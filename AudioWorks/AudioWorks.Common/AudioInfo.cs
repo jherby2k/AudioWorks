@@ -13,19 +13,19 @@ namespace AudioWorks.Common
         /// <summary>
         /// Creates a new instance of the <see cref="AudioInfo"/> class describing a lossless audio file.
         /// </summary>
-        /// <param name="description">The format description.</param>
+        /// <param name="format">The format.</param>
         /// <param name="channels">The # of channels.</param>
         /// <param name="bitsPerSample">The # of bits per sample.</param>
         /// <param name="sampleRate">The sample rate (in samples per second).</param>
         /// <param name="sampleCount">The sample count, or 0 if unknown.</param>
         /// <returns>The instance.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="description"/> is null or empty.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="format"/> is null or empty.</exception>
         /// <exception cref="AudioInvalidException">Thrown if one or more parameters is out of valid range.</exception>
         /// <exception cref="AudioUnsupportedException">Thrown if one or more parameters is out of the range supported
         /// by AudioWorks.</exception>
         [NotNull]
         public static AudioInfo CreateForLossless(
-            [NotNull] string description,
+            [NotNull] string format,
             int channels,
             int bitsPerSample,
             int sampleRate,
@@ -37,7 +37,7 @@ namespace AudioWorks.Common
                 throw new AudioUnsupportedException($"{bitsPerSample} is not a supported # of bits per sample.");
 
             return new AudioInfo(
-                description,
+                format,
                 channels,
                 bitsPerSample,
                 sampleRate,
@@ -48,19 +48,19 @@ namespace AudioWorks.Common
         /// <summary>
         /// Creates a new instance of the <see cref="AudioInfo"/> class describing a lossy-compressed audio file.
         /// </summary>
-        /// <param name="description">The format description.</param>
+        /// <param name="format">The format.</param>
         /// <param name="channels">The # of channels.</param>
         /// <param name="sampleRate">The sample rate (in samples per second).</param>
         /// <param name="sampleCount">The sample count, or 0 if unknown.</param>
         /// <param name="bitRate">The bit rate (in bits per second).</param>
         /// <returns>The instance.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="description"/> is null or empty.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="format"/> is null or empty.</exception>
         /// <exception cref="AudioInvalidException">Thrown if one or more parameters is out of valid range.</exception>
         /// <exception cref="AudioUnsupportedException">Thrown if one or more parameters is out of the range supported
         /// by AudioWorks.</exception>
         [NotNull]
         public static AudioInfo CreateForLossy(
-            [NotNull] string description,
+            [NotNull] string format,
             int channels,
             int sampleRate,
             long sampleCount = 0,
@@ -70,7 +70,7 @@ namespace AudioWorks.Common
                 throw new AudioInvalidException($"{bitRate} is not a valid bitrate.");
 
             return new AudioInfo(
-                description,
+                format,
                 channels,
                 0,
                 sampleRate,
@@ -79,13 +79,13 @@ namespace AudioWorks.Common
         }
 
         /// <summary>
-        /// Gets the format description.
+        /// Gets the format.
         /// </summary>
         /// <value>
-        /// The format description.
+        /// The format.
         /// </value>
         [NotNull]
-        public string Description { get; }
+        public string Format { get; }
 
         /// <summary>
         /// Gets the # of channels.
@@ -139,15 +139,15 @@ namespace AudioWorks.Common
                 : new TimeSpan(0, 0, (int) Math.Round(SampleCount / (double) SampleRate));
 
         AudioInfo(
-            [NotNull] string description,
+            [NotNull] string format,
             int channels,
             int bitsPerSample,
             int sampleRate,
             int bitRate,
             long sampleCount)
         {
-            if (string.IsNullOrEmpty(description))
-                throw new ArgumentNullException(nameof(description), "The description cannot be null or empty.");
+            if (string.IsNullOrEmpty(format))
+                throw new ArgumentNullException(nameof(format), "The format cannot be null or empty.");
             if (channels < 1)
                 throw new AudioInvalidException($"{channels} is not a valid channel count.");
             if (channels > 2)
@@ -157,7 +157,7 @@ namespace AudioWorks.Common
             if (sampleCount < 0)
                 throw new AudioInvalidException($"{sampleCount} is not a valid sample count.");
 
-            Description = description;
+            Format = format;
             Channels = channels;
             BitsPerSample = bitsPerSample;
             SampleRate = sampleRate;
