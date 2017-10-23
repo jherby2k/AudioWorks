@@ -13,6 +13,10 @@ namespace AudioWorks.Extensions.Flac
                 Append("ARTIST", metadata.Artist);
             if (!string.IsNullOrEmpty(metadata.Album))
                 Append("ALBUM", metadata.Album);
+            if (!string.IsNullOrEmpty(metadata.AlbumArtist))
+                Append("ALBUMARTIST", metadata.AlbumArtist);
+            if (!string.IsNullOrEmpty(metadata.Composer))
+                Append("COMPOSER", metadata.Composer);
             if (!string.IsNullOrEmpty(metadata.Genre))
                 Append("GENRE", metadata.Genre);
             if (!string.IsNullOrEmpty(metadata.Comment))
@@ -29,6 +33,15 @@ namespace AudioWorks.Extensions.Flac
                 Append("TRACKNUMBER", !string.IsNullOrEmpty(metadata.TrackCount)
                     ? $"{metadata.TrackNumber}/{metadata.TrackCount}"
                     : metadata.TrackNumber);
+
+            if (!string.IsNullOrEmpty(metadata.TrackPeak))
+                Append("REPLAYGAIN_TRACK_PEAK", metadata.TrackPeak);
+            if (!string.IsNullOrEmpty(metadata.AlbumPeak))
+                Append("REPLAYGAIN_ALBUM_PEAK", metadata.AlbumPeak);
+            if (!string.IsNullOrEmpty(metadata.TrackGain))
+                Append("REPLAYGAIN_TRACK_GAIN", $"{metadata.TrackGain} dB");
+            if (!string.IsNullOrEmpty(metadata.AlbumGain))
+                Append("REPLAYGAIN_ALBUM_GAIN", $"{metadata.AlbumGain} dB");
         }
     }
 }
