@@ -1,5 +1,6 @@
 ﻿using AudioWorks.Common;
 using Id3Lib;
+using Id3Lib.Frames;
 using JetBrains.Annotations;
 using System.Diagnostics.CodeAnalysis;
 
@@ -17,16 +18,51 @@ namespace AudioWorks.Extensions.Id3
                 Title = metadata.Title,
                 Artist = metadata.Artist,
                 Album = metadata.Album,
+                Composer = metadata.Composer,
                 Genre = metadata.Genre,
                 Comment = metadata.Comment,
                 Year = metadata.Year,
-                Track = GetTrackText(metadata)
+                Track = GetTrackText(metadata),
             };
 
-            // TDAT isn't supported by TagHandler
+            if (!string.IsNullOrEmpty(metadata.AlbumArtist))
+                Add(new FrameText("TPE2") { Text = metadata.AlbumArtist });
+
             var tdatFrame = new TdatFrame(metadata);
             if (!string.IsNullOrEmpty(tdatFrame.Text))
                 Add(new TdatFrame(metadata));
+
+            if (!string.IsNullOrEmpty(metadata.TrackPeak))
+                Add(new FrameTextUserDef("TXXX")
+                {
+                    Description = "REPLAYGAIN_TRACK_PEAK",
+                    Text = metadata.TrackPeak,
+                    FileAlter = true
+                });
+
+            if (!string.IsNullOrEmpty(metadata.AlbumPeak))
+                Add(new FrameTextUserDef("TXXX")
+                {
+                    Description = "REPLAYGAIN_ALBUM_PEAK",
+                    Text = metadata.AlbumPeak,
+                    FileAlter = true
+                });
+
+            if (!string.IsNullOrEmpty(metadata.TrackGain))
+                Add(new FrameTextUserDef("TXXX")
+                {
+                    Description = "REPLAYGAIN_TRACK_GAIN",
+                    Text = $"{metadata.TrackGain} dB",
+                    FileAlter = true
+                });
+
+            if (!string.IsNullOrEmpty(metadata.AlbumGain))
+                Add(new FrameTextUserDef("TXXX")
+                {
+                    Description = "REPLAYGAIN_ALBUM_GAIN",
+                    Text = $"{metadata.AlbumGain} dB",
+                    FileAlter = true
+                });
         }
 
         [Pure, NotNull]
