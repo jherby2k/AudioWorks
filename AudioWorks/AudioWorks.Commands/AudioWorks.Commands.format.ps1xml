@@ -122,5 +122,69 @@
         </ListEntries>
       </ListControl>
     </View>
+    <View>
+      <Name>AudioInfo</Name>
+      <ViewSelectedBy>
+        <TypeName>AudioWorks.Common.AudioMetadata</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <PropertyName>Title</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Artist</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Album</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>AlbumArtist</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Composer</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Genre</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Comment</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Day</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Month</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Year</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>TrackNumber</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>TrackCount</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>TrackPeak</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>AlbumPeak</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>TrackGain</Label>
+                <ScriptBlock>"$($_.TrackGain) dB"</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>AlbumGain</Label>
+                <ScriptBlock>"$($_.TrackGain) dB"</ScriptBlock>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
   </ViewDefinitions>
 </Configuration>

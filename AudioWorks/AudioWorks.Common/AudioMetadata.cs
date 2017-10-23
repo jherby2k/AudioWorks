@@ -15,6 +15,8 @@ namespace AudioWorks.Common
         [NotNull] string _title = string.Empty;
         [NotNull] string _artist = string.Empty;
         [NotNull] string _album = string.Empty;
+        [NotNull] string _albumArtist = string.Empty;
+        [NotNull] string _composer = string.Empty;
         [NotNull] string _genre = string.Empty;
         [NotNull] string _comment = string.Empty;
         [NotNull] string _day = string.Empty;
@@ -22,6 +24,10 @@ namespace AudioWorks.Common
         [NotNull] string _year = string.Empty;
         [NotNull] string _trackNumber = string.Empty;
         [NotNull] string _trackCount = string.Empty;
+        [NotNull] string _trackPeak = string.Empty;
+        [NotNull] string _albumPeak = string.Empty;
+        [NotNull] string _trackGain = string.Empty;
+        [NotNull] string _albumGain = string.Empty;
 
         /// <summary>
         /// Gets or sets the title. To clear the title, set an empty <paramref name="value"/>.
@@ -57,6 +63,30 @@ namespace AudioWorks.Common
         {
             get => _album;
             set => _album = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        /// <summary>
+        /// Gets or sets the album artist. To clear the album artist, set an empty <paramref name="value"/>.
+        /// </summary>
+        /// <value>The album artist.</value>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
+        [NotNull]
+        public string AlbumArtist
+        {
+            get => _albumArtist;
+            set => _albumArtist = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        /// <summary>
+        /// Gets or sets the composer. To clear the composer, set an empty <paramref name="value"/>.
+        /// </summary>
+        /// <value>The composer.</value>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
+        [NotNull]
+        public string Composer
+        {
+            get => _composer;
+            set => _composer = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
@@ -192,8 +222,9 @@ namespace AudioWorks.Common
         /// Gets or sets the track count. To clear the track count, set an empty <paramref name="value"/>.
         /// </summary>
         /// <value>The track count.</value>
-        /// <exception cref="ArgumentNullException">value</exception>
-        /// <exception cref="AudioMetadataInvalidException">TrackCount must be between 1 and 99.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
+        /// <exception cref="AudioMetadataInvalidException">Thrown if <paramref name="value"/> is not valid.
+        /// </exception>
         [NotNull]
         public string TrackCount
         {
@@ -209,6 +240,112 @@ namespace AudioWorks.Common
                     if (!int.TryParse(value, out var intValue) || intValue < 1 || intValue > 99)
                         throw new AudioMetadataInvalidException("TrackCount must be between 1 and 99.");
                     _trackCount = intValue.ToString("00", CultureInfo.InvariantCulture);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the track's peak amplitude. To clear the track peak, set an empty <paramref name="value"/>.
+        /// </summary>
+        /// <value>The track peak.</value>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
+        /// <exception cref="AudioMetadataInvalidException">Thrown if <paramref name="value"/> is not valid.
+        /// </exception>
+        [NotNull]
+        public string TrackPeak
+        {
+            get => _trackPeak;
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException(nameof(value));
+                if (string.IsNullOrEmpty(value))
+                    _trackPeak = string.Empty;
+                else
+                {
+                    if (!double.TryParse(value, out var floatValue) || floatValue < 0 || floatValue > 1.0)
+                        throw new AudioMetadataInvalidException("TrackPeak must be between 0 and 1.0.");
+                    _trackPeak = floatValue.ToString("F6", CultureInfo.InvariantCulture);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the album's peak amplitude. To clear the album peak, set an empty <paramref name="value"/>.
+        /// </summary>
+        /// <value>The album peak.</value>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
+        /// <exception cref="AudioMetadataInvalidException">Thrown if <paramref name="value"/> is not valid.
+        /// </exception>
+        [NotNull]
+        public string AlbumPeak
+        {
+            get => _albumPeak;
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException(nameof(value));
+                if (string.IsNullOrEmpty(value))
+                    _albumPeak = string.Empty;
+                else
+                {
+                    if (!double.TryParse(value, out var floatValue) || floatValue < 0 || floatValue > 1.0)
+                        throw new AudioMetadataInvalidException("AlbumPeak must be between 0 and 1.0.");
+                    _albumPeak = floatValue.ToString("F6", CultureInfo.InvariantCulture);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the track's desired gain adjustment, in dB. To clear the track gain, set an empty
+        /// <paramref name="value"/>.
+        /// </summary>
+        /// <value>The track gain.</value>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
+        /// <exception cref="AudioMetadataInvalidException">Thrown if <paramref name="value"/> is not valid.
+        /// </exception>
+        [NotNull]
+        public string TrackGain
+        {
+            get => _trackGain;
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException(nameof(value));
+                if (string.IsNullOrEmpty(value))
+                    _trackGain = string.Empty;
+                else
+                {
+                    if (!double.TryParse(value, out var floatValue))
+                        throw new AudioMetadataInvalidException("TrackGain must be numeric.");
+                    _trackGain = floatValue.ToString("F2", CultureInfo.InvariantCulture);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the album's desired gain adjustment, in dB. To clear the album gain, set an empty
+        /// <paramref name="value"/>.
+        /// </summary>
+        /// <value>The album gain.</value>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
+        /// <exception cref="AudioMetadataInvalidException">Thrown if <paramref name="value"/> is not valid.
+        /// </exception>
+        [NotNull]
+        public string AlbumGain
+        {
+            get => _albumGain;
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException(nameof(value));
+                if (string.IsNullOrEmpty(value))
+                    _albumGain = string.Empty;
+                else
+                {
+                    if (!double.TryParse(value, out var floatValue))
+                        throw new AudioMetadataInvalidException("AlbumGain must be numeric.");
+                    _albumGain = floatValue.ToString("F2", CultureInfo.InvariantCulture);
                 }
             }
         }
