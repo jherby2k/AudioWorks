@@ -41,6 +41,18 @@ namespace AudioWorks.Commands
         public SwitchParameter Album { get; set; }
 
         /// <summary>
+        /// <para type="description">Clears the album artist.</para>
+        /// </summary>
+        [Parameter]
+        public SwitchParameter AlbumArtist { get; set; }
+
+        /// <summary>
+        /// <para type="description">Clears the composer.</para>
+        /// </summary>
+        [Parameter]
+        public SwitchParameter Composer { get; set; }
+
+        /// <summary>
         /// <para type="description">Clears the genre.</para>
         /// </summary>
         [Parameter]
@@ -83,6 +95,12 @@ namespace AudioWorks.Commands
         public SwitchParameter TrackCount { get; set; }
 
         /// <summary>
+        /// <para type="description">Clears the track peak, album peak, track gain and album gain.</para>
+        /// </summary>
+        [Parameter]
+        public SwitchParameter Loudness { get; set; }
+
+        /// <summary>
         /// <para type="description">Returns an object representing the item with which you are working. By default,
         /// this cmdlet does not generate any output.</para>
         /// </summary>
@@ -98,6 +116,10 @@ namespace AudioWorks.Commands
                 AudioFile.Metadata.Artist = string.Empty;
             if (Album)
                 AudioFile.Metadata.Album = string.Empty;
+            if (AlbumArtist)
+                AudioFile.Metadata.AlbumArtist = string.Empty;
+            if (Composer)
+                AudioFile.Metadata.Composer = string.Empty;
             if (Genre)
                 AudioFile.Metadata.Genre = string.Empty;
             if (Comment)
@@ -112,9 +134,17 @@ namespace AudioWorks.Commands
                 AudioFile.Metadata.TrackNumber = string.Empty;
             if (TrackCount)
                 AudioFile.Metadata.TrackCount = string.Empty;
+            if (Loudness)
+            {
+                AudioFile.Metadata.TrackPeak = string.Empty;
+                AudioFile.Metadata.AlbumPeak = string.Empty;
+                AudioFile.Metadata.TrackGain = string.Empty;
+                AudioFile.Metadata.AlbumGain = string.Empty;
+            }
 
             // If no switches were specified, clear everything
-            if (!(Title || Artist || Album || Genre || Comment || Day || Month || Year || TrackNumber || TrackCount))
+            if (!(Title || Artist || Album || AlbumArtist || Composer || Genre || Comment ||
+                  Day || Month || Year || TrackNumber || TrackCount || Loudness))
                 AudioFile.Metadata.Clear();
 
             if (PassThru)

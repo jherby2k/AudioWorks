@@ -19,13 +19,19 @@ namespace AudioWorks.Commands.Tests
             Title = "Test Title",
             Artist = "Test Artist",
             Album = "Test Album",
+            AlbumArtist = "Test Album Artist",
+            Composer = "Test Composer",
             Genre = "Test Genre",
             Comment = "Test Comment",
             Day = "31",
             Month = "01",
             Year = "2017",
             TrackNumber = "01",
-            TrackCount = "12"
+            TrackCount = "12",
+            TrackPeak = "0.5",
+            AlbumPeak = "0.6",
+            TrackGain = "0.7",
+            AlbumGain = "0.8"
         };
 
         public ClearAudioMetadataTests(
@@ -267,6 +273,86 @@ namespace AudioWorks.Commands.Tests
             var differences = differenceEnumerable.ToArray();
             Assert.Single(differences);
             Assert.Equal("Album", differences[0].MemberPath);
+            Assert.True(string.IsNullOrEmpty(differences[0].Value2));
+        }
+
+        [Fact(DisplayName = "Clear-AudioMetadata accepts a AlbumArtist switch")]
+        public void AcceptsAlbumArtistSwitch()
+        {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Clear-AudioMetadata")
+                    .AddParameter("AudioFile", mock.Object)
+                    .AddParameter("AlbumArtist");
+
+                ps.Invoke();
+
+                Assert.True(true);
+            }
+        }
+
+        [Fact(DisplayName = "Clear-AudioMetadata with AlbumArtist switch clears only the Composer")]
+        public void AlbumArtistSwitchClearsAlbumArtist()
+        {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Clear-AudioMetadata")
+                    .AddParameter("AudioFile", mock.Object)
+                    .AddParameter("AlbumArtist");
+
+                ps.Invoke();
+            }
+
+            new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
+            var differences = differenceEnumerable.ToArray();
+            Assert.Single(differences);
+            Assert.Equal("AlbumArtist", differences[0].MemberPath);
+            Assert.True(string.IsNullOrEmpty(differences[0].Value2));
+        }
+
+        [Fact(DisplayName = "Clear-AudioMetadata accepts a Composer switch")]
+        public void AcceptsComposerSwitch()
+        {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Clear-AudioMetadata")
+                    .AddParameter("AudioFile", mock.Object)
+                    .AddParameter("Composer");
+
+                ps.Invoke();
+
+                Assert.True(true);
+            }
+        }
+
+        [Fact(DisplayName = "Clear-AudioMetadata with Composer switch clears only the Composer")]
+        public void ComposerSwitchClearsComposer()
+        {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Clear-AudioMetadata")
+                    .AddParameter("AudioFile", mock.Object)
+                    .AddParameter("Composer");
+
+                ps.Invoke();
+            }
+
+            new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
+            var differences = differenceEnumerable.ToArray();
+            Assert.Single(differences);
+            Assert.Equal("Composer", differences[0].MemberPath);
             Assert.True(string.IsNullOrEmpty(differences[0].Value2));
         }
 
@@ -548,6 +634,49 @@ namespace AudioWorks.Commands.Tests
             Assert.Single(differences);
             Assert.Equal("TrackCount", differences[0].MemberPath);
             Assert.True(string.IsNullOrEmpty(differences[0].Value2));
+        }
+
+        [Fact(DisplayName = "Clear-AudioMetadata accepts a Loudness switch")]
+        public void AcceptsLoudnessSwitch()
+        {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Clear-AudioMetadata")
+                    .AddParameter("AudioFile", mock.Object)
+                    .AddParameter("Loudness");
+
+                ps.Invoke();
+
+                Assert.True(true);
+            }
+        }
+
+        [Fact(DisplayName = "Clear-AudioMetadata with Loudness switch clears only the TrackPeak, AlbumPeak, TrackGain and AlbumGain")]
+        public void LoudnessSwitchClearsPeakAndGain()
+        {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Clear-AudioMetadata")
+                    .AddParameter("AudioFile", mock.Object)
+                    .AddParameter("Loudness");
+
+                ps.Invoke();
+            }
+
+            new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
+            var differences = differenceEnumerable.ToArray();
+            Assert.True(differences.Length == 4);
+            foreach (var difference in differences)
+            {
+                Assert.Contains(difference.MemberPath, new[] { "TrackPeak", "AlbumPeak", "TrackGain", "AlbumGain" });
+                Assert.True(string.IsNullOrEmpty(difference.Value2));
+            }
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a PassThru switch")]
