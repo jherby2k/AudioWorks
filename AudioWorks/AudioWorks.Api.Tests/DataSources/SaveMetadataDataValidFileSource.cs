@@ -501,6 +501,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "D10242261CDBC3FF2D9BEB2C232DC1F7"
             },
+
+            // All fields
             new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
@@ -509,17 +511,25 @@ namespace AudioWorks.Api.Tests.DataSources
                     Title = "Test Title",
                     Artist = "Test Artist",
                     Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
                     Genre = "Test Genre",
                     Comment = "Test Comment",
                     Day = "31",
                     Month = "01",
                     Year = "2017",
                     TrackNumber = "01",
-                    TrackCount = "12"
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
                 },
                 null,
-                "BCE37102012B373E38A33BA3C86D1472"
+                "790D31645868CF672F7763994647C912"
             },
+
+            // Day unset
             new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
@@ -528,16 +538,24 @@ namespace AudioWorks.Api.Tests.DataSources
                     Title = "Test Title",
                     Artist = "Test Artist",
                     Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
                     Genre = "Test Genre",
                     Comment = "Test Comment",
                     Month = "01",
                     Year = "2017",
                     TrackNumber = "01",
-                    TrackCount = "12"
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
                 },
                 null,
-                "D38AA6C008279B0C45454879289AB804"
+                "BA9CB459626962B9B6890EB076D16A58"
             },
+
+            // Month unset
             new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
@@ -546,16 +564,24 @@ namespace AudioWorks.Api.Tests.DataSources
                     Title = "Test Title",
                     Artist = "Test Artist",
                     Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
                     Genre = "Test Genre",
                     Comment = "Test Comment",
                     Day = "31",
                     Year = "2017",
                     TrackNumber = "01",
-                    TrackCount = "12"
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
                 },
                 null,
-                "D38AA6C008279B0C45454879289AB804"
+                "BA9CB459626962B9B6890EB076D16A58"
             },
+
+            // TrackNumber unset
             new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
@@ -564,16 +590,24 @@ namespace AudioWorks.Api.Tests.DataSources
                     Title = "Test Title",
                     Artist = "Test Artist",
                     Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
                     Genre = "Test Genre",
                     Comment = "Test Comment",
                     Day = "31",
                     Month = "01",
                     Year = "2017",
-                    TrackCount = "12"
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
                 },
                 null,
-                "12C1F8EC359366D56B8E4C2D8CC06F27"
+                "57C151D8130EE70789782DD0E8E4EF6B"
             },
+
+            // TrackCount unset
             new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
@@ -582,16 +616,24 @@ namespace AudioWorks.Api.Tests.DataSources
                     Title = "Test Title",
                     Artist = "Test Artist",
                     Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
                     Genre = "Test Genre",
                     Comment = "Test Comment",
                     Day = "31",
                     Month = "01",
                     Year = "2017",
-                    TrackNumber = "01"
+                    TrackNumber = "01",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
                 },
                 null,
-                "D5A910F428B9D1DD7A95665D287D9FFE"
+                "19D283763F7F2397D800155FD8C4F227"
             },
+
+            // Existing tag
             new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged).ogg",
@@ -600,16 +642,22 @@ namespace AudioWorks.Api.Tests.DataSources
                     Title = "Test Title",
                     Artist = "Test Artist",
                     Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
                     Genre = "Test Genre",
                     Comment = "Test Comment",
                     Day = "31",
                     Month = "01",
                     Year = "2017",
                     TrackNumber = "01",
-                    TrackCount = "12"
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
                 },
                 null,
-                "BCE37102012B373E38A33BA3C86D1472"
+                "790D31645868CF672F7763994647C912"
             },
             new object[]
             {
