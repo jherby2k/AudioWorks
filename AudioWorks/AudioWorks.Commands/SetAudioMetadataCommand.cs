@@ -43,6 +43,20 @@ namespace AudioWorks.Commands
         public string Album { get; set; }
 
         /// <summary>
+        /// <para type="description">Sets the album artist.</para>
+        /// </summary>
+        [CanBeNull]
+        [Parameter, ValidateNotNull]
+        public string AlbumArtist { get; set; }
+
+        /// <summary>
+        /// <para type="description">Sets the composer.</para>
+        /// </summary>
+        [CanBeNull]
+        [Parameter, ValidateNotNull]
+        public string Composer { get; set; }
+
+        /// <summary>
         /// <para type="description">Sets the genre.</para>
         /// </summary>
         [CanBeNull]
@@ -111,6 +125,10 @@ namespace AudioWorks.Commands
                     AudioFile.Metadata.Artist = Artist;
                 if (Album != null)
                     AudioFile.Metadata.Album = Album;
+                if (AlbumArtist != null)
+                    AudioFile.Metadata.AlbumArtist = AlbumArtist;
+                if (Composer != null)
+                    AudioFile.Metadata.Composer = Composer;
                 if (Genre != null)
                     AudioFile.Metadata.Genre = Genre;
                 if (Comment != null)

@@ -258,6 +258,108 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
+        [Fact(DisplayName = "Set-AudioMetadata accepts an AlbumArtist parameter")]
+        public void AcceptsAlbumArtistParameter()
+        {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", mock.Object)
+                    .AddParameter("AlbumArtist", "Test Album Artist");
+
+                ps.Invoke();
+
+                Assert.True(true);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata's AlbumArtist Parameter sets the AlbumArtist")]
+        public void AlbumArtistParameterSetsAlbumArtist()
+        {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", mock.Object)
+                    .AddParameter("AlbumArtist", "Test Album Artist");
+
+                ps.Invoke();
+
+                Assert.Equal("Test Album Artist", mock.Object.Metadata.AlbumArtist);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata returns an error if AlbumArtist is null")]
+        public void AlbumArtistNullReturnsError()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object)
+                    .AddParameter("AlbumArtist", null);
+
+                // Actual exception type ParameterBindingValidationException is Internal
+                Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata accepts a Composer parameter")]
+        public void AcceptsComposerParameter()
+        {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", mock.Object)
+                    .AddParameter("Composer", "Test Composer");
+
+                ps.Invoke();
+
+                Assert.True(true);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata's Composer Parameter sets the Composer")]
+        public void ComposerParameterSetsComposer()
+        {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", mock.Object)
+                    .AddParameter("Composer", "Test Composer");
+
+                ps.Invoke();
+
+                Assert.Equal("Test Composer", mock.Object.Metadata.Composer);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata returns an error if Composer is null")]
+        public void ComposerNullReturnsError()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object)
+                    .AddParameter("Composer", null);
+
+                // Actual exception type ParameterBindingValidationException is Internal
+                Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
+            }
+        }
+
         [Fact(DisplayName = "Set-AudioMetadata accepts a Genre parameter")]
         public void AcceptsGenreParameter()
         {
