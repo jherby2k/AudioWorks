@@ -23,6 +23,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
@@ -37,6 +38,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -51,6 +53,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
+
             new object[]
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
@@ -65,6 +68,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
+
             new object[]
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
@@ -79,6 +83,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo (extensible).wav",
@@ -93,6 +98,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
+
             new object[]
             {
                 "Lame CBR 24 8000Hz Stereo.mp3",
@@ -106,6 +112,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
+
             new object[]
             {
                 "Lame CBR 64 44100Hz Mono.mp3",
@@ -119,6 +126,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
+
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
@@ -132,6 +140,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
+
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo (no header).mp3",
@@ -144,6 +153,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
+
             new object[]
             {
                 "Lame CBR 128 48000Hz Stereo.mp3",
@@ -157,6 +167,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
+
             new object[]
             {
                 "Lame VBR Standard 44100Hz Stereo.mp3",
@@ -170,6 +181,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
+
             new object[]
             {
                 "Fraunhofer CBR 128 44100Hz Stereo.mp3",
@@ -182,6 +194,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
+
             new object[]
             {
                 "Fraunhofer VBR 44100Hz Stereo.mp3",
@@ -194,6 +207,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
+
             new object[]
             {
                 "Fraunhofer VBR 44100Hz Stereo (with header).mp3",
@@ -207,6 +221,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
+
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v1).mp3",
@@ -229,6 +244,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackNumber = "01"
                 }
             },
+
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
@@ -252,6 +268,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackCount = "12"
                 }
             },
+
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 UTF16).mp3",
@@ -275,319 +292,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackCount = "12"
                 }
             },
-            new object[]
-            {
-                "QAAC TVBR 91 8000Hz Stereo.m4a",
-                new TestAudioInfo
-                {
-                    Format = "AAC",
-                    Channels = 2,
-                    SampleRate = 8000,
-                    SampleCount = 25600,
-                    BitRate = 50795
-                },
-                new TestAudioMetadata()
-            },
-            new object[]
-            {
-                "QAAC TVBR 91 44100Hz Mono.m4a",
-                new TestAudioInfo
-                {
-                    Format = "AAC",
-                    Channels = 1,
-                    SampleRate = 44100,
-                    SampleCount = 126976,
-                    BitRate = 93207
-                },
-                new TestAudioMetadata()
-            },
-            new object[]
-            {
-                "QAAC TVBR 91 44100Hz Stereo.m4a",
-                new TestAudioInfo
-                {
-                    Format = "AAC",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 126976,
-                    BitRate = 183702
-                },
-                new TestAudioMetadata()
-            },
-            new object[]
-            {
-                "QAAC TVBR 91 48000Hz Stereo.m4a",
-                new TestAudioInfo
-                {
-                    Format = "AAC",
-                    Channels = 2,
-                    SampleRate = 48000,
-                    SampleCount = 137216,
-                    BitRate = 197757
-                },
-                new TestAudioMetadata()
-            },
-            new object[]
-            {
-                "QAAC TVBR 91 44100Hz Stereo (Tagged).m4a",
-                new TestAudioInfo
-                {
-                    Format = "AAC",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 126976,
-                    BitRate = 183702
-                },
-                new TestAudioMetadata
-                {
-                    Title = "Test Title",
-                    Artist = "Test Artist",
-                    Album = "Test Album",
-                    AlbumArtist = "Test Album Artist",
-                    Composer = "Test Composer",
-                    Genre = "Test Genre",
-                    Comment = "Test Comment",
-                    Day = "31",
-                    Month = "01",
-                    Year = "2017",
-                    TrackNumber = "01",
-                    TrackCount = "12"
-                }
-            },
-            new object[]
-            {
-                "ALAC 16-bit 44100Hz Mono.m4a",
-                new TestAudioInfo
-                {
-                    Format = "ALAC",
-                    Channels = 1,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 122880,
-                    BitRate = 705600
-                },
-                new TestAudioMetadata()
-            },
-            new object[]
-            {
-                "ALAC 16-bit 44100Hz Stereo.m4a",
-                new TestAudioInfo
-                {
-                    Format = "ALAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 122880,
-                    BitRate = 1411200
-                },
-                new TestAudioMetadata()
-            },
-            new object[]
-            {
-                "ALAC 16-bit 48000Hz Stereo.m4a",
-                new TestAudioInfo
-                {
-                    Format = "ALAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 48000,
-                    SampleCount = 131072,
-                    BitRate = 1536000
-                },
-                new TestAudioMetadata()
-            },
-            new object[]
-            {
-                "ALAC 24-bit 96000Hz Stereo.m4a",
-                new TestAudioInfo
-                {
-                    Format = "ALAC",
-                    Channels = 2,
-                    BitsPerSample = 24,
-                    SampleRate = 96000,
-                    SampleCount = 266240,
-                    BitRate = 4608000
-                },
-                new TestAudioMetadata()
-            },
-            new object[]
-            {
-                "ALAC 16-bit 44100Hz Stereo (Tagged).m4a",
-                new TestAudioInfo
-                {
-                    Format = "ALAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 122880,
-                    BitRate = 1411200
-                },
-                new TestAudioMetadata
-                {
-                    Title = "Test Title",
-                    Artist = "Test Artist",
-                    Album = "Test Album",
-                    AlbumArtist = "Test Album Artist",
-                    Composer = "Test Composer",
-                    Genre = "Test Genre",
-                    Comment = "Test Comment",
-                    Day = "31",
-                    Month = "01",
-                    Year = "2017",
-                    TrackNumber = "01",
-                    TrackCount = "12"
-                }
-            },
-            new object[]
-            {
-                "Vorbis Quality 3 8000Hz Stereo.ogg",
-                new TestAudioInfo
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 8000,
-                    BitRate = 31800
-                },
-                new TestAudioMetadata()
-            },
-            new object[]
-            {
-                "Vorbis Quality 3 44100Hz Mono.ogg",
-                new TestAudioInfo
-                {
-                    Format = "Vorbis",
-                    Channels = 1,
-                    SampleRate = 44100,
-                    BitRate = 80000
-                },
-                new TestAudioMetadata()
-            },
-            new object[]
-            {
-                "Vorbis Quality 3 44100Hz Stereo.ogg",
-                new TestAudioInfo
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    BitRate = 112000
-                },
-                new TestAudioMetadata()
-            },
-            new object[]
-            {
-                "Vorbis Quality 3 48000Hz Stereo.ogg",
-                new TestAudioInfo
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 48000,
-                    BitRate = 112000
-                },
-                new TestAudioMetadata()
-            },
-            new object[]
-            {
-                "Vorbis Quality 3 96000Hz Stereo.ogg",
-                new TestAudioInfo
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 96000
-                },
-                new TestAudioMetadata()
-            },
-            new object[]
-            {
-                "Vorbis Quality 3 44100Hz Stereo (Tagged).ogg",
-                new TestAudioInfo
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    BitRate = 112000
-                },
-                new TestAudioMetadata
-                {
-                    Title = "Test Title",
-                    Artist = "Test Artist",
-                    Album = "Test Album",
-                    Genre = "Test Genre",
-                    Comment = "Test Comment",
-                    Day = "31",
-                    Month = "01",
-                    Year = "2017",
-                    TrackNumber = "01",
-                    TrackCount = "12"
-                }
-            },
-            new object[]
-            {
-                "Vorbis Quality 3 44100Hz Stereo (Tagged using extended DATE).ogg",
-                new TestAudioInfo
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    BitRate = 112000
-                },
-                new TestAudioMetadata
-                {
-                    Title = "Test Title",
-                    Artist = "Test Artist",
-                    Album = "Test Album",
-                    Genre = "Test Genre",
-                    Comment = "Test Comment",
-                    Day = "31",
-                    Month = "01",
-                    Year = "2017",
-                    TrackNumber = "01",
-                    TrackCount = "12"
-                }
-            },
-            new object[]
-            {
-                "Vorbis Quality 3 44100Hz Stereo (Tagged using invalid DATE).ogg",
-                new TestAudioInfo
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    BitRate = 112000
-                },
-                new TestAudioMetadata
-                {
-                    Title = "Test Title",
-                    Artist = "Test Artist",
-                    Album = "Test Album",
-                    Genre = "Test Genre",
-                    Comment = "Test Comment",
-                    TrackNumber = "01",
-                    TrackCount = "12"
-                }
-            },
-            new object[]
-            {
-                "Vorbis Quality 3 44100Hz Stereo (Tagged using invalid TRACKNUMBER).ogg",
-                new TestAudioInfo
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    BitRate = 112000
-                },
-                new TestAudioMetadata
-                {
-                    Title = "Test Title",
-                    Artist = "Test Artist",
-                    Album = "Test Album",
-                    Genre = "Test Genre",
-                    Comment = "Test Comment",
-                    Day = "31",
-                    Month = "01",
-                    Year = "2017"
-                }
-            },
+
             new object[]
             {
                 "FLAC Level 5 8-bit 8000Hz Stereo.flac",
@@ -602,6 +307,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Mono.flac",
@@ -616,6 +322,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
@@ -630,6 +337,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 48000Hz Stereo.flac",
@@ -644,6 +352,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
+
             new object[]
             {
                 "FLAC Level 5 24-bit 96000Hz Stereo.flac",
@@ -658,6 +367,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
@@ -690,6 +400,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using mixed-case fields).flac",
@@ -722,6 +433,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using COMMENT).flac",
@@ -754,6 +466,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TOTALTRACKS).flac",
@@ -786,6 +499,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TRACKCOUNT).flac",
@@ -818,6 +532,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TRACKTOTAL).flac",
@@ -850,6 +565,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using YEAR).flac",
@@ -880,6 +596,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using extended DATE).flac",
@@ -912,6 +629,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using invalid DATE).flac",
@@ -941,6 +659,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using invalid TRACKNUMBER).flac",
@@ -971,6 +690,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using ReplayGain with '+' sign).flac",
@@ -1003,6 +723,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using ReplayGain with missing 'dB').flac",
@@ -1035,6 +756,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using invalid ReplayGain fields).flac",
@@ -1045,6 +767,338 @@ namespace AudioWorks.Api.Tests.DataSources
                     BitsPerSample = 16,
                     SampleRate = 44100,
                     SampleCount = 124112,
+                    BitRate = 1411200
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+
+            new object[]
+            {
+                "Vorbis Quality 3 8000Hz Stereo.ogg",
+                new TestAudioInfo
+                {
+                    Format = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 8000,
+                    BitRate = 31800
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Mono.ogg",
+                new TestAudioInfo
+                {
+                    Format = "Vorbis",
+                    Channels = 1,
+                    SampleRate = 44100,
+                    BitRate = 80000
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo.ogg",
+                new TestAudioInfo
+                {
+                    Format = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 112000
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "Vorbis Quality 3 48000Hz Stereo.ogg",
+                new TestAudioInfo
+                {
+                    Format = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 48000,
+                    BitRate = 112000
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "Vorbis Quality 3 96000Hz Stereo.ogg",
+                new TestAudioInfo
+                {
+                    Format = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 96000
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo (Tagged).ogg",
+                new TestAudioInfo
+                {
+                    Format = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 112000
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo (Tagged using extended DATE).ogg",
+                new TestAudioInfo
+                {
+                    Format = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 112000
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo (Tagged using invalid DATE).ogg",
+                new TestAudioInfo
+                {
+                    Format = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 112000
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo (Tagged using invalid TRACKNUMBER).ogg",
+                new TestAudioInfo
+                {
+                    Format = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 112000
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017"
+                }
+            },
+
+            new object[]
+            {
+                "QAAC TVBR 91 8000Hz Stereo.m4a",
+                new TestAudioInfo
+                {
+                    Format = "AAC",
+                    Channels = 2,
+                    SampleRate = 8000,
+                    SampleCount = 25600,
+                    BitRate = 50795
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "QAAC TVBR 91 44100Hz Mono.m4a",
+                new TestAudioInfo
+                {
+                    Format = "AAC",
+                    Channels = 1,
+                    SampleRate = 44100,
+                    SampleCount = 126976,
+                    BitRate = 93207
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "QAAC TVBR 91 44100Hz Stereo.m4a",
+                new TestAudioInfo
+                {
+                    Format = "AAC",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 126976,
+                    BitRate = 183702
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "QAAC TVBR 91 48000Hz Stereo.m4a",
+                new TestAudioInfo
+                {
+                    Format = "AAC",
+                    Channels = 2,
+                    SampleRate = 48000,
+                    SampleCount = 137216,
+                    BitRate = 197757
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "QAAC TVBR 91 44100Hz Stereo (Tagged).m4a",
+                new TestAudioInfo
+                {
+                    Format = "AAC",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 126976,
+                    BitRate = 183702
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Mono.m4a",
+                new TestAudioInfo
+                {
+                    Format = "ALAC",
+                    Channels = 1,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 122880,
+                    BitRate = 705600
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo.m4a",
+                new TestAudioInfo
+                {
+                    Format = "ALAC",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 122880,
+                    BitRate = 1411200
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "ALAC 16-bit 48000Hz Stereo.m4a",
+                new TestAudioInfo
+                {
+                    Format = "ALAC",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 48000,
+                    SampleCount = 131072,
+                    BitRate = 1536000
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "ALAC 24-bit 96000Hz Stereo.m4a",
+                new TestAudioInfo
+                {
+                    Format = "ALAC",
+                    Channels = 2,
+                    BitsPerSample = 24,
+                    SampleRate = 96000,
+                    SampleCount = 266240,
+                    BitRate = 4608000
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo (Tagged).m4a",
+                new TestAudioInfo
+                {
+                    Format = "ALAC",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 122880,
                     BitRate = 1411200
                 },
                 new TestAudioMetadata
