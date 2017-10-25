@@ -6,12 +6,12 @@ using System.Text;
 
 namespace AudioWorks.Extensions.Flac
 {
-    sealed class NativeMetadataDecoder : NativeStreamDecoder
+    sealed class MetadataDecoder : StreamDecoder
     {
         [NotNull]
         internal VorbisCommentToMetadataAdapter AudioMetadata { get; } = new VorbisCommentToMetadataAdapter();
 
-        internal NativeMetadataDecoder([NotNull] Stream stream)
+        internal MetadataDecoder([NotNull] Stream stream)
             : base(stream)
         {
         }

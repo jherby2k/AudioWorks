@@ -3,11 +3,11 @@ using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
 {
-    sealed class NativeOggSync : IDisposable
+    sealed class OggSync : IDisposable
     {
         readonly IntPtr _state;
 
-        public NativeOggSync()
+        public OggSync()
         {
             _state = Marshal.AllocHGlobal(Marshal.SizeOf<OggSyncState>());
             SafeNativeMethods.OggSyncInitialize(_state);
@@ -40,7 +40,7 @@ namespace AudioWorks.Extensions.Vorbis
             Marshal.FreeHGlobal(_state);
         }
 
-        ~NativeOggSync()
+        ~OggSync()
         {
             FreeUnmanaged();
         }

@@ -5,7 +5,7 @@ using System.IO;
 
 namespace AudioWorks.Extensions.Flac
 {
-    abstract class NativeStreamDecoder : IDisposable
+    abstract class StreamDecoder : IDisposable
     {
         [NotNull] readonly NativeCallbacks.StreamDecoderReadCallback _readCallback;
         [NotNull] readonly NativeCallbacks.StreamDecoderSeekCallback _seekCallback;
@@ -18,9 +18,9 @@ namespace AudioWorks.Extensions.Flac
         [NotNull] readonly Stream _stream;
 
         [NotNull]
-        protected NativeStreamDecoderHandle Handle { get; } = SafeNativeMethods.StreamDecoderNew();
+        protected StreamDecoderHandle Handle { get; } = SafeNativeMethods.StreamDecoderNew();
 
-        internal NativeStreamDecoder([NotNull] Stream stream)
+        internal StreamDecoder([NotNull] Stream stream)
         {
             // Need a reference to the callbacks for the lifetime of the decoder
             _readCallback = ReadCallback;

@@ -3,9 +3,9 @@ using System.Text;
 
 namespace AudioWorks.Extensions.Flac
 {
-    abstract class NativeVorbisCommentBlock : NativeMetadataBlock
+    abstract class VorbisCommentBlock : MetadataBlock
     {
-        internal NativeVorbisCommentBlock()
+        internal VorbisCommentBlock()
             : base(MetadataType.VorbisComment)
         {
         }

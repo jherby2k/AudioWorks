@@ -13,13 +13,13 @@ namespace AudioWorks.Extensions.Vorbis
         {
             var buffer = new byte[4096];
 
-            NativeOggStream oggStream = null;
+            OggStream oggStream = null;
             SafeNativeMethods.VorbisCommentInitialize(out var vorbisComment);
 
             try
             {
-                using (var sync = new NativeOggSync())
-                using (var decoder = new NativeVorbisDecoder())
+                using (var sync = new OggSync())
+                using (var decoder = new VorbisDecoder())
                 {
                     OggPage page;
 
@@ -38,7 +38,7 @@ namespace AudioWorks.Extensions.Vorbis
                         }
 
                         if (oggStream == null)
-                            oggStream = new NativeOggStream(SafeNativeMethods.OggPageGetSerialNumber(ref page));
+                            oggStream = new OggStream(SafeNativeMethods.OggPageGetSerialNumber(ref page));
 
                         oggStream.PageIn(ref page);
 

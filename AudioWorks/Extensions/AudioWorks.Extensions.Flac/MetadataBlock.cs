@@ -3,12 +3,12 @@ using System;
 
 namespace AudioWorks.Extensions.Flac
 {
-    abstract class NativeMetadataBlock : IDisposable
+    abstract class MetadataBlock : IDisposable
     {
         [NotNull]
-        internal NativeMetadataBlockHandle Handle { get; }
+        internal MetadataBlockHandle Handle { get; }
 
-        protected NativeMetadataBlock(MetadataType metadataType)
+        protected MetadataBlock(MetadataType metadataType)
         {
             Handle = SafeNativeMethods.MetadataObjectNew(metadataType);
         }

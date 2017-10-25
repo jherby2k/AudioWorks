@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Flac
 {
-    sealed class NativeAudioInfoDecoder : NativeStreamDecoder
+    sealed class AudioInfoStreamDecoder : StreamDecoder
     {
         [CanBeNull]
         internal AudioInfo AudioInfo { get; private set; }
 
-        internal NativeAudioInfoDecoder([NotNull] Stream stream)
+        internal AudioInfoStreamDecoder([NotNull] Stream stream)
             : base(stream)
         {
         }

@@ -19,7 +19,7 @@ namespace AudioWorks.Extensions.Flac
         {
             var padding = GetPadding(settings);
 
-            using (var chain = new NativeMetadataChain(stream))
+            using (var chain = new MetadataChain(stream))
             using (var comments = new MetadataToVorbisCommentAdapter(metadata))
             {
                 chain.Read();
@@ -53,8 +53,8 @@ namespace AudioWorks.Extensions.Flac
         }
 
         static void UpdateChain(
-            [NotNull] NativeMetadataIterator iterator,
-            [NotNull] NativeVorbisCommentBlock newComments,
+            [NotNull] MetadataIterator iterator,
+            [NotNull] VorbisCommentBlock newComments,
             int? padding)
         {
             var metadataInserted = false;
@@ -83,7 +83,7 @@ namespace AudioWorks.Extensions.Flac
 
             // If padding was explicitly requested, add it
             if (padding.HasValue)
-                iterator.InsertBlockAfter(new NativePaddingBlock(padding.Value));
+                iterator.InsertBlockAfter(new PaddingBlock(padding.Value));
         }
     }
 }

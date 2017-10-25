@@ -20,12 +20,12 @@ namespace AudioWorks.Extensions.Vorbis
 
             using (var tempStream = new MemoryStream())
             {
-                NativeOggStream inputOggStream = null;
-                NativeOggStream outputOggStream = null;
+                OggStream inputOggStream = null;
+                OggStream outputOggStream = null;
 
                 try
                 {
-                    using (var sync = new NativeOggSync())
+                    using (var sync = new OggSync())
                     {
                         OggPage inPage;
 
@@ -41,9 +41,9 @@ namespace AudioWorks.Extensions.Vorbis
                             }
 
                             if (inputOggStream == null)
-                                inputOggStream = new NativeOggStream(SafeNativeMethods.OggPageGetSerialNumber(ref inPage));
+                                inputOggStream = new OggStream(SafeNativeMethods.OggPageGetSerialNumber(ref inPage));
                             if (outputOggStream == null)
-                                outputOggStream = new NativeOggStream(inputOggStream.SerialNumber);
+                                outputOggStream = new OggStream(inputOggStream.SerialNumber);
 
                             inputOggStream.PageIn(ref inPage);
 

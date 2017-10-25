@@ -5,11 +5,11 @@ using System.Runtime.ConstrainedExecution;
 namespace AudioWorks.Extensions.Flac
 {
     [UsedImplicitly]
-    sealed class NativeMetadataBlockHandle : SafeHandleZeroOrMinusOneIsInvalid
+    sealed class MetadataBlockHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
         bool _dropOwnership;
 
-        internal NativeMetadataBlockHandle()
+        internal MetadataBlockHandle()
             : base(true)
         {
         }

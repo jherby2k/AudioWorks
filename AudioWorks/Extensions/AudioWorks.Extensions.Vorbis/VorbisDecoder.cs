@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
 {
-    sealed class NativeVorbisDecoder : IDisposable
+    sealed class VorbisDecoder : IDisposable
     {
         readonly IntPtr _info;
 
-        internal NativeVorbisDecoder()
+        internal VorbisDecoder()
         {
             _info = Marshal.AllocHGlobal(Marshal.SizeOf<VorbisInfo>());
             SafeNativeMethods.VorbisInfoInitialize(_info);
@@ -37,7 +37,7 @@ namespace AudioWorks.Extensions.Vorbis
             Marshal.FreeHGlobal(_info);
         }
 
-        ~NativeVorbisDecoder()
+        ~VorbisDecoder()
         {
             FreeUnmanaged();
         }

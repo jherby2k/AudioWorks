@@ -5,9 +5,9 @@ using System.Runtime.ConstrainedExecution;
 namespace AudioWorks.Extensions.Flac
 {
     [UsedImplicitly]
-    sealed class NativeMetadataIteratorHandle : SafeHandleZeroOrMinusOneIsInvalid
+    sealed class MetadataChainHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
-        internal NativeMetadataIteratorHandle()
+        internal MetadataChainHandle()
             : base(true)
         {
         }
@@ -15,7 +15,7 @@ namespace AudioWorks.Extensions.Flac
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         protected override bool ReleaseHandle()
         {
-            SafeNativeMethods.MetadataIteratorDelete(handle);
+            SafeNativeMethods.MetadataChainDelete(handle);
             return true;
         }
     }

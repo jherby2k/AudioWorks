@@ -10,7 +10,7 @@ namespace AudioWorks.Extensions.Flac
     {
         public AudioInfo ReadAudioInfo(FileStream stream)
         {
-            using (var decoder = new NativeAudioInfoDecoder(stream))
+            using (var decoder = new AudioInfoStreamDecoder(stream))
             {
                 decoder.Initialize();
                 if (!decoder.ProcessMetadata())

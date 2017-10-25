@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Flac
 {
-    sealed class NativeMetadataChain : IDisposable
+    sealed class MetadataChain : IDisposable
     {
-        [NotNull] readonly NativeMetadataChainHandle _handle = SafeNativeMethods.MetadataChainNew();
+        [NotNull] readonly MetadataChainHandle _handle = SafeNativeMethods.MetadataChainNew();
         readonly IoCallbacks _callbacks;
 
-        internal NativeMetadataChain([NotNull] Stream stream)
+        internal MetadataChain([NotNull] Stream stream)
         {
             _callbacks = InitializeCallbacks(stream);
         }
@@ -40,9 +40,9 @@ namespace AudioWorks.Extensions.Flac
         }
 
         [NotNull]
-        internal NativeMetadataIterator GetIterator()
+        internal MetadataIterator GetIterator()
         {
-            return new NativeMetadataIterator(_handle);
+            return new MetadataIterator(_handle);
         }
 
         public void Dispose()

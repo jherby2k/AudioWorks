@@ -3,11 +3,11 @@ using System;
 
 namespace AudioWorks.Extensions.Flac
 {
-    sealed class NativeMetadataIterator : IDisposable
+    sealed class MetadataIterator : IDisposable
     {
-        [NotNull] readonly NativeMetadataIteratorHandle _handle = SafeNativeMethods.MetadataIteratorNew();
+        [NotNull] readonly MetadataIteratorHandle _handle = SafeNativeMethods.MetadataIteratorNew();
 
-        internal NativeMetadataIterator([NotNull] NativeMetadataChainHandle chainHandle)
+        internal MetadataIterator([NotNull] MetadataChainHandle chainHandle)
         {
             SafeNativeMethods.MetadataIteratorInit(_handle, chainHandle);
         }
@@ -22,7 +22,7 @@ namespace AudioWorks.Extensions.Flac
             return SafeNativeMethods.MetadataIteratorGetBlock(_handle);
         }
 
-        internal void InsertBlockAfter([NotNull] NativeMetadataBlock metadataBlock)
+        internal void InsertBlockAfter([NotNull] MetadataBlock metadataBlock)
         {
             // The iterator takes ownership of the handle
             SafeNativeMethods.MetadataIteratorInsertBlockAfter(_handle, metadataBlock.Handle);

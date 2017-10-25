@@ -5,9 +5,9 @@ using System.Runtime.ConstrainedExecution;
 namespace AudioWorks.Extensions.Flac
 {
     [UsedImplicitly]
-    sealed class NativeStreamDecoderHandle : SafeHandleZeroOrMinusOneIsInvalid
+    sealed class StreamDecoderHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
-        internal NativeStreamDecoderHandle()
+        internal StreamDecoderHandle()
             : base(true)
         {
         }

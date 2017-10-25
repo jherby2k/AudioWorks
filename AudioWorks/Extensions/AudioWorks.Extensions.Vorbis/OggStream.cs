@@ -3,13 +3,13 @@ using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
 {
-    sealed class NativeOggStream : IDisposable
+    sealed class OggStream : IDisposable
     {
         readonly IntPtr _state;
 
         internal int SerialNumber => Marshal.PtrToStructure<OggStreamState>(_state).SerialNumber;
 
-        internal NativeOggStream(int serialNumber)
+        internal OggStream(int serialNumber)
         {
             _state = Marshal.AllocHGlobal(Marshal.SizeOf<OggStreamState>());
             SafeNativeMethods.OggStreamInitialize(_state, serialNumber);
@@ -52,7 +52,7 @@ namespace AudioWorks.Extensions.Vorbis
             Marshal.FreeHGlobal(_state);
         }
 
-        ~NativeOggStream()
+        ~OggStream()
         {
             FreeUnmanaged();
         }

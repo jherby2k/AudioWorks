@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
 {
-    sealed class MetadataToVorbisCommentAdapter : NativeVorbisCommentBlock
+    sealed class MetadataToVorbisCommentAdapter : VorbisCommentBlock
     {
         internal MetadataToVorbisCommentAdapter([NotNull] AudioMetadata metadata)
         {
