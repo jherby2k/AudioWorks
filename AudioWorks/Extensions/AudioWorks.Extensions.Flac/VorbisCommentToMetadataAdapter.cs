@@ -25,6 +25,14 @@ namespace AudioWorks.Extensions.Flac
                         Album = value;
                         break;
 
+                    case "ALBUMARTIST":
+                        AlbumArtist = value;
+                        break;
+
+                    case "COMPOSER":
+                        Composer = value;
+                        break;
+
                     case "GENRE":
                         Genre = value;
                         break;
@@ -62,6 +70,22 @@ namespace AudioWorks.Extensions.Flac
                     case "TRACKTOTAL":
                     case "TOTALTRACKS":
                         TrackCount = value;
+                        break;
+
+                    case "REPLAYGAIN_TRACK_PEAK":
+                        TrackPeak = value;
+                        break;
+
+                    case "REPLAYGAIN_ALBUM_PEAK":
+                        AlbumPeak = value;
+                        break;
+
+                    case "REPLAYGAIN_TRACK_GAIN":
+                        TrackGain = value.Replace("dB", "").Trim();
+                        break;
+
+                    case "REPLAYGAIN_ALBUM_GAIN":
+                        AlbumGain = value.Replace("dB", "").Trim();
                         break;
                 }
             }
