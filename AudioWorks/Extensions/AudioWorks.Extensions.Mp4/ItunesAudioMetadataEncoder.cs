@@ -65,7 +65,7 @@ namespace AudioWorks.Extensions.Mp4
         {
             using (var resultStream = new MemoryStream())
             {
-                var adaptedMetadata = new MetadataToAtomAdapter(metadata);
+                var adaptedMetadata = new MetadataToIlstAtomAdapter(metadata);
 
                 // "Reverse DNS" atoms may need to be preserved:
                 foreach (var reverseDnsAtom in originalMp4.GetChildAtomInfo()

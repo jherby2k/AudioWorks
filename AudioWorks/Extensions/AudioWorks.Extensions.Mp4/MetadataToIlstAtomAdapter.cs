@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace AudioWorks.Extensions.Mp4
 {
-    sealed class MetadataToAtomAdapter
+    sealed class MetadataToIlstAtomAdapter
     {
         [NotNull, ItemNotNull] readonly List<WritableAtom> _atoms = new List<WritableAtom>();
 
-        public MetadataToAtomAdapter([NotNull] AudioMetadata metadata)
+        public MetadataToIlstAtomAdapter([NotNull] AudioMetadata metadata)
         {
             if (!string.IsNullOrEmpty(metadata.Title))
                 _atoms.Add(new TextAtom("©nam", metadata.Title));

@@ -30,6 +30,14 @@ namespace AudioWorks.Extensions.Mp4
                         Album = new TextAtom(atomData).Value;
                         break;
 
+                    case "aART":
+                        AlbumArtist = new TextAtom(atomData).Value;
+                        break;
+
+                    case "©wrt":
+                        Composer = new TextAtom(atomData).Value;
+                        break;
+
                     case "©gen":
                         Genre = new TextAtom(atomData).Value;
                         break;
