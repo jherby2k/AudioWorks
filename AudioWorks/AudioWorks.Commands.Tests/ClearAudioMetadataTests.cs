@@ -151,7 +151,7 @@ namespace AudioWorks.Commands.Tests
 
             new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
             var differences = differenceEnumerable.ToArray();
-            Assert.True(differences.Length == 10);
+            Assert.Equal(typeof(AudioMetadata).GetProperties().Length, differences.Length);
             foreach (var difference in differences)
                 Assert.True(string.IsNullOrEmpty(difference.Value2));
         }
