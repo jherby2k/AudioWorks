@@ -1061,5 +1061,53 @@ namespace AudioWorks.Api.Tests
                 fileName);
             Assert.Equal(expectedMetadata.TrackCount, new TaggedAudioFile(path).Metadata.TrackCount);
         }
+
+        [Theory(DisplayName = "AudioMetadata has the expected TrackPeak")]
+        [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
+        public void HasExpectedTrackPeak([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        {
+            var path = Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                "TestFiles",
+                "Valid",
+                fileName);
+            Assert.Equal(expectedMetadata.TrackPeak, new TaggedAudioFile(path).Metadata.TrackPeak);
+        }
+
+        [Theory(DisplayName = "AudioMetadata has the expected AlbumPeak")]
+        [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
+        public void HasExpectedAlbumPeak([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        {
+            var path = Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                "TestFiles",
+                "Valid",
+                fileName);
+            Assert.Equal(expectedMetadata.AlbumPeak, new TaggedAudioFile(path).Metadata.AlbumPeak);
+        }
+
+        [Theory(DisplayName = "AudioMetadata has the expected TrackGain")]
+        [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
+        public void HasExpectedTrackGain([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        {
+            var path = Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                "TestFiles",
+                "Valid",
+                fileName);
+            Assert.Equal(expectedMetadata.TrackGain, new TaggedAudioFile(path).Metadata.TrackGain);
+        }
+
+        [Theory(DisplayName = "AudioMetadata has the expected AlbumGain")]
+        [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
+        public void HasExpectedAlbumGain([NotNull] string fileName, [NotNull] AudioMetadata expectedMetadata)
+        {
+            var path = Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                "TestFiles",
+                "Valid",
+                fileName);
+            Assert.Equal(expectedMetadata.AlbumGain, new TaggedAudioFile(path).Metadata.AlbumGain);
+        }
     }
 }
