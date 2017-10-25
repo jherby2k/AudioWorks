@@ -17,6 +17,10 @@ namespace AudioWorks.Extensions.Mp4
                 _atoms.Add(new TextAtom("©ART", metadata.Artist));
             if (!string.IsNullOrEmpty(metadata.Album))
                 _atoms.Add(new TextAtom("©alb", metadata.Album));
+            if (!string.IsNullOrEmpty(metadata.AlbumArtist))
+                _atoms.Add(new TextAtom("aART", metadata.AlbumArtist));
+            if (!string.IsNullOrEmpty(metadata.Composer))
+                _atoms.Add(new TextAtom("©wrt", metadata.Composer));
             if (!string.IsNullOrEmpty(metadata.Genre))
                 _atoms.Add(new TextAtom("©gen", metadata.Genre));
             if (!string.IsNullOrEmpty(metadata.Comment))

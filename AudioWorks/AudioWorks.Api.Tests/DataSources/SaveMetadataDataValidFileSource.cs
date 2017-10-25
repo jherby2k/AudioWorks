@@ -659,6 +659,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 "790D31645868CF672F7763994647C912"
             },
+
+            // All fields
             new object[]
             {
                 "QAAC TVBR 91 44100Hz Stereo.m4a",
@@ -667,17 +669,25 @@ namespace AudioWorks.Api.Tests.DataSources
                     Title = "Test Title",
                     Artist = "Test Artist",
                     Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
                     Genre = "Test Genre",
                     Comment = "Test Comment",
                     Day = "31",
                     Month = "01",
                     Year = "2017",
                     TrackNumber = "01",
-                    TrackCount = "12"
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
                 },
                 null,
-                "D4DF89FD398D7B71B484B9862E6565A8"
+                "D551443B82A3EF81D969CF2EDE90557B"
             },
+
+            // Day unset
             new object[]
             {
                 "QAAC TVBR 91 44100Hz Stereo.m4a",
@@ -686,16 +696,24 @@ namespace AudioWorks.Api.Tests.DataSources
                     Title = "Test Title",
                     Artist = "Test Artist",
                     Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
                     Genre = "Test Genre",
                     Comment = "Test Comment",
                     Month = "01",
                     Year = "2017",
                     TrackNumber = "01",
-                    TrackCount = "12"
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
                 },
                 null,
-                "F55EA657346A062BB5E1C45D285AE53F"
+                "5DAD1968C67AF0585EEF0FF4B7C7307D"
             },
+
+            // Month unset
             new object[]
             {
                 "QAAC TVBR 91 44100Hz Stereo.m4a",
@@ -704,16 +722,24 @@ namespace AudioWorks.Api.Tests.DataSources
                     Title = "Test Title",
                     Artist = "Test Artist",
                     Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
                     Genre = "Test Genre",
                     Comment = "Test Comment",
                     Day = "31",
                     Year = "2017",
                     TrackNumber = "01",
-                    TrackCount = "12"
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
                 },
                 null,
-                "F55EA657346A062BB5E1C45D285AE53F"
+                "5DAD1968C67AF0585EEF0FF4B7C7307D"
             },
+
+            // TrackNumber unset
             new object[]
             {
                 "QAAC TVBR 91 44100Hz Stereo.m4a",
@@ -722,16 +748,24 @@ namespace AudioWorks.Api.Tests.DataSources
                     Title = "Test Title",
                     Artist = "Test Artist",
                     Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
                     Genre = "Test Genre",
                     Comment = "Test Comment",
                     Day = "31",
                     Month = "01",
                     Year = "2017",
-                    TrackCount = "12"
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
                 },
                 null,
-                "36A30F8B33875D2E04317C04DC373B96"
+                "279AED563163E923BE08CBCFD27C19F6"
             },
+
+            // TrackCount unset
             new object[]
             {
                 "QAAC TVBR 91 44100Hz Stereo.m4a",
@@ -740,16 +774,24 @@ namespace AudioWorks.Api.Tests.DataSources
                     Title = "Test Title",
                     Artist = "Test Artist",
                     Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
                     Genre = "Test Genre",
                     Comment = "Test Comment",
                     Day = "31",
                     Month = "01",
                     Year = "2017",
-                    TrackNumber = "01"
+                    TrackNumber = "01",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
                 },
                 null,
-                "552F66D763FE4D062A7CB9FF070D3376"
+                "C2AC79197D43DF26E21ABA13229F3607"
             },
+
+            // Existing tag
             new object[]
             {
                 "QAAC TVBR 91 44100Hz Stereo (Tagged).m4a",
@@ -758,16 +800,180 @@ namespace AudioWorks.Api.Tests.DataSources
                     Title = "Test Title",
                     Artist = "Test Artist",
                     Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
                     Genre = "Test Genre",
                     Comment = "Test Comment",
                     Day = "31",
                     Month = "01",
                     Year = "2017",
                     TrackNumber = "01",
-                    TrackCount = "12"
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
                 },
                 null,
-                "D4DF89FD398D7B71B484B9862E6565A8"
+                "D551443B82A3EF81D969CF2EDE90557B"
+            },
+
+            // All fields
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo.m4a",
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
+                },
+                null,
+                "C5AB9200ADED87DF989263BBB9EC941A"
+            },
+
+            // Day unset
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo.m4a",
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
+                },
+                null,
+                "A0B7793B566AEB3275B12B3E9997C68B"
+            },
+
+            // Month unset
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo.m4a",
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
+                },
+                null,
+                "A0B7793B566AEB3275B12B3E9997C68B"
+            },
+
+            // TrackNumber unset
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo.m4a",
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
+                },
+                null,
+                "F831C9354ACD1EE9E52E12403112D897"
+            },
+
+            // TrackCount unset
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo.m4a",
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
+                },
+                null,
+                "CAA6CB0E47596B3B7A3C24FA76A9213E"
+            },
+
+            // Existing tag
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo (Tagged).m4a",
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
+                },
+                null,
+                "7A0AE5E0C52FA1B257A29A75D6DAC7EC"
             }
         };
 
