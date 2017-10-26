@@ -8,60 +8,47 @@ namespace AudioWorks.Extensions.Vorbis
     sealed class MetadataToVorbisCommentAdapter : IDisposable
     {
         VorbisComment _comment;
+        bool _unmanagedMemoryAllocated;
 
         internal MetadataToVorbisCommentAdapter([NotNull] AudioMetadata metadata)
         {
             SafeNativeMethods.VorbisCommentInitialize(out _comment);
 
             if (!string.IsNullOrEmpty(metadata.Title))
-                SafeNativeMethods.VorbisCommentAddTag(ref _comment,
-                    Encode("TITLE"), Encode(metadata.Title));
+                AddTag("TITLE", metadata.Title);
             if (!string.IsNullOrEmpty(metadata.Artist))
-                SafeNativeMethods.VorbisCommentAddTag(ref _comment,
-                    Encode("ARTIST"), Encode(metadata.Artist));
+                AddTag("ARTIST", metadata.Artist);
             if (!string.IsNullOrEmpty(metadata.Album))
-                SafeNativeMethods.VorbisCommentAddTag(ref _comment,
-                    Encode("ALBUM"), Encode(metadata.Album));
+                AddTag("ALBUM", metadata.Album);
             if (!string.IsNullOrEmpty(metadata.AlbumArtist))
-                SafeNativeMethods.VorbisCommentAddTag(ref _comment,
-                    Encode("ALBUMARTIST"), Encode(metadata.AlbumArtist));
+                AddTag("ALBUMARTIST", metadata.AlbumArtist);
             if (!string.IsNullOrEmpty(metadata.Composer))
-                SafeNativeMethods.VorbisCommentAddTag(ref _comment,
-                    Encode("COMPOSER"), Encode(metadata.Composer));
+                AddTag("COMPOSER", metadata.Composer);
             if (!string.IsNullOrEmpty(metadata.Genre))
-                SafeNativeMethods.VorbisCommentAddTag(ref _comment,
-                    Encode("GENRE"), Encode(metadata.Genre));
+                AddTag("GENRE", metadata.Genre);
             if (!string.IsNullOrEmpty("Comment"))
-                SafeNativeMethods.VorbisCommentAddTag(ref _comment,
-                    Encode("DESCRIPTION"), Encode(metadata.Comment));
+                AddTag("DESCRIPTION", metadata.Comment);
 
             if (!string.IsNullOrEmpty(metadata.Day) &&
                 !string.IsNullOrEmpty(metadata.Month) &&
                 !string.IsNullOrEmpty(metadata.Year))
-                SafeNativeMethods.VorbisCommentAddTag(ref _comment,
-                    Encode("DATE"), Encode($"{metadata.Year}-{metadata.Month}-{metadata.Day}"));
+                AddTag("DATE", $"{metadata.Year}-{metadata.Month}-{metadata.Day}");
             else if (!string.IsNullOrEmpty(metadata.Year))
-                SafeNativeMethods.VorbisCommentAddTag(ref _comment,
-                    Encode("YEAR"), Encode(metadata.Year));
+                AddTag("YEAR", metadata.Year);
 
             if (!string.IsNullOrEmpty(metadata.TrackNumber))
-                SafeNativeMethods.VorbisCommentAddTag(ref _comment,
-                    Encode("TRACKNUMBER"), Encode(!string.IsNullOrEmpty(metadata.TrackCount)
-                        ? $"{metadata.TrackNumber}/{metadata.TrackCount}"
-                        : metadata.TrackNumber));
+                AddTag("TRACKNUMBER", !string.IsNullOrEmpty(metadata.TrackCount)
+                    ? $"{metadata.TrackNumber}/{metadata.TrackCount}"
+                    : metadata.TrackNumber);
 
             if (!string.IsNullOrEmpty(metadata.TrackPeak))
-                SafeNativeMethods.VorbisCommentAddTag(ref _comment,
-                    Encode("REPLAYGAIN_TRACK_PEAK"), Encode(metadata.TrackPeak));
+                AddTag("REPLAYGAIN_TRACK_PEAK", metadata.TrackPeak);
             if (!string.IsNullOrEmpty(metadata.AlbumPeak))
-                SafeNativeMethods.VorbisCommentAddTag(ref _comment,
-                    Encode("REPLAYGAIN_ALBUM_PEAK"), Encode(metadata.AlbumPeak));
+                AddTag("REPLAYGAIN_ALBUM_PEAK", metadata.AlbumPeak);
             if (!string.IsNullOrEmpty(metadata.TrackGain))
-                SafeNativeMethods.VorbisCommentAddTag(ref _comment,
-                    Encode("REPLAYGAIN_TRACK_GAIN"), Encode($"{metadata.TrackGain} dB"));
+                AddTag("REPLAYGAIN_TRACK_GAIN", $"{metadata.TrackGain} dB");
             if (!string.IsNullOrEmpty(metadata.AlbumGain))
-                SafeNativeMethods.VorbisCommentAddTag(ref _comment,
-                    Encode("REPLAYGAIN_ALBUM_GAIN"), Encode($"{metadata.AlbumGain} dB"));
+                AddTag("REPLAYGAIN_ALBUM_GAIN", $"{metadata.AlbumGain} dB");
         }
 
         internal void HeaderOut(out OggPacket packet)
@@ -75,9 +62,10 @@ namespace AudioWorks.Extensions.Vorbis
             GC.SuppressFinalize(this);
         }
 
-        void FreeUnmanaged()
+        void AddTag([NotNull] string tag, [NotNull] string contents)
         {
-            SafeNativeMethods.VorbisCommentClear(ref _comment);
+            SafeNativeMethods.VorbisCommentAddTag(ref _comment, Encode(tag), Encode(contents));
+            _unmanagedMemoryAllocated = true;
         }
 
         [Pure, NotNull]
@@ -87,6 +75,12 @@ namespace AudioWorks.Extensions.Vorbis
             var keyBytes = new byte[Encoding.UTF8.GetByteCount(text) + 1];
             Encoding.UTF8.GetBytes(text, 0, text.Length, keyBytes, 0);
             return keyBytes;
+        }
+
+        void FreeUnmanaged()
+        {
+            if (_unmanagedMemoryAllocated)
+                SafeNativeMethods.VorbisCommentClear(ref _comment);
         }
 
         ~MetadataToVorbisCommentAdapter()
