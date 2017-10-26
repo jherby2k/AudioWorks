@@ -39,6 +39,14 @@ namespace AudioWorks.Extensions.Vorbis
                             Album = comment[1];
                             break;
 
+                        case "ALBUMARTIST":
+                            AlbumArtist = comment[1];
+                            break;
+
+                        case "COMPOSER":
+                            Composer = comment[1];
+                            break;
+
                         case "GENRE":
                             Genre = comment[1];
                             break;
@@ -76,6 +84,22 @@ namespace AudioWorks.Extensions.Vorbis
                         case "TRACKTOTAL":
                         case "TOTALTRACKS":
                             TrackCount = comment[1];
+                            break;
+
+                        case "REPLAYGAIN_TRACK_PEAK":
+                            TrackPeak = comment[1];
+                            break;
+
+                        case "REPLAYGAIN_ALBUM_PEAK":
+                            AlbumPeak = comment[1];
+                            break;
+
+                        case "REPLAYGAIN_TRACK_GAIN":
+                            TrackGain = comment[1].Replace(" dB", string.Empty);
+                            break;
+
+                        case "REPLAYGAIN_ALBUM_GAIN":
+                            AlbumGain = comment[1].Replace(" dB", string.Empty);
                             break;
                     }
                 }

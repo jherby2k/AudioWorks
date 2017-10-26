@@ -636,7 +636,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Existing tag
             new object[]
             {
-                "Vorbis Quality 3 44100Hz Stereo (Tagged).ogg",
+                "Vorbis Quality 3 44100Hz Stereo (Tagged using defaults).ogg",
                 new TestAudioMetadata
                 {
                     Title = "Test Title",

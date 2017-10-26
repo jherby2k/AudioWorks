@@ -81,11 +81,11 @@ namespace AudioWorks.Extensions.Flac
                         break;
 
                     case "REPLAYGAIN_TRACK_GAIN":
-                        TrackGain = value.Replace(" dB", "");
+                        TrackGain = value.Replace(" dB", string.Empty);
                         break;
 
                     case "REPLAYGAIN_ALBUM_GAIN":
-                        AlbumGain = value.Replace(" dB", "");
+                        AlbumGain = value.Replace(" dB", string.Empty);
                         break;
                 }
             }

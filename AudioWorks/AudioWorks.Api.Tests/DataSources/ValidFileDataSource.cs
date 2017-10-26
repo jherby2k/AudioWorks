@@ -852,7 +852,7 @@ namespace AudioWorks.Api.Tests.DataSources
 
             new object[]
             {
-                "Vorbis Quality 3 44100Hz Stereo (Tagged).ogg",
+                "Vorbis Quality 3 44100Hz Stereo (Tagged using defaults).ogg",
                 new TestAudioInfo
                 {
                     Format = "Vorbis",
@@ -865,13 +865,203 @@ namespace AudioWorks.Api.Tests.DataSources
                     Title = "Test Title",
                     Artist = "Test Artist",
                     Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
                     Genre = "Test Genre",
                     Comment = "Test Comment",
                     Day = "31",
                     Month = "01",
                     Year = "2017",
                     TrackNumber = "01",
-                    TrackCount = "12"
+                    TrackCount = "12",
+                    TrackPeak = "0.500000",
+                    AlbumPeak = "0.600000",
+                    TrackGain = "0.70",
+                    AlbumGain = "0.80"
+                }
+            },
+
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo (Tagged using mixed-case fields).ogg",
+                new TestAudioInfo
+                {
+                    Format = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 112000
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.500000",
+                    AlbumPeak = "0.600000",
+                    TrackGain = "0.70",
+                    AlbumGain = "0.80"
+                }
+            },
+
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo (Tagged using COMMENT).ogg",
+                new TestAudioInfo
+                {
+                    Format = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 112000
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.500000",
+                    AlbumPeak = "0.600000",
+                    TrackGain = "0.70",
+                    AlbumGain = "0.80"
+                }
+            },
+
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo (Tagged using TOTALTRACKS).ogg",
+                new TestAudioInfo
+                {
+                    Format = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 112000
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.500000",
+                    AlbumPeak = "0.600000",
+                    TrackGain = "0.70",
+                    AlbumGain = "0.80"
+                }
+            },
+
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo (Tagged using TRACKCOUNT).ogg",
+                new TestAudioInfo
+                {
+                    Format = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 112000
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.500000",
+                    AlbumPeak = "0.600000",
+                    TrackGain = "0.70",
+                    AlbumGain = "0.80"
+                }
+            },
+
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo (Tagged using TRACKTOTAL).ogg",
+                new TestAudioInfo
+                {
+                    Format = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 112000
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.500000",
+                    AlbumPeak = "0.600000",
+                    TrackGain = "0.70",
+                    AlbumGain = "0.80"
+                }
+            },
+
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo (Tagged using YEAR).ogg",
+                new TestAudioInfo
+                {
+                    Format = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 112000
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.500000",
+                    AlbumPeak = "0.600000",
+                    TrackGain = "0.70",
+                    AlbumGain = "0.80"
                 }
             },
 
@@ -890,13 +1080,19 @@ namespace AudioWorks.Api.Tests.DataSources
                     Title = "Test Title",
                     Artist = "Test Artist",
                     Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
                     Genre = "Test Genre",
                     Comment = "Test Comment",
                     Day = "31",
                     Month = "01",
                     Year = "2017",
                     TrackNumber = "01",
-                    TrackCount = "12"
+                    TrackCount = "12",
+                    TrackPeak = "0.500000",
+                    AlbumPeak = "0.600000",
+                    TrackGain = "0.70",
+                    AlbumGain = "0.80"
                 }
             },
 
@@ -915,10 +1111,16 @@ namespace AudioWorks.Api.Tests.DataSources
                     Title = "Test Title",
                     Artist = "Test Artist",
                     Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
                     Genre = "Test Genre",
                     Comment = "Test Comment",
                     TrackNumber = "01",
-                    TrackCount = "12"
+                    TrackCount = "12",
+                    TrackPeak = "0.500000",
+                    AlbumPeak = "0.600000",
+                    TrackGain = "0.70",
+                    AlbumGain = "0.80"
                 }
             },
 
@@ -937,11 +1139,106 @@ namespace AudioWorks.Api.Tests.DataSources
                     Title = "Test Title",
                     Artist = "Test Artist",
                     Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
                     Genre = "Test Genre",
                     Comment = "Test Comment",
                     Day = "31",
                     Month = "01",
-                    Year = "2017"
+                    Year = "2017",
+                    TrackPeak = "0.500000",
+                    AlbumPeak = "0.600000",
+                    TrackGain = "0.70",
+                    AlbumGain = "0.80"
+                }
+            },
+
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo (Tagged using ReplayGain with '+' sign).ogg",
+                new TestAudioInfo
+                {
+                    Format = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 112000
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.500000",
+                    AlbumPeak = "0.600000",
+                    TrackGain = "0.70",
+                    AlbumGain = "0.80"
+                }
+            },
+
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo (Tagged using ReplayGain with missing 'dB').ogg",
+                new TestAudioInfo
+                {
+                    Format = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 112000
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.500000",
+                    AlbumPeak = "0.600000",
+                    TrackGain = "0.70",
+                    AlbumGain = "0.80"
+                }
+            },
+
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo (Tagged using invalid ReplayGain fields).ogg",
+                new TestAudioInfo
+                {
+                    Format = "Vorbis",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 112000
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
                 }
             },
 
