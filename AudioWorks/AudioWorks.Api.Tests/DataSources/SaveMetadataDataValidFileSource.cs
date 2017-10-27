@@ -526,7 +526,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 null,
-                "790D31645868CF672F7763994647C912"
+                "90322322985B2DB1339FD81752D4720C"
             },
 
             // Day unset
@@ -552,7 +552,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 null,
-                "BA9CB459626962B9B6890EB076D16A58"
+                "49FEC21D04F57D1B4B1464BF198DBFF6"
             },
 
             // Month unset
@@ -578,7 +578,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 null,
-                "BA9CB459626962B9B6890EB076D16A58"
+                "49FEC21D04F57D1B4B1464BF198DBFF6"
             },
 
             // TrackNumber unset
@@ -604,7 +604,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 null,
-                "57C151D8130EE70789782DD0E8E4EF6B"
+                "D278DF8DB1592BFC1B356A41B0223DCC"
             },
 
             // TrackCount unset
@@ -630,7 +630,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 null,
-                "19D283763F7F2397D800155FD8C4F227"
+                "547D02098C5C2AB5BE63759342B49F08"
             },
 
             // Existing tag
@@ -657,7 +657,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 null,
-                "790D31645868CF672F7763994647C912"
+                "90322322985B2DB1339FD81752D4720C"
             },
 
             // All fields
