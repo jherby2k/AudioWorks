@@ -261,11 +261,19 @@ namespace AudioWorks.Api.Tests.DataSources
                     Title = "Test Title",
                     Artist = "Test Artist",
                     Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
                     Genre = "Test Genre",
                     Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
                     Year = "2017",
                     TrackNumber = "01",
-                    TrackCount = "12"
+                    TrackCount = "12",
+                    TrackPeak = "0.500000",
+                    AlbumPeak = "0.600000",
+                    TrackGain = "0.70",
+                    AlbumGain = "0.80"
                 }
             },
 
@@ -285,11 +293,19 @@ namespace AudioWorks.Api.Tests.DataSources
                     Title = "Test Title",
                     Artist = "Test Artist",
                     Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
                     Genre = "Test Genre",
                     Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
                     Year = "2017",
                     TrackNumber = "01",
-                    TrackCount = "12"
+                    TrackCount = "12",
+                    TrackPeak = "0.500000",
+                    AlbumPeak = "0.600000",
+                    TrackGain = "0.70",
+                    AlbumGain = "0.80"
                 }
             },
 

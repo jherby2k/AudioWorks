@@ -27,6 +27,14 @@ namespace AudioWorks.Extensions.Id3
                                 Album = frameText.Text;
                                 break;
 
+                            case "TPE2":
+                                AlbumArtist = frameText.Text;
+                                break;
+
+                            case "TCOM":
+                                Composer = frameText.Text;
+                                break;
+
                             case "TCON":
                                 Genre = frameText.Text;
                                 break;
@@ -54,6 +62,27 @@ namespace AudioWorks.Extensions.Id3
                     case FrameFullText frameFullText:
                         if (string.CompareOrdinal("COMM", frameFullText.FrameId) == 0 && string.IsNullOrEmpty(frameFullText.Description))
                             Comment = frameFullText.Text;
+                        break;
+
+                    case FrameTextUserDef frameTextUserDef:
+                        switch (frameTextUserDef.Description)
+                        {
+                            case "REPLAYGAIN_TRACK_PEAK":
+                                TrackPeak = frameTextUserDef.Text;
+                                break;
+
+                            case "REPLAYGAIN_ALBUM_PEAK":
+                                AlbumPeak = frameTextUserDef.Text;
+                                break;
+
+                            case "REPLAYGAIN_TRACK_GAIN":
+                                TrackGain = frameTextUserDef.Text.Replace(" dB", string.Empty);
+                                break;
+
+                            case "REPLAYGAIN_ALBUM_GAIN":
+                                AlbumGain = frameTextUserDef.Text.Replace(" dB", string.Empty);
+                                break;
+                        }
                         break;
                 }
         }
