@@ -2,67 +2,83 @@
 using Id3Lib;
 using Id3Lib.Frames;
 using JetBrains.Annotations;
-using System.Diagnostics.CodeAnalysis;
 
 namespace AudioWorks.Extensions.Id3
 {
     sealed class MetadataToTagModelAdapter : TagModel
     {
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "TagHandler creation modifies the underlying TagModel")]
-        internal MetadataToTagModelAdapter([NotNull] AudioMetadata metadata)
+        internal MetadataToTagModelAdapter([NotNull] AudioMetadata metadata, [NotNull] string encoding)
         {
-            // TagHandler is a helper class for setting the most common frames
-            new TagHandler(this)
-            {
-                Title = metadata.Title,
-                Artist = metadata.Artist,
-                Album = metadata.Album,
-                Composer = metadata.Composer,
-                Genre = metadata.Genre,
-                Comment = metadata.Comment,
-                Year = metadata.Year,
-                Track = GetTrackText(metadata),
-            };
+            AddTextFrame("TIT2", metadata.Title, encoding);
+            AddTextFrame("TPE1", metadata.Artist, encoding);
+            AddTextFrame("TALB", metadata.Album, encoding);
+            AddTextFrame("TCOM", metadata.Composer, encoding);
+            AddTextFrame("TCON", metadata.Genre, encoding);
+            AddFullTextFrame("COMM", metadata.Comment, "eng", encoding);
+            AddTextFrame("TYER", metadata.Year, encoding);
+            AddTextFrame("TRCK", GetTrackText(metadata), encoding);
 
-            if (!string.IsNullOrEmpty(metadata.AlbumArtist))
-                Add(new FrameText("TPE2") { Text = metadata.AlbumArtist });
+            AddTextFrame("TPE2", metadata.AlbumArtist, encoding);
 
-            var tdatFrame = new TdatFrame(metadata);
-            if (!string.IsNullOrEmpty(tdatFrame.Text))
-                Add(new TdatFrame(metadata));
+            AddTextFrame("TDAT", GetDateText(metadata), encoding);
 
-            if (!string.IsNullOrEmpty(metadata.TrackPeak))
+            // ReplayGain fields are always in Latin-1 encoding as per specification:
+            AddUserDefinedFrame("REPLAYGAIN_TRACK_PEAK", metadata.TrackPeak, "Latin1", true);
+            AddUserDefinedFrame("REPLAYGAIN_ALBUM_PEAK", metadata.AlbumPeak, "Latin1", true);
+            AddUserDefinedFrame("REPLAYGAIN_TRACK_GAIN", $"{metadata.TrackGain} dB", "Latin1", true);
+            AddUserDefinedFrame("REPLAYGAIN_ALBUM_GAIN", $"{metadata.AlbumGain} dB", "Latin1", true);
+        }
+
+        void AddTextFrame(
+            [NotNull] string frameId,
+            [NotNull] string value,
+            [NotNull] string encoding)
+        {
+            if (!string.IsNullOrEmpty(value))
+                Add(new FrameText(frameId)
+                {
+                    Text = value,
+                    TextCode = string.CompareOrdinal("Latin1", encoding) == 0 ? TextCode.Ascii : TextCode.Utf16
+                });
+        }
+
+        void AddFullTextFrame(
+            [NotNull] string frameId,
+            [NotNull] string value,
+            [NotNull] string language,
+            [NotNull] string encoding)
+        {
+            if (!string.IsNullOrEmpty(value))
+                Add(new FrameFullText(frameId)
+                {
+                    Text = value,
+                    Language = language,
+                    TextCode = string.CompareOrdinal("Latin1", encoding) == 0 ? TextCode.Ascii : TextCode.Utf16
+                });
+        }
+
+        void AddUserDefinedFrame(
+            [NotNull] string description,
+            [NotNull] string value,
+            [NotNull] string encoding,
+            bool fileAlter)
+        {
+            if (!string.IsNullOrEmpty(value))
                 Add(new FrameTextUserDef("TXXX")
                 {
-                    Description = "REPLAYGAIN_TRACK_PEAK",
-                    Text = metadata.TrackPeak,
-                    FileAlter = true
+                    Description = description,
+                    Text = value,
+                    TextCode = string.CompareOrdinal("Latin1", encoding) == 0 ? TextCode.Ascii : TextCode.Utf16,
+                    FileAlter = fileAlter
                 });
+        }
 
-            if (!string.IsNullOrEmpty(metadata.AlbumPeak))
-                Add(new FrameTextUserDef("TXXX")
-                {
-                    Description = "REPLAYGAIN_ALBUM_PEAK",
-                    Text = metadata.AlbumPeak,
-                    FileAlter = true
-                });
-
-            if (!string.IsNullOrEmpty(metadata.TrackGain))
-                Add(new FrameTextUserDef("TXXX")
-                {
-                    Description = "REPLAYGAIN_TRACK_GAIN",
-                    Text = $"{metadata.TrackGain} dB",
-                    FileAlter = true
-                });
-
-            if (!string.IsNullOrEmpty(metadata.AlbumGain))
-                Add(new FrameTextUserDef("TXXX")
-                {
-                    Description = "REPLAYGAIN_ALBUM_GAIN",
-                    Text = $"{metadata.AlbumGain} dB",
-                    FileAlter = true
-                });
+        [Pure, NotNull]
+        static string GetDateText([NotNull] AudioMetadata metadata)
+        {
+            if (string.IsNullOrEmpty(metadata.Day) || string.IsNullOrEmpty(metadata.Month))
+                return string.Empty;
+            return metadata.Day + metadata.Month;
         }
 
         [Pure, NotNull]

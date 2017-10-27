@@ -15,6 +15,7 @@ namespace AudioWorks.Extensions.Id3
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
         {
             ["Version"] = new StringSettingInfo("2.3", "2.4"),
+            ["Encoding"] = new StringSettingInfo("Latin1", "UTF16"),
             ["Padding"] = new IntSettingInfo(0, 268_435_456)
         };
 
@@ -22,7 +23,9 @@ namespace AudioWorks.Extensions.Id3
         {
             var existingTagLength = GetExistingTagLength(stream);
 
-            var tagModel = new MetadataToTagModelAdapter(metadata);
+            var tagModel = settings.TryGetValue("Encoding", out var encoding)
+                ? new MetadataToTagModelAdapter(metadata, (string) encoding)
+                : new MetadataToTagModelAdapter(metadata, "Latin1");
 
             // Set the version (default to 3)
             if (settings.TryGetValue("Version", out var version) && string.CompareOrdinal("2.4", (string) version) == 0)
