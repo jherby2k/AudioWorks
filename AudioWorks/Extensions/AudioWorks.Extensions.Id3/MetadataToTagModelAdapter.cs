@@ -12,15 +12,13 @@ namespace AudioWorks.Extensions.Id3
             AddTextFrame("TIT2", metadata.Title, encoding);
             AddTextFrame("TPE1", metadata.Artist, encoding);
             AddTextFrame("TALB", metadata.Album, encoding);
+            AddTextFrame("TPE2", metadata.AlbumArtist, encoding);
             AddTextFrame("TCOM", metadata.Composer, encoding);
             AddTextFrame("TCON", metadata.Genre, encoding);
             AddFullTextFrame("COMM", metadata.Comment, "eng", encoding);
+            AddTextFrame("TDAT", GetDateText(metadata), encoding);
             AddTextFrame("TYER", metadata.Year, encoding);
             AddTextFrame("TRCK", GetTrackText(metadata), encoding);
-
-            AddTextFrame("TPE2", metadata.AlbumArtist, encoding);
-
-            AddTextFrame("TDAT", GetDateText(metadata), encoding);
 
             // ReplayGain fields are always in Latin-1 encoding as per specification:
             AddUserDefinedFrame("REPLAYGAIN_TRACK_PEAK", metadata.TrackPeak, "Latin1", true);

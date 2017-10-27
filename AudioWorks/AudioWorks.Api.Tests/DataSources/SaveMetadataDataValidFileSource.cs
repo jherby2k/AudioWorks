@@ -33,7 +33,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 null,
-                "E9F13EF19289BDE0C92D511459836217"
+                "076B838A43E883DCC9F0D0ABE8A263D6"
             },
 
             // Day unset
@@ -59,7 +59,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 null,
-                "FBF8DABFF3EB861A05895CCD0AC1816E"
+                "9626E070B41FBF47B77592F454A0D782"
             },
 
             // Month unset
@@ -85,7 +85,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 null,
-                "FBF8DABFF3EB861A05895CCD0AC1816E"
+                "9626E070B41FBF47B77592F454A0D782"
             },
 
             // TrackNumber unset
@@ -111,7 +111,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 null,
-                "1E23523120A00810F7B4EB570C228BF9"
+                "0D7BA308B6C08BC1B91926DC99B7BBC9"
             },
 
             // TrackCount unset
@@ -137,7 +137,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 null,
-                "7C62317BA6126BFEA9C4C210A167EDD3"
+                "CD89FBB650E8822D0D0ADFBC3FAA2B50"
             },
 
             // Existing tag
@@ -164,7 +164,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 null,
-                "E9F13EF19289BDE0C92D511459836217"
+                "076B838A43E883DCC9F0D0ABE8A263D6"
             },
 
             // Existing tag, changed to v2.4
@@ -194,7 +194,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["Version"] = "2.4"
                 },
-                "94AB926C4AAE8D9ED4D4047A8359A22B"
+                "2036C7EE00BC0F607DF9E729D466DE85"
             },
 
             // UTF-16 encoding
@@ -224,7 +224,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["Encoding"] = "UTF16"
                 },
-                "81C7202EC70DF60E9F6CD353BC16D42A"
+                "85BF987703B5AD8DA099181ECF3681FD"
             },
 
             // No padding
@@ -254,7 +254,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["Padding"] = 0
                 },
-                "E9F13EF19289BDE0C92D511459836217"
+                "076B838A43E883DCC9F0D0ABE8A263D6"
             },
 
             // 100 bytes of padding
@@ -284,7 +284,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["Padding"] = 100
                 },
-                "276F4C71AC615540582FBEEB8C824BB3"
+                "FB11A9074E54FF8F52946036D791E6D8"
             },
 
             // Existing v1 tag
@@ -311,7 +311,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 null,
-                "E9F13EF19289BDE0C92D511459836217"
+                "076B838A43E883DCC9F0D0ABE8A263D6"
             },
 
             // All fields
