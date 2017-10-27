@@ -167,10 +167,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 "076B838A43E883DCC9F0D0ABE8A263D6"
             },
 
-            // Existing tag, changed to v2.4
+            // Tag version 2.4
             new object[]
             {
-                "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
+                "Lame CBR 128 44100Hz Stereo.mp3",
                 new TestAudioMetadata
                 {
                     Title = "Test Title",
