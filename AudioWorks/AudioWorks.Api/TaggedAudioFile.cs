@@ -44,18 +44,18 @@ namespace AudioWorks.Api
         /// <inheritdoc />
         public void SaveMetadata(SettingDictionary settings = null)
         {
-            var fileInfo = new FileInfo(Path);
             if (settings == null)
                 settings = new SettingDictionary();
+            var extension = System.IO.Path.GetExtension(Path);
 
             // Make sure the provided settings are clean
-            AudioMetadataEncoderManager.GetSettingInfo(fileInfo.Extension).ValidateSettings(settings);
+            AudioMetadataEncoderManager.GetSettingInfo(extension).ValidateSettings(settings);
 
-            using (var fileStream = fileInfo.Open(FileMode.Open, FileAccess.ReadWrite))
+            using (var fileStream = File.Open(Path, FileMode.Open))
             {
                 // Try each encoder that supports this file extension
                 foreach (var factory in ExtensionProvider.GetFactories<IAudioMetadataEncoder>(
-                    "Extension", fileInfo.Extension))
+                    "Extension", extension))
                     using (var export = factory.CreateExport())
                     {
                         export.Value.WriteMetadata(fileStream, Metadata, settings);
@@ -69,12 +69,11 @@ namespace AudioWorks.Api
         [NotNull]
         static AudioMetadata LoadMetadata([NotNull] string path)
         {
-            var fileInfo = new FileInfo(path);
-            using (var fileStream = fileInfo.OpenRead())
+            using (var fileStream = File.OpenRead(path))
             {
                 // Try each decoder that supports this file extension
                 foreach (var decoderFactory in ExtensionProvider.GetFactories<IAudioMetadataDecoder>(
-                    "Extension", fileInfo.Extension))
+                    "Extension", System.IO.Path.GetExtension(path)))
                     try
                     {
                         using (var lifetimeContext = decoderFactory.CreateExport())

@@ -55,7 +55,7 @@ namespace AudioWorks.Commands
             if (AudioFile == null) return null;
 
             _parameters = SettingAdapter.SettingInfoToParameters(
-                AudioMetadataEncoderManager.GetSettingInfo(new FileInfo(AudioFile.Path).Extension));
+                AudioMetadataEncoderManager.GetSettingInfo(Path.GetExtension(AudioFile.Path)));
             return _parameters;
         }
     }

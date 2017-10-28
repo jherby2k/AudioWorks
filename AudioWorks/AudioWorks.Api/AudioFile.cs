@@ -33,19 +33,18 @@ namespace AudioWorks.Api
             if (!File.Exists(path))
                 throw new FileNotFoundException($"The file '{path}' cannot be found.", path);
 
-            Path = new FileInfo(path).FullName;
+            Path = System.IO.Path.GetFullPath(path);
             Info = LoadInfo();
         }
 
         [NotNull]
         AudioInfo LoadInfo()
         {
-            var fileInfo = new FileInfo(Path);
-            using (var fileStream = fileInfo.OpenRead())
+            using (var fileStream = File.OpenRead(Path))
             {
                 // Try each info decoder that supports this file extension
                 foreach (var factory in ExtensionProvider.GetFactories<IAudioInfoDecoder>(
-                    "Extension", fileInfo.Extension))
+                    "Extension", System.IO.Path.GetExtension(Path)))
                     try
                     {
                         using (var export = factory.CreateExport())
