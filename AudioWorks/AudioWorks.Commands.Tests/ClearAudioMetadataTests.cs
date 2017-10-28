@@ -34,8 +34,7 @@ namespace AudioWorks.Commands.Tests
             AlbumGain = "0.8"
         };
 
-        public ClearAudioMetadataTests(
-            [NotNull] ModuleFixture moduleFixture)
+        public ClearAudioMetadataTests([NotNull] ModuleFixture moduleFixture)
         {
             _moduleFixture = moduleFixture;
 

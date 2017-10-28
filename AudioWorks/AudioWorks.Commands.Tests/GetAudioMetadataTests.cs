@@ -15,8 +15,7 @@ namespace AudioWorks.Commands.Tests
     {
         [NotNull] readonly ModuleFixture _moduleFixture;
 
-        public GetAudioMetadataTests(
-            [NotNull] ModuleFixture moduleFixture)
+        public GetAudioMetadataTests([NotNull] ModuleFixture moduleFixture)
         {
             _moduleFixture = moduleFixture;
         }
