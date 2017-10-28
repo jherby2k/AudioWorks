@@ -22,13 +22,14 @@
     <PackageReference Include="Microsoft.PowerShell.SDK" Version="6.0.0-beta.9" />
     <PackageReference Include="Microsoft.WSMan.Management" Version="6.0.0-beta.9" />
     <PackageReference Include="Moq" Version="4.7.142" />
-    <PackageReference Include="xunit" Version="2.3.0-beta5-build3769" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.0-beta5-build3769" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj" />
+    <ProjectReference Include="..\AudioWorks.Commands\AudioWorks.Commands.csproj" />
   </ItemGroup>
 
 </Project>

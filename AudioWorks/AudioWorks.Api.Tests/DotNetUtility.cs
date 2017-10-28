@@ -3,9 +3,9 @@ using System.Diagnostics;
 
 namespace AudioWorks.Api.Tests
 {
-    public static class DotNetUtility
+    static class DotNetUtility
     {
-        public static void Publish([NotNull] string projectDir, [NotNull] string configuration, [NotNull] string outputDir)
+        internal static void Publish([NotNull] string projectDir, [NotNull] string configuration, [NotNull] string outputDir)
         {
             using (var publish = new Process())
             {

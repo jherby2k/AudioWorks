@@ -1,4 +1,3 @@
-using AudioWorks.Api.Tests;
 using JetBrains.Annotations;
 using System;
 using System.IO;
@@ -17,11 +16,6 @@ namespace AudioWorks.Commands.Tests
         public ModuleFixture()
         {
             var workingDir = new DirectoryInfo(Directory.GetCurrentDirectory());
-
-            DotNetUtility.Publish(
-                Path.Combine(workingDir.Parent.Parent.Parent.Parent.FullName, _moduleProject),
-                workingDir.Parent.Name,
-                workingDir.FullName);
 
             // Import the module
             var state = InitialSessionState.CreateDefault();
