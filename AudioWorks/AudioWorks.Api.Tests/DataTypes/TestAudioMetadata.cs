@@ -4,7 +4,7 @@ using Xunit.Abstractions;
 
 namespace AudioWorks.Api.Tests.DataTypes
 {
-    sealed class TestAudioMetadata : AudioMetadata, IXunitSerializable
+    public sealed class TestAudioMetadata : AudioMetadata, IXunitSerializable
     {
         public void Deserialize([NotNull] IXunitSerializationInfo info)
         {

@@ -13,7 +13,7 @@ namespace AudioWorks.Api
     /// <seealso cref="ITaggedAudioFile"/>
     [PublicAPI]
     [Serializable]
-    public sealed class TaggedAudioFile : AudioFile, ITaggedAudioFile
+    public class TaggedAudioFile : AudioFile, ITaggedAudioFile
     {
         [CanBeNull] AudioMetadata _metadata;
 
