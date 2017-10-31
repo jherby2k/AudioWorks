@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using ObjectsComparer;
 using System;
 using System.IO;
+using System.Threading;
 using Xunit;
 
 namespace AudioWorks.Api.Tests
@@ -62,7 +63,7 @@ namespace AudioWorks.Api.Tests
                 "Valid",
                 fileName));
 
-            audioFile.Analyze(analyzer);
+            audioFile.Analyze(analyzer, CancellationToken.None);
 
             Assert.True(new Comparer().Compare(expectedMetadata, audioFile.Metadata));
         }

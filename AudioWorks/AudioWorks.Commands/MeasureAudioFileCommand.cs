@@ -1,6 +1,7 @@
 ﻿using AudioWorks.Common;
 using JetBrains.Annotations;
 using System.Management.Automation;
+using System.Threading;
 
 namespace AudioWorks.Commands
 {
@@ -35,7 +36,7 @@ namespace AudioWorks.Commands
         /// <inheritdoc/>
         protected override void ProcessRecord()
         {
-            AudioFile.Analyze(Analyzer);
+            AudioFile.Analyze(Analyzer, CancellationToken.None);
 
             if (PassThru)
                 WriteObject(AudioFile);
