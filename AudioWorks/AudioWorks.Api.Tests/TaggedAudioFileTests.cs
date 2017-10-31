@@ -1,4 +1,5 @@
 using AudioWorks.Api.Tests.DataSources;
+using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
 using AutoMapper;
 using JetBrains.Annotations;
@@ -102,8 +103,8 @@ namespace AudioWorks.Api.Tests
         public void SaveMetadataCreatesExpectedOutput(
             int index,
             [NotNull] string fileName,
-            [NotNull] AudioMetadata metadata,
-            [CanBeNull] SettingDictionary settings,
+            [NotNull] TestAudioMetadata metadata,
+            [CanBeNull] TestSettingDictionary settings,
             [NotNull] string expectedHash)
         {
             var path = Path.Combine("Output", "SaveMetadata", "Valid", $"{index:00} - {fileName}");
@@ -141,7 +142,7 @@ namespace AudioWorks.Api.Tests
         public void SaveMetadataUnexpectedSettingThrowsException(
             int index,
             [NotNull] string fileName,
-            [CanBeNull] SettingDictionary settings)
+            [CanBeNull] TestSettingDictionary settings)
         {
             var path = Path.Combine("Output", "SaveMetadata", "UnexpectedSetting", $"{index:00} - {fileName}");
             Directory.CreateDirectory(Path.GetDirectoryName(path));
