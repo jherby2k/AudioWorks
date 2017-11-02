@@ -14,10 +14,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 "ReplayGain",
                 new TestAudioMetadata
                 {
-                    TrackPeak = "0.5",
-                    AlbumPeak = "0.6",
-                    TrackGain = "0.7",
-                    AlbumGain = "0.8"
+                    TrackPeak = "1.000000",
+                    AlbumPeak = "1.000000",
+                    TrackGain = "-8.67",
+                    AlbumGain = "-8.67"
                 }
             }
         };
