@@ -14,8 +14,8 @@ namespace AudioWorks.Common
         /// Analyzes the audio file.
         /// </summary>
         /// <param name="analyzer">The analyzer.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
         /// <param name="groupToken">The group token.</param>
-        void Analyze([NotNull] string analyzer, CancellationToken cancellationToken, [CanBeNull] GroupToken groupToken = null);
+        /// <param name="cancellationToken">The cancellation token.</param>
+        void Analyze([NotNull] string analyzer, [NotNull] GroupToken groupToken, CancellationToken cancellationToken);
     }
 }

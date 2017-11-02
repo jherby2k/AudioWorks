@@ -30,7 +30,7 @@ namespace AudioWorks.Api
         }
 
         /// <inheritdoc />
-        public async void Analyze(string analyzer, CancellationToken cancellationToken, GroupToken groupToken = null)
+        public async void Analyze(string analyzer, GroupToken groupToken, CancellationToken cancellationToken)
         {
             if (analyzer == null)
                 throw new ArgumentNullException(nameof(analyzer));
@@ -43,7 +43,7 @@ namespace AudioWorks.Api
             using (var analyzerExport = analyzerFactory.CreateExport())
             {
                 var analyzerInstance = analyzerExport.Value;
-                analyzerInstance.Initialize(Info, groupToken ?? new GroupToken());
+                analyzerInstance.Initialize(Info, groupToken);
 
                 // Try each decoder that supports this file extension:
                 foreach (var decoderFactory in ExtensionProvider.GetFactories<IAudioDecoder>(

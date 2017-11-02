@@ -63,7 +63,8 @@ namespace AudioWorks.Api.Tests
                 "Valid",
                 fileName));
 
-            audioFile.Analyze(analyzer, CancellationToken.None);
+            using (var groupToken = new GroupToken())
+                audioFile.Analyze(analyzer, groupToken, CancellationToken.None);
 
             Assert.True(new Comparer().Compare(expectedMetadata, audioFile.Metadata));
         }

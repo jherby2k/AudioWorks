@@ -11,12 +11,14 @@ namespace AudioWorks.Extensions.ReplayGain
             new ConcurrentDictionary<GroupToken, ConcurrentBag<StateHandle>>();
 
         readonly uint _channels;
+        [NotNull] readonly GroupToken _groupToken;
         [NotNull] readonly StateHandle _handle;
         [NotNull] readonly ConcurrentBag<StateHandle> _groupHandles;
 
         internal R128Analyzer(uint channels, uint sampleRate, [NotNull] GroupToken groupToken)
         {
             _channels = channels;
+            _groupToken = groupToken;
             _handle = SafeNativeMethods.Initialize(channels, sampleRate, Modes.Global | Modes.SamplePeak);
             _groupHandles = _globalHandles.GetOrAdd(groupToken, new ConcurrentBag<StateHandle>());
             _groupHandles.Add(_handle);
@@ -68,7 +70,12 @@ namespace AudioWorks.Extensions.ReplayGain
 
         public void Dispose()
         {
-            _handle.Dispose();
+            // The first group member to dispose will take care of all the handles
+            if (!_globalHandles.TryRemove(_groupToken, out _))
+                return;
+
+            foreach (var handle in _groupHandles)
+                handle.Dispose();
         }
     }
 }

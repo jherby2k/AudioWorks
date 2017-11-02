@@ -36,7 +36,8 @@ namespace AudioWorks.Commands
         /// <inheritdoc/>
         protected override void ProcessRecord()
         {
-            AudioFile.Analyze(Analyzer, CancellationToken.None);
+            using (var groupToken = new GroupToken())
+                AudioFile.Analyze(Analyzer, groupToken, CancellationToken.None);
 
             if (PassThru)
                 WriteObject(AudioFile);
