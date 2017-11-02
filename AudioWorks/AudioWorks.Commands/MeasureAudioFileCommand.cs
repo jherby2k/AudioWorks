@@ -1,5 +1,6 @@
 ﻿using AudioWorks.Common;
 using JetBrains.Annotations;
+using System.Collections.Generic;
 using System.Management.Automation;
 using System.Threading;
 
@@ -14,6 +15,8 @@ namespace AudioWorks.Commands
     [Cmdlet(VerbsDiagnostic.Measure, "AudioFile"), OutputType(typeof(IAnalyzableAudioFile))]
     public sealed class MeasureAudioFileCommand : Cmdlet
     {
+        readonly List<IAnalyzableAudioFile> _audioFiles = new List<IAnalyzableAudioFile>();
+
         /// <summary>
         /// <para type="description">Specifies the audio file.</para>
         /// </summary>
@@ -36,7 +39,13 @@ namespace AudioWorks.Commands
         /// <inheritdoc/>
         protected override void ProcessRecord()
         {
-            using (var groupToken = new GroupToken())
+            _audioFiles.Add(AudioFile);
+        }
+
+        /// <inheritdoc/>
+        protected override void EndProcessing()
+        {
+            using (var groupToken = new GroupToken(_audioFiles.Count))
                 AudioFile.Analyze(Analyzer, groupToken, CancellationToken.None);
 
             if (PassThru)
