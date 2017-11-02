@@ -10,6 +10,12 @@ namespace AudioWorks.Extensions
     public interface IAudioDecoder
     {
         /// <summary>
+        /// Gets a value indicating whether this <see cref="IAudioDecoder"/> is finished.
+        /// </summary>
+        /// <value><c>true</c> if finished; otherwise, <c>false</c>.</value>
+        bool Finished { get; }
+
+        /// <summary>
         /// Initializes the decoder.
         /// </summary>
         /// <param name="fileStream">The file stream.</param>
@@ -21,11 +27,5 @@ namespace AudioWorks.Extensions
         /// <returns>The samples.</returns>
         [NotNull]
         SampleCollection DecodeSamples();
-
-        /// <summary>
-        /// Gets a value indicating whether this <see cref="IAudioDecoder"/> is finished.
-        /// </summary>
-        /// <value><c>true</c> if finished; otherwise, <c>false</c>.</value>
-        bool Finished { get; }
     }
 }
