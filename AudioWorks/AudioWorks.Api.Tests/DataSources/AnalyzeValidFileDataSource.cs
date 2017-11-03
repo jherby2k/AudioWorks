@@ -10,6 +10,32 @@ namespace AudioWorks.Api.Tests.DataSources
         {
             new object[]
             {
+                "LPCM 8-bit 8000Hz Stereo.wav",
+                "ReplayGain",
+                new TestAudioMetadata
+                {
+                    TrackPeak = "0.987757",
+                    AlbumPeak = "0.987757",
+                    TrackGain = "-8.84",
+                    AlbumGain = "-8.84"
+                }
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Mono.wav",
+                "ReplayGain",
+                new TestAudioMetadata
+                {
+                    TrackPeak = "1.000000",
+                    AlbumPeak = "1.000000",
+                    TrackGain = "-9.75",
+                    AlbumGain = "-9.75"
+                }
+            },
+
+            new object[]
+            {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ReplayGain",
                 new TestAudioMetadata
@@ -23,6 +49,58 @@ namespace AudioWorks.Api.Tests.DataSources
 
             new object[]
             {
+                "LPCM 16-bit 48000Hz Stereo.wav",
+                "ReplayGain",
+                new TestAudioMetadata
+                {
+                    TrackPeak = "1.000000",
+                    AlbumPeak = "1.000000",
+                    TrackGain = "-8.66",
+                    AlbumGain = "-8.66"
+                }
+            },
+
+            new object[]
+            {
+                "LPCM 24-bit 96000Hz Stereo.wav",
+                "ReplayGain",
+                new TestAudioMetadata
+                {
+                    TrackPeak = "0.992940",
+                    AlbumPeak = "0.992940",
+                    TrackGain = "-8.64",
+                    AlbumGain = "-8.64"
+                }
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 8-bit 8000Hz Stereo.flac",
+                "ReplayGain",
+                new TestAudioMetadata
+                {
+                    TrackPeak = "0.987757",
+                    AlbumPeak = "0.987757",
+                    TrackGain = "-8.84",
+                    AlbumGain = "-8.84"
+                }
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Mono.flac",
+                "ReplayGain",
+                new TestAudioMetadata
+                {
+                    TrackPeak = "1.000000",
+                    AlbumPeak = "1.000000",
+                    TrackGain = "-9.75",
+                    AlbumGain = "-9.75"
+                }
+            },
+
+            new object[]
+            {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 "ReplayGain",
                 new TestAudioMetadata
@@ -31,6 +109,32 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumPeak = "1.000000",
                     TrackGain = "-8.67",
                     AlbumGain = "-8.67"
+                }
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 48000Hz Stereo.flac",
+                "ReplayGain",
+                new TestAudioMetadata
+                {
+                    TrackPeak = "1.000000",
+                    AlbumPeak = "1.000000",
+                    TrackGain = "-8.66",
+                    AlbumGain = "-8.66"
+                }
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 24-bit 96000Hz Stereo.flac",
+                "ReplayGain",
+                new TestAudioMetadata
+                {
+                    TrackPeak = "0.992940",
+                    AlbumPeak = "0.992940",
+                    TrackGain = "-8.64",
+                    AlbumGain = "-8.64"
                 }
             }
         };
