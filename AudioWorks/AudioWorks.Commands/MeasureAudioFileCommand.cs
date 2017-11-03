@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using System.Collections.Generic;
 using System.Management.Automation;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace AudioWorks.Commands
 {
@@ -46,10 +47,16 @@ namespace AudioWorks.Commands
         protected override void EndProcessing()
         {
             using (var groupToken = new GroupToken(_audioFiles.Count))
-                AudioFile.Analyze(Analyzer, groupToken, CancellationToken.None);
+                AnalyzeParallel(groupToken);
 
             if (PassThru)
                 WriteObject(AudioFile);
+        }
+
+        void AnalyzeParallel([NotNull] GroupToken groupToken)
+        {
+            Parallel.ForEach(_audioFiles, audioFile =>
+                audioFile.Analyze(Analyzer, groupToken, CancellationToken.None));
         }
     }
 }
