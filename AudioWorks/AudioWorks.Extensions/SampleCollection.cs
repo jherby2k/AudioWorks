@@ -10,14 +10,6 @@ namespace AudioWorks.Extensions
     /// </summary>
     public sealed class SampleCollection : IEnumerable<float[]>
     {
-        /// <summary>
-        /// Gets the maximum # of frames that can be stored in a single <see cref="SampleCollection"/>.
-        /// </summary>
-        /// <value>
-        /// The maximum # of frames.
-        /// </value>
-        public static int MaxFrames { get; } = 4096;
-
         [NotNull, ItemNotNull] readonly float[][] _samples;
 
         /// <summary>
@@ -58,9 +50,9 @@ namespace AudioWorks.Extensions
             if (channels <= 0 || channels > 2)
                 throw new ArgumentOutOfRangeException(nameof(channels),
                     $"{nameof(channels)} must be 1 or 2.");
-            if (frames <= 0 || frames > MaxFrames)
+            if (frames < 0)
                 throw new ArgumentOutOfRangeException(nameof(frames),
-                    $"{nameof(frames)} must be between 1 and {MaxFrames}.");
+                    $"{nameof(frames)} must be 0 or greater.");
 
             _samples = new float[channels][];
             for (var i = 0; i < _samples.Length; i++)

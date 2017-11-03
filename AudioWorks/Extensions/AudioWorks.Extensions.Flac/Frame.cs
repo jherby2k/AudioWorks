@@ -6,7 +6,7 @@ namespace AudioWorks.Extensions.Flac
     [StructLayout(LayoutKind.Sequential)]
     struct Frame
     {
-        readonly FrameHeader Header;
+        internal FrameHeader Header;
 
         readonly IntPtr SubFrames;
 

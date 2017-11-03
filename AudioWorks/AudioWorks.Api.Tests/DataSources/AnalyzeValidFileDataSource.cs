@@ -19,6 +19,19 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackGain = "-8.67",
                     AlbumGain = "-8.67"
                 }
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo.flac",
+                "ReplayGain",
+                new TestAudioMetadata
+                {
+                    TrackPeak = "1.000000",
+                    AlbumPeak = "1.000000",
+                    TrackGain = "-8.67",
+                    AlbumGain = "-8.67"
+                }
             }
         };
 

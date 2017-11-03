@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Flac
 {
-    sealed class AudioInfoStreamDecoder : StreamDecoder
+    class AudioInfoStreamDecoder : StreamDecoder
     {
         [CanBeNull]
         internal AudioInfo AudioInfo { get; private set; }

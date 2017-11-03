@@ -119,6 +119,17 @@ namespace AudioWorks.Extensions.Flac
             throw new NotImplementedException();
         }
 
+        internal static bool StreamDecoderProcessSingle(
+            [NotNull] StreamDecoderHandle handle)
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                return WinStreamDecoderProcessSingle(handle);
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                return LinuxStreamDecoderProcessSingle(handle);
+
+            throw new NotImplementedException();
+        }
+
         internal static DecoderState StreamDecoderGetState(
             [NotNull] StreamDecoderHandle handle)
         {
@@ -479,6 +490,18 @@ namespace AudioWorks.Extensions.Flac
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool LinuxStreamDecoderProcessUntilEndOfMetadata(
+            [NotNull] StreamDecoderHandle handle);
+
+        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__stream_decoder_process_single",
+            CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool WinStreamDecoderProcessSingle(
+            [NotNull] StreamDecoderHandle handle);
+
+        [DllImport(_linuxFlacLibrary, EntryPoint = "FLAC__stream_decoder_process_single",
+            CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool LinuxStreamDecoderProcessSingle(
             [NotNull] StreamDecoderHandle handle);
 
         [DllImport(_winFlacLibrary, EntryPoint = "FLAC__stream_decoder_get_state",

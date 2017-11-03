@@ -5,15 +5,15 @@ namespace AudioWorks.Extensions.Flac
     [StructLayout(LayoutKind.Explicit)]
     struct FrameHeader
     {
-        [FieldOffset(0)] readonly uint BlockSize;
+        [FieldOffset(0)] internal uint BlockSize;
 
         [FieldOffset(4)] readonly uint SampleRate;
 
-        [FieldOffset(8)] readonly uint Channels;
+        [FieldOffset(8)] internal uint Channels;
 
         [FieldOffset(12)] readonly int ChannelAssignment;
 
-        [FieldOffset(16)] readonly uint BitsPerSample;
+        [FieldOffset(16)] internal uint BitsPerSample;
 
         [FieldOffset(20)] readonly int NumberType;
 

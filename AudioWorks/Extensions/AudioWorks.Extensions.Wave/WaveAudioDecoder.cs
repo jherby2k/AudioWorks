@@ -11,6 +11,8 @@ namespace AudioWorks.Extensions.Wave
     [AudioDecoderExport(".wav")]
     public sealed class WaveAudioDecoder : IAudioDecoder, IDisposable
     {
+        const int _defaultFrameCount = 4096;
+
         [NotNull] readonly byte[] _buffer = new byte[4];
         [CanBeNull] AudioInfo _audioInfo;
         [CanBeNull] RiffReader _reader;
@@ -37,19 +39,19 @@ namespace AudioWorks.Extensions.Wave
         {
             var result = new SampleCollection(
                 _audioInfo.Channels,
-                (int) Math.Min(_framesRemaining, SampleCollection.MaxFrames));
+                (int) Math.Min(_framesRemaining, _defaultFrameCount));
 
             // 1-8 bit samples are unsigned:
             if (_bytesPerSample == 1)
-                for (var frame = 0; frame < result.Frames; frame++)
-                for (var channel = 0; channel < result.Channels; channel++)
-                    result[channel][frame] = (_reader.ReadByte() - 128) / _divisor;
+                for (var frameIndex = 0; frameIndex < result.Frames; frameIndex++)
+                for (var channelIndex = 0; channelIndex < result.Channels; channelIndex++)
+                    result[channelIndex][frameIndex] = (_reader.ReadByte() - 128) / _divisor;
             else
-                for (var sample = 0; sample < result.Frames; sample++)
-                for (var channel = 0; channel < result.Channels; channel++)
+                for (var frameIndex = 0; frameIndex < result.Frames; frameIndex++)
+                for (var channelIndex = 0; channelIndex < result.Channels; channelIndex++)
                 {
                     _reader.Read(_buffer, 4 - _bytesPerSample, _bytesPerSample);
-                    result[channel][sample] =
+                    result[channelIndex][frameIndex] =
                         (BitConverter.ToInt32(_buffer, 0) >> (4 - _bytesPerSample) * 8) / _divisor;
                 }
 

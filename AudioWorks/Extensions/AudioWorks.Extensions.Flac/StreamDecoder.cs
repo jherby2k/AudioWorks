@@ -110,7 +110,7 @@ namespace AudioWorks.Extensions.Flac
 
         [SuppressMessage("Performance", "CA1801:Review unused parameters",
             Justification = "Part of FLAC API")]
-        static DecoderWriteStatus WriteCallback(IntPtr handle, ref Frame frame, IntPtr buffer, IntPtr userData)
+        protected virtual DecoderWriteStatus WriteCallback(IntPtr handle, ref Frame frame, IntPtr buffer, IntPtr userData)
         {
             return DecoderWriteStatus.Continue;
         }
