@@ -1,12 +1,10 @@
 ﻿using AudioWorks.Common;
 using JetBrains.Annotations;
 using System;
-using System.Composition;
 using System.IO;
 
 namespace AudioWorks.Extensions.Mp3
 {
-    [Shared]
     [AudioInfoDecoderExport(".mp3")]
     public sealed class Mp3AudioInfoDecoder : IAudioInfoDecoder
     {

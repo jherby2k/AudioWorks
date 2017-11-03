@@ -1,13 +1,11 @@
 ﻿using AudioWorks.Common;
 using JetBrains.Annotations;
 using System;
-using System.Composition;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 namespace AudioWorks.Extensions.Flac
 {
-    [Shared]
     [AudioDecoderExport(".flac")]
     public sealed class FlacAudioDecoder : IAudioDecoder, IDisposable
     {

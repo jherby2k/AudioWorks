@@ -1,10 +1,8 @@
 ﻿using AudioWorks.Common;
-using System.Composition;
 using System.IO;
 
 namespace AudioWorks.Extensions.Mp4
 {
-    [Shared]
     [AudioMetadataDecoderExport(".m4a")]
     public sealed class ItunesAudioMetadataDecoder : IAudioMetadataDecoder
     {

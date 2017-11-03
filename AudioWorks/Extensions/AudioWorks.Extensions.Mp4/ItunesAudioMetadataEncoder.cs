@@ -1,12 +1,10 @@
 ﻿using AudioWorks.Common;
 using JetBrains.Annotations;
-using System.Composition;
 using System.IO;
 using System.Linq;
 
 namespace AudioWorks.Extensions.Mp4
 {
-    [Shared]
     [AudioMetadataEncoderExport(".m4a")]
     public sealed class ItunesAudioMetadataEncoder : IAudioMetadataEncoder
     {

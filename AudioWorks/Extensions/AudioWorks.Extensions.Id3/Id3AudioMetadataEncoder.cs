@@ -2,13 +2,11 @@
 using Id3Lib;
 using Id3Lib.Exceptions;
 using JetBrains.Annotations;
-using System.Composition;
 using System.IO;
 using System.Text;
 
 namespace AudioWorks.Extensions.Id3
 {
-    [Shared]
     [AudioMetadataEncoderExport(".mp3")]
     public sealed class Id3AudioMetadataEncoder : IAudioMetadataEncoder
     {
