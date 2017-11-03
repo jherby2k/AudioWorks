@@ -12,11 +12,12 @@ namespace AudioWorks.Common
     public interface IAnalyzableAudioFile : ITaggedAudioFile
     {
         /// <summary>
-        /// Analyzes the audio file.
+        /// Analyzes the audio file asynchronously.
         /// </summary>
         /// <param name="analyzer">The analyzer.</param>
         /// <param name="groupToken">The group token.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>An awaitable task.</returns>
         Task AnalyzeAsync([NotNull] string analyzer, [NotNull] GroupToken groupToken, CancellationToken cancellationToken);
     }
 }
