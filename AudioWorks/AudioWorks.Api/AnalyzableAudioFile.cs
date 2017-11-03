@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 
 namespace AudioWorks.Api
@@ -30,7 +31,7 @@ namespace AudioWorks.Api
         }
 
         /// <inheritdoc />
-        public async void Analyze(string analyzer, GroupToken groupToken, CancellationToken cancellationToken)
+        public async Task AnalyzeAsync(string analyzer, GroupToken groupToken, CancellationToken cancellationToken)
         {
             if (analyzer == null)
                 throw new ArgumentNullException(nameof(analyzer));
@@ -55,9 +56,10 @@ namespace AudioWorks.Api
                             decoderExport.Value.Initialize(fileStream);
 
                             var block = new ActionBlock<SampleCollection>(samples => analyzerInstance.Submit(samples));
-
                             while (!decoderExport.Value.Finished)
                                 await block.SendAsync(decoderExport.Value.DecodeSamples()).ConfigureAwait(false);
+                            block.Complete();
+                            await block.Completion.ConfigureAwait(false);
 
                             CopyFields(analyzerExport.Value.GetResult(), Metadata);
                             return;

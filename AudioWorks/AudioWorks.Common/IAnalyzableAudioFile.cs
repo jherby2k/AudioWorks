@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Common
@@ -16,6 +17,6 @@ namespace AudioWorks.Common
         /// <param name="analyzer">The analyzer.</param>
         /// <param name="groupToken">The group token.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        void Analyze([NotNull] string analyzer, [NotNull] GroupToken groupToken, CancellationToken cancellationToken);
+        Task AnalyzeAsync([NotNull] string analyzer, [NotNull] GroupToken groupToken, CancellationToken cancellationToken);
     }
 }

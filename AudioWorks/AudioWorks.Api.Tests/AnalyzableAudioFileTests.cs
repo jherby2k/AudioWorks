@@ -52,7 +52,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AnalyzableAudioFile's Analyze method creates the expected metadata")]
         [MemberData(nameof(AnalyzeValidFileDataSource.Data), MemberType = typeof(AnalyzeValidFileDataSource))]
-        public void AnalyzeCreatesExpectedMetadata(
+        public async void AnalyzeCreatesExpectedMetadata(
             [NotNull] string fileName,
             [NotNull] string analyzer,
             [NotNull] TestAudioMetadata expectedMetadata)
@@ -64,7 +64,7 @@ namespace AudioWorks.Api.Tests
                 fileName));
 
             using (var groupToken = new GroupToken())
-                audioFile.Analyze(analyzer, groupToken, CancellationToken.None);
+                await audioFile.AnalyzeAsync(analyzer, groupToken, CancellationToken.None).ConfigureAwait(true);
 
             Assert.True(new Comparer().Compare(expectedMetadata, audioFile.Metadata));
         }

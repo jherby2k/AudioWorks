@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 using System.Collections.Generic;
 using System.Management.Automation;
 using System.Threading;
-using System.Threading.Tasks;
+using System.Threading.Tasks.Dataflow;
 
 namespace AudioWorks.Commands
 {
@@ -55,8 +55,15 @@ namespace AudioWorks.Commands
 
         void AnalyzeParallel([NotNull] GroupToken groupToken)
         {
-            Parallel.ForEach(_audioFiles, audioFile =>
-                audioFile.Analyze(Analyzer, groupToken, CancellationToken.None));
+            var block = new ActionBlock<IAnalyzableAudioFile>(async audioFile =>
+                    await audioFile.AnalyzeAsync(Analyzer, groupToken, CancellationToken.None).ConfigureAwait(false),
+                new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = DataflowBlockOptions.Unbounded });
+
+            foreach (var audioFile in _audioFiles)
+                block.Post(audioFile);
+
+            block.Complete();
+            block.Completion.Wait();
         }
     }
 }
