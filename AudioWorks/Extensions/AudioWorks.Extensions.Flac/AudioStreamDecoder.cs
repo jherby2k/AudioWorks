@@ -8,7 +8,7 @@ namespace AudioWorks.Extensions.Flac
     sealed class AudioStreamDecoder : AudioInfoStreamDecoder
     {
         float _divisor;
-        int[][] _managedBuffer;
+        [CanBeNull] int[] _buffer;
 
         [CanBeNull]
         public SampleCollection Samples { get; set; }
@@ -26,31 +26,26 @@ namespace AudioWorks.Extensions.Flac
         protected override DecoderWriteStatus WriteCallback(IntPtr handle, ref Frame frame, IntPtr buffer,
             IntPtr userData)
         {
-            // Initialize the divisor:
+            // Initialize the divisor
             if (_divisor < 1)
                 _divisor = (float) Math.Pow(2, frame.Header.BitsPerSample - 1);
 
-            // Initialize the output buffer:
-            if (_managedBuffer == null)
-            {
-                _managedBuffer = new int[frame.Header.Channels][];
-                for (var channelIndex = 0; channelIndex < frame.Header.Channels; channelIndex++)
-                    _managedBuffer[channelIndex] = new int[frame.Header.BlockSize];
-            }
+            // Initialize the output buffer
+            if (_buffer == null)
+                _buffer = new int[frame.Header.BlockSize];
 
-            // Copy the samples from unmanaged memory into the output buffer:
+            Samples = new SampleCollection((int)frame.Header.Channels, (int)frame.Header.BlockSize);
+
             for (var channelIndex = 0; channelIndex < frame.Header.Channels; channelIndex++)
             {
+                // Copy the samples for each channel from unmanaged memory into the output buffer
                 var channelPtr = Marshal.ReadIntPtr(buffer, channelIndex * Marshal.SizeOf(buffer));
-                Marshal.Copy(channelPtr, _managedBuffer[channelIndex], 0, (int) frame.Header.BlockSize);
+                Marshal.Copy(channelPtr, _buffer, 0, (int) frame.Header.BlockSize);
+
+                // Convert to floating point values
+                for (var frameIndex = 0; frameIndex < (int)frame.Header.BlockSize; frameIndex++)
+                    Samples[channelIndex][frameIndex] = _buffer[frameIndex] / _divisor;
             }
-
-            Samples = new SampleCollection((int) frame.Header.Channels, (int) frame.Header.BlockSize);
-
-            // Copy the output buffer into a new sample block, converting to floating point values:
-            for (var channelIndex = 0; channelIndex < (int) frame.Header.Channels; channelIndex++)
-            for (var frameIndex = 0; frameIndex < (int) frame.Header.BlockSize; frameIndex++)
-                Samples[channelIndex][frameIndex] = _managedBuffer[channelIndex][frameIndex] / _divisor;
 
             return DecoderWriteStatus.Continue;
         }
