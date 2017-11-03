@@ -19,22 +19,26 @@ namespace AudioWorks.Extensions.ReplayGain
 
         public void Initialize(AudioInfo audioInfo, GroupToken groupToken)
         {
-            _buffer = new float[audioInfo.Channels * SampleCollection.MaxFrames];
             _analyzer = new R128Analyzer((uint) audioInfo.Channels, (uint) audioInfo.SampleRate, groupToken);
             _groupToken = groupToken;
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
         public void Submit(SampleCollection samples)
         {
+            if (samples.Frames == 0)
+                return;
+
+            if (_buffer == null)
+                _buffer = new float[samples.Channels * samples.Frames];
+
             // Interlace the samples, and store them in the buffer:
             var index = 0;
-            for (var frame = 0; frame < samples.Frames; frame++)
-            for (var channel = 0; channel < samples.Channels; channel++)
-                _buffer[index++] = samples[channel][frame];
+            for (var frameIndex = 0; frameIndex < samples.Frames; frameIndex++)
+            for (var channelIndex = 0; channelIndex < samples.Channels; channelIndex++)
+                _buffer[index++] = samples[channelIndex][frameIndex];
 
-            _analyzer.AddFrames(_buffer);
+            _analyzer.AddFrames(_buffer, (uint) samples.Frames);
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
@@ -42,7 +46,7 @@ namespace AudioWorks.Extensions.ReplayGain
         {
             var result = new AudioMetadata
             {
-                TrackPeak = _analyzer.GetSamplePeak()
+                TrackPeak = _analyzer.GetTruePeak()
                     .ToString(CultureInfo.InvariantCulture),
                 TrackGain = (_referenceLevel - _analyzer.GetLoudness())
                     .ToString(CultureInfo.InvariantCulture)
@@ -51,7 +55,7 @@ namespace AudioWorks.Extensions.ReplayGain
             _groupToken.CompleteMember();
             _groupToken.WaitForMembers();
 
-            result.AlbumPeak = _analyzer.GetSamplePeakMultiple()
+            result.AlbumPeak = _analyzer.GetTruePeakMultiple()
                 .ToString(CultureInfo.InvariantCulture);
             result.AlbumGain = (_referenceLevel - _analyzer.GetLoudnessMultiple())
                 .ToString(CultureInfo.InvariantCulture);

@@ -65,19 +65,19 @@ namespace AudioWorks.Extensions.ReplayGain
             throw new NotImplementedException();
         }
 
-        internal static void SamplePeak(
+        internal static void TruePeak(
             [NotNull] StateHandle handle,
             uint channel,
             out double result)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                WinSamplePeak(handle, channel, out result);
+                WinTruePeak(handle, channel, out result);
                 return;
             }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                LinuxSamplePeak(handle, channel, out result);
+                LinuxTruePeak(handle, channel, out result);
                 return;
             }
 
@@ -150,13 +150,13 @@ namespace AudioWorks.Extensions.ReplayGain
             CallingConvention = CallingConvention.Cdecl)]
         static extern Ebur128Error LinuxAddFramesFloat([NotNull] StateHandle handle, float[] source, UIntPtr count);
 
-        [DllImport(_winEbur128Library, EntryPoint = "ebur128_sample_peak",
+        [DllImport(_winEbur128Library, EntryPoint = "ebur128_true_peak",
             CallingConvention = CallingConvention.Cdecl)]
-        static extern Ebur128Error WinSamplePeak([NotNull] StateHandle handle, uint channel, out double result);
+        static extern Ebur128Error WinTruePeak([NotNull] StateHandle handle, uint channel, out double result);
 
-        [DllImport(_linuxEbur128Library, EntryPoint = "ebur128_sample_peak",
+        [DllImport(_linuxEbur128Library, EntryPoint = "ebur128_true_peak",
             CallingConvention = CallingConvention.Cdecl)]
-        static extern Ebur128Error LinuxSamplePeak([NotNull] StateHandle handle, uint channel, out double result);
+        static extern Ebur128Error LinuxTruePeak([NotNull] StateHandle handle, uint channel, out double result);
 
         [DllImport(_winEbur128Library, EntryPoint = "ebur128_loudness_global",
             CallingConvention = CallingConvention.Cdecl)]

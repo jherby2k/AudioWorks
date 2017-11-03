@@ -19,41 +19,41 @@ namespace AudioWorks.Extensions.ReplayGain
         {
             _channels = channels;
             _groupToken = groupToken;
-            _handle = SafeNativeMethods.Initialize(channels, sampleRate, Modes.Global | Modes.SamplePeak);
+            _handle = SafeNativeMethods.Initialize(channels, sampleRate, Modes.Global | Modes.TruePeak);
             _groupHandles = _globalHandles.GetOrAdd(groupToken, new ConcurrentBag<StateHandle>());
             _groupHandles.Add(_handle);
         }
 
-        internal void AddFrames([NotNull] float[] frames)
+        internal void AddFrames([NotNull] float[] frames, uint count)
         {
-            SafeNativeMethods.AddFramesFloat(_handle, frames, (uint) frames.LongLength / _channels);
+            SafeNativeMethods.AddFramesFloat(_handle, frames, count);
         }
 
-        internal double GetSamplePeak()
+        internal double GetTruePeak()
         {
             var absolutePeak = 0.0;
 
             for (uint channel = 0; channel < _channels; channel++)
             {
-                SafeNativeMethods.SamplePeak(_handle, channel, out var channelPeak);
+                SafeNativeMethods.TruePeak(_handle, channel, out var channelPeak);
                 absolutePeak = Math.Max(channelPeak, absolutePeak);
             }
 
-            return absolutePeak;
+            return Math.Min(absolutePeak, 1.0);
         }
 
-        internal double GetSamplePeakMultiple()
+        internal double GetTruePeakMultiple()
         {
             var absolutePeak = 0.0;
 
             foreach (var trackHandle in _groupHandles)
                 for (uint channel = 0; channel < _channels; channel++)
                 {
-                    SafeNativeMethods.SamplePeak(trackHandle, channel, out var channelPeak);
+                    SafeNativeMethods.TruePeak(trackHandle, channel, out var channelPeak);
                     absolutePeak = Math.Max(channelPeak, absolutePeak);
                 }
 
-            return absolutePeak;
+            return Math.Min(absolutePeak, 1.0);
         }
 
         internal double GetLoudness()
