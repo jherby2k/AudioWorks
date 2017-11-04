@@ -136,6 +136,58 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackGain = "-8.64",
                     AlbumGain = "-8.64"
                 }
+            },
+
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Mono.m4a",
+                "ReplayGain",
+                new TestAudioMetadata
+                {
+                    TrackPeak = "1.000000",
+                    AlbumPeak = "1.000000",
+                    TrackGain = "-9.75",
+                    AlbumGain = "-9.75"
+                }
+            },
+
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo.m4a",
+                "ReplayGain",
+                new TestAudioMetadata
+                {
+                    TrackPeak = "1.000000",
+                    AlbumPeak = "1.000000",
+                    TrackGain = "-8.67",
+                    AlbumGain = "-8.67"
+                }
+            },
+
+            new object[]
+            {
+                "ALAC 16-bit 48000Hz Stereo.m4a",
+                "ReplayGain",
+                new TestAudioMetadata
+                {
+                    TrackPeak = "1.000000",
+                    AlbumPeak = "1.000000",
+                    TrackGain = "-8.66",
+                    AlbumGain = "-8.66"
+                }
+            },
+
+            new object[]
+            {
+                "ALAC 24-bit 96000Hz Stereo.m4a",
+                "ReplayGain",
+                new TestAudioMetadata
+                {
+                    TrackPeak = "0.992940",
+                    AlbumPeak = "0.992940",
+                    TrackGain = "-8.64",
+                    AlbumGain = "-8.64"
+                }
             }
         };
 

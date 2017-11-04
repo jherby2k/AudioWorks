@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>The Apple lossless and AAC format extension for AudioWorks. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
+    <Authors>Jeremy Herbison</Authors>
+    <Company />
+    <Product>AudioWorks</Product>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <Copyright>Copyright © 2017 Jeremy Herbison</Copyright>
+    <CodeAnalysisRuleSet>CodeAnalysis.ruleset</CodeAnalysisRuleSet>
+    <Features>IOperation</Features>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.3.0-beta1" />
+    <PackageReference Include="Microsoft.Win32.Registry" Version="4.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\AudioWorks.Extensions\AudioWorks.Extensions.csproj" />
+  </ItemGroup>
+
+</Project>
