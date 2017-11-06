@@ -15,7 +15,6 @@ namespace AudioWorks.Extensions.Wave
         [CanBeNull] AudioInfo _audioInfo;
         [CanBeNull] RiffReader _reader;
         int _bytesPerSample;
-        float _divisor;
         long _framesRemaining;
 
         public bool Finished => _framesRemaining == 0;
@@ -25,7 +24,6 @@ namespace AudioWorks.Extensions.Wave
             _audioInfo = new WaveAudioInfoDecoder().ReadAudioInfo(fileStream);
             _reader = new RiffReader(fileStream);
             _bytesPerSample = (int) Math.Ceiling(_audioInfo.BitsPerSample / 8.0);
-            _divisor = (float) Math.Pow(2, _audioInfo.BitsPerSample - 1);
             _framesRemaining = _audioInfo.SampleCount;
 
             _reader.Initialize();
@@ -43,14 +41,13 @@ namespace AudioWorks.Extensions.Wave
             if (_bytesPerSample == 1)
                 for (var frameIndex = 0; frameIndex < result.Frames; frameIndex++)
                 for (var channelIndex = 0; channelIndex < result.Channels; channelIndex++)
-                    result[channelIndex][frameIndex] = (_reader.ReadByte() - 128) / _divisor;
+                    result[channelIndex][frameIndex] = (_reader.ReadByte() - 128) / (float) 128;
             else
                 for (var frameIndex = 0; frameIndex < result.Frames; frameIndex++)
                 for (var channelIndex = 0; channelIndex < result.Channels; channelIndex++)
                 {
                     _reader.Read(_buffer, 4 - _bytesPerSample, _bytesPerSample);
-                    result[channelIndex][frameIndex] =
-                        (BitConverter.ToInt32(_buffer, 0) >> (4 - _bytesPerSample) * 8) / _divisor;
+                    result[channelIndex][frameIndex] = BitConverter.ToInt32(_buffer, 0) / (float) 0x8000_0000;
                 }
 
             _framesRemaining -= result.Frames;
