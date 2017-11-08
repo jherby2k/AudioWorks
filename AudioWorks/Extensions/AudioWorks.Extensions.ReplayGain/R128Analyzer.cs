@@ -36,7 +36,7 @@ namespace AudioWorks.Extensions.ReplayGain
             for (uint channel = 0; channel < _channels; channel++)
             {
                 SafeNativeMethods.TruePeak(_handle, channel, out var channelPeak);
-                absolutePeak = Math.Min(Math.Max(channelPeak, absolutePeak), 1.0);
+                absolutePeak = Math.Max(channelPeak, absolutePeak);
             }
 
             _groupState.AddPeak(absolutePeak);

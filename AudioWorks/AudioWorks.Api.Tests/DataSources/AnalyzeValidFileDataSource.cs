@@ -27,8 +27,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "ReplayGain",
                 new TestAudioMetadata
                 {
-                    TrackPeak = "1.000000",
-                    AlbumPeak = "1.000000",
+                    TrackPeak = "1.342166",
+                    AlbumPeak = "1.342166",
                     TrackGain = "-9.75",
                     AlbumGain = "-9.75"
                 }
@@ -40,8 +40,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "ReplayGain",
                 new TestAudioMetadata
                 {
-                    TrackPeak = "1.000000",
-                    AlbumPeak = "1.000000",
+                    TrackPeak = "1.012000",
+                    AlbumPeak = "1.012000",
                     TrackGain = "-8.67",
                     AlbumGain = "-8.67"
                 }
@@ -53,8 +53,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "ReplayGain",
                 new TestAudioMetadata
                 {
-                    TrackPeak = "1.000000",
-                    AlbumPeak = "1.000000",
+                    TrackPeak = "1.014152",
+                    AlbumPeak = "1.014152",
                     TrackGain = "-8.66",
                     AlbumGain = "-8.66"
                 }
@@ -92,8 +92,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "ReplayGain",
                 new TestAudioMetadata
                 {
-                    TrackPeak = "1.000000",
-                    AlbumPeak = "1.000000",
+                    TrackPeak = "1.342166",
+                    AlbumPeak = "1.342166",
                     TrackGain = "-9.75",
                     AlbumGain = "-9.75"
                 }
@@ -105,8 +105,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "ReplayGain",
                 new TestAudioMetadata
                 {
-                    TrackPeak = "1.000000",
-                    AlbumPeak = "1.000000",
+                    TrackPeak = "1.012000",
+                    AlbumPeak = "1.012000",
                     TrackGain = "-8.67",
                     AlbumGain = "-8.67"
                 }
@@ -118,8 +118,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "ReplayGain",
                 new TestAudioMetadata
                 {
-                    TrackPeak = "1.000000",
-                    AlbumPeak = "1.000000",
+                    TrackPeak = "1.014152",
+                    AlbumPeak = "1.014152",
                     TrackGain = "-8.66",
                     AlbumGain = "-8.66"
                 }
@@ -144,8 +144,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "ReplayGain",
                 new TestAudioMetadata
                 {
-                    TrackPeak = "1.000000",
-                    AlbumPeak = "1.000000",
+                    TrackPeak = "1.342166",
+                    AlbumPeak = "1.342166",
                     TrackGain = "-9.75",
                     AlbumGain = "-9.75"
                 }
@@ -157,8 +157,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "ReplayGain",
                 new TestAudioMetadata
                 {
-                    TrackPeak = "1.000000",
-                    AlbumPeak = "1.000000",
+                    TrackPeak = "1.012000",
+                    AlbumPeak = "1.012000",
                     TrackGain = "-8.67",
                     AlbumGain = "-8.67"
                 }
@@ -170,8 +170,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "ReplayGain",
                 new TestAudioMetadata
                 {
-                    TrackPeak = "1.000000",
-                    AlbumPeak = "1.000000",
+                    TrackPeak = "1.014152",
+                    AlbumPeak = "1.014152",
                     TrackGain = "-8.66",
                     AlbumGain = "-8.66"
                 }

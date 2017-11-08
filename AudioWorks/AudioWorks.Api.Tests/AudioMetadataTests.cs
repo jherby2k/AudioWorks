@@ -674,12 +674,6 @@ namespace AudioWorks.Api.Tests
             Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { TrackPeak = "-0.1" });
         }
 
-        [Fact(DisplayName = "AudioMetadata throws an exception if TrackPeak is greater than 1.0")]
-        public void TrackPeakTooHighThrowsException()
-        {
-            Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { TrackPeak = "1.1" });
-        }
-
         [Fact(DisplayName = "AudioMetadata throws an exception if TrackPeak isn't numeric")]
         public void TrackPeakNotNumericThrowsException()
         {
@@ -740,12 +734,6 @@ namespace AudioWorks.Api.Tests
         public void AlbumPeakNegativeThrowsException()
         {
             Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { AlbumPeak = "-0.1" });
-        }
-
-        [Fact(DisplayName = "AudioMetadata throws an exception if AlbumPeak is greater than 1.0")]
-        public void AlbumPeakTooHighThrowsException()
-        {
-            Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { AlbumPeak = "1.1" });
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if AlbumPeak isn't numeric")]

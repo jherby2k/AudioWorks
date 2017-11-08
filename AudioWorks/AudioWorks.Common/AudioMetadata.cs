@@ -263,8 +263,8 @@ namespace AudioWorks.Common
                     _trackPeak = string.Empty;
                 else
                 {
-                    if (!double.TryParse(value, out var floatValue) || floatValue < 0 || floatValue > 1.0)
-                        throw new AudioMetadataInvalidException("TrackPeak must be between 0 and 1.0.");
+                    if (!double.TryParse(value, out var floatValue) || floatValue < 0)
+                        throw new AudioMetadataInvalidException("TrackPeak cannot be negative.");
                     _trackPeak = floatValue.ToString("F6", CultureInfo.InvariantCulture);
                 }
             }
@@ -289,8 +289,8 @@ namespace AudioWorks.Common
                     _albumPeak = string.Empty;
                 else
                 {
-                    if (!double.TryParse(value, out var floatValue) || floatValue < 0 || floatValue > 1.0)
-                        throw new AudioMetadataInvalidException("AlbumPeak must be between 0 and 1.0.");
+                    if (!double.TryParse(value, out var floatValue) || floatValue < 0)
+                        throw new AudioMetadataInvalidException("AlbumPeak cannot be negative.");
                     _albumPeak = floatValue.ToString("F6", CultureInfo.InvariantCulture);
                 }
             }
