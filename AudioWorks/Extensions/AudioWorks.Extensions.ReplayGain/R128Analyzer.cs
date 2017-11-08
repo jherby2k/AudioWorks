@@ -7,21 +7,21 @@ namespace AudioWorks.Extensions.ReplayGain
 {
     sealed class R128Analyzer : IDisposable
     {
-        [NotNull] static readonly ConcurrentDictionary<GroupToken, ConcurrentBag<StateHandle>> _globalHandles =
-            new ConcurrentDictionary<GroupToken, ConcurrentBag<StateHandle>>();
+        [NotNull] static readonly ConcurrentDictionary<GroupToken, GroupState> _groupStates =
+            new ConcurrentDictionary<GroupToken, GroupState>();
 
         readonly uint _channels;
         [NotNull] readonly GroupToken _groupToken;
         [NotNull] readonly StateHandle _handle;
-        [NotNull] readonly ConcurrentBag<StateHandle> _groupHandles;
+        [NotNull] readonly GroupState _groupState;
 
         internal R128Analyzer(uint channels, uint sampleRate, [NotNull] GroupToken groupToken)
         {
             _channels = channels;
             _groupToken = groupToken;
             _handle = SafeNativeMethods.Initialize(channels, sampleRate, Modes.Global | Modes.TruePeak);
-            _groupHandles = _globalHandles.GetOrAdd(groupToken, new ConcurrentBag<StateHandle>());
-            _groupHandles.Add(_handle);
+            _groupState = _groupStates.GetOrAdd(groupToken, new GroupState());
+            _groupState.Handles.Add(_handle);
         }
 
         internal void AddFrames([NotNull] float[] frames, uint count)
@@ -46,7 +46,7 @@ namespace AudioWorks.Extensions.ReplayGain
         {
             var absolutePeak = 0.0;
 
-            foreach (var trackHandle in _groupHandles)
+            foreach (var trackHandle in _groupState.Handles)
                 for (uint channel = 0; channel < _channels; channel++)
                 {
                     SafeNativeMethods.TruePeak(trackHandle, channel, out var channelPeak);
@@ -64,18 +64,20 @@ namespace AudioWorks.Extensions.ReplayGain
 
         internal double GetLoudnessMultiple()
         {
-            SafeNativeMethods.LoudnessGlobalMultiple(_groupHandles.ToArray(), out var loudness);
+            SafeNativeMethods.LoudnessGlobalMultiple(_groupState.Handles.ToArray(), out var loudness);
             return loudness;
         }
 
         public void Dispose()
         {
-            // The first group member to dispose will take care of all the handles
-            if (!_globalHandles.TryRemove(_groupToken, out _))
+            if (_groupState.SignalHandleDisposing() != _groupToken.Count)
                 return;
 
-            foreach (var handle in _groupHandles)
+            // Dispose all the handles at once
+            while (_groupState.Handles.TryTake(out var handle))
                 handle.Dispose();
+
+            _groupStates.TryRemove(_groupToken, out _);
         }
     }
 }

@@ -13,6 +13,14 @@ namespace AudioWorks.Common
         int _remainingMembers;
 
         /// <summary>
+        /// Gets the member count.
+        /// </summary>
+        /// <value>
+        /// The member count.
+        /// </value>
+        public int Count { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GroupToken"/> class.
         /// </summary>
         /// <param name="count">The member count.</param>
@@ -22,6 +30,7 @@ namespace AudioWorks.Common
             if (count < 1)
                 throw new ArgumentOutOfRangeException(nameof(count), $"{nameof(count)} must be 1 or greater.");
 
+            Count = count;
             _remainingMembers = count;
         }
 
