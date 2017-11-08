@@ -36,24 +36,16 @@ namespace AudioWorks.Extensions.ReplayGain
             for (uint channel = 0; channel < _channels; channel++)
             {
                 SafeNativeMethods.TruePeak(_handle, channel, out var channelPeak);
-                absolutePeak = Math.Max(channelPeak, absolutePeak);
+                absolutePeak = Math.Min(Math.Max(channelPeak, absolutePeak), 1.0);
             }
 
-            return Math.Min(absolutePeak, 1.0);
+            _groupState.AddPeak(absolutePeak);
+            return absolutePeak;
         }
 
         internal double GetTruePeakMultiple()
         {
-            var absolutePeak = 0.0;
-
-            foreach (var trackHandle in _groupState.Handles)
-                for (uint channel = 0; channel < _channels; channel++)
-                {
-                    SafeNativeMethods.TruePeak(trackHandle, channel, out var channelPeak);
-                    absolutePeak = Math.Max(channelPeak, absolutePeak);
-                }
-
-            return Math.Min(absolutePeak, 1.0);
+            return _groupState.GroupPeak;
         }
 
         internal double GetLoudness()
