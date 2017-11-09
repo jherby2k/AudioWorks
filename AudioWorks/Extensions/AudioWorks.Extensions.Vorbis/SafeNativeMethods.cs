@@ -12,8 +12,8 @@ namespace AudioWorks.Extensions.Vorbis
     [SuppressUnmanagedCodeSecurity]
     static class SafeNativeMethods
     {
-        const string _winOggLibrary = "libogg";
-        const string _winVorbisLibrary = "libvorbis";
+        const string _standardOggLibrary = "libogg";
+        const string _standardVorbisLibrary = "libvorbis";
         const string _linuxOggLibrary = "libogg.so.0";
         const string _linuxVorbisLibrary = "libvorbis.so.0";
 
@@ -35,17 +35,17 @@ namespace AudioWorks.Extensions.Vorbis
         [Pure]
         internal static int OggPageGetSerialNumber(ref OggPage page)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                return LinuxOggPageSerialNo(ref page);
-            return WinOggPageSerialNo(ref page);
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                ? LinuxOggPageSerialNo(ref page)
+                : StandardOggPageSerialNo(ref page);
         }
 
         [Pure]
         internal static bool OggPageEndOfStream(ref OggPage page)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                return LinuxOggPageEos(ref page);
-            return WinOggPageEos(ref page);
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                ? LinuxOggPageEos(ref page)
+                : StandardOggPageEos(ref page);
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
@@ -55,21 +55,21 @@ namespace AudioWorks.Extensions.Vorbis
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxOggSyncInit(syncState);
             else
-                WinOggSyncInit(syncState);
+                StandardOggSyncInit(syncState);
         }
 
         internal static bool OggSyncPageOut(IntPtr syncState, out OggPage page)
-        { 
+        {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return LinuxOggSyncPageOut(syncState, out page) == 1;
-            return WinOggSyncPageOut(syncState, out page) == 1;
+            return StandardOggSyncPageOut(syncState, out page) == 1;
         }
 
         internal static IntPtr OggSyncBuffer(IntPtr syncState, int size)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                return LinuxOggSyncBuffer(syncState, size);
-            return WinOggSyncBuffer(syncState, size);
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                ? LinuxOggSyncBuffer(syncState, size)
+                : StandardOggSyncBuffer(syncState, size);
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
@@ -79,7 +79,7 @@ namespace AudioWorks.Extensions.Vorbis
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxOggSyncWrote(syncState, bytes);
             else
-                WinOggSyncWrote(syncState, bytes);
+                StandardOggSyncWrote(syncState, bytes);
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
@@ -89,7 +89,7 @@ namespace AudioWorks.Extensions.Vorbis
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxOggSyncClear(syncState);
             else
-                WinOggSyncClear(syncState);
+                StandardOggSyncClear(syncState);
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
@@ -99,7 +99,7 @@ namespace AudioWorks.Extensions.Vorbis
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxOggStreamInit(streamState, serialNumber);
             else
-                WinOggStreamInit(streamState, serialNumber);
+                StandardOggStreamInit(streamState, serialNumber);
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
@@ -109,14 +109,14 @@ namespace AudioWorks.Extensions.Vorbis
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxOggStreamPageIn(streamState, ref page);
             else
-                WinOggStreamPageIn(streamState, ref page);
+                StandardOggStreamPageIn(streamState, ref page);
         }
 
         internal static bool OggStreamPageOut(IntPtr streamState, out OggPage page)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return LinuxOggStreamPageOut(streamState, out page) != 0;
-            return WinOggStreamPageOut(streamState, out page) != 0;
+            return StandardOggStreamPageOut(streamState, out page) != 0;
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
@@ -126,21 +126,21 @@ namespace AudioWorks.Extensions.Vorbis
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxOggStreamPacketIn(streamState, ref packet);
             else
-                WinOggStreamPacketIn(streamState, ref packet);
+                StandardOggStreamPacketIn(streamState, ref packet);
         }
 
         internal static bool OggStreamPacketOut(IntPtr streamState, out OggPacket packet)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return LinuxOggStreamPacketOut(streamState, out packet) == 1;
-            return WinOggStreamPacketOut(streamState, out packet) == 1;
+            return StandardOggStreamPacketOut(streamState, out packet) == 1;
         }
 
         internal static bool OggStreamFlush(IntPtr streamState, out OggPage page)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return LinuxOggStreamFlush(streamState, out page) != 0;
-            return WinOggStreamFlush(streamState, out page) != 0;
+            return StandardOggStreamFlush(streamState, out page) != 0;
         }
 
         internal static void OggStreamClear(IntPtr streamState)
@@ -148,7 +148,7 @@ namespace AudioWorks.Extensions.Vorbis
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxOggStreamClear(streamState);
             else
-                WinOggStreamClear(streamState);
+                StandardOggStreamClear(streamState);
         }
 
         internal static void VorbisCommentInitialize(out VorbisComment comment)
@@ -156,7 +156,7 @@ namespace AudioWorks.Extensions.Vorbis
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxVorbisCommentInit(out comment);
             else
-                WinVorbisCommentInit(out comment);
+                StandardVorbisCommentInit(out comment);
         }
 
         internal static void VorbisCommentAddTag(ref VorbisComment comment, byte[] tag, byte[] contents)
@@ -164,7 +164,7 @@ namespace AudioWorks.Extensions.Vorbis
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxVorbisCommentAddTag(ref comment, tag, contents);
             else
-                WinVorbisCommentAddTag(ref comment, tag, contents);
+                StandardVorbisCommentAddTag(ref comment, tag, contents);
         }
 
         internal static void VorbisCommentClear(ref VorbisComment comment)
@@ -172,7 +172,7 @@ namespace AudioWorks.Extensions.Vorbis
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxVorbisCommentClear(ref comment);
             else
-                WinVorbisCommentClear(ref comment);
+                StandardVorbisCommentClear(ref comment);
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
@@ -182,7 +182,7 @@ namespace AudioWorks.Extensions.Vorbis
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxVorbisCommentHeaderOut(ref comment, out packet);
             else
-                WinVorbisCommentHeaderOut(ref comment, out packet);
+                StandardVorbisCommentHeaderOut(ref comment, out packet);
         }
 
         internal static void VorbisInfoInitialize(IntPtr info)
@@ -190,7 +190,7 @@ namespace AudioWorks.Extensions.Vorbis
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxVorbisInfoInit(info);
             else
-                WinVorbisInfoInit(info);
+                StandardVorbisInfoInit(info);
         }
 
         internal static void VorbisInfoClear(IntPtr info)
@@ -198,15 +198,15 @@ namespace AudioWorks.Extensions.Vorbis
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxVorbisInfoClear(info);
             else
-                WinVorbisInfoClear(info);
+                StandardVorbisInfoClear(info);
         }
 
         [Pure]
         internal static bool VorbisSynthesisIdHeader(ref OggPacket packet)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                return LinuxVorbisSynthesisIdHeader(ref packet);
-            return WinVorbisSynthesisIdHeader(ref packet);
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                ? LinuxVorbisSynthesisIdHeader(ref packet)
+                : StandardVorbisSynthesisIdHeader(ref packet);
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
@@ -216,12 +216,12 @@ namespace AudioWorks.Extensions.Vorbis
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxVorbisSynthesisHeaderIn(info, ref comment, ref packet);
             else
-                WinVorbisSynthesisHeaderIn(info, ref comment, ref packet);
+                StandardVorbisSynthesisHeaderIn(info, ref comment, ref packet);
         }
 
         [Pure]
-        [DllImport(_winOggLibrary, EntryPoint = "ogg_page_serialno", CallingConvention = CallingConvention.Cdecl)]
-        static extern int WinOggPageSerialNo(ref OggPage page);
+        [DllImport(_standardOggLibrary, EntryPoint = "ogg_page_serialno", CallingConvention = CallingConvention.Cdecl)]
+        static extern int StandardOggPageSerialNo(ref OggPage page);
 
         [Pure]
         [DllImport(_linuxOggLibrary, EntryPoint = "ogg_page_serialno", CallingConvention = CallingConvention.Cdecl)]
@@ -229,133 +229,133 @@ namespace AudioWorks.Extensions.Vorbis
 
         [Pure]
         [return: MarshalAs(UnmanagedType.Bool)]
-        [DllImport(_winOggLibrary, EntryPoint = "ogg_page_eos", CallingConvention = CallingConvention.Cdecl)]
-        static extern bool WinOggPageEos(ref OggPage page);
+        [DllImport(_standardOggLibrary, EntryPoint = "ogg_page_eos", CallingConvention = CallingConvention.Cdecl)]
+        static extern bool StandardOggPageEos(ref OggPage page);
 
         [Pure]
         [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport(_linuxOggLibrary, EntryPoint = "ogg_page_eos", CallingConvention = CallingConvention.Cdecl)]
         static extern bool LinuxOggPageEos(ref OggPage page);
 
-        [DllImport(_winOggLibrary, EntryPoint = "ogg_sync_init", CallingConvention = CallingConvention.Cdecl)]
-        static extern int WinOggSyncInit(IntPtr syncState);
+        [DllImport(_standardOggLibrary, EntryPoint = "ogg_sync_init", CallingConvention = CallingConvention.Cdecl)]
+        static extern int StandardOggSyncInit(IntPtr syncState);
 
         [DllImport(_linuxOggLibrary, EntryPoint = "ogg_sync_init", CallingConvention = CallingConvention.Cdecl)]
         static extern int LinuxOggSyncInit(IntPtr syncState);
 
-        [DllImport(_winOggLibrary, EntryPoint = "ogg_sync_pageout", CallingConvention = CallingConvention.Cdecl)]
-        static extern int WinOggSyncPageOut(IntPtr syncState, out OggPage page);
+        [DllImport(_standardOggLibrary, EntryPoint = "ogg_sync_pageout", CallingConvention = CallingConvention.Cdecl)]
+        static extern int StandardOggSyncPageOut(IntPtr syncState, out OggPage page);
 
         [DllImport(_linuxOggLibrary, EntryPoint = "ogg_sync_pageout", CallingConvention = CallingConvention.Cdecl)]
         static extern int LinuxOggSyncPageOut(IntPtr syncState, out OggPage page);
 
-        [DllImport(_winOggLibrary, EntryPoint = "ogg_sync_buffer", CallingConvention = CallingConvention.Cdecl)]
-        static extern IntPtr WinOggSyncBuffer(IntPtr syncState, int size);
+        [DllImport(_standardOggLibrary, EntryPoint = "ogg_sync_buffer", CallingConvention = CallingConvention.Cdecl)]
+        static extern IntPtr StandardOggSyncBuffer(IntPtr syncState, int size);
 
         [DllImport(_linuxOggLibrary, EntryPoint = "ogg_sync_buffer", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr LinuxOggSyncBuffer(IntPtr syncState, int size);
 
-        [DllImport(_winOggLibrary, EntryPoint = "ogg_sync_wrote", CallingConvention = CallingConvention.Cdecl)]
-        static extern int WinOggSyncWrote(IntPtr syncState, int bytes);
+        [DllImport(_standardOggLibrary, EntryPoint = "ogg_sync_wrote", CallingConvention = CallingConvention.Cdecl)]
+        static extern int StandardOggSyncWrote(IntPtr syncState, int bytes);
 
         [DllImport(_linuxOggLibrary, EntryPoint = "ogg_sync_wrote", CallingConvention = CallingConvention.Cdecl)]
         static extern int LinuxOggSyncWrote(IntPtr syncState, int bytes);
 
-        [DllImport(_winOggLibrary, EntryPoint = "ogg_sync_clear", CallingConvention = CallingConvention.Cdecl)]
-        static extern int WinOggSyncClear(IntPtr syncState);
+        [DllImport(_standardOggLibrary, EntryPoint = "ogg_sync_clear", CallingConvention = CallingConvention.Cdecl)]
+        static extern int StandardOggSyncClear(IntPtr syncState);
 
         [DllImport(_linuxOggLibrary, EntryPoint = "ogg_sync_clear", CallingConvention = CallingConvention.Cdecl)]
         static extern int LinuxOggSyncClear(IntPtr syncState);
 
-        [DllImport(_winOggLibrary, EntryPoint = "ogg_stream_init", CallingConvention = CallingConvention.Cdecl)]
-        static extern int WinOggStreamInit(IntPtr streamState, int serialNumber);
+        [DllImport(_standardOggLibrary, EntryPoint = "ogg_stream_init", CallingConvention = CallingConvention.Cdecl)]
+        static extern int StandardOggStreamInit(IntPtr streamState, int serialNumber);
 
         [DllImport(_linuxOggLibrary, EntryPoint = "ogg_stream_init", CallingConvention = CallingConvention.Cdecl)]
         static extern int LinuxOggStreamInit(IntPtr streamState, int serialNumber);
 
-        [DllImport(_winOggLibrary, EntryPoint = "ogg_stream_pagein", CallingConvention = CallingConvention.Cdecl)]
-        static extern int WinOggStreamPageIn(IntPtr streamState, ref OggPage page);
+        [DllImport(_standardOggLibrary, EntryPoint = "ogg_stream_pagein", CallingConvention = CallingConvention.Cdecl)]
+        static extern int StandardOggStreamPageIn(IntPtr streamState, ref OggPage page);
 
         [DllImport(_linuxOggLibrary, EntryPoint = "ogg_stream_pagein", CallingConvention = CallingConvention.Cdecl)]
         static extern int LinuxOggStreamPageIn(IntPtr streamState, ref OggPage page);
 
-        [DllImport(_winOggLibrary, EntryPoint = "ogg_stream_pageout", CallingConvention = CallingConvention.Cdecl)]
-        static extern int WinOggStreamPageOut(IntPtr streamState, out OggPage page);
+        [DllImport(_standardOggLibrary, EntryPoint = "ogg_stream_pageout", CallingConvention = CallingConvention.Cdecl)]
+        static extern int StandardOggStreamPageOut(IntPtr streamState, out OggPage page);
 
         [DllImport(_linuxOggLibrary, EntryPoint = "ogg_stream_pageout", CallingConvention = CallingConvention.Cdecl)]
         static extern int LinuxOggStreamPageOut(IntPtr streamState, out OggPage page);
 
-        [DllImport(_winOggLibrary, EntryPoint = "ogg_stream_packetin", CallingConvention = CallingConvention.Cdecl)]
-        static extern int WinOggStreamPacketIn(IntPtr streamState, ref OggPacket packet);
+        [DllImport(_standardOggLibrary, EntryPoint = "ogg_stream_packetin", CallingConvention = CallingConvention.Cdecl)]
+        static extern int StandardOggStreamPacketIn(IntPtr streamState, ref OggPacket packet);
 
         [DllImport(_linuxOggLibrary, EntryPoint = "ogg_stream_packetin", CallingConvention = CallingConvention.Cdecl)]
         static extern int LinuxOggStreamPacketIn(IntPtr streamState, ref OggPacket packet);
 
-        [DllImport(_winOggLibrary, EntryPoint = "ogg_stream_packetout", CallingConvention = CallingConvention.Cdecl)]
-        static extern int WinOggStreamPacketOut(IntPtr streamState, out OggPacket packet);
+        [DllImport(_standardOggLibrary, EntryPoint = "ogg_stream_packetout", CallingConvention = CallingConvention.Cdecl)]
+        static extern int StandardOggStreamPacketOut(IntPtr streamState, out OggPacket packet);
 
         [DllImport(_linuxOggLibrary, EntryPoint = "ogg_stream_packetout", CallingConvention = CallingConvention.Cdecl)]
         static extern int LinuxOggStreamPacketOut(IntPtr streamState, out OggPacket packet);
 
-        [DllImport(_winOggLibrary, EntryPoint = "ogg_stream_flush", CallingConvention = CallingConvention.Cdecl)]
-        static extern int WinOggStreamFlush(IntPtr streamState, out OggPage page);
+        [DllImport(_standardOggLibrary, EntryPoint = "ogg_stream_flush", CallingConvention = CallingConvention.Cdecl)]
+        static extern int StandardOggStreamFlush(IntPtr streamState, out OggPage page);
 
         [DllImport(_linuxOggLibrary, EntryPoint = "ogg_stream_flush", CallingConvention = CallingConvention.Cdecl)]
         static extern int LinuxOggStreamFlush(IntPtr streamState, out OggPage page);
 
-        [DllImport(_winOggLibrary, EntryPoint = "ogg_stream_clear", CallingConvention = CallingConvention.Cdecl)]
-        static extern void WinOggStreamClear(IntPtr streamState);
+        [DllImport(_standardOggLibrary, EntryPoint = "ogg_stream_clear", CallingConvention = CallingConvention.Cdecl)]
+        static extern void StandardOggStreamClear(IntPtr streamState);
 
         [DllImport(_linuxOggLibrary, EntryPoint = "ogg_stream_clear", CallingConvention = CallingConvention.Cdecl)]
         static extern void LinuxOggStreamClear(IntPtr streamState);
 
-        [DllImport(_winVorbisLibrary, EntryPoint = "vorbis_comment_init", CallingConvention = CallingConvention.Cdecl)]
-        static extern void WinVorbisCommentInit(out VorbisComment comment);
+        [DllImport(_standardVorbisLibrary, EntryPoint = "vorbis_comment_init", CallingConvention = CallingConvention.Cdecl)]
+        static extern void StandardVorbisCommentInit(out VorbisComment comment);
 
         [DllImport(_linuxVorbisLibrary, EntryPoint = "vorbis_comment_init",
             CallingConvention = CallingConvention.Cdecl)]
         static extern void LinuxVorbisCommentInit(out VorbisComment comment);
 
-        [DllImport(_winVorbisLibrary, EntryPoint = "vorbis_comment_add_tag",
+        [DllImport(_standardVorbisLibrary, EntryPoint = "vorbis_comment_add_tag",
             CallingConvention = CallingConvention.Cdecl)]
-        static extern void WinVorbisCommentAddTag(ref VorbisComment comment, byte[] tag, byte[] contents);
+        static extern void StandardVorbisCommentAddTag(ref VorbisComment comment, byte[] tag, byte[] contents);
 
         [DllImport(_linuxVorbisLibrary, EntryPoint = "vorbis_comment_add_tag",
             CallingConvention = CallingConvention.Cdecl)]
         static extern void LinuxVorbisCommentAddTag(ref VorbisComment comment, byte[] tag, byte[] contents);
 
-        [DllImport(_winVorbisLibrary, EntryPoint = "vorbis_comment_clear", CallingConvention = CallingConvention.Cdecl)]
-        static extern void WinVorbisCommentClear(ref VorbisComment comment);
+        [DllImport(_standardVorbisLibrary, EntryPoint = "vorbis_comment_clear", CallingConvention = CallingConvention.Cdecl)]
+        static extern void StandardVorbisCommentClear(ref VorbisComment comment);
 
         [DllImport(_linuxVorbisLibrary, EntryPoint = "vorbis_comment_clear",
             CallingConvention = CallingConvention.Cdecl)]
         static extern void LinuxVorbisCommentClear(ref VorbisComment comment);
 
-        [DllImport(_winVorbisLibrary, EntryPoint = "vorbis_commentheader_out",
+        [DllImport(_standardVorbisLibrary, EntryPoint = "vorbis_commentheader_out",
             CallingConvention = CallingConvention.Cdecl)]
-        static extern int WinVorbisCommentHeaderOut(ref VorbisComment comment, out OggPacket packet);
+        static extern int StandardVorbisCommentHeaderOut(ref VorbisComment comment, out OggPacket packet);
 
         [DllImport(_linuxVorbisLibrary, EntryPoint = "vorbis_commentheader_out",
             CallingConvention = CallingConvention.Cdecl)]
         static extern int LinuxVorbisCommentHeaderOut(ref VorbisComment comment, out OggPacket packet);
 
-        [DllImport(_winVorbisLibrary, EntryPoint = "vorbis_info_init", CallingConvention = CallingConvention.Cdecl)]
-        static extern void WinVorbisInfoInit(IntPtr info);
+        [DllImport(_standardVorbisLibrary, EntryPoint = "vorbis_info_init", CallingConvention = CallingConvention.Cdecl)]
+        static extern void StandardVorbisInfoInit(IntPtr info);
 
         [DllImport(_linuxVorbisLibrary, EntryPoint = "vorbis_info_init", CallingConvention = CallingConvention.Cdecl)]
         static extern void LinuxVorbisInfoInit(IntPtr info);
 
-        [DllImport(_winVorbisLibrary, EntryPoint = "vorbis_info_clear", CallingConvention = CallingConvention.Cdecl)]
-        static extern void WinVorbisInfoClear(IntPtr info);
+        [DllImport(_standardVorbisLibrary, EntryPoint = "vorbis_info_clear", CallingConvention = CallingConvention.Cdecl)]
+        static extern void StandardVorbisInfoClear(IntPtr info);
 
         [DllImport(_linuxVorbisLibrary, EntryPoint = "vorbis_info_clear", CallingConvention = CallingConvention.Cdecl)]
         static extern void LinuxVorbisInfoClear(IntPtr info);
 
         [Pure]
         [return: MarshalAs(UnmanagedType.Bool)]
-        [DllImport(_winVorbisLibrary, EntryPoint = "vorbis_synthesis_idheader",
+        [DllImport(_standardVorbisLibrary, EntryPoint = "vorbis_synthesis_idheader",
             CallingConvention = CallingConvention.Cdecl)]
-        static extern bool WinVorbisSynthesisIdHeader(ref OggPacket packet);
+        static extern bool StandardVorbisSynthesisIdHeader(ref OggPacket packet);
 
         [Pure]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -363,9 +363,9 @@ namespace AudioWorks.Extensions.Vorbis
             CallingConvention = CallingConvention.Cdecl)]
         static extern bool LinuxVorbisSynthesisIdHeader(ref OggPacket packet);
 
-        [DllImport(_winVorbisLibrary, EntryPoint = "vorbis_synthesis_headerin",
+        [DllImport(_standardVorbisLibrary, EntryPoint = "vorbis_synthesis_headerin",
             CallingConvention = CallingConvention.Cdecl)]
-        static extern int WinVorbisSynthesisHeaderIn(IntPtr info, ref VorbisComment comment, ref OggPacket packet);
+        static extern int StandardVorbisSynthesisHeaderIn(IntPtr info, ref VorbisComment comment, ref OggPacket packet);
 
         [DllImport(_linuxVorbisLibrary, EntryPoint = "vorbis_synthesis_headerin",
             CallingConvention = CallingConvention.Cdecl)]

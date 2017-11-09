@@ -13,7 +13,7 @@ namespace AudioWorks.Extensions.Flac
     [SuppressUnmanagedCodeSecurity]
     static class SafeNativeMethods
     {
-        const string _winFlacLibrary = "libFLAC";
+        const string _standardFlacLibrary = "libFLAC";
         const string _linuxFlacLibrary = "libFLAC.so.8";
 
         static SafeNativeMethods()
@@ -35,9 +35,9 @@ namespace AudioWorks.Extensions.Flac
         [NotNull]
         internal static StreamDecoderHandle StreamDecoderNew()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                return LinuxStreamDecoderNew();
-            return WinStreamDecoderNew();
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                ? LinuxStreamDecoderNew()
+                : StandardStreamDecoderNew();
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
@@ -66,7 +66,7 @@ namespace AudioWorks.Extensions.Flac
                     errorCallback,
                     IntPtr.Zero);
             else
-                WinStreamDecoderInitStream(
+                StandardStreamDecoderInitStream(
                     handle,
                     readCallback,
                     seekCallback,
@@ -86,33 +86,32 @@ namespace AudioWorks.Extensions.Flac
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxStreamDecoderSetMetadataRespond(handle, metadataType);
             else
-                WinStreamDecoderSetMetadataRespond(handle, metadataType);
+                StandardStreamDecoderSetMetadataRespond(handle, metadataType);
         }
 
         internal static bool StreamDecoderProcessUntilEndOfMetadata(
             [NotNull] StreamDecoderHandle handle)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                return LinuxStreamDecoderProcessUntilEndOfMetadata(handle);
-            return WinStreamDecoderProcessUntilEndOfMetadata(handle);
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                ? LinuxStreamDecoderProcessUntilEndOfMetadata(handle)
+                : StandardStreamDecoderProcessUntilEndOfMetadata(handle);
         }
 
         internal static bool StreamDecoderProcessSingle(
             [NotNull] StreamDecoderHandle handle)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                return LinuxStreamDecoderProcessSingle(handle);
-            return WinStreamDecoderProcessSingle(handle);
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                ? LinuxStreamDecoderProcessSingle(handle)
+                : StandardStreamDecoderProcessSingle(handle);
         }
 
         internal static DecoderState StreamDecoderGetState(
             [NotNull] StreamDecoderHandle handle)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                return LinuxStreamDecoderGetState(handle);
-            return WinStreamDecoderGetState(handle);
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                ? LinuxStreamDecoderGetState(handle)
+                : StandardStreamDecoderGetState(handle);
         }
-
 
         internal static void StreamDecoderFinish(
             [NotNull] StreamDecoderHandle handle)
@@ -120,7 +119,7 @@ namespace AudioWorks.Extensions.Flac
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxStreamDecoderFinish(handle);
             else
-                WinStreamDecoderFinish(handle);
+                StandardStreamDecoderFinish(handle);
         }
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
@@ -130,16 +129,16 @@ namespace AudioWorks.Extensions.Flac
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxStreamDecoderDelete(handle);
             else
-                WinStreamDecoderDelete(handle);
+                StandardStreamDecoderDelete(handle);
         }
 
         [NotNull]
         internal static MetadataBlockHandle MetadataObjectNew(
             MetadataType metadataType)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                return LinuxMetadataObjectNew(metadataType);
-            return WinMetadataObjectNew(metadataType);
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                ? LinuxMetadataObjectNew(metadataType)
+                : StandardMetadataObjectNew(metadataType);
         }
 
         internal static void MetadataObjectVorbisCommentEntryFromNameValuePair(
@@ -150,7 +149,7 @@ namespace AudioWorks.Extensions.Flac
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxMetadataObjectVorbisCommentEntryFromNameValuePair(out vorbisComment, key, value);
             else
-                WinMetadataObjectVorbisCommentEntryFromNameValuePair(out vorbisComment, key, value);
+                StandardMetadataObjectVorbisCommentEntryFromNameValuePair(out vorbisComment, key, value);
         }
 
         internal static void MetadataObjectVorbisCommentAppendComment(
@@ -161,7 +160,7 @@ namespace AudioWorks.Extensions.Flac
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxMetadataObjectVorbisCommentAppendComment(handle, vorbisComment, copy);
             else
-                WinMetadataObjectVorbisCommentAppendComment(handle, vorbisComment, copy);
+                StandardMetadataObjectVorbisCommentAppendComment(handle, vorbisComment, copy);
         }
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
@@ -171,15 +170,15 @@ namespace AudioWorks.Extensions.Flac
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxMetadataObjectDelete(handle);
             else
-                WinMetadataObjectDelete(handle);
+                StandardMetadataObjectDelete(handle);
         }
 
         [NotNull]
         internal static MetadataChainHandle MetadataChainNew()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                return LinuxMetadataChainNew();
-            return WinMetadataChainNew();
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                ? LinuxMetadataChainNew()
+                : StandardMetadataChainNew();
         }
 
         internal static void MetadataChainReadWithCallbacks(
@@ -189,16 +188,16 @@ namespace AudioWorks.Extensions.Flac
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxMetadataChainReadWithCallbacks(handle, IntPtr.Zero, callbacks);
             else
-                WinMetadataChainReadWithCallbacks(handle, IntPtr.Zero, callbacks);
+                StandardMetadataChainReadWithCallbacks(handle, IntPtr.Zero, callbacks);
         }
 
         internal static bool MetadataChainCheckIfTempFileNeeded(
             [NotNull] MetadataChainHandle handle,
             bool usePadding)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                return LinuxMetadataChainCheckIfTempFileNeeded(handle, usePadding);
-            return WinMetadataChainCheckIfTempFileNeeded(handle, usePadding);
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                ? LinuxMetadataChainCheckIfTempFileNeeded(handle, usePadding)
+                : StandardMetadataChainCheckIfTempFileNeeded(handle, usePadding);
         }
 
         internal static void MetadataChainWriteWithCallbacks(
@@ -209,7 +208,7 @@ namespace AudioWorks.Extensions.Flac
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxMetadataChainWriteWithCallbacks(handle, usePadding, IntPtr.Zero, callbacks);
             else
-                WinMetadataChainWriteWithCallbacks(handle, usePadding, IntPtr.Zero, callbacks);
+                StandardMetadataChainWriteWithCallbacks(handle, usePadding, IntPtr.Zero, callbacks);
         }
 
         internal static void MetadataChainWriteWithCallbacksAndTempFile(
@@ -227,7 +226,7 @@ namespace AudioWorks.Extensions.Flac
                     IntPtr.Zero,
                     tempCallbacks);
             else
-                WinMetadataChainWriteWithCallbacksAndTempFile(
+                StandardMetadataChainWriteWithCallbacksAndTempFile(
                     handle,
                     usePadding,
                     IntPtr.Zero,
@@ -243,15 +242,15 @@ namespace AudioWorks.Extensions.Flac
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxMetadataChainDelete(handle);
             else
-                WinMetadataChainDelete(handle);
+                StandardMetadataChainDelete(handle);
         }
 
         [NotNull]
         internal static MetadataIteratorHandle MetadataIteratorNew()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                return LinuxMetadataIteratorNew();
-            return WinMetadataIteratorNew();
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                ? LinuxMetadataIteratorNew()
+                : StandardMetadataIteratorNew();
         }
 
         internal static void MetadataIteratorInit(
@@ -261,23 +260,23 @@ namespace AudioWorks.Extensions.Flac
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxMetadataIteratorInit(handle, chainHandle);
             else
-                WinMetadataIteratorInit(handle, chainHandle);
+                StandardMetadataIteratorInit(handle, chainHandle);
         }
 
         internal static bool MetadataIteratorNext(
             [NotNull] MetadataIteratorHandle handle)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                return LinuxMetadataIteratorNext(handle);
-            return WinMetadataIteratorNext(handle);
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                ? LinuxMetadataIteratorNext(handle)
+                : StandardMetadataIteratorNext(handle);
         }
 
         internal static IntPtr MetadataIteratorGetBlock(
             [NotNull] MetadataIteratorHandle handle)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                return LinuxMetadataIteratorGetBlock(handle);
-            return WinMetadataIteratorGetBlock(handle);
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                ? LinuxMetadataIteratorGetBlock(handle)
+                : StandardMetadataIteratorGetBlock(handle);
         }
 
         internal static void MetadataIteratorInsertBlockAfter(
@@ -287,7 +286,7 @@ namespace AudioWorks.Extensions.Flac
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxMetadataIteratorInsertBlockAfter(handle, metadataHandle);
             else
-                WinMetadataIteratorInsertBlockAfter(handle, metadataHandle);
+                StandardMetadataIteratorInsertBlockAfter(handle, metadataHandle);
         }
 
         internal static void MetadataIteratorDeleteBlock(
@@ -297,7 +296,7 @@ namespace AudioWorks.Extensions.Flac
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxMetadataIteratorDeleteBlock(handle, replaceWithPadding);
             else
-                WinMetadataIteratorDeleteBlock(handle, replaceWithPadding);
+                StandardMetadataIteratorDeleteBlock(handle, replaceWithPadding);
         }
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
@@ -307,22 +306,22 @@ namespace AudioWorks.Extensions.Flac
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxMetadataIteratorDelete(handle);
             else
-                WinMetadataIteratorDelete(handle);
+                StandardMetadataIteratorDelete(handle);
         }
 
         [NotNull]
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__stream_decoder_new",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__stream_decoder_new",
             CallingConvention = CallingConvention.Cdecl)]
-        static extern StreamDecoderHandle WinStreamDecoderNew();
+        static extern StreamDecoderHandle StandardStreamDecoderNew();
 
         [NotNull]
         [DllImport(_linuxFlacLibrary, EntryPoint = "FLAC__stream_decoder_new",
             CallingConvention = CallingConvention.Cdecl)]
         static extern StreamDecoderHandle LinuxStreamDecoderNew();
 
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__stream_decoder_init_stream",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__stream_decoder_init_stream",
             CallingConvention = CallingConvention.Cdecl)]
-        static extern int WinStreamDecoderInitStream(
+        static extern int StandardStreamDecoderInitStream(
             [NotNull] StreamDecoderHandle handle,
             [NotNull] NativeCallbacks.StreamDecoderReadCallback readCallback,
             [NotNull] NativeCallbacks.StreamDecoderSeekCallback seekCallback,
@@ -348,10 +347,10 @@ namespace AudioWorks.Extensions.Flac
             [NotNull] NativeCallbacks.StreamDecoderErrorCallback errorCallback,
             IntPtr userData);
 
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__stream_decoder_set_metadata_respond",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__stream_decoder_set_metadata_respond",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool WinStreamDecoderSetMetadataRespond(
+        static extern bool StandardStreamDecoderSetMetadataRespond(
             StreamDecoderHandle handle,
             MetadataType metadataType);
 
@@ -362,10 +361,10 @@ namespace AudioWorks.Extensions.Flac
             StreamDecoderHandle handle,
             MetadataType metadataType);
 
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__stream_decoder_process_until_end_of_metadata",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__stream_decoder_process_until_end_of_metadata",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool WinStreamDecoderProcessUntilEndOfMetadata(
+        static extern bool StandardStreamDecoderProcessUntilEndOfMetadata(
             [NotNull] StreamDecoderHandle handle);
 
         [DllImport(_linuxFlacLibrary, EntryPoint = "FLAC__stream_decoder_process_until_end_of_metadata",
@@ -374,10 +373,10 @@ namespace AudioWorks.Extensions.Flac
         static extern bool LinuxStreamDecoderProcessUntilEndOfMetadata(
             [NotNull] StreamDecoderHandle handle);
 
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__stream_decoder_process_single",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__stream_decoder_process_single",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool WinStreamDecoderProcessSingle(
+        static extern bool StandardStreamDecoderProcessSingle(
             [NotNull] StreamDecoderHandle handle);
 
         [DllImport(_linuxFlacLibrary, EntryPoint = "FLAC__stream_decoder_process_single",
@@ -386,9 +385,9 @@ namespace AudioWorks.Extensions.Flac
         static extern bool LinuxStreamDecoderProcessSingle(
             [NotNull] StreamDecoderHandle handle);
 
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__stream_decoder_get_state",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__stream_decoder_get_state",
             CallingConvention = CallingConvention.Cdecl)]
-        static extern DecoderState WinStreamDecoderGetState(
+        static extern DecoderState StandardStreamDecoderGetState(
             [NotNull] StreamDecoderHandle handle);
 
         [DllImport(_linuxFlacLibrary, EntryPoint = "FLAC__stream_decoder_get_state",
@@ -396,10 +395,10 @@ namespace AudioWorks.Extensions.Flac
         static extern DecoderState LinuxStreamDecoderGetState(
             [NotNull] StreamDecoderHandle handle);
 
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__stream_decoder_finish",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__stream_decoder_finish",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool WinStreamDecoderFinish(
+        static extern bool StandardStreamDecoderFinish(
             [NotNull] StreamDecoderHandle handle);
 
         [DllImport(_linuxFlacLibrary, EntryPoint = "FLAC__stream_decoder_finish",
@@ -409,9 +408,9 @@ namespace AudioWorks.Extensions.Flac
             [NotNull] StreamDecoderHandle handle);
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__stream_decoder_delete",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__stream_decoder_delete",
             CallingConvention = CallingConvention.Cdecl)]
-        static extern void WinStreamDecoderDelete(
+        static extern void StandardStreamDecoderDelete(
             IntPtr handle);
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
@@ -421,9 +420,9 @@ namespace AudioWorks.Extensions.Flac
             IntPtr handle);
 
         [NotNull]
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__metadata_object_new",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__metadata_object_new",
             CallingConvention = CallingConvention.Cdecl)]
-        static extern MetadataBlockHandle WinMetadataObjectNew(
+        static extern MetadataBlockHandle StandardMetadataObjectNew(
             MetadataType blockType);
 
         [NotNull]
@@ -432,10 +431,10 @@ namespace AudioWorks.Extensions.Flac
         static extern MetadataBlockHandle LinuxMetadataObjectNew(
             MetadataType blockType);
 
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__metadata_object_vorbiscomment_entry_from_name_value_pair",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__metadata_object_vorbiscomment_entry_from_name_value_pair",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool WinMetadataObjectVorbisCommentEntryFromNameValuePair(
+        static extern bool StandardMetadataObjectVorbisCommentEntryFromNameValuePair(
             out VorbisCommentEntry vorbisComment,
             [NotNull] byte[] key,
             [NotNull] byte[] value);
@@ -448,10 +447,10 @@ namespace AudioWorks.Extensions.Flac
             [NotNull] byte[] key,
             [NotNull] byte[] value);
 
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__metadata_object_vorbiscomment_append_comment",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__metadata_object_vorbiscomment_append_comment",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool WinMetadataObjectVorbisCommentAppendComment(
+        static extern bool StandardMetadataObjectVorbisCommentAppendComment(
             [NotNull] MetadataBlockHandle handle,
             VorbisCommentEntry vorbisComment,
             [MarshalAs(UnmanagedType.Bool)] bool copy);
@@ -465,9 +464,9 @@ namespace AudioWorks.Extensions.Flac
             [MarshalAs(UnmanagedType.Bool)] bool copy);
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__metadata_object_delete",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__metadata_object_delete",
             CallingConvention = CallingConvention.Cdecl)]
-        static extern void WinMetadataObjectDelete(
+        static extern void StandardMetadataObjectDelete(
             IntPtr handle);
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
@@ -477,19 +476,19 @@ namespace AudioWorks.Extensions.Flac
             IntPtr handle);
 
         [NotNull]
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__metadata_chain_new",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__metadata_chain_new",
             CallingConvention = CallingConvention.Cdecl)]
-        static extern MetadataChainHandle WinMetadataChainNew();
+        static extern MetadataChainHandle StandardMetadataChainNew();
 
         [NotNull]
         [DllImport(_linuxFlacLibrary, EntryPoint = "FLAC__metadata_chain_new",
             CallingConvention = CallingConvention.Cdecl)]
         static extern MetadataChainHandle LinuxMetadataChainNew();
 
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__metadata_chain_read_with_callbacks",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__metadata_chain_read_with_callbacks",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool WinMetadataChainReadWithCallbacks(
+        static extern bool StandardMetadataChainReadWithCallbacks(
             [NotNull] MetadataChainHandle handle,
             IntPtr ioHandle,
             IoCallbacks callbacks);
@@ -502,10 +501,10 @@ namespace AudioWorks.Extensions.Flac
             IntPtr ioHandle,
             IoCallbacks callbacks);
 
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__metadata_chain_check_if_tempfile_needed",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__metadata_chain_check_if_tempfile_needed",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool WinMetadataChainCheckIfTempFileNeeded(
+        static extern bool StandardMetadataChainCheckIfTempFileNeeded(
             [NotNull] MetadataChainHandle handle,
             [MarshalAs(UnmanagedType.Bool)] bool usePadding);
 
@@ -516,10 +515,10 @@ namespace AudioWorks.Extensions.Flac
             [NotNull] MetadataChainHandle handle,
             [MarshalAs(UnmanagedType.Bool)] bool usePadding);
 
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__metadata_chain_write_with_callbacks",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__metadata_chain_write_with_callbacks",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool WinMetadataChainWriteWithCallbacks(
+        static extern bool StandardMetadataChainWriteWithCallbacks(
             [NotNull] MetadataChainHandle handle,
             [MarshalAs(UnmanagedType.Bool)] bool usePadding,
             IntPtr ioHandle,
@@ -534,10 +533,10 @@ namespace AudioWorks.Extensions.Flac
             IntPtr ioHandle,
             IoCallbacks callbacks);
 
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__metadata_chain_write_with_callbacks_and_tempfile",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__metadata_chain_write_with_callbacks_and_tempfile",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool WinMetadataChainWriteWithCallbacksAndTempFile(
+        static extern bool StandardMetadataChainWriteWithCallbacksAndTempFile(
             [NotNull] MetadataChainHandle handle,
             [MarshalAs(UnmanagedType.Bool)] bool usePadding,
             IntPtr ioHandle,
@@ -557,9 +556,9 @@ namespace AudioWorks.Extensions.Flac
             IoCallbacks tempCallbacks);
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__metadata_chain_delete",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__metadata_chain_delete",
             CallingConvention = CallingConvention.Cdecl)]
-        static extern void WinMetadataChainDelete(
+        static extern void StandardMetadataChainDelete(
             IntPtr handle);
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
@@ -569,18 +568,18 @@ namespace AudioWorks.Extensions.Flac
             IntPtr handle);
 
         [NotNull]
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__metadata_iterator_new",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__metadata_iterator_new",
             CallingConvention = CallingConvention.Cdecl)]
-        static extern MetadataIteratorHandle WinMetadataIteratorNew();
+        static extern MetadataIteratorHandle StandardMetadataIteratorNew();
 
         [NotNull]
         [DllImport(_linuxFlacLibrary, EntryPoint = "FLAC__metadata_iterator_new",
             CallingConvention = CallingConvention.Cdecl)]
         static extern MetadataIteratorHandle LinuxMetadataIteratorNew();
 
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__metadata_iterator_init",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__metadata_iterator_init",
             CallingConvention = CallingConvention.Cdecl)]
-        static extern void WinMetadataIteratorInit(
+        static extern void StandardMetadataIteratorInit(
             [NotNull] MetadataIteratorHandle handle,
             [NotNull] MetadataChainHandle chainHandle);
 
@@ -590,10 +589,10 @@ namespace AudioWorks.Extensions.Flac
             [NotNull] MetadataIteratorHandle handle,
             [NotNull] MetadataChainHandle chainHandle);
 
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__metadata_iterator_next",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__metadata_iterator_next",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool WinMetadataIteratorNext(
+        static extern bool StandardMetadataIteratorNext(
             [NotNull] MetadataIteratorHandle handle);
 
         [DllImport(_linuxFlacLibrary, EntryPoint = "FLAC__metadata_iterator_next",
@@ -602,9 +601,9 @@ namespace AudioWorks.Extensions.Flac
         static extern bool LinuxMetadataIteratorNext(
             [NotNull] MetadataIteratorHandle handle);
 
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__metadata_iterator_get_block",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__metadata_iterator_get_block",
             CallingConvention = CallingConvention.Cdecl)]
-        static extern IntPtr WinMetadataIteratorGetBlock(
+        static extern IntPtr StandardMetadataIteratorGetBlock(
             [NotNull] MetadataIteratorHandle handle);
 
         [DllImport(_linuxFlacLibrary, EntryPoint = "FLAC__metadata_iterator_get_block",
@@ -612,10 +611,10 @@ namespace AudioWorks.Extensions.Flac
         static extern IntPtr LinuxMetadataIteratorGetBlock(
             [NotNull] MetadataIteratorHandle handle);
 
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__metadata_iterator_insert_block_after",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__metadata_iterator_insert_block_after",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool WinMetadataIteratorInsertBlockAfter(
+        static extern bool StandardMetadataIteratorInsertBlockAfter(
             [NotNull] MetadataIteratorHandle handle,
             [NotNull] MetadataBlockHandle metadataHandle);
 
@@ -626,10 +625,10 @@ namespace AudioWorks.Extensions.Flac
             [NotNull] MetadataIteratorHandle handle,
             [NotNull] MetadataBlockHandle metadataHandle);
 
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__metadata_iterator_delete_block"
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__metadata_iterator_delete_block"
             , CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool WinMetadataIteratorDeleteBlock(
+        static extern bool StandardMetadataIteratorDeleteBlock(
             [NotNull] MetadataIteratorHandle handle,
             [MarshalAs(UnmanagedType.Bool)] bool replaceWithPadding);
 
@@ -641,9 +640,9 @@ namespace AudioWorks.Extensions.Flac
             [MarshalAs(UnmanagedType.Bool)] bool replaceWithPadding);
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
-        [DllImport(_winFlacLibrary, EntryPoint = "FLAC__metadata_iterator_delete",
+        [DllImport(_standardFlacLibrary, EntryPoint = "FLAC__metadata_iterator_delete",
             CallingConvention = CallingConvention.Cdecl)]
-        static extern void WinMetadataIteratorDelete(
+        static extern void StandardMetadataIteratorDelete(
             IntPtr handle);
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
