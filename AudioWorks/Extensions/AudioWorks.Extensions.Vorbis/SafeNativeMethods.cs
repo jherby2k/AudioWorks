@@ -12,8 +12,8 @@ namespace AudioWorks.Extensions.Vorbis
     [SuppressUnmanagedCodeSecurity]
     static class SafeNativeMethods
     {
-        const string _winOggLibrary = "libogg.dll";
-        const string _winVorbisLibrary = "libvorbis.dll";
+        const string _winOggLibrary = "libogg";
+        const string _winVorbisLibrary = "libvorbis";
         const string _linuxOggLibrary = "libogg.so.0";
         const string _linuxVorbisLibrary = "libvorbis.so.0";
 
@@ -35,324 +35,188 @@ namespace AudioWorks.Extensions.Vorbis
         [Pure]
         internal static int OggPageGetSerialNumber(ref OggPage page)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return WinOggPageSerialNo(ref page);
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return LinuxOggPageSerialNo(ref page);
-
-            throw new NotImplementedException();
+            return WinOggPageSerialNo(ref page);
         }
 
         [Pure]
         internal static bool OggPageEndOfStream(ref OggPage page)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return WinOggPageEos(ref page);
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return LinuxOggPageEos(ref page);
-
-            throw new NotImplementedException();
+            return WinOggPageEos(ref page);
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method always returns 0")]
         internal static void OggSyncInitialize(IntPtr syncState)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinOggSyncInit(syncState);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxOggSyncInit(syncState);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinOggSyncInit(syncState);
         }
 
         internal static bool OggSyncPageOut(IntPtr syncState, out OggPage page)
-        {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return WinOggSyncPageOut(syncState, out page) == 1;
+        { 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return LinuxOggSyncPageOut(syncState, out page) == 1;
-
-            throw new NotImplementedException();
+            return WinOggSyncPageOut(syncState, out page) == 1;
         }
 
         internal static IntPtr OggSyncBuffer(IntPtr syncState, int size)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return WinOggSyncBuffer(syncState, size);
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return LinuxOggSyncBuffer(syncState, size);
-
-            throw new NotImplementedException();
+            return WinOggSyncBuffer(syncState, size);
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
         internal static void OggSyncWrote(IntPtr syncState, int bytes)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinOggSyncWrote(syncState, bytes);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxOggSyncWrote(syncState, bytes);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinOggSyncWrote(syncState, bytes);
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method always returns 0")]
         internal static void OggSyncClear(IntPtr syncState)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinOggSyncClear(syncState);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxOggSyncClear(syncState);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinOggSyncClear(syncState);
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
         internal static void OggStreamInitialize(IntPtr streamState, int serialNumber)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinOggStreamInit(streamState, serialNumber);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxOggStreamInit(streamState, serialNumber);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinOggStreamInit(streamState, serialNumber);
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
         internal static void OggStreamPageIn(IntPtr streamState, ref OggPage page)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinOggStreamPageIn(streamState, ref page);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxOggStreamPageIn(streamState, ref page);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinOggStreamPageIn(streamState, ref page);
         }
 
         internal static bool OggStreamPageOut(IntPtr streamState, out OggPage page)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return WinOggStreamPageOut(streamState, out page) != 0;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return LinuxOggStreamPageOut(streamState, out page) != 0;
-
-            throw new NotImplementedException();
+            return WinOggStreamPageOut(streamState, out page) != 0;
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
         internal static void OggStreamPacketIn(IntPtr streamState, ref OggPacket packet)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinOggStreamPacketIn(streamState, ref packet);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxOggStreamPacketIn(streamState, ref packet);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinOggStreamPacketIn(streamState, ref packet);
         }
 
         internal static bool OggStreamPacketOut(IntPtr streamState, out OggPacket packet)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return WinOggStreamPacketOut(streamState, out packet) == 1;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return LinuxOggStreamPacketOut(streamState, out packet) == 1;
-
-            throw new NotImplementedException();
+            return WinOggStreamPacketOut(streamState, out packet) == 1;
         }
 
         internal static bool OggStreamFlush(IntPtr streamState, out OggPage page)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return WinOggStreamFlush(streamState, out page) != 0;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return LinuxOggStreamFlush(streamState, out page) != 0;
-
-            throw new NotImplementedException();
+            return WinOggStreamFlush(streamState, out page) != 0;
         }
 
         internal static void OggStreamClear(IntPtr streamState)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinOggStreamClear(streamState);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxOggStreamClear(streamState);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinOggStreamClear(streamState);
         }
 
         internal static void VorbisCommentInitialize(out VorbisComment comment)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinVorbisCommentInit(out comment);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxVorbisCommentInit(out comment);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinVorbisCommentInit(out comment);
         }
 
         internal static void VorbisCommentAddTag(ref VorbisComment comment, byte[] tag, byte[] contents)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinVorbisCommentAddTag(ref comment, tag, contents);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxVorbisCommentAddTag(ref comment, tag, contents);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinVorbisCommentAddTag(ref comment, tag, contents);
         }
 
         internal static void VorbisCommentClear(ref VorbisComment comment)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinVorbisCommentClear(ref comment);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxVorbisCommentClear(ref comment);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinVorbisCommentClear(ref comment);
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
         internal static void VorbisCommentHeaderOut(ref VorbisComment comment, out OggPacket packet)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinVorbisCommentHeaderOut(ref comment, out packet);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxVorbisCommentHeaderOut(ref comment, out packet);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinVorbisCommentHeaderOut(ref comment, out packet);
         }
 
         internal static void VorbisInfoInitialize(IntPtr info)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinVorbisInfoInit(info);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxVorbisInfoInit(info);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinVorbisInfoInit(info);
         }
 
         internal static void VorbisInfoClear(IntPtr info)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinVorbisInfoClear(info);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxVorbisInfoClear(info);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinVorbisInfoClear(info);
         }
 
         [Pure]
         internal static bool VorbisSynthesisIdHeader(ref OggPacket packet)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return WinVorbisSynthesisIdHeader(ref packet);
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return LinuxVorbisSynthesisIdHeader(ref packet);
-
-            throw new NotImplementedException();
+            return WinVorbisSynthesisIdHeader(ref packet);
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
         internal static void VorbisSynthesisHeaderIn(IntPtr info, ref VorbisComment comment, ref OggPacket packet)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinVorbisSynthesisHeaderIn(info, ref comment, ref packet);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxVorbisSynthesisHeaderIn(info, ref comment, ref packet);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinVorbisSynthesisHeaderIn(info, ref comment, ref packet);
         }
 
         [Pure]

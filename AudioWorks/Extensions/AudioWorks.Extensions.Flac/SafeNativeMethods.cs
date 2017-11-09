@@ -13,7 +13,7 @@ namespace AudioWorks.Extensions.Flac
     [SuppressUnmanagedCodeSecurity]
     static class SafeNativeMethods
     {
-        const string _winFlacLibrary = "libFLAC.dll";
+        const string _winFlacLibrary = "libFLAC";
         const string _linuxFlacLibrary = "libFLAC.so.8";
 
         static SafeNativeMethods()
@@ -35,12 +35,9 @@ namespace AudioWorks.Extensions.Flac
         [NotNull]
         internal static StreamDecoderHandle StreamDecoderNew()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return WinStreamDecoderNew();
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return LinuxStreamDecoderNew();
-
-            throw new NotImplementedException();
+            return WinStreamDecoderNew();
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
@@ -56,23 +53,7 @@ namespace AudioWorks.Extensions.Flac
             [NotNull] NativeCallbacks.StreamDecoderMetadataCallback metadataCallback,
             [NotNull] NativeCallbacks.StreamDecoderErrorCallback errorCallback)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinStreamDecoderInitStream(
-                    handle,
-                    readCallback,
-                    seekCallback,
-                    tellCallback,
-                    lengthCallback,
-                    eofCallback,
-                    writeCallback,
-                    metadataCallback,
-                    errorCallback,
-                    IntPtr.Zero);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxStreamDecoderInitStream(
                     handle,
                     readCallback,
@@ -84,101 +65,81 @@ namespace AudioWorks.Extensions.Flac
                     metadataCallback,
                     errorCallback,
                     IntPtr.Zero);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinStreamDecoderInitStream(
+                    handle,
+                    readCallback,
+                    seekCallback,
+                    tellCallback,
+                    lengthCallback,
+                    eofCallback,
+                    writeCallback,
+                    metadataCallback,
+                    errorCallback,
+                    IntPtr.Zero);
         }
 
         internal static void StreamDecoderSetMetadataRespond(
             [NotNull] StreamDecoderHandle handle,
             MetadataType metadataType)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinStreamDecoderSetMetadataRespond(handle, metadataType);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxStreamDecoderSetMetadataRespond(handle, metadataType);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinStreamDecoderSetMetadataRespond(handle, metadataType);
         }
 
         internal static bool StreamDecoderProcessUntilEndOfMetadata(
             [NotNull] StreamDecoderHandle handle)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return WinStreamDecoderProcessUntilEndOfMetadata(handle);
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return LinuxStreamDecoderProcessUntilEndOfMetadata(handle);
-
-            throw new NotImplementedException();
+            return WinStreamDecoderProcessUntilEndOfMetadata(handle);
         }
 
         internal static bool StreamDecoderProcessSingle(
             [NotNull] StreamDecoderHandle handle)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return WinStreamDecoderProcessSingle(handle);
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return LinuxStreamDecoderProcessSingle(handle);
-
-            throw new NotImplementedException();
+            return WinStreamDecoderProcessSingle(handle);
         }
 
         internal static DecoderState StreamDecoderGetState(
             [NotNull] StreamDecoderHandle handle)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return WinStreamDecoderGetState(handle);
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return LinuxStreamDecoderGetState(handle);
-
-            throw new NotImplementedException();
+            return WinStreamDecoderGetState(handle);
         }
 
 
         internal static void StreamDecoderFinish(
             [NotNull] StreamDecoderHandle handle)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinStreamDecoderFinish(handle);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxStreamDecoderFinish(handle);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinStreamDecoderFinish(handle);
         }
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         internal static void StreamDecoderDelete(
             IntPtr handle)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                WinStreamDecoderDelete(handle);
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxStreamDecoderDelete(handle);
+            else
+                WinStreamDecoderDelete(handle);
         }
 
         [NotNull]
         internal static MetadataBlockHandle MetadataObjectNew(
             MetadataType metadataType)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return WinMetadataObjectNew(metadataType);
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return LinuxMetadataObjectNew(metadataType);
-
-            throw new NotImplementedException();
+            return WinMetadataObjectNew(metadataType);
         }
 
         internal static void MetadataObjectVorbisCommentEntryFromNameValuePair(
@@ -186,18 +147,10 @@ namespace AudioWorks.Extensions.Flac
             [NotNull] byte[] key,
             [NotNull] byte[] value)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinMetadataObjectVorbisCommentEntryFromNameValuePair(out vorbisComment, key, value);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxMetadataObjectVorbisCommentEntryFromNameValuePair(out vorbisComment, key, value);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinMetadataObjectVorbisCommentEntryFromNameValuePair(out vorbisComment, key, value);
         }
 
         internal static void MetadataObjectVorbisCommentAppendComment(
@@ -205,69 +158,47 @@ namespace AudioWorks.Extensions.Flac
             VorbisCommentEntry vorbisComment,
             bool copy)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinMetadataObjectVorbisCommentAppendComment(handle, vorbisComment, copy);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxMetadataObjectVorbisCommentAppendComment(handle, vorbisComment, copy);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinMetadataObjectVorbisCommentAppendComment(handle, vorbisComment, copy);
         }
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         internal static void MetadataObjectDelete(
             IntPtr handle)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                WinMetadataObjectDelete(handle);
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxMetadataObjectDelete(handle);
+            else
+                WinMetadataObjectDelete(handle);
         }
 
         [NotNull]
         internal static MetadataChainHandle MetadataChainNew()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return WinMetadataChainNew();
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return LinuxMetadataChainNew();
-
-            throw new NotImplementedException();
+            return WinMetadataChainNew();
         }
 
         internal static void MetadataChainReadWithCallbacks(
             [NotNull] MetadataChainHandle handle,
             IoCallbacks callbacks)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinMetadataChainReadWithCallbacks(handle, IntPtr.Zero, callbacks);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxMetadataChainReadWithCallbacks(handle, IntPtr.Zero, callbacks);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinMetadataChainReadWithCallbacks(handle, IntPtr.Zero, callbacks);
         }
 
         internal static bool MetadataChainCheckIfTempFileNeeded(
             [NotNull] MetadataChainHandle handle,
             bool usePadding)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return WinMetadataChainCheckIfTempFileNeeded(handle, usePadding);
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return LinuxMetadataChainCheckIfTempFileNeeded(handle, usePadding);
-
-            throw new NotImplementedException();
+            return WinMetadataChainCheckIfTempFileNeeded(handle, usePadding);
         }
 
         internal static void MetadataChainWriteWithCallbacks(
@@ -275,18 +206,10 @@ namespace AudioWorks.Extensions.Flac
             bool usePadding,
             IoCallbacks callbacks)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinMetadataChainWriteWithCallbacks(handle, usePadding, IntPtr.Zero, callbacks);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxMetadataChainWriteWithCallbacks(handle, usePadding, IntPtr.Zero, callbacks);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinMetadataChainWriteWithCallbacks(handle, usePadding, IntPtr.Zero, callbacks);
         }
 
         internal static void MetadataChainWriteWithCallbacksAndTempFile(
@@ -295,19 +218,7 @@ namespace AudioWorks.Extensions.Flac
             IoCallbacks callbacks,
             IoCallbacks tempCallbacks)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinMetadataChainWriteWithCallbacksAndTempFile(
-                    handle,
-                    usePadding,
-                    IntPtr.Zero,
-                    callbacks,
-                    IntPtr.Zero,
-                    tempCallbacks);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxMetadataChainWriteWithCallbacksAndTempFile(
                     handle,
                     usePadding,
@@ -315,117 +226,88 @@ namespace AudioWorks.Extensions.Flac
                     callbacks,
                     IntPtr.Zero,
                     tempCallbacks);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinMetadataChainWriteWithCallbacksAndTempFile(
+                    handle,
+                    usePadding,
+                    IntPtr.Zero,
+                    callbacks,
+                    IntPtr.Zero,
+                    tempCallbacks);
         }
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         internal static void MetadataChainDelete(
             IntPtr handle)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                WinMetadataChainDelete(handle);
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxMetadataChainDelete(handle);
+            else
+                WinMetadataChainDelete(handle);
         }
 
         [NotNull]
         internal static MetadataIteratorHandle MetadataIteratorNew()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return WinMetadataIteratorNew();
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return LinuxMetadataIteratorNew();
-
-            throw new NotImplementedException();
+            return WinMetadataIteratorNew();
         }
 
         internal static void MetadataIteratorInit(
             [NotNull] MetadataIteratorHandle handle,
             [NotNull] MetadataChainHandle chainHandle)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinMetadataIteratorInit(handle, chainHandle);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxMetadataIteratorInit(handle, chainHandle);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinMetadataIteratorInit(handle, chainHandle);
         }
 
         internal static bool MetadataIteratorNext(
             [NotNull] MetadataIteratorHandle handle)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return WinMetadataIteratorNext(handle);
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return LinuxMetadataIteratorNext(handle);
-
-            throw new NotImplementedException();
+            return WinMetadataIteratorNext(handle);
         }
 
         internal static IntPtr MetadataIteratorGetBlock(
             [NotNull] MetadataIteratorHandle handle)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return WinMetadataIteratorGetBlock(handle);
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return LinuxMetadataIteratorGetBlock(handle);
-
-            throw new NotImplementedException();
+            return WinMetadataIteratorGetBlock(handle);
         }
 
         internal static void MetadataIteratorInsertBlockAfter(
             [NotNull] MetadataIteratorHandle handle,
             [NotNull] MetadataBlockHandle metadataHandle)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinMetadataIteratorInsertBlockAfter(handle, metadataHandle);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxMetadataIteratorInsertBlockAfter(handle, metadataHandle);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinMetadataIteratorInsertBlockAfter(handle, metadataHandle);
         }
 
         internal static void MetadataIteratorDeleteBlock(
             [NotNull] MetadataIteratorHandle handle,
             bool replaceWithPadding)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WinMetadataIteratorDeleteBlock(handle, replaceWithPadding);
-                return;
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
                 LinuxMetadataIteratorDeleteBlock(handle, replaceWithPadding);
-                return;
-            }
-
-            throw new NotImplementedException();
+            else
+                WinMetadataIteratorDeleteBlock(handle, replaceWithPadding);
         }
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         internal static void MetadataIteratorDelete(
             IntPtr handle)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                WinMetadataIteratorDelete(handle);
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 LinuxMetadataIteratorDelete(handle);
+            else
+                WinMetadataIteratorDelete(handle);
         }
 
         [NotNull]
