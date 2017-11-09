@@ -13,6 +13,11 @@ namespace AudioWorks.Commands.Tests
     [Collection("Module")]
     public sealed class ClearAudioMetadataTests
     {
+        static ClearAudioMetadataTests()
+        {
+            Mapper.Initialize(config => config.CreateMap<AudioMetadata, AudioMetadata>());
+        }
+
         [NotNull] readonly ModuleFixture _moduleFixture;
         [NotNull] readonly AudioMetadata _testMetadata = new AudioMetadata
         {
@@ -37,8 +42,6 @@ namespace AudioWorks.Commands.Tests
         public ClearAudioMetadataTests([NotNull] ModuleFixture moduleFixture)
         {
             _moduleFixture = moduleFixture;
-
-            Mapper.Initialize(config => config.CreateMap<AudioMetadata, AudioMetadata>());
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata command exists")]

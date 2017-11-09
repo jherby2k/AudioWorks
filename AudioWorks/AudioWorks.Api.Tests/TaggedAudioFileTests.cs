@@ -14,7 +14,7 @@ namespace AudioWorks.Api.Tests
     [Collection("Extensions")]
     public sealed class TaggedAudioFileTests
     {
-        public TaggedAudioFileTests()
+        static TaggedAudioFileTests()
         {
             Mapper.Initialize(config => config.CreateMap<AudioMetadata, AudioMetadata>());
         }
