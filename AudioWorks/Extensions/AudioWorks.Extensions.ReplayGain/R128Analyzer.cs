@@ -2,6 +2,7 @@
 using JetBrains.Annotations;
 using System;
 using System.Collections.Concurrent;
+using System.Linq;
 
 namespace AudioWorks.Extensions.ReplayGain
 {
@@ -21,7 +22,7 @@ namespace AudioWorks.Extensions.ReplayGain
             _channels = channels;
             _groupToken = groupToken;
             _calculateTruePeaks = calculateTruePeaks;
-            _handle = SafeNativeMethods.Initialize(channels, sampleRate,
+            _handle = SafeNativeMethods.Init(channels, sampleRate,
                 calculateTruePeaks ? Modes.Global | Modes.TruePeak : Modes.Global | Modes.SamplePeak);
             _groupState = _groupStates.GetOrAdd(groupToken, new GroupState());
             _groupState.Handles.Add(_handle);
@@ -29,7 +30,7 @@ namespace AudioWorks.Extensions.ReplayGain
 
         internal void AddFrames([NotNull] float[] frames, uint count)
         {
-            SafeNativeMethods.AddFramesFloat(_handle, frames, count);
+            SafeNativeMethods.AddFramesFloat(_handle, frames, new UIntPtr(count));
         }
 
         internal double GetPeak()
@@ -63,7 +64,10 @@ namespace AudioWorks.Extensions.ReplayGain
 
         internal double GetLoudnessMultiple()
         {
-            SafeNativeMethods.LoudnessGlobalMultiple(_groupState.Handles.ToArray(), out var loudness);
+            SafeNativeMethods.LoudnessGlobalMultiple(
+                _groupState.Handles.Select(handle => handle.DangerousGetHandle()).ToArray(),
+                new UIntPtr((uint) _groupState.Handles.Count),
+                out var loudness);
             return loudness;
         }
 
