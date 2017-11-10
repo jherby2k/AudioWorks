@@ -12,14 +12,17 @@ namespace AudioWorks.Extensions.ReplayGain
 
         readonly uint _channels;
         [NotNull] readonly GroupToken _groupToken;
+        readonly bool _calculateTruePeaks;
         [NotNull] readonly StateHandle _handle;
         [NotNull] readonly GroupState _groupState;
 
-        internal R128Analyzer(uint channels, uint sampleRate, [NotNull] GroupToken groupToken)
+        internal R128Analyzer(uint channels, uint sampleRate, [NotNull] GroupToken groupToken, bool calculateTruePeaks)
         {
             _channels = channels;
             _groupToken = groupToken;
-            _handle = SafeNativeMethods.Initialize(channels, sampleRate, Modes.Global | Modes.TruePeak);
+            _calculateTruePeaks = calculateTruePeaks;
+            _handle = SafeNativeMethods.Initialize(channels, sampleRate,
+                calculateTruePeaks ? Modes.Global | Modes.TruePeak : Modes.Global | Modes.SamplePeak);
             _groupState = _groupStates.GetOrAdd(groupToken, new GroupState());
             _groupState.Handles.Add(_handle);
         }
@@ -29,13 +32,17 @@ namespace AudioWorks.Extensions.ReplayGain
             SafeNativeMethods.AddFramesFloat(_handle, frames, count);
         }
 
-        internal double GetTruePeak()
+        internal double GetPeak()
         {
             var absolutePeak = 0.0;
 
             for (uint channel = 0; channel < _channels; channel++)
             {
-                SafeNativeMethods.TruePeak(_handle, channel, out var channelPeak);
+                double channelPeak;
+                if (_calculateTruePeaks)
+                    SafeNativeMethods.TruePeak(_handle, channel, out channelPeak);
+                else
+                    SafeNativeMethods.SamplePeak(_handle, channel, out channelPeak);
                 absolutePeak = Math.Max(channelPeak, absolutePeak);
             }
 
@@ -43,7 +50,7 @@ namespace AudioWorks.Extensions.ReplayGain
             return absolutePeak;
         }
 
-        internal double GetTruePeakMultiple()
+        internal double GetPeakMultiple()
         {
             return _groupState.GroupPeak;
         }

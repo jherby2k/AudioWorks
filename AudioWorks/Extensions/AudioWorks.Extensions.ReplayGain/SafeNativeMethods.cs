@@ -84,6 +84,25 @@ namespace AudioWorks.Extensions.ReplayGain
             throw new NotImplementedException();
         }
 
+        internal static void SamplePeak(
+            [NotNull] StateHandle handle,
+            uint channel,
+            out double result)
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                WinSamplePeak(handle, channel, out result);
+                return;
+            }
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                LinuxSamplePeak(handle, channel, out result);
+                return;
+            }
+
+            throw new NotImplementedException();
+        }
+
         internal static void LoudnessGlobal(
             [NotNull] StateHandle handle,
             out double result)
@@ -157,6 +176,14 @@ namespace AudioWorks.Extensions.ReplayGain
         [DllImport(_linuxEbur128Library, EntryPoint = "ebur128_true_peak",
             CallingConvention = CallingConvention.Cdecl)]
         static extern Ebur128Error LinuxTruePeak([NotNull] StateHandle handle, uint channel, out double result);
+
+        [DllImport(_winEbur128Library, EntryPoint = "ebur128_sample_peak",
+            CallingConvention = CallingConvention.Cdecl)]
+        static extern Ebur128Error WinSamplePeak([NotNull] StateHandle handle, uint channel, out double result);
+
+        [DllImport(_linuxEbur128Library, EntryPoint = "ebur128_sample_peak",
+            CallingConvention = CallingConvention.Cdecl)]
+        static extern Ebur128Error LinuxSamplePeak([NotNull] StateHandle handle, uint channel, out double result);
 
         [DllImport(_winEbur128Library, EntryPoint = "ebur128_loudness_global",
             CallingConvention = CallingConvention.Cdecl)]

@@ -214,6 +214,7 @@ namespace AudioWorks.Commands.Tests
         public void CreatesExpectedMetadata(
             [NotNull] string fileName,
             [NotNull] string analyzer,
+            [CanBeNull] TestSettingDictionary settings,
             [NotNull] TestAudioMetadata expectedMetadata)
         {
             var audioFile = new AnalyzableAudioFile(Path.Combine(
@@ -227,6 +228,9 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Measure-AudioFile")
                     .AddArgument(audioFile)
                     .AddArgument(analyzer);
+                if (settings != null)
+                    foreach (var item in settings)
+                        ps.AddParameter(item.Key, item.Value);
 
                 ps.Invoke();
             }

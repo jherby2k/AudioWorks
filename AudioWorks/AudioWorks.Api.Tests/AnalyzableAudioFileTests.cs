@@ -55,6 +55,7 @@ namespace AudioWorks.Api.Tests
         public void AnalyzeCreatesExpectedMetadata(
             [NotNull] string fileName,
             [NotNull] string analyzer,
+            [NotNull] TestSettingDictionary settings,
             [NotNull] TestAudioMetadata expectedMetadata)
         {
             var audioFile = new AnalyzableAudioFile(Path.Combine(
@@ -64,7 +65,7 @@ namespace AudioWorks.Api.Tests
                 fileName));
 
             using (var groupToken = new GroupToken())
-                audioFile.AnalyzeAsync(analyzer, groupToken, CancellationToken.None).Wait();
+                audioFile.AnalyzeAsync(analyzer, settings, groupToken, CancellationToken.None).Wait();
 
             Assert.True(new Comparer().Compare(expectedMetadata, audioFile.Metadata));
         }

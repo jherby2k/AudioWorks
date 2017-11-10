@@ -15,9 +15,16 @@ namespace AudioWorks.Extensions.ReplayGain
         [CanBeNull] R128Analyzer _analyzer;
         [CanBeNull] GroupToken _groupToken;
 
-        public void Initialize(AudioInfo audioInfo, GroupToken groupToken)
+        public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
         {
-            _analyzer = new R128Analyzer((uint) audioInfo.Channels, (uint) audioInfo.SampleRate, groupToken);
+            ["PeakAnalysis"] = new StringSettingInfo("Simple", "Interpolated")
+        };
+
+        public void Initialize(AudioInfo audioInfo, SettingDictionary settings, GroupToken groupToken)
+        {
+            _analyzer = new R128Analyzer((uint) audioInfo.Channels, (uint) audioInfo.SampleRate, groupToken,
+                settings.TryGetValue("PeakAnalysis", out var peakAnalysis) &&
+                string.CompareOrdinal("Interpolated", (string) peakAnalysis) == 0);
             _groupToken = groupToken;
         }
 
@@ -44,7 +51,7 @@ namespace AudioWorks.Extensions.ReplayGain
         {
             var result = new AudioMetadata
             {
-                TrackPeak = _analyzer.GetTruePeak()
+                TrackPeak = _analyzer.GetPeak()
                     .ToString(CultureInfo.InvariantCulture),
                 TrackGain = (_referenceLevel - _analyzer.GetLoudness())
                     .ToString(CultureInfo.InvariantCulture)
@@ -53,7 +60,7 @@ namespace AudioWorks.Extensions.ReplayGain
             _groupToken.CompleteMember();
             _groupToken.WaitForMembers();
 
-            result.AlbumPeak = _analyzer.GetTruePeakMultiple()
+            result.AlbumPeak = _analyzer.GetPeakMultiple()
                 .ToString(CultureInfo.InvariantCulture);
             result.AlbumGain = (_referenceLevel - _analyzer.GetLoudnessMultiple())
                 .ToString(CultureInfo.InvariantCulture);

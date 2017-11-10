@@ -1,4 +1,5 @@
-﻿using AudioWorks.Common;
+﻿using AudioWorks.Api;
+using AudioWorks.Common;
 using JetBrains.Annotations;
 using System.Collections.Generic;
 using System.Management.Automation;
@@ -14,9 +15,10 @@ namespace AudioWorks.Commands
     /// </summary>
     [PublicAPI]
     [Cmdlet(VerbsDiagnostic.Measure, "AudioFile"), OutputType(typeof(IAnalyzableAudioFile))]
-    public sealed class MeasureAudioFileCommand : Cmdlet
+    public sealed class MeasureAudioFileCommand : Cmdlet, IDynamicParameters
     {
-        readonly List<IAnalyzableAudioFile> _audioFiles = new List<IAnalyzableAudioFile>();
+        [NotNull] readonly List<IAnalyzableAudioFile> _audioFiles = new List<IAnalyzableAudioFile>();
+        [CanBeNull] RuntimeDefinedParameterDictionary _parameters;
 
         /// <summary>
         /// <para type="description">Specifies the audio file.</para>
@@ -53,10 +55,23 @@ namespace AudioWorks.Commands
                 WriteObject(AudioFile);
         }
 
+        /// <inheritdoc/>
+        [NotNull]
+        public object GetDynamicParameters()
+        {
+            return _parameters = SettingAdapter.SettingInfoToParameters(
+                AudioAnalyzerManager.GetSettingInfo(Analyzer));
+        }
+
         void AnalyzeParallel([NotNull] GroupToken groupToken)
         {
             var block = new ActionBlock<IAnalyzableAudioFile>(async audioFile =>
-                    await audioFile.AnalyzeAsync(Analyzer, groupToken, CancellationToken.None).ConfigureAwait(false),
+                    await audioFile.AnalyzeAsync(
+                            Analyzer,
+                            SettingAdapter.ParametersToSettings(_parameters),
+                            groupToken,
+                            CancellationToken.None)
+                        .ConfigureAwait(false),
                 new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = DataflowBlockOptions.Unbounded });
 
             foreach (var audioFile in _audioFiles)

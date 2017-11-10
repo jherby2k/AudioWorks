@@ -10,11 +10,24 @@ namespace AudioWorks.Extensions
     public interface IAudioAnalyzer
     {
         /// <summary>
+        /// Gets information about the settings that can be passed to the <see cref="Initialize"/> method.
+        /// </summary>
+        /// <value>
+        /// The setting information.
+        /// </value>
+        [NotNull]
+        SettingInfoDictionary SettingInfo { get; }
+
+        /// <summary>
         /// Initializes the analyzer.
         /// </summary>
         /// <param name="audioInfo">The audio information.</param>
+        /// <param name="settings">The settings.</param>
         /// <param name="groupToken">The group token.</param>
-        void Initialize([NotNull] AudioInfo audioInfo, [NotNull] GroupToken groupToken);
+        void Initialize(
+            [NotNull] AudioInfo audioInfo,
+            [NotNull] SettingDictionary settings,
+            [NotNull] GroupToken groupToken);
 
         /// <summary>
         /// Submits samples for processing.
