@@ -35,9 +35,11 @@ namespace AudioWorks.Extensions.Flac
             _stream = stream;
         }
 
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Native method is always expected to return 0")]
         internal void Initialize()
         {
-            SafeNativeMethods.StreamDecoderInitializeStream(Handle,
+            SafeNativeMethods.StreamDecoderInitStream(Handle,
                 _readCallback,
                 _seekCallback,
                 _tellCallback,
@@ -45,7 +47,8 @@ namespace AudioWorks.Extensions.Flac
                 _eofCallback,
                 _writeCallback,
                 _metadataCallback,
-                _errorCallback);
+                _errorCallback,
+                IntPtr.Zero);
         }
 
         internal bool ProcessMetadata()

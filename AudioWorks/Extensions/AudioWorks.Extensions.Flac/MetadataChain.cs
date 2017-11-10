@@ -17,7 +17,7 @@ namespace AudioWorks.Extensions.Flac
 
         internal void Read()
         {
-            SafeNativeMethods.MetadataChainReadWithCallbacks(_handle, _callbacks);
+            SafeNativeMethods.MetadataChainReadWithCallbacks(_handle, IntPtr.Zero, _callbacks);
         }
 
         internal bool CheckIfTempFileNeeded(bool usePadding)
@@ -27,7 +27,7 @@ namespace AudioWorks.Extensions.Flac
 
         internal void Write(bool usePadding)
         {
-            SafeNativeMethods.MetadataChainWriteWithCallbacks(_handle, usePadding, _callbacks);
+            SafeNativeMethods.MetadataChainWriteWithCallbacks(_handle, usePadding, IntPtr.Zero, _callbacks);
         }
 
         internal void WriteWithTempFile(bool usePadding, [NotNull] Stream tempStream)
@@ -35,7 +35,9 @@ namespace AudioWorks.Extensions.Flac
             SafeNativeMethods.MetadataChainWriteWithCallbacksAndTempFile(
                 _handle,
                 usePadding,
+                IntPtr.Zero,
                 _callbacks,
+                IntPtr.Zero,
                 InitializeCallbacks(tempStream));
         }
 
