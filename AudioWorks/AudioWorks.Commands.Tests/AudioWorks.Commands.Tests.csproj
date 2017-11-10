@@ -11,6 +11,15 @@
     <Copyright>Copyright © 2017 Jeremy Herbison</Copyright>
     <CodeAnalysisRuleSet>CodeAnalysis.ruleset</CodeAnalysisRuleSet>
     <Features>IOperation</Features>
+    <Configurations>Debug-Windows;Release-Windows</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Windows|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE;WINDOWS;NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Windows|AnyCPU'">
+    <DefineConstants>RELEASE;TRACE;WINDOWS;NETSTANDARD2_0</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

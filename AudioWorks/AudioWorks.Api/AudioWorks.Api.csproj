@@ -10,6 +10,7 @@
     <Copyright>Copyright © 2017 Jeremy Herbison</Copyright>
     <CodeAnalysisRuleSet>CodeAnalysis.ruleset</CodeAnalysisRuleSet>
     <Features>IOperation</Features>
+    <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
