@@ -1,11 +1,13 @@
 ﻿using JetBrains.Annotations;
-using Microsoft.Win32;
 using System;
-using System.IO;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
+#if (WINDOWS)
+using Microsoft.Win32;
+using System.IO;
 using System.Text;
+#endif
 
 namespace AudioWorks.Extensions.Apple
 {

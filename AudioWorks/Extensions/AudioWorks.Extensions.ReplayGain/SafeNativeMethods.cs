@@ -1,11 +1,13 @@
 ﻿using JetBrains.Annotations;
 using System;
-using System.IO;
-using System.Reflection;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
+#if (WINDOWS)
+using System.IO;
+using System.Reflection;
 using System.Text;
+#endif
 
 namespace AudioWorks.Extensions.ReplayGain
 {
