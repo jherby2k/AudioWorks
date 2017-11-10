@@ -49,7 +49,7 @@
     <ProjectReference Include="..\..\AudioWorks.Extensions\AudioWorks.Extensions.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="$(DefineConstants.Contains(WINDOWS))">
     <None Update="x86\libogg.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

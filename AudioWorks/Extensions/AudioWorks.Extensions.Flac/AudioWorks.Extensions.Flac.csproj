@@ -49,7 +49,7 @@
     <ProjectReference Include="..\..\AudioWorks.Extensions\AudioWorks.Extensions.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="$(DefineConstants.Contains(WINDOWS))">
     <None Update="x64\libFLAC.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
