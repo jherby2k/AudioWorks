@@ -8,16 +8,25 @@ namespace AudioWorks.Extensions.Vorbis
     {
         readonly IntPtr BodyData;
 
+#if (WINDOWS)
         readonly int BodyStorage;
 
         readonly int BodyFill;
 
         readonly int BodyReturned;
+#else
+        readonly long BodyStorage;
+
+        readonly long BodyFill;
+
+        readonly long BodyReturned;
+#endif
 
         readonly IntPtr LacingValues;
 
         readonly IntPtr GranuleValues;
 
+#if (WINDOWS)
         readonly int LacingStorage;
 
         readonly int LacingFill;
@@ -25,6 +34,15 @@ namespace AudioWorks.Extensions.Vorbis
         readonly int LacingPacket;
 
         readonly int LacingReturned;
+#else
+        readonly long LacingStorage;
+
+        readonly long LacingFill;
+
+        readonly long LacingPacket;
+
+        readonly long LacingReturned;
+#endif
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 282)]
         readonly char[] Header;
@@ -35,7 +53,11 @@ namespace AudioWorks.Extensions.Vorbis
 
         readonly int BeginningOfStream;
 
+#if (WINDOWS)
         internal readonly int SerialNumber;
+#else
+        internal readonly long SerialNumber;
+#endif
 
         readonly int PageNumber;
 

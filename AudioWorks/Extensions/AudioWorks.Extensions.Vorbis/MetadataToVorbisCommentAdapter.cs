@@ -1,6 +1,7 @@
 ﻿using AudioWorks.Common;
 using JetBrains.Annotations;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace AudioWorks.Extensions.Vorbis
@@ -12,7 +13,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         internal MetadataToVorbisCommentAdapter([NotNull] AudioMetadata metadata)
         {
-            SafeNativeMethods.VorbisCommentInitialize(out _comment);
+            SafeNativeMethods.VorbisCommentInit(out _comment);
 
             if (!string.IsNullOrEmpty(metadata.Title))
                 AddTag("TITLE", metadata.Title);
@@ -51,6 +52,8 @@ namespace AudioWorks.Extensions.Vorbis
                 AddTag("REPLAYGAIN_ALBUM_GAIN", $"{metadata.AlbumGain} dB");
         }
 
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Native method is always expected to return 0")]
         internal void HeaderOut(out OggPacket packet)
         {
             SafeNativeMethods.VorbisCommentHeaderOut(ref _comment, out packet);

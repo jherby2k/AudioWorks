@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
@@ -11,9 +12,11 @@ namespace AudioWorks.Extensions.Vorbis
         internal VorbisDecoder()
         {
             _info = Marshal.AllocHGlobal(Marshal.SizeOf<VorbisInfo>());
-            SafeNativeMethods.VorbisInfoInitialize(_info);
+            SafeNativeMethods.VorbisInfoInit(_info);
         }
 
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Native method is always expected to return 0")]
         internal void HeaderIn(ref VorbisComment comment, ref OggPacket packet)
         {
             SafeNativeMethods.VorbisSynthesisHeaderIn(_info, ref comment, ref packet);

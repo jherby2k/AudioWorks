@@ -12,7 +12,7 @@ namespace AudioWorks.Extensions.Vorbis
             var buffer = new byte[4096];
 
             OggStream oggStream = null;
-            SafeNativeMethods.VorbisCommentInitialize(out var vorbisComment);
+            SafeNativeMethods.VorbisCommentInit(out var vorbisComment);
 
             try
             {
@@ -36,7 +36,7 @@ namespace AudioWorks.Extensions.Vorbis
                         }
 
                         if (oggStream == null)
-                            oggStream = new OggStream(SafeNativeMethods.OggPageGetSerialNumber(ref page));
+                            oggStream = new OggStream(SafeNativeMethods.OggPageSerialNo(ref page));
 
                         oggStream.PageIn(ref page);
 
@@ -55,7 +55,7 @@ namespace AudioWorks.Extensions.Vorbis
                                 0,
                                 info.BitrateNominal > 0 ? info.BitrateNominal : 0);
                         }
-                    } while (!SafeNativeMethods.OggPageEndOfStream(ref page));
+                    } while (!SafeNativeMethods.OggPageEos(ref page));
 
                     throw new AudioInvalidException("The end of the Ogg stream was reached without finding the header.",
                         stream.Name);

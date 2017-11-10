@@ -39,7 +39,7 @@ namespace AudioWorks.Extensions.Vorbis
                             }
 
                             if (inputOggStream == null)
-                                inputOggStream = new OggStream(SafeNativeMethods.OggPageGetSerialNumber(ref inPage));
+                                inputOggStream = new OggStream(SafeNativeMethods.OggPageSerialNo(ref inPage));
                             if (outputOggStream == null)
                                 outputOggStream = new OggStream(inputOggStream.SerialNumber);
 
@@ -65,7 +65,7 @@ namespace AudioWorks.Extensions.Vorbis
                                     while (outputOggStream.PageOut(out var outPage))
                                         WritePage(outPage, tempStream, buffer);
                             }
-                        } while (!SafeNativeMethods.OggPageEndOfStream(ref inPage));
+                        } while (!SafeNativeMethods.OggPageEos(ref inPage));
 
                         // Once the end of the input is reached, overwrite the original file and return
                         Overwrite(stream, tempStream);
@@ -81,8 +81,13 @@ namespace AudioWorks.Extensions.Vorbis
 
         static void WritePage(OggPage page, [NotNull] Stream stream, [NotNull] byte[] buffer)
         {
+#if (WINDOWS)
             WritePointer(page.Header, page.HeaderLength, stream, buffer);
             WritePointer(page.Body, page.BodyLength, stream, buffer);
+#else
+            WritePointer(page.Header, (int) page.HeaderLength, stream, buffer);
+            WritePointer(page.Body, (int) page.BodyLength, stream, buffer);
+#endif
         }
 
         static void WritePointer(IntPtr location, int length, [NotNull] Stream stream, [NotNull] byte[] buffer)
