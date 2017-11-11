@@ -50,10 +50,10 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains(WINDOWS))">
-    <None Update="x64\ebur128.dll">
+    <None Update="x64\libebur128.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="x86\ebur128.dll">
+    <None Update="x86\libebur128.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
