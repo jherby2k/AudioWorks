@@ -104,8 +104,8 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
-        [Fact(DisplayName = "Get-AudioFile has an OutputType of ITaggedAudioFile")]
-        public void OutputTypeIsIAudioFile()
+        [Fact(DisplayName = "Get-AudioFile has an OutputType of IAnalyzableAudioFile")]
+        public void OutputTypeIsIAnalyzableAudioFile()
         {
             using (var ps = PowerShell.Create())
             {
@@ -119,7 +119,7 @@ namespace AudioWorks.Commands.Tests
 
                 var result = ps.Invoke();
 
-                Assert.Equal(typeof(ITaggedAudioFile), (Type) result[0].BaseObject);
+                Assert.Equal(typeof(IAnalyzableAudioFile), (Type) result[0].BaseObject);
             }
         }
 
@@ -193,9 +193,9 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
-        [Theory(DisplayName = "Get-AudioFile returns an ITaggedAudioFile")]
+        [Theory(DisplayName = "Get-AudioFile returns an IAnalyzableAudioFile")]
         [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
-        public void ReturnsIAudioFile([NotNull] string fileName)
+        public void ReturnsIAnalyzableAudioFile([NotNull] string fileName)
         {
             using (var ps = PowerShell.Create())
             {
@@ -207,13 +207,13 @@ namespace AudioWorks.Commands.Tests
                         "Valid",
                         fileName));
 
-                Assert.IsAssignableFrom<ITaggedAudioFile>(ps.Invoke()[0].BaseObject);
+                Assert.IsAssignableFrom<IAnalyzableAudioFile>(ps.Invoke()[0].BaseObject);
             }
         }
 
-        [Theory(DisplayName = "Get-AudioFile returns an ITaggedAudioFile using a relative path")]
+        [Theory(DisplayName = "Get-AudioFile returns an IAnalyzableAudioFile using a relative path")]
         [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
-        public void RelativePathReturnsITaggedAudioFile([NotNull] string fileName)
+        public void RelativePathReturnsIAnalyzableAudioFile([NotNull] string fileName)
         {
             using (var ps = PowerShell.Create())
             {
@@ -232,7 +232,7 @@ namespace AudioWorks.Commands.Tests
 
                 ps.Invoke();
 
-                Assert.IsAssignableFrom<ITaggedAudioFile>(result[0].BaseObject);
+                Assert.IsAssignableFrom<IAnalyzableAudioFile>(result[0].BaseObject);
             }
         }
     }
