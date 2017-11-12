@@ -10,7 +10,6 @@ using Xunit;
 
 namespace AudioWorks.Api.Tests
 {
-    [Collection("Extensions")]
     public sealed class AudioMetadataTests
     {
         [Fact(DisplayName = "AudioMetadata throws an exception if Title is null")]

@@ -9,7 +9,6 @@ using Xunit;
 
 namespace AudioWorks.Api.Tests
 {
-    [Collection("Extensions")]
     public sealed class AudioInfoTests
     {
         [Fact(DisplayName = "AudioInfo throws an exception if the Format is null")]

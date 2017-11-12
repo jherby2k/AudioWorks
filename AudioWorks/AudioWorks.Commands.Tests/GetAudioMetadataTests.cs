@@ -10,8 +10,7 @@ using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    [Collection("Module")]
-    public sealed class GetAudioMetadataTests
+    public sealed class GetAudioMetadataTests : IClassFixture<ModuleFixture>
     {
         [NotNull] readonly ModuleFixture _moduleFixture;
 

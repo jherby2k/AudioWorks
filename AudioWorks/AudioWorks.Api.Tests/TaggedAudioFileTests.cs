@@ -11,7 +11,6 @@ using Xunit;
 
 namespace AudioWorks.Api.Tests
 {
-    [Collection("Extensions")]
     public sealed class TaggedAudioFileTests
     {
         static TaggedAudioFileTests()

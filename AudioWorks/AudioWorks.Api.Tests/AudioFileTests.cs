@@ -9,7 +9,6 @@ using Xunit;
 
 namespace AudioWorks.Api.Tests
 {
-    [Collection("Extensions")]
     public sealed class AudioFileTests
     {
         [Fact(DisplayName = "AudioFile's constructor throws an exception if the path is null")]

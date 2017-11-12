@@ -55,4 +55,8 @@
     <ProjectReference Include="..\AudioWorks.Api\AudioWorks.Api.csproj" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="pwsh.exe -ExecutionPolicy Unrestricted -file &quot;$(SolutionDir)PublishExtensions.ps1&quot; -Configuration $(ConfigurationName) -ExtensionProjectRoot &quot;$(SolutionDir)Extensions&quot; -ExtensionOutputRoot &quot;$(OutDir)Extensions&quot;" />
+  </Target>
+
 </Project>
