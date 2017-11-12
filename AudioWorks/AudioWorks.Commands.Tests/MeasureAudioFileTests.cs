@@ -234,7 +234,7 @@ namespace AudioWorks.Commands.Tests
                 ps.Invoke();
             }
 
-            Assert.True(new Comparer().Compare(expectedMetadata, audioFile.Metadata));
+            Assert.True(new Comparer().Compare(expectedMetadata, audioFile.Metadata, out var differences), string.Join(' ', differences));
         }
     }
 }

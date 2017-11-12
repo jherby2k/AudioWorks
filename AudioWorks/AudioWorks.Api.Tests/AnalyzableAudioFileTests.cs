@@ -66,7 +66,7 @@ namespace AudioWorks.Api.Tests
             using (var groupToken = new GroupToken())
                 audioFile.AnalyzeAsync(analyzer, settings, groupToken, CancellationToken.None).Wait();
 
-            Assert.True(new Comparer().Compare(expectedMetadata, audioFile.Metadata));
+            Assert.True(new Comparer().Compare(expectedMetadata, audioFile.Metadata, out var differences), string.Join(' ', differences));
         }
     }
 }
