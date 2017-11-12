@@ -715,7 +715,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata has an OutputType of ITaggedAudioFile")]
-        public void OutputTypeIsAudioFile()
+        public void OutputTypeIsITaggedAudioFile()
         {
             using (var ps = PowerShell.Create())
             {
