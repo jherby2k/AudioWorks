@@ -21,16 +21,16 @@ namespace AudioWorks.Commands
         [CanBeNull] RuntimeDefinedParameterDictionary _parameters;
 
         /// <summary>
-        /// <para type="description">Specifies the audio file.</para>
+        /// <para type="description">Specifies the type of analysis to perform.</para>
         /// </summary>
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
-        public IAnalyzableAudioFile AudioFile { get; set; }
+        [Parameter(Mandatory = true, Position = 0)]
+        public string Analyzer { get; set; }
 
         /// <summary>
         /// <para type="description">Specifies the audio file.</para>
         /// </summary>
         [Parameter(Mandatory = true, Position = 1, ValueFromPipeline = true)]
-        public string Analyzer { get; set; }
+        public IAnalyzableAudioFile AudioFile { get; set; }
 
         /// <summary>
         /// <para type="description">Returns an object representing the item with which you are working. By default,
@@ -56,9 +56,12 @@ namespace AudioWorks.Commands
         }
 
         /// <inheritdoc/>
-        [NotNull]
+        [CanBeNull]
         public object GetDynamicParameters()
         {
+            // AudioFile parameter may not be bound yet
+            if (Analyzer == null) return null;
+
             return _parameters = SettingAdapter.SettingInfoToParameters(
                 AudioAnalyzerManager.GetSettingInfo(Analyzer));
         }

@@ -41,6 +41,51 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
+        [Fact(DisplayName = "Measure-AudioFile accepts an Analyzer parameter")]
+        public void AcceptsAnalyzerParameter()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Measure-AudioFile")
+                    .AddParameter("Analyzer", "Foo")
+                    .AddParameter("AudioFile", new Mock<IAnalyzableAudioFile>().Object);
+
+                ps.Invoke();
+
+                Assert.True(true);
+            }
+        }
+
+        [Fact(DisplayName = "Measure-AudioFile requires the Analyzer parameter")]
+        public void RequiresAnalyzerParameter()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Measure-AudioFile")
+                    .AddParameter("AudioFile", new Mock<IAnalyzableAudioFile>().Object);
+
+                Assert.Throws<ParameterBindingException>(() => ps.Invoke());
+            }
+        }
+
+        [Fact(DisplayName = "Measure-AudioFile accepts the Analyzer parameter as the first argument")]
+        public void AcceptsAnalyzerParameterAsFirstArgument()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Measure-AudioFile")
+                    .AddArgument("Foo")
+                    .AddParameter("AudioFile", new Mock<IAnalyzableAudioFile>().Object);
+
+                ps.Invoke();
+
+                Assert.True(true);
+            }
+        }
+
         [Fact(DisplayName = "Measure-AudioFile accepts an AudioFile parameter")]
         public void AcceptsAudioFileParameter()
         {
@@ -48,8 +93,8 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
-                    .AddParameter("AudioFile", new Mock<IAnalyzableAudioFile>().Object)
-                    .AddParameter("Analyzer", "Foo");
+                    .AddParameter("Analyzer", "Foo")
+                    .AddParameter("AudioFile", new Mock<IAnalyzableAudioFile>().Object);
 
                 ps.Invoke();
 
@@ -70,15 +115,15 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
-        [Fact(DisplayName = "Measure-AudioFile accepts the AudioFile parameter as the first argument")]
-        public void AcceptsAudioFileParameterAsFirstArgument()
+        [Fact(DisplayName = "Measure-AudioFile accepts the AudioFile parameter as the second argument")]
+        public void AcceptsAudioFileParameterAsSecondArgument()
         {
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
-                    .AddArgument(new Mock<IAnalyzableAudioFile>().Object)
-                    .AddParameter("Analyzer", "Foo");
+                    .AddArgument("Foo")
+                    .AddArgument(new Mock<IAnalyzableAudioFile>().Object);
 
                 ps.Invoke();
 
@@ -112,52 +157,6 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
-        [Fact(DisplayName = "Measure-AudioFile accepts an Analyzer parameter")]
-        public void AcceptsAnalyzerParameter()
-        {
-            using (var ps = PowerShell.Create())
-            {
-                ps.Runspace = _moduleFixture.Runspace;
-                ps.AddCommand("Measure-AudioFile")
-                    .AddParameter("AudioFile", new Mock<IAnalyzableAudioFile>().Object)
-                    .AddParameter("Analyzer", "Foo");
-
-                ps.Invoke();
-
-                Assert.True(true);
-            }
-        }
-
-        [Fact(DisplayName = "Measure-AudioFile requires the Analyzer parameter")]
-        public void RequiresAnalyzerParameter()
-        {
-            using (var ps = PowerShell.Create())
-            {
-                ps.Runspace = _moduleFixture.Runspace;
-                ps.AddCommand("Measure-AudioFile")
-                    .AddParameter("AudioFile", new Mock<IAnalyzableAudioFile>().Object);
-
-                Assert.Throws<ParameterBindingException>(() => ps.Invoke());
-            }
-        }
-
-        [Fact(DisplayName = "Measure-AudioFile accepts the Analyzer parameter as the second argument")]
-        public void AcceptsAudioFileParameterAsSecondArgument()
-        {
-            using (var ps = PowerShell.Create())
-            {
-                ps.Runspace = _moduleFixture.Runspace;
-                ps.AddCommand("Measure-AudioFile")
-                    .AddArgument(new Mock<IAnalyzableAudioFile>().Object)
-                    .AddArgument("Foo");
-
-                ps.Invoke();
-
-                Assert.True(true);
-            }
-        }
-
-
         [Fact(DisplayName = "Measure-AudioFile accepts a PassThru switch")]
         public void AcceptsPassThruSwitch()
         {
@@ -165,8 +164,8 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
-                    .AddParameter("AudioFile", new Mock<IAnalyzableAudioFile>().Object)
                     .AddParameter("Analyzer", "Foo")
+                    .AddParameter("AudioFile", new Mock<IAnalyzableAudioFile>().Object)
                     .AddParameter("PassThru");
 
                 ps.Invoke();
@@ -183,8 +182,8 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
-                    .AddParameter("AudioFile", audioFile)
                     .AddParameter("Analyzer", "Foo")
+                    .AddParameter("AudioFile", audioFile)
                     .AddParameter("PassThru");
 
                 Assert.Equal(audioFile, ps.Invoke()[0].BaseObject);
@@ -225,8 +224,8 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
-                    .AddArgument(audioFile)
-                    .AddArgument(analyzer);
+                    .AddArgument(analyzer)
+                    .AddArgument(audioFile);
                 if (settings != null)
                     foreach (var item in settings)
                         ps.AddParameter(item.Key, item.Value);
