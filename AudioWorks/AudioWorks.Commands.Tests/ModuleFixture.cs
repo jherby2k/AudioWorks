@@ -15,11 +15,11 @@ namespace AudioWorks.Commands.Tests
 
         public ModuleFixture()
         {
-            var workingDir = new DirectoryInfo(Directory.GetCurrentDirectory());
-
-            // Import the module
             var state = InitialSessionState.CreateDefault();
-            state.ImportPSModule(new[] { Path.Combine(workingDir.FullName, $"{_moduleProject}.dll") });
+            state.ImportPSModule(new[]
+            {
+                Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).FullName, $"{_moduleProject}.dll")
+            });
             Runspace = RunspaceFactory.CreateRunspace(state);
             Runspace.Open();
         }
