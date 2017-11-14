@@ -317,6 +317,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "-8.64"
                 }
             },
+#if (!LINUX)
 
             new object[]
             {
@@ -427,6 +428,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "-8.64"
                 }
             }
+#endif
         };
 
         [NotNull, ItemNotNull]
