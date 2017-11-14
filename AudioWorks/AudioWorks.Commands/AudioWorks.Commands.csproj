@@ -50,6 +50,9 @@
     <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.3.0-beta1" />
     <PackageReference Include="PowerShellStandard.Library" Version="3.0.0-preview-01" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(DefineConstants.Contains(WINDOWS))">
     <PackageReference Include="XmlDoc2CmdletDoc" Version="0.2.9" />
   </ItemGroup>
 
