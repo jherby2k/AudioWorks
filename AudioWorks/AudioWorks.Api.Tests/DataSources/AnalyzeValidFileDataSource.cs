@@ -354,6 +354,20 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 "ReplayGain",
+                null,
+                new TestAudioMetadata
+                {
+                    TrackPeak = "1.000000",
+                    AlbumPeak = "1.000000",
+                    TrackGain = "-8.67",
+                    AlbumGain = "-8.67"
+                }
+            },
+
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo.m4a",
+                "ReplayGain",
                 new TestSettingDictionary
                 {
                     ["PeakAnalysis"] = "Interpolated"
