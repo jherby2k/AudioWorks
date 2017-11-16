@@ -52,7 +52,7 @@ namespace AudioWorks.Commands
                 AnalyzeParallel(groupToken);
 
             if (PassThru)
-                WriteObject(AudioFile);
+                WriteObject(_audioFiles, true);
         }
 
         /// <inheritdoc/>
