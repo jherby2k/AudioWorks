@@ -44,7 +44,7 @@ namespace AudioWorks.Api
             using (var analyzerExport = analyzerFactory.CreateExport())
             {
                 var analyzerInstance = analyzerExport.Value;
-                analyzerInstance.Initialize(Info, settings ?? new SettingDictionary(), groupToken);
+                analyzerInstance.Initialize(Info, settings ?? new SettingDictionary());
 
                 // Try each decoder that supports this file extension:
                 foreach (var decoderFactory in ExtensionProvider.GetFactories<IAudioDecoder>(
@@ -62,7 +62,7 @@ namespace AudioWorks.Api
                             block.Complete();
                             await block.Completion.ConfigureAwait(false);
 
-                            CopyFields(analyzerExport.Value.GetResult(), Metadata);
+                            CopyFields(analyzerExport.Value.GetResult(groupToken), Metadata);
                             return;
                         }
                     }

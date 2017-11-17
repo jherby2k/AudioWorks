@@ -10,15 +10,9 @@ namespace AudioWorks.Common
     public sealed class GroupToken : IDisposable
     {
         [NotNull] readonly ManualResetEventSlim _resetEvent = new ManualResetEventSlim();
+        readonly object _syncRoot = new object();
         int _remainingMembers;
-
-        /// <summary>
-        /// Gets the member count.
-        /// </summary>
-        /// <value>
-        /// The member count.
-        /// </value>
-        public int Count { get; }
+        object _groupState;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GroupToken"/> class.
@@ -30,7 +24,6 @@ namespace AudioWorks.Common
             if (count < 1)
                 throw new ArgumentOutOfRangeException(nameof(count), $"{nameof(count)} must be 1 or greater.");
 
-            Count = count;
             _remainingMembers = count;
         }
 
@@ -51,10 +44,31 @@ namespace AudioWorks.Common
             _resetEvent.Wait();
         }
 
+        /// <summary>
+        /// Sets a group state object, or returns the current one if it has already been set.
+        /// </summary>
+        /// <remarks>
+        /// The group state object will automatically be disposed with the <see cref="GroupToken"/>, if it implements
+        /// <see cref="IDisposable"/>.
+        /// </remarks>
+        /// <param name="groupState">A new group state object.</param>
+        /// <returns>The current group state</returns>
+        public object GetOrSetGroupState(object groupState)
+        {
+            lock (_syncRoot)
+            {
+                if (_groupState == null)
+                    return _groupState = groupState;
+                return _groupState;
+            }
+        }
+
         /// <inheritdoc/>
         public void Dispose()
         {
             _resetEvent.Dispose();
+            if (_groupState is IDisposable disposableState)
+                disposableState.Dispose();
         }
     }
 }
