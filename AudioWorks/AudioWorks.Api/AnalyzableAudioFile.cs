@@ -55,7 +55,8 @@ namespace AudioWorks.Api
                         {
                             decoderExport.Value.Initialize(fileStream);
 
-                            var block = new ActionBlock<SampleCollection>(samples => analyzerInstance.Submit(samples));
+                            var block = new ActionBlock<SampleCollection>(samples => analyzerInstance.Submit(samples),
+                                new ExecutionDataflowBlockOptions { SingleProducerConstrained = true });
                             while (!decoderExport.Value.Finished)
                                 await block.SendAsync(decoderExport.Value.DecodeSamples()).ConfigureAwait(false);
                             block.Complete();
