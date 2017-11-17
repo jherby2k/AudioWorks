@@ -49,10 +49,10 @@ namespace AudioWorks.Commands
         protected override void EndProcessing()
         {
             using (var groupToken = new GroupToken(_audioFiles.Count))
-                AnalyzeParallel(groupToken);
+                AnalyzeParallel(groupToken, SettingAdapter.ParametersToSettings(_parameters));
 
             if (PassThru)
-                WriteObject(AudioFile);
+                WriteObject(_audioFiles, true);
         }
 
         /// <inheritdoc/>
@@ -66,16 +66,15 @@ namespace AudioWorks.Commands
                 AudioAnalyzerManager.GetSettingInfo(Analyzer));
         }
 
-        void AnalyzeParallel([NotNull] GroupToken groupToken)
+        void AnalyzeParallel([NotNull] GroupToken groupToken, [CanBeNull] SettingDictionary settings)
         {
-            var block = new ActionBlock<IAnalyzableAudioFile>(async audioFile =>
-                    await audioFile.AnalyzeAsync(
-                            Analyzer,
-                            SettingAdapter.ParametersToSettings(_parameters),
-                            groupToken,
-                            CancellationToken.None)
-                        .ConfigureAwait(false),
-                new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = DataflowBlockOptions.Unbounded });
+            var block = new ActionBlock<IAnalyzableAudioFile>(audioFile =>
+                    audioFile.AnalyzeAsync(Analyzer, settings, groupToken, CancellationToken.None),
+                new ExecutionDataflowBlockOptions
+                {
+                    MaxDegreeOfParallelism = DataflowBlockOptions.Unbounded,
+                    SingleProducerConstrained = true
+                });
 
             foreach (var audioFile in _audioFiles)
                 block.Post(audioFile);

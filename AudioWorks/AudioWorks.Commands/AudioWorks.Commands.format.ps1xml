@@ -179,7 +179,7 @@
               </ListItem>
               <ListItem>
                 <Label>AlbumGain</Label>
-                <ScriptBlock>"$($_.TrackGain) dB"</ScriptBlock>
+                <ScriptBlock>"$($_.AlbumGain) dB"</ScriptBlock>
               </ListItem>
             </ListItems>
           </ListEntry>
