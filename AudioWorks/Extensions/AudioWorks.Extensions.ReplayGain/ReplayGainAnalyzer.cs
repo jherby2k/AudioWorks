@@ -12,17 +12,19 @@ namespace AudioWorks.Extensions.ReplayGain
 
         [CanBeNull] float[] _buffer;
         [CanBeNull] R128Analyzer _analyzer;
+        [CanBeNull] GroupState _groupState;
 
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
         {
             ["PeakAnalysis"] = new StringSettingInfo("Simple", "Interpolated")
         };
 
-        public void Initialize(AudioInfo audioInfo, SettingDictionary settings)
+        public void Initialize(AudioInfo audioInfo, SettingDictionary settings, GroupToken groupToken)
         {
             _analyzer = new R128Analyzer((uint) audioInfo.Channels, (uint) audioInfo.SampleRate,
                 settings.TryGetValue("PeakAnalysis", out var peakAnalysis) &&
                 string.CompareOrdinal("Interpolated", (string) peakAnalysis) == 0);
+            _groupState = (GroupState) groupToken.GetOrSetGroupState(new GroupState());
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
@@ -44,29 +46,30 @@ namespace AudioWorks.Extensions.ReplayGain
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-        public AudioMetadata GetResult(GroupToken groupToken)
+        public AudioMetadata GetResult()
         {
-            var groupState = (GroupState) groupToken.GetOrSetGroupState(new GroupState());
-            groupState.Handles.Add(_analyzer.Handle);
+            _groupState.Handles.Add(_analyzer.Handle);
 
             var peak = _analyzer.GetPeak();
-            groupState.AddPeak(peak);
+            _groupState.AddPeak(peak);
 
-            var result = new AudioMetadata
+            return new AudioMetadata
             {
                 TrackPeak = peak.ToString(CultureInfo.InvariantCulture),
                 TrackGain = (_referenceLevel - _analyzer.GetLoudness())
                     .ToString(CultureInfo.InvariantCulture)
             };
+        }
 
-            groupToken.CompleteMember();
-            groupToken.WaitForMembers();
-
-            result.AlbumPeak = groupState.GroupPeak.ToString(CultureInfo.InvariantCulture);
-            result.AlbumGain = (_referenceLevel - _analyzer.GetLoudnessMultiple(groupState.Handles.ToArray()))
-                .ToString(CultureInfo.InvariantCulture);
-
-            return result;
+        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
+        public AudioMetadata GetGroupResult()
+        {
+            return new AudioMetadata
+            {
+                AlbumPeak = _groupState.GroupPeak.ToString(CultureInfo.InvariantCulture),
+                AlbumGain = (_referenceLevel - _analyzer.GetLoudnessMultiple(_groupState.Handles.ToArray()))
+                    .ToString(CultureInfo.InvariantCulture)
+            };
         }
     }
 }

@@ -23,9 +23,11 @@ namespace AudioWorks.Extensions
         /// </summary>
         /// <param name="audioInfo">The audio information.</param>
         /// <param name="settings">The settings.</param>
+        /// <param name="groupToken">The group token.</param>
         void Initialize(
             [NotNull] AudioInfo audioInfo,
-            [NotNull] SettingDictionary settings);
+            [NotNull] SettingDictionary settings,
+            [NotNull] GroupToken groupToken);
 
         /// <summary>
         /// Submits samples for processing.
@@ -36,9 +38,15 @@ namespace AudioWorks.Extensions
         /// <summary>
         /// Gets the result.
         /// </summary>
-        /// <param name="groupToken">The group token.</param>
         /// <returns>The result.</returns>
         [NotNull]
-        AudioMetadata GetResult([NotNull] GroupToken groupToken);
+        AudioMetadata GetResult();
+
+        /// <summary>
+        /// Gets the result for a group.
+        /// </summary>
+        /// <returns>The result.</returns>
+        [NotNull]
+        AudioMetadata GetGroupResult();
     }
 }
