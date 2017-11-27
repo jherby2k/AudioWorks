@@ -49,7 +49,7 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
                     .AddParameter("Analyzer", "Foo")
-                    .AddParameter("AudioFile", new Mock<IAnalyzableAudioFile>().Object);
+                    .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object);
 
                 ps.Invoke();
 
@@ -64,7 +64,7 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
-                    .AddParameter("AudioFile", new Mock<IAnalyzableAudioFile>().Object);
+                    .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object);
 
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
             }
@@ -78,7 +78,7 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
                     .AddArgument("Foo")
-                    .AddParameter("AudioFile", new Mock<IAnalyzableAudioFile>().Object);
+                    .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object);
 
                 ps.Invoke();
 
@@ -94,7 +94,7 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
                     .AddParameter("Analyzer", "Foo")
-                    .AddParameter("AudioFile", new Mock<IAnalyzableAudioFile>().Object);
+                    .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object);
 
                 ps.Invoke();
 
@@ -123,7 +123,7 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
                     .AddArgument("Foo")
-                    .AddArgument(new Mock<IAnalyzableAudioFile>().Object);
+                    .AddArgument(new Mock<ITaggedAudioFile>().Object);
 
                 ps.Invoke();
 
@@ -139,7 +139,7 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-Variable")
                     .AddArgument("audioFile")
-                    .AddArgument(new Mock<IAnalyzableAudioFile>().Object)
+                    .AddArgument(new Mock<ITaggedAudioFile>().Object)
                     .AddParameter("PassThru");
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Value");
@@ -165,7 +165,7 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
                     .AddParameter("Analyzer", "Foo")
-                    .AddParameter("AudioFile", new Mock<IAnalyzableAudioFile>().Object)
+                    .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object)
                     .AddParameter("PassThru");
 
                 ps.Invoke();
@@ -177,7 +177,7 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName = "Measure-AudioFile with PassThru switch returns the AudioFile")]
         public void PassThruSwitchReturnsAudioFile()
         {
-            var audioFile = new Mock<IAnalyzableAudioFile>().Object;
+            var audioFile = new Mock<ITaggedAudioFile>().Object;
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
@@ -190,8 +190,8 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
-        [Fact(DisplayName = "Measure-AudioFile has an OutputType of IAnalyzableAudioFile")]
-        public void OutputTypeIsAnalyzableAudioFile()
+        [Fact(DisplayName = "Measure-AudioFile has an OutputType of ITaggedAudioFile")]
+        public void OutputTypeIsITaggedAudioFile()
         {
             using (var ps = PowerShell.Create())
             {
@@ -203,7 +203,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Type");
 
-                Assert.Equal(typeof(IAnalyzableAudioFile), (Type) ps.Invoke()[0].BaseObject);
+                Assert.Equal(typeof(ITaggedAudioFile), (Type) ps.Invoke()[0].BaseObject);
             }
         }
 
@@ -215,7 +215,7 @@ namespace AudioWorks.Commands.Tests
             [CanBeNull] TestSettingDictionary settings,
             [NotNull] TestAudioMetadata expectedMetadata)
         {
-            var audioFile = new AnalyzableAudioFile(Path.Combine(
+            var audioFile = new TaggedAudioFile(Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
                 "TestFiles",
                 "Valid",

@@ -11,7 +11,7 @@ namespace AudioWorks.Commands
     /// metadata, and can be manipulated in various ways by the other AudioWorks cmdlets.</para>
     /// </summary>
     [PublicAPI]
-    [Cmdlet(VerbsCommon.Get, "AudioFile", DefaultParameterSetName = "ByPath"), OutputType(typeof(IAnalyzableAudioFile))]
+    [Cmdlet(VerbsCommon.Get, "AudioFile", DefaultParameterSetName = "ByPath"), OutputType(typeof(ITaggedAudioFile))]
     public sealed class GetAudioFileCommand : PSCmdlet
     {
         /// <summary>
@@ -39,7 +39,7 @@ namespace AudioWorks.Commands
             try
             {
                 foreach (var path in this.GetFileSystemPaths(Path, LiteralPath))
-                    WriteObject(new AnalyzableAudioFile(path));
+                    WriteObject(new TaggedAudioFile(path));
             }
             catch (ItemNotFoundException e)
             {

@@ -48,7 +48,7 @@ namespace AudioWorks.Extensions.ReplayGain
             return loudness;
         }
 
-        internal double GetLoudnessMultiple([NotNull, ItemNotNull] StateHandle[] handles)
+        internal static double GetLoudnessMultiple([NotNull, ItemNotNull] StateHandle[] handles)
         {
             SafeNativeMethods.LoudnessGlobalMultiple(
                 handles.Select(handle => handle.DangerousGetHandle()).ToArray(),

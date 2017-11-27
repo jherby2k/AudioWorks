@@ -11,7 +11,7 @@ namespace AudioWorks.Extensions.ReplayGain
         internal double GroupPeak { get; private set; }
 
         [NotNull]
-        internal ConcurrentBag<StateHandle> Handles { get; } = new ConcurrentBag<StateHandle>();
+        internal ConcurrentQueue<StateHandle> Handles { get; } = new ConcurrentQueue<StateHandle>();
 
         internal void AddPeak(double peak)
         {
@@ -21,7 +21,7 @@ namespace AudioWorks.Extensions.ReplayGain
 
         public void Dispose()
         {
-            while (Handles.TryTake(out var handle))
+            while (Handles.TryDequeue(out var handle))
                 handle.Dispose();
         }
     }

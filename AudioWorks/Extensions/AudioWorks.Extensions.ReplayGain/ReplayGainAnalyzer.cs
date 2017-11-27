@@ -24,7 +24,10 @@ namespace AudioWorks.Extensions.ReplayGain
             _analyzer = new R128Analyzer((uint) audioInfo.Channels, (uint) audioInfo.SampleRate,
                 settings.TryGetValue("PeakAnalysis", out var peakAnalysis) &&
                 string.CompareOrdinal("Interpolated", (string) peakAnalysis) == 0);
+
             _groupState = (GroupState) groupToken.GetOrSetGroupState(new GroupState());
+            // ReSharper disable once PossibleNullReferenceException
+            _groupState.Handles.Enqueue(_analyzer.Handle);
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
@@ -48,8 +51,6 @@ namespace AudioWorks.Extensions.ReplayGain
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public AudioMetadata GetResult()
         {
-            _groupState.Handles.Add(_analyzer.Handle);
-
             var peak = _analyzer.GetPeak();
             _groupState.AddPeak(peak);
 
@@ -67,7 +68,7 @@ namespace AudioWorks.Extensions.ReplayGain
             return new AudioMetadata
             {
                 AlbumPeak = _groupState.GroupPeak.ToString(CultureInfo.InvariantCulture),
-                AlbumGain = (_referenceLevel - _analyzer.GetLoudnessMultiple(_groupState.Handles.ToArray()))
+                AlbumGain = (_referenceLevel - R128Analyzer.GetLoudnessMultiple(_groupState.Handles.ToArray()))
                     .ToString(CultureInfo.InvariantCulture)
             };
         }

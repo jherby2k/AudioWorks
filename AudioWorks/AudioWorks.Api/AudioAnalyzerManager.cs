@@ -6,15 +6,15 @@ using System;
 namespace AudioWorks.Api
 {
     /// <summary>
-    /// Provides information about the available analyzers, which are used by an <see cref="IAnalyzableAudioFile"/>'s
-    /// AnalyzeAsync method.
+    /// Provides information about the available analyzers, which are used by an <see cref="AudioFileAnalyzer"/>'s
+    /// Analyze method.
     /// </summary>
     [PublicAPI]
     public static class AudioAnalyzerManager
     {
         /// <summary>
-        /// Gets information about the available settings that can be passed to an <see cref="IAnalyzableAudioFile"/>'s
-        /// AnalyzeAsync method, for a given analyzer.
+        /// Gets information about the available settings that can be passed to an <see cref="AudioFileAnalyzer"/>'s
+        /// Analyze method, for a given analyzer.
         /// </summary>
         /// <param name="name">The name of the analyzer.</param>
         /// <returns>Information about the available settings.</returns>

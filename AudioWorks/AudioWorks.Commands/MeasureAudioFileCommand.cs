@@ -3,8 +3,6 @@ using AudioWorks.Common;
 using JetBrains.Annotations;
 using System.Collections.Generic;
 using System.Management.Automation;
-using System.Threading;
-using System.Threading.Tasks.Dataflow;
 
 namespace AudioWorks.Commands
 {
@@ -14,10 +12,10 @@ namespace AudioWorks.Commands
     /// measurements as metadata.</para>
     /// </summary>
     [PublicAPI]
-    [Cmdlet(VerbsDiagnostic.Measure, "AudioFile"), OutputType(typeof(IAnalyzableAudioFile))]
+    [Cmdlet(VerbsDiagnostic.Measure, "AudioFile"), OutputType(typeof(ITaggedAudioFile))]
     public sealed class MeasureAudioFileCommand : Cmdlet, IDynamicParameters
     {
-        [NotNull] readonly List<IAnalyzableAudioFile> _audioFiles = new List<IAnalyzableAudioFile>();
+        [NotNull] readonly List<ITaggedAudioFile> _audioFiles = new List<ITaggedAudioFile>();
         [CanBeNull] RuntimeDefinedParameterDictionary _parameters;
 
         /// <summary>
@@ -30,7 +28,7 @@ namespace AudioWorks.Commands
         /// <para type="description">Specifies the audio file.</para>
         /// </summary>
         [Parameter(Mandatory = true, Position = 1, ValueFromPipeline = true)]
-        public IAnalyzableAudioFile AudioFile { get; set; }
+        public ITaggedAudioFile AudioFile { get; set; }
 
         /// <summary>
         /// <para type="description">Returns an object representing the item with which you are working. By default,
@@ -48,8 +46,8 @@ namespace AudioWorks.Commands
         /// <inheritdoc/>
         protected override void EndProcessing()
         {
-            using (var groupToken = new GroupToken(_audioFiles.Count))
-                AnalyzeParallel(groupToken, SettingAdapter.ParametersToSettings(_parameters));
+            new AudioFileAnalyzer(Analyzer, SettingAdapter.ParametersToSettings(_parameters))
+                .Analyze(_audioFiles.ToArray());
 
             if (PassThru)
                 WriteObject(_audioFiles, true);
@@ -64,23 +62,6 @@ namespace AudioWorks.Commands
 
             return _parameters = SettingAdapter.SettingInfoToParameters(
                 AudioAnalyzerManager.GetSettingInfo(Analyzer));
-        }
-
-        void AnalyzeParallel([NotNull] GroupToken groupToken, [CanBeNull] SettingDictionary settings)
-        {
-            var block = new ActionBlock<IAnalyzableAudioFile>(audioFile =>
-                    audioFile.AnalyzeAsync(Analyzer, settings, groupToken, CancellationToken.None),
-                new ExecutionDataflowBlockOptions
-                {
-                    MaxDegreeOfParallelism = DataflowBlockOptions.Unbounded,
-                    SingleProducerConstrained = true
-                });
-
-            foreach (var audioFile in _audioFiles)
-                block.Post(audioFile);
-
-            block.Complete();
-            block.Completion.Wait();
         }
     }
 }
