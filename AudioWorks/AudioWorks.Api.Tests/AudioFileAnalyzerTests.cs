@@ -3,6 +3,7 @@ using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 using ObjectsComparer;
+using System;
 using System.IO;
 using System.Linq;
 using Xunit;
@@ -11,6 +12,19 @@ namespace AudioWorks.Api.Tests
 {
     public sealed class AudioFileAnalyzerTests
     {
+        [Fact(DisplayName = "AudioFileAnalyzer's constructor throws an exception if the name is null")]
+        public void ConstructorNameNullThrowsException()
+        {
+            // ReSharper disable once AssignNullToNotNullAttribute
+            Assert.Throws<ArgumentNullException>(() => new AudioFileAnalyzer(null));
+        }
+
+        [Fact(DisplayName = "AudioFileAnalyzer's constructor throws an exception if the name is unsupported")]
+        public void ConstructorNameUnsupportedThrowsException()
+        {
+            Assert.Throws<ArgumentException>(() => new AudioFileAnalyzer("Foo"));
+        }
+
         [Theory(DisplayName = "AudioFileAnalyzer's Analyze method creates the expected metadata")]
         [MemberData(nameof(AnalyzeValidFileDataSource.Data), MemberType = typeof(AnalyzeValidFileDataSource))]
         public void AnalyzeCreatesExpectedMetadata(
