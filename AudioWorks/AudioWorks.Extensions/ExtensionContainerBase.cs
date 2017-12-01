@@ -5,15 +5,17 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions
 {
     abstract class ExtensionContainerBase
     {
-        static readonly DirectoryInfo _extensionRoot = new DirectoryInfo(Path.Combine(
+        [NotNull] static readonly DirectoryInfo _extensionRoot = new DirectoryInfo(Path.Combine(
             Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath) ?? string.Empty,
             "Extensions"));
 
+        [NotNull]
         protected static CompositionHost CompositionHost { get; } = new ContainerConfiguration()
             .WithAssemblies(_extensionRoot
                 .EnumerateFiles("AudioWorks.Extensions.*.dll", SearchOption.AllDirectories)

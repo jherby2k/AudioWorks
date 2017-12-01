@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions
 {
@@ -7,8 +8,8 @@ namespace AudioWorks.Extensions
     /// </summary>
     public sealed class GroupToken : IDisposable
     {
-        readonly object _syncRoot = new object();
-        object _groupState;
+        [NotNull] readonly object _syncRoot = new object();
+        [CanBeNull] object _groupState;
 
         /// <summary>
         /// Sets a group state object, or returns the current one if it has already been set.
@@ -19,7 +20,8 @@ namespace AudioWorks.Extensions
         /// </remarks>
         /// <param name="groupState">A new group state object.</param>
         /// <returns>The current group state</returns>
-        public object GetOrSetGroupState(object groupState)
+        [CanBeNull]
+        public object GetOrSetGroupState([CanBeNull] object groupState)
         {
             lock (_syncRoot)
             {
