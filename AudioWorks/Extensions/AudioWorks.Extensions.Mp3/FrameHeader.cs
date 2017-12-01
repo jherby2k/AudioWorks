@@ -1,7 +1,7 @@
-﻿using AudioWorks.Common;
-using JetBrains.Annotations;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using AudioWorks.Common;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp3
 {

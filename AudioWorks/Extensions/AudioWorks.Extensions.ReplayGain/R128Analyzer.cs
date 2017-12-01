@@ -1,6 +1,6 @@
-﻿using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.ReplayGain
 {

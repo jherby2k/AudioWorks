@@ -1,6 +1,6 @@
-﻿using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Runtime.Serialization;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Common
 {

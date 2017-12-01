@@ -1,8 +1,8 @@
-﻿using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Composition;
 using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions
 {

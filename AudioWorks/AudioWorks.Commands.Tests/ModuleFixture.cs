@@ -1,7 +1,7 @@
-using JetBrains.Annotations;
 using System;
 using System.IO;
 using System.Management.Automation.Runspaces;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Commands.Tests
 {

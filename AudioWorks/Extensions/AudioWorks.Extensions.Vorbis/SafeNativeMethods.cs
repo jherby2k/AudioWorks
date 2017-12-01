@@ -1,7 +1,7 @@
-﻿using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using System.Security;
+using JetBrains.Annotations;
 #if (WINDOWS)
 using System.IO;
 using System.Reflection;

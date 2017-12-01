@@ -1,8 +1,8 @@
-﻿using AudioWorks.Common;
+﻿using System;
+using System.IO;
+using AudioWorks.Common;
 using AudioWorks.Extensions;
 using JetBrains.Annotations;
-using System;
-using System.IO;
 
 namespace AudioWorks.Api
 {

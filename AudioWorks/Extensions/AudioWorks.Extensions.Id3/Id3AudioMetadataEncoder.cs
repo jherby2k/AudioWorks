@@ -1,9 +1,9 @@
-﻿using AudioWorks.Common;
+﻿using System.IO;
+using System.Text;
+using AudioWorks.Common;
 using Id3Lib;
 using Id3Lib.Exceptions;
 using JetBrains.Annotations;
-using System.IO;
-using System.Text;
 
 namespace AudioWorks.Extensions.Id3
 {

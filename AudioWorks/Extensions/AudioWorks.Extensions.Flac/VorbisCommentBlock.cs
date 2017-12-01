@@ -1,5 +1,5 @@
-﻿using JetBrains.Annotations;
-using System.Text;
+﻿using System.Text;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
 {

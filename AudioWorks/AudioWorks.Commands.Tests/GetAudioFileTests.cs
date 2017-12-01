@@ -1,9 +1,9 @@
-using AudioWorks.Api.Tests.DataSources;
-using AudioWorks.Common;
-using JetBrains.Annotations;
 using System;
 using System.IO;
 using System.Management.Automation;
+using AudioWorks.Api.Tests.DataSources;
+using AudioWorks.Common;
+using JetBrains.Annotations;
 using Xunit;
 
 namespace AudioWorks.Commands.Tests

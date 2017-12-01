@@ -1,6 +1,6 @@
-﻿using JetBrains.Annotations;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp4
 {

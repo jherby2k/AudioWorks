@@ -1,8 +1,8 @@
-﻿using AudioWorks.Common;
-using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Linq;
+using AudioWorks.Common;
+using JetBrains.Annotations;
 using Xunit.Abstractions;
 
 namespace AudioWorks.Api.Tests.DataTypes

@@ -1,5 +1,5 @@
-﻿using JetBrains.Annotations;
-using System.IO;
+﻿using System.IO;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions
 {

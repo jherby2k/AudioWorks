@@ -1,7 +1,7 @@
-﻿using AudioWorks.Common;
-using JetBrains.Annotations;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
+using AudioWorks.Common;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp4
 {

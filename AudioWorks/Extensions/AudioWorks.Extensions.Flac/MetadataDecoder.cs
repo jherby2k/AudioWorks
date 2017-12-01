@@ -1,8 +1,8 @@
-﻿using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
 {

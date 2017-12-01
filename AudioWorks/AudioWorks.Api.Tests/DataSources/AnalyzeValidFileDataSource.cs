@@ -1,6 +1,6 @@
-﻿using AudioWorks.Api.Tests.DataTypes;
+﻿using System.Collections.Generic;
+using AudioWorks.Api.Tests.DataTypes;
 using JetBrains.Annotations;
-using System.Collections.Generic;
 
 namespace AudioWorks.Api.Tests.DataSources
 {

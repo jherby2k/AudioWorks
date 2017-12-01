@@ -1,8 +1,8 @@
-﻿using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Apple
 {

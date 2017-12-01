@@ -1,7 +1,7 @@
-﻿using AudioWorks.Common;
-using JetBrains.Annotations;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Management.Automation;
+using AudioWorks.Common;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Commands
 {

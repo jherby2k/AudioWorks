@@ -1,11 +1,11 @@
+using System;
+using System.IO;
+using System.Linq;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 using ObjectsComparer;
-using System;
-using System.IO;
-using System.Linq;
 using Xunit;
 
 namespace AudioWorks.Api.Tests

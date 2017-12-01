@@ -1,8 +1,8 @@
-﻿using JetBrains.Annotations;
-using Microsoft.PowerShell.Commands;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Management.Automation;
+using JetBrains.Annotations;
+using Microsoft.PowerShell.Commands;
 
 namespace AudioWorks.Commands
 {

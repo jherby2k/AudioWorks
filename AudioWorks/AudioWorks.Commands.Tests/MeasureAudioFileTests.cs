@@ -1,13 +1,13 @@
-﻿using AudioWorks.Api;
+﻿using System;
+using System.IO;
+using System.Management.Automation;
+using AudioWorks.Api;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 using Moq;
 using ObjectsComparer;
-using System;
-using System.IO;
-using System.Management.Automation;
 using Xunit;
 
 namespace AudioWorks.Commands.Tests

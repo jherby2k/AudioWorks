@@ -1,8 +1,8 @@
-﻿using AudioWorks.Common;
+﻿using System;
+using System.Management.Automation;
+using AudioWorks.Common;
 using JetBrains.Annotations;
 using Moq;
-using System;
-using System.Management.Automation;
 using Xunit;
 
 namespace AudioWorks.Commands.Tests

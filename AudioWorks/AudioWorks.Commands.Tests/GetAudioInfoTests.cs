@@ -1,11 +1,11 @@
-﻿using AudioWorks.Api;
+﻿using System;
+using System.IO;
+using System.Management.Automation;
+using AudioWorks.Api;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 using Moq;
-using System;
-using System.IO;
-using System.Management.Automation;
 using Xunit;
 
 namespace AudioWorks.Commands.Tests

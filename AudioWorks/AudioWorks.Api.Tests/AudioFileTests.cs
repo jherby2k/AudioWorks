@@ -1,10 +1,10 @@
+using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 using ObjectsComparer;
-using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using Xunit;
 
 namespace AudioWorks.Api.Tests

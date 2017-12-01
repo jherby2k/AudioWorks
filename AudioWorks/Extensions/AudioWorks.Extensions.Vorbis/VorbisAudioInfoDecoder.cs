@@ -1,6 +1,6 @@
-﻿using AudioWorks.Common;
-using System.IO;
+﻿using System.IO;
 using System.Runtime.InteropServices;
+using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Vorbis
 {

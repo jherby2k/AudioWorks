@@ -1,11 +1,11 @@
-﻿using AudioWorks.Api.Tests.DataSources;
-using AudioWorks.Api.Tests.DataTypes;
-using AudioWorks.Common;
-using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using AudioWorks.Api.Tests.DataSources;
+using AudioWorks.Api.Tests.DataTypes;
+using AudioWorks.Common;
+using JetBrains.Annotations;
 using Xunit;
 
 namespace AudioWorks.Api.Tests

@@ -1,8 +1,8 @@
-﻿using AudioWorks.Api;
+﻿using System.Collections.Generic;
+using System.Management.Automation;
+using AudioWorks.Api;
 using AudioWorks.Common;
 using JetBrains.Annotations;
-using System.Collections.Generic;
-using System.Management.Automation;
 
 namespace AudioWorks.Commands
 {

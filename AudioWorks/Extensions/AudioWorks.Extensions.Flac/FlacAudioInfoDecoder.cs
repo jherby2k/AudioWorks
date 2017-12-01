@@ -1,5 +1,5 @@
-﻿using AudioWorks.Common;
-using System.IO;
+﻿using System.IO;
+using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Flac
 {

@@ -1,6 +1,6 @@
-using AudioWorks.Common;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using AudioWorks.Common;
 using Xunit;
 
 namespace AudioWorks.Api.Tests

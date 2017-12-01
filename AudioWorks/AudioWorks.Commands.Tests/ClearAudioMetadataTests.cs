@@ -1,11 +1,11 @@
-﻿using AudioWorks.Common;
+﻿using System;
+using System.Linq;
+using System.Management.Automation;
+using AudioWorks.Common;
 using AutoMapper;
 using JetBrains.Annotations;
 using Moq;
 using ObjectsComparer;
-using System;
-using System.Linq;
-using System.Management.Automation;
 using Xunit;
 
 namespace AudioWorks.Commands.Tests

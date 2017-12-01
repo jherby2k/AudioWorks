@@ -1,7 +1,7 @@
-﻿using AudioWorks.Common;
+﻿using System.IO;
+using AudioWorks.Common;
 using Id3Lib;
 using Id3Lib.Exceptions;
-using System.IO;
 
 namespace AudioWorks.Extensions.Id3
 {

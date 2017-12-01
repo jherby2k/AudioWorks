@@ -1,6 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿using System.Runtime.ConstrainedExecution;
+using JetBrains.Annotations;
 using Microsoft.Win32.SafeHandles;
-using System.Runtime.ConstrainedExecution;
 
 namespace AudioWorks.Extensions.Flac
 {
