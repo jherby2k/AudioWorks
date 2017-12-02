@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AudioWorks.Api.Tests.DataTypes;
 using JetBrains.Annotations;
 
@@ -448,8 +449,13 @@ namespace AudioWorks.Api.Tests.DataSources
         [NotNull, ItemNotNull]
         public static IEnumerable<object[]> Data
         {
-            // Prepend an index to each row
             [UsedImplicitly] get => _data;
+        }
+
+        [NotNull, ItemNotNull]
+        public static IEnumerable<object[]> FileNamesAndAnalyzers
+        {
+            [UsedImplicitly] get => _data.Select(item => new[] { item[0], item[1] });
         }
     }
 }
