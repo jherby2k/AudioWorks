@@ -1062,7 +1062,6 @@ namespace AudioWorks.Api.Tests.DataSources
         [NotNull, ItemNotNull]
         public static IEnumerable<object[]> Data
         {
-            // Prepend an index to each row
             [UsedImplicitly] get => _data;
         }
     }
