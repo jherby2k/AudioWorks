@@ -2,6 +2,7 @@
 using System.Composition;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using AudioWorks.Common;
@@ -46,6 +47,18 @@ namespace AudioWorks.Api
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
         public void Analyze([NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
         {
+            Analyze(CancellationToken.None, audioFiles);
+        }
+
+        /// <summary>
+        /// Analyzes the specified audio files.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <param name="audioFiles">The audio files.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
+        public void Analyze(CancellationToken cancellationToken, [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
+        {
             if (audioFiles == null)
                 throw new ArgumentNullException(nameof(audioFiles));
             if (audioFiles.Any(audioFile => audioFile == null))
@@ -64,7 +77,8 @@ namespace AudioWorks.Api
                     }
 
                     // Process the audio files in parallel
-                    Parallel.For(0, audioFiles.Length, i => ProcessSingle(audioFiles[i], analyzerExports[i].Value));
+                    Parallel.For(0, audioFiles.Length, new ParallelOptions { CancellationToken = cancellationToken },
+                        i => ProcessSingle(audioFiles[i], analyzerExports[i].Value, cancellationToken));
 
                     // Obtain the group results sequentially
                     for (var i = 0; i < audioFiles.Length; i++)
@@ -78,7 +92,10 @@ namespace AudioWorks.Api
             }
         }
 
-        static void ProcessSingle([NotNull] ITaggedAudioFile audioFile, [NotNull] IAudioAnalyzer audioAnalyzer)
+        static void ProcessSingle(
+            [NotNull] ITaggedAudioFile audioFile,
+            [NotNull] IAudioAnalyzer audioAnalyzer,
+            CancellationToken cancellationToken)
         {
             using (var fileStream = File.OpenRead(audioFile.Path))
             {
@@ -89,17 +106,22 @@ namespace AudioWorks.Api
                     {
                         // Use an action block to process the sample collections asynchronously
                         var block = new ActionBlock<SampleCollection>(samples => audioAnalyzer.Submit(samples),
-                            new ExecutionDataflowBlockOptions { SingleProducerConstrained = true });
+                            new ExecutionDataflowBlockOptions
+                            {
+                                CancellationToken = cancellationToken,
+                                SingleProducerConstrained = true
+                            });
 
                         using (var decoderExport = decoderFactory.CreateExport())
                         {
                             decoderExport.Value.Initialize(fileStream);
                             while (!decoderExport.Value.Finished)
-                                block.Post(decoderExport.Value.DecodeSamples());
+                                if (!block.Post(decoderExport.Value.DecodeSamples()))
+                                    break;
                         }
 
                         block.Complete();
-                        block.Completion.Wait();
+                        block.Completion.Wait(cancellationToken);
 
                         CopyFields(audioAnalyzer.GetResult(), audioFile.Metadata);
 

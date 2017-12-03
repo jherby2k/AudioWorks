@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Management.Automation;
+using System.Threading;
 using AudioWorks.Api;
 using AudioWorks.Common;
 using JetBrains.Annotations;
@@ -13,8 +15,9 @@ namespace AudioWorks.Commands
     /// </summary>
     [PublicAPI]
     [Cmdlet(VerbsDiagnostic.Measure, "AudioFile"), OutputType(typeof(ITaggedAudioFile))]
-    public sealed class MeasureAudioFileCommand : Cmdlet, IDynamicParameters
+    public sealed class MeasureAudioFileCommand : Cmdlet, IDynamicParameters, IDisposable
     {
+        [NotNull] readonly CancellationTokenSource _cancellationSource = new CancellationTokenSource();
         [NotNull] readonly List<ITaggedAudioFile> _audioFiles = new List<ITaggedAudioFile>();
         [CanBeNull] RuntimeDefinedParameterDictionary _parameters;
 
@@ -47,10 +50,16 @@ namespace AudioWorks.Commands
         protected override void EndProcessing()
         {
             new AudioFileAnalyzer(Analyzer, SettingAdapter.ParametersToSettings(_parameters))
-                .Analyze(_audioFiles.ToArray());
+                .Analyze(_cancellationSource.Token, _audioFiles.ToArray());
 
             if (PassThru)
                 WriteObject(_audioFiles, true);
+        }
+
+        /// <inheritdoc/>
+        protected override void StopProcessing()
+        {
+            _cancellationSource.Cancel();
         }
 
         /// <inheritdoc/>
@@ -62,6 +71,12 @@ namespace AudioWorks.Commands
 
             return _parameters = SettingAdapter.SettingInfoToParameters(
                 AudioAnalyzerManager.GetSettingInfo(Analyzer));
+        }
+
+        /// <inheritdoc />
+        public void Dispose()
+        {
+            _cancellationSource.Dispose();
         }
     }
 }
