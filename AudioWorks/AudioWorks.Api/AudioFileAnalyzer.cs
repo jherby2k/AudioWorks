@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Composition;
 using System.IO;
 using System.Linq;
@@ -45,7 +46,8 @@ namespace AudioWorks.Api
         /// <param name="audioFiles">The audio files.</param>
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
-        public void Analyze([NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
+        public void Analyze(
+            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
         {
             Analyze(CancellationToken.None, audioFiles);
         }
@@ -57,12 +59,32 @@ namespace AudioWorks.Api
         /// <param name="audioFiles">The audio files.</param>
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
-        public void Analyze(CancellationToken cancellationToken, [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
+        public void Analyze(
+            CancellationToken cancellationToken,
+            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
+        {
+            Analyze(null, cancellationToken, audioFiles);
+        }
+
+        /// <summary>
+        /// Analyzes the specified audio files.
+        /// </summary>
+        /// <param name="progressQueue">The progress queue, or <c>null</c>.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <param name="audioFiles">The audio files.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
+        public void Analyze(
+            [CanBeNull] BlockingCollection<ProgressToken> progressQueue,
+            CancellationToken cancellationToken,
+            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
         {
             if (audioFiles == null)
                 throw new ArgumentNullException(nameof(audioFiles));
             if (audioFiles.Any(audioFile => audioFile == null))
                 throw new ArgumentException("One or more audio files are null.", nameof(audioFiles));
+
+            progressQueue?.Add(new ProgressToken(0, audioFiles.Length), cancellationToken);
 
             using (var groupToken = new GroupToken())
             {
@@ -77,8 +99,15 @@ namespace AudioWorks.Api
                     }
 
                     // Process the audio files in parallel
+                    var complete = 0;
                     Parallel.For(0, audioFiles.Length, new ParallelOptions { CancellationToken = cancellationToken },
-                        i => ProcessSingle(audioFiles[i], analyzerExports[i].Value, cancellationToken));
+                        i =>
+                        {
+                            ProcessSingle(audioFiles[i], analyzerExports[i].Value, cancellationToken);
+                            progressQueue?.Add(
+                                new ProgressToken(Interlocked.Increment(ref complete), audioFiles.Length),
+                                cancellationToken);
+                        });
 
                     // Obtain the group results sequentially
                     for (var i = 0; i < audioFiles.Length; i++)

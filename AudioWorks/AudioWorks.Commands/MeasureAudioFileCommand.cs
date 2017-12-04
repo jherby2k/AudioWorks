@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Management.Automation;
 using System.Threading;
+using System.Threading.Tasks;
 using AudioWorks.Api;
 using AudioWorks.Common;
 using JetBrains.Annotations;
@@ -49,8 +51,16 @@ namespace AudioWorks.Commands
         /// <inheritdoc/>
         protected override void EndProcessing()
         {
-            new AudioFileAnalyzer(Analyzer, SettingAdapter.ParametersToSettings(_parameters))
-                .Analyze(_cancellationSource.Token, _audioFiles.ToArray());
+            using (var outputQueue = new BlockingCollection<ProgressToken>())
+            {
+                Task.Run(() => new AudioFileAnalyzer(Analyzer, SettingAdapter.ParametersToSettings(_parameters))
+                        .Analyze(outputQueue, _cancellationSource.Token, _audioFiles.ToArray()))
+                    .ContinueWith(task => outputQueue.CompleteAdding());
+
+                // Process output on the main thread
+                foreach (var progressToken in outputQueue.GetConsumingEnumerable(_cancellationSource.Token))
+                    WriteProgress(ProgressAdapter.TokenToRecord(progressToken));
+            }
 
             if (PassThru)
                 WriteObject(_audioFiles, true);
