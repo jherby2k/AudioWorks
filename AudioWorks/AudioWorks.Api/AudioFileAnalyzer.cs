@@ -137,7 +137,11 @@ namespace AudioWorks.Api
                     try
                     {
                         // Use an action block to process the sample collections asynchronously
-                        var block = new ActionBlock<SampleCollection>(samples => audioAnalyzer.Submit(samples),
+                        var block = new ActionBlock<SampleCollection>(samples =>
+                            {
+                                audioAnalyzer.Submit(samples);
+                                SampleCollectionPool.Instance.Release(samples);
+                            },
                             new ExecutionDataflowBlockOptions
                             {
                                 CancellationToken = cancellationToken,

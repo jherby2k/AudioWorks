@@ -33,7 +33,7 @@ namespace AudioWorks.Extensions.Wave
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public SampleCollection DecodeSamples()
         {
-            var result = new SampleCollection(
+            var result = SampleCollectionPool.Instance.Create(
                 _audioInfo.Channels,
                 (int) Math.Min(_framesRemaining, _defaultFrameCount));
 
