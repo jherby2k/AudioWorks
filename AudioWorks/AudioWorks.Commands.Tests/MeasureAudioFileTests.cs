@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Management.Automation;
 using AudioWorks.Api;
 using AudioWorks.Api.Tests.DataSources;
@@ -261,7 +262,7 @@ namespace AudioWorks.Commands.Tests
         [MemberData(nameof(AnalyzeValidFileDataSource.Data), MemberType = typeof(AnalyzeValidFileDataSource))]
         public void CreatesExpectedMetadata(
             [NotNull] string fileName,
-            [NotNull] string analyzer,
+            [NotNull] string analyzerName,
             [CanBeNull] TestSettingDictionary settings,
             [NotNull] TestAudioMetadata expectedMetadata)
         {
@@ -274,7 +275,7 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
-                    .AddArgument(analyzer)
+                    .AddArgument(analyzerName)
                     .AddArgument(audioFile);
                 if (settings != null)
                     foreach (var item in settings)
@@ -284,6 +285,45 @@ namespace AudioWorks.Commands.Tests
             }
 
             Assert.True(new Comparer().Compare(expectedMetadata, audioFile.Metadata, out var differences), string.Join(' ', differences));
+        }
+
+        [Theory(DisplayName = "Measure-AudioFile creates the expected metadata for a group")]
+        [MemberData(nameof(AnalyzeGroupDataSource.Data), MemberType = typeof(AnalyzeGroupDataSource))]
+        public void CreatesExpectedMetadataForGroup(
+            [NotNull] string[] fileNames,
+            [NotNull] string analyzerName,
+            [CanBeNull] TestSettingDictionary settings,
+            [NotNull] TestAudioMetadata[] expectedMetadata)
+        {
+            var audioFiles = fileNames.Select(fileName => new TaggedAudioFile(Path.Combine(
+                    new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                    "TestFiles",
+                    "Valid",
+                    fileName)))
+                .ToArray<ITaggedAudioFile>();
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-Variable")
+                    .AddArgument("audioFiles")
+                    .AddArgument(audioFiles)
+                    .AddParameter("PassThru");
+                ps.AddCommand("Select-Object")
+                    .AddParameter("ExpandProperty", "Value");
+                ps.AddCommand("Measure-AudioFile")
+                    .AddArgument(analyzerName);
+                if (settings != null)
+                    foreach (var item in settings)
+                        ps.AddParameter(item.Key, item.Value);
+
+                ps.Invoke();
+            }
+
+            var i = 0;
+            var comparer = new Comparer();
+            Assert.All(audioFiles, audioFile =>
+                Assert.True(comparer.Compare(expectedMetadata[i++], audioFile.Metadata, out var differences),
+                    string.Join(' ', differences)));
         }
     }
 }
