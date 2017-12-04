@@ -30,7 +30,7 @@ namespace AudioWorks.Api.Tests
         public void AnalyzeCreatesExpectedMetadata(
             [NotNull] string fileName,
             [NotNull] string analyzerName,
-            [NotNull] TestSettingDictionary settings,
+            [CanBeNull] TestSettingDictionary settings,
             [NotNull] TestAudioMetadata expectedMetadata)
         {
             var audioFile = new TaggedAudioFile(Path.Combine(
@@ -49,9 +49,8 @@ namespace AudioWorks.Api.Tests
         public void AnalyzeCreatesExpectedMetadataForGroup(
             [NotNull] string[] fileNames,
             [NotNull] string analyzerName,
-            [NotNull] TestSettingDictionary settings,
-            [NotNull] TestAudioMetadata[] expectedMetadata
-            )
+            [CanBeNull] TestSettingDictionary settings,
+            [NotNull] TestAudioMetadata[] expectedMetadata)
         {
             var audioFiles = fileNames.Select(fileName => new TaggedAudioFile(Path.Combine(
                     new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
