@@ -17,8 +17,9 @@ namespace AudioWorks.Api
     /// </summary>
     public sealed class AudioFileAnalyzer
     {
-        [NotNull] readonly SettingDictionary _settings;
         [NotNull] readonly ExportFactory<IAudioAnalyzer> _analyzerFactory;
+        [NotNull] readonly SettingDictionary _settings;
+        [NotNull] readonly string _progressDescription;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioFileAnalyzer"/> class.
@@ -38,6 +39,7 @@ namespace AudioWorks.Api
                 throw new ArgumentException($"No '{name}' analyzer is available.", nameof(name));
 
             _settings = settings ?? new SettingDictionary();
+            _progressDescription = $"Performing {name} analysis";
         }
 
         /// <summary>
@@ -84,7 +86,7 @@ namespace AudioWorks.Api
             if (audioFiles.Any(audioFile => audioFile == null))
                 throw new ArgumentException("One or more audio files are null.", nameof(audioFiles));
 
-            progressQueue?.Add(new ProgressToken(0, audioFiles.Length), cancellationToken);
+            progressQueue?.Add(new ProgressToken(_progressDescription, 0, audioFiles.Length), cancellationToken);
 
             using (var groupToken = new GroupToken())
             {
@@ -105,7 +107,8 @@ namespace AudioWorks.Api
                         {
                             ProcessSingle(audioFiles[i], analyzerExports[i].Value, cancellationToken);
                             progressQueue?.Add(
-                                new ProgressToken(Interlocked.Increment(ref complete), audioFiles.Length),
+                                new ProgressToken(_progressDescription, Interlocked.Increment(ref complete),
+                                    audioFiles.Length),
                                 cancellationToken);
                         });
 

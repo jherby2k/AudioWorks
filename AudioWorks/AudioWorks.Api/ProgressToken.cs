@@ -6,6 +6,12 @@
     public sealed class ProgressToken
     {
         /// <summary>
+        /// Gets the description.
+        /// </summary>
+        /// <value>The description.</value>
+        public string Description { get; }
+
+        /// <summary>
         /// Gets the # completed.
         /// </summary>
         /// <value>The # completed.</value>
@@ -17,8 +23,9 @@
         /// <value>The total.</value>
         public int Total { get; }
 
-        internal ProgressToken(int completed, int total)
+        internal ProgressToken(string description, int completed, int total)
         {
+            Description = description;
             Completed = completed;
             Total = total;
         }
