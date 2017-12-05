@@ -1,4 +1,5 @@
-﻿using AudioWorks.Common;
+﻿using System.Diagnostics.CodeAnalysis;
+using AudioWorks.Common;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions
@@ -40,6 +41,8 @@ namespace AudioWorks.Extensions
         /// </summary>
         /// <returns>The result.</returns>
         [NotNull]
+        [SuppressMessage("Design", "CA1024:Use properties where appropriate",
+            Justification = "Order of execution is important")]
         AudioMetadata GetResult();
 
         /// <summary>
@@ -47,6 +50,8 @@ namespace AudioWorks.Extensions
         /// </summary>
         /// <returns>The result.</returns>
         [NotNull]
+        [SuppressMessage("Design", "CA1024:Use properties where appropriate",
+            Justification = "Order of execution is important")]
         AudioMetadata GetGroupResult();
     }
 }
