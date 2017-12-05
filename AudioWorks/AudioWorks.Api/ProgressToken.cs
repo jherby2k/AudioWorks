@@ -1,8 +1,11 @@
-﻿namespace AudioWorks.Api
+﻿using JetBrains.Annotations;
+
+namespace AudioWorks.Api
 {
     /// <summary>
     /// An immutable message that indicates progress.
     /// </summary>
+    [PublicAPI]
     public sealed class ProgressToken
     {
         /// <summary>

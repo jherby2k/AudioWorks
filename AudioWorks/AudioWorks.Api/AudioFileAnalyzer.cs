@@ -15,6 +15,7 @@ namespace AudioWorks.Api
     /// <summary>
     /// Performs analysis on one or more audio files.
     /// </summary>
+    [PublicAPI]
     public sealed class AudioFileAnalyzer
     {
         [NotNull] readonly ExportFactory<IAudioAnalyzer> _analyzerFactory;
