@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
 {
@@ -28,44 +27,32 @@ namespace AudioWorks.Extensions.Flac
         [UsedImplicitly] Uninitialized
     }
 
-    [SuppressMessage("Naming", "CA1717:Only FlagsAttribute enums should have plural names",
-        Justification = "'Status' is plural")]
     enum DecoderReadStatus
     {
         Continue,
         EndOfStream
     }
 
-    [SuppressMessage("Naming", "CA1717:Only FlagsAttribute enums should have plural names",
-        Justification = "'Status' is plural")]
     enum DecoderSeekStatus
     {
         Ok
     }
 
-    [SuppressMessage("Naming", "CA1717:Only FlagsAttribute enums should have plural names",
-        Justification = "'Status' is plural")]
     enum DecoderTellStatus
     {
         Ok
     }
 
-    [SuppressMessage("Naming", "CA1717:Only FlagsAttribute enums should have plural names",
-        Justification = "'Status' is plural")]
     enum DecoderLengthStatus
     {
         Ok
     }
 
-    [SuppressMessage("Naming", "CA1717:Only FlagsAttribute enums should have plural names",
-        Justification = "'Status' is plural")]
     enum DecoderWriteStatus
     {
         Continue
     }
 
-    [SuppressMessage("Naming", "CA1717:Only FlagsAttribute enums should have plural names",
-        Justification = "'Status' is plural")]
     enum DecoderErrorStatus
     {
         [UsedImplicitly] LostSync,

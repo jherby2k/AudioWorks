@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace AudioWorks.Extensions.Apple
 {
@@ -41,8 +40,6 @@ namespace AudioWorks.Extensions.Apple
         DecompressionMagicCookie = 0x646d6763 // 'dmgc'
     }
 
-    [SuppressMessage("Naming", "CA1717:Only FlagsAttribute enums should have plural names",
-        Justification = "'Status' is plural")]
     enum AudioFileStatus
     {
         Ok = 0,
@@ -64,8 +61,6 @@ namespace AudioWorks.Extensions.Apple
         FileNotFoundError = -43
     }
 
-    [SuppressMessage("Naming", "CA1717:Only FlagsAttribute enums should have plural names",
-        Justification = "'Status' is plural")]
     enum AudioConverterStatus
     {
         Ok = 0,
