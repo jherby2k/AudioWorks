@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
     <Description>Public types used by the AudioWorks API. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
     <Authors>Jeremy Herbison</Authors>
     <Company />
