@@ -40,6 +40,7 @@ namespace AudioWorks.Extensions
         [CollectionAccess(CollectionAccessType.None)]
         public int Frames => _samples[0].Length;
 
+        [CollectionAccess(CollectionAccessType.UpdatedContent)]
         internal SampleCollection([NotNull] float[][] samples)
         {
             _samples = samples;
