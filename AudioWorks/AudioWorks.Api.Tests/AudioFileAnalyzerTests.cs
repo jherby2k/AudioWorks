@@ -44,7 +44,7 @@ namespace AudioWorks.Api.Tests
             Assert.True(new Comparer().Compare(expectedMetadata, audioFile.Metadata, out var differences), string.Join(' ', differences));
         }
 
-        [Theory(DisplayName = "AnalyzableAudioFile's Analyze method creates the expected metadata for a group")]
+        [Theory(DisplayName = "AudioFileAnalyzer's Analyze method creates the expected metadata for a group")]
         [MemberData(nameof(AnalyzeGroupDataSource.Data), MemberType = typeof(AnalyzeGroupDataSource))]
         public void AnalyzeCreatesExpectedMetadataForGroup(
             [NotNull] string[] fileNames,
