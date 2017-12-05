@@ -53,9 +53,15 @@ namespace AudioWorks.Commands
         {
             using (var outputQueue = new BlockingCollection<ProgressToken>())
             {
-                Task.Run(() => new AudioFileAnalyzer(Analyzer, SettingAdapter.ParametersToSettings(_parameters))
-                        .Analyze(outputQueue, _cancellationSource.Token, _audioFiles.ToArray()))
-                    .ContinueWith(task => outputQueue.CompleteAdding());
+                // Avoid closure inside a using block by passing outputQueue as state
+                var task = new Task(q =>
+                    new AudioFileAnalyzer(Analyzer, SettingAdapter.ParametersToSettings(_parameters))
+                        .Analyze((BlockingCollection<ProgressToken>) q, _cancellationSource.Token,
+                            _audioFiles.ToArray()), outputQueue);
+                task.ContinueWith((t, q) =>
+                        ((BlockingCollection<ProgressToken>) q).CompleteAdding(),
+                    outputQueue, TaskScheduler.Default);
+                task.Start(TaskScheduler.Default);
 
                 // Process output on the main thread
                 foreach (var progressToken in outputQueue.GetConsumingEnumerable(_cancellationSource.Token))
