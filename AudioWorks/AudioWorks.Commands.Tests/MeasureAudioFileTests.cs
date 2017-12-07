@@ -142,7 +142,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Theory(DisplayName = "Measure-AudioFile requires the AudioFile parameter")]
-        [MemberData(nameof(AnalyzerDataSource.Data), MemberType = typeof(AnalyzerDataSource))]
+        [MemberData(nameof(AnalyzeValidFileDataSource.Analyzers), MemberType = typeof(AnalyzeValidFileDataSource))]
         public void RequiresAudioFileParameter([NotNull] string analyzer)
         {
             using (var ps = PowerShell.Create())
