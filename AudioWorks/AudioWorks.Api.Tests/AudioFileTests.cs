@@ -30,7 +30,7 @@ namespace AudioWorks.Api.Tests
         {
             Assert.Throws<AudioUnsupportedException>(() =>
                 new AudioFile(Path.Combine(
-                    new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                    new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                     "TestFiles",
                     "Unsupported",
                     fileName)));
@@ -42,7 +42,7 @@ namespace AudioWorks.Api.Tests
         {
             Assert.Throws<AudioInvalidException>(() =>
                 new AudioFile(Path.Combine(
-                    new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                    new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                     "TestFiles",
                     "Invalid",
                     fileName)));
@@ -53,7 +53,7 @@ namespace AudioWorks.Api.Tests
         public void HasExpectedPath([NotNull] string fileName)
         {
             var path = Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName);
@@ -66,7 +66,7 @@ namespace AudioWorks.Api.Tests
         public void HasInfo([NotNull] string fileName)
         {
             var path = Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName);
@@ -79,7 +79,7 @@ namespace AudioWorks.Api.Tests
         public void PathIsSerialized([NotNull] string fileName)
         {
             var audioFile = new AudioFile(Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName));
@@ -98,7 +98,7 @@ namespace AudioWorks.Api.Tests
         public void InfoIsSerialized([NotNull] string fileName)
         {
             var audioFile = new AudioFile(Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName));

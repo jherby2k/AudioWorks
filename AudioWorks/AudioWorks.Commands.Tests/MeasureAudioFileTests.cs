@@ -84,7 +84,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Measure-AudioFile")
                     .AddParameter("Analyzer", analyzerName)
                     .AddParameter("AudioFile", new TaggedAudioFile(Path.Combine(
-                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                         "TestFiles",
                         "Valid",
                         fileName)));
@@ -107,7 +107,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Measure-AudioFile")
                     .AddArgument(analyzerName)
                     .AddParameter("AudioFile", new TaggedAudioFile(Path.Combine(
-                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                         "TestFiles",
                         "Valid",
                         fileName)));
@@ -130,7 +130,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Measure-AudioFile")
                     .AddParameter("Analyzer", analyzerName)
                     .AddParameter("AudioFile", new TaggedAudioFile(Path.Combine(
-                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                         "TestFiles",
                         "Valid",
                         fileName)));
@@ -167,7 +167,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Measure-AudioFile")
                     .AddArgument(analyzerName)
                     .AddArgument(new TaggedAudioFile(Path.Combine(
-                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                         "TestFiles",
                         "Valid",
                         fileName)));
@@ -190,7 +190,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Set-Variable")
                     .AddArgument("audioFile")
                     .AddArgument(new TaggedAudioFile(Path.Combine(
-                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                         "TestFiles",
                         "Valid",
                         fileName)))
@@ -223,7 +223,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Measure-AudioFile")
                     .AddParameter("Analyzer", analyzerName)
                     .AddParameter("AudioFile", new TaggedAudioFile(Path.Combine(
-                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                         "TestFiles",
                         "Valid",
                         fileName)))
@@ -242,7 +242,7 @@ namespace AudioWorks.Commands.Tests
             [NotNull] string analyzerName)
         {
             var audioFile = new TaggedAudioFile(Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName));
@@ -267,7 +267,7 @@ namespace AudioWorks.Commands.Tests
             [NotNull] TestAudioMetadata expectedMetadata)
         {
             var audioFile = new TaggedAudioFile(Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName));
@@ -296,7 +296,7 @@ namespace AudioWorks.Commands.Tests
             [NotNull] TestAudioMetadata[] expectedMetadata)
         {
             var audioFiles = fileNames.Select(fileName => new TaggedAudioFile(Path.Combine(
-                    new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                    new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                     "TestFiles",
                     "Valid",
                     fileName)))

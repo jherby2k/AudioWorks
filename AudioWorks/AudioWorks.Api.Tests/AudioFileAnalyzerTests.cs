@@ -34,7 +34,7 @@ namespace AudioWorks.Api.Tests
             [NotNull] TestAudioMetadata expectedMetadata)
         {
             var audioFile = new TaggedAudioFile(Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName));
@@ -53,7 +53,7 @@ namespace AudioWorks.Api.Tests
             [NotNull] TestAudioMetadata[] expectedMetadata)
         {
             var audioFiles = fileNames.Select(fileName => new TaggedAudioFile(Path.Combine(
-                    new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                    new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                     "TestFiles",
                     "Valid",
                     fileName)))
