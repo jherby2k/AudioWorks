@@ -98,7 +98,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "TaggedAudioFile's SaveMetadata method creates the expected output")]
-        [MemberData(nameof(SaveMetadataDataValidFileSource.Data), MemberType = typeof(SaveMetadataDataValidFileSource))]
+        [MemberData(nameof(SaveMetadataValidFileSource.Data), MemberType = typeof(SaveMetadataValidFileSource))]
         public void SaveMetadataCreatesExpectedOutput(
             int index,
             [NotNull] string fileName,
