@@ -11,8 +11,7 @@ namespace AudioWorks.Extensions
     /// filesystem, if the file extension matches.
     /// </summary>
     /// <remarks>
-    /// Classes marked with this attribute should implement <see cref="IAudioInfoDecoder"/> and also be marked with the
-    /// <see cref="SharedAttribute"/> attribute.
+    /// Classes marked with this attribute must implement <see cref="IAudioInfoDecoder"/>.
     /// </remarks>
     /// <seealso cref="ExportAttribute"/>
     [PublicAPI, MeansImplicitUse, BaseTypeRequired(typeof(IAudioInfoDecoder))]

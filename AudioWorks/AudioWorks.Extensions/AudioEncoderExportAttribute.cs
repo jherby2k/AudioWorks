@@ -9,8 +9,7 @@ namespace AudioWorks.Extensions
     /// file to another format.
     /// </summary>
     /// <remarks>
-    /// Classes marked with this attribute should implement <see cref="IAudioEncoder"/> and also be marked with
-    /// the <see cref="SharedAttribute"/> attribute.
+    /// Classes marked with this attribute must implement <see cref="IAudioEncoder"/>.
     /// </remarks>
     /// <seealso cref="ExportAttribute"/>
     [PublicAPI, MeansImplicitUse, BaseTypeRequired(typeof(IAudioEncoder))]

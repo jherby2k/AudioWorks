@@ -9,8 +9,7 @@ namespace AudioWorks.Extensions
     /// the name matches.
     /// </summary>
     /// <remarks>
-    /// Classes marked with this attribute should implement <see cref="IAudioAnalyzer"/> and also be marked with the
-    /// <see cref="SharedAttribute"/> attribute.
+    /// Classes marked with this attribute must implement <see cref="IAudioAnalyzer"/>.
     /// </remarks>
     /// <seealso cref="ExportAttribute"/>
     [PublicAPI, MeansImplicitUse, BaseTypeRequired(typeof(IAudioAnalyzer))]
