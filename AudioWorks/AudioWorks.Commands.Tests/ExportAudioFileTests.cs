@@ -123,7 +123,8 @@ namespace AudioWorks.Commands.Tests
                     .AddArgument(encoderName)
                     .AddArgument(path)
                     .AddArgument(sourceAudioFile)
-                    .AddParameter("Name", $"{index:00} - {Path.GetFileNameWithoutExtension(sourceFileName)}");
+                    .AddParameter("Name", $"{index:00} - {Path.GetFileNameWithoutExtension(sourceFileName)}")
+                    .AddParameter("Replace");
                 if (settings != null)
                     foreach (var item in settings)
                         ps.AddParameter(item.Key, item.Value);
