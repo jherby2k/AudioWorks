@@ -40,5 +40,10 @@ namespace AudioWorks.Extensions
             [NotNull] AudioInfo info,
             [NotNull] AudioMetadata metadata,
             [NotNull] SettingDictionary settings);
+
+        /// <summary>
+        /// Finishes encoding.
+        /// </summary>
+        void Finish();
     }
 }
