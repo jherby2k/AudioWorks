@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Management.Automation;
 using System.Threading;
 using AudioWorks.Api;
@@ -58,10 +60,38 @@ namespace AudioWorks.Commands
         [Parameter]
         public string Name { get; set; }
 
+        /// <summary>
+        /// <para type="description">Indicates that existing files should be replaced.</para>
+        /// </summary>
+        [Parameter]
+        public SwitchParameter Replace { get; set; }
+
         /// <inheritdoc/>
         protected override void ProcessRecord()
         {
             _sourceAudioFiles.Add(AudioFile);
+        }
+
+        /// <inheritdoc/>
+        protected override void EndProcessing()
+        {
+            var encoder = new AudioFileEncoder(Encoder, SettingAdapter.ParametersToSettings(_parameters));
+
+            foreach (var audioFile in _sourceAudioFiles)
+            {
+                var substituter = new MetadataSubstituter(audioFile.Metadata);
+                DirectoryInfo outputDirectory;
+                try
+                {
+                    outputDirectory = new DirectoryInfo(this.GetFileSystemPaths(substituter.Substitute(Path), substituter.Substitute(LiteralPath)).First());
+                }
+                catch (ItemNotFoundException e)
+                {
+                    outputDirectory = new DirectoryInfo(e.ItemName);
+                }
+
+                WriteObject(encoder.Export(audioFile, _cancellationSource.Token, outputDirectory, substituter.Substitute(Name), Replace));
+            }
         }
 
         /// <inheritdoc/>
