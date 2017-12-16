@@ -86,8 +86,14 @@ namespace AudioWorks.Api
 
             try
             {
-                using (var encoderExport = _encoderFactory.CreateExport())
+                // Need to close these in reverse order, so can't use "using"
+                Export<IAudioEncoder> encoderExport = null;
+                FileStream outputStream = null;
+
+                try
                 {
+                    encoderExport = _encoderFactory.CreateExport();
+
                     outputFilePath = Path.Combine(outputDirectory.FullName,
                         outputFileName + encoderExport.Value.FileExtension);
                     finalOutputFilePath = outputFilePath;
@@ -101,11 +107,16 @@ namespace AudioWorks.Api
                         outputFilePath = Path.Combine(outputDirectory.FullName, Path.GetRandomFileName());
                     }
 
-                    using (var outputStream = File.OpenWrite(outputFilePath))
-                    {
-                        encoderExport.Value.Initialize(outputStream, audioFile.Info, audioFile.Metadata, _settings);
-                        encoderExport.Value.ProcessSamples(audioFile.Path, cancellationToken);
-                    }
+                    outputStream = File.OpenWrite(outputFilePath);
+
+                    encoderExport.Value.Initialize(outputStream, audioFile.Info, audioFile.Metadata, _settings);
+                    encoderExport.Value.ProcessSamples(audioFile.Path, cancellationToken);
+                    encoderExport.Value.Finish();
+                }
+                finally
+                {
+                    encoderExport?.Dispose();
+                    outputStream?.Dispose();
                 }
             }
             catch (Exception)

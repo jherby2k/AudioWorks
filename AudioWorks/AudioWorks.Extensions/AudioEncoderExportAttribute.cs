@@ -31,7 +31,7 @@ namespace AudioWorks.Extensions
         /// <param name="name">The name of the analyzer.</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="name"/> is null or empty.</exception>
         public AudioEncoderExportAttribute([NotNull] string name)
-            : base(typeof(IAudioMetadataEncoder))
+            : base(typeof(IAudioEncoder))
         {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentException("Value cannot be null or empty.", nameof(name));
