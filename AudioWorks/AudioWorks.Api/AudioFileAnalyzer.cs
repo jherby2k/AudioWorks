@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Composition;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
 using AudioWorks.Common;
 using AudioWorks.Extensions;
 using JetBrains.Annotations;
@@ -82,8 +80,7 @@ namespace AudioWorks.Api
             CancellationToken cancellationToken,
             [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
         {
-            if (audioFiles == null)
-                throw new ArgumentNullException(nameof(audioFiles));
+            if (audioFiles == null) throw new ArgumentNullException(nameof(audioFiles));
             if (audioFiles.Any(audioFile => audioFile == null))
                 throw new ArgumentException("One or more audio files are null.", nameof(audioFiles));
 
@@ -106,7 +103,8 @@ namespace AudioWorks.Api
                     Parallel.For(0, audioFiles.Length, new ParallelOptions { CancellationToken = cancellationToken },
                         i =>
                         {
-                            ProcessSingle(audioFiles[i], analyzerExports[i].Value, cancellationToken);
+                            analyzerExports[i].Value.ProcessSamples(audioFiles[i].Path, cancellationToken);
+                            CopyFields(analyzerExports[i].Value.GetResult(), audioFiles[i].Metadata);
                             progressQueue?.Add(
                                 new ProgressToken(_progressDescription, Interlocked.Increment(ref complete),
                                     audioFiles.Length),
@@ -122,55 +120,6 @@ namespace AudioWorks.Api
                     foreach (var analyzerExport in analyzerExports)
                         analyzerExport?.Dispose();
                 }
-            }
-        }
-
-        static void ProcessSingle(
-            [NotNull] ITaggedAudioFile audioFile,
-            [NotNull] IAudioAnalyzer audioAnalyzer,
-            CancellationToken cancellationToken)
-        {
-            using (var fileStream = File.OpenRead(audioFile.Path))
-            {
-                // Try each decoder that supports this file extension
-                foreach (var decoderFactory in ExtensionProvider.GetFactories<IAudioDecoder>(
-                    "Extension", Path.GetExtension(audioFile.Path)))
-                    try
-                    {
-                        // Use an action block to process the sample collections asynchronously
-                        var block = new ActionBlock<SampleCollection>(samples =>
-                            {
-                                audioAnalyzer.Submit(samples);
-                                SampleCollectionPool.Instance.Release(samples);
-                            },
-                            new ExecutionDataflowBlockOptions
-                            {
-                                CancellationToken = cancellationToken,
-                                SingleProducerConstrained = true
-                            });
-
-                        using (var decoderExport = decoderFactory.CreateExport())
-                        {
-                            decoderExport.Value.Initialize(fileStream);
-                            while (!decoderExport.Value.Finished)
-                                if (!block.Post(decoderExport.Value.DecodeSamples()))
-                                    break;
-                        }
-
-                        block.Complete();
-                        block.Completion.Wait(cancellationToken);
-
-                        CopyFields(audioAnalyzer.GetResult(), audioFile.Metadata);
-
-                        return;
-                    }
-                    catch (AudioUnsupportedException)
-                    {
-                        // If a decoder wasn't supported, rewind the stream and try another:
-                        fileStream.Position = 0;
-                    }
-
-                throw new AudioUnsupportedException("No supporting decoders are available.");
             }
         }
 

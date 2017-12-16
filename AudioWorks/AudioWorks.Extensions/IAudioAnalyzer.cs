@@ -8,7 +8,7 @@ namespace AudioWorks.Extensions
     /// An extension that can analyze audio samples.
     /// </summary>
     [PublicAPI]
-    public interface IAudioAnalyzer
+    public interface IAudioAnalyzer : ISampleProcessor
     {
         /// <summary>
         /// Gets information about the settings that can be passed to the <see cref="Initialize"/> method.
@@ -29,12 +29,6 @@ namespace AudioWorks.Extensions
             [NotNull] AudioInfo info,
             [NotNull] SettingDictionary settings,
             [NotNull] GroupToken groupToken);
-
-        /// <summary>
-        /// Submits samples for processing.
-        /// </summary>
-        /// <param name="samples">The samples.</param>
-        void Submit([NotNull] SampleCollection samples);
 
         /// <summary>
         /// Gets the result.
