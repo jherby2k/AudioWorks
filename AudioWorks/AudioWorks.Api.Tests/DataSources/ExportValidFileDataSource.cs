@@ -13,7 +13,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "Wave",
                 null,
-                "<hash>"
+                "509B83828F13945E4121E4C4897A8649"
             }
         };
 
