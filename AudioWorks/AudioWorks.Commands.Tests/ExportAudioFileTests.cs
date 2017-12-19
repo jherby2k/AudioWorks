@@ -109,7 +109,7 @@ namespace AudioWorks.Commands.Tests
             [CanBeNull] TestSettingDictionary settings,
             [NotNull] string expectedHash)
         {
-            var path = Path.Combine("Output", "ExportAudioFile", "Valid");
+            var path = Path.Combine("Output", "Export-AudioFile", "Valid");
             Directory.CreateDirectory(path);
             var sourceAudioFile = new TaggedAudioFile(Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
