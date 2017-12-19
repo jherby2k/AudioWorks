@@ -76,10 +76,15 @@ namespace AudioWorks.Api
         {
             if (audioFile == null) throw new ArgumentNullException(nameof(audioFile));
 
+            // The output directory defaults to the input directory
             if (outputDirectory == null)
                 outputDirectory = new DirectoryInfo(Path.GetDirectoryName(audioFile.Path));
             else
                 outputDirectory.Create();
+
+            // The output file name defaults to the input file name
+            if (outputFileName == null)
+                outputFileName = Path.GetFileNameWithoutExtension(audioFile.Path);
 
             string outputFilePath = null;
             string finalOutputFilePath;
