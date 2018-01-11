@@ -30,11 +30,11 @@ namespace AudioWorks.Api.Tests
         public void AnalyzeCreatesExpectedMetadata(
             [NotNull] string fileName,
             [NotNull] string analyzerName,
-            [NotNull] TestSettingDictionary settings,
+            [CanBeNull] TestSettingDictionary settings,
             [NotNull] TestAudioMetadata expectedMetadata)
         {
             var audioFile = new TaggedAudioFile(Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName));
@@ -44,17 +44,16 @@ namespace AudioWorks.Api.Tests
             Assert.True(new Comparer().Compare(expectedMetadata, audioFile.Metadata, out var differences), string.Join(' ', differences));
         }
 
-        [Theory(DisplayName = "AnalyzableAudioFile's Analyze method creates the expected metadata for a group")]
+        [Theory(DisplayName = "AudioFileAnalyzer's Analyze method creates the expected metadata for a group")]
         [MemberData(nameof(AnalyzeGroupDataSource.Data), MemberType = typeof(AnalyzeGroupDataSource))]
         public void AnalyzeCreatesExpectedMetadataForGroup(
             [NotNull] string[] fileNames,
             [NotNull] string analyzerName,
-            [NotNull] TestSettingDictionary settings,
-            [NotNull] TestAudioMetadata[] expectedMetadata
-            )
+            [CanBeNull] TestSettingDictionary settings,
+            [NotNull] TestAudioMetadata[] expectedMetadata)
         {
             var audioFiles = fileNames.Select(fileName => new TaggedAudioFile(Path.Combine(
-                    new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                    new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                     "TestFiles",
                     "Valid",
                     fileName)))

@@ -901,7 +901,7 @@ namespace AudioWorks.Api.Tests
         public void HasExpectedTitle([NotNull] string fileName, [NotNull] TestAudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName);
@@ -914,7 +914,7 @@ namespace AudioWorks.Api.Tests
         public void HasExpectedArtist([NotNull] string fileName, [NotNull] TestAudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName);
@@ -927,7 +927,7 @@ namespace AudioWorks.Api.Tests
         public void HasExpectedAlbum([NotNull] string fileName, [NotNull] TestAudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName);
@@ -940,7 +940,7 @@ namespace AudioWorks.Api.Tests
         public void HasExpectedAlbumArtist([NotNull] string fileName, [NotNull] TestAudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName);
@@ -953,7 +953,7 @@ namespace AudioWorks.Api.Tests
         public void HasExpectedComposer([NotNull] string fileName, [NotNull] TestAudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName);
@@ -966,7 +966,7 @@ namespace AudioWorks.Api.Tests
         public void HasExpectedGenre([NotNull] string fileName, [NotNull] TestAudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName);
@@ -979,7 +979,7 @@ namespace AudioWorks.Api.Tests
         public void HasExpectedComment([NotNull] string fileName, [NotNull] TestAudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName);
@@ -992,7 +992,7 @@ namespace AudioWorks.Api.Tests
         public void HasExpectedDay([NotNull] string fileName, [NotNull] TestAudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName);
@@ -1005,7 +1005,7 @@ namespace AudioWorks.Api.Tests
         public void HasExpectedMonth([NotNull] string fileName, [NotNull] TestAudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName);
@@ -1018,7 +1018,7 @@ namespace AudioWorks.Api.Tests
         public void HasExpectedYear([NotNull] string fileName, [NotNull] TestAudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName);
@@ -1031,7 +1031,7 @@ namespace AudioWorks.Api.Tests
         public void HasExpectedTrackNumber([NotNull] string fileName, [NotNull] TestAudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName);
@@ -1043,7 +1043,7 @@ namespace AudioWorks.Api.Tests
         public void HasExpectedTrackCount([NotNull] string fileName, [NotNull] TestAudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName);
@@ -1055,7 +1055,7 @@ namespace AudioWorks.Api.Tests
         public void HasExpectedTrackPeak([NotNull] string fileName, [NotNull] TestAudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName);
@@ -1067,7 +1067,7 @@ namespace AudioWorks.Api.Tests
         public void HasExpectedAlbumPeak([NotNull] string fileName, [NotNull] TestAudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName);
@@ -1079,7 +1079,7 @@ namespace AudioWorks.Api.Tests
         public void HasExpectedTrackGain([NotNull] string fileName, [NotNull] TestAudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName);
@@ -1091,7 +1091,7 @@ namespace AudioWorks.Api.Tests
         public void HasExpectedAlbumGain([NotNull] string fileName, [NotNull] TestAudioMetadata expectedMetadata)
         {
             var path = Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName,
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
                 fileName);

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
@@ -8,6 +7,9 @@ namespace AudioWorks.Extensions
     /// <summary>
     /// Represents a collection of audio samples.
     /// </summary>
+    /// <remarks>
+    /// New <see cref="SampleCollection"/> instances should be created using <see cref="SampleCollectionPool.Create"/>.
+    /// </remarks>
     public sealed class SampleCollection : IEnumerable<float[]>
     {
         [NotNull, ItemNotNull] readonly float[][] _samples;
@@ -38,25 +40,10 @@ namespace AudioWorks.Extensions
         [CollectionAccess(CollectionAccessType.None)]
         public int Frames => _samples[0].Length;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SampleCollection"/> class.
-        /// </summary>
-        /// <param name="channels">The # of channels.</param>
-        /// <param name="frames">The frame count.</param>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="channels"/> or
-        /// <paramref name="frames"/> is out of range.</exception>
-        public SampleCollection(int channels, int frames)
+        [CollectionAccess(CollectionAccessType.UpdatedContent)]
+        internal SampleCollection([NotNull] float[][] samples)
         {
-            if (channels <= 0 || channels > 2)
-                throw new ArgumentOutOfRangeException(nameof(channels),
-                    $"{nameof(channels)} must be 1 or 2.");
-            if (frames < 0)
-                throw new ArgumentOutOfRangeException(nameof(frames),
-                    $"{nameof(frames)} must be 0 or greater.");
-
-            _samples = new float[channels][];
-            for (var i = 0; i < _samples.Length; i++)
-                _samples[i] = new float[frames];
+            _samples = samples;
         }
 
         /// <inheritdoc/>

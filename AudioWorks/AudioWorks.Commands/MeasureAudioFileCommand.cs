@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Management.Automation;
+using System.Threading;
+using System.Threading.Tasks;
 using AudioWorks.Api;
 using AudioWorks.Common;
 using JetBrains.Annotations;
@@ -13,8 +17,9 @@ namespace AudioWorks.Commands
     /// </summary>
     [PublicAPI]
     [Cmdlet(VerbsDiagnostic.Measure, "AudioFile"), OutputType(typeof(ITaggedAudioFile))]
-    public sealed class MeasureAudioFileCommand : Cmdlet, IDynamicParameters
+    public sealed class MeasureAudioFileCommand : Cmdlet, IDynamicParameters, IDisposable
     {
+        [NotNull] readonly CancellationTokenSource _cancellationSource = new CancellationTokenSource();
         [NotNull] readonly List<ITaggedAudioFile> _audioFiles = new List<ITaggedAudioFile>();
         [CanBeNull] RuntimeDefinedParameterDictionary _parameters;
 
@@ -46,11 +51,29 @@ namespace AudioWorks.Commands
         /// <inheritdoc/>
         protected override void EndProcessing()
         {
-            new AudioFileAnalyzer(Analyzer, SettingAdapter.ParametersToSettings(_parameters))
-                .Analyze(_audioFiles.ToArray());
+            using (var outputQueue = new BlockingCollection<ProgressToken>())
+            {
+                Task.Factory.StartNew(q =>
+                            new AudioFileAnalyzer(Analyzer, SettingAdapter.ParametersToSettings(_parameters))
+                                .Analyze((BlockingCollection<ProgressToken>) q, _cancellationSource.Token,
+                                    _audioFiles.ToArray()), outputQueue, _cancellationSource.Token,
+                        TaskCreationOptions.DenyChildAttach | TaskCreationOptions.LongRunning, TaskScheduler.Default)
+                    .ContinueWith((t, q) => ((BlockingCollection<ProgressToken>) q).CompleteAdding(),
+                        outputQueue, TaskScheduler.Default);
+
+                // Process output on the main thread
+                foreach (var progressToken in outputQueue.GetConsumingEnumerable(_cancellationSource.Token))
+                    WriteProgress(ProgressAdapter.TokenToRecord(progressToken));
+            }
 
             if (PassThru)
                 WriteObject(_audioFiles, true);
+        }
+
+        /// <inheritdoc/>
+        protected override void StopProcessing()
+        {
+            _cancellationSource.Cancel();
         }
 
         /// <inheritdoc/>
@@ -62,6 +85,12 @@ namespace AudioWorks.Commands
 
             return _parameters = SettingAdapter.SettingInfoToParameters(
                 AudioAnalyzerManager.GetSettingInfo(Analyzer));
+        }
+
+        /// <inheritdoc />
+        public void Dispose()
+        {
+            _cancellationSource.Dispose();
         }
     }
 }

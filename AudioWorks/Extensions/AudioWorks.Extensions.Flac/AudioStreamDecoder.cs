@@ -34,7 +34,7 @@ namespace AudioWorks.Extensions.Flac
             if (_buffer == null)
                 _buffer = new int[frame.Header.BlockSize];
 
-            Samples = new SampleCollection((int)frame.Header.Channels, (int)frame.Header.BlockSize);
+            Samples = SampleCollectionPool.Instance.Create((int)frame.Header.Channels, (int)frame.Header.BlockSize);
 
             for (var channelIndex = 0; channelIndex < frame.Header.Channels; channelIndex++)
             {

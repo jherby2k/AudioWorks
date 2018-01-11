@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Api.Tests.DataSources
 {
-    public static class SaveMetadataDataValidFileSource
+    public static class SaveMetadataValidFileSource
     {
         [NotNull, ItemNotNull] static readonly List<object[]> _data = new List<object[]>
         {

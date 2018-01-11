@@ -19,9 +19,9 @@ namespace AudioWorks.Extensions.ReplayGain
             ["PeakAnalysis"] = new StringSettingInfo("Simple", "Interpolated")
         };
 
-        public void Initialize(AudioInfo audioInfo, SettingDictionary settings, GroupToken groupToken)
+        public void Initialize(AudioInfo info, SettingDictionary settings, GroupToken groupToken)
         {
-            _analyzer = new R128Analyzer((uint) audioInfo.Channels, (uint) audioInfo.SampleRate,
+            _analyzer = new R128Analyzer((uint) info.Channels, (uint) info.SampleRate,
                 settings.TryGetValue("PeakAnalysis", out var peakAnalysis) &&
                 string.CompareOrdinal("Interpolated", (string) peakAnalysis) == 0);
 
