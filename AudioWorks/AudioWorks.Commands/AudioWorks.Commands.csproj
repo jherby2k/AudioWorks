@@ -54,7 +54,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains(WINDOWS))">
-    <PackageReference Include="XmlDoc2CmdletDoc" Version="0.2.9" />
+    <PackageReference Include="XmlDoc2CmdletDoc" Version="0.2.10" />
   </ItemGroup>
 
   <ItemGroup>
