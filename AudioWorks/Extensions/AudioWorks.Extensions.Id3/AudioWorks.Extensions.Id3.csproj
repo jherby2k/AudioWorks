@@ -10,7 +10,6 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <Copyright>Copyright © 2017 Jeremy Herbison</Copyright>
     <CodeAnalysisRuleSet>CodeAnalysis.ruleset</CodeAnalysisRuleSet>
-    <Features>IOperation</Features>
     <Configurations>Debug-Windows;Release-Windows;Debug-OSX;Release-OSX;Debug-Linux;Release-Linux</Configurations>
   </PropertyGroup>
 
@@ -48,7 +47,7 @@
   <ItemGroup>
     <PackageReference Include="csid3lib" Version="0.7.0-alpha" />
     <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.0-beta2" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.0" />
   </ItemGroup>
 
   <ItemGroup>
