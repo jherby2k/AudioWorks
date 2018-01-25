@@ -37,12 +37,12 @@ namespace AudioWorks.Extensions.Wave
 
         internal void FinishChunk()
         {
-            var chunkSizePosition = _chunkSizePositions.Pop();
+            var (sizeUpdated, position) = _chunkSizePositions.Pop();
 
-            if (!chunkSizePosition.sizeUpdated)
+            if (!sizeUpdated)
             {
                 var currentPosition = (uint) BaseStream.Position;
-                BaseStream.Position = chunkSizePosition.position;
+                BaseStream.Position = position;
                 Write((uint) (currentPosition - BaseStream.Position - 4));
                 BaseStream.Position = currentPosition;
             }

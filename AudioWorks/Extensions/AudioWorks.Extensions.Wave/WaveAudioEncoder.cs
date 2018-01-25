@@ -20,8 +20,8 @@ namespace AudioWorks.Extensions.Wave
 
         public void Initialize(FileStream fileStream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
-            _bytesPerSample = (int)Math.Ceiling(info.BitsPerSample / (double)8);
-            _multiplier = (float)Math.Pow(2, info.BitsPerSample - 1);
+            _bytesPerSample = (int) Math.Ceiling(info.BitsPerSample / (double) 8);
+            _multiplier = (float) Math.Pow(2, info.BitsPerSample - 1);
             _writer = new RiffWriter(fileStream);
 
             _writer.Initialize("WAVE");
