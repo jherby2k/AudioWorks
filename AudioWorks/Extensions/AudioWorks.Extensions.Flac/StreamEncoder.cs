@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
@@ -46,6 +48,14 @@ namespace AudioWorks.Extensions.Flac
         internal void SetCompressionLevel(uint compressionLevel)
         {
             SafeNativeMethods.StreamEncoderSetCompressionLevel(_handle, compressionLevel);
+        }
+
+        [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods",
+            Justification = "Can't pass an array of SafeHandles")]
+        internal void SetMetadata([NotNull, ItemNotNull] IEnumerable<MetadataBlock> metadataBlocks)
+        {
+            var blockPointers = metadataBlocks.Select(block => block.Handle.DangerousGetHandle()).ToArray();
+            SafeNativeMethods.StreamEncoderSetMetadata(_handle, blockPointers, (uint) blockPointers.Length);
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",

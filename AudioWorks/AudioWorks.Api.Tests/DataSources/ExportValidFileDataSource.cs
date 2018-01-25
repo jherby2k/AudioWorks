@@ -161,6 +161,13 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             new object[]
             {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "FLAC",
+                null,
+                "2091B9F7170427E14A704B5B8919A160"
+            },
+            new object[]
+            {
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "FLAC",
                 new TestSettingDictionary

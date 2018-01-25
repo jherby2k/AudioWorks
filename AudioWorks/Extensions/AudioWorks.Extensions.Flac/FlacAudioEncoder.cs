@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using AudioWorks.Common;
@@ -12,6 +13,7 @@ namespace AudioWorks.Extensions.Flac
         [CanBeNull] StreamEncoder _encoder;
         float _multiplier;
         [CanBeNull] int[] _buffer;
+        List<MetadataBlock> _metadataBlocks;
 
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
         {
@@ -32,6 +34,9 @@ namespace AudioWorks.Extensions.Flac
             _encoder.SetCompressionLevel(settings.TryGetValue("CompressionLevel", out var compressionLevel)
                 ? (uint) (int) compressionLevel
                 : 5);
+
+            _metadataBlocks = new List<MetadataBlock>(1) { new MetadataToVorbisCommentAdapter(metadata) };
+            _encoder.SetMetadata(_metadataBlocks);
 
             _encoder.Initialize();
 
@@ -61,6 +66,9 @@ namespace AudioWorks.Extensions.Flac
         public void Finish()
         {
             _encoder.Finish();
+            if (_metadataBlocks != null)
+                foreach (var block in _metadataBlocks)
+                    block.Dispose();
             //TODO check the result and throw an exception if necessary.
         }
 
