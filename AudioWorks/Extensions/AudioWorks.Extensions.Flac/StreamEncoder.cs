@@ -43,6 +43,11 @@ namespace AudioWorks.Extensions.Flac
             SafeNativeMethods.StreamEncoderSetTotalSamplesEstimate(_handle, sampleCount);
         }
 
+        internal void SetCompressionLevel(uint compressionLevel)
+        {
+            SafeNativeMethods.StreamEncoderSetCompressionLevel(_handle, compressionLevel);
+        }
+
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
         internal void Initialize()

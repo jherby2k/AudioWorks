@@ -13,7 +13,10 @@ namespace AudioWorks.Extensions.Flac
         float _multiplier;
         [CanBeNull] int[] _buffer;
 
-        public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary();
+        public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
+        {
+            ["CompressionLevel"] = new IntSettingInfo(0, 8)
+        };
 
         public string FileExtension { get; } = ".flac";
 
@@ -24,6 +27,12 @@ namespace AudioWorks.Extensions.Flac
             _encoder.SetBitsPerSample((uint) info.BitsPerSample);
             _encoder.SetSampleRate((uint) info.SampleRate);
             _encoder.SetTotalSamplesEstimate((ulong) info.SampleCount);
+
+            // Use a default compression level of 5
+            _encoder.SetCompressionLevel(settings.TryGetValue("CompressionLevel", out var compressionLevel)
+                ? (uint) (int) compressionLevel
+                : 5);
+
             _encoder.Initialize();
 
             _multiplier = (float) Math.Pow(2, info.BitsPerSample - 1);

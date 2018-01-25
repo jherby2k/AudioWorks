@@ -123,6 +123,13 @@ namespace AudioWorks.Extensions.Flac
             [NotNull] StreamEncoderHandle handle,
             ulong totalSamples);
 
+        [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_set_compression_level",
+            CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern void StreamEncoderSetCompressionLevel(
+            [NotNull] StreamEncoderHandle handle,
+            uint compressionLevel);
+
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_init_stream",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int StreamEncoderInitialize(
