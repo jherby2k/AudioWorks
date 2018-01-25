@@ -8,6 +8,7 @@ namespace AudioWorks.Api.Tests.DataSources
     {
         [NotNull, ItemNotNull] static readonly List<object[]> _data = new List<object[]>
         {
+            // Wave encoding
             new object[]
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
@@ -119,6 +120,43 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Wave",
                 null,
                 "5D4B869CD72BE208BC7B47F35E13BE9A"
+            },
+
+            // FLAC encoding
+            new object[]
+            {
+                "LPCM 8-bit 8000Hz Stereo.wav",
+                "FLAC",
+                null,
+                "158095449AD4C8BCA6EECDDC2FD82667"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Mono.wav",
+                "FLAC",
+                null,
+                "7386711EF1FF2CFDD3237D1D0B6BD015"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "FLAC",
+                null,
+                "6D50D234121EF64A84FF03BB557B025B"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 48000Hz Stereo.wav",
+                "FLAC",
+                null,
+                "802B4CD402BED63278D4148275739DEE"
+            },
+            new object[]
+            {
+                "LPCM 24-bit 96000Hz Stereo.wav",
+                "FLAC",
+                null,
+                "42B3494C2B3971EBECD0C02289471CB8"
             }
         };
 

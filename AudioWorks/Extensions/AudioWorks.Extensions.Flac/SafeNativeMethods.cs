@@ -45,12 +45,12 @@ namespace AudioWorks.Extensions.Flac
         internal static extern int StreamDecoderInitStream(
             [NotNull] StreamDecoderHandle handle,
             [NotNull] NativeCallbacks.StreamDecoderReadCallback readCallback,
-            [NotNull] NativeCallbacks.StreamDecoderSeekCallback seekCallback,
-            [NotNull] NativeCallbacks.StreamDecoderTellCallback tellCallback,
-            [NotNull] NativeCallbacks.StreamDecoderLengthCallback lengthCallback,
-            [NotNull] NativeCallbacks.StreamDecoderEofCallback eofCallback,
+            [CanBeNull] NativeCallbacks.StreamDecoderSeekCallback seekCallback,
+            [CanBeNull] NativeCallbacks.StreamDecoderTellCallback tellCallback,
+            [CanBeNull] NativeCallbacks.StreamDecoderLengthCallback lengthCallback,
+            [CanBeNull] NativeCallbacks.StreamDecoderEofCallback eofCallback,
             [NotNull] NativeCallbacks.StreamDecoderWriteCallback writeCallback,
-            [NotNull] NativeCallbacks.StreamDecoderMetadataCallback metadataCallback,
+            [CanBeNull] NativeCallbacks.StreamDecoderMetadataCallback metadataCallback,
             [NotNull] NativeCallbacks.StreamDecoderErrorCallback errorCallback,
             IntPtr userData);
 
@@ -88,6 +88,74 @@ namespace AudioWorks.Extensions.Flac
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_delete",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern void StreamDecoderDelete(
+            IntPtr handle);
+
+        [NotNull]
+        [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_new",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern StreamEncoderHandle StreamEncoderNew();
+
+        [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_set_channels",
+            CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool StreamEncoderSetChannels(
+            [NotNull] StreamEncoderHandle handle,
+            uint channels);
+
+        [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_set_bits_per_sample",
+            CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool StreamEncoderSetBitsPerSample(
+            [NotNull] StreamEncoderHandle handle,
+            uint bitsPerSample);
+
+        [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_set_sample_rate",
+            CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool StreamEncoderSetSampleRate(
+            [NotNull] StreamEncoderHandle handle,
+            uint sampleRate);
+
+        [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_set_total_samples_estimate",
+            CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool StreamEncoderSetTotalSamplesEstimate(
+            [NotNull] StreamEncoderHandle handle,
+            ulong totalSamples);
+
+        [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_init_stream",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int StreamEncoderInitialize(
+            [NotNull] StreamEncoderHandle handle,
+            [NotNull] NativeCallbacks.StreamEncoderWriteCallback writeCallback,
+            [CanBeNull] NativeCallbacks.StreamEncoderSeekCallback seekCallback,
+            [CanBeNull] NativeCallbacks.StreamEncoderTellCallback tellCallback,
+            [CanBeNull] NativeCallbacks.StreamEncoderMetadataCallback metadataCallback,
+            IntPtr userData);
+
+        [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_process_interleaved",
+            CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool StreamEncoderProcessInterleaved(
+            [NotNull] StreamEncoderHandle handle,
+            [NotNull] int[] buffer,
+            uint samples);
+
+        [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_finish",
+            CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool StreamEncoderFinish(
+            [NotNull] StreamEncoderHandle handle);
+
+        [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_get_state",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern EncoderState StreamEncoderGetState(
+            [NotNull] StreamEncoderHandle handle);
+
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
+        [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_delete",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void StreamEncoderDelete(
             IntPtr handle);
 
         [NotNull]

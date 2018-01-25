@@ -60,4 +60,32 @@ namespace AudioWorks.Extensions.Flac
         [UsedImplicitly] FrameCrcMismatch,
         [UsedImplicitly] UnparseableStream
     }
+
+    enum EncoderWriteStatus
+    {
+        Ok
+    }
+
+    enum EncoderSeekStatus
+    {
+        Ok
+    }
+
+    enum EncoderTellStatus
+    {
+        Ok
+    }
+
+    enum EncoderState
+    {
+        Ok,
+        Uninitialized,
+        OggError,
+        DecoderError,
+        AudioDataMismatch,
+        ClientError,
+        IoError,
+        FramingError,
+        MemoryAllocationError
+    }
 }
