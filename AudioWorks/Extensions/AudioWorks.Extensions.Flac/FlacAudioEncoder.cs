@@ -29,7 +29,8 @@ namespace AudioWorks.Extensions.Flac
             _encoder.SetChannels((uint) info.Channels);
             _encoder.SetBitsPerSample((uint) info.BitsPerSample);
             _encoder.SetSampleRate((uint) info.SampleRate);
-            _encoder.SetTotalSamplesEstimate((ulong) info.SampleCount);
+            if (info.SampleCount > 0)
+                _encoder.SetTotalSamplesEstimate((ulong) info.SampleCount);
 
             // Use a default compression level of 5
             _encoder.SetCompressionLevel(settings.TryGetValue("CompressionLevel", out var compressionLevel)
