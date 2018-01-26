@@ -161,10 +161,80 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             new object[]
             {
+                "FLAC Level 5 8-bit 8000Hz Stereo.flac",
+                "FLAC",
+                null,
+                "44AA2E52CED28503D02D51957B19DF74"
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Mono.flac",
+                "FLAC",
+                null,
+                "588ACB7827AF0D1A6A18751EEFEA3604"
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo.flac",
+                "FLAC",
+                null,
+                "3983A342A074A7E8871FEF4FBE0AC73F"
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 48000Hz Stereo.flac",
+                "FLAC",
+                null,
+                "8A532C4C9D61AF027BC6F684C59FE9A6"
+            },
+            new object[]
+            {
+                "FLAC Level 5 24-bit 96000Hz Stereo.flac",
+                "FLAC",
+                null,
+                "4A4DE0494E31D82F446421C876FB10EA"
+            },
+            new object[]
+            {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "FLAC",
                 null,
                 "A6B18F2B4DDC51DC37154410E701251F"
+            },
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Mono.m4a",
+                "FLAC",
+                null,
+                "588ACB7827AF0D1A6A18751EEFEA3604"
+            },
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo.m4a",
+                "FLAC",
+                null,
+                "3983A342A074A7E8871FEF4FBE0AC73F"
+            },
+            new object[]
+            {
+                "ALAC 16-bit 48000Hz Stereo.m4a",
+                "FLAC",
+                null,
+                "8A532C4C9D61AF027BC6F684C59FE9A6"
+            },
+            new object[]
+            {
+                "ALAC 24-bit 96000Hz Stereo.m4a",
+                "FLAC",
+                null,
+                "4A4DE0494E31D82F446421C876FB10EA"
+            },
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo (Tagged).m4a",
+                "FLAC",
+                null,
+                "0EE0AF9261C48854D66957F1567256C9"
             },
             new object[]
             {
