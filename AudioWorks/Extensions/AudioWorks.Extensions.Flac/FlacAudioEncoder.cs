@@ -10,14 +10,15 @@ namespace AudioWorks.Extensions.Flac
     [AudioEncoderExport("FLAC")]
     public sealed class FlacAudioEncoder : IAudioEncoder, IDisposable
     {
+        [NotNull] readonly List<MetadataBlock> _metadataBlocks = new List<MetadataBlock>(2);
         [CanBeNull] StreamEncoder _encoder;
         float _multiplier;
         [CanBeNull] int[] _buffer;
-        List<MetadataBlock> _metadataBlocks;
 
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
         {
-            ["CompressionLevel"] = new IntSettingInfo(0, 8)
+            ["CompressionLevel"] = new IntSettingInfo(0, 8),
+            ["Padding"] = new IntSettingInfo(0, int.MaxValue)
         };
 
         public string FileExtension { get; } = ".flac";
@@ -35,9 +36,19 @@ namespace AudioWorks.Extensions.Flac
                 ? (uint) (int) compressionLevel
                 : 5);
 
-            _metadataBlocks = new List<MetadataBlock>(1) { new MetadataToVorbisCommentAdapter(metadata) };
-            _encoder.SetMetadata(_metadataBlocks);
+            _metadataBlocks.Add(new MetadataToVorbisCommentAdapter(metadata));
 
+            // Use a default padding of 8192
+            if (settings.TryGetValue("Padding", out var paddingValue))
+            {
+                var padding = (int) paddingValue;
+                if (padding != 0)
+                    _metadataBlocks.Add(new PaddingBlock(padding));
+            }
+            else
+                _metadataBlocks.Add(new PaddingBlock(8192));
+
+            _encoder.SetMetadata(_metadataBlocks);
             _encoder.Initialize();
 
             _multiplier = (float) Math.Pow(2, info.BitsPerSample - 1);
@@ -66,9 +77,8 @@ namespace AudioWorks.Extensions.Flac
         public void Finish()
         {
             _encoder.Finish();
-            if (_metadataBlocks != null)
-                foreach (var block in _metadataBlocks)
-                    block.Dispose();
+            foreach (var block in _metadataBlocks)
+                block.Dispose();
             //TODO check the result and throw an exception if necessary.
         }
 

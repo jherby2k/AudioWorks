@@ -129,42 +129,42 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "FLAC",
                 null,
-                "EDD9B72838A464EA044EC708BD3D6DAC"
+                "A7224E3C8A82D28B19B12C9619B21B8B"
             },
             new object[]
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "FLAC",
                 null,
-                "1F576BE36A17F1C89C46D0AE170DDA2D"
+                "2EFAF80C41F97AD14CB6CD312E6DA601"
             },
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
                 null,
-                "3EF30DBEE1A041F82B660ED62AFF9C98"
+                "7DBB3E3E8079E60932AA5F8B4D9CD57C"
             },
             new object[]
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "FLAC",
                 null,
-                "29E0BB750298EEFCAE1B8D1FDD7B6D88"
+                "9122D368FBF84374365F2C1AB9F0B515"
             },
             new object[]
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "FLAC",
                 null,
-                "E0EA787ABB3779F207C6FEC852489A8A"
+                "28334293763C566566380FA7C8E40A86"
             },
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "FLAC",
                 null,
-                "2091B9F7170427E14A704B5B8919A160"
+                "1D1B1C489829AC4F65CC81595DC4FB7C"
             },
             new object[]
             {
@@ -174,7 +174,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["CompressionLevel"] = "8"
                 },
-                "B207A1CD8777A198E9C13734C8AECAE4"
+                "34C544E6B6807C99EBEE375A925435CB"
             },
             new object[]
             {
@@ -184,7 +184,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["CompressionLevel"] = "8"
                 },
-                "224AA2ADCF9FC568C6BC4A52EFD104FE"
+                "548AA7139E7845BA63AA0768F99A8AED"
             },
             new object[]
             {
@@ -194,7 +194,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["CompressionLevel"] = "8"
                 },
-                "824E258162C14654E104DEC97FC531FF"
+                "39B34A26597B032F4A6A2BC96B27A543"
             },
             new object[]
             {
@@ -204,7 +204,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["CompressionLevel"] = "8"
                 },
-                "5A0FAFF509BD74E1084480FC05BD7D96"
+                "CE5A3FC57E2219AE3A5972E8CBBC9B65"
             },
             new object[]
             {
@@ -214,7 +214,27 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["CompressionLevel"] = "8"
                 },
-                "E36EEB92754EB9D334599F07831D8263"
+                "38D0FFC9903E1CBA1251C1765651FE96"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "FLAC",
+                new TestSettingDictionary
+                {
+                    ["Padding"] = "0"
+                },
+                "3EF30DBEE1A041F82B660ED62AFF9C98"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "FLAC",
+                new TestSettingDictionary
+                {
+                    ["Padding"] = "10240"
+                },
+                "D01374B4C52D6E4CE81AE667BC0E330A"
             }
         };
 
