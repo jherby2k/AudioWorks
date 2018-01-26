@@ -62,7 +62,7 @@ namespace AudioWorks.Extensions.Flac
             Justification = "Native method is always expected to return 0")]
         internal void Initialize()
         {
-            SafeNativeMethods.StreamEncoderInitialize(_handle, _writeCallback, _seekCallback, _tellCallback, null,
+            SafeNativeMethods.StreamEncoderInitStream(_handle, _writeCallback, _seekCallback, _tellCallback, null,
                 IntPtr.Zero);
         }
 

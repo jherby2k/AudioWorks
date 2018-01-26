@@ -10,7 +10,7 @@ namespace AudioWorks.Extensions.Flac
     [AudioEncoderExport("FLAC")]
     public sealed class FlacAudioEncoder : IAudioEncoder, IDisposable
     {
-        [NotNull] readonly List<MetadataBlock> _metadataBlocks = new List<MetadataBlock>(2);
+        [NotNull] readonly List<MetadataBlock> _metadataBlocks = new List<MetadataBlock>(3);
         [CanBeNull] StreamEncoder _encoder;
         float _multiplier;
         [CanBeNull] int[] _buffer;
@@ -18,6 +18,7 @@ namespace AudioWorks.Extensions.Flac
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
         {
             ["CompressionLevel"] = new IntSettingInfo(0, 8),
+            ["SeekPointInterval"] = new IntSettingInfo(0, int.MaxValue),
             ["Padding"] = new IntSettingInfo(0, int.MaxValue)
         };
 
@@ -37,17 +38,22 @@ namespace AudioWorks.Extensions.Flac
                 ? (uint) (int) compressionLevel
                 : 5);
 
+            // Use a default seek point interval of 10 seconds
+            var seekPointInterval = info.SampleCount > 0 ? 10 : 0;
+            if (settings.TryGetValue("SeekPointInterval", out var seekPointIntervalValue))
+                seekPointInterval = (int) seekPointIntervalValue;
+            if (seekPointInterval > 0)
+                _metadataBlocks.Add(new SeekTableBlock(
+                    (uint) Math.Ceiling(info.PlayLength.TotalSeconds / seekPointInterval), (ulong) info.SampleCount));
+
             _metadataBlocks.Add(new MetadataToVorbisCommentAdapter(metadata));
 
             // Use a default padding of 8192
+            var padding = 8192;
             if (settings.TryGetValue("Padding", out var paddingValue))
-            {
-                var padding = (int) paddingValue;
-                if (padding != 0)
-                    _metadataBlocks.Add(new PaddingBlock(padding));
-            }
-            else
-                _metadataBlocks.Add(new PaddingBlock(8192));
+                padding = (int) paddingValue;
+            if (padding > 0)
+                _metadataBlocks.Add(new PaddingBlock(padding));
 
             _encoder.SetMetadata(_metadataBlocks);
             _encoder.Initialize();

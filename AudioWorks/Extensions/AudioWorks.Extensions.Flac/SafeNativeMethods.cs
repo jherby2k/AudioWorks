@@ -140,7 +140,7 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_init_stream",
             CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int StreamEncoderInitialize(
+        internal static extern int StreamEncoderInitStream(
             [NotNull] StreamEncoderHandle handle,
             [NotNull] NativeCallbacks.StreamEncoderWriteCallback writeCallback,
             [CanBeNull] NativeCallbacks.StreamEncoderSeekCallback seekCallback,
@@ -193,6 +193,14 @@ namespace AudioWorks.Extensions.Flac
             [NotNull] MetadataBlockHandle handle,
             VorbisCommentEntry vorbisComment,
             [MarshalAs(UnmanagedType.Bool)] bool copy);
+
+        [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_object_seektable_template_append_spaced_points",
+            CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool MetadataObjectSeekTableTemplateAppendSpacedPoints(
+            [NotNull] MetadataBlockHandle handle,
+            uint num,
+            ulong totalSamples);
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_object_delete",
