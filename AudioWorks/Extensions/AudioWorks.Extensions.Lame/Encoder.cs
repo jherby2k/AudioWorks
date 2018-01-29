@@ -51,6 +51,7 @@ namespace AudioWorks.Extensions.Lame
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
+        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
         internal void Flush()
         {
             var bytesFlushed = SafeNativeMethods.EncodeFlush(_handle, _buffer, _buffer.Length);
@@ -60,6 +61,7 @@ namespace AudioWorks.Extensions.Lame
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
+        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
         internal void UpdateLameTag()
         {
             _stream.Seek(_startPosition, SeekOrigin.Begin);
