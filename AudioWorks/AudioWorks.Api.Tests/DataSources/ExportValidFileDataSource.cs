@@ -325,6 +325,43 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["Padding"] = "10240"
                 },
                 "BC1409EBD6849C10194075C06647EEE2"
+            },
+
+            // Lame encoding
+            new object[]
+            {
+                "LPCM 8-bit 8000Hz Stereo.wav",
+                "LameMP3",
+                null,
+                "2497BEAE6985804E47F88EF363D11506"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Mono.wav",
+                "LameMP3",
+                null,
+                "B670B4B203FE05756B530B096854C5DE"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "LameMP3",
+                null,
+                "EACCA2FD6404ACA1AB46027FAE6A667B"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 48000Hz Stereo.wav",
+                "LameMP3",
+                null,
+                "DD26295CB89365F57972FAACD813FA60"
+            },
+            new object[]
+            {
+                "LPCM 24-bit 96000Hz Stereo.wav",
+                "LameMP3",
+                null,
+                "8F69A9B32B8EBC0232B57D33ACA9BE2F"
             }
         };
 

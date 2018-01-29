@@ -1,0 +1,50 @@
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using AudioWorks.Common;
+using JetBrains.Annotations;
+
+namespace AudioWorks.Extensions.Lame
+{
+    [AudioEncoderExport("LameMP3")]
+    public sealed class LameAudioEncoder : IAudioEncoder, IDisposable
+    {
+        [CanBeNull] Encoder _encoder;
+
+        public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary();
+
+        public string FileExtension { get; } = ".mp3";
+
+        public void Initialize(FileStream fileStream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
+        {
+            _encoder = new Encoder(fileStream);
+            _encoder.SetChannels(info.Channels);
+            _encoder.SetSampleRate(info.SampleRate);
+            if (info.SampleCount > 0)
+                _encoder.SetSampleCount((uint) info.SampleCount);
+
+            _encoder.InitializeParameters();
+        }
+
+        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
+        public void Submit(SampleCollection samples)
+        {
+            if (samples.Frames <= 0) return;
+
+            // If there is only one channel, set the right channel to null
+            _encoder.Encode(samples[0], samples.Channels == 1 ? null : samples[1]);
+        }
+
+        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
+        public void Finish()
+        {
+            _encoder.Flush();
+            _encoder.UpdateLameTag();
+        }
+
+        public void Dispose()
+        {
+            _encoder?.Dispose();
+        }
+    }
+}
