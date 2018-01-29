@@ -112,7 +112,7 @@ namespace AudioWorks.Api
                         outputFilePath = Path.Combine(outputDirectory.FullName, Path.GetRandomFileName());
                     }
 
-                    outputStream = File.OpenWrite(outputFilePath);
+                    outputStream = File.Open(outputFilePath, FileMode.OpenOrCreate);
 
                     encoderExport.Value.Initialize(outputStream, audioFile.Info, audioFile.Metadata, _settings);
                     encoderExport.Value.ProcessSamples(audioFile.Path, cancellationToken);

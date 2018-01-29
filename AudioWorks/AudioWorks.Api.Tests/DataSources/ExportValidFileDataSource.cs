@@ -362,6 +362,83 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LameMP3",
                 null,
                 "8F69A9B32B8EBC0232B57D33ACA9BE2F"
+            },
+            new object[]
+            {
+                "FLAC Level 5 8-bit 8000Hz Stereo.flac",
+                "LameMP3",
+                null,
+                "2497BEAE6985804E47F88EF363D11506"
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Mono.flac",
+                "LameMP3",
+                null,
+                "B670B4B203FE05756B530B096854C5DE"
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo.flac",
+                "LameMP3",
+                null,
+                "EACCA2FD6404ACA1AB46027FAE6A667B"
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 48000Hz Stereo.flac",
+                "LameMP3",
+                null,
+                "DD26295CB89365F57972FAACD813FA60"
+            },
+            new object[]
+            {
+                "FLAC Level 5 24-bit 96000Hz Stereo.flac",
+                "LameMP3",
+                null,
+                "8F69A9B32B8EBC0232B57D33ACA9BE2F"
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "LameMP3",
+                null,
+                "9C00AA16F9F313D94051FF3C9FAF04DC"
+            },
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Mono.m4a",
+                "LameMP3",
+                null,
+                "B670B4B203FE05756B530B096854C5DE"
+            },
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo.m4a",
+                "LameMP3",
+                null,
+                "EACCA2FD6404ACA1AB46027FAE6A667B"
+            },
+            new object[]
+            {
+                "ALAC 16-bit 48000Hz Stereo.m4a",
+                "LameMP3",
+                null,
+                "DD26295CB89365F57972FAACD813FA60"
+            },
+            new object[]
+            {
+                "ALAC 24-bit 96000Hz Stereo.m4a",
+                "LameMP3",
+                null,
+                "8F69A9B32B8EBC0232B57D33ACA9BE2F"
+            },
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo (Tagged).m4a",
+                "LameMP3",
+                null,
+                "AD52D9E1B2FA59FD3B6759A6C9620C54"
             }
         };
 

@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 using AudioWorks.Common;
+using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 using Id3Lib;
 using Id3Lib.Exceptions;
 using JetBrains.Annotations;
@@ -25,28 +26,46 @@ namespace AudioWorks.Extensions.Id3
                 ? new MetadataToTagModelAdapter(metadata, (string) encoding)
                 : new MetadataToTagModelAdapter(metadata, "Latin1");
 
-            // Set the version (default to 3)
-            if (settings.TryGetValue("Version", out var version) && string.CompareOrdinal("2.4", (string) version) == 0)
-                tagModel.Header.Version = 4;
-            else
-                tagModel.Header.Version = 3;
+            if (tagModel.Count > 0)
+            {
+                // Set the version (default to 3)
+                if (settings.TryGetValue("Version", out var version) &&
+                    string.CompareOrdinal("2.4", (string) version) == 0)
+                    tagModel.Header.Version = 4;
+                else
+                    tagModel.Header.Version = 3;
 
-            // Set the padding (default to 0)
-            if (settings.TryGetValue("Padding", out var padding))
-                tagModel.Header.PaddingSize = (uint) (int) padding;
+                // Set the padding (default to 0)
+                if (settings.TryGetValue("Padding", out var padding))
+                    tagModel.Header.PaddingSize = (uint) (int) padding;
 
-            tagModel.UpdateSize();
+                tagModel.UpdateSize();
 
-            if (!settings.ContainsKey("Padding") && existingTagLength >= tagModel.Header.TagSizeWithHeaderFooter)
-                Overwrite(stream, existingTagLength, tagModel);
-            else
-                FullRewrite(stream, existingTagLength, tagModel);
+                if (!settings.ContainsKey("Padding") && existingTagLength >= tagModel.Header.TagSizeWithHeaderFooter)
+                    Overwrite(stream, existingTagLength, tagModel);
+                else
+                    FullRewrite(stream, existingTagLength, tagModel);
+            }
+            else if (existingTagLength > 0)
+            {
+                // Remove the ID3v2 tag, if present
+                stream.Seek(existingTagLength, SeekOrigin.Begin);
+                using (var tempStream = new MemoryStream())
+                {
+                    stream.CopyTo(tempStream);
+                    stream.SetLength(stream.Length - existingTagLength);
+                    tempStream.Position = 0;
+                    tempStream.CopyTo(stream);
+                }
+            }
 
             // Remove the ID3v1 tag, if present
+            if (stream.Length < 128) return;
             stream.Seek(-128, SeekOrigin.End);
             using (var reader = new BinaryReader(stream, Encoding.ASCII, true))
                 if (string.CompareOrdinal("TAG", new string(reader.ReadChars(3))) == 0)
                     stream.SetLength(stream.Length - 128);
+            stream.Seek(tagModel.Header.TagSizeWithHeaderFooter, SeekOrigin.Begin);
         }
 
         static uint GetExistingTagLength([NotNull] Stream stream)

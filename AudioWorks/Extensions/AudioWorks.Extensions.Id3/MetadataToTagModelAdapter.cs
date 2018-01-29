@@ -20,11 +20,13 @@ namespace AudioWorks.Extensions.Id3
             AddTextFrame("TYER", metadata.Year, encoding);
             AddTextFrame("TRCK", GetTrackText(metadata), encoding);
 
-            // ReplayGain fields are always in Latin-1 encoding as per specification:
+            // ReplayGain fields are always in Latin-1, encoding as per specification
             AddUserDefinedFrame("REPLAYGAIN_TRACK_PEAK", metadata.TrackPeak, "Latin1", true);
             AddUserDefinedFrame("REPLAYGAIN_ALBUM_PEAK", metadata.AlbumPeak, "Latin1", true);
-            AddUserDefinedFrame("REPLAYGAIN_TRACK_GAIN", $"{metadata.TrackGain} dB", "Latin1", true);
-            AddUserDefinedFrame("REPLAYGAIN_ALBUM_GAIN", $"{metadata.AlbumGain} dB", "Latin1", true);
+            if (!string.IsNullOrEmpty(metadata.TrackGain))
+                AddUserDefinedFrame("REPLAYGAIN_TRACK_GAIN", $"{metadata.TrackGain} dB", "Latin1", true);
+            if (!string.IsNullOrEmpty(metadata.AlbumGain))
+                AddUserDefinedFrame("REPLAYGAIN_ALBUM_GAIN", $"{metadata.AlbumGain} dB", "Latin1", true);
         }
 
         void AddTextFrame(

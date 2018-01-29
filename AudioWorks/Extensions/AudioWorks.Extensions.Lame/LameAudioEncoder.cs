@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 
@@ -17,6 +18,13 @@ namespace AudioWorks.Extensions.Lame
 
         public void Initialize(FileStream fileStream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
+            // Call the external ID3 encoder, if available
+            var metadataEncoderFactory =
+                ExtensionProvider.GetFactories<IAudioMetadataEncoder>("Extension", FileExtension).FirstOrDefault();
+            if (metadataEncoderFactory != null)
+                using (var export = metadataEncoderFactory.CreateExport())
+                    export.Value.WriteMetadata(fileStream, metadata, settings);
+
             _encoder = new Encoder(fileStream);
             _encoder.SetChannels(info.Channels);
             _encoder.SetSampleRate(info.SampleRate);
