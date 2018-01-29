@@ -40,10 +40,6 @@
     <DefineConstants>RELEASE;TRACE;LINUX;NETSTANDARD2_0</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-OSX|AnyCPU'">
-    <DefineConstants>RELEASE;TRACE;WINDOWS;NETSTANDARD2_0</DefineConstants>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="csid3lib" Version="0.7.0-alpha" />
     <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
