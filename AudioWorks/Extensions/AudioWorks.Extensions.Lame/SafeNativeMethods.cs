@@ -57,17 +57,23 @@ namespace AudioWorks.Extensions.Lame
             [NotNull] EncoderHandle handle,
             int bitRate);
 
+        [DllImport(_lameLibrary, EntryPoint = "lame_set_VBR",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void SetVbr(
+            [NotNull] EncoderHandle handle,
+            VbrMode vbrMode);
+
         [DllImport(_lameLibrary, EntryPoint = "lame_set_VBR_mean_bitrate_kbps",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern void SetVbrMeanBitRateKbps(
             [NotNull] EncoderHandle handle,
             int bitRate);
 
-        [DllImport(_lameLibrary, EntryPoint = "lame_set_VBR",
+        [DllImport(_lameLibrary, EntryPoint = "lame_set_VBR_quality",
             CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void SetVbr(
+        internal static extern void SetVbrQuality(
             [NotNull] EncoderHandle handle,
-            VbrMode vbrMode);
+            float quality);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_init_params",
             CallingConvention = CallingConvention.Cdecl)]

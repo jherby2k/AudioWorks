@@ -37,14 +37,19 @@ namespace AudioWorks.Extensions.Lame
             SafeNativeMethods.SetBRate(_handle, bitRate);
         }
 
-        internal void SetMeanBitRate(int bitRate)
+        internal void SetVbrMode(VbrMode mode)
+        {
+            SafeNativeMethods.SetVbr(_handle, mode);
+        }
+
+        internal void SetVbrMeanBitRate(int bitRate)
         {
             SafeNativeMethods.SetVbrMeanBitRateKbps(_handle, bitRate);
         }
 
-        internal void SetVbrMode(VbrMode mode)
+        internal void SetVbrQuality(float quality)
         {
-            SafeNativeMethods.SetVbr(_handle, mode);
+            SafeNativeMethods.SetVbrQuality(_handle, quality);
         }
 
         internal void InitializeParameters()

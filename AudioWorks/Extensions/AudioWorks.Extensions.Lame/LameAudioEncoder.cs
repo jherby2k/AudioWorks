@@ -18,6 +18,7 @@ namespace AudioWorks.Extensions.Lame
             {
                 var result = new SettingInfoDictionary
                 {
+                    ["VBRQuality"] = new IntSettingInfo(0, 9),
                     ["BitRate"] = new IntSettingInfo(8, 320),
                     ["ForceCBR"] = new BoolSettingInfo()
                 };
@@ -51,16 +52,28 @@ namespace AudioWorks.Extensions.Lame
             if (info.SampleCount > 0)
                 _encoder.SetSampleCount((uint) info.SampleCount);
 
-            // Use ABR unless ForceCBR is specified
-            var forceCbr = false;
-            if (!settings.TryGetValue("ForceCBR", out var forceCbrValue) || !(forceCbr = (bool) forceCbrValue))
-                _encoder.SetVbrMode(VbrMode.Abr);
+            if (settings.ContainsKey("BitRate"))
+            {
+                var bitRate = (int) settings["BitRate"];
 
-            if (settings.TryGetValue("BitRate", out var bitRateValue))
-                if (forceCbr)
-                    _encoder.SetBitRate((int) bitRateValue);
+                // Use ABR, unless ForceCBR is specified
+                if (!settings.TryGetValue("ForceCBR", out var forceCbrValue) || !(bool) forceCbrValue)
+                {
+                    _encoder.SetVbrMeanBitRate(bitRate);
+                    _encoder.SetVbrMode(VbrMode.Abr);
+                }
                 else
-                    _encoder.SetMeanBitRate((int) bitRateValue);
+                    _encoder.SetBitRate(bitRate);
+            }
+            else
+            {
+                // Use VBR quality 3 if nothing else is specified
+                if (settings.TryGetValue("VBRQuality", out var vbrQualityValue))
+                    _encoder.SetVbrQuality((int) vbrQualityValue);
+                else
+                    _encoder.SetVbrQuality(3);
+                _encoder.SetVbrMode(VbrMode.Mtrh);
+            }
 
             _encoder.InitializeParameters();
         }
