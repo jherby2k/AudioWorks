@@ -192,7 +192,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestSettingDictionary
                 {
-                    ["Version"] = "2.4"
+                    ["TagVersion"] = "2.4"
                 },
                 "2036C7EE00BC0F607DF9E729D466DE85"
             },
@@ -222,7 +222,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestSettingDictionary
                 {
-                    ["Encoding"] = "UTF16"
+                    ["TagEncoding"] = "UTF16"
                 },
                 "85BF987703B5AD8DA099181ECF3681FD"
             },
@@ -252,7 +252,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestSettingDictionary
                 {
-                    ["Padding"] = 0
+                    ["TagPadding"] = 0
                 },
                 "076B838A43E883DCC9F0D0ABE8A263D6"
             },
@@ -282,7 +282,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestSettingDictionary
                 {
-                    ["Padding"] = 100
+                    ["TagPadding"] = 100
                 },
                 "FB11A9074E54FF8F52946036D791E6D8"
             },

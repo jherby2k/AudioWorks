@@ -13,35 +13,35 @@ namespace AudioWorks.Extensions.Id3
     {
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
         {
-            ["Version"] = new StringSettingInfo("2.3", "2.4"),
-            ["Encoding"] = new StringSettingInfo("Latin1", "UTF16"),
-            ["Padding"] = new IntSettingInfo(0, 268_435_456)
+            ["TagVersion"] = new StringSettingInfo("2.3", "2.4"),
+            ["TagEncoding"] = new StringSettingInfo("Latin1", "UTF16"),
+            ["TagPadding"] = new IntSettingInfo(0, 268_435_456)
         };
 
         public void WriteMetadata(FileStream stream, AudioMetadata metadata, SettingDictionary settings)
         {
             var existingTagLength = GetExistingTagLength(stream);
 
-            var tagModel = settings.TryGetValue("Encoding", out var encoding)
+            var tagModel = settings.TryGetValue("TagEncoding", out var encoding)
                 ? new MetadataToTagModelAdapter(metadata, (string) encoding)
                 : new MetadataToTagModelAdapter(metadata, "Latin1");
 
             if (tagModel.Count > 0)
             {
                 // Set the version (default to 3)
-                if (settings.TryGetValue("Version", out var version) &&
+                if (settings.TryGetValue("TagVersion", out var version) &&
                     string.CompareOrdinal("2.4", (string) version) == 0)
                     tagModel.Header.Version = 4;
                 else
                     tagModel.Header.Version = 3;
 
                 // Set the padding (default to 0)
-                if (settings.TryGetValue("Padding", out var padding))
+                if (settings.TryGetValue("TagPadding", out var padding))
                     tagModel.Header.PaddingSize = (uint) (int) padding;
 
                 tagModel.UpdateSize();
 
-                if (!settings.ContainsKey("Padding") && existingTagLength >= tagModel.Header.TagSizeWithHeaderFooter)
+                if (!settings.ContainsKey("TagPadding") && existingTagLength >= tagModel.Header.TagSizeWithHeaderFooter)
                     Overwrite(stream, existingTagLength, tagModel);
                 else
                     FullRewrite(stream, existingTagLength, tagModel);

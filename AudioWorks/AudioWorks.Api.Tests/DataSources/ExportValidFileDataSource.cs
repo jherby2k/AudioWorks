@@ -446,7 +446,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LameMP3",
                 new TestSettingDictionary
                 {
-                    ["Version"] = "2.4"
+                    ["TagVersion"] = "2.4"
                 },
                 "B3E83C9D0E609B9191E02AA8DC611F6D"
             },
@@ -456,7 +456,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LameMP3",
                 new TestSettingDictionary
                 {
-                    ["Encoding"] = "UTF16"
+                    ["TagEncoding"] = "UTF16"
                 },
                 "6FCE4FB36A48DD94E355AAEA354F2AE5"
             },
@@ -466,7 +466,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LameMP3",
                 new TestSettingDictionary
                 {
-                    ["Padding"] = "100"
+                    ["TagPadding"] = "100"
                 },
                 "AAD23C629AD8DD5CA22C9DD0DF3647C0"
             }
