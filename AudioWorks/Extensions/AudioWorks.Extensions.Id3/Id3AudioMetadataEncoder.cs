@@ -65,7 +65,7 @@ namespace AudioWorks.Extensions.Id3
             using (var reader = new BinaryReader(stream, Encoding.ASCII, true))
                 if (string.CompareOrdinal("TAG", new string(reader.ReadChars(3))) == 0)
                     stream.SetLength(stream.Length - 128);
-            stream.Seek(tagModel.Header.TagSizeWithHeaderFooter, SeekOrigin.Begin);
+            stream.Seek(tagModel.Header.TagSizeWithHeaderFooter + tagModel.Header.PaddingSize, SeekOrigin.Begin);
         }
 
         static uint GetExistingTagLength([NotNull] Stream stream)

@@ -12,7 +12,23 @@ namespace AudioWorks.Extensions.Lame
     {
         [CanBeNull] Encoder _encoder;
 
-        public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary();
+        public SettingInfoDictionary SettingInfo
+        {
+            get
+            {
+                var result = new SettingInfoDictionary();
+
+                // Call the external ID3 encoder, if available
+                var metadataEncoderFactory =
+                    ExtensionProvider.GetFactories<IAudioMetadataEncoder>("Extension", FileExtension).FirstOrDefault();
+                if (metadataEncoderFactory != null)
+                    using (var export = metadataEncoderFactory.CreateExport())
+                        foreach (var settingInfo in export.Value.SettingInfo)
+                            result.Add(settingInfo.Key, settingInfo.Value);
+
+                return result;
+            }
+        }
 
         public string FileExtension { get; } = ".mp3";
 

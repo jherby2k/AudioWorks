@@ -439,6 +439,36 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LameMP3",
                 null,
                 "AD52D9E1B2FA59FD3B6759A6C9620C54"
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "LameMP3",
+                new TestSettingDictionary
+                {
+                    ["Version"] = "2.4"
+                },
+                "B3E83C9D0E609B9191E02AA8DC611F6D"
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "LameMP3",
+                new TestSettingDictionary
+                {
+                    ["Encoding"] = "UTF16"
+                },
+                "6FCE4FB36A48DD94E355AAEA354F2AE5"
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "LameMP3",
+                new TestSettingDictionary
+                {
+                    ["Padding"] = "100"
+                },
+                "AAD23C629AD8DD5CA22C9DD0DF3647C0"
             }
         };
 
