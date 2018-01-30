@@ -16,7 +16,10 @@ namespace AudioWorks.Commands
 
             var result = new SettingDictionary();
             foreach (var parameter in parameters.Where(p => p.Value.IsSet))
-                result.Add(parameter.Key, parameter.Value.Value);
+                result.Add(parameter.Key,
+                    parameter.Value.ParameterType == typeof(SwitchParameter)
+                        ? true
+                        : parameter.Value.Value);
             return result;
         }
 
@@ -29,14 +32,18 @@ namespace AudioWorks.Commands
                 var attributes = new Collection<Attribute> { new ParameterAttribute() };
                 switch (item.Value)
                 {
+                    case BoolSettingInfo _:
+                        result.Add(item.Key, new RuntimeDefinedParameter(item.Key, typeof(SwitchParameter), attributes));
+                        break;
                     case IntSettingInfo intSettingInfo:
                         attributes.Add(new ValidateRangeAttribute(intSettingInfo.MinValue, intSettingInfo.MaxValue));
+                        result.Add(item.Key, new RuntimeDefinedParameter(item.Key, item.Value.ValueType, attributes));
                         break;
                     case StringSettingInfo stringSettingInfo:
                         attributes.Add(new ValidateSetAttribute(stringSettingInfo.AcceptedValues.ToArray()));
+                        result.Add(item.Key, new RuntimeDefinedParameter(item.Key, item.Value.ValueType, attributes));
                         break;
                 }
-                result.Add(item.Key, new RuntimeDefinedParameter(item.Key, item.Value.ValueType, attributes));
             }
             return result;
         }

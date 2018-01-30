@@ -333,112 +333,112 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "LameMP3",
                 null,
-                "2497BEAE6985804E47F88EF363D11506"
+                "6687273F561AFA080E551094EAA6A7B7"
             },
             new object[]
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "LameMP3",
                 null,
-                "B670B4B203FE05756B530B096854C5DE"
+                "278E145CD9B5D289F7E942F13F21D40A"
             },
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
                 null,
-                "EACCA2FD6404ACA1AB46027FAE6A667B"
+                "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6"
             },
             new object[]
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "LameMP3",
                 null,
-                "DD26295CB89365F57972FAACD813FA60"
+                "B38922C3B31040AC33FB26562E4CDF4D"
             },
             new object[]
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "LameMP3",
                 null,
-                "8F69A9B32B8EBC0232B57D33ACA9BE2F"
+                "3FC4319E0575FD00749855437442F0ED"
             },
             new object[]
             {
                 "FLAC Level 5 8-bit 8000Hz Stereo.flac",
                 "LameMP3",
                 null,
-                "2497BEAE6985804E47F88EF363D11506"
+                "6687273F561AFA080E551094EAA6A7B7"
             },
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Mono.flac",
                 "LameMP3",
                 null,
-                "B670B4B203FE05756B530B096854C5DE"
+                "278E145CD9B5D289F7E942F13F21D40A"
             },
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 "LameMP3",
                 null,
-                "EACCA2FD6404ACA1AB46027FAE6A667B"
+                "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6"
             },
             new object[]
             {
                 "FLAC Level 5 16-bit 48000Hz Stereo.flac",
                 "LameMP3",
                 null,
-                "DD26295CB89365F57972FAACD813FA60"
+                "B38922C3B31040AC33FB26562E4CDF4D"
             },
             new object[]
             {
                 "FLAC Level 5 24-bit 96000Hz Stereo.flac",
                 "LameMP3",
                 null,
-                "8F69A9B32B8EBC0232B57D33ACA9BE2F"
+                "3FC4319E0575FD00749855437442F0ED"
             },
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
                 null,
-                "9C00AA16F9F313D94051FF3C9FAF04DC"
+                "31BFAF0AD95A00E47D6D55D3D1C8F3A1"
             },
             new object[]
             {
                 "ALAC 16-bit 44100Hz Mono.m4a",
                 "LameMP3",
                 null,
-                "B670B4B203FE05756B530B096854C5DE"
+                "278E145CD9B5D289F7E942F13F21D40A"
             },
             new object[]
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 "LameMP3",
                 null,
-                "EACCA2FD6404ACA1AB46027FAE6A667B"
+                "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6"
             },
             new object[]
             {
                 "ALAC 16-bit 48000Hz Stereo.m4a",
                 "LameMP3",
                 null,
-                "DD26295CB89365F57972FAACD813FA60"
+                "B38922C3B31040AC33FB26562E4CDF4D"
             },
             new object[]
             {
                 "ALAC 24-bit 96000Hz Stereo.m4a",
                 "LameMP3",
                 null,
-                "8F69A9B32B8EBC0232B57D33ACA9BE2F"
+                "3FC4319E0575FD00749855437442F0ED"
             },
             new object[]
             {
                 "ALAC 16-bit 44100Hz Stereo (Tagged).m4a",
                 "LameMP3",
                 null,
-                "AD52D9E1B2FA59FD3B6759A6C9620C54"
+                "032B83AD8A54FBAF67ED0C41D4870AB6"
             },
             new object[]
             {
@@ -448,7 +448,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["TagVersion"] = "2.4"
                 },
-                "B3E83C9D0E609B9191E02AA8DC611F6D"
+                "DE767AE0737E5A64F694F49805C187C7"
             },
             new object[]
             {
@@ -458,7 +458,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["TagEncoding"] = "UTF16"
                 },
-                "6FCE4FB36A48DD94E355AAEA354F2AE5"
+                "6CB3E505F78FD128C54E8E44B33C6593"
             },
             new object[]
             {
@@ -468,25 +468,57 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["TagPadding"] = "100"
                 },
-                "AAD23C629AD8DD5CA22C9DD0DF3647C0"
+                "EF02F7065F0B05D955D2604DCD4D5557"
             },
             new object[]
             {
-                "ALAC 16-bit 44100Hz Stereo.m4a",
+                "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
                 new TestSettingDictionary
                 {
                     ["BitRate"] = "8"
                 },
-                "E350012375B3222543D4E2757AF4CC88"
+                "2BBC83E74AB1A4EB150BC6E1EB9920B5"
             },
             new object[]
             {
-                "ALAC 16-bit 44100Hz Stereo.m4a",
+                "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
                 new TestSettingDictionary
                 {
                     ["BitRate"] = "320"
+                },
+                "BEB5029A08011BCEDFFA99173B763E7F"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "LameMP3",
+                new TestSettingDictionary
+                {
+                    ["ForceCBR"] = true
+                },
+                "EACCA2FD6404ACA1AB46027FAE6A667B"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "LameMP3",
+                new TestSettingDictionary
+                {
+                    ["BitRate"] = "8",
+                    ["ForceCBR"] = true
+                },
+                "E350012375B3222543D4E2757AF4CC88"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "LameMP3",
+                new TestSettingDictionary
+                {
+                    ["BitRate"] = "320",
+                    ["ForceCBR"] = true
                 },
                 "77D0EF309A2EB2D1F62A2A6E787EA8F3"
             }

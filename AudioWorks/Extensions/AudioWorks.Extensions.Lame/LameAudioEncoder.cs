@@ -18,7 +18,8 @@ namespace AudioWorks.Extensions.Lame
             {
                 var result = new SettingInfoDictionary
                 {
-                    ["BitRate"] = new IntSettingInfo(8, 320)
+                    ["BitRate"] = new IntSettingInfo(8, 320),
+                    ["ForceCBR"] = new BoolSettingInfo()
                 };
 
                 // Call the external ID3 encoder, if available
@@ -50,8 +51,16 @@ namespace AudioWorks.Extensions.Lame
             if (info.SampleCount > 0)
                 _encoder.SetSampleCount((uint) info.SampleCount);
 
+            // Use ABR unless ForceCBR is specified
+            var forceCbr = false;
+            if (!settings.TryGetValue("ForceCBR", out var forceCbrValue) || !(forceCbr = (bool) forceCbrValue))
+                _encoder.SetVbrMode(VbrMode.Abr);
+
             if (settings.TryGetValue("BitRate", out var bitRateValue))
-                _encoder.SetBitRate((int) bitRateValue);
+                if (forceCbr)
+                    _encoder.SetBitRate((int) bitRateValue);
+                else
+                    _encoder.SetMeanBitRate((int) bitRateValue);
 
             _encoder.InitializeParameters();
         }
