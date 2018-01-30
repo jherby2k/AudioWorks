@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Text;
 using AudioWorks.Common;
-using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 using Id3Lib;
 using Id3Lib.Exceptions;
 using JetBrains.Annotations;
