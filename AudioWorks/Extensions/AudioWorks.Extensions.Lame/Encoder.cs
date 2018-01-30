@@ -19,17 +19,22 @@ namespace AudioWorks.Extensions.Lame
 
         internal void SetChannels(int channels)
         {
-            SafeNativeMethods.SetChannels(_handle, channels);
+            SafeNativeMethods.SetNumChannels(_handle, channels);
         }
 
         internal void SetSampleRate(int sampleRate)
         {
-            SafeNativeMethods.SetSampleRate(_handle, sampleRate);
+            SafeNativeMethods.SetInSampleRate(_handle, sampleRate);
         }
 
         internal void SetSampleCount(uint sampleCount)
         {
-            SafeNativeMethods.SetSampleCount(_handle, sampleCount);
+            SafeNativeMethods.SetNumSamples(_handle, sampleCount);
+        }
+
+        internal void SetBitRate(int bitRate)
+        {
+            SafeNativeMethods.SetBRate(_handle, bitRate);
         }
 
         internal void InitializeParameters()

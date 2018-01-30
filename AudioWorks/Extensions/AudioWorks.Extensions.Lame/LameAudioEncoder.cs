@@ -16,7 +16,10 @@ namespace AudioWorks.Extensions.Lame
         {
             get
             {
-                var result = new SettingInfoDictionary();
+                var result = new SettingInfoDictionary
+                {
+                    ["BitRate"] = new IntSettingInfo(8, 320)
+                };
 
                 // Call the external ID3 encoder, if available
                 var metadataEncoderFactory =
@@ -46,6 +49,9 @@ namespace AudioWorks.Extensions.Lame
             _encoder.SetSampleRate(info.SampleRate);
             if (info.SampleCount > 0)
                 _encoder.SetSampleCount((uint) info.SampleCount);
+
+            if (settings.TryGetValue("BitRate", out var bitRateValue))
+                _encoder.SetBitRate((int) bitRateValue);
 
             _encoder.InitializeParameters();
         }

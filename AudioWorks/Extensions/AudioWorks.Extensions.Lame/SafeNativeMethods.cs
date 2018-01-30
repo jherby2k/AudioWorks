@@ -35,21 +35,27 @@ namespace AudioWorks.Extensions.Lame
 
         [DllImport(_lameLibrary, EntryPoint = "lame_set_num_channels",
             CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void SetChannels(
+        internal static extern void SetNumChannels(
             [NotNull] EncoderHandle handle,
             int channels);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_set_in_samplerate",
             CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void SetSampleRate(
+        internal static extern void SetInSampleRate(
             [NotNull] EncoderHandle handle,
             int sampleRate);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_set_num_samples",
             CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void SetSampleCount(
+        internal static extern void SetNumSamples(
             [NotNull] EncoderHandle handle,
             uint samples);
+
+        [DllImport(_lameLibrary, EntryPoint = "lame_set_brate",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void SetBRate(
+            [NotNull] EncoderHandle handle,
+            int bitRate);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_init_params",
             CallingConvention = CallingConvention.Cdecl)]

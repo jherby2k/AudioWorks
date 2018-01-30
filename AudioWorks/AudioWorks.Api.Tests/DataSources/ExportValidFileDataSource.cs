@@ -469,6 +469,26 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["TagPadding"] = "100"
                 },
                 "AAD23C629AD8DD5CA22C9DD0DF3647C0"
+            },
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo.m4a",
+                "LameMP3",
+                new TestSettingDictionary
+                {
+                    ["BitRate"] = "8"
+                },
+                "E350012375B3222543D4E2757AF4CC88"
+            },
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo.m4a",
+                "LameMP3",
+                new TestSettingDictionary
+                {
+                    ["BitRate"] = "320"
+                },
+                "77D0EF309A2EB2D1F62A2A6E787EA8F3"
             }
         };
 
