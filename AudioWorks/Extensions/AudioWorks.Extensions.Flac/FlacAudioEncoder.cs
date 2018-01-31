@@ -18,8 +18,8 @@ namespace AudioWorks.Extensions.Flac
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
         {
             ["CompressionLevel"] = new IntSettingInfo(0, 8),
-            ["SeekPointInterval"] = new IntSettingInfo(0, int.MaxValue),
-            ["Padding"] = new IntSettingInfo(0, int.MaxValue)
+            ["SeekPointInterval"] = new IntSettingInfo(0, 600),
+            ["Padding"] = new IntSettingInfo(0, 16_775_369)
         };
 
         public string FileExtension { get; } = ".flac";

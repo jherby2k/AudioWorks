@@ -102,6 +102,29 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC",
                 new TestSettingDictionary
                 {
+                    // Default compression
+                    ["CompressionLevel"] = "5"
+                },
+                "3983A342A074A7E8871FEF4FBE0AC73F"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "FLAC",
+                new TestSettingDictionary
+                {
+                    // Minimum compression
+                    ["CompressionLevel"] = "0"
+                },
+                "D352B276E4712ABBA3A8F1B9CA8BAB55"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "FLAC",
+                new TestSettingDictionary
+                {
+                    // Maximum compression
                     ["CompressionLevel"] = "8"
                 },
                 "C73F21F10850A4542EEA2435226F1DEB"
@@ -112,6 +135,18 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC",
                 new TestSettingDictionary
                 {
+                    // Default seek point interval
+                    ["SeekPointInterval"] = "10"
+                },
+                "3983A342A074A7E8871FEF4FBE0AC73F"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "FLAC",
+                new TestSettingDictionary
+                {
+                    // Disabled seek points
                     ["SeekPointInterval"] = "0"
                 },
                 "7DBB3E3E8079E60932AA5F8B4D9CD57C"
@@ -122,9 +157,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC",
                 new TestSettingDictionary
                 {
-                    ["SeekPointInterval"] = "1"
+                    // Maximum seek point interval
+                    ["SeekPointInterval"] = 600
                 },
-                "03C1D2C32C63848D0E5CB287E705FF48"
+                "3983A342A074A7E8871FEF4FBE0AC73F"
             },
             new object[]
             {
@@ -132,6 +168,18 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC",
                 new TestSettingDictionary
                 {
+                    // Default padding
+                    ["Padding"] = "8192"
+                },
+                "3983A342A074A7E8871FEF4FBE0AC73F"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "FLAC",
+                new TestSettingDictionary
+                {
+                    // Disabled padding
                     ["Padding"] = "0"
                 },
                 "FFB7D9F0F4CDF37EDBA799FE371424A7"
@@ -142,9 +190,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC",
                 new TestSettingDictionary
                 {
-                    ["Padding"] = "10240"
+                    // Maximum padding
+                    ["Padding"] = 16_775_369
                 },
-                "BC1409EBD6849C10194075C06647EEE2"
+                "F03F417B853C560705CD424AD329EFBC"
             },
 
             // Lame encoding
