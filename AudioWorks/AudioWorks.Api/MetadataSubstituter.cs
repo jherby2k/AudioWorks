@@ -21,13 +21,19 @@ namespace AudioWorks.Api
         public string Substitute([NotNull] string path) => _replacer.Replace(path, match =>
         {
             var propertyName = match.Value.Substring(1, match.Value.Length - 2);
-            var propertyValue = new string(((string) typeof(AudioMetadata).GetProperty(propertyName)
-                .GetValue(_metadata)).Where(character => !_invalidChars.Contains(character)).ToArray());
+            var propertyValue = (string) typeof(AudioMetadata).GetProperty(propertyName).GetValue(_metadata);
 
-            // If a property isn't set
             if (string.IsNullOrEmpty(propertyValue))
-                propertyValue = $"Unknown {propertyName}";
-            return propertyValue;
+                return $"Unknown {propertyName}";
+
+            var sanitizedPropertyValue =
+                new string(propertyValue.Where(character => !_invalidChars.Contains(character)).ToArray());
+
+            // Remove any double spaces introduced in sanitization
+            if (sanitizedPropertyValue.Contains("  ") && !propertyValue.Contains("  "))
+                sanitizedPropertyValue = sanitizedPropertyValue.Replace("  ", " ");
+
+            return sanitizedPropertyValue;
         });
     }
 }

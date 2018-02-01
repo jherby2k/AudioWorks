@@ -46,6 +46,17 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "{Title} by {Artist}",
                 "Unknown Title by Unknown Artist.wav"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                new TestAudioMetadata
+                {
+                    Title = "Test Title <> with |invalid \"characters\""
+                },
+                "{Title}",
+                "Test Title with invalid characters.wav"
             }
         };
 
