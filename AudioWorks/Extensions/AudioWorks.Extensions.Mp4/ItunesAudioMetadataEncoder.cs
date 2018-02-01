@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using AudioWorks.Common;
 using JetBrains.Annotations;
@@ -21,10 +22,10 @@ namespace AudioWorks.Extensions.Mp4
                 var topAtoms = originalMp4.GetChildAtomInfo();
 
                 // Copy the ftyp and moov atoms to the temporary stream
-                originalMp4.CopyAtom(topAtoms.Single(atom => string.CompareOrdinal("ftyp", atom.FourCc) == 0),
-                    tempStream);
-                originalMp4.CopyAtom(topAtoms.Single(atom => string.CompareOrdinal("moov", atom.FourCc) == 0),
-                    tempStream);
+                originalMp4.CopyAtom(topAtoms.Single(atom =>
+                        string.Equals("ftyp", atom.FourCc, StringComparison.Ordinal)), tempStream);
+                originalMp4.CopyAtom(topAtoms.Single(atom =>
+                        string.Equals("moov", atom.FourCc, StringComparison.Ordinal)), tempStream);
 
                 // Move to the start of the ilst atom
                 originalMp4.DescendToAtom("moov", "udta", "meta", "ilst");
@@ -36,17 +37,16 @@ namespace AudioWorks.Extensions.Mp4
                 tempStream.Write(ilstData, 0, ilstData.Length);
 
                 // Update the ilst and parent atom sizes:
-                tempMp4.UpdateAtomSizes((uint)tempStream.Length - tempMp4.CurrentAtom.End);
+                tempMp4.UpdateAtomSizes((uint) tempStream.Length - tempMp4.CurrentAtom.End);
 
                 // Update the stco atom to reflect the new location of mdat:
-                tempMp4.UpdateStco((uint) (tempStream.Length -
-                                           topAtoms.Single(atom => string.CompareOrdinal("mdat", atom.FourCc) == 0)
-                                               .Start));
+                tempMp4.UpdateStco((uint) (tempStream.Length - topAtoms.Single(atom =>
+                                               string.Equals("mdat", atom.FourCc, StringComparison.Ordinal)).Start));
 
                 // Copy the mdat atom to the temporary stream, after the moov atom
                 tempStream.Seek(0, SeekOrigin.End);
-                originalMp4.CopyAtom(topAtoms.Single(atom => string.CompareOrdinal("mdat", atom.FourCc) == 0),
-                    tempStream);
+                originalMp4.CopyAtom(topAtoms.Single(atom =>
+                    string.Equals("mdat", atom.FourCc, StringComparison.Ordinal)), tempStream);
 
                 // Overwrite the original stream with the new, optimized one
                 stream.SetLength(tempStream.Length);
@@ -67,7 +67,7 @@ namespace AudioWorks.Extensions.Mp4
 
                 // "Reverse DNS" atoms may need to be preserved:
                 foreach (var reverseDnsAtom in originalMp4.GetChildAtomInfo()
-                    .Where(childAtom => string.CompareOrdinal("----", childAtom.FourCc) == 0)
+                    .Where(childAtom => string.Equals("----", childAtom.FourCc, StringComparison.Ordinal))
                     .Select(childAtom => new ReverseDnsAtom(originalMp4.ReadAtom(childAtom))))
                     switch (reverseDnsAtom.Name)
                     {

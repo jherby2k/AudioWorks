@@ -1,4 +1,5 @@
-﻿using AudioWorks.Common;
+﻿using System;
+using AudioWorks.Common;
 using Id3Lib;
 using Id3Lib.Frames;
 using JetBrains.Annotations;
@@ -60,7 +61,8 @@ namespace AudioWorks.Extensions.Id3
                         break;
 
                     case FrameFullText frameFullText:
-                        if (string.CompareOrdinal("COMM", frameFullText.FrameId) == 0 && string.IsNullOrEmpty(frameFullText.Description))
+                        if (string.Equals("COMM", frameFullText.FrameId, StringComparison.Ordinal) &&
+                            string.IsNullOrEmpty(frameFullText.Description))
                             Comment = frameFullText.Text;
                         break;
 

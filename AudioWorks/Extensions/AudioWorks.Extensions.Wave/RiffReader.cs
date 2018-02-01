@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using AudioWorks.Common;
 using JetBrains.Annotations;
@@ -17,7 +18,7 @@ namespace AudioWorks.Extensions.Wave
         internal void Initialize()
         {
             BaseStream.Position = 0;
-            if (string.CompareOrdinal("RIFF", new string(ReadChars(4))) != 0)
+            if (!string.Equals("RIFF", new string(ReadChars(4)), StringComparison.OrdinalIgnoreCase))
                 throw new AudioInvalidException("Not a valid RIFF stream.");
 
             RiffChunkSize = ReadUInt32();
@@ -37,7 +38,7 @@ namespace AudioWorks.Extensions.Wave
             var currentChunkId = new string(ReadChars(4));
             var currentChunkLength = ReadUInt32();
 
-            while (string.CompareOrdinal(chunkId, currentChunkId) != 0)
+            while (!string.Equals(chunkId, currentChunkId, StringComparison.Ordinal))
             {
                 // Chunks are word-aligned:
                 BaseStream.Seek(currentChunkLength + currentChunkLength % 2, SeekOrigin.Current);

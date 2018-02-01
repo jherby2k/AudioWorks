@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using AudioWorks.Common;
 using Id3Lib;
@@ -29,7 +30,7 @@ namespace AudioWorks.Extensions.Id3
             {
                 // Set the version (default to 3)
                 if (settings.TryGetValue("TagVersion", out var version) &&
-                    string.CompareOrdinal("2.4", (string) version) == 0)
+                    string.Equals("2.4", (string) version, StringComparison.Ordinal))
                     tagModel.Header.Version = 4;
                 else
                     tagModel.Header.Version = 3;
@@ -62,7 +63,7 @@ namespace AudioWorks.Extensions.Id3
             if (stream.Length < 128) return;
             stream.Seek(-128, SeekOrigin.End);
             using (var reader = new BinaryReader(stream, Encoding.ASCII, true))
-                if (string.CompareOrdinal("TAG", new string(reader.ReadChars(3))) == 0)
+                if (string.Equals("TAG", new string(reader.ReadChars(3)), StringComparison.Ordinal))
                     stream.SetLength(stream.Length - 128);
             stream.Seek(tagModel.Header.TagSizeWithHeaderFooter + tagModel.Header.PaddingSize, SeekOrigin.Begin);
         }

@@ -1,4 +1,5 @@
-﻿using AudioWorks.Common;
+﻿using System;
+using AudioWorks.Common;
 using Id3Lib;
 using Id3Lib.Frames;
 using JetBrains.Annotations;
@@ -38,7 +39,9 @@ namespace AudioWorks.Extensions.Id3
                 Add(new FrameText(frameId)
                 {
                     Text = value,
-                    TextCode = string.CompareOrdinal("Latin1", encoding) == 0 ? TextCode.Ascii : TextCode.Utf16
+                    TextCode = string.Equals("Latin1", encoding, StringComparison.Ordinal)
+                        ? TextCode.Ascii
+                        : TextCode.Utf16
                 });
         }
 
@@ -53,7 +56,9 @@ namespace AudioWorks.Extensions.Id3
                 {
                     Text = value,
                     Language = language,
-                    TextCode = string.CompareOrdinal("Latin1", encoding) == 0 ? TextCode.Ascii : TextCode.Utf16
+                    TextCode = string.Equals("Latin1", encoding, StringComparison.Ordinal)
+                        ? TextCode.Ascii
+                        : TextCode.Utf16
                 });
         }
 
@@ -68,7 +73,9 @@ namespace AudioWorks.Extensions.Id3
                 {
                     Description = description,
                     Text = value,
-                    TextCode = string.CompareOrdinal("Latin1", encoding) == 0 ? TextCode.Ascii : TextCode.Utf16,
+                    TextCode = string.Equals("Latin1", encoding, StringComparison.Ordinal)
+                        ? TextCode.Ascii
+                        : TextCode.Utf16,
                     FileAlter = fileAlter
                 });
         }

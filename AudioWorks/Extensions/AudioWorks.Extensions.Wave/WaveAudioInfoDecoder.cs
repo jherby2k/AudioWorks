@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Wave
@@ -17,7 +18,7 @@ namespace AudioWorks.Extensions.Wave
                     if (stream.Length != reader.RiffChunkSize + 8)
                         throw new AudioInvalidException("File is unexpectedly truncated.", stream.Name);
 
-                    if (string.CompareOrdinal("WAVE", reader.ReadFourCc()) != 0)
+                    if (!string.Equals("WAVE", reader.ReadFourCc(), StringComparison.Ordinal))
                         throw new AudioInvalidException("Not a Wave file.", stream.Name);
 
                     var fmtChunkSize = reader.SeekToChunk("fmt ");

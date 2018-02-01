@@ -29,9 +29,8 @@ namespace AudioWorks.Extensions.Mp4
                         esds.Channels,
                         (int) esds.SampleRate,
                         sampleCount,
-                        CalculateBitRate(
-                            mp4.GetChildAtomInfo().Single(atom => string.CompareOrdinal("mdat", atom.FourCc) == 0).Size,
-                            sampleCount,
+                        CalculateBitRate(mp4.GetChildAtomInfo().Single(atom =>
+                                string.Equals("mdat", atom.FourCc, StringComparison.Ordinal)).Size, sampleCount,
                             esds.SampleRate));
                 }
 
