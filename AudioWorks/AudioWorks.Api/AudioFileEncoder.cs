@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Composition;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using AudioWorks.Common;
 using AudioWorks.Extensions;
 using JetBrains.Annotations;
@@ -15,8 +17,13 @@ namespace AudioWorks.Api
     [PublicAPI]
     public sealed class AudioFileEncoder
     {
+        [NotNull] MetadataSubstituter _fileNameSubstituter = new MetadataSubstituter(Path.GetInvalidFileNameChars());
+        [NotNull] MetadataSubstituter _directoryNameSubstituter = new MetadataSubstituter(Path.GetInvalidPathChars());
         [NotNull] readonly ExportFactory<IAudioEncoder> _encoderFactory;
         [NotNull] readonly SettingDictionary _settings;
+        [CanBeNull] readonly string _encodedDirectoryName;
+        [CanBeNull] readonly string _encodedFileName;
+        readonly bool _overwrite;
         [NotNull] readonly string _progressDescription;
 
         /// <summary>
@@ -24,10 +31,18 @@ namespace AudioWorks.Api
         /// </summary>
         /// <param name="name">The name of the encoder.</param>
         /// <param name="settings">The settings.</param>
+        /// <param name="encodedDirectoryName">The encoded directory name, or null.</param>
+        /// <param name="encodedFileName">The encode file name, or null.</param>
+        /// <param name="overwrite">if set to <c>true</c>, any existing file will be overwritten.</param>
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="name"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if <see paramref="name"/> is not the name of an available encoder.
         /// </exception>
-        public AudioFileEncoder([NotNull] string name, [CanBeNull] SettingDictionary settings = null)
+        public AudioFileEncoder(
+            [NotNull] string name,
+            [CanBeNull] SettingDictionary settings = null,
+            [CanBeNull] string encodedDirectoryName = null,
+            [CanBeNull] string encodedFileName = null,
+            bool overwrite = false)
         {
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
@@ -37,108 +52,109 @@ namespace AudioWorks.Api
                 throw new ArgumentException($"No '{name}' encoder is available.", nameof(name));
 
             _settings = settings ?? new SettingDictionary();
+            _encodedDirectoryName = encodedDirectoryName;
+            _encodedFileName = encodedFileName;
+            _overwrite = overwrite;
             _progressDescription = $"Exporting to {name} format";
         }
 
         /// <summary>
-        /// Exports the specified audio file.
+        /// Encodes the specified audio files.
         /// </summary>
-        /// <param name="audioFile">The audio file.</param>
-        /// <param name="outputDirectory">The output directory, or null.</param>
-        /// <param name="outputFileName">The name of the output file, (without the path or extension) or null.</param>
-        /// <param name="overwrite">if set to <c>true</c>, any existing file will be overwritten.</param>
+        /// <param name="audioFiles">The audio files.</param>
         /// <returns>A new audio file.</returns>
-        [NotNull]
-        public ITaggedAudioFile Export([NotNull] ITaggedAudioFile audioFile,
-            [CanBeNull] DirectoryInfo outputDirectory = null,
-            [CanBeNull] string outputFileName = null,
-            bool overwrite = false)
+        [NotNull, ItemNotNull]
+        public IEnumerable<ITaggedAudioFile> Encode(
+            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
         {
-            return Export(audioFile, CancellationToken.None, outputDirectory, outputFileName, overwrite);
+            return Encode(CancellationToken.None, audioFiles);
         }
 
         /// <summary>
-        /// Exports the specified audio file.
+        /// Encodes the specified audio files.
         /// </summary>
-        /// <param name="audioFile">The audio file.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <param name="outputDirectory">The output directory, or null.</param>
-        /// <param name="outputFileName">The name of the output file, (without the path or extension) or null.</param>
-        /// <param name="overwrite">if set to <c>true</c>, any existing file will be overwritten.</param>
+        /// <param name="audioFiles">The audio files.</param>
         /// <returns>A new audio file.</returns>
-        [NotNull]
-        public ITaggedAudioFile Export(
-            [NotNull] ITaggedAudioFile audioFile,
+        [NotNull, ItemNotNull]
+        public IEnumerable<ITaggedAudioFile> Encode(
             CancellationToken cancellationToken,
-            [CanBeNull] DirectoryInfo outputDirectory = null,
-            [CanBeNull] string outputFileName = null,
-            bool overwrite = false)
+            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
         {
-            if (audioFile == null) throw new ArgumentNullException(nameof(audioFile));
+            if (audioFiles == null) throw new ArgumentNullException(nameof(audioFiles));
+            if (audioFiles.Any(audioFile => audioFile == null))
+                throw new ArgumentException("One or more audio files are null.", nameof(audioFiles));
 
-            // The output directory defaults to the input directory
-            if (outputDirectory == null)
-                outputDirectory = new DirectoryInfo(Path.GetDirectoryName(audioFile.Path));
-            else
-                outputDirectory.Create();
+            var finalOutputPaths = new string[audioFiles.Length];
 
-            // The output file name defaults to the input file name
-            if (outputFileName == null)
-                outputFileName = Path.GetFileNameWithoutExtension(audioFile.Path);
-
-            string outputFilePath = null;
-            string finalOutputFilePath;
-
-            try
+            Parallel.For(0, audioFiles.Length, new ParallelOptions { CancellationToken = cancellationToken }, i =>
             {
-                // Need to close these in reverse order, so can't use "using"
-                Export<IAudioEncoder> encoderExport = null;
-                FileStream outputStream = null;
+                string tempOutputPath = null;
 
                 try
                 {
-                    encoderExport = _encoderFactory.CreateExport();
+                    Export<IAudioEncoder> encoderExport = null;
+                    FileStream outputStream = null;
 
-                    outputFilePath = Path.Combine(outputDirectory.FullName,
-                        outputFileName + encoderExport.Value.FileExtension);
-                    finalOutputFilePath = outputFilePath;
-
-                    // If the output file already exists, write to a temporary file first:
-                    if (File.Exists(outputFilePath))
+                    try
                     {
-                        if (!overwrite)
-                            throw new IOException($"The file '{outputFilePath}' already exists.");
+                        // The output directory defaults to the each audiofile's current directory
+                        var outputDirectory = _encodedDirectoryName == null
+                            ? Path.GetDirectoryName(audioFiles[i].Path)
+                            : _directoryNameSubstituter.Substitute(_encodedDirectoryName, audioFiles[i].Metadata);
 
-                        outputFilePath = Path.Combine(outputDirectory.FullName, Path.GetRandomFileName());
+                        Directory.CreateDirectory(outputDirectory);
+
+                        // The output file names default to the input file names
+                        var outputFileName = _encodedFileName == null
+                            ? Path.GetFileNameWithoutExtension(audioFiles[i].Path)
+                            : _fileNameSubstituter.Substitute(_encodedFileName, audioFiles[i].Metadata);
+
+                        encoderExport = _encoderFactory.CreateExport();
+
+                        tempOutputPath = finalOutputPaths[i] = Path.Combine(outputDirectory,
+                            outputFileName + encoderExport.Value.FileExtension);
+
+                        // If the output file already exists, write to a temporary file first
+                        if (File.Exists(finalOutputPaths[i]))
+                        {
+                            if (!_overwrite)
+                                throw new IOException($"The file '{finalOutputPaths[i]}' already exists.");
+
+                            tempOutputPath = Path.Combine(outputDirectory, Path.GetRandomFileName());
+                        }
+
+                        outputStream = File.Open(tempOutputPath, FileMode.OpenOrCreate);
+
+                        encoderExport.Value.Initialize(outputStream, audioFiles[i].Info,
+                            audioFiles[i].Metadata,
+                            _settings);
+                        encoderExport.Value.ProcessSamples(audioFiles[i].Path, cancellationToken);
+                        encoderExport.Value.Finish();
+                    }
+                    finally
+                    {
+                        // Dispose the encoders before closing the streams
+                        encoderExport?.Dispose();
+                        outputStream?.Dispose();
                     }
 
-                    outputStream = File.Open(outputFilePath, FileMode.OpenOrCreate);
+                    if (string.Equals(tempOutputPath, finalOutputPaths[i], StringComparison.OrdinalIgnoreCase)) return;
 
-                    encoderExport.Value.Initialize(outputStream, audioFile.Info, audioFile.Metadata, _settings);
-                    encoderExport.Value.ProcessSamples(audioFile.Path, cancellationToken);
-                    encoderExport.Value.Finish();
+                    // If writing to a temporary file, replace the original
+                    File.Delete(finalOutputPaths[i]);
+                    File.Move(tempOutputPath, finalOutputPaths[i]);
                 }
-                finally
+                catch (Exception)
                 {
-                    encoderExport?.Dispose();
-                    outputStream?.Dispose();
+                    if (tempOutputPath != null)
+                        File.Delete(tempOutputPath);
+                    throw;
                 }
-            }
-            catch (Exception)
-            {
-                if (outputFilePath != null)
-                    File.Delete(outputFilePath);
-                throw;
-            }
+            });
 
-            // If using a temporary file, replace the original
-            if (!string.Equals(outputFilePath, finalOutputFilePath, StringComparison.Ordinal))
-            {
-                File.Delete(finalOutputFilePath);
-                File.Move(outputFilePath, finalOutputFilePath);
-            }
-
-            return new TaggedAudioFile(finalOutputFilePath);
+            foreach (var outputPath in finalOutputPaths)
+                yield return new TaggedAudioFile(outputPath);
         }
     }
 }

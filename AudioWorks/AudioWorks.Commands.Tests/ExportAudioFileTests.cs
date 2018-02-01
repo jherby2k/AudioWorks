@@ -101,7 +101,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Theory(DisplayName = "Export-AudioFile creates the expected audio file")]
-        [MemberData(nameof(ExportValidFileDataSource.Data), MemberType = typeof(ExportValidFileDataSource))]
+        [MemberData(nameof(EncodeValidFileDataSource.Data), MemberType = typeof(EncodeValidFileDataSource))]
         public void CreatesExpectedAudioFile(
             int index,
             [NotNull] string sourceFileName,

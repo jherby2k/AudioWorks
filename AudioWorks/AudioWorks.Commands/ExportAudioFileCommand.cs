@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Threading;
-using System.Threading.Tasks;
 using AudioWorks.Api;
 using AudioWorks.Common;
 using JetBrains.Annotations;
@@ -23,7 +20,6 @@ namespace AudioWorks.Commands
     {
         [NotNull] readonly CancellationTokenSource _cancellationSource = new CancellationTokenSource();
         [NotNull] readonly List<ITaggedAudioFile> _sourceAudioFiles = new List<ITaggedAudioFile>();
-        [CanBeNull] ConcurrentDictionary<int, ITaggedAudioFile> _outputAudioFiles = new ConcurrentDictionary<int, ITaggedAudioFile>();
         [CanBeNull] RuntimeDefinedParameterDictionary _parameters;
 
         /// <summary>
@@ -78,32 +74,14 @@ namespace AudioWorks.Commands
         /// <inheritdoc/>
         protected override void EndProcessing()
         {
-            _outputAudioFiles = new ConcurrentDictionary<int, ITaggedAudioFile>();
-            var substituter = new MetadataSubstituter(System.IO.Path.GetInvalidFileNameChars());
-            var encoder = new AudioFileEncoder(Encoder, SettingAdapter.ParametersToSettings(_parameters));
-
-            Parallel.For(0, _sourceAudioFiles.Count,
-                new ParallelOptions { CancellationToken = _cancellationSource.Token },
-                i =>
-                {
-                    DirectoryInfo outputDirectory;
-                    try
-                    {
-                        outputDirectory = new DirectoryInfo(this.GetFileSystemPaths(
-                                substituter.Substitute(Path ?? string.Empty, _sourceAudioFiles[i].Metadata),
-                                substituter.Substitute(LiteralPath ?? string.Empty, _sourceAudioFiles[i].Metadata))
-                            .First());
-                    }
-                    catch (ItemNotFoundException e)
-                    {
-                        outputDirectory = new DirectoryInfo(e.ItemName);
-                    }
-
-                    _outputAudioFiles.TryAdd(i, encoder.Export(_sourceAudioFiles[i], _cancellationSource.Token, outputDirectory, substituter.Substitute(Name, _sourceAudioFiles[i].Metadata), Replace));
-                });
-
-            if (!_cancellationSource.IsCancellationRequested)
-                WriteObject(_outputAudioFiles.OrderBy(item => item.Key).Select(kvp => kvp.Value), true);
+            foreach (var result in new AudioFileEncoder(
+                    Encoder,
+                    SettingAdapter.ParametersToSettings(_parameters),
+                    this.GetFileSystemPaths(Path, LiteralPath).First(),
+                    Name,
+                    Replace)
+                .Encode(_cancellationSource.Token, _sourceAudioFiles.ToArray()))
+                WriteObject(result);
         }
 
         /// <inheritdoc/>
