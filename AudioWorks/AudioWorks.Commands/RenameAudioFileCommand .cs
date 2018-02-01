@@ -33,10 +33,19 @@ namespace AudioWorks.Commands
         [Parameter]
         public SwitchParameter Replace { get; set; }
 
+        /// <summary>
+        /// <para type="description">Returns an object representing the item with which you are working. By default,
+        /// this cmdlet does not generate any output.</para>
+        /// </summary>
+        [Parameter]
+        public SwitchParameter PassThru { get; set; }
+
         /// <inheritdoc/>
         protected override void ProcessRecord()
         {
             AudioFile.Rename(Name, Replace);
+            if (PassThru)
+                WriteObject(AudioFile);
         }
     }
 }

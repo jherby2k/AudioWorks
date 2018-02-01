@@ -141,6 +141,23 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
+        [Fact(DisplayName = "Rename-AudioFile accepts a PassThru switch")]
+        public void AcceptsPassThruSwitch()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Rename-AudioFile")
+                    .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object)
+                    .AddParameter("Name", "Foo")
+                    .AddParameter("PassThru");
+
+                ps.Invoke();
+
+                Assert.True(true);
+            }
+        }
+
         [Fact(DisplayName = "Rename-AudioFile has an OutputType of ITaggedAudioFile")]
         public void OutputTypeIsITaggedAudioFile()
         {
@@ -155,6 +172,35 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("ExpandProperty", "Type");
 
                 Assert.Equal(typeof(ITaggedAudioFile), (Type) ps.Invoke()[0].BaseObject);
+            }
+        }
+
+        [Theory(DisplayName = "Rename-AudioFile with PassThru switch returns the AudioFile")]
+        [MemberData(nameof(RenameValidFileDataSource.FileNamesMetadataAndNames), MemberType = typeof(RenameValidFileDataSource))]
+        public void PassThruSwitchReturnsAudioFile(
+            int index,
+            [NotNull] string fileName,
+            [NotNull] TestAudioMetadata metadata,
+            [NotNull] string name)
+        {
+            var path = Path.Combine("Output", "Rename-AudioFile", fileName);
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            File.Copy(Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
+                "TestFiles",
+                "Valid",
+                fileName), path, true);
+            var audioFile = new TaggedAudioFile(path) { Metadata = metadata };
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Rename-AudioFile")
+                    .AddParameter("AudioFile", audioFile)
+                    .AddParameter("Name", $"{index:00} - {name}")
+                    .AddParameter("Replace")
+                    .AddParameter("PassThru");
+
+                Assert.Equal(audioFile, ps.Invoke()[0].BaseObject);
             }
         }
 

@@ -66,5 +66,12 @@ namespace AudioWorks.Api.Tests.DataSources
             // Prepend an index to each row
             [UsedImplicitly] get => _data.Select((item, index) => item.Prepend(index).ToArray());
         }
+
+        [NotNull, ItemNotNull]
+        public static IEnumerable<object[]> FileNamesMetadataAndNames
+        {
+            // Prepend an index to each row
+            [UsedImplicitly] get => _data.Select((item, index) => new[] { index, item[0], item[1], item[2] });
+        }
     }
 }
