@@ -203,9 +203,9 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
-        [Theory(DisplayName = "Rename-AudioFile creates the expected output")]
+        [Theory(DisplayName = "Rename-AudioFile renames the file")]
         [MemberData(nameof(RenameValidFileDataSource.Data), MemberType = typeof(RenameValidFileDataSource))]
-        public void CreatesExpectedOutput(
+        public void RenamesFile(
             [NotNull] string fileName,
             [NotNull] TestAudioMetadata metadata,
             [NotNull] string name,
