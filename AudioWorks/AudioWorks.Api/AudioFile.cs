@@ -3,6 +3,7 @@ using System.IO;
 using AudioWorks.Common;
 using AudioWorks.Extensions;
 using JetBrains.Annotations;
+using IO = System.IO;
 
 namespace AudioWorks.Api
 {
@@ -15,10 +16,23 @@ namespace AudioWorks.Api
     public class AudioFile : IAudioFile
     {
         /// <inheritdoc />
-        public string Path { get; }
+        public string Path { get; private set; }
 
         /// <inheritdoc />
         public AudioInfo Info { get; }
+
+        /// <inheritdoc/>
+        public virtual void Rename(string name, bool replace)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentNullException(nameof(name), "Value cannot be null or empty.");
+
+            var newPath = IO.Path.Combine(IO.Path.GetDirectoryName(Path), name + IO.Path.GetExtension(Path));
+            if (File.Exists(newPath) && replace)
+                File.Delete(newPath);
+            File.Move(Path, newPath);
+            Path = newPath;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioFile"/> class.
@@ -33,7 +47,7 @@ namespace AudioWorks.Api
             if (!File.Exists(path))
                 throw new FileNotFoundException($"The file '{path}' cannot be found.", path);
 
-            Path = System.IO.Path.GetFullPath(path);
+            Path = IO.Path.GetFullPath(path);
             Info = LoadInfo();
         }
 
@@ -44,7 +58,7 @@ namespace AudioWorks.Api
             {
                 // Try each info decoder that supports this file extension
                 foreach (var factory in ExtensionProvider.GetFactories<IAudioInfoDecoder>(
-                    "Extension", System.IO.Path.GetExtension(Path)))
+                    "Extension", IO.Path.GetExtension(Path)))
                     try
                     {
                         using (var export = factory.CreateExport())

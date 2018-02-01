@@ -3,6 +3,7 @@ using System.IO;
 using AudioWorks.Common;
 using AudioWorks.Extensions;
 using JetBrains.Annotations;
+using IO = System.IO;
 
 namespace AudioWorks.Api
 {
@@ -46,7 +47,7 @@ namespace AudioWorks.Api
         {
             if (settings == null)
                 settings = new SettingDictionary();
-            var extension = System.IO.Path.GetExtension(Path);
+            var extension = IO.Path.GetExtension(Path);
 
             // Make sure the provided settings are clean
             AudioMetadataEncoderManager.GetSettingInfo(extension).ValidateSettings(settings);
@@ -66,6 +67,16 @@ namespace AudioWorks.Api
             throw new AudioUnsupportedException("No supporting extensions are available.");
         }
 
+        /// <inheritdoc/>
+        public override void Rename(string name, bool replace)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentNullException(nameof(name), "Value cannot be null or empty.");
+
+            var substituter = new MetadataSubstituter(Metadata, IO.Path.GetInvalidFileNameChars());
+            base.Rename(substituter.Substitute(name), replace);
+        }
+
         [NotNull]
         static AudioMetadata LoadMetadata([NotNull] string path)
         {
@@ -73,7 +84,7 @@ namespace AudioWorks.Api
             {
                 // Try each decoder that supports this file extension
                 foreach (var decoderFactory in ExtensionProvider.GetFactories<IAudioMetadataDecoder>(
-                    "Extension", System.IO.Path.GetExtension(path)))
+                    "Extension", IO.Path.GetExtension(path)))
                     try
                     {
                         using (var lifetimeContext = decoderFactory.CreateExport())

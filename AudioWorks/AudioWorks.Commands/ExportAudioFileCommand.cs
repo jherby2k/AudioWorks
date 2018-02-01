@@ -85,11 +85,11 @@ namespace AudioWorks.Commands
                 new ParallelOptions { CancellationToken = _cancellationSource.Token },
                 i =>
                 {
-                    var substituter = new MetadataSubstituter(_sourceAudioFiles[i].Metadata);
+                    var substituter = new MetadataSubstituter(_sourceAudioFiles[i].Metadata, System.IO.Path.GetInvalidFileNameChars());
                     DirectoryInfo outputDirectory;
                     try
                     {
-                        outputDirectory = new DirectoryInfo(this.GetFileSystemPaths(substituter.Substitute(Path), substituter.Substitute(LiteralPath)).First());
+                        outputDirectory = new DirectoryInfo(this.GetFileSystemPaths(substituter.Substitute(Path ?? string.Empty), substituter.Substitute(LiteralPath ?? string.Empty)).First());
                     }
                     catch (ItemNotFoundException e)
                     {
