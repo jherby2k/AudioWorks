@@ -15,10 +15,10 @@ namespace AudioWorks.Api
     [Serializable]
     public class AudioFile : IAudioFile
     {
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public string Path { get; private set; }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public AudioInfo Info { get; }
 
         /// <inheritdoc/>

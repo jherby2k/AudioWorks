@@ -72,7 +72,7 @@ namespace AudioWorks.Common
             Path = info.GetString("Path");
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override void GetObjectData([NotNull] SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);

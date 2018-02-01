@@ -123,7 +123,7 @@ namespace AudioWorks.Commands
                 AudioEncoderManager.GetSettingInfo(Encoder));
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void Dispose()
         {
             _cancellationSource.Dispose();

@@ -87,7 +87,7 @@ namespace AudioWorks.Commands
                 AudioAnalyzerManager.GetSettingInfo(Analyzer));
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void Dispose()
         {
             _cancellationSource.Dispose();

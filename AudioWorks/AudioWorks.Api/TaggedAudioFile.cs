@@ -18,7 +18,7 @@ namespace AudioWorks.Api
     {
         [CanBeNull] AudioMetadata _metadata;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public AudioMetadata Metadata
         {
             get => _metadata ?? (_metadata = LoadMetadata(Path));
@@ -36,13 +36,13 @@ namespace AudioWorks.Api
         {
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void LoadMetadata()
         {
             _metadata = LoadMetadata(Path);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void SaveMetadata(SettingDictionary settings = null)
         {
             if (settings == null)
