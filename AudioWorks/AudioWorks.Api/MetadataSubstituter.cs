@@ -10,18 +10,15 @@ namespace AudioWorks.Api
         static readonly Regex _replacer = new Regex(@"\{[^{]+\}");
         readonly char[] _invalidChars;
 
-        [NotNull] readonly AudioMetadata _metadata;
-
-        public MetadataSubstituter([NotNull] AudioMetadata metadata, [NotNull] char[] invalidChars)
+        public MetadataSubstituter([NotNull] char[] invalidChars)
         {
-            _metadata = metadata;
             _invalidChars = invalidChars;
         }
 
-        public string Substitute([NotNull] string path) => _replacer.Replace(path, match =>
+        [NotNull] public string Substitute([NotNull] string path, [NotNull] AudioMetadata metadata) => _replacer.Replace(path, match =>
         {
             var propertyName = match.Value.Substring(1, match.Value.Length - 2);
-            var propertyValue = (string) typeof(AudioMetadata).GetProperty(propertyName).GetValue(_metadata);
+            var propertyValue = (string) typeof(AudioMetadata).GetProperty(propertyName).GetValue(metadata);
 
             if (string.IsNullOrEmpty(propertyValue))
                 return $"Unknown {propertyName}";
