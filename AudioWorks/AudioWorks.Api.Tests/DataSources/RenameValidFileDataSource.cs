@@ -9,6 +9,7 @@ namespace AudioWorks.Api.Tests.DataSources
     {
         [NotNull, ItemNotNull] static readonly List<object[]> _data = new List<object[]>
         {
+            // Basic rename
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -17,6 +18,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Testing 123.wav"
             },
 
+            // Metadata substitution
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -28,6 +30,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Test Title.wav"
             },
 
+            // Composite of multiple metadata fields
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -40,6 +43,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Test Title by Test Artist.wav"
             },
 
+            // Requested metadata not present
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -48,6 +52,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Unknown Title by Unknown Artist.wav"
             },
 
+            // Metadata with invalid characters
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -57,21 +62,29 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "{Title}",
                 "Test Title with invalid characters.wav"
+            },
+
+            // New name matches old
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                new TestAudioMetadata(),
+                "LPCM 16-bit 44100Hz Stereo",
+                "LPCM 16-bit 44100Hz Stereo.wav"
             }
         };
 
         [NotNull, ItemNotNull]
         public static IEnumerable<object[]> Data
         {
-            // Prepend an index to each row
-            [UsedImplicitly] get => _data.Select((item, index) => item.Prepend(index).ToArray());
+            [UsedImplicitly] get => _data;
         }
 
         [NotNull, ItemNotNull]
         public static IEnumerable<object[]> FileNamesMetadataAndNames
         {
             // Prepend an index to each row
-            [UsedImplicitly] get => _data.Select((item, index) => new[] { index, item[0], item[1], item[2] });
+            [UsedImplicitly] get => _data.Select(item => new[] { item[0], item[1], item[2] });
         }
     }
 }

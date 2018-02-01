@@ -27,7 +27,12 @@ namespace AudioWorks.Api
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name), "Value cannot be null or empty.");
 
+            // If the name isn't changing, do nothing
+            if (string.Compare(
+                    IO.Path.GetFileNameWithoutExtension(Path), name, StringComparison.OrdinalIgnoreCase) == 0) return;
+
             var newPath = IO.Path.Combine(IO.Path.GetDirectoryName(Path), name + IO.Path.GetExtension(Path));
+
             if (File.Exists(newPath) && replace)
                 File.Delete(newPath);
             File.Move(Path, newPath);
