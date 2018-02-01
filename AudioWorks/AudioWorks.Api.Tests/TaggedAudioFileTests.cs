@@ -80,6 +80,28 @@ namespace AudioWorks.Api.Tests
                     fileName)).Metadata = null);
         }
 
+        [Theory(DisplayName = "TaggedAudioFile's Rename method renames the file")]
+        [MemberData(nameof(RenameValidFileDataSource.Data), MemberType = typeof(RenameValidFileDataSource))]
+        public void RenameRenamesFile(
+            [NotNull] string fileName,
+            [NotNull] TestAudioMetadata metadata,
+            [NotNull] string name,
+            [NotNull] string expectedFileName)
+        {
+            var path = Path.Combine("Output", "Rename", fileName);
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            File.Copy(Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
+                "TestFiles",
+                "Valid",
+                fileName), path, true);
+            var audioFile = new TaggedAudioFile(path) { Metadata = metadata };
+
+            audioFile.Rename(name, true);
+
+            Assert.Equal(expectedFileName, Path.GetFileName(audioFile.Path));
+        }
+
         [Theory(DisplayName = "TaggedAudioFile's LoadMetadata method refreshes the Metadata property")]
         [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
         public void LoadMetadataRefreshesMetadata([NotNull] string fileName)
