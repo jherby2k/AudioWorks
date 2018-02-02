@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Composition;
 using System.IO;
@@ -55,7 +56,7 @@ namespace AudioWorks.Api
             _encodedDirectoryName = encodedDirectoryName;
             _encodedFileName = encodedFileName;
             _overwrite = overwrite;
-            _progressDescription = $"Exporting to {name} format";
+            _progressDescription = $"Encoding to {name} format";
         }
 
         /// <summary>
@@ -81,12 +82,31 @@ namespace AudioWorks.Api
             CancellationToken cancellationToken,
             [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
         {
+            return Encode(null, cancellationToken, audioFiles);
+        }
+
+        /// <summary>
+        /// Encodes the specified audio files.
+        /// </summary>
+        /// <param name="progressQueue">The progress queue, or <c>null</c>.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <param name="audioFiles">The audio files.</param>
+        /// <returns>A new audio file.</returns>
+        [NotNull, ItemNotNull]
+        public IEnumerable<ITaggedAudioFile> Encode(
+            [CanBeNull] BlockingCollection<ProgressToken> progressQueue,
+            CancellationToken cancellationToken,
+            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
+        {
             if (audioFiles == null) throw new ArgumentNullException(nameof(audioFiles));
             if (audioFiles.Any(audioFile => audioFile == null))
                 throw new ArgumentException("One or more audio files are null.", nameof(audioFiles));
 
+            progressQueue?.Add(new ProgressToken(_progressDescription, 0, audioFiles.Length), cancellationToken);
+
             var finalOutputPaths = new string[audioFiles.Length];
 
+            var complete = 0;
             Parallel.For(0, audioFiles.Length, new ParallelOptions { CancellationToken = cancellationToken }, i =>
             {
                 string tempOutputPath = null;
@@ -144,6 +164,11 @@ namespace AudioWorks.Api
                     // If writing to a temporary file, replace the original
                     File.Delete(finalOutputPaths[i]);
                     File.Move(tempOutputPath, finalOutputPaths[i]);
+
+                    progressQueue?.Add(
+                        new ProgressToken(_progressDescription, Interlocked.Increment(ref complete),
+                            audioFiles.Length),
+                        cancellationToken);
                 }
                 catch (Exception)
                 {
@@ -153,8 +178,7 @@ namespace AudioWorks.Api
                 }
             });
 
-            foreach (var outputPath in finalOutputPaths)
-                yield return new TaggedAudioFile(outputPath);
+            return finalOutputPaths.Select(path => new TaggedAudioFile(path));
         }
     }
 }

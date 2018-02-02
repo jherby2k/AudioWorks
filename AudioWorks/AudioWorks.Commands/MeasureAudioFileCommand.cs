@@ -54,12 +54,21 @@ namespace AudioWorks.Commands
             using (var outputQueue = new BlockingCollection<ProgressToken>())
             {
                 Task.Factory.StartNew(q =>
-                            new AudioFileAnalyzer(Analyzer, SettingAdapter.ParametersToSettings(_parameters))
-                                .Analyze((BlockingCollection<ProgressToken>) q, _cancellationSource.Token,
-                                    _audioFiles.ToArray()), outputQueue, _cancellationSource.Token,
-                        TaskCreationOptions.DenyChildAttach | TaskCreationOptions.LongRunning, TaskScheduler.Default)
-                    .ContinueWith((t, q) => ((BlockingCollection<ProgressToken>) q).CompleteAdding(),
-                        outputQueue, TaskScheduler.Default);
+                            new AudioFileAnalyzer(
+                                    Analyzer,
+                                    SettingAdapter.ParametersToSettings(_parameters))
+                                .Analyze(
+                                    (BlockingCollection<ProgressToken>) q,
+                                    _cancellationSource.Token,
+                                    _audioFiles.ToArray()),
+                        outputQueue,
+                        _cancellationSource.Token,
+                        TaskCreationOptions.DenyChildAttach | TaskCreationOptions.LongRunning,
+                        TaskScheduler.Default)
+                    .ContinueWith((t, q) =>
+                            ((BlockingCollection<ProgressToken>) q).CompleteAdding(),
+                        outputQueue,
+                        TaskScheduler.Default);
 
                 // Process output on the main thread
                 foreach (var progressToken in outputQueue.GetConsumingEnumerable(_cancellationSource.Token))
