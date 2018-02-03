@@ -48,21 +48,6 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Export-AudioFile")
-                    .AddParameter("Path", "Foo")
-                    .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object);
-
-                Assert.Throws<ParameterBindingException>(() => ps.Invoke());
-            }
-        }
-
-        [Fact(DisplayName = "Export-AudioFile requires the Path parameter")]
-        public void RequiresPathParameter()
-        {
-            using (var ps = PowerShell.Create())
-            {
-                ps.Runspace = _moduleFixture.Runspace;
-                ps.AddCommand("Export-AudioFile")
-                    .AddParameter("Encoder", "Foo")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object);
 
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
@@ -76,8 +61,7 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Export-AudioFile")
-                    .AddParameter("Encoder", "Foo")
-                    .AddParameter("Path", "Foo");
+                    .AddParameter("Encoder", "Foo");
 
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
             }
@@ -121,8 +105,8 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Export-AudioFile")
                     .AddArgument(encoderName)
-                    .AddArgument(path)
                     .AddArgument(sourceAudioFile)
+                    .AddParameter("Path", path)
                     .AddParameter("Name", $"{index:00} - {Path.GetFileNameWithoutExtension(sourceFileName)}")
                     .AddParameter("Replace");
                 if (settings != null)

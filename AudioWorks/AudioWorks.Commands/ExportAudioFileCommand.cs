@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,27 +30,16 @@ namespace AudioWorks.Commands
         public string Encoder { get; set; }
 
         /// <summary>
-        /// <para type="description">Specifies the path to the output directory. This parameter is required, but the
-        /// parameter name ("Path") is optional.</para>
-        /// <para type="description">Use a dot (.) to specify the current location.</para>
-        /// </summary>
-        [Parameter(ParameterSetName = "ByPath", Mandatory = true, Position = 1)]
-        public string Path { get; set; }
-
-        /// <summary>
-        /// <para type="description">Specifies the path to the output directory. Unlike the Path parameter, the value
-        /// of LiteralPath is used exactly as it is typed. If the path includes escape characters, enclose it in single
-        /// quotation marks. Single quotation marks tell Windows PowerShell not to interpret any characters as escape
-        /// sequences.</para>
-        /// </summary>
-        [Parameter(ParameterSetName = "ByLiteralPath", Mandatory = true, Position = 1), Alias("PSPath")]
-        public string LiteralPath { get; set; }
-
-        /// <summary>
         /// <para type="description">Specifies the source audio file.</para>
         /// </summary>
-        [Parameter(Mandatory = true, Position = 2, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 1, ValueFromPipeline = true)]
         public ITaggedAudioFile AudioFile { get; set; }
+
+        /// <summary>
+        /// <para type="description">Specifies the output directory path.</para>
+        /// </summary>
+        [Parameter]
+        public string Path { get; set; }
 
         /// <summary>
         /// <para type="description">Specifies the output file name.</para>
@@ -82,7 +70,7 @@ namespace AudioWorks.Commands
                         new AudioFileEncoder(
                                 Encoder,
                                 SettingAdapter.ParametersToSettings(_parameters),
-                                this.GetFileSystemPaths(Path, LiteralPath).First(),
+                                SessionState.Path.GetUnresolvedProviderPathFromPSPath(Path, out var _, out var _),
                                 Name,
                                 Replace)
                             .Encode(
