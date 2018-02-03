@@ -76,15 +76,13 @@ namespace AudioWorks.Api
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
         public void Analyze(
-            [CanBeNull] BlockingCollection<ProgressToken> progressQueue,
+            [CanBeNull] BlockingCollection<int> progressQueue,
             CancellationToken cancellationToken,
             [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
         {
             if (audioFiles == null) throw new ArgumentNullException(nameof(audioFiles));
             if (audioFiles.Any(audioFile => audioFile == null))
                 throw new ArgumentException("One or more audio files are null.", nameof(audioFiles));
-
-            progressQueue?.Add(new ProgressToken(_progressDescription, 0, audioFiles.Length), cancellationToken);
 
             using (var groupToken = new GroupToken())
             {
@@ -99,16 +97,16 @@ namespace AudioWorks.Api
                     }
 
                     // Process the audio files in parallel
-                    var complete = 0;
                     Parallel.For(0, audioFiles.Length, new ParallelOptions { CancellationToken = cancellationToken },
                         i =>
                         {
-                            analyzerExports[i].Value.ProcessSamples(audioFiles[i].Path, cancellationToken);
-                            CopyFields(analyzerExports[i].Value.GetResult(), audioFiles[i].Metadata);
-                            progressQueue?.Add(
-                                new ProgressToken(_progressDescription, Interlocked.Increment(ref complete),
-                                    audioFiles.Length),
+                            analyzerExports[i].Value.ProcessSamples(
+                                audioFiles[i].Path,
+                                progressQueue,
+                                (int) (audioFiles[i].Info.SampleCount / 100),
                                 cancellationToken);
+
+                            CopyFields(analyzerExports[i].Value.GetResult(), audioFiles[i].Metadata);
                         });
 
                     // Obtain the group results sequentially

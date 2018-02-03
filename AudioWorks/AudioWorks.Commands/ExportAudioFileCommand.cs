@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
 using System.Threading;
 using System.Threading.Tasks;
@@ -64,7 +65,7 @@ namespace AudioWorks.Commands
         /// <inheritdoc/>
         protected override void EndProcessing()
         {
-            using (var outputQueue = new BlockingCollection<ProgressToken>())
+            using (var outputQueue = new BlockingCollection<int>())
             {
                 var encodeTask = Task<IEnumerable<ITaggedAudioFile>>.Factory.StartNew(q =>
                         new AudioFileEncoder(
@@ -74,7 +75,7 @@ namespace AudioWorks.Commands
                                 Name,
                                 Replace)
                             .Encode(
-                                (BlockingCollection<ProgressToken>) q,
+                                (BlockingCollection<int>) q,
                                 _cancellationSource.Token,
                                 _sourceAudioFiles.ToArray()),
                     outputQueue,
@@ -83,13 +84,26 @@ namespace AudioWorks.Commands
                     TaskScheduler.Default);
 
                 encodeTask.ContinueWith((t, q) =>
-                        ((BlockingCollection<ProgressToken>) q).CompleteAdding(),
+                        ((BlockingCollection<int>) q).CompleteAdding(),
                     outputQueue,
                     TaskScheduler.Default);
 
-                // Process output on the main thread
-                foreach (var progressToken in outputQueue.GetConsumingEnumerable(_cancellationSource.Token))
-                    WriteProgress(ProgressAdapter.TokenToRecord(progressToken));
+                // Process progress notifications on the main thread
+                var activity = $"Encoding {_sourceAudioFiles.Count} audio files in {Encoder} format";
+                var totalFramesCompleted = 0L;
+                var totalFrames = (double) _sourceAudioFiles.Sum(audioFile => audioFile.Info.SampleCount);
+
+                foreach (var framesCompleted in outputQueue.GetConsumingEnumerable(_cancellationSource.Token))
+                {
+                    // If the audio files have estimated frame counts, make this doesn't go over 100%
+                    totalFramesCompleted = (long) Math.Min(totalFramesCompleted + framesCompleted, totalFrames);
+                    var percentComplete =
+                        (int) Math.Floor(totalFramesCompleted / totalFrames * 100);
+                    WriteProgress(new ProgressRecord(0, activity, $"{percentComplete}% complete")
+                    {
+                        PercentComplete = percentComplete
+                    });
+                }
 
                 if (!encodeTask.IsCanceled)
                     WriteObject(encodeTask.Result, true);

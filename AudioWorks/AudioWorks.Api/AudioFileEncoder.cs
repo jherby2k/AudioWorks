@@ -25,7 +25,6 @@ namespace AudioWorks.Api
         [CanBeNull] readonly string _encodedDirectoryName;
         [CanBeNull] readonly string _encodedFileName;
         readonly bool _overwrite;
-        [NotNull] readonly string _progressDescription;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioFileEncoder"/> class.
@@ -56,7 +55,6 @@ namespace AudioWorks.Api
             _encodedDirectoryName = encodedDirectoryName;
             _encodedFileName = encodedFileName;
             _overwrite = overwrite;
-            _progressDescription = $"Encoding to {name} format";
         }
 
         /// <summary>
@@ -94,7 +92,7 @@ namespace AudioWorks.Api
         /// <returns>A new audio file.</returns>
         [NotNull, ItemNotNull]
         public IEnumerable<ITaggedAudioFile> Encode(
-            [CanBeNull] BlockingCollection<ProgressToken> progressQueue,
+            [CanBeNull] BlockingCollection<int> progressQueue,
             CancellationToken cancellationToken,
             [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
         {
@@ -102,11 +100,8 @@ namespace AudioWorks.Api
             if (audioFiles.Any(audioFile => audioFile == null))
                 throw new ArgumentException("One or more audio files are null.", nameof(audioFiles));
 
-            progressQueue?.Add(new ProgressToken(_progressDescription, 0, audioFiles.Length), cancellationToken);
-
             var finalOutputPaths = new string[audioFiles.Length];
 
-            var complete = 0;
             Parallel.For(0, audioFiles.Length, new ParallelOptions { CancellationToken = cancellationToken }, i =>
             {
                 string tempOutputPath = null;
@@ -149,7 +144,13 @@ namespace AudioWorks.Api
                         encoderExport.Value.Initialize(outputStream, audioFiles[i].Info,
                             audioFiles[i].Metadata,
                             _settings);
-                        encoderExport.Value.ProcessSamples(audioFiles[i].Path, cancellationToken);
+
+                        encoderExport.Value.ProcessSamples(
+                            audioFiles[i].Path,
+                            progressQueue,
+                            (int) (audioFiles[i].Info.SampleCount / 100),
+                            cancellationToken);
+
                         encoderExport.Value.Finish();
                     }
                     finally
@@ -164,11 +165,6 @@ namespace AudioWorks.Api
                     // If writing to a temporary file, replace the original
                     File.Delete(finalOutputPaths[i]);
                     File.Move(tempOutputPath, finalOutputPaths[i]);
-
-                    progressQueue?.Add(
-                        new ProgressToken(_progressDescription, Interlocked.Increment(ref complete),
-                            audioFiles.Length),
-                        cancellationToken);
                 }
                 catch (Exception)
                 {

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Concurrent;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks.Dataflow;
 using AudioWorks.Common;
@@ -12,6 +13,8 @@ namespace AudioWorks.Api
         internal static void ProcessSamples(
             [NotNull] this ISampleProcessor sampleProcessor,
             [NotNull] string inputFilePath,
+            [CanBeNull] BlockingCollection<int> progressQueue,
+            int minFramesToReport,
             CancellationToken cancellationToken)
         {
             using (var inputStream = File.OpenRead(inputFilePath))
@@ -21,11 +24,18 @@ namespace AudioWorks.Api
                     "Extension", Path.GetExtension(inputFilePath)))
                     try
                     {
+                        var framesSinceLastProgress = 0;
+
                         // Use an action block to process the sample collections asynchronously
                         var block = new ActionBlock<SampleCollection>(samples =>
                             {
                                 sampleProcessor.Submit(samples);
                                 SampleCollectionPool.Instance.Release(samples);
+
+                                if (progressQueue == null) return;
+                                if ((framesSinceLastProgress += samples.Frames) < minFramesToReport) return;
+                                progressQueue.Add(framesSinceLastProgress, cancellationToken);
+                                framesSinceLastProgress = 0;
                             },
                             new ExecutionDataflowBlockOptions
                             {
@@ -43,6 +53,10 @@ namespace AudioWorks.Api
 
                         block.Complete();
                         block.Completion.Wait(cancellationToken);
+
+                        // Report any unreported frames
+                        if (framesSinceLastProgress > 0)
+                            progressQueue?.Add(framesSinceLastProgress, cancellationToken);
 
                         return;
                     }
