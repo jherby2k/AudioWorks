@@ -632,6 +632,31 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["SerialNumber"] = 1
                 },
                 "D65B9F60DCDC296F6A6362600F3BFF34"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    // Managed bit rate ignored without bit rate
+                    ["Managed"] = true,
+                    ["SerialNumber"] = 1
+                },
+                "C5F96A755FF3C12B815528C6A39D44F7"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    // Quality ignored with bit rate
+                    ["Quality"] = 3,
+                    ["BitRate"] = 128,
+                    ["SerialNumber"] = 1
+                },
+                "512563162FD41AC28968D0C61CD1FB05"
             }
         };
 
