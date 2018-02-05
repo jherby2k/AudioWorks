@@ -27,7 +27,7 @@ namespace AudioWorks.Extensions.Vorbis
                 AddTag("COMPOSER", metadata.Composer);
             if (!string.IsNullOrEmpty(metadata.Genre))
                 AddTag("GENRE", metadata.Genre);
-            if (!string.IsNullOrEmpty("Comment"))
+            if (!string.IsNullOrEmpty(metadata.Comment))
                 AddTag("DESCRIPTION", metadata.Comment);
 
             if (!string.IsNullOrEmpty(metadata.Day) &&
@@ -57,6 +57,17 @@ namespace AudioWorks.Extensions.Vorbis
         internal void HeaderOut(out OggPacket packet)
         {
             SafeNativeMethods.VorbisCommentHeaderOut(ref _comment, out packet);
+        }
+
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Native method is always expected to return 0")]
+        internal void HeaderOut(
+            IntPtr dspState,
+            out OggPacket first,
+            out OggPacket second,
+            out OggPacket third)
+        {
+            SafeNativeMethods.VorbisAnalysisHeaderOut(dspState, ref _comment, out first, out second, out third);
         }
 
         public void Dispose()

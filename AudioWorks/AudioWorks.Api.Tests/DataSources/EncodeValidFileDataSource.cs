@@ -427,6 +427,68 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["BitRate"] = 128
                 },
                 "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6"
+            },
+
+            // Vorbis encoding
+            new object[]
+            {
+                "LPCM 8-bit 8000Hz Stereo.wav",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    ["SerialNumber"] = 1
+                },
+                "2983BAAC5F0B2D27D6149468B4599ADD"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Mono.wav",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    ["SerialNumber"] = 1
+                },
+                "1DDA52655E31316656613C83FD4328B2"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    ["SerialNumber"] = 1
+                },
+                "C5F96A755FF3C12B815528C6A39D44F7"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 48000Hz Stereo.wav",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    ["SerialNumber"] = 1
+                },
+                "B25A1DA6CABFD4D14F29945DCC48942E"
+            },
+            new object[]
+            {
+                "LPCM 24-bit 96000Hz Stereo.wav",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    ["SerialNumber"] = 1
+                },
+                "4CB78D36FAB745D482915719DF649DA2"
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    ["SerialNumber"] = 1
+                },
+                "12B91716F92EE910925A70A1D168A93C"
             }
         };
 
