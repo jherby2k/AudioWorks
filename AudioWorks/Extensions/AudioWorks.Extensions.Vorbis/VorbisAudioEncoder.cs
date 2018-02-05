@@ -18,7 +18,9 @@ namespace AudioWorks.Extensions.Vorbis
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
         {
             ["SerialNumber"] = new IntSettingInfo(int.MinValue, int.MaxValue),
-            ["Quality"] = new IntSettingInfo(-1, 10)
+            ["Quality"] = new IntSettingInfo(-1, 10),
+            ["BitRate"] = new IntSettingInfo(32, 500),
+            ["Managed"] = new BoolSettingInfo()
         };
 
         public string FileExtension { get; } = ".ogg";
@@ -30,10 +32,15 @@ namespace AudioWorks.Extensions.Vorbis
                 ? (int) serialNumberValue
                 : new Random().Next());
 
-            _encoder = new VorbisEncoder(info.Channels, info.SampleRate,
-                settings.TryGetValue("Quality", out var qualityValue)
-                    ? (float) (int) qualityValue / 10
-                    : 0.5f);
+            // Default to a quality setting of 5
+            if (settings.TryGetValue("BitRate", out var bitRateValue))
+                _encoder = new VorbisEncoder(info.Channels, info.SampleRate, (int) bitRateValue * 1000,
+                    settings.TryGetValue("Managed", out var managedValue) && (bool) managedValue);
+            else
+                _encoder = new VorbisEncoder(info.Channels, info.SampleRate,
+                    settings.TryGetValue("Quality", out var qualityValue)
+                        ? (int) qualityValue / 10f
+                        : 0.5f);
 
             // Write the header
             using (var comment = new MetadataToVorbisCommentAdapter(metadata))

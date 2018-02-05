@@ -547,6 +547,68 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["SerialNumber"] = 1
                 },
                 "9129A51C0130CB81FF121522C498BC85"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    // Minimum bit rate
+                    ["BitRate"] = 32,
+                    ["SerialNumber"] = 1
+                },
+                "520DA0716139BF621661EF9148BB921D"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    // Maximum bit rate
+                    ["BitRate"] = 500,
+                    ["SerialNumber"] = 1
+                },
+                "6835E346F1DF227638587C81CA57A3CA"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    // Managed bit rate disabled (default)
+                    ["BitRate"] = 128,
+                    ["SerialNumber"] = 1
+                },
+                "512563162FD41AC28968D0C61CD1FB05"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    // Managed bit rate explicitly disabled
+                    ["BitRate"] = 128,
+                    ["Managed"] = false,
+                    ["SerialNumber"] = 1
+                },
+                "512563162FD41AC28968D0C61CD1FB05"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    // Managed bit rate enabled
+                    ["BitRate"] = 128,
+                    ["Managed"] = true,
+                    ["SerialNumber"] = 1
+                },
+                "D65B9F60DCDC296F6A6362600F3BFF34"
             }
         };
 

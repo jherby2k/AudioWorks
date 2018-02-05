@@ -111,8 +111,11 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("Replace");
                 if (settings != null)
                     foreach (var item in settings)
-                        if (item.Value is bool boolValue && !boolValue)
-                            ps.AddParameter(item.Key);
+                        if (item.Value is bool boolValue)
+                        {
+                            if (boolValue)
+                                ps.AddParameter(item.Key);
+                        }
                         else
                             ps.AddParameter(item.Key, item.Value);
 

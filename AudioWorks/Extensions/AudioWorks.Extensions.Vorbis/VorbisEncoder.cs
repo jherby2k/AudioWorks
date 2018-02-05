@@ -6,24 +6,35 @@ namespace AudioWorks.Extensions.Vorbis
 {
     sealed class VorbisEncoder : IDisposable
     {
-        readonly IntPtr _info;
-        readonly IntPtr _block;
+        readonly IntPtr _info = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(VorbisInfo)));
+        readonly IntPtr _block = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(VorbisBlock)));
 
-        internal IntPtr DspState { get; }
+        internal IntPtr DspState { get; } = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(VorbisDspState)));
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native methods are always expected to return 0")]
         internal VorbisEncoder(int channels, int sampleRate, float baseQuality)
         {
-            _info = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(VorbisInfo)));
+            SafeNativeMethods.VorbisInfoInit(_info);
+            SafeNativeMethods.VorbisEncodeInitVbr(_info, channels, sampleRate, baseQuality);
+            SafeNativeMethods.VorbisAnalysisInit(DspState, _info);
+            SafeNativeMethods.VorbisBlockInit(DspState, _block);
+        }
+
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Native methods are always expected to return 0")]
+        public VorbisEncoder(int channels, int sampleRate, int nominalBitRate, bool managed)
+        {
             SafeNativeMethods.VorbisInfoInit(_info);
 
-            SafeNativeMethods.VorbisEncodeInitVbr(_info, channels, sampleRate, baseQuality);
+            // Use 3-step setup so bitrate management can be disabled
+            SafeNativeMethods.VorbisEncodeSetupManaged(_info, channels, sampleRate,
+                -1, nominalBitRate, -1);
+            if (!managed)
+                SafeNativeMethods.VorbisEncodeCtl(_info, 0x15, IntPtr.Zero);
+            SafeNativeMethods.VorbisEncodeSetupInit(_info);
 
-            DspState = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(VorbisDspState)));
             SafeNativeMethods.VorbisAnalysisInit(DspState, _info);
-
-            _block = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(VorbisBlock)));
             SafeNativeMethods.VorbisBlockInit(DspState, _block);
         }
 

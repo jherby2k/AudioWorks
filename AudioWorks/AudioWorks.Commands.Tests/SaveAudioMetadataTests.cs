@@ -194,7 +194,13 @@ namespace AudioWorks.Commands.Tests
                     .AddArgument(audioFile);
                 if (settings != null)
                     foreach (var item in settings)
-                        ps.AddParameter(item.Key, item.Value);
+                        if (item.Value is bool boolValue)
+                        {
+                            if (boolValue)
+                                ps.AddParameter(item.Key);
+                        }
+                        else
+                            ps.AddParameter(item.Key, item.Value);
 
                 ps.Invoke();
             }

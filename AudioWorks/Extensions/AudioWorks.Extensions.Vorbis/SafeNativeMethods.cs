@@ -170,6 +170,27 @@ namespace AudioWorks.Extensions.Vorbis
         internal static extern void VorbisInfoClear(
             IntPtr info);
 
+        [DllImport(_vorbisLibrary, EntryPoint = "vorbis_encode_setup_managed",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int VorbisEncodeSetupManaged(
+            IntPtr info,
+            int channels,
+            int sampleRate,
+            int maximumBitRate,
+            int nominalBitRate,
+            int minimumBitRate);
+
+        [DllImport(_vorbisLibrary, EntryPoint = "vorbis_encode_ctl",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int VorbisEncodeCtl(IntPtr info,
+            int request,
+            IntPtr argument);
+
+        [DllImport(_vorbisLibrary, EntryPoint = "vorbis_encode_setup_init",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int VorbisEncodeSetupInit(
+            IntPtr info);
+
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_encode_init_vbr",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int VorbisEncodeInitVbr(
