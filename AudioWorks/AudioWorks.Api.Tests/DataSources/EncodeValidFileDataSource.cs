@@ -489,6 +489,64 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["SerialNumber"] = 1
                 },
                 "12B91716F92EE910925A70A1D168A93C"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    // Minimum serial #
+                    ["SerialNumber"] = int.MinValue
+                },
+                "8E2CA85D5EAF62C83583B82966C7FD3B"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    // Maximum serial #
+                    ["SerialNumber"] = int.MaxValue
+                },
+                "499847A27EA465A2C6D881C01B2368D8"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    // Default quality
+                    ["Quality"] = 5,
+                    ["SerialNumber"] = 1
+                },
+                "C5F96A755FF3C12B815528C6A39D44F7"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    // Minimum quality
+                    ["Quality"] = -1,
+                    ["SerialNumber"] = 1
+                },
+                "10EB7A1F488C7D45EAB7E332730A34EA"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    // Maximum quality
+                    ["Quality"] = 10,
+                    ["SerialNumber"] = 1
+                },
+                "9129A51C0130CB81FF121522C498BC85"
             }
         };
 

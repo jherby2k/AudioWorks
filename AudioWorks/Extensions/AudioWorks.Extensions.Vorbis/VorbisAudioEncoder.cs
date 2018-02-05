@@ -10,25 +10,30 @@ namespace AudioWorks.Extensions.Vorbis
     [AudioEncoderExport("Vorbis")]
     public sealed class VorbisAudioEncoder : IAudioEncoder, IDisposable
     {
-        [CanBeNull] VorbisEncoder _encoder;
         [CanBeNull] FileStream _fileStream;
         [CanBeNull] OggStream _oggStream;
+        [CanBeNull] VorbisEncoder _encoder;
         [CanBeNull] byte[] _buffer;
 
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
         {
-            ["SerialNumber"] = new IntSettingInfo(int.MinValue, int.MaxValue)
+            ["SerialNumber"] = new IntSettingInfo(int.MinValue, int.MaxValue),
+            ["Quality"] = new IntSettingInfo(-1, 10)
         };
 
         public string FileExtension { get; } = ".ogg";
 
         public void Initialize(FileStream fileStream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
-            _encoder = new VorbisEncoder(info.Channels, info.SampleRate, 0.5f);
             _fileStream = fileStream;
             _oggStream = new OggStream(settings.TryGetValue("SerialNumber", out var serialNumberValue)
                 ? (int) serialNumberValue
                 : new Random().Next());
+
+            _encoder = new VorbisEncoder(info.Channels, info.SampleRate,
+                settings.TryGetValue("Quality", out var qualityValue)
+                    ? (float) (int) qualityValue / 10
+                    : 0.5f);
 
             // Write the header
             using (var comment = new MetadataToVorbisCommentAdapter(metadata))
