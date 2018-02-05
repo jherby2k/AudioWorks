@@ -399,7 +399,30 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LameMP3",
                 new TestSettingDictionary
                 {
-                    // Forced bit rate
+                    // Forced bit rate disabled (default)
+                    ["BitRate"] = 128
+                },
+                "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "LameMP3",
+                new TestSettingDictionary
+                {
+                    // Forced bit rate explicitly disabled
+                    ["BitRate"] = 128,
+                    ["ForceCBR"] = false
+                },
+                "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "LameMP3",
+                new TestSettingDictionary
+                {
+                    // Forced bit rate enabled
                     ["BitRate"] = 128,
                     ["ForceCBR"] = true
                 },
