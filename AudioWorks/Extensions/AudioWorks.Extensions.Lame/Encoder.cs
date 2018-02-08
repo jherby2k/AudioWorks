@@ -52,12 +52,13 @@ namespace AudioWorks.Extensions.Lame
             SafeNativeMethods.SetVbrQuality(_handle, quality);
         }
 
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Native method is always expected to return 0")]
         internal void InitializeParameters()
         {
             _startPosition = _stream.Position;
 
             SafeNativeMethods.InitParams(_handle);
-            //TODO catch errors here?
         }
 
         internal void Encode([NotNull] float[] leftSamples, [CanBeNull] float[] rightSamples)

@@ -51,8 +51,9 @@ namespace AudioWorks.Extensions.Vorbis
                 _oggStream.PacketIn(ref third);
             }
 
+            // ReSharper disable once PossibleNullReferenceException
             while (_oggStream.Flush(out var page))
-                WritePage(page, _fileStream);
+                WritePage(page);
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException",
@@ -68,13 +69,13 @@ namespace AudioWorks.Extensions.Vorbis
                 for (var i = 0; i < samples.Channels; i++)
                     Marshal.Copy(samples[i], 0, buffers[i], samples[i].Length);
 
-                WriteToFileStream(samples.Frames);
+                WriteFrames(samples.Frames);
             }
         }
 
         public void Finish()
         {
-            WriteToFileStream(0);
+            WriteFrames(0);
         }
 
         public void Dispose()
@@ -83,13 +84,15 @@ namespace AudioWorks.Extensions.Vorbis
             _oggStream?.Dispose();
         }
 
-        void WritePage(OggPage page, [NotNull] Stream stream)
+        void WritePage(OggPage page)
         {
-            WritePointer(page.Header, page.HeaderLength, stream);
-            WritePointer(page.Body, page.BodyLength, stream);
+            WritePointer(page.Header, page.HeaderLength);
+            WritePointer(page.Body, page.BodyLength);
         }
 
-        void WritePointer(IntPtr location, int length, [NotNull] Stream stream)
+        [SuppressMessage("ReSharper", "PossibleNullReferenceException",
+            Justification = "_fileStream is always initialized first")]
+        void WritePointer(IntPtr location, int length)
         {
             if (_buffer == null)
                 _buffer = new byte[4096];
@@ -99,14 +102,14 @@ namespace AudioWorks.Extensions.Vorbis
             {
                 var bytesCopied = Math.Min(length - offset, _buffer.Length);
                 Marshal.Copy(IntPtr.Add(location, offset), _buffer, 0, bytesCopied);
-                stream.Write(_buffer, 0, bytesCopied);
+                _fileStream.Write(_buffer, 0, bytesCopied);
                 offset += bytesCopied;
             }
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException",
             Justification = "Initialize is always called first")]
-        void WriteToFileStream(int frames)
+        void WriteFrames(int frames)
         {
             _encoder.Wrote(frames);
 
@@ -120,7 +123,7 @@ namespace AudioWorks.Extensions.Vorbis
                     _oggStream.PacketIn(ref packet);
 
                     while (_oggStream.PageOut(out OggPage page))
-                        WritePage(page, _fileStream);
+                        WritePage(page);
                 }
             }
         }
