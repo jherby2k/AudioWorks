@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Api
@@ -10,6 +11,8 @@ namespace AudioWorks.Api
     [PublicAPI]
     public sealed class CoverArt
     {
+        static readonly string[] _acceptedExtensions = { ".bmp", ".png", ".jpg" };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CoverArt"/> class.
         /// </summary>
@@ -22,6 +25,9 @@ namespace AudioWorks.Api
                 throw new ArgumentNullException(nameof(path), "Value cannot be null or empty.");
             if (!File.Exists(path))
                 throw new FileNotFoundException($"The file '{path}' cannot be found.", path);
+
+            if (!_acceptedExtensions.Contains(Path.GetExtension(path), StringComparer.OrdinalIgnoreCase))
+                throw new ImageUnsupportedException("Not a supported image file format.", path);
         }
     }
 }

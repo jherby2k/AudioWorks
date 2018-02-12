@@ -1,6 +1,8 @@
 using System;
+using System.IO;
 using System.Management.Automation;
 using AudioWorks.Api;
+using AudioWorks.Api.Tests.DataSources;
 using JetBrains.Annotations;
 using Xunit;
 
@@ -138,6 +140,49 @@ namespace AudioWorks.Commands.Tests
                 Assert.Equal($"{nameof(ItemNotFoundException)},AudioWorks.Commands.GetAudioCoverArtCommand",
                     errors[0].FullyQualifiedErrorId);
                 Assert.Equal(ErrorCategory.ObjectNotFound, errors[0].CategoryInfo.Category);
+            }
+        }
+
+        [Theory(DisplayName = "Get-AudioCoverArt returns a CoverArt")]
+        [MemberData(nameof(ValidImageFileDataSource.Data), MemberType = typeof(ValidImageFileDataSource))]
+        public void ReturnsCoverArt([NotNull] string fileName)
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Get-AudioCoverArt")
+                    .AddArgument(Path.Combine(
+                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
+                        "TestFiles",
+                        "Valid",
+                        fileName));
+
+                Assert.IsAssignableFrom<CoverArt>(ps.Invoke()[0].BaseObject);
+            }
+        }
+
+        [Theory(DisplayName = "Get-AudioCoverArt returns an error if the Path is an unsupported file")]
+        [MemberData(nameof(UnsupportedImageFileDataSource.Data), MemberType = typeof(UnsupportedImageFileDataSource))]
+        public void PathUnsupportedReturnsError([NotNull] string fileName)
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Get-AudioCoverArt")
+                    .AddArgument(Path.Combine(
+                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
+                        "TestFiles",
+                        "Unsupported",
+                        fileName));
+
+                ps.Invoke();
+
+                var errors = ps.Streams.Error.ReadAll();
+                Assert.Single(errors);
+                Assert.IsType<ImageUnsupportedException>(errors[0].Exception);
+                Assert.Equal($"{nameof(ImageUnsupportedException)},AudioWorks.Commands.GetAudioCoverArtCommand",
+                    errors[0].FullyQualifiedErrorId);
+                Assert.Equal(ErrorCategory.InvalidData, errors[0].CategoryInfo.Category);
             }
         }
     }

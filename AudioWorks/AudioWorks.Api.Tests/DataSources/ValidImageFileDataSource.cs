@@ -3,14 +3,24 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Api.Tests.DataSources
 {
-    public static class UnsupportedFileDataSource
+    public static class ValidImageFileDataSource
     {
         [NotNull, ItemNotNull] static readonly List<object[]> _data = new List<object[]>
         {
-            new object[] { "Text.txt" },
-            new object[] { "MS ADPCM.wav" },
-            new object[] { "Speex.ogg" },
-            new object[] { "Lame MP3.m4a" }
+            new object[]
+            {
+                "Bitmap 24-bit 1280 x 935.bmp"
+            },
+
+            new object[]
+            {
+                "PNG 24-bit 1280 x 935.png"
+            },
+
+            new object[]
+            {
+                "JPEG 24-bit 1280 x 935.jpg"
+            }
         };
 
         [NotNull, ItemNotNull]

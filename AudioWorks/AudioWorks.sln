@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2026
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Commands", "AudioWorks.Commands\AudioWorks.Commands.csproj", "{53605AC7-B464-478F-ABA4-EBE6CB8BC968}"
 EndProject
@@ -22,8 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unsupported", "Unsupported"
 	ProjectSection(SolutionItems) = preProject
 		TestFiles\Unsupported\Lame MP3.m4a = TestFiles\Unsupported\Lame MP3.m4a
 		TestFiles\Unsupported\MS ADPCM.wav = TestFiles\Unsupported\MS ADPCM.wav
-		TestFiles\Unsupported\Not Audio.txt = TestFiles\Unsupported\Not Audio.txt
 		TestFiles\Unsupported\Speex.ogg = TestFiles\Unsupported\Speex.ogg
+		TestFiles\Unsupported\Text.txt = TestFiles\Unsupported\Text.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Invalid", "Invalid", "{F91FD451-BD07-4280-B74F-870DAF191591}"
@@ -49,6 +49,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Valid", "Valid", "{F3EE5042
 		TestFiles\Valid\ALAC 16-bit 44100Hz Stereo.m4a = TestFiles\Valid\ALAC 16-bit 44100Hz Stereo.m4a
 		TestFiles\Valid\ALAC 16-bit 48000Hz Stereo.m4a = TestFiles\Valid\ALAC 16-bit 48000Hz Stereo.m4a
 		TestFiles\Valid\ALAC 24-bit 96000Hz Stereo.m4a = TestFiles\Valid\ALAC 24-bit 96000Hz Stereo.m4a
+		TestFiles\Valid\Bitmap 24-bit 1280 x 935.bmp = TestFiles\Valid\Bitmap 24-bit 1280 x 935.bmp
 		TestFiles\Valid\FLAC Level 5 16-bit 44100Hz Mono.flac = TestFiles\Valid\FLAC Level 5 16-bit 44100Hz Mono.flac
 		TestFiles\Valid\FLAC Level 5 16-bit 44100Hz Stereo (Tagged using COMMENT).flac = TestFiles\Valid\FLAC Level 5 16-bit 44100Hz Stereo (Tagged using COMMENT).flac
 		TestFiles\Valid\FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac = TestFiles\Valid\FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac
@@ -70,6 +71,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Valid", "Valid", "{F3EE5042
 		TestFiles\Valid\Fraunhofer CBR 128 44100Hz Stereo.mp3 = TestFiles\Valid\Fraunhofer CBR 128 44100Hz Stereo.mp3
 		TestFiles\Valid\Fraunhofer VBR 44100Hz Stereo (with header).mp3 = TestFiles\Valid\Fraunhofer VBR 44100Hz Stereo (with header).mp3
 		TestFiles\Valid\Fraunhofer VBR 44100Hz Stereo.mp3 = TestFiles\Valid\Fraunhofer VBR 44100Hz Stereo.mp3
+		TestFiles\Valid\JPEG 24-bit 1280 x 935.jpg = TestFiles\Valid\JPEG 24-bit 1280 x 935.jpg
 		TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v1).mp3 = TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v1).mp3
 		TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3 = TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3
 		TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v2.3 UTF16).mp3 = TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v2.3 UTF16).mp3
@@ -85,6 +87,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Valid", "Valid", "{F3EE5042
 		TestFiles\Valid\LPCM 16-bit 48000Hz Stereo.wav = TestFiles\Valid\LPCM 16-bit 48000Hz Stereo.wav
 		TestFiles\Valid\LPCM 24-bit 96000Hz Stereo.wav = TestFiles\Valid\LPCM 24-bit 96000Hz Stereo.wav
 		TestFiles\Valid\LPCM 8-bit 8000Hz Stereo.wav = TestFiles\Valid\LPCM 8-bit 8000Hz Stereo.wav
+		TestFiles\Valid\PNG 24-bit 1280 x 935.png = TestFiles\Valid\PNG 24-bit 1280 x 935.png
 		TestFiles\Valid\QAAC TVBR 91 44100Hz Mono.m4a = TestFiles\Valid\QAAC TVBR 91 44100Hz Mono.m4a
 		TestFiles\Valid\QAAC TVBR 91 44100Hz Stereo (Tagged).m4a = TestFiles\Valid\QAAC TVBR 91 44100Hz Stereo (Tagged).m4a
 		TestFiles\Valid\QAAC TVBR 91 44100Hz Stereo.m4a = TestFiles\Valid\QAAC TVBR 91 44100Hz Stereo.m4a

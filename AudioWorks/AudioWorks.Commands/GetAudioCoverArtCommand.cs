@@ -1,5 +1,6 @@
 ﻿using System.Management.Automation;
 using AudioWorks.Api;
+using AudioWorks.Common;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Commands
@@ -43,6 +44,10 @@ namespace AudioWorks.Commands
             catch (ItemNotFoundException e)
             {
                 WriteError(new ErrorRecord(e, nameof(ItemNotFoundException), ErrorCategory.ObjectNotFound, Path));
+            }
+            catch (AudioException e)
+            {
+                WriteError(new ErrorRecord(e, e.GetType().Name, ErrorCategory.InvalidData, Path));
             }
         }
     }
