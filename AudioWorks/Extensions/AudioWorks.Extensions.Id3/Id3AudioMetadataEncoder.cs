@@ -49,12 +49,12 @@ namespace AudioWorks.Extensions.Id3
             else if (existingTagLength > 0)
             {
                 // Remove the ID3v2 tag, if present
-                stream.Seek(existingTagLength, SeekOrigin.Begin);
                 using (var tempStream = new MemoryStream())
                 {
                     stream.CopyTo(tempStream);
+                    stream.Seek(0, SeekOrigin.Begin);
                     stream.SetLength(stream.Length - existingTagLength);
-                    tempStream.Position = 0;
+                    tempStream.Seek(0, SeekOrigin.Begin);
                     tempStream.CopyTo(stream);
                 }
             }
@@ -65,7 +65,8 @@ namespace AudioWorks.Extensions.Id3
             using (var reader = new BinaryReader(stream, Encoding.ASCII, true))
                 if (string.Equals("TAG", new string(reader.ReadChars(3)), StringComparison.Ordinal))
                     stream.SetLength(stream.Length - 128);
-            stream.Seek(tagModel.Header.TagSizeWithHeaderFooter + tagModel.Header.PaddingSize, SeekOrigin.Begin);
+            stream.Seek(tagModel.Count == 0 ? 0 : tagModel.Header.TagSizeWithHeaderFooter + tagModel.Header.PaddingSize,
+                SeekOrigin.Begin);
         }
 
         static uint GetExistingTagLength([NotNull] Stream stream)

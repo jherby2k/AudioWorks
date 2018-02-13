@@ -314,6 +314,15 @@ namespace AudioWorks.Api.Tests.DataSources
                 "076B838A43E883DCC9F0D0ABE8A263D6"
             },
 
+            // Existing tag removal
+            new object[]
+            {
+                "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
+                new TestAudioMetadata(),
+                null,
+                "963D578D818C25DE5FEE6625BE7BFA98"
+            },
+
             // All fields
             new object[]
             {
@@ -532,6 +541,15 @@ namespace AudioWorks.Api.Tests.DataSources
                 "D10242261CDBC3FF2D9BEB2C232DC1F7"
             },
 
+            // Existing tag - removed
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                new TestAudioMetadata(),
+                null,
+                "3983A342A074A7E8871FEF4FBE0AC73F"
+            },
+
             // All fields
             new object[]
             {
@@ -686,6 +704,15 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackGain = "0.7",
                     AlbumGain = "0.8"
                 },
+                null,
+                "90322322985B2DB1339FD81752D4720C"
+            },
+
+            // Existing tag - removed
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo (Tagged using defaults).ogg",
+                new TestAudioMetadata(),
                 null,
                 "90322322985B2DB1339FD81752D4720C"
             },
@@ -848,6 +875,15 @@ namespace AudioWorks.Api.Tests.DataSources
                 "D551443B82A3EF81D969CF2EDE90557B"
             },
 
+            // Existing tag - removed
+            new object[]
+            {
+                "QAAC TVBR 91 44100Hz Stereo (Tagged).m4a",
+                new TestAudioMetadata(),
+                null,
+                "notD551443B82A3EF81D969CF2EDE90557B"
+            },
+
             // All fields
             new object[]
             {
@@ -1004,6 +1040,15 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 "7A0AE5E0C52FA1B257A29A75D6DAC7EC"
+            },
+
+            // Existing tag - removed
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo (Tagged).m4a",
+                new TestAudioMetadata(),
+                null,
+                "not7A0AE5E0C52FA1B257A29A75D6DAC7EC"
             }
         };
 
