@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using AudioWorks.Api.Tests.DataSources;
-using AudioWorks.Common;
 using JetBrains.Annotations;
 using Xunit;
 
@@ -32,6 +31,32 @@ namespace AudioWorks.Api.Tests
                     "TestFiles",
                     "Unsupported",
                     fileName)));
+        }
+
+        [Theory(DisplayName = "CoverArt has the expected Width property value")]
+        [MemberData(nameof(ValidImageFileDataSource.FileNamesAndWidth), MemberType = typeof(ValidImageFileDataSource))]
+        public void HasExpectedWidth(
+            [NotNull] string fileName,
+            int expectedWidth)
+        {
+            Assert.Equal(expectedWidth, new CoverArt(Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
+                "TestFiles",
+                "Valid",
+                fileName)).Width);
+        }
+
+        [Theory(DisplayName = "CoverArt has the expected Height property value")]
+        [MemberData(nameof(ValidImageFileDataSource.FileNamesAndHeight), MemberType = typeof(ValidImageFileDataSource))]
+        public void HasExpectedHeight(
+            [NotNull] string fileName,
+            int expectedHeight)
+        {
+            Assert.Equal(expectedHeight, new CoverArt(Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
+                "TestFiles",
+                "Valid",
+                fileName)).Height);
         }
     }
 }

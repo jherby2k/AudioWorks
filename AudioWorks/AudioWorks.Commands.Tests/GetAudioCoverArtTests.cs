@@ -144,7 +144,7 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Theory(DisplayName = "Get-AudioCoverArt returns a CoverArt")]
-        [MemberData(nameof(ValidImageFileDataSource.Data), MemberType = typeof(ValidImageFileDataSource))]
+        [MemberData(nameof(ValidImageFileDataSource.FileNames), MemberType = typeof(ValidImageFileDataSource))]
         public void ReturnsCoverArt([NotNull] string fileName)
         {
             using (var ps = PowerShell.Create())

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
+using SixLabors.ImageSharp;
 
 namespace AudioWorks.Api
 {
@@ -11,7 +12,19 @@ namespace AudioWorks.Api
     [PublicAPI]
     public sealed class CoverArt
     {
-        static readonly string[] _acceptedExtensions = { ".bmp", ".png", ".jpg" };
+        [NotNull] static readonly string[] _acceptedExtensions = { ".bmp", ".png", ".jpg" };
+
+        /// <summary>
+        /// Gets the width.
+        /// </summary>
+        /// <value>The width.</value>
+        public int Width { get; }
+
+        /// <summary>
+        /// Gets the height.
+        /// </summary>
+        /// <value>The height.</value>
+        public int Height { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CoverArt"/> class.
@@ -28,6 +41,12 @@ namespace AudioWorks.Api
 
             if (!_acceptedExtensions.Contains(Path.GetExtension(path), StringComparer.OrdinalIgnoreCase))
                 throw new ImageUnsupportedException("Not a supported image file format.", path);
+
+            using (var image = Image.Load(path))
+            {
+                Width = image.Width;
+                Height = image.Height;
+            }
         }
     }
 }
