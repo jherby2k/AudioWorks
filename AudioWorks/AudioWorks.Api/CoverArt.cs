@@ -42,10 +42,17 @@ namespace AudioWorks.Api
             if (!_acceptedExtensions.Contains(Path.GetExtension(path), StringComparer.OrdinalIgnoreCase))
                 throw new ImageUnsupportedException("Not a supported image file format.", path);
 
-            using (var image = Image.Load(path))
+            try
             {
-                Width = image.Width;
-                Height = image.Height;
+                using (var image = Image.Load(path))
+                {
+                    Width = image.Width;
+                    Height = image.Height;
+                }
+            }
+            catch (NotSupportedException)
+            {
+                throw new ImageInvalidException("Not a valid image file.", path);
             }
         }
     }

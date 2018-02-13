@@ -185,5 +185,30 @@ namespace AudioWorks.Commands.Tests
                 Assert.Equal(ErrorCategory.InvalidData, errors[0].CategoryInfo.Category);
             }
         }
+
+        [Theory(DisplayName = "Get-AudioCoverArt returns an error if the Path is an invalid file")]
+        [MemberData(nameof(InvalidImageFileDataSource.Data), MemberType = typeof(InvalidImageFileDataSource))]
+        public void PathInvalidReturnsError([NotNull] string fileName)
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Get-AudioCoverArt")
+                    .AddArgument(Path.Combine(
+                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
+                        "TestFiles",
+                        "Invalid",
+                        fileName));
+
+                ps.Invoke();
+
+                var errors = ps.Streams.Error.ReadAll();
+                Assert.Single(errors);
+                Assert.IsType<ImageInvalidException>(errors[0].Exception);
+                Assert.Equal($"{nameof(ImageInvalidException)},AudioWorks.Commands.GetAudioCoverArtCommand",
+                    errors[0].FullyQualifiedErrorId);
+                Assert.Equal(ErrorCategory.InvalidData, errors[0].CategoryInfo.Category);
+            }
+        }
     }
 }

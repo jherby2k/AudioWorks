@@ -33,6 +33,18 @@ namespace AudioWorks.Api.Tests
                     fileName)));
         }
 
+        [Theory(DisplayName = "CoverArt's constructor throws an exception if the path is an unsupported file")]
+        [MemberData(nameof(InvalidImageFileDataSource.Data), MemberType = typeof(InvalidImageFileDataSource))]
+        public void ConstructorPathInvalidThrowsException([NotNull] string fileName)
+        {
+            Assert.Throws<ImageInvalidException>(() =>
+                new CoverArt(Path.Combine(
+                    new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
+                    "TestFiles",
+                    "Invalid",
+                    fileName)));
+        }
+
         [Theory(DisplayName = "CoverArt has the expected Width property value")]
         [MemberData(nameof(ValidImageFileDataSource.FileNamesAndWidth), MemberType = typeof(ValidImageFileDataSource))]
         public void HasExpectedWidth(
