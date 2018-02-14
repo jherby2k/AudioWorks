@@ -23,7 +23,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native methods are always expected to return 0")]
-        public VorbisEncoder(int channels, int sampleRate, int nominalBitRate, bool managed)
+        internal VorbisEncoder(int channels, int sampleRate, int nominalBitRate, bool managed)
         {
             SafeNativeMethods.VorbisInfoInit(_info);
 

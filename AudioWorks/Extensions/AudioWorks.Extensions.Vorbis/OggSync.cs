@@ -10,7 +10,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method always returns 0")]
-        public OggSync()
+        internal OggSync()
         {
             _state = Marshal.AllocHGlobal(Marshal.SizeOf<OggSyncState>());
             SafeNativeMethods.OggSyncInit(_state);

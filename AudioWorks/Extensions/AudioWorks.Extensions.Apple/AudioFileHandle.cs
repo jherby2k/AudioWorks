@@ -7,7 +7,7 @@ namespace AudioWorks.Extensions.Apple
     [UsedImplicitly]
     sealed class AudioFileHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
-        public AudioFileHandle()
+        internal AudioFileHandle()
             : base(true)
         {
         }

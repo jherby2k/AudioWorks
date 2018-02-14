@@ -11,14 +11,14 @@ namespace AudioWorks.Extensions.Flac
         [CanBeNull] int[] _buffer;
 
         [CanBeNull]
-        public SampleCollection Samples { get; set; }
+        internal SampleCollection Samples { get; set; }
 
         internal AudioStreamDecoder([NotNull] Stream stream)
             : base(stream)
         {
         }
 
-        public bool ProcessSingle()
+        internal bool ProcessSingle()
         {
             return SafeNativeMethods.StreamDecoderProcessSingle(Handle);
         }

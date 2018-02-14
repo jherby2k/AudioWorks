@@ -11,7 +11,7 @@ namespace AudioWorks.Extensions.Mp4
         [NotNull] readonly string _fourCc;
 
         [NotNull]
-        public string Value { get; }
+        internal string Value { get; }
 
         internal TextAtom([NotNull] IReadOnlyCollection<byte> data)
         {

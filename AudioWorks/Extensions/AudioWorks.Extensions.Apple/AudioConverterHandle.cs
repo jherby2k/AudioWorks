@@ -7,7 +7,7 @@ namespace AudioWorks.Extensions.Apple
     [UsedImplicitly]
     sealed class AudioConverterHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
-        public AudioConverterHandle()
+        internal AudioConverterHandle()
             : base(true)
         {
         }
