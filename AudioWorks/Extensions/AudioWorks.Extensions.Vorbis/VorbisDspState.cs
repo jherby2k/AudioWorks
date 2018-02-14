@@ -6,44 +6,44 @@ namespace AudioWorks.Extensions.Vorbis
     [StructLayout(LayoutKind.Sequential)]
     struct VorbisDspState
     {
-        internal int AnalysisP;
+        readonly int AnalysisP;
 
-        internal IntPtr VorbisInfo;
+        readonly IntPtr VorbisInfo;
 
-        internal IntPtr Pcm;
+        readonly IntPtr Pcm;
 
-        internal IntPtr PcmRet;
+        readonly IntPtr PcmRet;
 
-        internal int PcmStorage;
+        readonly int PcmStorage;
 
-        internal int PcmCurrent;
+        readonly int PcmCurrent;
 
-        internal int PcmReturned;
+        readonly int PcmReturned;
 
-        internal int PreExtrapolate;
+        readonly int PreExtrapolate;
 
-        internal int EofFlag;
+        readonly int EofFlag;
 
-        internal int Lw;
+        readonly int Lw;
 
-        internal int W;
+        readonly int W;
 
-        internal int Nw;
+        readonly int Nw;
 
-        internal int CenterW;
+        readonly int CenterW;
 
-        internal long GranulePosition;
+        readonly long GranulePosition;
 
-        internal long Sequence;
+        readonly long Sequence;
 
-        internal long GlueBits;
+        readonly long GlueBits;
 
-        internal long TimeBits;
+        readonly long TimeBits;
 
-        internal long FloorBits;
+        readonly long FloorBits;
 
-        internal long ResBits;
+        readonly long ResBits;
 
-        internal IntPtr BackendState;
+        readonly IntPtr BackendState;
     }
 }

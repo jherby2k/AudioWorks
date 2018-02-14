@@ -6,14 +6,14 @@ namespace AudioWorks.Extensions.Vorbis
     [StructLayout(LayoutKind.Sequential)]
     struct OggPackBuffer
     {
-        internal int EndByte;
+        readonly int EndByte;
 
-        internal int EndBit;
+        readonly int EndBit;
 
-        internal IntPtr Buffer;
+        readonly IntPtr Buffer;
 
-        internal IntPtr Ptr;
+        readonly IntPtr Ptr;
 
-        internal int Storage;
+        readonly int Storage;
     }
 }

@@ -6,46 +6,46 @@ namespace AudioWorks.Extensions.Vorbis
     [StructLayout(LayoutKind.Sequential)]
     struct VorbisBlock
     {
-        internal IntPtr Pcm;
+        readonly IntPtr Pcm;
 
-        internal OggPackBuffer OggPackBuffer;
+        readonly OggPackBuffer OggPackBuffer;
 
-        internal int Lw;
+        readonly int Lw;
 
-        internal int W;
+        readonly int W;
 
-        internal int Nw;
+        readonly int Nw;
 
-        internal int PcmEnd;
+        readonly int PcmEnd;
 
-        internal int Mode;
+        readonly int Mode;
 
-        internal int EoffLag;
+        readonly int EoffLag;
 
-        internal long GranulePosition;
+        readonly long GranulePosition;
 
-        internal long Sequence;
+        readonly long Sequence;
 
-        internal IntPtr DspState;
+        readonly IntPtr DspState;
 
-        internal IntPtr LocalStore;
+        readonly IntPtr LocalStore;
 
-        internal int LocalTop;
+        readonly int LocalTop;
 
-        internal int LocalAlloc;
+        readonly int LocalAlloc;
 
-        internal int TotalUse;
+        readonly int TotalUse;
 
-        internal IntPtr Reap;
+        readonly IntPtr Reap;
 
-        internal int GlueBits;
+        readonly int GlueBits;
 
-        internal int TimeBits;
+        readonly int TimeBits;
 
-        internal int FloorBits;
+        readonly int FloorBits;
 
-        internal int ResBits;
+        readonly int ResBits;
 
-        internal IntPtr Internal;
+        readonly IntPtr Internal;
     }
 }
