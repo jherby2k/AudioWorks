@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using AudioWorks.Common;
 using JetBrains.Annotations;
@@ -9,7 +11,7 @@ namespace AudioWorks.Extensions.Mp4
     {
         [NotNull, ItemNotNull] readonly List<WritableAtom> _atoms = new List<WritableAtom>();
 
-        public MetadataToIlstAtomAdapter([NotNull] AudioMetadata metadata)
+        internal MetadataToIlstAtomAdapter([NotNull] AudioMetadata metadata)
         {
             if (!string.IsNullOrEmpty(metadata.Title))
                 _atoms.Add(new TextAtom("©nam", metadata.Title));
@@ -34,13 +36,30 @@ namespace AudioWorks.Extensions.Mp4
             else if (!string.IsNullOrEmpty(metadata.Year))
                 _atoms.Add(new TextAtom("©day", metadata.Year));
 
-            _atoms.Add(new TrackNumberAtom(metadata.TrackNumber, metadata.TrackCount));
+            if (!string.IsNullOrEmpty(metadata.TrackNumber))
+                _atoms.Add(new TrackNumberAtom(metadata.TrackNumber, metadata.TrackCount));
+        }
+
+        internal void Prepend([NotNull] WritableAtom atom)
+        {
+            _atoms.Insert(0, atom);
         }
 
         [Pure, NotNull]
-        public byte[] GetBytes()
+        internal byte[] GetBytes()
         {
-            return _atoms.SelectMany(x => x.GetBytes()).ToArray();
+            if (_atoms.Count == 0) return Array.Empty<byte>();
+
+            var data = _atoms.SelectMany(x => x.GetBytes()).ToArray();
+
+            using (var stream = new MemoryStream())
+            using (var writer = new Mp4Writer(stream))
+            {
+                writer.WriteBigEndian((uint) data.Length + 8);
+                writer.Write(BitConverter.GetBytes(0x74736c69));
+                writer.Write(data);
+                return stream.ToArray();
+            }
         }
     }
 }

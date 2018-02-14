@@ -323,6 +323,15 @@ namespace AudioWorks.Api.Tests.DataSources
                 "963D578D818C25DE5FEE6625BE7BFA98"
             },
 
+            // Nothing to do
+            new object[]
+            {
+                "Lame CBR 128 44100Hz Stereo.mp3",
+                new TestAudioMetadata(),
+                null,
+                "963D578D818C25DE5FEE6625BE7BFA98"
+            },
+
             // All fields
             new object[]
             {
@@ -541,10 +550,19 @@ namespace AudioWorks.Api.Tests.DataSources
                 "D10242261CDBC3FF2D9BEB2C232DC1F7"
             },
 
-            // Existing tag - removed
+            // Existing tag removal
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                new TestAudioMetadata(),
+                null,
+                "3983A342A074A7E8871FEF4FBE0AC73F"
+            },
+
+            // Nothing to do
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 new TestAudioMetadata(),
                 null,
                 "3983A342A074A7E8871FEF4FBE0AC73F"
@@ -708,13 +726,22 @@ namespace AudioWorks.Api.Tests.DataSources
                 "90322322985B2DB1339FD81752D4720C"
             },
 
-            // Existing tag - removed
+            // Existing tag removal
             new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using defaults).ogg",
                 new TestAudioMetadata(),
                 null,
-                "90322322985B2DB1339FD81752D4720C"
+                "9841053230BA17907883AB4224608165"
+            },
+
+            // Nothing to do
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo.ogg",
+                new TestAudioMetadata(),
+                null,
+                "9841053230BA17907883AB4224608165"
             },
 
             // All fields
@@ -875,13 +902,22 @@ namespace AudioWorks.Api.Tests.DataSources
                 "D551443B82A3EF81D969CF2EDE90557B"
             },
 
-            // Existing tag - removed
+            // Existing tag removal
             new object[]
             {
                 "QAAC TVBR 91 44100Hz Stereo (Tagged).m4a",
                 new TestAudioMetadata(),
                 null,
-                "notD551443B82A3EF81D969CF2EDE90557B"
+                "D70D2D0CA1FE1E04B9C8065BC7E95628"
+            },
+
+            // Nothing to do
+            new object[]
+            {
+                "QAAC TVBR 91 44100Hz Stereo.m4a",
+                new TestAudioMetadata(),
+                null,
+                "D70D2D0CA1FE1E04B9C8065BC7E95628"
             },
 
             // All fields
@@ -908,7 +944,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 null,
-                "C5AB9200ADED87DF989263BBB9EC941A"
+                "7A0AE5E0C52FA1B257A29A75D6DAC7EC"
             },
 
             // Day unset
@@ -934,7 +970,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 null,
-                "A0B7793B566AEB3275B12B3E9997C68B"
+                "DBAF0FE34295642C5180D26B5DF99B64"
             },
 
             // Month unset
@@ -960,7 +996,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 null,
-                "A0B7793B566AEB3275B12B3E9997C68B"
+                "DBAF0FE34295642C5180D26B5DF99B64"
             },
 
             // TrackNumber unset
@@ -986,7 +1022,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 null,
-                "F831C9354ACD1EE9E52E12403112D897"
+                "7C72D7D8C65BC0090D28C0E61BAAD7CF"
             },
 
             // TrackCount unset
@@ -1012,7 +1048,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 null,
-                "CAA6CB0E47596B3B7A3C24FA76A9213E"
+                "8BEBE4DCA2422197A0FB336EBEDD15B5"
             },
 
             // Existing tag
@@ -1042,13 +1078,22 @@ namespace AudioWorks.Api.Tests.DataSources
                 "7A0AE5E0C52FA1B257A29A75D6DAC7EC"
             },
 
-            // Existing tag - removed
+            // Existing tag removal
             new object[]
             {
                 "ALAC 16-bit 44100Hz Stereo (Tagged).m4a",
                 new TestAudioMetadata(),
                 null,
-                "not7A0AE5E0C52FA1B257A29A75D6DAC7EC"
+                "2A66A8458C32EC663AE48C6294E829AB"
+            },
+
+            // Nothing to do
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo.m4a",
+                new TestAudioMetadata(),
+                null,
+                "2A66A8458C32EC663AE48C6294E829AB"
             }
         };
 

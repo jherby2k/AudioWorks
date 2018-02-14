@@ -26,7 +26,9 @@ namespace AudioWorks.Extensions.Mp4
 
             using (var reader = new Mp4Reader(_stream))
             {
-                _stream.Position = _atomInfoStack.Count == 0 ? 0 : _atomInfoStack.Peek().Start + 8;
+                _stream.Position = _atomInfoStack.Count == 0
+                    ? 0
+                    : _atomInfoStack.Peek().Start + 8 + GetDataLength(_atomInfoStack.Peek().FourCc);
 
                 while (_stream.Position < (_atomInfoStack.Count == 0 ? _stream.Length : _atomInfoStack.Peek().End))
                 {
@@ -60,21 +62,7 @@ namespace AudioWorks.Extensions.Mp4
                         if (string.Equals(subAtom.FourCc, fourCc, StringComparison.Ordinal))
                         {
                             _atomInfoStack.Push(subAtom);
-
-                            // Some containers also contain data, which needs to be skipped:
-                            switch (fourCc)
-                            {
-                                case "meta":
-                                    _stream.Seek(4, SeekOrigin.Current);
-                                    break;
-                                case "stsd":
-                                    _stream.Seek(8, SeekOrigin.Current);
-                                    break;
-                                case "mp4a":
-                                    _stream.Seek(28, SeekOrigin.Current);
-                                    break;
-                            }
-
+                            _stream.Seek(GetDataLength(fourCc), SeekOrigin.Current);
                             break;
                         }
 
@@ -148,6 +136,22 @@ namespace AudioWorks.Extensions.Mp4
                     _stream.Seek(-4, SeekOrigin.Current);
                     writer.WriteBigEndian(value + offset);
                 }
+            }
+        }
+
+        static int GetDataLength(string fourCc)
+        {
+            // Some containers also contain data, which needs to be skipped
+            switch (fourCc)
+            {
+                case "meta":
+                    return 4;
+                case "stsd":
+                    return 8;
+                case "mp4a":
+                    return 28;
+                default:
+                    return 0;
             }
         }
     }
