@@ -104,8 +104,8 @@ namespace AudioWorks.Extensions.Vorbis
 
         static void Overwrite([NotNull] Stream originalStream, [NotNull] Stream newStream)
         {
-            originalStream.SetLength(newStream.Length);
             originalStream.Position = 0;
+            originalStream.SetLength(newStream.Length);
             newStream.Position = 0;
             newStream.CopyTo(originalStream);
         }

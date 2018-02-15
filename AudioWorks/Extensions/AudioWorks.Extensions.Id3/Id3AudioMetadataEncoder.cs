@@ -54,8 +54,7 @@ namespace AudioWorks.Extensions.Id3
                     stream.CopyTo(tempStream);
                     stream.Position = 0;
                     stream.SetLength(stream.Length - existingTagLength);
-                    tempStream.Position = 0;
-                    tempStream.CopyTo(stream);
+                    tempStream.WriteTo(stream);
                 }
             }
 
@@ -104,8 +103,7 @@ namespace AudioWorks.Extensions.Id3
                 stream.Position = 0;
                 stream.SetLength(tagModel.Header.TagSizeWithHeaderFooter + tagModel.Header.PaddingSize + tempStream.Length);
                 TagManager.Serialize(tagModel, stream);
-                tempStream.Position = 0;
-                tempStream.CopyTo(stream);
+                tempStream.WriteTo(stream);
             }
         }
     }

@@ -58,8 +58,7 @@ namespace AudioWorks.Extensions.Mp4
                 // Overwrite the original stream with the new, optimized one
                 stream.Position = 0;
                 stream.SetLength(tempStream.Length);
-                tempStream.Position = 0;
-                tempStream.CopyTo(stream);
+                tempStream.WriteTo(stream);
             }
         }
 
