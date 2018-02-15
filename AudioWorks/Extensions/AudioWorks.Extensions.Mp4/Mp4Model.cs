@@ -66,7 +66,7 @@ namespace AudioWorks.Extensions.Mp4
                             break;
                         }
 
-                        _stream.Seek(subAtom.End, SeekOrigin.Begin);
+                        _stream.Position = subAtom.End;
 
                     } while (_stream.Position < (_atomInfoStack.Count == 0 ? _stream.Length : _atomInfoStack.Peek().End));
             }

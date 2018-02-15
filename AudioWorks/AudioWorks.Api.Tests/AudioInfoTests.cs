@@ -25,7 +25,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, AudioInfo.CreateForLossless("Test", 2, 16, 44100));
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal("Test", ((AudioInfo) formatter.Deserialize(stream)).Format);
             }
@@ -50,7 +50,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, AudioInfo.CreateForLossless("Test", 2, 16, 44100));
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal(2, ((AudioInfo) formatter.Deserialize(stream)).Channels);
             }
@@ -75,7 +75,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, AudioInfo.CreateForLossless("Test", 2, 16, 44100));
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal(16, ((AudioInfo) formatter.Deserialize(stream)).BitsPerSample);
             }
@@ -94,7 +94,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, AudioInfo.CreateForLossless("Test", 2, 16, 44100));
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal(44100, ((AudioInfo) formatter.Deserialize(stream)).SampleRate);
             }
@@ -113,7 +113,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, AudioInfo.CreateForLossless("Test", 2, 16, 44100, 1000));
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal(1000, ((AudioInfo) formatter.Deserialize(stream)).SampleCount);
             }
@@ -132,7 +132,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, AudioInfo.CreateForLossy("Test", 2, 44100, 0, 1000));
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal(1000, ((AudioInfo) formatter.Deserialize(stream)).BitRate);
             }

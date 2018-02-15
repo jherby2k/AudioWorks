@@ -87,7 +87,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, audioFile);
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal(audioFile.Path, ((AudioFile) formatter.Deserialize(stream)).Path);
             }
@@ -106,7 +106,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, audioFile);
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.True(new Comparer<AudioInfo>().Compare(
                     audioFile.Info,

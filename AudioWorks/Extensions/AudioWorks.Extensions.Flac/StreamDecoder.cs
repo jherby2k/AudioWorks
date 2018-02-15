@@ -84,7 +84,7 @@ namespace AudioWorks.Extensions.Flac
             Justification = "Part of FLAC API")]
         DecoderSeekStatus SeekCallback(IntPtr handle, ulong absoluteOffset, IntPtr userData)
         {
-            _stream.Seek((long) absoluteOffset, SeekOrigin.Begin);
+            _stream.Position = (long) absoluteOffset;
             return DecoderSeekStatus.Ok;
         }
 

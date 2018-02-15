@@ -20,7 +20,7 @@ namespace AudioWorks.Api.Tests
             {
                 var formatter = new BinaryFormatter();
                 formatter.Serialize(stream, new AudioInvalidException(null, "Foo"));
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
                 Assert.Equal("Foo", ((AudioInvalidException) formatter.Deserialize(stream)).Path);
             }
         }

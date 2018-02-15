@@ -189,7 +189,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, audioFile);
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.True(new Comparer<AudioMetadata>().Compare(
                     audioFile.Metadata,

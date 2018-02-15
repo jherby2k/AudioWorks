@@ -59,7 +59,7 @@ namespace AudioWorks.Extensions.Mp3
         static OptionalHeaderInfo ReadXingHeader([NotNull] FrameReader reader, [NotNull] FrameHeader header)
         {
             // Xing header (if present) is located after the side info
-            reader.BaseStream.Seek(reader.FrameStart + 4 + header.SideInfoLength, SeekOrigin.Begin);
+            reader.BaseStream.Position = reader.FrameStart + 4 + header.SideInfoLength;
 
             var result = new OptionalHeaderInfo();
 
@@ -81,7 +81,7 @@ namespace AudioWorks.Extensions.Mp3
         static OptionalHeaderInfo ReadVbriHeader([NotNull] FrameReader reader)
         {
             // VBRI header (if present) is located 32 bytes past the frame header
-            reader.BaseStream.Seek(reader.FrameStart + 36, SeekOrigin.Begin);
+            reader.BaseStream.Position = reader.FrameStart + 36;
 
             var result = new OptionalHeaderInfo();
 

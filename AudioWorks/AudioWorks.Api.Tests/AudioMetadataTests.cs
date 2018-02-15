@@ -50,7 +50,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, new AudioMetadata { Title = "Test Title" });
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal("Test Title", ((AudioMetadata) formatter.Deserialize(stream)).Title);
             }
@@ -94,7 +94,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, new AudioMetadata { Artist = "Test Artist" });
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal("Test Artist", ((AudioMetadata) formatter.Deserialize(stream)).Artist);
             }
@@ -138,7 +138,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, new AudioMetadata { Album = "Test Album" });
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal("Test Album", ((AudioMetadata) formatter.Deserialize(stream)).Album);
             }
@@ -182,7 +182,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, new AudioMetadata { AlbumArtist = "Test Album Artist" });
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal("Test Album Artist", ((AudioMetadata)formatter.Deserialize(stream)).AlbumArtist);
             }
@@ -226,7 +226,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, new AudioMetadata { Composer = "Test Composer" });
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal("Test Composer", ((AudioMetadata)formatter.Deserialize(stream)).Composer);
             }
@@ -270,7 +270,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, new AudioMetadata { Genre = "Test Genre" });
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal("Test Genre", ((AudioMetadata) formatter.Deserialize(stream)).Genre);
             }
@@ -314,7 +314,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, new AudioMetadata { Comment = "Test Comment" });
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal("Test Comment", ((AudioMetadata) formatter.Deserialize(stream)).Comment);
             }
@@ -382,7 +382,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, new AudioMetadata { Day = "31" });
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal("31", ((AudioMetadata) formatter.Deserialize(stream)).Day);
             }
@@ -450,7 +450,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, new AudioMetadata { Month = "01" });
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal("01", ((AudioMetadata) formatter.Deserialize(stream)).Month);
             }
@@ -518,7 +518,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, new AudioMetadata { Year = "2017" });
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal("2017", ((AudioMetadata) formatter.Deserialize(stream)).Year);
             }
@@ -586,7 +586,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, new AudioMetadata { TrackNumber = "01" });
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal("01", ((AudioMetadata)formatter.Deserialize(stream)).TrackNumber);
             }
@@ -654,7 +654,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, new AudioMetadata { TrackCount = "12" });
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal("12", ((AudioMetadata) formatter.Deserialize(stream)).TrackCount);
             }
@@ -716,7 +716,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, new AudioMetadata { TrackPeak = "0.500000" });
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal("0.500000", ((AudioMetadata)formatter.Deserialize(stream)).TrackPeak);
             }
@@ -778,7 +778,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, new AudioMetadata { AlbumPeak = "0.600000" });
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal("0.600000", ((AudioMetadata)formatter.Deserialize(stream)).AlbumPeak);
             }
@@ -834,7 +834,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, new AudioMetadata { TrackGain = "0.70" });
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal("0.70", ((AudioMetadata)formatter.Deserialize(stream)).TrackGain);
             }
@@ -890,7 +890,7 @@ namespace AudioWorks.Api.Tests
             using (var stream = new MemoryStream())
             {
                 formatter.Serialize(stream, new AudioMetadata { AlbumGain = "0.80" });
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Position = 0;
 
                 Assert.Equal("0.80", ((AudioMetadata)formatter.Deserialize(stream)).AlbumGain);
             }

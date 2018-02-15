@@ -33,8 +33,8 @@ namespace AudioWorks.Extensions.Flac
                         chain.WriteWithTempFile(!padding.HasValue, tempStream);
 
                         // Clear the original stream, and copy the temporary one over it:
-                        stream.SetLength(tempStream.Length);
                         stream.Position = 0;
+                        stream.SetLength(tempStream.Length);
                         tempStream.WriteTo(stream);
                     }
                 else

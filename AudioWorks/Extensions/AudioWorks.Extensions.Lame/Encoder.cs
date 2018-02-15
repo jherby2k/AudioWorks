@@ -85,7 +85,7 @@ namespace AudioWorks.Extensions.Lame
         [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
         internal void UpdateLameTag()
         {
-            _stream.Seek(_startPosition, SeekOrigin.Begin);
+            _stream.Position = _startPosition;
             _stream.Write(_buffer, 0,
                 (int) SafeNativeMethods.GetLameTagFrame(_handle, _buffer, new UIntPtr((uint) _buffer.Length))
                     .ToUInt32());

@@ -52,9 +52,9 @@ namespace AudioWorks.Extensions.Id3
                 using (var tempStream = new MemoryStream())
                 {
                     stream.CopyTo(tempStream);
-                    stream.Seek(0, SeekOrigin.Begin);
+                    stream.Position = 0;
                     stream.SetLength(stream.Length - existingTagLength);
-                    tempStream.Seek(0, SeekOrigin.Begin);
+                    tempStream.Position = 0;
                     tempStream.CopyTo(stream);
                 }
             }
@@ -65,8 +65,9 @@ namespace AudioWorks.Extensions.Id3
             using (var reader = new BinaryReader(stream, Encoding.ASCII, true))
                 if (string.Equals("TAG", new string(reader.ReadChars(3)), StringComparison.Ordinal))
                     stream.SetLength(stream.Length - 128);
-            stream.Seek(tagModel.Count == 0 ? 0 : tagModel.Header.TagSizeWithHeaderFooter + tagModel.Header.PaddingSize,
-                SeekOrigin.Begin);
+            stream.Position = tagModel.Count == 0
+                ? 0
+                : tagModel.Header.TagSizeWithHeaderFooter + tagModel.Header.PaddingSize;
         }
 
         static uint GetExistingTagLength([NotNull] Stream stream)
@@ -85,7 +86,7 @@ namespace AudioWorks.Extensions.Id3
         static void Overwrite([NotNull] Stream stream, uint existingTagLength, [NotNull] TagModel tagModel)
         {
             // Write the new tag overtop of the old one, leaving unused space as padding
-            stream.Seek(0, SeekOrigin.Begin);
+            stream.Position = 0;
             tagModel.Header.PaddingSize = existingTagLength - tagModel.Header.TagSizeWithHeaderFooter;
             TagManager.Serialize(tagModel, stream);
         }
@@ -93,7 +94,7 @@ namespace AudioWorks.Extensions.Id3
         static void FullRewrite([NotNull] Stream stream, uint existingTagLength, [NotNull] TagModel tagModel)
         {
             // Copy the audio to memory, then rewrite the whole stream
-            stream.Seek(existingTagLength, SeekOrigin.Begin);
+            stream.Position = existingTagLength;
             using (var tempStream = new MemoryStream())
             {
                 // Copy the MP3 portion to memory
