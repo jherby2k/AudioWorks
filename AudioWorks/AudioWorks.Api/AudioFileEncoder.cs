@@ -160,7 +160,7 @@ namespace AudioWorks.Api
                         outputStream?.Dispose();
                     }
 
-                    if (string.Equals(tempOutputPath, finalOutputPaths[i], StringComparison.OrdinalIgnoreCase)) return;
+                    if (tempOutputPath.Equals(finalOutputPaths[i], StringComparison.OrdinalIgnoreCase)) return;
 
                     // If writing to a temporary file, replace the original
                     File.Delete(finalOutputPaths[i]);

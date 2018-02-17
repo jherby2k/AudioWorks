@@ -38,7 +38,7 @@ namespace AudioWorks.Extensions
             where T : class
         {
             return ExtensionContainer<T>.Instance.Factories.Where(factory =>
-                string.Equals((string) factory.Metadata[key], value, StringComparison.OrdinalIgnoreCase));
+                value.Equals((string) factory.Metadata[key], StringComparison.OrdinalIgnoreCase));
         }
     }
 }

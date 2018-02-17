@@ -47,9 +47,7 @@ namespace AudioWorks.Extensions.Id3
                 Add(new FrameText(frameId)
                 {
                     Text = value,
-                    TextCode = string.Equals("Latin1", encoding, StringComparison.Ordinal)
-                        ? TextCode.Ascii
-                        : TextCode.Utf16
+                    TextCode = GetTextCode(encoding)
                 });
         }
 
@@ -64,9 +62,7 @@ namespace AudioWorks.Extensions.Id3
                 {
                     Text = value,
                     Language = language,
-                    TextCode = string.Equals("Latin1", encoding, StringComparison.Ordinal)
-                        ? TextCode.Ascii
-                        : TextCode.Utf16
+                    TextCode = GetTextCode(encoding)
                 });
         }
 
@@ -81,9 +77,7 @@ namespace AudioWorks.Extensions.Id3
                 {
                     Description = description,
                     Text = value,
-                    TextCode = string.Equals("Latin1", encoding, StringComparison.Ordinal)
-                        ? TextCode.Ascii
-                        : TextCode.Utf16,
+                    TextCode = GetTextCode(encoding),
                     FileAlter = fileAlter
                 });
         }
@@ -104,6 +98,13 @@ namespace AudioWorks.Extensions.Id3
             return string.IsNullOrEmpty(metadata.TrackCount)
                 ? metadata.TrackNumber
                 : $"{metadata.TrackNumber}/{metadata.TrackCount}";
+        }
+
+        static TextCode GetTextCode([NotNull] string encoding)
+        {
+            return encoding.Equals("Latin1", StringComparison.Ordinal)
+                ? TextCode.Ascii
+                : TextCode.Utf16;
         }
     }
 }
