@@ -13,9 +13,7 @@ namespace AudioWorks.Common
         /// <summary>
         /// Gets the accepted values.
         /// </summary>
-        /// <value>
-        /// The accepted values.
-        /// </value>
+        /// <value>The accepted values.</value>
         [NotNull, ItemNotNull]
         public IEnumerable<string> AcceptedValues { get; }
 

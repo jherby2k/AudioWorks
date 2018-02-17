@@ -15,9 +15,7 @@ namespace AudioWorks.Common
         /// <summary>
         /// Gets or sets the file path.
         /// </summary>
-        /// <value>
-        /// The file path.
-        /// </value>
+        /// <value>The file path.</value>
         [CanBeNull]
         public string Path { get; set; }
 

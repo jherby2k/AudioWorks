@@ -19,9 +19,7 @@ namespace AudioWorks.Extensions
         /// <summary>
         /// Gets the name of the analyzer.
         /// </summary>
-        /// <value>
-        /// The name.
-        /// </value>
+        /// <value>The name.</value>
         [NotNull]
         public string Name { get; }
 

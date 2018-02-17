@@ -81,58 +81,44 @@ namespace AudioWorks.Common
         /// <summary>
         /// Gets the format.
         /// </summary>
-        /// <value>
-        /// The format.
-        /// </value>
+        /// <value>The format.</value>
         [NotNull]
         public string Format { get; }
 
         /// <summary>
         /// Gets the # of channels.
         /// </summary>
-        /// <value>
-        /// The # of channels.
-        /// </value>
+        /// <value>The # of channels.</value>
         public int Channels { get; }
 
         /// <summary>
         /// Gets the # of bits per sample, or 0 for lossy files.
         /// </summary>
-        /// <value>
-        /// The # of bits per sample.
-        /// </value>
+        /// <value>The # of bits per sample.</value>
         public int BitsPerSample { get; }
 
         /// <summary>
         /// Gets the sample rate (in samples per second).
         /// </summary>
-        /// <value>
-        /// The sample rate.
-        /// </value>
+        /// <value>The sample rate.</value>
         public int SampleRate { get; }
 
         /// <summary>
         /// Gets the bit rate (in bits per second).
         /// </summary>
-        /// <value>
-        /// The bit rate.
-        /// </value>
+        /// <value>The bit rate.</value>
         public int BitRate { get; }
 
         /// <summary>
         /// Gets the sample count, or 0 if unknown.
         /// </summary>
-        /// <value>
-        /// The sample count.
-        /// </value>
+        /// <value>The sample count.</value>
         public long SampleCount { get; }
 
         /// <summary>
         /// Gets the play length, which is 0 if the sample count is unknown.
         /// </summary>
-        /// <value>
-        /// The play length.
-        /// </value>
+        /// <value>The play length.</value>
         public TimeSpan PlayLength =>
             SampleCount == 0
                 ? TimeSpan.Zero

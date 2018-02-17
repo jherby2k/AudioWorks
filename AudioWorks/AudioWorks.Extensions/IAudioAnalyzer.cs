@@ -13,9 +13,7 @@ namespace AudioWorks.Extensions
         /// <summary>
         /// Gets information about the settings that can be passed to the <see cref="Initialize"/> method.
         /// </summary>
-        /// <value>
-        /// The setting information.
-        /// </value>
+        /// <value>The setting information.</value>
         [NotNull]
         SettingInfoDictionary SettingInfo { get; }
 

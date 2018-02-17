@@ -13,9 +13,7 @@ namespace AudioWorks.Common
         /// <summary>
         /// Gets or sets the metadata.
         /// </summary>
-        /// <value>
-        /// The metadata.
-        /// </value>
+        /// <value>The metadata.</value>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
         [NotNull]
         AudioMetadata Metadata { get; set; }

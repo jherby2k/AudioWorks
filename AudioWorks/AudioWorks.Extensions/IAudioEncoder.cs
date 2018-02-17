@@ -13,18 +13,14 @@ namespace AudioWorks.Extensions
         /// <summary>
         /// Gets information about the settings that can be passed to the <see cref="Initialize"/> method.
         /// </summary>
-        /// <value>
-        /// The setting information.
-        /// </value>
+        /// <value>The setting information.</value>
         [NotNull]
         SettingInfoDictionary SettingInfo { get; }
 
         /// <summary>
         /// Gets the file extension used by the encoder.
         /// </summary>
-        /// <value>
-        /// The file extension.
-        /// </value>
+        /// <value>The file extension.</value>
         [NotNull]
         string FileExtension { get; }
 

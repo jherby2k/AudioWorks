@@ -12,9 +12,7 @@ namespace AudioWorks.Common
         /// <summary>
         /// Gets the type of the setting value.
         /// </summary>
-        /// <value>
-        /// The type of the setting value.
-        /// </value>
+        /// <value>The type of the setting value.</value>
         [NotNull]
         public Type ValueType { get; }
 

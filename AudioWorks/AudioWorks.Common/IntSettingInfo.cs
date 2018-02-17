@@ -13,17 +13,13 @@ namespace AudioWorks.Common
         /// <summary>
         /// Gets the minimum value for the integer.
         /// </summary>
-        /// <value>
-        /// The minimum value.
-        /// </value>
+        /// <value>The minimum value.</value>
         public int MinValue { get; }
 
         /// <summary>
         /// Gets the maximum value for the integer.
         /// </summary>
-        /// <value>
-        /// The maximum value.
-        /// </value>
+        /// <value>The maximum value.</value>
         public int MaxValue { get; }
 
         /// <summary>

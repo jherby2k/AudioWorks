@@ -25,18 +25,14 @@ namespace AudioWorks.Extensions
         /// <summary>
         /// Gets the # of channels.
         /// </summary>
-        /// <value>
-        /// The # of channels.
-        /// </value>
+        /// <value>The # of channels.</value>
         [CollectionAccess(CollectionAccessType.None)]
         public int Channels => _samples.Length;
 
         /// <summary>
         /// Gets the frame count.
         /// </summary>
-        /// <value>
-        /// The frame count.
-        /// </value>
+        /// <value>The frame count.</value>
         [CollectionAccess(CollectionAccessType.None)]
         public int Frames => _samples[0].Length;
 

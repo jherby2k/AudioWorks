@@ -15,9 +15,7 @@ namespace AudioWorks.Extensions
         /// <summary>
         /// Gets the singleton instance.
         /// </summary>
-        /// <value>
-        /// The singleton instance.
-        /// </value>
+        /// <value>The singleton instance.</value>
         [NotNull]
         public static SampleCollectionPool Instance => _lazyInstance.Value;
 

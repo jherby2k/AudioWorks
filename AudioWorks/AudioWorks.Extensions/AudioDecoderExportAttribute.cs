@@ -21,9 +21,7 @@ namespace AudioWorks.Extensions
         /// <summary>
         /// Gets the file extension.
         /// </summary>
-        /// <value>
-        /// The file extension.
-        /// </value>
+        /// <value>The file extension.</value>
         [NotNull]
         public string Extension { get; }
 

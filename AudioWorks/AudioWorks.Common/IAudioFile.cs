@@ -13,18 +13,14 @@ namespace AudioWorks.Common
         /// <summary>
         /// Gets the fully-qualified file path.
         /// </summary>
-        /// <value>
-        /// The file path.
-        /// </value>
+        /// <value>The file path.</value>
         [NotNull]
         string Path { get; }
 
         /// <summary>
         /// Gets the audio information.
         /// </summary>
-        /// <value>
-        /// The audio information.
-        /// </value>
+        /// <value>The audio information.</value>
         [NotNull]
         AudioInfo Info { get; }
 
