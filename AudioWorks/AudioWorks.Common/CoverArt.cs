@@ -53,6 +53,10 @@ namespace AudioWorks.Common
         /// <param name="path">The fully-qualified path to the file.</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="path"/> is null or empty.</exception>
         /// <exception cref="FileNotFoundException">Thrown if <paramref name="path"/> does not exist.</exception>
+        /// <exception cref="ImageUnsupportedException">Thrown if <paramref name="path"/> is not a supported image
+        /// format.</exception>
+        /// <exception cref="ImageInvalidException">Thrown if <paramref name="path"/> is not a valid image file.
+        /// </exception>
         public CoverArt([NotNull] string path)
         {
             if (string.IsNullOrEmpty(path))
@@ -112,7 +116,6 @@ namespace AudioWorks.Common
         /// Gets the raw image data.
         /// </summary>
         /// <returns>The raw image data.</returns>
-        /// <exception cref="NotImplementedException"></exception>
         [NotNull]
         public byte[] GetData()
         {
