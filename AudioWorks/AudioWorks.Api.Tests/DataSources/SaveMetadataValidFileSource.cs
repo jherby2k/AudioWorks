@@ -345,16 +345,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 "963D578D818C25DE5FEE6625BE7BFA98"
             },
 
-            // Bitmap CoverArt
-            new object[]
-            {
-                "Lame CBR 128 44100Hz Stereo.mp3",
-                new TestAudioMetadata(),
-                "Bitmap 24-bit 1280 x 935.bmp",
-                null,
-                "21AAE0459AC82BE5864ECF47FA2354AE"
-            },
-
             // PNG CoverArt
             new object[]
             {
@@ -619,16 +609,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 null,
                 "3983A342A074A7E8871FEF4FBE0AC73F"
-            },
-
-            // Bitmap CoverArt
-            new object[]
-            {
-                "FLAC Level 5 16-bit 44100Hz Stereo.flac",
-                new TestAudioMetadata(),
-                "Bitmap 24-bit 1280 x 935.bmp",
-                null,
-                "39208AFCF095EA95EE6E3894584DC0FE"
             },
 
             // PNG CoverArt
