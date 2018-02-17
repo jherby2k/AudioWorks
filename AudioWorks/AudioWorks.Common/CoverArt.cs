@@ -13,7 +13,7 @@ namespace AudioWorks.Common
     [Serializable]
     public sealed class CoverArt
     {
-        [NotNull] static readonly string[] _acceptedExtensions = { ".bmp", ".png", ".jpg" };
+        [NotNull] static readonly string[] _acceptedExtensions = { ".bmp", ".png", ".jpg", ".jpeg" };
 
         [NotNull] readonly byte[] _data;
 
