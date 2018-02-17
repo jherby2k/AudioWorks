@@ -125,17 +125,20 @@ namespace AudioWorks.Api.Tests
             int index,
             [NotNull] string fileName,
             [NotNull] TestAudioMetadata metadata,
+            [CanBeNull] string imageFileName,
             [CanBeNull] TestSettingDictionary settings,
             [NotNull] string expectedHash)
         {
-            var path = Path.Combine("Output", "SaveMetadata", "Valid", $"{index:00} - {fileName}");
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
-            File.Copy(Path.Combine(
+            var sourceDirectory = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
-                "Valid",
-                fileName), path, true);
+                "Valid");
+            var path = Path.Combine("Output", "SaveMetadata", "Valid", $"{index:00} - {fileName}");
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            File.Copy(Path.Combine(sourceDirectory, fileName), path, true);
             var audioFile = new TaggedAudioFile(path) { Metadata = metadata };
+            if (imageFileName != null)
+                audioFile.Metadata.CoverArt = new CoverArt(Path.Combine(sourceDirectory, imageFileName));
 
             audioFile.SaveMetadata(settings);
 

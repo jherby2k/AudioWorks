@@ -11,22 +11,31 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[]
             {
                 "Bitmap 24-bit 1280 x 935.bmp",
+                "PNG",
+                "image/png",
                 1280,
-                935
+                935,
+                "AE46988A9D44F2797469B8B79CA77A33"
             },
 
             new object[]
             {
                 "PNG 24-bit 1280 x 935.png",
+                "PNG",
+                "image/png",
                 1280,
-                935
+                935,
+                "6895D34A230827FE1F7C3141AC0454FA"
             },
 
             new object[]
             {
                 "JPEG 24-bit 1280 x 935.jpg",
+                "JPEG",
+                "image/jpeg",
                 1280,
-                935
+                935,
+                "0E19A69A74AF427BD6F7CCE15B1D5AB9"
             }
         };
 
@@ -37,16 +46,37 @@ namespace AudioWorks.Api.Tests.DataSources
         }
 
         [NotNull, ItemNotNull]
+        public static IEnumerable<object[]> FileNamesAndFormat
+        {
+            [UsedImplicitly]
+            get => _data.Select(item => new[] { item[0], item[1] });
+        }
+
+        [NotNull, ItemNotNull]
+        public static IEnumerable<object[]> FileNamesAndMimeType
+        {
+            [UsedImplicitly]
+            get => _data.Select(item => new[] { item[0], item[2] });
+        }
+
+        [NotNull, ItemNotNull]
         public static IEnumerable<object[]> FileNamesAndWidth
         {
-            [UsedImplicitly] get => _data.Select(item => new[] { item[0], item[1] });
+            [UsedImplicitly] get => _data.Select(item => new[] { item[0], item[3] });
         }
 
         [NotNull, ItemNotNull]
         public static IEnumerable<object[]> FileNamesAndHeight
         {
             [UsedImplicitly]
-            get => _data.Select(item => new[] { item[0], item[2] });
+            get => _data.Select(item => new[] { item[0], item[4] });
+        }
+
+        [NotNull, ItemNotNull]
+        public static IEnumerable<object[]> FileNamesAndDataHash
+        {
+            [UsedImplicitly]
+            get => _data.Select(item => new[] { item[0], item[5] });
         }
     }
 }

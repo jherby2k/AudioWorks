@@ -176,17 +176,20 @@ namespace AudioWorks.Commands.Tests
             int index,
             [NotNull] string fileName,
             [NotNull] AudioMetadata metadata,
+            [CanBeNull] string imageFileName,
             [CanBeNull] SettingDictionary settings,
             [NotNull] string expectedHash)
         {
-            var path = Path.Combine("Output", "Save-AudioMetadata", "Valid", $"{index:00} - {fileName}");
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
-            File.Copy(Path.Combine(
+            var sourceDirectory = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
-                "Valid",
-                fileName), path, true);
+                "Valid");
+            var path = Path.Combine("Output", "Save-AudioMetadata", "Valid", $"{index:00} - {fileName}");
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            File.Copy(Path.Combine(sourceDirectory, fileName), path, true);
             var audioFile = new TaggedAudioFile(path) { Metadata = metadata };
+            if (imageFileName != null)
+                audioFile.Metadata.CoverArt = new CoverArt(Path.Combine(sourceDirectory, imageFileName));
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using AudioWorks.Common;
 using JetBrains.Annotations;
 
-namespace AudioWorks.Api
+namespace AudioWorks.Common
 {
     /// <summary>
     /// Represents errors that occur during the reading of a cover art image that are the result of encountering

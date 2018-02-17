@@ -150,11 +150,8 @@ namespace AudioWorks.Commands.Tests
                 ps.Invoke();
             }
 
-            new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
-            var differences = differenceEnumerable.ToArray();
-            Assert.Equal(typeof(AudioMetadata).GetProperties().Length, differences.Length);
-            foreach (var difference in differences)
-                Assert.True(string.IsNullOrEmpty(difference.Value2));
+            new Comparer().Compare(new AudioMetadata(), mock.Object.Metadata, out var differences);
+            Assert.Empty(differences);
         }
 
         [Fact(DisplayName = "Clear-AudioMetadata accepts a Title switch")]

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using AudioWorks.Api.Tests.DataSources;
+using AudioWorks.Common;
 using JetBrains.Annotations;
 using Xunit;
 
@@ -45,6 +46,32 @@ namespace AudioWorks.Api.Tests
                     fileName)));
         }
 
+        [Theory(DisplayName = "CoverArt has the expected Format property value")]
+        [MemberData(nameof(ValidImageFileDataSource.FileNamesAndFormat), MemberType = typeof(ValidImageFileDataSource))]
+        public void HasExpectedFormat(
+            [NotNull] string fileName,
+            [NotNull] string format)
+        {
+            Assert.Equal(format, new CoverArt(Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
+                "TestFiles",
+                "Valid",
+                fileName)).Format);
+        }
+
+        [Theory(DisplayName = "CoverArt has the expected MimeType property value")]
+        [MemberData(nameof(ValidImageFileDataSource.FileNamesAndMimeType), MemberType = typeof(ValidImageFileDataSource))]
+        public void HasExpectedMimeType(
+            [NotNull] string fileName,
+            [NotNull] string mimeType)
+        {
+            Assert.Equal(mimeType, new CoverArt(Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
+                "TestFiles",
+                "Valid",
+                fileName)).MimeType);
+        }
+
         [Theory(DisplayName = "CoverArt has the expected Width property value")]
         [MemberData(nameof(ValidImageFileDataSource.FileNamesAndWidth), MemberType = typeof(ValidImageFileDataSource))]
         public void HasExpectedWidth(
@@ -69,6 +96,19 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName)).Height);
+        }
+
+        [Theory(DisplayName = "GetData returns the expected value")]
+        [MemberData(nameof(ValidImageFileDataSource.FileNamesAndDataHash), MemberType = typeof(ValidImageFileDataSource))]
+        public void GetDataReturnsExpectedValue(
+            [NotNull] string fileName,
+            [NotNull] string expectedHash)
+        {
+            Assert.Equal(expectedHash, HashUtility.CalculateHash(new CoverArt(Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
+                "TestFiles",
+                "Valid",
+                fileName)).GetData()));
         }
     }
 }

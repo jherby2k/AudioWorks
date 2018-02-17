@@ -351,12 +351,19 @@ namespace AudioWorks.Common
         }
 
         /// <summary>
-        /// Clears all metadata properties by setting each to an empty string.
+        /// Gets or sets the cover art. To clear the cover art, set a null <paramref name="value"/>.
+        /// </summary>
+        /// <value>The cover art.</value>
+        [CanBeNull]
+        public CoverArt CoverArt { get; set; }
+
+        /// <summary>
+        /// Clears all properties.
         /// </summary>
         public void Clear()
         {
             foreach (var property in GetType().GetProperties())
-                property.SetValue(this, string.Empty);
+                property.SetValue(this, property.PropertyType == typeof(string) ? string.Empty : null);
         }
     }
 }

@@ -28,6 +28,14 @@ namespace AudioWorks.Extensions.Id3
                 AddUserDefinedFrame("REPLAYGAIN_TRACK_GAIN", $"{metadata.TrackGain} dB", "Latin1", true);
             if (!string.IsNullOrEmpty(metadata.AlbumGain))
                 AddUserDefinedFrame("REPLAYGAIN_ALBUM_GAIN", $"{metadata.AlbumGain} dB", "Latin1", true);
+
+            if (metadata.CoverArt != null)
+                Add(new FramePicture("APIC")
+                {
+                    PictureType = PictureTypeCode.CoverFront,
+                    Mime = metadata.CoverArt.MimeType,
+                    PictureData = metadata.CoverArt.GetData()
+                });
         }
 
         void AddTextFrame(

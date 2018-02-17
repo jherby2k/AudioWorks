@@ -19,5 +19,15 @@ namespace AudioWorks.Api.Tests
                 return BitConverter.ToString(md5.ComputeHash(fileStream))
                     .Replace("-", string.Empty, StringComparison.InvariantCulture);
         }
+
+        [Pure, NotNull]
+        [SuppressMessage("Microsoft.Security", "CA5351:Do not use insecure cryptographic algorithm MD5.",
+            Justification = "This method is not security critical")]
+        public static string CalculateHash([NotNull] byte[] data)
+        {
+            using (var md5 = MD5.Create())
+                return BitConverter.ToString(md5.ComputeHash(data))
+                    .Replace("-", string.Empty, StringComparison.InvariantCulture);
+        }
     }
 }
