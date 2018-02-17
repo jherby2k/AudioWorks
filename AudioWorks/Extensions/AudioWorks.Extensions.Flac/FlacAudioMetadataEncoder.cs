@@ -22,23 +22,34 @@ namespace AudioWorks.Extensions.Flac
             {
                 chain.Read();
 
-                // Iterate over the existing blocks, replacing and deleting as needed:
-                using (var iterator = chain.GetIterator())
-                    UpdateChain(iterator, comments, padding);
+                PictureBlock pictureBlock = null;
+                try
+                {
+                    if (metadata.CoverArt != null)
+                        pictureBlock = new CoverArtToPictureBlockAdapter(metadata.CoverArt);
 
-                // If FLAC requests a temporary file, use a MemoryStream instead. Then overwrite the original:
-                if (chain.CheckIfTempFileNeeded(!padding.HasValue))
-                    using (var tempStream = new MemoryStream())
-                    {
-                        chain.WriteWithTempFile(!padding.HasValue, tempStream);
+                    // Iterate over the existing blocks, replacing and deleting as needed:
+                    using (var iterator = chain.GetIterator())
+                        UpdateChain(iterator, comments, pictureBlock, padding);
 
-                        // Clear the original stream, and copy the temporary one over it:
-                        stream.Position = 0;
-                        stream.SetLength(tempStream.Length);
-                        tempStream.WriteTo(stream);
-                    }
-                else
-                    chain.Write(!padding.HasValue);
+                    // If FLAC requests a temporary file, use a MemoryStream instead. Then overwrite the original:
+                    if (chain.CheckIfTempFileNeeded(!padding.HasValue))
+                        using (var tempStream = new MemoryStream())
+                        {
+                            chain.WriteWithTempFile(!padding.HasValue, tempStream);
+
+                            // Clear the original stream, and copy the temporary one over it:
+                            stream.Position = 0;
+                            stream.SetLength(tempStream.Length);
+                            tempStream.WriteTo(stream);
+                        }
+                    else
+                        chain.Write(!padding.HasValue);
+                }
+                finally
+                {
+                    pictureBlock?.Dispose();
+                }
             }
         }
 
@@ -53,9 +64,11 @@ namespace AudioWorks.Extensions.Flac
         static void UpdateChain(
             [NotNull] MetadataIterator iterator,
             [NotNull] VorbisCommentBlock newComments,
+            [CanBeNull] PictureBlock pictureBlock,
             int? padding)
         {
             var metadataInserted = false;
+            var pictureInserted = false;
 
             do
             {
@@ -68,6 +81,14 @@ namespace AudioWorks.Extensions.Flac
                         metadataInserted = true;
                         break;
 
+                    // Replace the existing Picture block:
+                    case MetadataType.Picture:
+                        iterator.DeleteBlock(false);
+                        if (pictureBlock != null)
+                            iterator.InsertBlockAfter(pictureBlock);
+                        pictureInserted = true;
+                        break;
+
                     // Delete any padding
                     case MetadataType.Padding:
                         iterator.DeleteBlock(false);
@@ -78,6 +99,10 @@ namespace AudioWorks.Extensions.Flac
             // If there was no existing metadata block to replace, insert it now
             if (!metadataInserted)
                 iterator.InsertBlockAfter(newComments);
+
+            // If there was no existing picture block to replace, and a new one is available, insert it now
+            if (pictureBlock != null && !pictureInserted)
+                iterator.InsertBlockAfter(pictureBlock);
 
             // If padding was explicitly requested, add it
             if (padding.HasValue)

@@ -42,6 +42,12 @@ namespace AudioWorks.Common
         public int Height { get; }
 
         /// <summary>
+        /// Gets the color depth.
+        /// </summary>
+        /// <value>The color depth.</value>
+        public int ColorDepth { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CoverArt"/> class.
         /// </summary>
         /// <param name="path">The fully-qualified path to the file.</param>
@@ -59,6 +65,7 @@ namespace AudioWorks.Common
 
             using (var fileStream = File.OpenRead(path))
             {
+                // TODO use Image.Identify in next release to get an IImageInfo instead
                 var format = Image.DetectFormat(fileStream) ??
                              throw new ImageInvalidException("Not a valid image file.", path);
 
@@ -97,6 +104,7 @@ namespace AudioWorks.Common
 
                 Format = format.Name;
                 MimeType = format.DefaultMimeType;
+                ColorDepth = 24; //TODO can read this from IImageInfo in next release
             }
         }
 

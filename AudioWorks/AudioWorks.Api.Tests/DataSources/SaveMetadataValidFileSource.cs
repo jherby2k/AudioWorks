@@ -621,6 +621,36 @@ namespace AudioWorks.Api.Tests.DataSources
                 "3983A342A074A7E8871FEF4FBE0AC73F"
             },
 
+            // Bitmap CoverArt
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo.flac",
+                new TestAudioMetadata(),
+                "Bitmap 24-bit 1280 x 935.bmp",
+                null,
+                "39208AFCF095EA95EE6E3894584DC0FE"
+            },
+
+            // PNG CoverArt
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo.flac",
+                new TestAudioMetadata(),
+                "PNG 24-bit 1280 x 935.png",
+                null,
+                "ABC14285A7AA837A876EA751BEF07678"
+            },
+
+            // JPEG CoverArt
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo.flac",
+                new TestAudioMetadata(),
+                "JPEG 24-bit 1280 x 935.jpg",
+                null,
+                "CA0F514A6C18C3C62758B6440DB34A49"
+            },
+
             // All fields
             new object[]
             {

@@ -202,6 +202,23 @@ namespace AudioWorks.Extensions.Flac
             uint num,
             ulong totalSamples);
 
+        [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_object_picture_set_mime_type",
+            CallingConvention = CallingConvention.Cdecl, BestFitMapping = false)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool MetadataObjectPictureSetMimeType(
+            [NotNull] MetadataBlockHandle handle,
+            [MarshalAs(UnmanagedType.LPStr)] string mimeType,
+            [MarshalAs(UnmanagedType.Bool)] bool copy);
+
+        [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_object_picture_set_data",
+            CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool MetadataObjectPictureSetData(
+            [NotNull] MetadataBlockHandle handle,
+            byte[] data,
+            uint length,
+            [MarshalAs(UnmanagedType.Bool)] bool copy);
+
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_object_delete",
             CallingConvention = CallingConvention.Cdecl)]

@@ -13,6 +13,31 @@ namespace AudioWorks.Extensions.Flac
         Picture
     }
 
+    enum PictureType : uint
+    {
+        Other,
+        PngIcon,
+        OtherIcon,
+        CoverFront,
+        CoverBack,
+        Leaflet,
+        Media,
+        LeadArtist,
+        Artist,
+        Conductor,
+        Band,
+        Composer,
+        Lyricist,
+        Location,
+        DuringRecording,
+        DuringPerformance,
+        ScreenCapture,
+        BrightFish,
+        Illustration,
+        ArtistLogo,
+        PublisherLogo
+    }
+
     enum DecoderState
     {
         [UsedImplicitly] SearchForMetadata,
