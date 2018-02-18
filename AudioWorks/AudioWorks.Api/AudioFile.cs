@@ -7,10 +7,7 @@ using IO = System.IO;
 
 namespace AudioWorks.Api
 {
-    /// <summary>
-    /// The primary base type for working with AudioWorks. Represents a single track of audio within the filesystem.
-    /// </summary>
-    /// <seealso cref="IAudioFile"/>
+    /// <inheritdoc/>
     [PublicAPI]
     [Serializable]
     public class AudioFile : IAudioFile

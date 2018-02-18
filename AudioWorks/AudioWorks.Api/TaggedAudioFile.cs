@@ -7,11 +7,7 @@ using IO = System.IO;
 
 namespace AudioWorks.Api
 {
-    /// <summary>
-    /// Represents a single track of audio on the filesystem that may or may not contain a metadata "tag".
-    /// </summary>
-    /// <seealso cref="AudioFile"/>
-    /// <seealso cref="ITaggedAudioFile"/>
+    /// <inheritdoc cref="ITaggedAudioFile"/>
     [PublicAPI]
     [Serializable]
     public sealed class TaggedAudioFile : AudioFile, ITaggedAudioFile
