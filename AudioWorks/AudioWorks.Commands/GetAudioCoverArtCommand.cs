@@ -10,7 +10,7 @@ namespace AudioWorks.Commands
     /// applied to and extracted from audio files when supported by the audio format.</para>
     /// </summary>
     [PublicAPI]
-    [Cmdlet(VerbsCommon.Get, "AudioCoverArt", DefaultParameterSetName = "ByPath"), OutputType(typeof(CoverArt))]
+    [Cmdlet(VerbsCommon.Get, "AudioCoverArt", DefaultParameterSetName = "ByPath"), OutputType(typeof(ICoverArt))]
     public sealed class GetAudioCoverArtCommand : PSCmdlet
     {
         /// <summary>
@@ -38,7 +38,7 @@ namespace AudioWorks.Commands
             try
             {
                 foreach (var path in this.GetFileSystemPaths(Path, LiteralPath))
-                    WriteObject(new CoverArt(path));
+                    WriteObject(CoverArtFactory.Create(path));
             }
             catch (ItemNotFoundException e)
             {

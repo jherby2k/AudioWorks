@@ -355,7 +355,7 @@ namespace AudioWorks.Common
         /// </summary>
         /// <value>The cover art.</value>
         [CanBeNull]
-        public CoverArt CoverArt { get; set; }
+        public ICoverArt CoverArt { get; set; }
 
         /// <summary>
         /// Clears all properties.

@@ -119,7 +119,7 @@ namespace AudioWorks.Commands.Tests
 
                 var result = ps.Invoke();
 
-                Assert.Equal(typeof(CoverArt), (Type) result[0].BaseObject);
+                Assert.Equal(typeof(ICoverArt), (Type) result[0].BaseObject);
             }
         }
 
