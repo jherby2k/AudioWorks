@@ -41,7 +41,7 @@
     <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.0" />
     <PackageReference Include="Microsoft.PowerShell.Commands.Diagnostics" Version="6.0.1" />
     <PackageReference Include="Microsoft.PowerShell.SDK" Version="6.0.1" />
     <PackageReference Include="Microsoft.WSMan.Management" Version="6.0.1" />
