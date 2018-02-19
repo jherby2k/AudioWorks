@@ -108,6 +108,13 @@ namespace AudioWorks.Commands
         public string TrackCount { get; set; }
 
         /// <summary>
+        /// <para type="description">Sets the cover art.</para>
+        /// </summary>
+        [CanBeNull]
+        [Parameter]
+        public ICoverArt CoverArt { get; set; }
+
+        /// <summary>
         /// <para type="description">Returns an object representing the item with which you are working. By default,
         /// this cmdlet does not generate any output.</para>
         /// </summary>
@@ -143,6 +150,8 @@ namespace AudioWorks.Commands
                     AudioFile.Metadata.TrackNumber = TrackNumber;
                 if (TrackCount != null)
                     AudioFile.Metadata.TrackCount = TrackCount;
+                if (CoverArt != null)
+                    AudioFile.Metadata.CoverArt = CoverArt;
             }
             catch (AudioMetadataInvalidException e)
             {

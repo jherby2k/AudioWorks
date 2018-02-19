@@ -793,6 +793,43 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
+        [Fact(DisplayName = "Set-AudioMetadata accepts a CoverArt parameter")]
+        public void AcceptsCoverArtParameter()
+        {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", mock.Object)
+                    .AddParameter("CoverArt", new Mock<ICoverArt>().Object);
+
+                ps.Invoke();
+
+                Assert.True(true);
+            }
+        }
+
+        [Fact(DisplayName = "Set-AudioMetadata's CoverArt Parameter sets the CoverArt")]
+        public void CoverArtParameterSetsCoverArt()
+        {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
+            var coverArt = new Mock<ICoverArt>().Object;
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Set-AudioMetadata")
+                    .AddParameter("AudioFile", mock.Object)
+                    .AddParameter("CoverArt", coverArt);
+
+                ps.Invoke();
+
+                Assert.Equal(coverArt, mock.Object.Metadata.CoverArt);
+            }
+        }
+
         [Fact(DisplayName = "Set-AudioMetadata returns an error if TrackCount is null")]
         public void TrackCountNullReturnsError()
         {
