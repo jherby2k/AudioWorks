@@ -17,36 +17,40 @@ namespace AudioWorks.Commands
     /// </para>
     /// </summary>
     [PublicAPI]
-    [Cmdlet(VerbsData.Export, "AudioFile", DefaultParameterSetName = "ByPath"), OutputType(typeof(ITaggedAudioFile))]
+    [Cmdlet(VerbsData.Export, "AudioFile"), OutputType(typeof(ITaggedAudioFile))]
     public sealed class ExportAudioFileCommand : PSCmdlet, IDynamicParameters, IDisposable
     {
         [NotNull] readonly CancellationTokenSource _cancellationSource = new CancellationTokenSource();
-        [NotNull] readonly List<ITaggedAudioFile> _sourceAudioFiles = new List<ITaggedAudioFile>();
+        [NotNull, ItemNotNull] readonly List<ITaggedAudioFile> _sourceAudioFiles = new List<ITaggedAudioFile>();
         [CanBeNull] RuntimeDefinedParameterDictionary _parameters;
 
         /// <summary>
         /// <para type="description">Specifies the encoder to use.</para>
         /// </summary>
+        [CanBeNull]
         [Parameter(Mandatory = true, Position = 0)]
         public string Encoder { get; set; }
 
         /// <summary>
-        /// <para type="description">Specifies the source audio file.</para>
-        /// </summary>
-        [Parameter(Mandatory = true, Position = 1, ValueFromPipeline = true)]
-        public ITaggedAudioFile AudioFile { get; set; }
-
-        /// <summary>
         /// <para type="description">Specifies the output directory path.</para>
         /// </summary>
-        [Parameter]
+        [CanBeNull]
+        [Parameter(Mandatory = true, Position = 1)]
         public string Path { get; set; }
+
+        /// <summary>
+        /// <para type="description">Specifies the source audio file.</para>
+        /// </summary>
+        [CanBeNull]
+        [Parameter(Mandatory = true, Position = 2, ValueFromPipeline = true)]
+        public ITaggedAudioFile AudioFile { get; set; }
 
         /// <summary>
         /// <para type="description">Specifies the output file name.</para>
         /// <para type="description">The file extension will be selected automatically and should not be included. If
         /// this parameter is omitted, the name will be the same as the source audio file.</para>
         /// </summary>
+        [CanBeNull]
         [Parameter]
         public string Name { get; set; }
 
@@ -69,9 +73,10 @@ namespace AudioWorks.Commands
             {
                 var encodeTask = Task<IEnumerable<ITaggedAudioFile>>.Factory.StartNew(q =>
                         new AudioFileEncoder(
+                                // ReSharper disable once AssignNullToNotNullAttribute
                                 Encoder,
                                 SettingAdapter.ParametersToSettings(_parameters),
-                                SessionState.Path.GetUnresolvedProviderPathFromPSPath(Path, out var _, out var _),
+                                SessionState.Path.GetUnresolvedProviderPathFromPSPath(Path),
                                 Name,
                                 Replace)
                             .Encode(
