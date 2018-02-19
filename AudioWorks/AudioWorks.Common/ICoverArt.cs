@@ -40,6 +40,13 @@ namespace AudioWorks.Common
         string MimeType { get; }
 
         /// <summary>
+        /// Gets the default file extension (.png for lossless, or .jpg for lossy files).
+        /// </summary>
+        /// <value>The file extension.</value>
+        [NotNull]
+        string FileExtension { get; set; }
+
+        /// <summary>
         /// Gets the raw image data.
         /// </summary>
         /// <returns>The raw image data.</returns>

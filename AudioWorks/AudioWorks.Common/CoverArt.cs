@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using JetBrains.Annotations;
 using SixLabors.ImageSharp;
 
@@ -26,6 +27,9 @@ namespace AudioWorks.Common
 
         /// <inheritdoc/>
         public string MimeType { get; set; }
+
+        /// <inheritdoc/>
+        public string FileExtension { get; set; }
 
         internal CoverArt([NotNull] Stream stream)
         {
@@ -69,6 +73,7 @@ namespace AudioWorks.Common
             ColorDepth = 24; //TODO can read this from IImageInfo in next release
             Lossless = format.Name.Equals("PNG", StringComparison.OrdinalIgnoreCase);
             MimeType = format.DefaultMimeType;
+            FileExtension = $".{format.FileExtensions.First()}";
         }
 
         /// <inheritdoc/>
