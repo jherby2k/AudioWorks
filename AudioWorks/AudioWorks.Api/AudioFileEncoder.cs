@@ -18,8 +18,8 @@ namespace AudioWorks.Api
     [PublicAPI]
     public sealed class AudioFileEncoder
     {
-        [NotNull] MetadataSubstituter _fileNameSubstituter = new MetadataSubstituter(Path.GetInvalidFileNameChars());
-        [NotNull] MetadataSubstituter _directoryNameSubstituter = new MetadataSubstituter(Path.GetInvalidPathChars());
+        [NotNull] readonly MetadataSubstituter _fileNameSubstituter = new MetadataSubstituter(Path.GetInvalidFileNameChars());
+        [NotNull] readonly MetadataSubstituter _directoryNameSubstituter = new MetadataSubstituter(Path.GetInvalidPathChars());
         [NotNull] readonly ExportFactory<IAudioEncoder> _encoderFactory;
         [NotNull] readonly SettingDictionary _settings;
         [CanBeNull] readonly string _encodedDirectoryName;
@@ -113,7 +113,7 @@ namespace AudioWorks.Api
 
                     try
                     {
-                        // The output directory defaults to the each audiofile's current directory
+                        // The output directory defaults to the audiofile's current directory
                         var outputDirectory = _encodedDirectoryName == null
                             ? Path.GetDirectoryName(audioFiles[i].Path)
                             : _directoryNameSubstituter.Substitute(_encodedDirectoryName, audioFiles[i].Metadata);
