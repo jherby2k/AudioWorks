@@ -656,7 +656,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
-                "90322322985B2DB1339FD81752D4720C"
+                "not90322322985B2DB1339FD81752D4720C"
             },
 
             // Day unset
@@ -683,7 +683,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
-                "49FEC21D04F57D1B4B1464BF198DBFF6"
+                "not49FEC21D04F57D1B4B1464BF198DBFF6"
             },
 
             // Month unset
@@ -710,7 +710,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
-                "49FEC21D04F57D1B4B1464BF198DBFF6"
+                "not49FEC21D04F57D1B4B1464BF198DBFF6"
             },
 
             // TrackNumber unset
@@ -737,7 +737,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
-                "D278DF8DB1592BFC1B356A41B0223DCC"
+                "notD278DF8DB1592BFC1B356A41B0223DCC"
             },
 
             // TrackCount unset
@@ -764,7 +764,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
-                "547D02098C5C2AB5BE63759342B49F08"
+                "not547D02098C5C2AB5BE63759342B49F08"
             },
 
             // Existing tag
@@ -792,7 +792,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
-                "90322322985B2DB1339FD81752D4720C"
+                "not90322322985B2DB1339FD81752D4720C"
             },
 
             // Existing tag removal
@@ -802,7 +802,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 null,
                 null,
-                "9841053230BA17907883AB4224608165"
+                "not9841053230BA17907883AB4224608165"
             },
 
             // Nothing to do
@@ -812,7 +812,27 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 null,
                 null,
-                "9841053230BA17907883AB4224608165"
+                "not9841053230BA17907883AB4224608165"
+            },
+
+            // PNG CoverArt
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo.ogg",
+                new TestAudioMetadata(),
+                "PNG 24-bit 1280 x 935.png",
+                null,
+                "not9841053230BA17907883AB4224608165"
+            },
+
+            // JPEG CoverArt
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo.ogg",
+                new TestAudioMetadata(),
+                "JPEG 24-bit 1280 x 935.jpg",
+                null,
+                "not9841053230BA17907883AB4224608165"
             },
 
             // All fields
