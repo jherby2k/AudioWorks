@@ -69,7 +69,7 @@ namespace AudioWorks.Api
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name), "Value cannot be null or empty.");
 
-            base.Rename(new MetadataSubstituter(name, IO.Path.GetInvalidFileNameChars()).Substitute(Metadata), replace);
+            base.Rename(new FileNameSubstituter(name).Substitute(Metadata), replace);
         }
 
         [NotNull]

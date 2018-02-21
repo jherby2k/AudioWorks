@@ -77,9 +77,9 @@ namespace AudioWorks.Api
 
             _settings = settings ?? new SettingDictionary();
             if (encodedDirectoryName != null)
-                _directoryNameSubstituter = new MetadataSubstituter(encodedDirectoryName, Path.GetInvalidFileNameChars());
+                _directoryNameSubstituter = new DirectoryNameSubstituter(encodedDirectoryName);
             if (encodedFileName != null)
-                _fileNameSubstituter = new MetadataSubstituter(encodedFileName, Path.GetInvalidPathChars());
+                _fileNameSubstituter = new FileNameSubstituter(encodedFileName);
             _overwrite = overwrite;
         }
 

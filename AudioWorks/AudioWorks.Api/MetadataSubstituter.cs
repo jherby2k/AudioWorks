@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Api
 {
-    sealed class MetadataSubstituter
+    abstract class MetadataSubstituter
     {
         [NotNull] static readonly Regex _replacer = new Regex(@"\{[^{]+\}");
         [NotNull] readonly string _encoded;

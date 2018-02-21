@@ -26,9 +26,9 @@ namespace AudioWorks.Api
             bool overwrite = false)
         {
             if (encodedDirectoryName != null)
-                _directoryNameSubstituter = new MetadataSubstituter(encodedDirectoryName, Path.GetInvalidPathChars());
+                _directoryNameSubstituter = new DirectoryNameSubstituter(encodedDirectoryName);
             if (encodedFileName != null)
-                _fileNameSubstituter = new MetadataSubstituter(encodedFileName, Path.GetInvalidFileNameChars());
+                _fileNameSubstituter = new FileNameSubstituter(encodedFileName);
             _overwrite = overwrite;
         }
 
