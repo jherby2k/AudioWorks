@@ -38,6 +38,9 @@ namespace AudioWorks.Extensions.Mp4
 
             if (!string.IsNullOrEmpty(metadata.TrackNumber))
                 _atoms.Add(new TrackNumberAtom(metadata.TrackNumber, metadata.TrackCount));
+
+            if (metadata.CoverArt != null)
+                _atoms.Add(new CoverAtom(metadata.CoverArt));
         }
 
         internal void Prepend([NotNull] WritableAtom atom)

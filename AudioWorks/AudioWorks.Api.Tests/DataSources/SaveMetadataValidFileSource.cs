@@ -1019,6 +1019,26 @@ namespace AudioWorks.Api.Tests.DataSources
                 "D70D2D0CA1FE1E04B9C8065BC7E95628"
             },
 
+            // PNG CoverArt
+            new object[]
+            {
+                "QAAC TVBR 91 44100Hz Stereo.m4a",
+                new TestAudioMetadata(),
+                "PNG 24-bit 1280 x 935.png",
+                null,
+                "73E480738586BA53F17B4868A73BA858"
+            },
+
+            // JPEG CoverArt
+            new object[]
+            {
+                "QAAC TVBR 91 44100Hz Stereo.m4a",
+                new TestAudioMetadata(),
+                "JPEG 24-bit 1280 x 935.jpg",
+                null,
+                "C6D1F2969F82F5BAF4DFFDA109D8705B"
+            },
+
             // All fields
             new object[]
             {
@@ -1201,6 +1221,26 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 null,
                 "2A66A8458C32EC663AE48C6294E829AB"
+            },
+
+            // PNG CoverArt
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo.m4a",
+                new TestAudioMetadata(),
+                "PNG 24-bit 1280 x 935.png",
+                null,
+                "2248FBC57A687F964BF115DF267B1622"
+            },
+
+            // JPEG CoverArt
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo.m4a",
+                new TestAudioMetadata(),
+                "JPEG 24-bit 1280 x 935.jpg",
+                null,
+                "F238013301868A1A625B3B4C401AA2A1"
             }
         };
 
