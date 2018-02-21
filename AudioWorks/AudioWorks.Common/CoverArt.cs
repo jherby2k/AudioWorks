@@ -79,7 +79,7 @@ namespace AudioWorks.Common
         /// <inheritdoc/>
         public byte[] GetData()
         {
-            return _data;
+            return (byte[]) _data.Clone();
         }
     }
 }

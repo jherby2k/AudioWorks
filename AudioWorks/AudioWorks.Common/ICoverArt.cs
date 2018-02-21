@@ -47,7 +47,7 @@ namespace AudioWorks.Common
         string FileExtension { get; set; }
 
         /// <summary>
-        /// Gets the raw image data.
+        /// Gets a copy of the raw image data.
         /// </summary>
         /// <returns>The raw image data.</returns>
         [NotNull]
