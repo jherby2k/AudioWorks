@@ -23,6 +23,12 @@ namespace AudioWorks.Api.Tests
             Assert.Throws<ArgumentException>(() => new AudioFileEncoder("Foo"));
         }
 
+        [Fact(DisplayName = "AudioFileEncoder's constructor throws an exception if encodedDirectoryName references an invalid metadata field")]
+        public void ConstructorEncodedDirectoryNameInvalidThrowsException()
+        {
+            Assert.Throws<ArgumentException>(() => new AudioFileEncoder("Wave", null, "{Invalid}"));
+        }
+
         [Theory(DisplayName = "AudioFileEncoder's Encode method creates the expected audio file")]
         [MemberData(nameof(EncodeValidFileDataSource.Data), MemberType = typeof(EncodeValidFileDataSource))]
         public void EncodeCreatesExpectedMetadata(

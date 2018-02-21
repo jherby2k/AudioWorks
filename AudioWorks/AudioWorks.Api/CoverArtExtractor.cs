@@ -10,13 +10,8 @@ namespace AudioWorks.Api
     /// </summary>
     public sealed class CoverArtExtractor
     {
-        [NotNull] readonly MetadataSubstituter _fileNameSubstituter =
-            new MetadataSubstituter(Path.GetInvalidFileNameChars());
-        [NotNull] readonly MetadataSubstituter _directoryNameSubstituter =
-            new MetadataSubstituter(Path.GetInvalidPathChars());
-
-        [CanBeNull] readonly string _encodedDirectoryName;
-        [CanBeNull] readonly string _encodedFileName;
+        [CanBeNull] readonly MetadataSubstituter _fileNameSubstituter;
+        [CanBeNull] readonly MetadataSubstituter _directoryNameSubstituter;
         readonly bool _overwrite;
 
         /// <summary>
@@ -30,8 +25,10 @@ namespace AudioWorks.Api
             [CanBeNull] string encodedFileName = null,
             bool overwrite = false)
         {
-            _encodedDirectoryName = encodedDirectoryName;
-            _encodedFileName = encodedFileName;
+            if (encodedDirectoryName != null)
+                _directoryNameSubstituter = new MetadataSubstituter(encodedDirectoryName, Path.GetInvalidPathChars());
+            if (encodedFileName != null)
+                _fileNameSubstituter = new MetadataSubstituter(encodedFileName, Path.GetInvalidFileNameChars());
             _overwrite = overwrite;
         }
 
@@ -52,16 +49,14 @@ namespace AudioWorks.Api
             if (audioFile.Metadata.CoverArt == null) return null;
 
             // The output directory defaults to the audiofile's current directory
-            var outputDirectory = _encodedDirectoryName == null
-                ? Path.GetDirectoryName(audioFile.Path)
-                : _directoryNameSubstituter.Substitute(_encodedDirectoryName, audioFile.Metadata);
+            var outputDirectory = _directoryNameSubstituter?.Substitute(audioFile.Metadata) ??
+                                  Path.GetDirectoryName(audioFile.Path);
 
             Directory.CreateDirectory(outputDirectory);
 
             // The output file names default to the input file names
-            var outputFileName = _encodedFileName == null
-                ? Path.GetFileNameWithoutExtension(audioFile.Path)
-                : _fileNameSubstituter.Substitute(_encodedFileName, audioFile.Metadata);
+            var outputFileName = _fileNameSubstituter?.Substitute(audioFile.Metadata) ??
+                                 Path.GetFileNameWithoutExtension(audioFile.Path);
 
             var result = new FileInfo(Path.Combine(
                 outputDirectory,

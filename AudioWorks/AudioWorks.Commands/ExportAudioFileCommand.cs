@@ -69,38 +69,39 @@ namespace AudioWorks.Commands
         /// <inheritdoc/>
         protected override void EndProcessing()
         {
+            var activity = $"Encoding {_sourceAudioFiles.Count} audio files in {Encoder} format";
+            var totalFramesCompleted = 0L;
+            var totalFrames = (double) _sourceAudioFiles.Sum(audioFile => audioFile.Info.SampleCount);
+
+            // ReSharper disable once AssignNullToNotNullAttribute
+            var encoder = new AudioFileEncoder(Encoder,
+                SettingAdapter.ParametersToSettings(_parameters),
+                SessionState.Path.GetUnresolvedProviderPathFromPSPath(Path),
+                Name,
+                Replace);
+
             using (var outputQueue = new BlockingCollection<int>())
             {
-                var encodeTask = Task<IEnumerable<ITaggedAudioFile>>.Factory.StartNew(q =>
-                        new AudioFileEncoder(
-                                // ReSharper disable once AssignNullToNotNullAttribute
-                                Encoder,
-                                SettingAdapter.ParametersToSettings(_parameters),
-                                SessionState.Path.GetUnresolvedProviderPathFromPSPath(Path),
-                                Name,
-                                Replace)
-                            .Encode(
-                                (BlockingCollection<int>) q,
-                                _cancellationSource.Token,
-                                _sourceAudioFiles.ToArray()),
+                // Encoding will take place in a background task
+                var encodeTask = Task.Factory.StartNew(q => encoder.Encode(
+                        (BlockingCollection<int>) q,
+                        _cancellationSource.Token,
+                        _sourceAudioFiles.ToArray()),
                     outputQueue,
                     _cancellationSource.Token,
                     TaskCreationOptions.DenyChildAttach | TaskCreationOptions.LongRunning,
                     TaskScheduler.Default);
 
+                // Close the output queue once encoding completes
                 encodeTask.ContinueWith((t, q) =>
                         ((BlockingCollection<int>) q).CompleteAdding(),
                     outputQueue,
                     TaskScheduler.Default);
 
-                // Process progress notifications on the main thread
-                var activity = $"Encoding {_sourceAudioFiles.Count} audio files in {Encoder} format";
-                var totalFramesCompleted = 0L;
-                var totalFrames = (double) _sourceAudioFiles.Sum(audioFile => audioFile.Info.SampleCount);
-
+                // Progress notifications will be processed on the main thread
                 foreach (var framesCompleted in outputQueue.GetConsumingEnumerable(_cancellationSource.Token))
                 {
-                    // If the audio files have estimated frame counts, make this doesn't go over 100%
+                    // If the audio files have estimated frame counts, make sure this doesn't go over 100%
                     totalFramesCompleted = (long) Math.Min(totalFramesCompleted + framesCompleted, totalFrames);
                     var percentComplete =
                         (int) Math.Floor(totalFramesCompleted / totalFrames * 100);

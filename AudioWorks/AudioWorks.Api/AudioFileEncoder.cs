@@ -18,13 +18,37 @@ namespace AudioWorks.Api
     [PublicAPI]
     public sealed class AudioFileEncoder
     {
-        [NotNull] readonly MetadataSubstituter _fileNameSubstituter = new MetadataSubstituter(Path.GetInvalidFileNameChars());
-        [NotNull] readonly MetadataSubstituter _directoryNameSubstituter = new MetadataSubstituter(Path.GetInvalidPathChars());
+        [CanBeNull] readonly MetadataSubstituter _fileNameSubstituter;
+        [CanBeNull] readonly MetadataSubstituter _directoryNameSubstituter;
         [NotNull] readonly ExportFactory<IAudioEncoder> _encoderFactory;
         [NotNull] readonly SettingDictionary _settings;
-        [CanBeNull] readonly string _encodedDirectoryName;
-        [CanBeNull] readonly string _encodedFileName;
         readonly bool _overwrite;
+
+        /// <summary>
+        /// Encodes the specified audio files.
+        /// </summary>
+        /// <param name="audioFiles">The audio files.</param>
+        /// <returns>A new audio file.</returns>
+        [NotNull, ItemNotNull]
+        public IEnumerable<ITaggedAudioFile> Encode(
+            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
+        {
+            return Encode(CancellationToken.None, audioFiles);
+        }
+
+        /// <summary>
+        /// Encodes the specified audio files.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <param name="audioFiles">The audio files.</param>
+        /// <returns>A new audio file.</returns>
+        [NotNull, ItemNotNull]
+        public IEnumerable<ITaggedAudioFile> Encode(
+            CancellationToken cancellationToken,
+            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
+        {
+            return Encode(null, cancellationToken, audioFiles);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioFileEncoder"/> class.
@@ -52,35 +76,11 @@ namespace AudioWorks.Api
                 throw new ArgumentException($"No '{name}' encoder is available.", nameof(name));
 
             _settings = settings ?? new SettingDictionary();
-            _encodedDirectoryName = encodedDirectoryName;
-            _encodedFileName = encodedFileName;
+            if (encodedDirectoryName != null)
+                _directoryNameSubstituter = new MetadataSubstituter(encodedDirectoryName, Path.GetInvalidFileNameChars());
+            if (encodedFileName != null)
+                _fileNameSubstituter = new MetadataSubstituter(encodedFileName, Path.GetInvalidPathChars());
             _overwrite = overwrite;
-        }
-
-        /// <summary>
-        /// Encodes the specified audio files.
-        /// </summary>
-        /// <param name="audioFiles">The audio files.</param>
-        /// <returns>A new audio file.</returns>
-        [NotNull, ItemNotNull]
-        public IEnumerable<ITaggedAudioFile> Encode(
-            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
-        {
-            return Encode(CancellationToken.None, audioFiles);
-        }
-
-        /// <summary>
-        /// Encodes the specified audio files.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <param name="audioFiles">The audio files.</param>
-        /// <returns>A new audio file.</returns>
-        [NotNull, ItemNotNull]
-        public IEnumerable<ITaggedAudioFile> Encode(
-            CancellationToken cancellationToken,
-            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
-        {
-            return Encode(null, cancellationToken, audioFiles);
         }
 
         /// <summary>
@@ -114,16 +114,14 @@ namespace AudioWorks.Api
                     try
                     {
                         // The output directory defaults to the audiofile's current directory
-                        var outputDirectory = _encodedDirectoryName == null
-                            ? Path.GetDirectoryName(audioFiles[i].Path)
-                            : _directoryNameSubstituter.Substitute(_encodedDirectoryName, audioFiles[i].Metadata);
+                        var outputDirectory = _directoryNameSubstituter?.Substitute(audioFiles[i].Metadata) ??
+                                              Path.GetDirectoryName(audioFiles[i].Path);
 
                         Directory.CreateDirectory(outputDirectory);
 
                         // The output file names default to the input file names
-                        var outputFileName = _encodedFileName == null
-                            ? Path.GetFileNameWithoutExtension(audioFiles[i].Path)
-                            : _fileNameSubstituter.Substitute(_encodedFileName, audioFiles[i].Metadata);
+                        var outputFileName = _fileNameSubstituter?.Substitute(audioFiles[i].Metadata) ??
+                                             Path.GetFileNameWithoutExtension(audioFiles[i].Path);
 
                         encoderExport = _encoderFactory.CreateExport();
 

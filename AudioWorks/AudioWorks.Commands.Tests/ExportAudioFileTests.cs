@@ -48,7 +48,8 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Export-AudioFile")
-                    .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object);
+                    .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object)
+                    .AddParameter("Path", "Bar");
 
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
             }
@@ -61,9 +62,44 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Export-AudioFile")
-                    .AddParameter("Encoder", "Foo");
+                    .AddParameter("Encoder", "Foo")
+                    .AddParameter("Path", "Bar");
 
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
+            }
+        }
+
+        [Fact(DisplayName = "Export-AudioFile requires the Path parameter")]
+        public void RequiresPathParameter()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Export-AudioFile")
+                    .AddParameter("Encoder", "Foo")
+                    .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object);
+
+                Assert.Throws<ParameterBindingException>(() => ps.Invoke());
+            }
+        }
+
+        [Fact(DisplayName = "Export-AudioFile throws an exception if an encoded path references an invalid metadata field")]
+        public void PathInvalidEncodingThrowsException()
+        {
+            var mock = new Mock<ITaggedAudioFile>();
+            mock.SetupGet(audioFile => audioFile.Info)
+                .Returns(AudioInfo.CreateForLossless("Test", 2, 16, 44100, 100));
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Export-AudioFile")
+                    .AddParameter("Encoder", "Wave")
+                    .AddParameter("AudioFile", mock.Object)
+                    .AddParameter("Path", "{Invalid}");
+
+                Assert.IsType<ArgumentException>(
+                    Assert.Throws<CmdletInvocationException>(() => ps.Invoke())
+                        .InnerException);
             }
         }
 

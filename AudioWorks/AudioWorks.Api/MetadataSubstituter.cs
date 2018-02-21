@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using AudioWorks.Common;
 using JetBrains.Annotations;
@@ -7,17 +8,27 @@ namespace AudioWorks.Api
 {
     sealed class MetadataSubstituter
     {
-        static readonly Regex _replacer = new Regex(@"\{[^{]+\}");
-        readonly char[] _invalidChars;
+        [NotNull] static readonly Regex _replacer = new Regex(@"\{[^{]+\}");
+        [NotNull] readonly string _encoded;
+        [NotNull] readonly char[] _invalidChars;
 
-        internal MetadataSubstituter([NotNull] char[] invalidChars)
+        internal MetadataSubstituter([NotNull] string encoded, [NotNull] char[] invalidChars)
         {
+            var validProperties = typeof(AudioMetadata).GetProperties()
+                .Select(propertyInfo => propertyInfo.Name).ToArray();
+            if (_replacer.Matches(encoded).Cast<Match>()
+                .Select(match => match.Value.Substring(1, match.Value.Length - 2))
+                .Except(validProperties).Any())
+                throw new ArgumentException("Parameter contains one or more invalid metadata properties.",
+                    nameof(encoded));
+
+            _encoded = encoded;
             _invalidChars = invalidChars;
         }
 
         [NotNull]
-        internal string Substitute([NotNull] string path, [NotNull] AudioMetadata metadata) =>
-            _replacer.Replace(path, match =>
+        internal string Substitute([NotNull] AudioMetadata metadata) =>
+            _replacer.Replace(_encoded, match =>
             {
                 var propertyName = match.Value.Substring(1, match.Value.Length - 2);
                 var propertyValue = (string) typeof(AudioMetadata).GetProperty(propertyName).GetValue(metadata);

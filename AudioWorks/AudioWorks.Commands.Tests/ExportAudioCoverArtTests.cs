@@ -63,6 +63,22 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
+        [Fact(DisplayName = "Export-AudioCoverArt throws an exception if an encoded path references an invalid metadata field")]
+        public void PathInvalidEncodingThrowsException()
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Export-AudioCoverArt")
+                    .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object)
+                    .AddParameter("Path", "{Invalid}");
+
+                Assert.IsType<ArgumentException>(
+                    Assert.Throws<CmdletInvocationException>(() => ps.Invoke())
+                        .InnerException);
+            }
+        }
+
         [Fact(DisplayName = "Export-AudioCoverArt has an OutputType of FileInfo")]
         public void OutputTypeIsFileInfo()
         {
