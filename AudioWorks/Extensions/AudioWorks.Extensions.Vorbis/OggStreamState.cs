@@ -45,7 +45,7 @@ namespace AudioWorks.Extensions.Vorbis
 #endif
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 282)]
-        readonly char[] Header;
+        readonly byte[] Header;
 
         readonly int HeaderFill;
 

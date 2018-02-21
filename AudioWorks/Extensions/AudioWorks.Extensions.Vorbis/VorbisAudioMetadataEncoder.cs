@@ -32,8 +32,8 @@ namespace AudioWorks.Extensions.Vorbis
                             // Read from the buffer into a page
                             while (!sync.PageOut(out inPage))
                             {
+                                var nativeBuffer = sync.Buffer(buffer.Length);
                                 var bytesRead = stream.Read(buffer, 0, buffer.Length);
-                                var nativeBuffer = sync.Buffer(bytesRead);
                                 Marshal.Copy(buffer, 0, nativeBuffer, bytesRead);
                                 sync.Wrote(bytesRead);
                             }
