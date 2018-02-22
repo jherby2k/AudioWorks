@@ -92,6 +92,13 @@ namespace AudioWorks.Extensions.Apple
             out ExtendedAudioFileHandle handle);
 
         [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern ExtendedAudioFileStatus ExtAudioFileGetProperty(
+            [NotNull] ExtendedAudioFileHandle handle,
+            ExtendedAudioFilePropertyId id,
+            ref uint size,
+            [Out] IntPtr data);
+
+        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
         internal static extern ExtendedAudioFileStatus ExtAudioFileSetProperty(
             [NotNull] ExtendedAudioFileHandle handle,
             ExtendedAudioFilePropertyId id,
@@ -127,6 +134,13 @@ namespace AudioWorks.Extensions.Apple
         [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
         internal static extern AudioConverterStatus AudioConverterSetProperty(
             [NotNull] AudioConverterHandle handle,
+            AudioConverterPropertyId id,
+            uint size,
+            IntPtr data);
+
+        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern AudioConverterStatus AudioConverterSetProperty(
+            IntPtr handle,
             AudioConverterPropertyId id,
             uint size,
             IntPtr data);

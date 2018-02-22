@@ -24,12 +24,14 @@ namespace AudioWorks.Extensions.Apple
         Alac24BitSourceData = 0b0000_0011,
         Alac32BitSourceData = 0b0000_0100,
         PcmIsSignedInteger = 0b0000_0100,
+        PcmIsPacked = 0b0000_1000,
         PcmIsAlignedHigh = 0b0001_0000
     }
 
     enum AudioFormat : uint
     {
         None,
+        AacLowComplexity = 0x61616320, // "aac "
         AppleLossless = 0x616c6163,    // "alac"
         LinearPcm = 0x6c70636d         // "lpcm"
     }
@@ -37,7 +39,19 @@ namespace AudioWorks.Extensions.Apple
     enum AudioConverterPropertyId : uint
     {
         None,
-        DecompressionMagicCookie = 0x646d6763 // 'dmgc'
+        DecompressionMagicCookie = 0x646d6763, // 'dmgc'
+        CodecQuality = 0x63647175, // 'cdqu'
+        BitRate = 0x62726174, // 'brat'
+        BitRateControlMode = 0x61636266, // 'acbf'
+        VbrQuality = 0x76627271 // 'vbrq'
+    }
+
+    enum BitrateControlMode : uint
+    {
+        Constant = 0,
+        LongTermAverage = 1,
+        VariableConstrained = 2,
+        Variable = 3
     }
 
     enum AudioFileStatus

@@ -32,6 +32,21 @@ namespace AudioWorks.Extensions.Apple
             }
         }
 
+        internal T GetProperty<T>(ExtendedAudioFilePropertyId id) where T : struct
+        {
+            var unmanagedValueSize = (uint) Marshal.SizeOf(typeof(T));
+            var unmanagedValue = Marshal.AllocHGlobal((int) unmanagedValueSize);
+            try
+            {
+                SafeNativeMethods.ExtAudioFileGetProperty(_handle, id, ref unmanagedValueSize, unmanagedValue);
+                return Marshal.PtrToStructure<T>(unmanagedValue);
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(unmanagedValue);
+            }
+        }
+
         internal ExtendedAudioFileStatus Write(AudioBufferList data, uint frames)
         {
             return SafeNativeMethods.ExtAudioFileWrite(_handle, frames, ref data);

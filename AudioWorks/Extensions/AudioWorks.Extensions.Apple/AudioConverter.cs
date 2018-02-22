@@ -57,7 +57,7 @@ namespace AudioWorks.Extensions.Apple
         }
 
         [SuppressMessage("Performance", "CA1801:Review unused parameters",
-            Justification = "Part of FLAC API")]
+            Justification = "Part of native API")]
         AudioConverterStatus InputCallback(IntPtr handle, ref uint numberPackets, ref AudioBufferList data, IntPtr packetDescriptions, IntPtr userData)
         {
             if (_buffer == null)

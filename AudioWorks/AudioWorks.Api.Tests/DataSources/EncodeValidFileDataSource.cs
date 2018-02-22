@@ -254,6 +254,63 @@ namespace AudioWorks.Api.Tests.DataSources
                 "B8031645E618B513852BD0291D78C736"
             },
 
+            // Apple AAC encoding
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Mono.wav",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "75F55C40222A16F8CCDEF4D8376A06D2"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "F50ED3DA24B6C1DE20C8A9C293AD87F7"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 48000Hz Stereo.wav",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "BBB345254D66856AB4EB9B08929B59FB"
+            },
+            new object[]
+            {
+                "LPCM 24-bit 96000Hz Stereo.wav",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "A45BE0A6F3D5238EE40A301DBA4B557E"
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "4D0867E6F01696E55BE0F640B759D11C"
+            },
+
             // Lame encoding
             new object[]
             {

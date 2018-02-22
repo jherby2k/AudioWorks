@@ -1,0 +1,199 @@
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
+using AudioWorks.Common;
+using JetBrains.Annotations;
+
+namespace AudioWorks.Extensions.Apple
+{
+    [AudioEncoderExport("AppleAAC")]
+    public sealed class AacAudioEncoder : IAudioEncoder, IDisposable
+    {
+        static readonly uint[] _vbrQualities = { 0, 9, 18, 27, 36, 45, 54, 63, 73, 82, 91, 100, 109, 118, 127 };
+
+        [CanBeNull] FileStream _fileStream;
+        [CanBeNull] AudioMetadata _metadata;
+        [CanBeNull] SettingDictionary _settings;
+        [CanBeNull] ExtendedAudioFile _audioFile;
+        [CanBeNull] int[] _buffer;
+
+        public SettingInfoDictionary SettingInfo
+        {
+            get
+            {
+                // Use the external MP4 encoder's SettingInfo
+                var metadataEncoderFactory =
+                    ExtensionProvider.GetFactories<IAudioMetadataEncoder>("Extension", FileExtension).FirstOrDefault();
+                if (metadataEncoderFactory == null) return new SettingInfoDictionary();
+                using (var export = metadataEncoderFactory.CreateExport())
+                    return export.Value.SettingInfo;
+            }
+        }
+
+        public string FileExtension { get; } = ".m4a";
+
+        public void Initialize(FileStream fileStream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
+        {
+            _fileStream = fileStream;
+            _metadata = metadata;
+            _settings = settings;
+
+            var inputDescription = GetInputDescription(info);
+            _audioFile = new ExtendedAudioFile(GetOutputDescription(inputDescription), AudioFileType.M4A, fileStream);
+            _audioFile.SetProperty(ExtendedAudioFilePropertyId.ClientDataFormat, inputDescription);
+
+            // Configure the audio converter
+            var converter = _audioFile.GetProperty<IntPtr>(ExtendedAudioFilePropertyId.AudioConverter);
+
+            // Enable high quality (defaults to medium, 0x40)
+            SetConverterProperty(converter, AudioConverterPropertyId.CodecQuality, 0x60);
+
+            // Enable a true variable bitrate (defaults to constrained)
+            SetConverterProperty(converter, AudioConverterPropertyId.BitRateControlMode,
+                (uint) BitrateControlMode.Variable);
+            SetConverterProperty(converter, AudioConverterPropertyId.VbrQuality, _vbrQualities[9]);
+
+            // Setting the ConverterConfig property to null resynchronizes the converter settings
+            _audioFile.SetProperty(ExtendedAudioFilePropertyId.ConverterConfig, IntPtr.Zero);
+        }
+
+        public void Submit(SampleCollection samples)
+        {
+            if (samples.Frames == 0) return;
+
+            if (_buffer == null)
+                _buffer = new int[samples.Frames * samples.Channels];
+
+            var index = 0;
+            for (var frameIndex = 0; frameIndex < samples.Frames; frameIndex++)
+            for (var channelIndex = 0; channelIndex < samples.Channels; channelIndex++)
+                _buffer[index++] = (int) Math.Round(samples[channelIndex][frameIndex] * 0x7fffffff);
+
+            var bufferHandle = GCHandle.Alloc(_buffer, GCHandleType.Pinned);
+
+            try
+            {
+                var bufferList = new AudioBufferList
+                {
+                    NumberBuffers = 1,
+                    Buffers = new AudioBuffer[1]
+                };
+                bufferList.Buffers[0].NumberChannels = (uint)samples.Channels;
+                bufferList.Buffers[0].DataByteSize = (uint)(index * Marshal.SizeOf<int>());
+                bufferList.Buffers[0].Data = bufferHandle.AddrOfPinnedObject();
+
+                // ReSharper disable once PossibleNullReferenceException
+                _audioFile.Write(bufferList, (uint) samples.Frames);
+                // TODO should probably check for errors here
+            }
+            finally
+            {
+                bufferHandle.Free();
+            }
+        }
+
+        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
+        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
+        public void Finish()
+        {
+            _audioFile.Dispose();
+            _audioFile = null;
+
+            _fileStream.Position = 0;
+
+            // Call the external MP4 encoder for writing iTunes-compatible atoms
+            var metadataEncoderFactory =
+                ExtensionProvider.GetFactories<IAudioMetadataEncoder>("Extension", FileExtension).FirstOrDefault();
+            if (metadataEncoderFactory == null) return;
+            using (var export = metadataEncoderFactory.CreateExport())
+                export.Value.WriteMetadata(_fileStream, _metadata, _settings);
+        }
+
+        public void Dispose()
+        {
+            _audioFile?.Dispose();
+        }
+
+        [Pure]
+        static AudioStreamBasicDescription GetInputDescription([NotNull] AudioInfo info)
+        {
+            return new AudioStreamBasicDescription
+            {
+                SampleRate = info.SampleRate,
+                AudioFormat = AudioFormat.LinearPcm,
+                Flags = AudioFormatFlags.PcmIsSignedInteger | AudioFormatFlags.PcmIsPacked,
+                BytesPerPacket = 4 * (uint) info.Channels,
+                FramesPerPacket = 1,
+                BytesPerFrame = 4 * (uint) info.Channels,
+                ChannelsPerFrame = (uint) info.Channels,
+                BitsPerChannel = 32
+            };
+        }
+
+        [Pure]
+        static AudioStreamBasicDescription GetOutputDescription(AudioStreamBasicDescription inputDescription)
+        {
+            var result = new AudioStreamBasicDescription
+            {
+                SampleRate = inputDescription.SampleRate,
+                FramesPerPacket = 1024,
+                AudioFormat = AudioFormat.AacLowComplexity,
+                ChannelsPerFrame = inputDescription.ChannelsPerFrame
+            };
+
+            switch (inputDescription.SampleRate)
+            {
+                case 192000:
+                case 144000:
+                case 128000: // conversion required
+                case 96000:
+                case 64000:  // conversion required
+                case 48000:
+                    result.SampleRate = 48000;
+                    break;
+
+                case 176400:
+                case 88200:
+                case 44100:
+                case 37800:  // conversion required
+                case 36000:  // conversion required
+                    result.SampleRate = 44100;
+                    break;
+
+                case 32000:
+                case 28000:  // conversion required
+                    result.SampleRate = 32000;
+                    break;
+
+                case 22050:
+                case 18900:  // conversion required
+                    result.SampleRate = 22050;
+                    break;
+                default:
+                    throw new AudioUnsupportedException(
+                        $"Apple AAC does not support a {inputDescription.SampleRate} Hz sample rate.");
+            }
+
+            return result;
+        }
+
+        static void SetConverterProperty<T>(IntPtr converter, AudioConverterPropertyId propertyId, T value)
+            where T : struct
+        {
+            var unmanagedValueSize = Marshal.SizeOf(typeof(T));
+            var unmanagedValue = Marshal.AllocHGlobal(unmanagedValueSize);
+            try
+            {
+                Marshal.StructureToPtr(value, unmanagedValue, false);
+                SafeNativeMethods.AudioConverterSetProperty(converter, propertyId, (uint) unmanagedValueSize,
+                    unmanagedValue);
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(unmanagedValue);
+            }
+        }
+    }
+}
