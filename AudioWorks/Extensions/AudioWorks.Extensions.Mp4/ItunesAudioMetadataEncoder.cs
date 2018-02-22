@@ -9,7 +9,11 @@ namespace AudioWorks.Extensions.Mp4
     [AudioMetadataEncoderExport(".m4a")]
     public sealed class ItunesAudioMetadataEncoder : IAudioMetadataEncoder
     {
-        public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary();
+        public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
+        {
+            ["CreationTime"] = new DateTimeSettingInfo(),
+            ["ModificationTime"] = new DateTimeSettingInfo()
+        };
 
         public void WriteMetadata(FileStream stream, AudioMetadata metadata, SettingDictionary settings)
         {
@@ -45,6 +49,16 @@ namespace AudioWorks.Extensions.Mp4
 
                 // Update the ilst and parent atom sizes
                 tempMp4.UpdateAtomSizes((uint) tempStream.Length - tempMp4.CurrentAtom.End);
+
+                // Update the creation times, if requested
+                DateTime? newCreationTime = null;
+                DateTime? newModificationTime = null;
+                if (settings.TryGetValue("CreationTime", out var creationTimeValue))
+                    newCreationTime = (DateTime) creationTimeValue;
+                if (settings.TryGetValue("ModificationTime", out var modificationTimeValue))
+                    newModificationTime = (DateTime) modificationTimeValue;
+                if (newCreationTime.HasValue || newModificationTime.HasValue)
+                    tempMp4.UpdateTimeStamps(newCreationTime, newModificationTime);
 
                 // Update the stco atom to reflect the new location of mdat
                 tempMp4.UpdateStco((uint) (tempStream.Length - topAtoms.Single(atom =>

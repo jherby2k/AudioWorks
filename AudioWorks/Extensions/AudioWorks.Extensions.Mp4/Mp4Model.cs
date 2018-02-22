@@ -139,6 +139,52 @@ namespace AudioWorks.Extensions.Mp4
             }
         }
 
+        internal void UpdateTimeStamps(DateTime? creationTime, DateTime? modificationTime)
+        {
+            UpdateTimeStamp(new[] { "moov", "mvhd" }, creationTime, modificationTime);
+            UpdateTimeStamp(new[] { "moov", "trak", "tkhd" }, creationTime, modificationTime);
+            UpdateTimeStamp(new[] { "moov", "trak", "mdia", "mdhd" }, creationTime, modificationTime);
+        }
+
+        void UpdateTimeStamp(
+            [NotNull, ItemNotNull] string[] hierarchy,
+            DateTime? creationTime,
+            DateTime? modificationTime)
+        {
+            DescendToAtom(hierarchy);
+
+            var version = _stream.ReadByte();
+            _stream.Seek(3, SeekOrigin.Current);
+
+            var epoch = new DateTime(1904, 1, 1);
+            var creationSeconds = creationTime?.Subtract(epoch).TotalSeconds ?? 0;
+            var modificationSeconds = modificationTime?.Subtract(epoch).TotalSeconds ?? 0;
+
+            using (var writer = new Mp4Writer(_stream))
+            {
+                if (version == 0)
+                {
+                    if (creationTime.HasValue)
+                        writer.WriteBigEndian((uint) creationSeconds);
+                    else
+                        writer.Seek(4, SeekOrigin.Current);
+
+                    if (modificationTime.HasValue)
+                        writer.WriteBigEndian((uint) modificationSeconds);
+                }
+                else
+                {
+                    if (creationTime.HasValue)
+                        writer.WriteBigEndian((ulong) creationSeconds);
+                    else
+                        writer.Seek(8, SeekOrigin.Current);
+
+                    if (modificationTime.HasValue)
+                        writer.WriteBigEndian((ulong) modificationSeconds);
+                }
+            }
+        }
+
         static int GetDataLength(string fourCc)
         {
             // Some containers also contain data, which needs to be skipped

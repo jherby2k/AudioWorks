@@ -18,5 +18,12 @@ namespace AudioWorks.Extensions.Mp4
             Array.Reverse(buffer);
             Write(buffer);
         }
+
+        internal void WriteBigEndian(ulong value)
+        {
+            var buffer = BitConverter.GetBytes(value);
+            Array.Reverse(buffer);
+            Write(buffer);
+        }
     }
 }

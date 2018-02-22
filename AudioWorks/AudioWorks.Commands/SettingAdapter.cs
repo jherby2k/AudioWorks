@@ -32,15 +32,22 @@ namespace AudioWorks.Commands
                 var attributes = new Collection<Attribute> { new ParameterAttribute() };
                 switch (item.Value)
                 {
+                    // Boolean settings are converted to switch parameters
                     case BoolSettingInfo _:
                         result.Add(item.Key, new RuntimeDefinedParameter(item.Key, typeof(SwitchParameter), attributes));
                         break;
+
+                    // Integer settings have range validation
                     case IntSettingInfo intSettingInfo:
                         attributes.Add(new ValidateRangeAttribute(intSettingInfo.MinValue, intSettingInfo.MaxValue));
-                        result.Add(item.Key, new RuntimeDefinedParameter(item.Key, item.Value.ValueType, attributes));
-                        break;
+                        goto default;
+
+                    // String settings have set validation
                     case StringSettingInfo stringSettingInfo:
                         attributes.Add(new ValidateSetAttribute(stringSettingInfo.AcceptedValues.ToArray()));
+                        goto default;
+
+                    default:
                         result.Add(item.Key, new RuntimeDefinedParameter(item.Key, item.Value.ValueType, attributes));
                         break;
                 }
