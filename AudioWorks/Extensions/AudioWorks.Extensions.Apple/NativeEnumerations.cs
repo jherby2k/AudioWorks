@@ -61,6 +61,28 @@ namespace AudioWorks.Extensions.Apple
         FileNotFoundError = -43
     }
 
+    enum ExtendedAudioFilePropertyId
+    {
+        AudioConverter = 0x61636e76, // 'acnv'
+        ClientDataFormat = 0x63666d74, // 'cfmt'
+        ConverterConfig = 0x61636366 // 'accf'
+    }
+
+    enum ExtendedAudioFileStatus
+    {
+        Ok                          = 0,
+        InvalidProperty             = -66561,
+        InvalidPropertySize         = -66562,
+        NonPcmClientFormat          = -66563,
+        InvalidChannelMap           = -66564,
+        InvalidOperationOrder       = -665665,
+        InvalidDataFormat           = -66566,
+        MaxPacketSizeUnknown        = -66567,
+        InvalidSeek                 = -66568,
+        AsyncWriteTooLarge          = -66569,
+        AsyncWriteBufferOverflow    = -66570
+    }
+
     enum AudioConverterStatus
     {
         Ok = 0,

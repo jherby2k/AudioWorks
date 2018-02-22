@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AudioWorks.Api.Tests.DataTypes;
 using JetBrains.Annotations;
@@ -194,6 +195,63 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["Padding"] = 16_775_369
                 },
                 "F03F417B853C560705CD424AD329EFBC"
+            },
+
+            // ALAC encoding
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Mono.wav",
+                "ALAC",
+                new TestSettingDictionary
+                {
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "2A2BF15D757CB23E6B1FA2A0818EF367"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "ALAC",
+                new TestSettingDictionary
+                {
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "03305CCE91A686386908415EF35BDE0D"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 48000Hz Stereo.wav",
+                "ALAC",
+                new TestSettingDictionary
+                {
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "DD63909696697914797CE17AE9F3FA41"
+            },
+            new object[]
+            {
+                "LPCM 24-bit 96000Hz Stereo.wav",
+                "ALAC",
+                new TestSettingDictionary
+                {
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "72F27226338669DE7E20483A633C5D56"
+            },
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "ALAC",
+                new TestSettingDictionary
+                {
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "B8031645E618B513852BD0291D78C736"
             },
 
             // Lame encoding

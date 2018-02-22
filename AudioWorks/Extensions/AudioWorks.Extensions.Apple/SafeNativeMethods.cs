@@ -44,6 +44,18 @@ namespace AudioWorks.Extensions.Apple
             [NotNull] out AudioFileHandle handle);
 
         [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern AudioFileStatus AudioFileInitializeWithCallbacks(
+            IntPtr userData,
+            [NotNull] NativeCallbacks.AudioFileReadCallback readCallback,
+            [NotNull] NativeCallbacks.AudioFileWriteCallback writeCallback,
+            [NotNull] NativeCallbacks.AudioFileGetSizeCallback getSizeCallback,
+            [NotNull] NativeCallbacks.AudioFileSetSizeCallback setSizeCallback,
+            AudioFileType fileType,
+            ref AudioStreamBasicDescription description,
+            uint flags,
+            [NotNull] out AudioFileHandle handle);
+
+        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
         internal static extern AudioFileStatus AudioFileGetProperty(
             [NotNull] AudioFileHandle handle,
             AudioFilePropertyId id,
@@ -70,6 +82,31 @@ namespace AudioWorks.Extensions.Apple
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
         internal static extern AudioFileStatus AudioFileClose(
+            IntPtr handle);
+
+        [DllImport(_coreAudioLibrary, EntryPoint = "ExtAudioFileWrapAudioFileID",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern ExtendedAudioFileStatus ExtAudioFileWrapAudioFile(
+            [NotNull] AudioFileHandle audioFileHandle,
+            [MarshalAs(UnmanagedType.Bool)] bool forWriting,
+            out ExtendedAudioFileHandle handle);
+
+        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern ExtendedAudioFileStatus ExtAudioFileSetProperty(
+            [NotNull] ExtendedAudioFileHandle handle,
+            ExtendedAudioFilePropertyId id,
+            uint size,
+            IntPtr data);
+
+        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern ExtendedAudioFileStatus ExtAudioFileWrite(
+            [NotNull] ExtendedAudioFileHandle handle,
+            uint frames,
+            ref AudioBufferList data);
+
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
+        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern ExtendedAudioFileStatus ExtAudioFileDispose(
             IntPtr handle);
 
         [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
