@@ -40,7 +40,7 @@ namespace AudioWorks.Extensions.Apple
             _settings = settings;
             _multiplier = (float) Math.Pow(2, info.BitsPerSample - 1);
 
-            var inputDescription = AsbdAdapter.GetInputDescription(info);
+            var inputDescription = GetInputDescription(info);
             _audioFile = new ExtendedAudioFile(GetOutputDescription(inputDescription), AudioFileType.M4A, fileStream);
             _audioFile.SetProperty(ExtendedAudioFilePropertyId.ClientDataFormat, inputDescription);
         }
@@ -102,6 +102,23 @@ namespace AudioWorks.Extensions.Apple
             _audioFile?.Dispose();
         }
 
+        [Pure]
+        static AudioStreamBasicDescription GetInputDescription([NotNull] AudioInfo info)
+        {
+            return new AudioStreamBasicDescription
+            {
+                SampleRate = info.SampleRate,
+                AudioFormat = AudioFormat.LinearPcm,
+                Flags = AudioFormatFlags.PcmIsSignedInteger,
+                BytesPerPacket = 4 * (uint) info.Channels,
+                FramesPerPacket = 1,
+                BytesPerFrame = 4 * (uint) info.Channels,
+                ChannelsPerFrame = (uint) info.Channels,
+                BitsPerChannel = (uint) info.BitsPerSample
+            };
+        }
+
+        [Pure]
         static AudioStreamBasicDescription GetOutputDescription(AudioStreamBasicDescription inputDescription)
         {
             var result = new AudioStreamBasicDescription
