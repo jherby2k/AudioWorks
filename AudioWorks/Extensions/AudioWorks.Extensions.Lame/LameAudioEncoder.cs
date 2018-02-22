@@ -23,7 +23,7 @@ namespace AudioWorks.Extensions.Lame
                     ["ForceCBR"] = new BoolSettingInfo()
                 };
 
-                // Call the external ID3 encoder, if available
+                // Merge the external ID3 encoder's SettingInfo
                 var metadataEncoderFactory =
                     ExtensionProvider.GetFactories<IAudioMetadataEncoder>("Extension", FileExtension).FirstOrDefault();
                 if (metadataEncoderFactory != null)
