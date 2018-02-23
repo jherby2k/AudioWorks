@@ -33,13 +33,13 @@ namespace AudioWorks.Extensions.Vorbis
                 : new Random().Next());
 
             // Default to a quality setting of 5
-            if (settings.TryGetValue("BitRate", out var bitRateValue))
-                _encoder = new VorbisEncoder(info.Channels, info.SampleRate, (int) bitRateValue * 1000,
-                    settings.TryGetValue("Managed", out var managedValue) && (bool) managedValue);
+            if (settings.TryGetValue<int>("BitRate", out var bitRate))
+                _encoder = new VorbisEncoder(info.Channels, info.SampleRate, bitRate * 1000,
+                    settings.TryGetValue<bool>("Managed", out var managed) && managed);
             else
                 _encoder = new VorbisEncoder(info.Channels, info.SampleRate,
-                    settings.TryGetValue("Quality", out var qualityValue)
-                        ? (int) qualityValue / 10f
+                    settings.TryGetValue<int>("Quality", out var quality)
+                        ? quality / 10f
                         : 0.5f);
 
             // Write the header

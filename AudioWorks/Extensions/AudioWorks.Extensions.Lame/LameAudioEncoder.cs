@@ -52,26 +52,24 @@ namespace AudioWorks.Extensions.Lame
             if (info.SampleCount > 0)
                 _encoder.SetSampleCount((uint) info.SampleCount);
 
-            if (settings.ContainsKey("BitRate"))
+            if (settings.TryGetValue<int>("BitRate", out var bitRate))
             {
-                var bitRate = (int) settings["BitRate"];
-
-                // Use ABR, unless ForceCBR is specified
-                if (!settings.TryGetValue("ForceCBR", out var forceCbrValue) || !(bool) forceCbrValue)
+                // Use ABR, unless ForceCBR is set to true
+                if (settings.TryGetValue<bool>("ForceCBR", out var forceCbr) && forceCbr)
+                    _encoder.SetBitRate(bitRate);
+                else
                 {
                     _encoder.SetVbrMeanBitRate(bitRate);
                     _encoder.SetVbrMode(VbrMode.Abr);
                 }
-                else
-                    _encoder.SetBitRate(bitRate);
             }
             else
             {
                 // Use VBR quality 3 if nothing else is specified
-                if (settings.TryGetValue("VBRQuality", out var vbrQualityValue))
-                    _encoder.SetVbrQuality((int) vbrQualityValue);
-                else
-                    _encoder.SetVbrQuality(3);
+                _encoder.SetVbrQuality(
+                    settings.TryGetValue<int>("VBRQuality", out var vbrQuality)
+                        ? vbrQuality
+                        : 3);
                 _encoder.SetVbrMode(VbrMode.Mtrh);
             }
 

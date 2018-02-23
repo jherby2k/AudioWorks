@@ -50,13 +50,13 @@ namespace AudioWorks.Extensions.Mp4
                 // Update the ilst and parent atom sizes
                 tempMp4.UpdateAtomSizes((uint) tempStream.Length - tempMp4.CurrentAtom.End);
 
-                // Update the creation times, if requested
+                // Update the time stamps, if requested
                 DateTime? newCreationTime = null;
                 DateTime? newModificationTime = null;
-                if (settings.TryGetValue("CreationTime", out var creationTimeValue))
-                    newCreationTime = (DateTime) creationTimeValue;
-                if (settings.TryGetValue("ModificationTime", out var modificationTimeValue))
-                    newModificationTime = (DateTime) modificationTimeValue;
+                if (settings.TryGetValue<DateTime>("CreationTime", out var creationTime))
+                    newCreationTime = creationTime;
+                if (settings.TryGetValue<DateTime>("ModificationTime", out var modificationTime))
+                    newModificationTime = modificationTime;
                 if (newCreationTime.HasValue || newModificationTime.HasValue)
                     tempMp4.UpdateTimeStamps(newCreationTime, newModificationTime);
 

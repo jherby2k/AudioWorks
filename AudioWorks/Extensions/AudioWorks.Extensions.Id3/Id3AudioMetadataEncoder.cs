@@ -22,22 +22,23 @@ namespace AudioWorks.Extensions.Id3
         {
             var existingTagLength = GetExistingTagLength(stream);
 
-            var tagModel = settings.TryGetValue("TagEncoding", out var encoding)
-                ? new MetadataToTagModelAdapter(metadata, (string) encoding)
-                : new MetadataToTagModelAdapter(metadata, "Latin1");
+            var tagModel = new MetadataToTagModelAdapter(metadata,
+                settings.TryGetValue<string>("TagEncoding", out var encoding)
+                    ? encoding
+                    : "Latin1");
 
             if (tagModel.Count > 0)
             {
                 // Set the version (default to 3)
-                if (settings.TryGetValue("TagVersion", out var version) &&
-                    string.Equals("2.4", (string) version, StringComparison.Ordinal))
-                    tagModel.Header.Version = 4;
-                else
-                    tagModel.Header.Version = 3;
+                tagModel.Header.Version = (byte) (
+                    settings.TryGetValue<string>("TagVersion", out var version) &&
+                    version.Equals("2.4", StringComparison.Ordinal)
+                        ? 4
+                        : 3);
 
                 // Set the padding (default to 0)
-                if (settings.TryGetValue("TagPadding", out var padding))
-                    tagModel.Header.PaddingSize = (uint) (int) padding;
+                if (settings.TryGetValue<int>("TagPadding", out var padding))
+                    tagModel.Header.PaddingSize = (uint) padding;
 
                 tagModel.UpdateSize();
 
@@ -62,7 +63,7 @@ namespace AudioWorks.Extensions.Id3
             if (stream.Length < 128) return;
             stream.Seek(-128, SeekOrigin.End);
             using (var reader = new BinaryReader(stream, Encoding.ASCII, true))
-                if (string.Equals("TAG", new string(reader.ReadChars(3)), StringComparison.Ordinal))
+                if (new string(reader.ReadChars(3)).Equals("TAG", StringComparison.Ordinal))
                     stream.SetLength(stream.Length - 128);
             stream.Position = tagModel.Count == 0
                 ? 0

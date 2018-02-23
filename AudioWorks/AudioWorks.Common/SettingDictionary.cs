@@ -17,7 +17,8 @@ namespace AudioWorks.Common
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>true, if the value is present in the dictionary. Otherwise, false.</returns>
-        public bool TryGetValue<TValue>([NotNull] string key, [CanBeNull] out TValue value)
+        [ContractAnnotation("=> false, value:null; => true, value:notnull")]
+        public bool TryGetValue<TValue>([NotNull] string key, out TValue value)
         {
             if (TryGetValue(key, out var objectValue) && objectValue is TValue)
             {
