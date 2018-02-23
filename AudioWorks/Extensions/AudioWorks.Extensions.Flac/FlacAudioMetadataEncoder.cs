@@ -56,9 +56,9 @@ namespace AudioWorks.Extensions.Flac
         [Pure]
         static int? GetPadding([NotNull] SettingDictionary settings)
         {
-            if (!settings.TryGetValue("Padding", out var stringValue))
-                return null;
-            return (int) stringValue;
+            if (settings.TryGetValue<int>("Padding", out var result))
+                return result;
+            return null;
         }
 
         static void UpdateChain(
