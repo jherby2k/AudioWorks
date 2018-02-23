@@ -23,12 +23,20 @@ namespace AudioWorks.Extensions.Apple
         {
             get
             {
-                // Use the external MP4 encoder's SettingInfo
+                var result = new SettingInfoDictionary
+                {
+                    ["VBRQuality"] = new IntSettingInfo(0, 14)
+                };
+
+                // Merge the external MP4 encoder's SettingInfo
                 var metadataEncoderFactory =
                     ExtensionProvider.GetFactories<IAudioMetadataEncoder>("Extension", FileExtension).FirstOrDefault();
-                if (metadataEncoderFactory == null) return new SettingInfoDictionary();
-                using (var export = metadataEncoderFactory.CreateExport())
-                    return export.Value.SettingInfo;
+                if (metadataEncoderFactory != null)
+                    using (var export = metadataEncoderFactory.CreateExport())
+                        foreach (var settingInfo in export.Value.SettingInfo)
+                            result.Add(settingInfo.Key, settingInfo.Value);
+
+                return result;
             }
         }
 
@@ -53,7 +61,12 @@ namespace AudioWorks.Extensions.Apple
             // Enable a true variable bitrate (defaults to constrained)
             SetConverterProperty(converter, AudioConverterPropertyId.BitRateControlMode,
                 (uint) BitrateControlMode.Variable);
-            SetConverterProperty(converter, AudioConverterPropertyId.VbrQuality, _vbrQualities[9]);
+
+            // Use a default VBR quality index of 9
+            SetConverterProperty(converter, AudioConverterPropertyId.VbrQuality,
+                settings.TryGetValue<int>("VBRQuality", out var quality)
+                    ? _vbrQualities[quality]
+                    : _vbrQualities[9]);
 
             // Setting the ConverterConfig property to null resynchronizes the converter settings
             _audioFile.SetProperty(ExtendedAudioFilePropertyId.ConverterConfig, IntPtr.Zero);

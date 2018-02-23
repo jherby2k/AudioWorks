@@ -253,6 +253,30 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "B8031645E618B513852BD0291D78C736"
             },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "ALAC",
+                new TestSettingDictionary
+                {
+                    // Different creation time
+                    ["CreationTime"] = new DateTime(2016, 12, 1),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "6303A79069EEDD654E293CF151BD725F"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "ALAC",
+                new TestSettingDictionary
+                {
+                    // Different modification time
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2018, 12, 1)
+                },
+                "B542CBCE107BA357EB8C5F1EBBB0A667"
+            },
 
             // Apple AAC encoding
             new object[]
@@ -309,6 +333,45 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
                 "4D0867E6F01696E55BE0F640B759D11C"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    // Default VBR quality
+                    ["VBRQuality"] = 9,
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "F50ED3DA24B6C1DE20C8A9C293AD87F7"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    // Minimum VBR quality
+                    ["VBRQuality"] = 0,
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "EFDF64F92260F52FE3028C69CA6EDB97"
+            },
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    // Maximum VBR quality
+                    ["VBRQuality"] = 14,
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "0F680DD08334DF1EDA820136FBF46292"
             },
 
             // Lame encoding
