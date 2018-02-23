@@ -416,6 +416,121 @@ namespace AudioWorks.Api.Tests.DataSources
                 "0F680DD08334DF1EDA820136FBF46292"
             },
 
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    // Minimum bit rate (stereo is automatically increased to 64)
+                    ["BitRate"] = 32,
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "056E67CA4BAE1A1E985E8AD94AD0EA50"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Mono.wav",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    // Minimum bit rate (mono)
+                    ["BitRate"] = 32,
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "316B2604CF68FE96D4E593A03B029B9D"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    // Maximum bit rate (stereo)
+                    ["BitRate"] = 320,
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "A314BC49F2651FF3B516EA14CE61E470"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Mono.wav",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    // Maximum bit rate (mono is automatically reduced to 256)
+                    ["BitRate"] = 320,
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "993B37F6A32F4E08004F5AA60F15EDA2"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Mono.wav",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    // Constrained bit rate mode (default)
+                    ["BitRate"] = 128,
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "931E93A50E4859B51FD34105C298B65A"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Mono.wav",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    // Constrained bit rate mode (explicit)
+                    ["ControlMode"] = "Constrained",
+                    ["BitRate"] = 128,
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "931E93A50E4859B51FD34105C298B65A"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Mono.wav",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    // Average bit rate mode
+                    ["ControlMode"] = "Average",
+                    ["BitRate"] = 128,
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "359F3DFFCA7DF8ADF32921EA303822BB"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Mono.wav",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    // Constant bit rate mode
+                    ["ControlMode"] = "Constant",
+                    ["BitRate"] = 128,
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "D72D6FE7B4F9B706AB937210C5291756"
+            },
+
             #endregion
 
             #region Lame MP3 Encoding

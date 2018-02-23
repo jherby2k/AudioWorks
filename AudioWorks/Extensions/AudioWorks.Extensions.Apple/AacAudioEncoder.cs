@@ -25,7 +25,9 @@ namespace AudioWorks.Extensions.Apple
             {
                 var result = new SettingInfoDictionary
                 {
-                    ["VBRQuality"] = new IntSettingInfo(0, 14)
+                    ["VBRQuality"] = new IntSettingInfo(0, 14),
+                    ["BitRate"] = new IntSettingInfo(32, 320),
+                    ["ControlMode"] = new StringSettingInfo("Constrained", "Average", "Constant")
                 };
 
                 // Merge the external MP4 encoder's SettingInfo
@@ -58,15 +60,34 @@ namespace AudioWorks.Extensions.Apple
             // Enable high quality (defaults to medium, 0x40)
             SetConverterProperty(converter, AudioConverterPropertyId.CodecQuality, 0x60);
 
-            // Enable a true variable bitrate (defaults to constrained)
-            SetConverterProperty(converter, AudioConverterPropertyId.BitRateControlMode,
-                (uint) BitrateControlMode.Variable);
+            if (settings.TryGetValue<int>("BitRate", out var bitRate))
+            {
+                // Stereo has a minimum of 64, Mono has a maximum of 256
+                bitRate = info.Channels == 1 ? Math.Min(bitRate, 256) : Math.Max(bitRate, 64);
 
-            // Use a default VBR quality index of 9
-            SetConverterProperty(converter, AudioConverterPropertyId.VbrQuality,
-                settings.TryGetValue<int>("VBRQuality", out var quality)
-                    ? _vbrQualities[quality]
-                    : _vbrQualities[9]);
+                SetConverterProperty(converter, AudioConverterPropertyId.BitRate, bitRate * 1000);
+
+                // Set the control mode (constrained is the default)
+                var controlMode = BitrateControlMode.VariableConstrained;
+                if (settings.TryGetValue<string>("ControlMode", out var controlModeValue))
+                    if (controlModeValue.Equals("Average", StringComparison.OrdinalIgnoreCase))
+                        controlMode = BitrateControlMode.LongTermAverage;
+                    else if (controlModeValue.Equals("Constant", StringComparison.OrdinalIgnoreCase))
+                        controlMode = BitrateControlMode.Constant;
+                SetConverterProperty(converter, AudioConverterPropertyId.BitRateControlMode, (uint) controlMode);
+            }
+            else
+            {
+                // Enable a true variable bitrate
+                SetConverterProperty(converter, AudioConverterPropertyId.BitRateControlMode,
+                    (uint) BitrateControlMode.Variable);
+
+                // Use a default VBR quality index of 9
+                SetConverterProperty(converter, AudioConverterPropertyId.VbrQuality,
+                    settings.TryGetValue<int>("VBRQuality", out var quality)
+                        ? _vbrQualities[quality]
+                        : _vbrQualities[9]);
+            }
 
             // Setting the ConverterConfig property to null resynchronizes the converter settings
             _audioFile.SetProperty(ExtendedAudioFilePropertyId.ConverterConfig, IntPtr.Zero);
