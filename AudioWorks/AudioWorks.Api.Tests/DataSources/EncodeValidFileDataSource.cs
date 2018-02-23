@@ -10,7 +10,8 @@ namespace AudioWorks.Api.Tests.DataSources
     {
         [NotNull, ItemNotNull] static readonly List<object[]> _data = new List<object[]>
         {
-            // Wave encoding
+            #region Wave Encoding
+
             new object[]
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
@@ -18,6 +19,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 "818EE6CBF16F76F923D33650E7A52708"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
@@ -25,6 +27,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 "509B83828F13945E4121E4C4897A8649"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -32,6 +35,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 "5D4B869CD72BE208BC7B47F35E13BE9A"
             },
+
             new object[]
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
@@ -39,6 +43,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 "EFBC44B9FA9C04449D67ECD16CB7F3D8"
             },
+
             new object[]
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
@@ -46,6 +51,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 "D55BD1987676A7D6C2A04BF09C10F64F"
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
@@ -54,7 +60,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 "5D4B869CD72BE208BC7B47F35E13BE9A"
             },
 
-            // FLAC encoding
+            #endregion
+
+            #region FLAC Encoding
+
             new object[]
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
@@ -62,6 +71,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 "44AA2E52CED28503D02D51957B19DF74"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
@@ -69,6 +79,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 "588ACB7827AF0D1A6A18751EEFEA3604"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -76,6 +87,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 "3983A342A074A7E8871FEF4FBE0AC73F"
             },
+
             new object[]
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
@@ -83,6 +95,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 "8A532C4C9D61AF027BC6F684C59FE9A6"
             },
+
             new object[]
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
@@ -90,6 +103,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 "4A4DE0494E31D82F446421C876FB10EA"
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
@@ -97,6 +111,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 "A6B18F2B4DDC51DC37154410E701251F"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -108,6 +123,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "3983A342A074A7E8871FEF4FBE0AC73F"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -119,6 +135,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "D352B276E4712ABBA3A8F1B9CA8BAB55"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -130,6 +147,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "C73F21F10850A4542EEA2435226F1DEB"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -141,6 +159,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "3983A342A074A7E8871FEF4FBE0AC73F"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -152,6 +171,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "7DBB3E3E8079E60932AA5F8B4D9CD57C"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -163,6 +183,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "3983A342A074A7E8871FEF4FBE0AC73F"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -174,6 +195,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "3983A342A074A7E8871FEF4FBE0AC73F"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -185,6 +207,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "FFB7D9F0F4CDF37EDBA799FE371424A7"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -197,7 +220,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 "F03F417B853C560705CD424AD329EFBC"
             },
 
-            // ALAC encoding
+            #endregion
+
+            #region ALAC Encoding
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
@@ -209,6 +235,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "2A2BF15D757CB23E6B1FA2A0818EF367"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -220,6 +247,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "03305CCE91A686386908415EF35BDE0D"
             },
+
             new object[]
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
@@ -231,6 +259,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "DD63909696697914797CE17AE9F3FA41"
             },
+
             new object[]
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
@@ -242,6 +271,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "72F27226338669DE7E20483A633C5D56"
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
@@ -253,6 +283,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "B8031645E618B513852BD0291D78C736"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -265,6 +296,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "6303A79069EEDD654E293CF151BD725F"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -278,7 +310,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 "B542CBCE107BA357EB8C5F1EBBB0A667"
             },
 
-            // Apple AAC encoding
+            #endregion
+
+            #region Apple AAC Encoding
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
@@ -290,6 +325,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "75F55C40222A16F8CCDEF4D8376A06D2"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -301,6 +337,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "F50ED3DA24B6C1DE20C8A9C293AD87F7"
             },
+
             new object[]
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
@@ -312,6 +349,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "BBB345254D66856AB4EB9B08929B59FB"
             },
+
             new object[]
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
@@ -323,6 +361,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "A45BE0A6F3D5238EE40A301DBA4B557E"
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
@@ -334,6 +373,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "4D0867E6F01696E55BE0F640B759D11C"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -347,6 +387,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "F50ED3DA24B6C1DE20C8A9C293AD87F7"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -360,6 +401,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "EFDF64F92260F52FE3028C69CA6EDB97"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -374,7 +416,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 "0F680DD08334DF1EDA820136FBF46292"
             },
 
-            // Lame encoding
+            #endregion
+
+            #region Lame MP3 Encoding
+
             new object[]
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
@@ -382,6 +427,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 "7CB68FB7ACC70E8CD928E7DB437B16FE"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
@@ -389,6 +435,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 "C02CA44F3E1CCA3D8BA0DE922C49946E"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -396,6 +443,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 "34C345AB6BDA4A4C172D74046EC683D7"
             },
+
             new object[]
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
@@ -403,6 +451,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 "A333E74AFF4107E6C6C987AB27DF4B36"
             },
+
             new object[]
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
@@ -410,6 +459,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 "C0204097396B92D06E2B1BEBA90D0BD9"
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
@@ -417,6 +467,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 "55F290095FDCE602C43380CC4F5D1101"
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
@@ -428,6 +479,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "55F290095FDCE602C43380CC4F5D1101"
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
@@ -439,6 +491,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "7B26B3378995DB4716016DF78074B37A"
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
@@ -450,6 +503,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "55F290095FDCE602C43380CC4F5D1101"
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
@@ -461,6 +515,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "AB114692E780A51DBBE029446A29F4AF"
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
@@ -472,6 +527,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "55F290095FDCE602C43380CC4F5D1101"
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
@@ -483,6 +539,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "655CE292707399097673F7EFFA439784"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -494,6 +551,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "34C345AB6BDA4A4C172D74046EC683D7"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -505,6 +563,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "34C345AB6BDA4A4C172D74046EC683D7"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -516,6 +575,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "34C345AB6BDA4A4C172D74046EC683D7"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -527,6 +587,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "34C345AB6BDA4A4C172D74046EC683D7"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -538,6 +599,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "BB8B33BD589DA49D751C883B8A0FF653"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -549,6 +611,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "5DE234656056DFDAAD30E4DA9FD26366"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -560,6 +623,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "2BBC83E74AB1A4EB150BC6E1EB9920B5"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -571,6 +635,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "BEB5029A08011BCEDFFA99173B763E7F"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -582,6 +647,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -594,6 +660,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -606,6 +673,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "EACCA2FD6404ACA1AB46027FAE6A667B"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -617,6 +685,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "34C345AB6BDA4A4C172D74046EC683D7"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -630,7 +699,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6"
             },
 
-            // Vorbis encoding
+            #endregion
+
+            #region Ogg Vorbis Encoding
+
             new object[]
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
@@ -641,6 +713,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "2983BAAC5F0B2D27D6149468B4599ADD"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
@@ -651,6 +724,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "1DDA52655E31316656613C83FD4328B2"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -661,6 +735,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "C5F96A755FF3C12B815528C6A39D44F7"
             },
+
             new object[]
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
@@ -671,6 +746,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "B25A1DA6CABFD4D14F29945DCC48942E"
             },
+
             new object[]
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
@@ -681,6 +757,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "4CB78D36FAB745D482915719DF649DA2"
             },
+
             new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
@@ -691,6 +768,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "12B91716F92EE910925A70A1D168A93C"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -702,6 +780,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "8E2CA85D5EAF62C83583B82966C7FD3B"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -713,6 +792,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "499847A27EA465A2C6D881C01B2368D8"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -725,6 +805,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "C5F96A755FF3C12B815528C6A39D44F7"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -737,6 +818,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "10EB7A1F488C7D45EAB7E332730A34EA"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -749,6 +831,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "9129A51C0130CB81FF121522C498BC85"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -761,6 +844,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "520DA0716139BF621661EF9148BB921D"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -773,6 +857,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "6835E346F1DF227638587C81CA57A3CA"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -785,6 +870,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "512563162FD41AC28968D0C61CD1FB05"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -798,6 +884,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "512563162FD41AC28968D0C61CD1FB05"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -811,6 +898,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "D65B9F60DCDC296F6A6362600F3BFF34"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -823,6 +911,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "C5F96A755FF3C12B815528C6A39D44F7"
             },
+
             new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
@@ -836,6 +925,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "512563162FD41AC28968D0C61CD1FB05"
             }
+
+            #endregion
         };
 
         [NotNull, ItemNotNull]

@@ -9,6 +9,8 @@ namespace AudioWorks.Api.Tests.DataSources
     {
         [NotNull, ItemNotNull] static readonly List<object[]> _data = new List<object[]>
         {
+            #region Wave
+
             new object[]
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
@@ -99,215 +101,9 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata()
             },
 
-            new object[]
-            {
-                "Lame CBR 24 8000Hz Stereo.mp3",
-                new TestAudioInfo
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 8000,
-                    SampleCount = 24192,
-                    BitRate = 24571
-                },
-                new TestAudioMetadata()
-            },
+            #endregion
 
-            new object[]
-            {
-                "Lame CBR 64 44100Hz Mono.mp3",
-                new TestAudioInfo
-                {
-                    Format = "MP3",
-                    Channels = 1,
-                    SampleRate = 44100,
-                    SampleCount = 125568,
-                    BitRate = 64582
-                },
-                new TestAudioMetadata()
-            },
-
-            new object[]
-            {
-                "Lame CBR 128 44100Hz Stereo.mp3",
-                new TestAudioInfo
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 125568,
-                    BitRate = 129170
-                },
-                new TestAudioMetadata()
-            },
-
-            new object[]
-            {
-                "Lame CBR 128 44100Hz Stereo (no header).mp3",
-                new TestAudioInfo
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    BitRate = 128000
-                },
-                new TestAudioMetadata()
-            },
-
-            new object[]
-            {
-                "Lame CBR 128 48000Hz Stereo.mp3",
-                new TestAudioInfo
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 48000,
-                    SampleCount = 137088,
-                    BitRate = 129076
-                },
-                new TestAudioMetadata()
-            },
-
-            new object[]
-            {
-                "Lame VBR Standard 44100Hz Stereo.mp3",
-                new TestAudioInfo
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 125568,
-                    BitRate = 213358
-                },
-                new TestAudioMetadata()
-            },
-
-            new object[]
-            {
-                "Fraunhofer CBR 128 44100Hz Stereo.mp3",
-                new TestAudioInfo
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    BitRate = 128000
-                },
-                new TestAudioMetadata()
-            },
-
-            new object[]
-            {
-                "Fraunhofer VBR 44100Hz Stereo.mp3",
-                new TestAudioInfo
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    BitRate = 160000
-                },
-                new TestAudioMetadata()
-            },
-
-            new object[]
-            {
-                "Fraunhofer VBR 44100Hz Stereo (with header).mp3",
-                new TestAudioInfo
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 126720,
-                    BitRate = 143200
-                },
-                new TestAudioMetadata()
-            },
-
-            new object[]
-            {
-                "Lame CBR 128 44100Hz Stereo (ID3v1).mp3",
-                new TestAudioInfo
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 125568,
-                    BitRate = 129170
-                },
-                new TestAudioMetadata
-                {
-                    Title = "Test Title",
-                    Artist = "Test Artist",
-                    Album = "Test Album",
-                    Genre = "Other",
-                    Comment = "Test Comment",
-                    Year = "2017",
-                    TrackNumber = "01"
-                }
-            },
-
-            new object[]
-            {
-                "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
-                new TestAudioInfo
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 125568,
-                    BitRate = 129170
-                },
-                new TestAudioMetadata
-                {
-                    Title = "Test Title",
-                    Artist = "Test Artist",
-                    Album = "Test Album",
-                    AlbumArtist = "Test Album Artist",
-                    Composer = "Test Composer",
-                    Genre = "Test Genre",
-                    Comment = "Test Comment",
-                    Day = "31",
-                    Month = "01",
-                    Year = "2017",
-                    TrackNumber = "01",
-                    TrackCount = "12",
-                    TrackPeak = "0.500000",
-                    AlbumPeak = "0.600000",
-                    TrackGain = "0.70",
-                    AlbumGain = "0.80"
-                }
-            },
-
-            new object[]
-            {
-                "Lame CBR 128 44100Hz Stereo (ID3v2.3 UTF16).mp3",
-                new TestAudioInfo
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 125568,
-                    BitRate = 129170
-                },
-                new TestAudioMetadata
-                {
-                    Title = "Test Title",
-                    Artist = "Test Artist",
-                    Album = "Test Album",
-                    AlbumArtist = "Test Album Artist",
-                    Composer = "Test Composer",
-                    Genre = "Test Genre",
-                    Comment = "Test Comment",
-                    Day = "31",
-                    Month = "01",
-                    Year = "2017",
-                    TrackNumber = "01",
-                    TrackCount = "12",
-                    TrackPeak = "0.500000",
-                    AlbumPeak = "0.600000",
-                    TrackGain = "0.70",
-                    AlbumGain = "0.80"
-                }
-            },
+            #region FLAC
 
             new object[]
             {
@@ -802,6 +598,405 @@ namespace AudioWorks.Api.Tests.DataSources
                 }
             },
 
+            #endregion
+
+            #region ALAC
+
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Mono.m4a",
+                new TestAudioInfo
+                {
+                    Format = "ALAC",
+                    Channels = 1,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 122880,
+                    BitRate = 705600
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo.m4a",
+                new TestAudioInfo
+                {
+                    Format = "ALAC",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 122880,
+                    BitRate = 1411200
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "ALAC 16-bit 48000Hz Stereo.m4a",
+                new TestAudioInfo
+                {
+                    Format = "ALAC",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 48000,
+                    SampleCount = 131072,
+                    BitRate = 1536000
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "ALAC 24-bit 96000Hz Stereo.m4a",
+                new TestAudioInfo
+                {
+                    Format = "ALAC",
+                    Channels = 2,
+                    BitsPerSample = 24,
+                    SampleRate = 96000,
+                    SampleCount = 266240,
+                    BitRate = 4608000
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo (Tagged).m4a",
+                new TestAudioInfo
+                {
+                    Format = "ALAC",
+                    Channels = 2,
+                    BitsPerSample = 16,
+                    SampleRate = 44100,
+                    SampleCount = 122880,
+                    BitRate = 1411200
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+
+            #endregion
+
+            #region AAC
+
+            new object[]
+            {
+                "QAAC TVBR 91 8000Hz Stereo.m4a",
+                new TestAudioInfo
+                {
+                    Format = "AAC",
+                    Channels = 2,
+                    SampleRate = 8000,
+                    SampleCount = 25600,
+                    BitRate = 50795
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "QAAC TVBR 91 44100Hz Mono.m4a",
+                new TestAudioInfo
+                {
+                    Format = "AAC",
+                    Channels = 1,
+                    SampleRate = 44100,
+                    SampleCount = 126976,
+                    BitRate = 93207
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "QAAC TVBR 91 44100Hz Stereo.m4a",
+                new TestAudioInfo
+                {
+                    Format = "AAC",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 126976,
+                    BitRate = 183702
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "QAAC TVBR 91 48000Hz Stereo.m4a",
+                new TestAudioInfo
+                {
+                    Format = "AAC",
+                    Channels = 2,
+                    SampleRate = 48000,
+                    SampleCount = 137216,
+                    BitRate = 197757
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "QAAC TVBR 91 44100Hz Stereo (Tagged).m4a",
+                new TestAudioInfo
+                {
+                    Format = "AAC",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 126976,
+                    BitRate = 183702
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+
+            #endregion
+
+            #region MP3
+
+            new object[]
+            {
+                "Lame CBR 24 8000Hz Stereo.mp3",
+                new TestAudioInfo
+                {
+                    Format = "MP3",
+                    Channels = 2,
+                    SampleRate = 8000,
+                    SampleCount = 24192,
+                    BitRate = 24571
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "Lame CBR 64 44100Hz Mono.mp3",
+                new TestAudioInfo
+                {
+                    Format = "MP3",
+                    Channels = 1,
+                    SampleRate = 44100,
+                    SampleCount = 125568,
+                    BitRate = 64582
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "Lame CBR 128 44100Hz Stereo.mp3",
+                new TestAudioInfo
+                {
+                    Format = "MP3",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 125568,
+                    BitRate = 129170
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "Lame CBR 128 44100Hz Stereo (no header).mp3",
+                new TestAudioInfo
+                {
+                    Format = "MP3",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 128000
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "Lame CBR 128 48000Hz Stereo.mp3",
+                new TestAudioInfo
+                {
+                    Format = "MP3",
+                    Channels = 2,
+                    SampleRate = 48000,
+                    SampleCount = 137088,
+                    BitRate = 129076
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "Lame VBR Standard 44100Hz Stereo.mp3",
+                new TestAudioInfo
+                {
+                    Format = "MP3",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 125568,
+                    BitRate = 213358
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "Fraunhofer CBR 128 44100Hz Stereo.mp3",
+                new TestAudioInfo
+                {
+                    Format = "MP3",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 128000
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "Fraunhofer VBR 44100Hz Stereo.mp3",
+                new TestAudioInfo
+                {
+                    Format = "MP3",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    BitRate = 160000
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "Fraunhofer VBR 44100Hz Stereo (with header).mp3",
+                new TestAudioInfo
+                {
+                    Format = "MP3",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 126720,
+                    BitRate = 143200
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "Lame CBR 128 44100Hz Stereo (ID3v1).mp3",
+                new TestAudioInfo
+                {
+                    Format = "MP3",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 125568,
+                    BitRate = 129170
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Genre = "Other",
+                    Comment = "Test Comment",
+                    Year = "2017",
+                    TrackNumber = "01"
+                }
+            },
+
+            new object[]
+            {
+                "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
+                new TestAudioInfo
+                {
+                    Format = "MP3",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 125568,
+                    BitRate = 129170
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.500000",
+                    AlbumPeak = "0.600000",
+                    TrackGain = "0.70",
+                    AlbumGain = "0.80"
+                }
+            },
+
+            new object[]
+            {
+                "Lame CBR 128 44100Hz Stereo (ID3v2.3 UTF16).mp3",
+                new TestAudioInfo
+                {
+                    Format = "MP3",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 125568,
+                    BitRate = 129170
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.500000",
+                    AlbumPeak = "0.600000",
+                    TrackGain = "0.70",
+                    AlbumGain = "0.80"
+                }
+            },
+
+            #endregion
+
+            #region Ogg Vorbis
+
             new object[]
             {
                 "Vorbis Quality 3 8000Hz Stereo.ogg",
@@ -1256,180 +1451,9 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackNumber = "01",
                     TrackCount = "12"
                 }
-            },
-
-            new object[]
-            {
-                "QAAC TVBR 91 8000Hz Stereo.m4a",
-                new TestAudioInfo
-                {
-                    Format = "AAC",
-                    Channels = 2,
-                    SampleRate = 8000,
-                    SampleCount = 25600,
-                    BitRate = 50795
-                },
-                new TestAudioMetadata()
-            },
-
-            new object[]
-            {
-                "QAAC TVBR 91 44100Hz Mono.m4a",
-                new TestAudioInfo
-                {
-                    Format = "AAC",
-                    Channels = 1,
-                    SampleRate = 44100,
-                    SampleCount = 126976,
-                    BitRate = 93207
-                },
-                new TestAudioMetadata()
-            },
-
-            new object[]
-            {
-                "QAAC TVBR 91 44100Hz Stereo.m4a",
-                new TestAudioInfo
-                {
-                    Format = "AAC",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 126976,
-                    BitRate = 183702
-                },
-                new TestAudioMetadata()
-            },
-
-            new object[]
-            {
-                "QAAC TVBR 91 48000Hz Stereo.m4a",
-                new TestAudioInfo
-                {
-                    Format = "AAC",
-                    Channels = 2,
-                    SampleRate = 48000,
-                    SampleCount = 137216,
-                    BitRate = 197757
-                },
-                new TestAudioMetadata()
-            },
-
-            new object[]
-            {
-                "QAAC TVBR 91 44100Hz Stereo (Tagged).m4a",
-                new TestAudioInfo
-                {
-                    Format = "AAC",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 126976,
-                    BitRate = 183702
-                },
-                new TestAudioMetadata
-                {
-                    Title = "Test Title",
-                    Artist = "Test Artist",
-                    Album = "Test Album",
-                    AlbumArtist = "Test Album Artist",
-                    Composer = "Test Composer",
-                    Genre = "Test Genre",
-                    Comment = "Test Comment",
-                    Day = "31",
-                    Month = "01",
-                    Year = "2017",
-                    TrackNumber = "01",
-                    TrackCount = "12"
-                }
-            },
-
-            new object[]
-            {
-                "ALAC 16-bit 44100Hz Mono.m4a",
-                new TestAudioInfo
-                {
-                    Format = "ALAC",
-                    Channels = 1,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 122880,
-                    BitRate = 705600
-                },
-                new TestAudioMetadata()
-            },
-
-            new object[]
-            {
-                "ALAC 16-bit 44100Hz Stereo.m4a",
-                new TestAudioInfo
-                {
-                    Format = "ALAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 122880,
-                    BitRate = 1411200
-                },
-                new TestAudioMetadata()
-            },
-
-            new object[]
-            {
-                "ALAC 16-bit 48000Hz Stereo.m4a",
-                new TestAudioInfo
-                {
-                    Format = "ALAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 48000,
-                    SampleCount = 131072,
-                    BitRate = 1536000
-                },
-                new TestAudioMetadata()
-            },
-
-            new object[]
-            {
-                "ALAC 24-bit 96000Hz Stereo.m4a",
-                new TestAudioInfo
-                {
-                    Format = "ALAC",
-                    Channels = 2,
-                    BitsPerSample = 24,
-                    SampleRate = 96000,
-                    SampleCount = 266240,
-                    BitRate = 4608000
-                },
-                new TestAudioMetadata()
-            },
-
-            new object[]
-            {
-                "ALAC 16-bit 44100Hz Stereo (Tagged).m4a",
-                new TestAudioInfo
-                {
-                    Format = "ALAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 122880,
-                    BitRate = 1411200
-                },
-                new TestAudioMetadata
-                {
-                    Title = "Test Title",
-                    Artist = "Test Artist",
-                    Album = "Test Album",
-                    AlbumArtist = "Test Album Artist",
-                    Composer = "Test Composer",
-                    Genre = "Test Genre",
-                    Comment = "Test Comment",
-                    Day = "31",
-                    Month = "01",
-                    Year = "2017",
-                    TrackNumber = "01",
-                    TrackCount = "12"
-                }
             }
+
+            #endregion
         };
 
         [NotNull, ItemNotNull]
