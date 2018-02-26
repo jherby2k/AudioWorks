@@ -11,7 +11,7 @@ namespace AudioWorks.Commands
     /// that these changes are not persisted to disk unless followed by a call to Save-AudioMetadata.</para>
     /// </summary>
     [PublicAPI]
-    [Cmdlet(VerbsCommon.Set, "AudioMetadata"), OutputType(typeof(ITaggedAudioFile))]
+    [Cmdlet(VerbsCommon.Set, "AudioMetadata"), OutputType(new[] { typeof(ITaggedAudioFile) })]
     public sealed class SetAudioMetadataCommand : Cmdlet
     {
         /// <summary>

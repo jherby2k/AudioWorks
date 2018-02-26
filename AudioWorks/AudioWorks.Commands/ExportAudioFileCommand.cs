@@ -17,7 +17,7 @@ namespace AudioWorks.Commands
     /// </para>
     /// </summary>
     [PublicAPI]
-    [Cmdlet(VerbsData.Export, "AudioFile"), OutputType(typeof(ITaggedAudioFile))]
+    [Cmdlet(VerbsData.Export, "AudioFile"), OutputType(new[] { typeof(ITaggedAudioFile) })]
     public sealed class ExportAudioFileCommand : PSCmdlet, IDynamicParameters, IDisposable
     {
         [NotNull] readonly CancellationTokenSource _cancellationSource = new CancellationTokenSource();

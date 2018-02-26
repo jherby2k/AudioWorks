@@ -13,7 +13,7 @@ namespace AudioWorks.Commands
     /// </para>
     /// </summary>
     [PublicAPI]
-    [Cmdlet(VerbsData.Export, "AudioCoverArt"), OutputType(typeof(FileInfo))]
+    [Cmdlet(VerbsData.Export, "AudioCoverArt"), OutputType(new[] { typeof(FileInfo) })]
     public sealed class ExportAudioCoverArtCommand : PSCmdlet
     {
         [CanBeNull] CoverArtExtractor _extractor;

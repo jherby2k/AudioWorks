@@ -12,7 +12,7 @@ namespace AudioWorks.Commands
     /// on the file extension, various optional parameters may be available.</para>
     /// </summary>
     [PublicAPI]
-    [Cmdlet(VerbsData.Save, "AudioMetadata", SupportsShouldProcess = true), OutputType(typeof(ITaggedAudioFile))]
+    [Cmdlet(VerbsData.Save, "AudioMetadata", SupportsShouldProcess = true), OutputType(new[] { typeof(ITaggedAudioFile) })]
     public sealed class SaveAudioMetadataCommand : Cmdlet, IDynamicParameters
     {
         [CanBeNull] RuntimeDefinedParameterDictionary _parameters;

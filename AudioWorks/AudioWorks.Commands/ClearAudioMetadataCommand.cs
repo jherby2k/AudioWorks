@@ -12,7 +12,7 @@ namespace AudioWorks.Commands
     /// <para type="description">If no metadata fields are specified, all fields are cleared.</para>
     /// </summary>
     [PublicAPI]
-    [Cmdlet(VerbsCommon.Clear, "AudioMetadata"), OutputType(typeof(ITaggedAudioFile))]
+    [Cmdlet(VerbsCommon.Clear, "AudioMetadata"), OutputType(new[] { typeof(ITaggedAudioFile) })]
     public sealed class ClearAudioMetadataCommand : Cmdlet
     {
         /// <summary>

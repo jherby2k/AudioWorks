@@ -10,7 +10,7 @@ namespace AudioWorks.Commands
     /// </para>
     /// </summary>
     [PublicAPI]
-    [Cmdlet(VerbsCommon.Rename, "AudioFile"), OutputType(typeof(ITaggedAudioFile))]
+    [Cmdlet(VerbsCommon.Rename, "AudioFile"), OutputType(new[] { typeof(ITaggedAudioFile) })]
     public sealed class RenameAudioFileCommand : Cmdlet
     {
         /// <summary>

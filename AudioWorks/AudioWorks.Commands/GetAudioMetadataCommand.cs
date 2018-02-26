@@ -11,7 +11,7 @@ namespace AudioWorks.Commands
     /// fields that can be modified and optionally persisted to disk using other cmdlets.</para>
     /// </summary>
     [PublicAPI]
-    [Cmdlet(VerbsCommon.Get, "AudioMetadata"), OutputType(typeof(AudioMetadata))]
+    [Cmdlet(VerbsCommon.Get, "AudioMetadata"), OutputType(new[] { typeof(AudioMetadata) })]
     public sealed class GetAudioMetadataCommand : Cmdlet
     {
         /// <summary>

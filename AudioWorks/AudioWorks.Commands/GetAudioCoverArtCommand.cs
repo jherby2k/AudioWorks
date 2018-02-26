@@ -10,7 +10,7 @@ namespace AudioWorks.Commands
     /// applied to and extracted from audio files when supported by the audio format.</para>
     /// </summary>
     [PublicAPI]
-    [Cmdlet(VerbsCommon.Get, "AudioCoverArt", DefaultParameterSetName = "ByPath"), OutputType(typeof(ICoverArt))]
+    [Cmdlet(VerbsCommon.Get, "AudioCoverArt", DefaultParameterSetName = "ByPath"), OutputType(new[] { typeof(ICoverArt) })]
     public sealed class GetAudioCoverArtCommand : PSCmdlet
     {
         /// <summary>
@@ -29,7 +29,7 @@ namespace AudioWorks.Commands
         /// characters, enclose it in single quotation marks. Single quotation marks tell Windows PowerShell not to
         /// interpret any characters as escape sequences.</para>
         /// </summary>
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = "ByLiteralPath"), Alias("PSPath")]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = "ByLiteralPath"), Alias(new[] { "PSPath" })]
         public string LiteralPath { get; set; }
 
         /// <inheritdoc/>
