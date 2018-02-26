@@ -6,7 +6,7 @@ namespace AudioWorks.Extensions.Flac
     [StructLayout(LayoutKind.Sequential)]
     struct Picture
     {
-        readonly PictureType Type;
+        internal readonly PictureType Type;
 
         readonly IntPtr MimeType;
 
@@ -20,8 +20,8 @@ namespace AudioWorks.Extensions.Flac
 
         readonly uint Colors;
 
-        readonly uint DataLength;
+        internal readonly uint DataLength;
 
-        readonly IntPtr Data;
+        internal readonly IntPtr Data;
     }
 }

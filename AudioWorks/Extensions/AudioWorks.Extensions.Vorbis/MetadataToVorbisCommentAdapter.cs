@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Text;
 using AudioWorks.Common;
 using JetBrains.Annotations;
@@ -54,7 +53,8 @@ namespace AudioWorks.Extensions.Vorbis
 
             // Always store images in JPEG format since Vorbis is also lossy
             if (metadata.CoverArt != null)
-                AddTag("METADATA_BLOCK_PICTURE", Encode(CoverArtFactory.ConvertToLossy(metadata.CoverArt)));
+                AddTag("METADATA_BLOCK_PICTURE", CoverArtAdapter.ToComment(
+                    CoverArtFactory.ConvertToLossy(metadata.CoverArt)));
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
@@ -94,36 +94,6 @@ namespace AudioWorks.Extensions.Vorbis
             var keyBytes = new byte[Encoding.UTF8.GetByteCount(text) + 1];
             Encoding.UTF8.GetBytes(text, 0, text.Length, keyBytes, 0);
             return keyBytes;
-        }
-
-        [Pure, NotNull]
-        static string Encode([NotNull] ICoverArt coverArt)
-        {
-            using (var stream = new MemoryStream())
-            using (var writer = new BinaryWriter(stream, Encoding.UTF8, true))
-            {
-                // Set the picture type as "Front Cover"
-                writer.WriteBigEndian(3);
-
-                var mimeBytes = Encoding.ASCII.GetBytes(coverArt.MimeType);
-                writer.WriteBigEndian((uint)mimeBytes.Length);
-                writer.Write(mimeBytes);
-
-                var descriptionBytes = Encoding.UTF8.GetBytes(string.Empty);
-                writer.WriteBigEndian((uint)descriptionBytes.Length);
-                writer.Write(descriptionBytes);
-
-                writer.WriteBigEndian((uint)coverArt.Width);
-                writer.WriteBigEndian((uint)coverArt.Height);
-                writer.WriteBigEndian((uint)coverArt.ColorDepth);
-                writer.WriteBigEndian(0); // Always 0 for PNG and JPEG
-
-                var data = coverArt.GetData();
-                writer.WriteBigEndian((uint)data.Length);
-                writer.Write(data);
-
-                return Convert.ToBase64String(stream.ToArray());
-            }
         }
 
         void FreeUnmanaged()

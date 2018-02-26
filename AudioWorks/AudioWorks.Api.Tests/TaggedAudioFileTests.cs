@@ -288,6 +288,90 @@ namespace AudioWorks.Api.Tests
                 .Metadata.AlbumGain);
         }
 
+        [Theory(DisplayName = "TaggedAudioFile's Metadata.CoverArt property has the expected Width")]
+        [MemberData(nameof(ValidFileWithCoverArtDataSource.FileNamesAndWidth),
+            MemberType = typeof(ValidFileWithCoverArtDataSource))]
+        public void CoverArtHasExpectedWidth([NotNull] string fileName, int expectedWidth)
+        {
+            Assert.Equal(expectedWidth, new TaggedAudioFile(
+                    Path.Combine(
+                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
+                        "TestFiles",
+                        "Valid",
+                        fileName))
+                .Metadata.CoverArt?.Width);
+        }
+
+        [Theory(DisplayName = "TaggedAudioFile's Metadata.CoverArt property has the expected Height")]
+        [MemberData(nameof(ValidFileWithCoverArtDataSource.FileNamesAndHeight),
+            MemberType = typeof(ValidFileWithCoverArtDataSource))]
+        public void CoverArtHasExpectedHeight([NotNull] string fileName, int expectedHeight)
+        {
+            Assert.Equal(expectedHeight, new TaggedAudioFile(
+                    Path.Combine(
+                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
+                        "TestFiles",
+                        "Valid",
+                        fileName))
+                .Metadata.CoverArt?.Height);
+        }
+
+        [Theory(DisplayName = "TaggedAudioFile's Metadata.CoverArt property has the expected ColorDepth")]
+        [MemberData(nameof(ValidFileWithCoverArtDataSource.FileNamesAndColorDepth),
+            MemberType = typeof(ValidFileWithCoverArtDataSource))]
+        public void CoverArtHasExpectedColorDepth([NotNull] string fileName, int expectedColorDepth)
+        {
+            Assert.Equal(expectedColorDepth, new TaggedAudioFile(
+                    Path.Combine(
+                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
+                        "TestFiles",
+                        "Valid",
+                        fileName))
+                .Metadata.CoverArt?.ColorDepth);
+        }
+
+        [Theory(DisplayName = "TaggedAudioFile's Metadata.CoverArt property has the expected Lossless value")]
+        [MemberData(nameof(ValidFileWithCoverArtDataSource.FileNamesAndLossless),
+            MemberType = typeof(ValidFileWithCoverArtDataSource))]
+        public void CoverArtHasExpectedLossless([NotNull] string fileName, bool expectedLossless)
+        {
+            Assert.Equal(expectedLossless, new TaggedAudioFile(
+                    Path.Combine(
+                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
+                        "TestFiles",
+                        "Valid",
+                        fileName))
+                .Metadata.CoverArt?.Lossless);
+        }
+
+        [Theory(DisplayName = "TaggedAudioFile's Metadata.CoverArt property has the expected MimeType")]
+        [MemberData(nameof(ValidFileWithCoverArtDataSource.FileNamesAndMimeType),
+            MemberType = typeof(ValidFileWithCoverArtDataSource))]
+        public void CoverArtHasExpectedMimeType([NotNull] string fileName, [NotNull] string expectedMimeType)
+        {
+            Assert.Equal(expectedMimeType, new TaggedAudioFile(
+                    Path.Combine(
+                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
+                        "TestFiles",
+                        "Valid",
+                        fileName))
+                .Metadata.CoverArt?.MimeType);
+        }
+
+        [Theory(DisplayName = "TaggedAudioFile's Metadata.CoverArt.GetData method returns the expected value")]
+        [MemberData(nameof(ValidFileWithCoverArtDataSource.FileNamesAndDataHash),
+            MemberType = typeof(ValidFileWithCoverArtDataSource))]
+        public void CoverArtGetDataReturnsExpectedValue([NotNull] string fileName, [NotNull] string expectedHash)
+        {
+            Assert.Equal(expectedHash, HashUtility.CalculateHash(new TaggedAudioFile(
+                    Path.Combine(
+                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
+                        "TestFiles",
+                        "Valid",
+                        fileName))
+                .Metadata.CoverArt?.GetData()));
+        }
+
         [Theory(DisplayName = "TaggedAudioFile's Rename method renames the file")]
         [MemberData(nameof(RenameValidFileDataSource.Data), MemberType = typeof(RenameValidFileDataSource))]
         public void RenameRenamesFile(

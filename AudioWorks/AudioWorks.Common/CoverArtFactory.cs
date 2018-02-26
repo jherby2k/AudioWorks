@@ -14,12 +14,30 @@ namespace AudioWorks.Common
         [NotNull] static readonly string[] _acceptedExtensions = { ".bmp", ".png", ".jpg", ".jpeg" };
 
         /// <summary>
+        /// Creates a new <see cref="ICoverArt"/> object from a byte array.
+        /// </summary>
+        /// <param name="data">The raw image data.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="data"/> is null.</exception>
+        /// <exception cref="ImageUnsupportedException">Thrown if <paramref name="data"/> is not in a supported image
+        /// format.</exception>
+        /// <exception cref="ImageInvalidException">Thrown if <paramref name="data"/> is not a valid image.</exception>
+        [NotNull]
+        public static ICoverArt Create([NotNull] byte[] data)
+        {
+            if (data == null)
+                throw new ArgumentNullException(nameof(data), "Value cannot be null.");
+
+            using (var memoryStream = new MemoryStream(data))
+                return new CoverArt(memoryStream);
+        }
+
+        /// <summary>
         /// Creates a new <see cref="ICoverArt"/> object from an image file.
         /// </summary>
         /// <param name="path">The fully-qualified path to the file.</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="path"/> is null or empty.</exception>
         /// <exception cref="FileNotFoundException">Thrown if <paramref name="path"/> does not exist.</exception>
-        /// <exception cref="ImageUnsupportedException">Thrown if <paramref name="path"/> is not a supported image
+        /// <exception cref="ImageUnsupportedException">Thrown if <paramref name="path"/> is not in a supported image
         /// format.</exception>
         /// <exception cref="ImageInvalidException">Thrown if <paramref name="path"/> is not a valid image file.
         /// </exception>

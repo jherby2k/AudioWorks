@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using AudioWorks.Common;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
@@ -35,6 +36,16 @@ namespace AudioWorks.Extensions.Flac
                         Marshal.Copy(entry.Entry, commentBytes, 0, commentBytes.Length);
                         var comment = Encoding.UTF8.GetString(commentBytes).Split(new[] { '=' }, 2);
                         AudioMetadata.Set(comment[0], comment[1]);
+                    }
+                    break;
+
+                case MetadataType.Picture:
+                    var picture = Marshal.PtrToStructure<PictureMetadataBlock>(metadataBlock).Picture;
+                    if (picture.Type == PictureType.CoverFront || picture.Type == PictureType.Other)
+                    {
+                        var coverBytes = new byte[picture.DataLength];
+                        Marshal.Copy(picture.Data, coverBytes, 0, coverBytes.Length);
+                        AudioMetadata.CoverArt = CoverArtFactory.Create(coverBytes);
                     }
                     break;
             }

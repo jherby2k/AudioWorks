@@ -10,10 +10,17 @@ namespace AudioWorks.Api.Tests
     public sealed class CoverArtFactoryTests
     {
         [Fact(DisplayName = "CoverArtFactory's Create method throws an exception if the path is null")]
+        public void CreateDataNullThrowsException()
+        {
+            // ReSharper disable once AssignNullToNotNullAttribute
+            Assert.Throws<ArgumentNullException>(() => CoverArtFactory.Create((byte[]) null));
+        }
+
+        [Fact(DisplayName = "CoverArtFactory's Create method throws an exception if the path is null")]
         public void CreatePathNullThrowsException()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() => CoverArtFactory.Create(null));
+            Assert.Throws<ArgumentNullException>(() => CoverArtFactory.Create((string) null));
         }
 
         [Fact(DisplayName = "CoverArtFactory's Create method throws an exception if the path cannot be found")]

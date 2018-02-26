@@ -11,6 +11,7 @@ namespace AudioWorks.Extensions.Flac
             using (var decoder = new MetadataDecoder(stream))
             {
                 decoder.SetMetadataRespond(MetadataType.VorbisComment);
+                decoder.SetMetadataRespond(MetadataType.Picture);
 
                 decoder.Initialize();
                 if (!decoder.ProcessMetadata())

@@ -11,6 +11,6 @@ namespace AudioWorks.Extensions.Flac
 
         [FieldOffset(8)] readonly uint Length;
 
-        [FieldOffset(16)] readonly Picture Picture;
+        [FieldOffset(16)] internal readonly Picture Picture;
     }
 }

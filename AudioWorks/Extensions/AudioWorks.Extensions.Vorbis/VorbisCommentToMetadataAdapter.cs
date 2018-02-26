@@ -101,6 +101,10 @@ namespace AudioWorks.Extensions.Vorbis
                         case "REPLAYGAIN_ALBUM_GAIN":
                             AlbumGain = comment[1].Replace(" dB", string.Empty);
                             break;
+
+                        case "METADATA_BLOCK_PICTURE":
+                            CoverArt = CoverArtAdapter.FromComment(comment[1]);
+                            break;
                     }
                 }
                 catch (AudioMetadataInvalidException)

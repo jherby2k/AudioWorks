@@ -66,6 +66,10 @@ namespace AudioWorks.Extensions.Mp4
                         if (trackNumberAtom.TrackCount > 0)
                             TrackCount = trackNumberAtom.TrackCount.ToString(CultureInfo.InvariantCulture);
                         break;
+
+                    case "covr":
+                        CoverArt = new CoverAtom(atomData).Value;
+                        break;
                 }
             }
         }
