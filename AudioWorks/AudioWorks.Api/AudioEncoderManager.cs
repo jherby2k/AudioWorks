@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AudioWorks.Common;
 using AudioWorks.Extensions;
 using JetBrains.Annotations;
@@ -31,6 +33,16 @@ namespace AudioWorks.Api
                     return export.Value.SettingInfo;
 
             return new SettingInfoDictionary();
+        }
+
+        /// <summary>
+        /// Gets the names of the available encoders.
+        /// </summary>
+        /// <returns>The encoder names.</returns>
+        [NotNull]
+        public static IEnumerable<string> GetEncoderNames()
+        {
+            return ExtensionProvider.GetFactories<IAudioEncoder>().Select(fac => fac.Metadata["Name"]).Cast<string>();
         }
     }
 }

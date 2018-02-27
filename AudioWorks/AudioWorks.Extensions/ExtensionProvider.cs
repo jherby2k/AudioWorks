@@ -19,7 +19,7 @@ namespace AudioWorks.Extensions
         /// <typeparam name="T">The type of extension.</typeparam>
         /// <returns>The extension factories.</returns>
         [NotNull]
-        public static IEnumerable<ExportFactory<T>> GetFactories<T>()
+        public static IEnumerable<ExportFactory<T, IDictionary<string, object>>> GetFactories<T>()
             where T : class
         {
             return ExtensionContainer<T>.Instance.Factories;

@@ -29,6 +29,7 @@ namespace AudioWorks.Commands
         /// </summary>
         [CanBeNull]
         [Parameter(Mandatory = true, Position = 0)]
+        [ArgumentCompleter(typeof(EncoderCompleter))]
         public string Encoder { get; set; }
 
         /// <summary>
