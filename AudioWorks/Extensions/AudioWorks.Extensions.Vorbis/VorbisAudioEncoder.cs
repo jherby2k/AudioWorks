@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Vorbis
 {
-    [AudioEncoderExport("Vorbis", "Xiph.Org's Ogg Vorbis Codec")]
+    [AudioEncoderExport("Vorbis", "Ogg Vorbis")]
     public sealed class VorbisAudioEncoder : IAudioEncoder, IDisposable
     {
         [CanBeNull] FileStream _fileStream;

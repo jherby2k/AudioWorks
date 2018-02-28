@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Wave
 {
-    [AudioEncoderExport("Wave", "Wave Audio Codec")]
+    [AudioEncoderExport("Wave", "Linear PCM Wave")]
     public sealed class WaveAudioEncoder : IAudioEncoder, IDisposable
     {
         int _bytesPerSample;

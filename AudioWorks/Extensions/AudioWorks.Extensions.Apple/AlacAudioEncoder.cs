@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Apple
 {
-    [AudioEncoderExport("ALAC", "Apple's Lossless Audio Codec")]
+    [AudioEncoderExport("ALAC", "Apple Lossless Audio Codec")]
     public sealed class AlacAudioEncoder : IAudioEncoder, IDisposable
     {
         [CanBeNull] FileStream _fileStream;
