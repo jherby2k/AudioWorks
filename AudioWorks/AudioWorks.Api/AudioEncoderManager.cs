@@ -36,13 +36,14 @@ namespace AudioWorks.Api
         }
 
         /// <summary>
-        /// Gets the names of the available encoders.
+        /// Gets information about the available encoders.
         /// </summary>
-        /// <returns>The encoder names.</returns>
+        /// <returns>The encoder info.</returns>
         [NotNull]
-        public static IEnumerable<string> GetEncoderNames()
+        public static IEnumerable<EncoderInfo> GetEncoderInfo()
         {
-            return ExtensionProvider.GetFactories<IAudioEncoder>().Select(fac => fac.Metadata["Name"]).Cast<string>();
+            return ExtensionProvider.GetFactories<IAudioEncoder>()
+                .Select(factory => new EncoderInfo(factory.Metadata));
         }
     }
 }

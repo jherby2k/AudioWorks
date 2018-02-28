@@ -31,7 +31,14 @@ namespace AudioWorks.Commands
             CommandAst commandAst,
             IDictionary fakeBoundParameters)
         {
-            return AudioEncoderManager.GetEncoderNames().Select(name => new CompletionResult(name));
+            var pattern = new WildcardPattern($"{wordToComplete}*", WildcardOptions.IgnoreCase);
+            return AudioEncoderManager.GetEncoderInfo()
+                .Where(info => pattern.IsMatch(info.Name))
+                .Select(info => new CompletionResult(
+                    info.Name,
+                    info.Name,
+                    CompletionResultType.ParameterValue,
+                    info.Description));
         }
     }
 }

@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Lame
 {
-    [AudioEncoderExport("LameMP3")]
+    [AudioEncoderExport("LameMP3", "Lame's MPEG Audio Layer 3 Codec")]
     public sealed class LameAudioEncoder : IAudioEncoder, IDisposable
     {
         [CanBeNull] Encoder _encoder;

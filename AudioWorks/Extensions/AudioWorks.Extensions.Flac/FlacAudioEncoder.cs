@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
 {
-    [AudioEncoderExport("FLAC")]
+    [AudioEncoderExport("FLAC", "Xiph.Org's Free Lossless Audio Codec")]
     public sealed class FlacAudioEncoder : IAudioEncoder, IDisposable
     {
         [NotNull] readonly List<MetadataBlock> _metadataBlocks = new List<MetadataBlock>(3);
