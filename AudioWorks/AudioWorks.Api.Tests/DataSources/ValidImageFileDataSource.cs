@@ -38,7 +38,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 24,
                 false,
                 "image/jpeg",
-                "0E19A69A74AF427BD6F7CCE15B1D5AB9"
+                "718DA67FD3FA5AC1C3A21C06860A5146"
             }
         };
 

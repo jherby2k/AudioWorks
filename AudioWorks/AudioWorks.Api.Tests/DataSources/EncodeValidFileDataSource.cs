@@ -117,7 +117,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "FLAC",
                 null,
-                "059F861F42C0EC7C89CFFEE43C6982FE"
+                "3AA3CA0051ABAD0A57BF03F854F5D206"
             },
 
             new object[]
@@ -313,7 +313,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "C3F80C66716D89C1F422D03B56F8F13F"
+                "815AAA13CE601B5FD9A090A67A8F7C39"
             },
 
             new object[]
@@ -427,7 +427,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "C23160A98E8AFCBDAC89007FC38294AB"
+                "176EDDA7813AB6127D3DBF0F535760F0"
             },
 
             new object[]
@@ -652,7 +652,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "LameMP3",
                 null,
-                "FF4BF3126F730A75711B5A688B158B0A"
+                "9FDD958CF9D8ED55B783D0F16484CF72"
             },
 
             new object[]
@@ -975,7 +975,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "07B7F2BD69FFF09BD4B2DEB3A578E084"
+                "EF2FFD1A07C8A8DD1E4867A8E1BD8CC8"
             },
 
             new object[]

@@ -274,7 +274,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "JPEG 24-bit 1280 x 935.jpg",
                 null,
-                "CA0F514A6C18C3C62758B6440DB34A49"
+                "3FCBA313EC7C7AE1731FAAA7B782B8AA"
             },
 
             #endregion
@@ -482,7 +482,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "JPEG 24-bit 1280 x 935.jpg",
                 null,
-                "F238013301868A1A625B3B4C401AA2A1"
+                "6296739331BF246B43E4539014BE65C8"
             },
 
             // PNG CoverArt (AAC, converted)
@@ -502,7 +502,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "JPEG 24-bit 1280 x 935.jpg",
                 null,
-                "C6D1F2969F82F5BAF4DFFDA109D8705B"
+                "F4AD128FC8191A38D0C01D27F1D83F54"
             },
 
             #endregion
@@ -862,7 +862,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "JPEG 24-bit 1280 x 935.jpg",
                 null,
-                "4F44E088AD399639070D033A93ADB143"
+                "7E47EBA6AE47527FB65773CDFFEE49D6"
             },
 
             #endregion
@@ -1060,7 +1060,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "PNG 24-bit 1280 x 935.png",
                 null,
-                "not9841053230BA17907883AB4224608165"
+                "not61DBC98AEC5A3698FF2EDC6F3D9DA649"
             },
 
             // JPEG CoverArt
@@ -1070,7 +1070,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "JPEG 24-bit 1280 x 935.jpg",
                 null,
-                "not9841053230BA17907883AB4224608165"
+                "not61DBC98AEC5A3698FF2EDC6F3D9DA649"
             }
 
             #endregion
