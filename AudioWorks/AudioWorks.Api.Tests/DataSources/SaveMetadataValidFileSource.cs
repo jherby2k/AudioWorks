@@ -465,7 +465,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "2A66A8458C32EC663AE48C6294E829AB"
             },
 
-            // PNG CoverArt
+            // PNG CoverArt (ALAC)
             new object[]
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
@@ -475,7 +475,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "2248FBC57A687F964BF115DF267B1622"
             },
 
-            // JPEG CoverArt
+            // JPEG CoverArt (ALAC)
             new object[]
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
@@ -483,6 +483,26 @@ namespace AudioWorks.Api.Tests.DataSources
                 "JPEG 24-bit 1280 x 935.jpg",
                 null,
                 "F238013301868A1A625B3B4C401AA2A1"
+            },
+
+            // PNG CoverArt (AAC, converted)
+            new object[]
+            {
+                "QAAC TVBR 91 44100Hz Stereo.m4a",
+                new TestAudioMetadata(),
+                "PNG 24-bit 1280 x 935.png",
+                null,
+                "F4AD128FC8191A38D0C01D27F1D83F54"
+            },
+
+            // JPEG CoverArt (AAC)
+            new object[]
+            {
+                "QAAC TVBR 91 44100Hz Stereo.m4a",
+                new TestAudioMetadata(),
+                "JPEG 24-bit 1280 x 935.jpg",
+                null,
+                "C6D1F2969F82F5BAF4DFFDA109D8705B"
             },
 
             #endregion
@@ -825,14 +845,14 @@ namespace AudioWorks.Api.Tests.DataSources
                 "963D578D818C25DE5FEE6625BE7BFA98"
             },
 
-            // PNG CoverArt
+            // PNG CoverArt (converted)
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
                 new TestAudioMetadata(),
                 "PNG 24-bit 1280 x 935.png",
                 null,
-                "7FEF56282B067336618CC27D5B41C0E0"
+                "7E47EBA6AE47527FB65773CDFFEE49D6"
             },
 
             // JPEG CoverArt
@@ -1033,7 +1053,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "not9841053230BA17907883AB4224608165"
             },
 
-            // PNG CoverArt
+            // PNG CoverArt (Converted)
             new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",

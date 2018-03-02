@@ -11,7 +11,7 @@ namespace AudioWorks.Extensions.Mp4
     {
         [NotNull, ItemNotNull] readonly List<WritableAtom> _atoms = new List<WritableAtom>();
 
-        internal MetadataToIlstAtomAdapter([NotNull] AudioMetadata metadata)
+        internal MetadataToIlstAtomAdapter([NotNull] AudioMetadata metadata, bool compressCoverArt)
         {
             if (!string.IsNullOrEmpty(metadata.Title))
                 _atoms.Add(new TextAtom("©nam", metadata.Title));
@@ -40,7 +40,9 @@ namespace AudioWorks.Extensions.Mp4
                 _atoms.Add(new TrackNumberAtom(metadata.TrackNumber, metadata.TrackCount));
 
             if (metadata.CoverArt != null)
-                _atoms.Add(new CoverAtom(metadata.CoverArt));
+                _atoms.Add(new CoverAtom(compressCoverArt
+                    ? CoverArtFactory.ConvertToLossy(metadata.CoverArt)
+                    : metadata.CoverArt));
         }
 
         internal void Prepend([NotNull] WritableAtom atom)

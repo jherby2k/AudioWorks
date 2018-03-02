@@ -415,7 +415,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "73D6342233BD172169CE9D17BA13DC25"
+                "176EDDA7813AB6127D3DBF0F535760F0"
             },
 
             new object[]
@@ -644,7 +644,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
                 "LameMP3",
                 null,
-                "1DB2B286E6477DE28963E277F2BA0B94"
+                "9FDD958CF9D8ED55B783D0F16484CF72"
             },
 
             new object[]

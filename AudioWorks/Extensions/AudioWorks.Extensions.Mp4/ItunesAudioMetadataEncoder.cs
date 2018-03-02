@@ -77,9 +77,14 @@ namespace AudioWorks.Extensions.Mp4
         }
 
         [NotNull]
-        static byte[] GenerateIlst([NotNull] Mp4Model originalMp4, [NotNull] AudioMetadata metadata)
+        static byte[] GenerateIlst(
+            [NotNull] Mp4Model originalMp4,
+            [NotNull] AudioMetadata metadata)
         {
-            var adaptedMetadata = new MetadataToIlstAtomAdapter(metadata);
+            // Always store images in JPEG format for AAC, since it is also lossy
+            originalMp4.DescendToAtom("moov", "trak", "mdia", "minf", "stbl", "stsd", "mp4a", "esds");
+            var adaptedMetadata = new MetadataToIlstAtomAdapter(metadata,
+                new EsdsAtom(originalMp4.ReadAtom(originalMp4.CurrentAtom)).IsAac);
 
             // If there is an existing ilst atom, "Reverse DNS" subatoms may need to be preserved
             if (originalMp4.DescendToAtom("moov", "udta", "meta", "ilst"))

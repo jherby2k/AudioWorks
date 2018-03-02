@@ -29,13 +29,16 @@ namespace AudioWorks.Extensions.Id3
             if (!string.IsNullOrEmpty(metadata.AlbumGain))
                 AddUserDefinedFrame("REPLAYGAIN_ALBUM_GAIN", $"{metadata.AlbumGain} dB", "Latin1", true);
 
-            if (metadata.CoverArt != null)
-                Add(new FramePicture("APIC")
-                {
-                    PictureType = PictureTypeCode.CoverFront,
-                    Mime = metadata.CoverArt.MimeType,
-                    PictureData = metadata.CoverArt.GetData()
-                });
+            if (metadata.CoverArt == null) return;
+
+            // Always store images in JPEG format since MP3 is also lossy
+            var lossyCoverArt = CoverArtFactory.ConvertToLossy(metadata.CoverArt);
+            Add(new FramePicture("APIC")
+            {
+                PictureType = PictureTypeCode.CoverFront,
+                Mime = lossyCoverArt.MimeType,
+                PictureData = lossyCoverArt.GetData()
+            });
         }
 
         void AddTextFrame(
