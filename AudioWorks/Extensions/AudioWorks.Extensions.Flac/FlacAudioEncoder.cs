@@ -10,7 +10,7 @@ namespace AudioWorks.Extensions.Flac
     [AudioEncoderExport("FLAC", "Free Lossless Audio Codec")]
     public sealed class FlacAudioEncoder : IAudioEncoder, IDisposable
     {
-        [NotNull] readonly List<MetadataBlock> _metadataBlocks = new List<MetadataBlock>(3);
+        [NotNull] readonly List<MetadataBlock> _metadataBlocks = new List<MetadataBlock>(4);
         [CanBeNull] StreamEncoder _encoder;
         float _multiplier;
         [CanBeNull] int[] _buffer;
@@ -47,6 +47,8 @@ namespace AudioWorks.Extensions.Flac
                     (uint) Math.Ceiling(info.PlayLength.TotalSeconds / seekPointInterval), (ulong) info.SampleCount));
 
             _metadataBlocks.Add(new MetadataToVorbisCommentAdapter(metadata));
+            if (metadata.CoverArt != null)
+                _metadataBlocks.Add(new CoverArtToPictureBlockAdapter(metadata.CoverArt));
 
             // Use a default padding of 8192
             if (!settings.TryGetValue<int>("Padding", out var padding))

@@ -52,14 +52,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 "D55BD1987676A7D6C2A04BF09C10F64F"
             },
 
-            new object[]
-            {
-                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
-                "Wave",
-                null,
-                "5D4B869CD72BE208BC7B47F35E13BE9A"
-            },
-
             #endregion
 
             #region FLAC Encoding
@@ -110,6 +102,22 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC",
                 null,
                 "A6B18F2B4DDC51DC37154410E701251F"
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
+                "FLAC",
+                null,
+                "90DE035E77A93A3DA90AAA129928259B"
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
+                "FLAC",
+                null,
+                "059F861F42C0EC7C89CFFEE43C6982FE"
             },
 
             new object[]
@@ -286,6 +294,30 @@ namespace AudioWorks.Api.Tests.DataSources
 
             new object[]
             {
+                "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
+                "ALAC",
+                new TestSettingDictionary
+                {
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "FA61875BD1BB22BFF395F068070BDA17"
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
+                "ALAC",
+                new TestSettingDictionary
+                {
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "C3F80C66716D89C1F422D03B56F8F13F"
+            },
+
+            new object[]
+            {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ALAC",
                 new TestSettingDictionary
@@ -372,6 +404,30 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
                 "4D0867E6F01696E55BE0F640B759D11C"
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "73D6342233BD172169CE9D17BA13DC25"
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "C23160A98E8AFCBDAC89007FC38294AB"
             },
 
             new object[]
@@ -581,6 +637,22 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LameMP3",
                 null,
                 "55F290095FDCE602C43380CC4F5D1101"
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
+                "LameMP3",
+                null,
+                "1DB2B286E6477DE28963E277F2BA0B94"
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
+                "LameMP3",
+                null,
+                "FF4BF3126F730A75711B5A688B158B0A"
             },
 
             new object[]
@@ -882,6 +954,28 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["SerialNumber"] = 1
                 },
                 "12B91716F92EE910925A70A1D168A93C"
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    ["SerialNumber"] = 1
+                },
+                "EF2FFD1A07C8A8DD1E4867A8E1BD8CC8"
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    ["SerialNumber"] = 1
+                },
+                "07B7F2BD69FFF09BD4B2DEB3A578E084"
             },
 
             new object[]
