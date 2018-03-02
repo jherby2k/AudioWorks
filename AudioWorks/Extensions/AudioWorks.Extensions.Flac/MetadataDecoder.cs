@@ -42,11 +42,11 @@ namespace AudioWorks.Extensions.Flac
                 case MetadataType.Picture:
                     var picture = Marshal.PtrToStructure<PictureMetadataBlock>(metadataBlock).Picture;
                     if (picture.Type == PictureType.CoverFront || picture.Type == PictureType.Other)
-                    {
-                        var coverBytes = new byte[picture.DataLength];
-                        Marshal.Copy(picture.Data, coverBytes, 0, coverBytes.Length);
-                        AudioMetadata.CoverArt = CoverArtFactory.Create(coverBytes);
-                    }
+                        unsafe
+                        {
+                            AudioMetadata.CoverArt = CoverArtFactory.Create(
+                                new Span<byte>(picture.Data.ToPointer(), (int) picture.DataLength).ToArray());
+                        }
                     break;
             }
         }

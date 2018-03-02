@@ -22,6 +22,6 @@ namespace AudioWorks.Extensions.Flac
 
         internal readonly uint DataLength;
 
-        internal readonly IntPtr Data;
+        internal IntPtr Data;
     }
 }

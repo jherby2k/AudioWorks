@@ -8,7 +8,6 @@ namespace AudioWorks.Extensions.Flac
     sealed class AudioStreamDecoder : AudioInfoStreamDecoder
     {
         float _divisor;
-        [CanBeNull] int[] _buffer;
 
         [CanBeNull]
         internal SampleCollection Samples { get; set; }
@@ -30,21 +29,21 @@ namespace AudioWorks.Extensions.Flac
             if (_divisor < 1)
                 _divisor = (float) Math.Pow(2, frame.Header.BitsPerSample - 1);
 
-            // Initialize the output buffer
-            if (_buffer == null)
-                _buffer = new int[frame.Header.BlockSize];
+            Samples = SampleCollectionPool.Instance.Create((int) frame.Header.Channels, (int) frame.Header.BlockSize);
 
-            Samples = SampleCollectionPool.Instance.Create((int)frame.Header.Channels, (int)frame.Header.BlockSize);
-
-            for (var channelIndex = 0; channelIndex < frame.Header.Channels; channelIndex++)
+            unsafe
             {
-                // Copy the samples for each channel from unmanaged memory into the output buffer
-                var channelPtr = Marshal.ReadIntPtr(buffer, channelIndex * Marshal.SizeOf(buffer));
-                Marshal.Copy(channelPtr, _buffer, 0, (int) frame.Header.BlockSize);
+                for (var channelIndex = 0; channelIndex < frame.Header.Channels; channelIndex++)
+                {
+                    // buffer is an array of pointers to each channel
+                    var channelBuffer = new Span<int>(
+                        Marshal.ReadIntPtr(buffer, channelIndex * Marshal.SizeOf(buffer)).ToPointer(),
+                        (int)frame.Header.BlockSize);
 
-                // Convert to floating point values
-                for (var frameIndex = 0; frameIndex < (int)frame.Header.BlockSize; frameIndex++)
-                    Samples[channelIndex][frameIndex] = _buffer[frameIndex] / _divisor;
+                    // Convert to floating point values
+                    for (var frameIndex = 0; frameIndex < (int)frame.Header.BlockSize; frameIndex++)
+                        Samples[channelIndex][frameIndex] = channelBuffer[frameIndex] / _divisor;
+                }
             }
 
             return DecoderWriteStatus.Continue;
