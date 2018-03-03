@@ -8,6 +8,6 @@ namespace AudioWorks.Extensions.Flac
     {
         internal readonly uint Length;
 
-        internal readonly IntPtr Entry;
+        internal IntPtr Entry;
     }
 }

@@ -1,27 +1,22 @@
-﻿using System;
+﻿using AudioWorks.Common;
+using System;
 using System.Globalization;
-using System.Runtime.InteropServices;
 using System.Text;
-using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Vorbis
 {
     sealed class VorbisCommentToMetadataAdapter : AudioMetadata
     {
-        internal VorbisCommentToMetadataAdapter(VorbisComment vorbisComment)
+        internal unsafe VorbisCommentToMetadataAdapter(VorbisComment vorbisComment)
         {
-            var commentLengths = new int[vorbisComment.Comments];
-            Marshal.Copy(vorbisComment.CommentLengths, commentLengths, 0, commentLengths.Length);
-
-            var commentPtrs = new IntPtr[vorbisComment.Comments];
-            Marshal.Copy(vorbisComment.UserComments, commentPtrs, 0, commentPtrs.Length);
+            var commentPtrs = new Span<IntPtr>(vorbisComment.UserComments.ToPointer(), vorbisComment.Comments);
+            var commentLengths = new Span<int>(vorbisComment.CommentLengths.ToPointer(), vorbisComment.Comments);
 
             for (var i = 0; i < vorbisComment.Comments; i++)
             {
-                var commentBytes = new byte[commentLengths[i]];
-                Marshal.Copy(commentPtrs[i], commentBytes, 0, commentLengths[i]);
-
-                var comment = Encoding.UTF8.GetString(commentBytes).Split(new[] { '=' }, 2);
+                var comment = Encoding.UTF8
+                    .GetString(new Span<byte>(commentPtrs[i].ToPointer(), commentLengths[i]).ToArray())
+                    .Split(new[] { '=' }, 2);
 
                 try
                 {

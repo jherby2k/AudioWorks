@@ -6,9 +6,9 @@ namespace AudioWorks.Extensions.Vorbis
     [StructLayout(LayoutKind.Sequential)]
     struct VorbisComment
     {
-        internal readonly IntPtr UserComments;
+        internal IntPtr UserComments;
 
-        internal readonly IntPtr CommentLengths;
+        internal IntPtr CommentLengths;
 
         internal readonly int Comments;
 

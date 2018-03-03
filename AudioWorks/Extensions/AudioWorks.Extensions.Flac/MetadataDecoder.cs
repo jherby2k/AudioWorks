@@ -22,7 +22,7 @@ namespace AudioWorks.Extensions.Flac
             SafeNativeMethods.StreamDecoderSetMetadataRespond(Handle, type);
         }
 
-        protected override void MetadataCallback(IntPtr handle, IntPtr metadataBlock, IntPtr userData)
+        protected override unsafe void MetadataCallback(IntPtr handle, IntPtr metadataBlock, IntPtr userData)
         {
             switch ((MetadataType) Marshal.ReadInt32(metadataBlock))
             {
@@ -32,9 +32,8 @@ namespace AudioWorks.Extensions.Flac
                     {
                         var entry = Marshal.PtrToStructure<VorbisCommentEntry>(IntPtr.Add(vorbisComment.Comments,
                             commentIndex * Marshal.SizeOf<VorbisCommentEntry>()));
-                        var commentBytes = new byte[entry.Length];
-                        Marshal.Copy(entry.Entry, commentBytes, 0, commentBytes.Length);
-                        var comment = Encoding.UTF8.GetString(commentBytes).Split(new[] { '=' }, 2);
+                        var comment = Encoding.UTF8.GetString((byte*) entry.Entry.ToPointer(), (int) entry.Length)
+                            .Split(new[] { '=' }, 2);
                         AudioMetadata.Set(comment[0], comment[1]);
                     }
                     break;
@@ -42,11 +41,8 @@ namespace AudioWorks.Extensions.Flac
                 case MetadataType.Picture:
                     var picture = Marshal.PtrToStructure<PictureMetadataBlock>(metadataBlock).Picture;
                     if (picture.Type == PictureType.CoverFront || picture.Type == PictureType.Other)
-                        unsafe
-                        {
-                            AudioMetadata.CoverArt = CoverArtFactory.Create(
-                                new Span<byte>(picture.Data.ToPointer(), (int) picture.DataLength).ToArray());
-                        }
+                        AudioMetadata.CoverArt = CoverArtFactory.Create(
+                            new Span<byte>(picture.Data.ToPointer(), (int) picture.DataLength).ToArray());
                     break;
             }
         }

@@ -52,7 +52,7 @@ namespace AudioWorks.Extensions.Flac
             _handle.Dispose();
         }
 
-        static IoCallbacks InitializeCallbacks([NotNull] Stream stream)
+        static unsafe IoCallbacks InitializeCallbacks([NotNull] Stream stream)
         {
             return new IoCallbacks
             {
@@ -69,9 +69,8 @@ namespace AudioWorks.Extensions.Flac
                 {
                     var castNumberOfRecords = numberOfRecords.ToInt32();
                     var totalBufferSize = bufferSize.ToInt32() * castNumberOfRecords;
-                    var managedBuffer = new byte[totalBufferSize];
-                    Marshal.Copy(writeBuffer, managedBuffer, 0, totalBufferSize);
-                    stream.Write(managedBuffer, 0, totalBufferSize);
+                    var managedBuffer = new Span<byte>(writeBuffer.ToPointer(), totalBufferSize);
+                    stream.Write(managedBuffer.ToArray(), 0, totalBufferSize);
                     return new IntPtr(castNumberOfRecords);
                 },
 

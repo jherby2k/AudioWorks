@@ -22,7 +22,7 @@ namespace AudioWorks.Extensions.Flac
             return SafeNativeMethods.StreamDecoderProcessSingle(Handle);
         }
 
-        protected override DecoderWriteStatus WriteCallback(IntPtr handle, ref Frame frame, IntPtr buffer,
+        protected override unsafe DecoderWriteStatus WriteCallback(IntPtr handle, ref Frame frame, IntPtr buffer,
             IntPtr userData)
         {
             // Initialize the divisor
@@ -31,19 +31,16 @@ namespace AudioWorks.Extensions.Flac
 
             Samples = SampleCollectionPool.Instance.Create((int) frame.Header.Channels, (int) frame.Header.BlockSize);
 
-            unsafe
+            for (var channelIndex = 0; channelIndex < frame.Header.Channels; channelIndex++)
             {
-                for (var channelIndex = 0; channelIndex < frame.Header.Channels; channelIndex++)
-                {
-                    // buffer is an array of pointers to each channel
-                    var channelBuffer = new Span<int>(
-                        Marshal.ReadIntPtr(buffer, channelIndex * Marshal.SizeOf(buffer)).ToPointer(),
-                        (int)frame.Header.BlockSize);
+                // buffer is an array of pointers to each channel
+                var channelBuffer = new Span<int>(
+                    Marshal.ReadIntPtr(buffer, channelIndex * Marshal.SizeOf(buffer)).ToPointer(),
+                    (int)frame.Header.BlockSize);
 
-                    // Convert to floating point values
-                    for (var frameIndex = 0; frameIndex < (int)frame.Header.BlockSize; frameIndex++)
-                        Samples[channelIndex][frameIndex] = channelBuffer[frameIndex] / _divisor;
-                }
+                // Convert to floating point values
+                for (var frameIndex = 0; frameIndex < (int)frame.Header.BlockSize; frameIndex++)
+                    Samples[channelIndex][frameIndex] = channelBuffer[frameIndex] / _divisor;
             }
 
             return DecoderWriteStatus.Continue;

@@ -13,7 +13,6 @@ namespace AudioWorks.Extensions.Vorbis
         [CanBeNull] FileStream _fileStream;
         [CanBeNull] OggStream _oggStream;
         [CanBeNull] VorbisEncoder _encoder;
-        [CanBeNull] byte[] _buffer;
 
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
         {
@@ -53,24 +52,20 @@ namespace AudioWorks.Extensions.Vorbis
 
             // ReSharper disable once PossibleNullReferenceException
             while (_oggStream.Flush(out var page))
-                WritePage(page);
+                WritePage(page, _fileStream);
         }
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException",
-            Justification = "Initialize is always called first")]
-        public void Submit(SampleCollection samples)
+        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
+        public unsafe void Submit(SampleCollection samples)
         {
-            if (samples.Frames > 0)
-            {
-                // Request an unmanaged buffer, then copy the samples to it
-                var buffers = new IntPtr[samples.Channels];
-                Marshal.Copy(_encoder.GetBuffer(samples.Frames), buffers, 0, buffers.Length);
+            if (samples.Frames <= 0) return;
 
-                for (var i = 0; i < samples.Channels; i++)
-                    Marshal.Copy(samples[i], 0, buffers[i], samples[i].Length);
+            // Request an unmanaged buffer for each channel, then copy the samples to to them
+            var buffers = new Span<IntPtr>(_encoder.GetBuffer(samples.Frames).ToPointer(), samples.Channels);
+            for (var i = 0; i < samples.Channels; i++)
+                Marshal.Copy(samples[i], 0, buffers[i], samples[i].Length);
 
-                WriteFrames(samples.Frames);
-            }
+            WriteFrames(samples.Frames);
         }
 
         public void Finish()
@@ -84,31 +79,8 @@ namespace AudioWorks.Extensions.Vorbis
             _oggStream?.Dispose();
         }
 
-        void WritePage(OggPage page)
-        {
-            WritePointer(page.Header, page.HeaderLength);
-            WritePointer(page.Body, page.BodyLength);
-        }
-
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException",
-            Justification = "_fileStream is always initialized first")]
-        void WritePointer(IntPtr location, int length)
-        {
-            if (_buffer == null)
-                _buffer = new byte[4096];
-
-            var offset = 0;
-            while (offset < length)
-            {
-                var bytesCopied = Math.Min(length - offset, _buffer.Length);
-                Marshal.Copy(IntPtr.Add(location, offset), _buffer, 0, bytesCopied);
-                _fileStream.Write(_buffer, 0, bytesCopied);
-                offset += bytesCopied;
-            }
-        }
-
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException",
-            Justification = "Initialize is always called first")]
+        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
+        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
         void WriteFrames(int frames)
         {
             _encoder.Wrote(frames);
@@ -123,9 +95,22 @@ namespace AudioWorks.Extensions.Vorbis
                     _oggStream.PacketIn(ref packet);
 
                     while (_oggStream.PageOut(out OggPage page))
-                        WritePage(page);
+                        WritePage(page, _fileStream);
                 }
             }
+        }
+
+        static unsafe void WritePage(OggPage page, [NotNull] Stream stream)
+        {
+#if (WINDOWS)
+            stream.Write(new Span<byte>(page.Header.ToPointer(), page.HeaderLength).ToArray(), 0, page.HeaderLength);
+            stream.Write(new Span<byte>(page.Body.ToPointer(), page.BodyLength).ToArray(), 0, page.BodyLength);
+#else
+            stream.Write(new Span<byte>(page.Header.ToPointer(), (int) page.HeaderLength).ToArray(), 0,
+                (int) page.HeaderLength);
+            stream.Write(new Span<byte>(page.Body.ToPointer(), (int) page.BodyLength).ToArray(), 0,
+                (int) page.BodyLength);
+#endif
         }
     }
 }

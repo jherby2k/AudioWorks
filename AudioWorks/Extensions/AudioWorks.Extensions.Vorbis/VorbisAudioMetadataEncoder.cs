@@ -60,15 +60,18 @@ namespace AudioWorks.Extensions.Vorbis
                                 // Page out each packet, flushing at the end of the header
                                 if (packet.PacketNumber == 2)
                                     while (outputOggStream.Flush(out var outPage))
-                                        WritePage(outPage, tempStream, buffer);
+                                        WritePage(outPage, tempStream);
                                 else
                                     while (outputOggStream.PageOut(out var outPage))
-                                        WritePage(outPage, tempStream, buffer);
+                                        WritePage(outPage, tempStream);
                             }
                         } while (!SafeNativeMethods.OggPageEos(ref inPage));
 
                         // Once the end of the input is reached, overwrite the original file and return
-                        Overwrite(stream, tempStream);
+                        stream.Position = 0;
+                        stream.SetLength(tempStream.Length);
+                        tempStream.Position = 0;
+                        tempStream.CopyTo(stream);
                     }
                 }
                 finally
@@ -79,35 +82,17 @@ namespace AudioWorks.Extensions.Vorbis
             }
         }
 
-        static void WritePage(OggPage page, [NotNull] Stream stream, [NotNull] byte[] buffer)
+        static unsafe void WritePage(OggPage page, [NotNull] Stream stream)
         {
 #if (WINDOWS)
-            WritePointer(page.Header, page.HeaderLength, stream, buffer);
-            WritePointer(page.Body, page.BodyLength, stream, buffer);
+            stream.Write(new Span<byte>(page.Header.ToPointer(), page.HeaderLength).ToArray(), 0, page.HeaderLength);
+            stream.Write(new Span<byte>(page.Body.ToPointer(), page.BodyLength).ToArray(), 0, page.BodyLength);
 #else
-            WritePointer(page.Header, (int) page.HeaderLength, stream, buffer);
-            WritePointer(page.Body, (int) page.BodyLength, stream, buffer);
+            stream.Write(new Span<byte>(page.Header.ToPointer(), (int) page.HeaderLength).ToArray(), 0,
+                (int) page.HeaderLength);
+            stream.Write(new Span<byte>(page.Body.ToPointer(), (int) page.BodyLength).ToArray(), 0,
+                (int) page.BodyLength);
 #endif
-        }
-
-        static void WritePointer(IntPtr location, int length, [NotNull] Stream stream, [NotNull] byte[] buffer)
-        {
-            var offset = 0;
-            while (offset < length)
-            {
-                var bytesCopied = Math.Min(length - offset, buffer.Length);
-                Marshal.Copy(IntPtr.Add(location, offset), buffer, 0, bytesCopied);
-                stream.Write(buffer, 0, bytesCopied);
-                offset += bytesCopied;
-            }
-        }
-
-        static void Overwrite([NotNull] Stream originalStream, [NotNull] Stream newStream)
-        {
-            originalStream.Position = 0;
-            originalStream.SetLength(newStream.Length);
-            newStream.Position = 0;
-            newStream.CopyTo(originalStream);
         }
     }
 }

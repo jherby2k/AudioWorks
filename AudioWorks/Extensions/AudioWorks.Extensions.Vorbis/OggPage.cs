@@ -6,7 +6,7 @@ namespace AudioWorks.Extensions.Vorbis
     [StructLayout(LayoutKind.Sequential)]
     struct OggPage
     {
-        internal readonly IntPtr Header;
+        internal IntPtr Header;
 
 #if (WINDOWS)
         internal readonly int HeaderLength;
@@ -14,7 +14,7 @@ namespace AudioWorks.Extensions.Vorbis
         internal readonly long HeaderLength;
 #endif
 
-        internal readonly IntPtr Body;
+        internal IntPtr Body;
 
 #if (WINDOWS)
         internal readonly int BodyLength;
