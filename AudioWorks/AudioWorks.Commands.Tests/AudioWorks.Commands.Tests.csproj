@@ -57,7 +57,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="pwsh.exe -ExecutionPolicy Unrestricted -File &quot;$(ProjectDir)..\PublishExtensions.ps1&quot; -Configuration $(ConfigurationName) -ExtensionProjectRoot &quot;$(ProjectDir)..\Extensions&quot; -ExtensionOutputRoot &quot;$(OutDir)Extensions&quot;" />
+    <Exec Command="pwsh.exe -ExecutionPolicy Unrestricted -File &quot;$(ProjectDir)..\CopyExtensions.ps1&quot; -Configuration $(ConfigurationName) -ExtensionProjectRoot &quot;$(ProjectDir)..\Extensions&quot; -ExtensionOutputRoot $(OutDir)" />
   </Target>
 
 </Project>
