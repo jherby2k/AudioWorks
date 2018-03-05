@@ -41,7 +41,7 @@ namespace AudioWorks.Extensions.ReplayGain
 
         [DllImport(_ebur128Library, EntryPoint = "ebur128_add_frames_float",
             CallingConvention = CallingConvention.Cdecl)]
-        internal static extern Ebur128Error AddFramesFloat([NotNull] StateHandle handle, float[] source, UIntPtr count);
+        internal static extern Ebur128Error AddFramesFloat([NotNull] StateHandle handle, IntPtr source, UIntPtr count);
 
         [Pure]
         [DllImport(_ebur128Library, EntryPoint = "ebur128_sample_peak",

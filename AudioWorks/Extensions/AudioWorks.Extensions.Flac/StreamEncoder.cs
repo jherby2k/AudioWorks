@@ -66,7 +66,7 @@ namespace AudioWorks.Extensions.Flac
                 IntPtr.Zero);
         }
 
-        internal bool ProcessInterleaved([NotNull] int[] buffer, uint sampleCount)
+        internal bool ProcessInterleaved(IntPtr buffer, uint sampleCount)
         {
             return SafeNativeMethods.StreamEncoderProcessInterleaved(_handle, buffer, sampleCount);
         }

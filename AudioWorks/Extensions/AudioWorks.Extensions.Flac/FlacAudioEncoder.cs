@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Runtime.InteropServices;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 
@@ -13,7 +14,6 @@ namespace AudioWorks.Extensions.Flac
         [NotNull] readonly List<MetadataBlock> _metadataBlocks = new List<MetadataBlock>(4);
         [CanBeNull] StreamEncoder _encoder;
         float _multiplier;
-        [CanBeNull] int[] _buffer;
 
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
         {
@@ -63,22 +63,28 @@ namespace AudioWorks.Extensions.Flac
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-        public void Submit(SampleCollection samples)
+        public unsafe void Submit(SampleCollection samples)
         {
-            if (samples.Frames == 0)
-                return;
+            if (samples.Frames == 0) return;
 
-            if (_buffer == null)
-                _buffer = new int[samples.Channels * samples.Frames];
+            var bufferSize = samples.Frames * samples.Channels;
+            var bufferAddress = Marshal.AllocHGlobal(bufferSize * Marshal.SizeOf<int>());
+            try
+            {
+                var buffer = new Span<int>(bufferAddress.ToPointer(), bufferSize);
 
-            // Interlace the samples in integer format, and store them in the input buffer:
-            var index = 0;
-            for (var frameIndex = 0; frameIndex < samples.Frames; frameIndex++)
-            for (var channelIndex = 0; channelIndex < samples.Channels; channelIndex++)
-                _buffer[index++] = (int) Math.Round(samples[channelIndex][frameIndex] * _multiplier);
+                // Interlace the samples in integer format, and store them in the unmanaged buffer
+                var index = 0;
+                for (var frameIndex = 0; frameIndex < samples.Frames; frameIndex++)
+                for (var channelIndex = 0; channelIndex < samples.Channels; channelIndex++)
+                    buffer[index++] = (int) Math.Round(samples[channelIndex][frameIndex] * _multiplier);
 
-            _encoder.ProcessInterleaved(_buffer, (uint) samples.Frames);
-            //TODO check the result and throw an exception if necessary.
+                _encoder.ProcessInterleaved(bufferAddress, (uint) samples.Frames);
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(bufferAddress);
+            }
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]

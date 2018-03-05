@@ -16,7 +16,6 @@ namespace AudioWorks.Extensions.Apple
         [CanBeNull] SettingDictionary _settings;
         float _multiplier;
         [CanBeNull] ExtendedAudioFile _audioFile;
-        [CanBeNull] int[] _buffer;
 
         public SettingInfoDictionary SettingInfo
         {
@@ -45,22 +44,22 @@ namespace AudioWorks.Extensions.Apple
             _audioFile.SetProperty(ExtendedAudioFilePropertyId.ClientDataFormat, inputDescription);
         }
 
-        public void Submit(SampleCollection samples)
+        public unsafe void Submit(SampleCollection samples)
         {
             if (samples.Frames == 0) return;
 
-            if (_buffer == null)
-                _buffer = new int[samples.Frames * samples.Channels];
-
-            var index = 0;
-            for (var frameIndex = 0; frameIndex < samples.Frames; frameIndex++)
-            for (var channelIndex = 0; channelIndex < samples.Channels; channelIndex++)
-                _buffer[index++] = (int) Math.Round(samples[channelIndex][frameIndex] * _multiplier);
-
-            var bufferHandle = GCHandle.Alloc(_buffer, GCHandleType.Pinned);
-
+            var bufferSize = samples.Frames * samples.Channels;
+            var bufferAddress = Marshal.AllocHGlobal(bufferSize * Marshal.SizeOf<int>());
             try
             {
+                var buffer = new Span<int>(bufferAddress.ToPointer(), bufferSize);
+
+                // Interlace the samples in integer format, and store them in the unmanaged buffer
+                var index = 0;
+                for (var frameIndex = 0; frameIndex < samples.Frames; frameIndex++)
+                for (var channelIndex = 0; channelIndex < samples.Channels; channelIndex++)
+                    buffer[index++] = (int) Math.Round(samples[channelIndex][frameIndex] * _multiplier);
+
                 var bufferList = new AudioBufferList
                 {
                     NumberBuffers = 1,
@@ -68,15 +67,14 @@ namespace AudioWorks.Extensions.Apple
                 };
                 bufferList.Buffers[0].NumberChannels = (uint)samples.Channels;
                 bufferList.Buffers[0].DataByteSize = (uint)(index * Marshal.SizeOf<int>());
-                bufferList.Buffers[0].Data = bufferHandle.AddrOfPinnedObject();
+                bufferList.Buffers[0].Data = bufferAddress;
 
                 // ReSharper disable once PossibleNullReferenceException
                 _audioFile.Write(bufferList, (uint) samples.Frames);
-                // TODO should probably check for errors here
             }
             finally
             {
-                bufferHandle.Free();
+                Marshal.FreeHGlobal(bufferAddress);
             }
         }
 

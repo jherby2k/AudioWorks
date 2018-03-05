@@ -153,7 +153,7 @@ namespace AudioWorks.Extensions.Flac
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamEncoderProcessInterleaved(
             [NotNull] StreamEncoderHandle handle,
-            [NotNull] int[] buffer,
+            IntPtr buffer,
             uint samples);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_finish",
