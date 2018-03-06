@@ -14,8 +14,8 @@ namespace AudioWorks.Extensions
             .WithAssemblies(new DirectoryInfo(Path.Combine(
                     Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath) ??
                     string.Empty,
-                    "Extensions"))
-                .EnumerateFiles("AudioWorks.Extensions.*.dll", SearchOption.AllDirectories)
+                    "Extensions")).GetDirectories()
+                .SelectMany(extensionDir => extensionDir.GetFiles("AudioWorks.Extensions.*.dll"))
                 .Select(fileInfo => new ExtensionAssemblyResolver(fileInfo.FullName).Assembly))
             .CreateContainer();
     }
