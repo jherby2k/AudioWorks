@@ -12,56 +12,41 @@ namespace AudioWorks.Extensions
 {
     sealed class ExtensionAssemblyResolver
     {
-        [NotNull] readonly ICompilationAssemblyResolver _assemblyResolver;
-        [NotNull] readonly DependencyContext _dependencyContext;
-        [NotNull] readonly AssemblyLoadContext _loadContext;
-
         [NotNull]
         internal Assembly Assembly { get; }
 
         internal ExtensionAssemblyResolver([NotNull] string path)
         {
-            Assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
-            _dependencyContext = DependencyContext.Load(Assembly);
+            Assembly = Assembly.LoadFrom(path);
+            var dependencyContext = DependencyContext.Load(Assembly);
+            var assemblyResolver = new PackageCompilationAssemblyResolver();
 
-            _assemblyResolver = new CompositeCompilationAssemblyResolver
-            (new ICompilationAssemblyResolver[]
+            AssemblyLoadContext.Default.Resolving += (context, name) =>
             {
-                new AppBaseCompilationAssemblyResolver(Path.GetDirectoryName(path)),
-                new ReferenceAssemblyPathResolver(),
-                new PackageCompilationAssemblyResolver()
-            });
+                var runtimeLibrary = dependencyContext.RuntimeLibraries.FirstOrDefault(library =>
+                    library.RuntimeAssemblyGroups.SelectMany(group => group.AssetPaths)
+                        .Select(Path.GetFileNameWithoutExtension)
+                        .Contains(name.Name, StringComparer.OrdinalIgnoreCase));
 
-            _loadContext = AssemblyLoadContext.GetLoadContext(Assembly);
-            _loadContext.Resolving += OnResolving;
-        }
+                if (runtimeLibrary != null)
+                {
+                    var compiliationLibrary = new CompilationLibrary(
+                        runtimeLibrary.Type,
+                        runtimeLibrary.Name,
+                        runtimeLibrary.Version,
+                        runtimeLibrary.Hash,
+                        runtimeLibrary.RuntimeAssemblyGroups.SelectMany(group => group.AssetPaths),
+                        runtimeLibrary.Dependencies,
+                        runtimeLibrary.Serviceable);
 
-        [CanBeNull]
-        Assembly OnResolving([NotNull] AssemblyLoadContext context, [NotNull] AssemblyName name)
-        {
-            var runtimeLibrary = _dependencyContext.RuntimeLibraries.FirstOrDefault(library =>
-                library.RuntimeAssemblyGroups.SelectMany(group => group.AssetPaths)
-                    .Select(Path.GetFileNameWithoutExtension)
-                    .Contains(name.Name, StringComparer.OrdinalIgnoreCase));
+                    var assemblies = new List<string>(1);
+                    assemblyResolver.TryResolveAssemblyPaths(compiliationLibrary, assemblies);
+                    if (assemblies.Count > 0)
+                        return AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblies[0]);
+                }
 
-            if (runtimeLibrary != null)
-            {
-                var compiliationLibrary = new CompilationLibrary(
-                    runtimeLibrary.Type,
-                    runtimeLibrary.Name,
-                    runtimeLibrary.Version,
-                    runtimeLibrary.Hash,
-                    runtimeLibrary.RuntimeAssemblyGroups.SelectMany(group => group.AssetPaths),
-                    runtimeLibrary.Dependencies,
-                    runtimeLibrary.Serviceable);
-
-                var assemblies = new List<string>(1);
-                _assemblyResolver.TryResolveAssemblyPaths(compiliationLibrary, assemblies);
-                if (assemblies.Count > 0)
-                    return _loadContext.LoadFromAssemblyPath(assemblies[0]);
-            }
-
-            return null;
+                return null;
+            };
         }
     }
 }
