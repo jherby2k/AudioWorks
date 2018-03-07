@@ -6,7 +6,6 @@ using JetBrains.Annotations;
 #if (WINDOWS)
 using System.IO;
 using System.Text;
-using Microsoft.Win32;
 #endif
 
 namespace AudioWorks.Extensions.Apple
@@ -21,11 +20,11 @@ namespace AudioWorks.Extensions.Apple
 
         static SafeNativeMethods()
         {
-            // Prefix the PATH variable with the Apple Application Support installation directory
-            var newPath = new StringBuilder(Registry.LocalMachine.OpenSubKey("SOFTWARE")?
-                                                .OpenSubKey("Apple Inc.")?
-                                                .OpenSubKey("Apple Application Support")?
-                                                .GetValue("InstallDir")?.ToString() ?? string.Empty);
+            // Prefix the PATH variable with the default Apple Application Support installation directory
+            var newPath = new StringBuilder(Path.Combine(
+                Environment.GetEnvironmentVariable("CommonProgramFiles"),
+                "Apple",
+                "Apple Application Support"));
             newPath.Append(Path.PathSeparator);
             newPath.Append(Environment.GetEnvironmentVariable("PATH"));
 

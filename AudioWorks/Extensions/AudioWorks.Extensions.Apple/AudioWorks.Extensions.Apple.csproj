@@ -37,10 +37,6 @@
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(DefineConstants.Contains(WINDOWS))">
-    <PackageReference Include="Microsoft.Win32.Registry" Version="4.4.0" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\AudioWorks.Extensions\AudioWorks.Extensions.csproj" />
   </ItemGroup>
