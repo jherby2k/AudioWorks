@@ -49,17 +49,15 @@ namespace AudioWorks.Extensions
 
                 if (runtimeLibrary != null)
                 {
-                    var compiliationLibrary = new CompilationLibrary(
+                    var assemblies = new List<string>(1);
+                    assemblyResolver.TryResolveAssemblyPaths(new CompilationLibrary(
                         runtimeLibrary.Type,
                         runtimeLibrary.Name,
                         runtimeLibrary.Version,
                         runtimeLibrary.Hash,
                         runtimeLibrary.RuntimeAssemblyGroups.SelectMany(group => group.AssetPaths),
                         runtimeLibrary.Dependencies,
-                        runtimeLibrary.Serviceable);
-
-                    var assemblies = new List<string>(1);
-                    assemblyResolver.TryResolveAssemblyPaths(compiliationLibrary, assemblies);
+                        runtimeLibrary.Serviceable), assemblies);
                     if (assemblies.Count > 0)
                         return AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblies[0]);
                 }
