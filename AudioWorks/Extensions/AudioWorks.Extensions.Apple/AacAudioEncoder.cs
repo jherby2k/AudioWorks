@@ -102,12 +102,7 @@ namespace AudioWorks.Extensions.Apple
             try
             {
                 var buffer = new Span<int>(bufferAddress.ToPointer(), bufferSize);
-
-                // Interlace the samples in integer format, and store them in the unmanaged buffer
-                var index = 0;
-                for (var frameIndex = 0; frameIndex < samples.Frames; frameIndex++)
-                for (var channelIndex = 0; channelIndex < samples.Channels; channelIndex++)
-                    buffer[index++] = (int) Math.Round(samples[channelIndex][frameIndex] * 0x7fffffff);
+                samples.CopyToInterleaved(buffer, 32);
 
                 var bufferList = new AudioBufferList
                 {
@@ -115,7 +110,7 @@ namespace AudioWorks.Extensions.Apple
                     Buffers = new AudioBuffer[1]
                 };
                 bufferList.Buffers[0].NumberChannels = (uint) samples.Channels;
-                bufferList.Buffers[0].DataByteSize = (uint) (index * Marshal.SizeOf<int>());
+                bufferList.Buffers[0].DataByteSize = (uint) (bufferSize * Marshal.SizeOf<int>());
                 bufferList.Buffers[0].Data = bufferAddress;
 
                 // ReSharper disable once PossibleNullReferenceException

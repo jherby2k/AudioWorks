@@ -11,11 +11,11 @@ namespace AudioWorks.Extensions.Wave
     {
         const int _defaultFrameCount = 4096;
 
-        [NotNull] readonly byte[] _buffer = new byte[4];
         [CanBeNull] AudioInfo _audioInfo;
         [CanBeNull] RiffReader _reader;
         int _bytesPerSample;
         long _framesRemaining;
+        byte[] _buffer;
 
         public bool Finished => _framesRemaining == 0;
 
@@ -33,9 +33,16 @@ namespace AudioWorks.Extensions.Wave
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public SampleCollection DecodeSamples()
         {
+            if (_buffer == null)
+                _buffer = new byte[_audioInfo.Channels * _defaultFrameCount * _bytesPerSample];
+
+            var count = _reader.Read(_buffer, 0, _buffer.Length);
+
+
             var result = new SampleCollection(
-                _audioInfo.Channels,
-                (int) Math.Min(_framesRemaining, _defaultFrameCount));
+                _audioInfo.Channels,));
+
+            result.CopyFromPcm(_buffer);
 
             // 1-8 bit samples are unsigned:
             if (_bytesPerSample == 1)

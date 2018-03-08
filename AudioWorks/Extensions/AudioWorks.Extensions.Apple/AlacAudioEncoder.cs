@@ -14,7 +14,7 @@ namespace AudioWorks.Extensions.Apple
         [CanBeNull] FileStream _fileStream;
         [CanBeNull] AudioMetadata _metadata;
         [CanBeNull] SettingDictionary _settings;
-        float _multiplier;
+        int _bitsPerSample;
         [CanBeNull] ExtendedAudioFile _audioFile;
 
         public SettingInfoDictionary SettingInfo
@@ -37,7 +37,7 @@ namespace AudioWorks.Extensions.Apple
             _fileStream = fileStream;
             _metadata = metadata;
             _settings = settings;
-            _multiplier = (float) Math.Pow(2, info.BitsPerSample - 1);
+            _bitsPerSample = info.BitsPerSample;
 
             var inputDescription = GetInputDescription(info);
             _audioFile = new ExtendedAudioFile(GetOutputDescription(inputDescription), AudioFileType.M4A, fileStream);
@@ -53,20 +53,15 @@ namespace AudioWorks.Extensions.Apple
             try
             {
                 var buffer = new Span<int>(bufferAddress.ToPointer(), bufferSize);
-
-                // Interlace the samples in integer format, and store them in the unmanaged buffer
-                var index = 0;
-                for (var frameIndex = 0; frameIndex < samples.Frames; frameIndex++)
-                for (var channelIndex = 0; channelIndex < samples.Channels; channelIndex++)
-                    buffer[index++] = (int) Math.Round(samples[channelIndex][frameIndex] * _multiplier);
+                samples.CopyToInterleaved(buffer, _bitsPerSample);
 
                 var bufferList = new AudioBufferList
                 {
                     NumberBuffers = 1,
                     Buffers = new AudioBuffer[1]
                 };
-                bufferList.Buffers[0].NumberChannels = (uint)samples.Channels;
-                bufferList.Buffers[0].DataByteSize = (uint)(index * Marshal.SizeOf<int>());
+                bufferList.Buffers[0].NumberChannels = (uint) samples.Channels;
+                bufferList.Buffers[0].DataByteSize = (uint) (bufferSize * Marshal.SizeOf<int>());
                 bufferList.Buffers[0].Data = bufferAddress;
 
                 // ReSharper disable once PossibleNullReferenceException

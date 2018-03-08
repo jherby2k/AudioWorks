@@ -59,12 +59,7 @@ namespace AudioWorks.Extensions.Apple
                     Finished = true;
 
                 var result = new SampleCollection((int) _inputDescription.ChannelsPerFrame, (int) frameCount);
-
-                // De-interlace the output buffer into the new sample collection, converting to floating point values
-                var index = 0;
-                for (var frameIndex = 0; frameIndex < result.Frames; frameIndex++)
-                for (var channelIndex = 0; channelIndex < result.Channels; channelIndex++)
-                    result[channelIndex][frameIndex] = _buffer[index++] / (float) 0x8000_0000;
+                result.CopyFromInterlaced(_buffer);
 
                 return result;
             }

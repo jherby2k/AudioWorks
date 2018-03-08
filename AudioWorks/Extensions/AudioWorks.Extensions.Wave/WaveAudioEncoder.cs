@@ -9,10 +9,10 @@ namespace AudioWorks.Extensions.Wave
     [AudioEncoderExport("Wave", "Linear PCM Wave")]
     public sealed class WaveAudioEncoder : IAudioEncoder, IDisposable
     {
+        int _bitsPerSample;
         int _bytesPerSample;
-        float _multiplier;
         [CanBeNull] RiffWriter _writer;
-        [NotNull] readonly byte[] _buffer = new byte[4];
+        [CanBeNull] byte[] _buffer;
 
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary();
 
@@ -20,8 +20,8 @@ namespace AudioWorks.Extensions.Wave
 
         public void Initialize(FileStream fileStream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
+            _bitsPerSample = info.BitsPerSample;
             _bytesPerSample = (int) Math.Ceiling(info.BitsPerSample / (double) 8);
-            _multiplier = (float) Math.Pow(2, info.BitsPerSample - 1);
             _writer = new RiffWriter(fileStream);
 
             _writer.Initialize("WAVE");
@@ -33,18 +33,13 @@ namespace AudioWorks.Extensions.Wave
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public void Submit(SampleCollection samples)
         {
-            if (_bytesPerSample == 1)
-                for (var frameIndex = 0; frameIndex < samples.Frames; frameIndex++)
-                for (var channelIndex = 0; channelIndex < samples.Channels; channelIndex++)
-                    _writer.Write((byte) Math.Round(samples[channelIndex][frameIndex] * _multiplier + 128));
-            else
-                for (var frameIndex = 0; frameIndex < samples.Frames; frameIndex++)
-                for (var channelIndex = 0; channelIndex < samples.Channels; channelIndex++)
-                {
-                    // Optimization - BitConverter generates too much garbage
-                    ConvertInt32ToBytes((int) Math.Round(samples[channelIndex][frameIndex] * _multiplier), _buffer);
-                    _writer.Write(_buffer, 0, _bytesPerSample);
-                }
+            var dataSize = samples.Channels * samples.Frames * _bytesPerSample;
+
+            if (_buffer == null)
+                _buffer = new byte[dataSize];
+
+            samples.CopyToPcm(_buffer, _bitsPerSample);
+            _writer.Write(_buffer, 0, dataSize);
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
