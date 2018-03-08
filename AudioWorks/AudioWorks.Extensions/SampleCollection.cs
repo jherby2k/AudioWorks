@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Buffers;
+using System.Buffers.Binary;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions
@@ -47,6 +48,85 @@ namespace AudioWorks.Extensions
         {
             foreach (var channel in _samples)
                 _pool.Return(channel);
+        }
+
+        public void CopyToInterleaved(Span<float> destination)
+        {
+            var index = 0;
+            for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
+                foreach (var channel in _samples)
+                    destination[index++] = channel[frameIndex];
+        }
+
+        public void CopyToInterleaved(Span<int> destination, int bitsPerSample)
+        {
+            var multiplier = (float) Math.Pow(2, bitsPerSample - 1);
+
+            var index = 0;
+            for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
+                foreach (var channel in _samples)
+                    destination[index++] = (int) Math.Round(channel[frameIndex] * multiplier);
+        }
+
+        public void CopyToPcm(Span<byte> destination, int bitsPerSample)
+        {
+            var multiplier = (float)Math.Pow(2, bitsPerSample - 1);
+
+            if (bitsPerSample <= 0)
+            {
+                var index = 0;
+                for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
+                    foreach (var channel in _samples)
+                        destination[index++] = (byte) Math.Round(channel[frameIndex] * multiplier + 128);
+            }
+            else
+            {
+                var bytesPerSample = (int) Math.Ceiling(bitsPerSample / (double) 8);
+
+                var index = 0;
+                for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
+                    foreach (var channel in _samples)
+                    {
+                        BinaryPrimitives.WriteInt32LittleEndian(destination.Slice(index, 4),
+                            (int) Math.Round(channel[frameIndex] * multiplier));
+                        index += bytesPerSample;
+                    }
+            }
+        }
+
+        public void CopyFromInterlaced(Span<int> source)
+        {
+            var index = 0;
+            for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
+            foreach (var channel in _samples)
+                channel[frameIndex] = source[index++] / (float) 0x8000_0000;
+        }
+
+        public void CopyFromPcm(Span<byte> source, int bitsPerSample)
+        {
+            // 1-8 bit samples are unsigned:
+            if (bitsPerSample <= 8)
+            {
+                var index = 0;
+                for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
+                foreach (var channel in _samples)
+                    channel[frameIndex] = (source[index++] - 128) / (float) 128;
+            }
+            else
+            {
+                var bytesPerSample = (int) Math.Ceiling(bitsPerSample / (double) 8);
+                Span<byte> temp = stackalloc byte[4];
+
+                var index = 0;
+                for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
+                foreach (var channel in _samples)
+                {
+                    source.Slice(index + 4 - bytesPerSample, bytesPerSample).CopyTo(temp);
+                    BinaryPrimitives.ReadInt32LittleEndian(temp);
+                    channel[frameIndex] =
+                        BinaryPrimitives.ReadInt32LittleEndian(temp) / (float) 0x8000_0000;
+                }
+            }
         }
     }
 }

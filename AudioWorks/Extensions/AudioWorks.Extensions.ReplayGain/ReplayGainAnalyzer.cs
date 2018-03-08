@@ -40,12 +40,7 @@ namespace AudioWorks.Extensions.ReplayGain
             try
             {
                 var buffer = new Span<float>(bufferAddress.ToPointer(), samples.Frames * samples.Channels);
-
-                // Interlace the samples, and store them in the unmanaged buffer
-                var index = 0;
-                for (var frameIndex = 0; frameIndex < samples.Frames; frameIndex++)
-                for (var channelIndex = 0; channelIndex < samples.Channels; channelIndex++)
-                    buffer[index++] = samples[channelIndex][frameIndex];
+                samples.CopyToInterleaved(buffer);
 
                 _analyzer.AddFrames(bufferAddress, (uint) samples.Frames);
             }

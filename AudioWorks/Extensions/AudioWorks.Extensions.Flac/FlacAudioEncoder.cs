@@ -13,7 +13,7 @@ namespace AudioWorks.Extensions.Flac
     {
         [NotNull] readonly List<MetadataBlock> _metadataBlocks = new List<MetadataBlock>(4);
         [CanBeNull] StreamEncoder _encoder;
-        float _multiplier;
+        int _bitsPerSample;
 
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
         {
@@ -59,7 +59,7 @@ namespace AudioWorks.Extensions.Flac
             _encoder.SetMetadata(_metadataBlocks);
             _encoder.Initialize();
 
-            _multiplier = (float) Math.Pow(2, info.BitsPerSample - 1);
+            _bitsPerSample = info.BitsPerSample;
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
@@ -72,12 +72,7 @@ namespace AudioWorks.Extensions.Flac
             try
             {
                 var buffer = new Span<int>(bufferAddress.ToPointer(), bufferSize);
-
-                // Interlace the samples in integer format, and store them in the unmanaged buffer
-                var index = 0;
-                for (var frameIndex = 0; frameIndex < samples.Frames; frameIndex++)
-                for (var channelIndex = 0; channelIndex < samples.Channels; channelIndex++)
-                    buffer[index++] = (int) Math.Round(samples[channelIndex][frameIndex] * _multiplier);
+                samples.CopyToInterleaved(buffer, _bitsPerSample);
 
                 _encoder.ProcessInterleaved(bufferAddress, (uint) samples.Frames);
             }
