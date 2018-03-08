@@ -40,7 +40,7 @@ namespace AudioWorks.Extensions.Flac
 
             _decoder.Finish();
             Finished = true;
-            return SampleCollectionPool.Instance.Create(_decoder.AudioInfo.Channels, 0);
+            return new SampleCollection(_decoder.AudioInfo.Channels, 0);
         }
 
         public void Dispose()

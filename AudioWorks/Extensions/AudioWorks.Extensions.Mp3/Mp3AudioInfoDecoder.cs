@@ -46,7 +46,7 @@ namespace AudioWorks.Extensions.Mp3
                 try
                 {
                     reader.SeekToNextFrame();
-                    result = new FrameHeader(reader.ReadBytes(4));
+                    result = new FrameHeader(reader.ReadBytes(4)); //TODO read into Span
                 }
                 catch (AudioException)
                 {
@@ -63,9 +63,9 @@ namespace AudioWorks.Extensions.Mp3
 
             var result = new OptionalHeaderInfo();
 
-            var headerId = new string(reader.ReadChars(4));
-            if (!string.Equals("Xing", headerId, StringComparison.Ordinal) &&
-                !string.Equals("Info", headerId, StringComparison.Ordinal))
+            var headerId = new string(reader.ReadChars(4)); //TODO read into Span
+            if (!headerId.Equals("Xing", StringComparison.Ordinal) &&
+                !headerId.Equals("Info", StringComparison.Ordinal))
                 return result;
 
             // Both fields are optional, even if the header is present
@@ -85,8 +85,8 @@ namespace AudioWorks.Extensions.Mp3
 
             var result = new OptionalHeaderInfo();
 
-            var headerId = new string(reader.ReadChars(4));
-            if (!string.Equals("VBRI", headerId, StringComparison.Ordinal)) return result;
+            var headerId = new string(reader.ReadChars(4)); //TODO read into Span
+            if (!headerId.Equals("VBRI", StringComparison.Ordinal)) return result;
 
             reader.BaseStream.Seek(6, SeekOrigin.Current);
             result.ByteCount = reader.ReadUInt32BigEndian();

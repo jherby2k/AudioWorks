@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Runtime.InteropServices;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 
@@ -62,8 +61,11 @@ namespace AudioWorks.Extensions.Vorbis
 
             // Request an unmanaged buffer for each channel, then copy the samples to to them
             var buffers = new Span<IntPtr>(_encoder.GetBuffer(samples.Frames).ToPointer(), samples.Channels);
-            for (var i = 0; i < samples.Channels; i++)
-                Marshal.Copy(samples[i], 0, buffers[i], samples[i].Length);
+            for (var channelIndex = 0; channelIndex < samples.Channels; channelIndex++)
+            {
+                var channelBuffer = new Span<float>(buffers[channelIndex].ToPointer(), samples.Frames);
+                samples.GetChannel(channelIndex).CopyTo(channelBuffer);
+            }
 
             WriteFrames(samples.Frames);
         }

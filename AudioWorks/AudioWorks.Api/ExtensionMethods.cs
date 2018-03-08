@@ -30,7 +30,7 @@ namespace AudioWorks.Api
                         var block = new ActionBlock<SampleCollection>(samples =>
                             {
                                 sampleProcessor.Submit(samples);
-                                SampleCollectionPool.Instance.Release(samples);
+                                samples.Return();
 
                                 if (progressQueue == null) return;
                                 if ((framesSinceLastProgress += samples.Frames) < minFramesToReport) return;

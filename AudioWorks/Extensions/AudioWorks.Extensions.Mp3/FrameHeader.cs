@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using AudioWorks.Common;
 using JetBrains.Annotations;
@@ -35,7 +34,7 @@ namespace AudioWorks.Extensions.Mp3
 
         internal int SideInfoLength { get; }
 
-        internal FrameHeader([NotNull] IReadOnlyList<byte> data)
+        internal FrameHeader(ReadOnlySpan<byte> data)
         {
             var mpegVersion = ParseMpegVersion(data);
             VerifyLayer(data);
@@ -48,7 +47,7 @@ namespace AudioWorks.Extensions.Mp3
         }
 
         [Pure, NotNull]
-        static string ParseMpegVersion([NotNull] IReadOnlyList<byte> data)
+        static string ParseMpegVersion(ReadOnlySpan<byte> data)
         {
             switch ((data[1] >> 3) & 0b00000011)
             {
@@ -63,7 +62,7 @@ namespace AudioWorks.Extensions.Mp3
             }
         }
 
-        static void VerifyLayer([NotNull] IReadOnlyList<byte> data)
+        static void VerifyLayer(ReadOnlySpan<byte> data)
         {
             switch ((data[1] >> 1) & 0b00000011)
             {
@@ -75,7 +74,7 @@ namespace AudioWorks.Extensions.Mp3
         }
 
         [Pure]
-        static int ParseBitRate([NotNull] IReadOnlyList<byte> data, [NotNull] string mpegVersion)
+        static int ParseBitRate(ReadOnlySpan<byte> data, [NotNull] string mpegVersion)
         {
             var column = (data[2] >> 4) & 0b00001111;
             if (column == 0b00001111)
@@ -85,7 +84,7 @@ namespace AudioWorks.Extensions.Mp3
         }
 
         [Pure]
-        static int ParseSampleRate([NotNull] IReadOnlyList<byte> data, [NotNull] string mpegVersion)
+        static int ParseSampleRate(ReadOnlySpan<byte> data, [NotNull] string mpegVersion)
         {
             var column = (data[2] >> 2) & 0b00000011;
             if (column == 0b00000011)
@@ -109,13 +108,13 @@ namespace AudioWorks.Extensions.Mp3
         }
 
         [Pure]
-        static int ParsePadding([NotNull] IReadOnlyList<byte> data)
+        static int ParsePadding(ReadOnlySpan<byte> data)
         {
             return (data[2] >> 1) & 0b00000001;
         }
 
         [Pure]
-        static int ParseChannels([NotNull] IReadOnlyList<byte> data)
+        static int ParseChannels(ReadOnlySpan<byte> data)
         {
             switch ((data[3] >> 6) & 0b00000011)
             {

@@ -29,7 +29,7 @@ namespace AudioWorks.Extensions.Flac
             if (_divisor < 1)
                 _divisor = (float) Math.Pow(2, frame.Header.BitsPerSample - 1);
 
-            Samples = SampleCollectionPool.Instance.Create((int) frame.Header.Channels, (int) frame.Header.BlockSize);
+            Samples = new SampleCollection((int) frame.Header.Channels, (int) frame.Header.BlockSize);
 
             for (var channelIndex = 0; channelIndex < frame.Header.Channels; channelIndex++)
             {
@@ -39,8 +39,9 @@ namespace AudioWorks.Extensions.Flac
                     (int)frame.Header.BlockSize);
 
                 // Convert to floating point values
+                var channel = Samples.GetChannel(channelIndex);
                 for (var frameIndex = 0; frameIndex < (int)frame.Header.BlockSize; frameIndex++)
-                    Samples[channelIndex][frameIndex] = channelBuffer[frameIndex] / _divisor;
+                    channel[frameIndex] = channelBuffer[frameIndex] / _divisor;
             }
 
             return DecoderWriteStatus.Continue;

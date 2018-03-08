@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using AudioWorks.Common;
 using JetBrains.Annotations;
@@ -113,8 +114,8 @@ namespace AudioWorks.Extensions.Apple
                     NumberBuffers = 1,
                     Buffers = new AudioBuffer[1]
                 };
-                bufferList.Buffers[0].NumberChannels = (uint)samples.Channels;
-                bufferList.Buffers[0].DataByteSize = (uint)(index * Marshal.SizeOf<int>());
+                bufferList.Buffers[0].NumberChannels = (uint) samples.Channels;
+                bufferList.Buffers[0].DataByteSize = (uint) (index * Marshal.SizeOf<int>());
                 bufferList.Buffers[0].Data = bufferAddress;
 
                 // ReSharper disable once PossibleNullReferenceException

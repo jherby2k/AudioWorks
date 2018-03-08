@@ -84,8 +84,8 @@ namespace AudioWorks.Extensions.Lame
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int EncodeBufferIeeeFloat(
             [NotNull] EncoderHandle handle,
-            [NotNull] float[] leftSamples,
-            [CanBeNull] float[] rightSamples,
+            IntPtr leftSamples,
+            IntPtr rightSamples,
             int sampleCount,
             [NotNull] [In, Out] byte[] buffer,
             int bufferSize);

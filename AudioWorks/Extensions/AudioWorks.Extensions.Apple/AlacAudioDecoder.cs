@@ -58,7 +58,7 @@ namespace AudioWorks.Extensions.Apple
                 if (frameCount == 0)
                     Finished = true;
 
-                var result = SampleCollectionPool.Instance.Create((int) _inputDescription.ChannelsPerFrame, (int) frameCount);
+                var result = new SampleCollection((int) _inputDescription.ChannelsPerFrame, (int) frameCount);
 
                 // De-interlace the output buffer into the new sample collection, converting to floating point values
                 var index = 0;

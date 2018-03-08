@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Buffers;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions
@@ -7,53 +7,46 @@ namespace AudioWorks.Extensions
     /// <summary>
     /// Represents a collection of audio samples.
     /// </summary>
-    /// <remarks>
-    /// New <see cref="SampleCollection"/> instances should be created using <see cref="SampleCollectionPool.Create"/>.
-    /// </remarks>
-    public sealed class SampleCollection : IEnumerable<float[]>
+    public sealed class SampleCollection
     {
-        [NotNull, ItemNotNull] readonly float[][] _samples;
+        static readonly ArrayPool<float> _pool = ArrayPool<float>.Create();
 
-        /// <summary>
-        /// Gets the samples for the specified channel #.
-        /// </summary>
-        /// <param name="channel">The channel #.</param>
-        /// <returns>The samples.</returns>
-        [NotNull, CollectionAccess(CollectionAccessType.Read)]
-        public float[] this[int channel] => _samples[channel];
+        [NotNull, ItemNotNull] readonly float[][] _samples;
 
         /// <summary>
         /// Gets the # of channels.
         /// </summary>
         /// <value>The # of channels.</value>
-        [CollectionAccess(CollectionAccessType.None)]
         public int Channels => _samples.Length;
 
         /// <summary>
         /// Gets the frame count.
         /// </summary>
         /// <value>The frame count.</value>
-        [CollectionAccess(CollectionAccessType.None)]
-        public int Frames => _samples[0].Length;
+        public int Frames { get; }
 
-        [CollectionAccess(CollectionAccessType.UpdatedContent)]
-        internal SampleCollection([NotNull] float[][] samples)
+        public SampleCollection(int channels, int frames)
         {
-            _samples = samples;
+            if (channels <= 0 || channels > 2)
+                throw new ArgumentOutOfRangeException(nameof(channels),
+                    $"{nameof(channels)} must be 1 or 2.");
+            if (frames < 0)
+                throw new ArgumentOutOfRangeException(nameof(frames),
+                    $"{nameof(frames)} must be 0 or greater.");
+
+            Frames = frames;
+
+            _samples = new float[channels][];
+            for (var i = 0; i < _samples.Length; i++)
+                _samples[i] = _pool.Rent(frames);
         }
 
-        /// <inheritdoc/>
-        [NotNull, CollectionAccess(CollectionAccessType.Read)]
-        public IEnumerator<float[]> GetEnumerator()
-        {
-            return ((IEnumerable<float[]>)_samples).GetEnumerator();
-        }
+        public Span<float> GetChannel(int channel) => _samples[channel].AsSpan().Slice(0, Frames);
 
-        /// <inheritdoc/>
-        [NotNull, CollectionAccess(CollectionAccessType.Read)]
-        IEnumerator IEnumerable.GetEnumerator()
+        public void Return()
         {
-            return _samples.GetEnumerator();
+            foreach (var channel in _samples)
+                _pool.Return(channel);
         }
     }
 }

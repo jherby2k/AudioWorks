@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Lame
@@ -61,14 +63,19 @@ namespace AudioWorks.Extensions.Lame
             SafeNativeMethods.InitParams(_handle);
         }
 
-        internal void Encode([NotNull] float[] leftSamples, [CanBeNull] float[] rightSamples)
+        internal unsafe void Encode(Span<float> leftSamples, Span<float> rightSamples)
         {
             if (_buffer == null)
                 _buffer = new byte[(int) Math.Ceiling(1.25 * leftSamples.Length) + 7200];
 
-            var bytesEncoded = SafeNativeMethods.EncodeBufferIeeeFloat(_handle, leftSamples, rightSamples, leftSamples.Length, _buffer, _buffer.Length);
-            //TODO throw on negative values (errors)
-            _stream.Write(_buffer, 0, bytesEncoded);
+            fixed (float* leftPointer = &MemoryMarshal.GetReference(leftSamples))
+            fixed (float* rightPointer = &MemoryMarshal.GetReference(rightSamples))
+            {
+                var bytesEncoded = SafeNativeMethods.EncodeBufferIeeeFloat(_handle, new IntPtr(leftPointer), new IntPtr(rightPointer), leftSamples.Length, _buffer, _buffer.Length);
+
+                //TODO throw on negative values (errors)
+                _stream.Write(_buffer, 0, bytesEncoded);
+            }
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]

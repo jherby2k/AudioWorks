@@ -82,7 +82,7 @@ namespace AudioWorks.Extensions.Lame
             if (samples.Frames <= 0) return;
 
             // If there is only one channel, set the right channel to null
-            _encoder.Encode(samples[0], samples.Channels == 1 ? null : samples[1]);
+            _encoder.Encode(samples.GetChannel(0), samples.Channels == 1 ? null : samples.GetChannel(1));
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
