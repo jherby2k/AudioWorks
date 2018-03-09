@@ -134,7 +134,7 @@ namespace AudioWorks.Extensions
         /// <param name="channel">The channel index.</param>
         /// <param name="source">The source samples.</param>
         /// <param name="bitsPerSample">The # of bits per sample.</param>
-        public void CopyFrom(int channel, Span<int> source, int bitsPerSample)
+        public void CopyFrom(int channel, ReadOnlySpan<int> source, int bitsPerSample)
         {
             var divisor = (float) Math.Pow(2, bitsPerSample - 1);
             var samples = _samples[channel];
@@ -147,7 +147,7 @@ namespace AudioWorks.Extensions
         /// Populates this object with copies of the interleaved samples in <paramref name="source"/>.
         /// </summary>
         /// <param name="source">The interleaved source samples.</param>
-        public void CopyFromInterleaved(Span<int> source)
+        public void CopyFromInterleaved(ReadOnlySpan<int> source)
         {
             var index = 0;
 
@@ -161,7 +161,7 @@ namespace AudioWorks.Extensions
         /// </summary>
         /// <param name="source">The interleaved source samples.</param>
         /// <param name="bitsPerSample">The # of bits per sample.</param>
-        public void CopyFromInterleaved(Span<byte> source, int bitsPerSample)
+        public void CopyFromInterleaved(ReadOnlySpan<byte> source, int bitsPerSample)
         {
             // 1-8 bit samples are unsigned
             if (bitsPerSample <= 8)
