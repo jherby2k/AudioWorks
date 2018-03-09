@@ -24,17 +24,29 @@ namespace AudioWorks.Extensions
         public string Name { get; }
 
         /// <summary>
+        /// Gets a description of the analyzer.
+        /// </summary>
+        /// <value>The description.</value>
+        [NotNull]
+        public string Description { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AudioAnalyzerExportAttribute"/> class.
         /// </summary>
-        /// <param name="name">The name of the analyzer.</param>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="name"/> is null or empty.</exception>
-        public AudioAnalyzerExportAttribute([NotNull] string name)
+        /// <param name="name">The analyzer name.</param>
+        /// <param name="description">The analyzer description.</param>
+        /// <exception cref="ArgumentNullException">Thrown if either <paramref name="name"/> or
+        /// <paramref name="description"/> is null or empty.</exception>
+        public AudioAnalyzerExportAttribute([NotNull] string name, [NotNull] string description)
             : base(typeof(IAudioAnalyzer))
         {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentException("Value cannot be null or empty.", nameof(name));
+            if (string.IsNullOrEmpty(description))
+                throw new ArgumentException("Value cannot be null or empty.", nameof(description));
 
             Name = name;
+            Description = description;
         }
     }
 }

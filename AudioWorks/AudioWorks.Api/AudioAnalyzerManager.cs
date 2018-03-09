@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AudioWorks.Common;
 using AudioWorks.Extensions;
 using JetBrains.Annotations;
@@ -31,6 +33,17 @@ namespace AudioWorks.Api
                     return export.Value.SettingInfo;
 
             return new SettingInfoDictionary();
+        }
+
+        /// <summary>
+        /// Gets information about the available analyzers.
+        /// </summary>
+        /// <returns>The analyzer info.</returns>
+        [NotNull]
+        public static IEnumerable<AnalyzerInfo> GetAnalyzerInfo()
+        {
+            return ExtensionProvider.GetFactories<IAudioAnalyzer>()
+                .Select(factory => new AnalyzerInfo(factory.Metadata));
         }
     }
 }

@@ -28,6 +28,7 @@ namespace AudioWorks.Commands
         /// <para type="description">Specifies the type of analysis to perform.</para>
         /// </summary>
         [Parameter(Mandatory = true, Position = 0)]
+        [ArgumentCompleter(typeof(AnalyzerCompleter))]
         public string Analyzer { get; set; }
 
         /// <summary>

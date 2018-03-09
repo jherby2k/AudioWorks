@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.ReplayGain
 {
-    [AudioAnalyzerExport("ReplayGain")]
+    [AudioAnalyzerExport("ReplayGain", "ReplayGain 2.0")]
     public sealed class ReplayGainAnalyzer : IAudioAnalyzer
     {
         const int _referenceLevel = -18;
