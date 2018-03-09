@@ -26,6 +26,6 @@ namespace AudioWorks.Extensions
         /// </summary>
         /// <returns>The samples.</returns>
         [NotNull]
-        SampleCollection DecodeSamples();
+        SampleBuffer DecodeSamples();
     }
 }

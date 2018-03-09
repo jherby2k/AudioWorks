@@ -10,7 +10,7 @@ namespace AudioWorks.Extensions.Flac
         float _divisor;
 
         [CanBeNull]
-        internal SampleCollection Samples { get; set; }
+        internal SampleBuffer Samples { get; set; }
 
         internal AudioStreamDecoder([NotNull] Stream stream)
             : base(stream)
@@ -29,7 +29,7 @@ namespace AudioWorks.Extensions.Flac
             if (_divisor < 1)
                 _divisor = (float) Math.Pow(2, frame.Header.BitsPerSample - 1);
 
-            Samples = new SampleCollection((int) frame.Header.Channels, (int) frame.Header.BlockSize);
+            Samples = new SampleBuffer((int) frame.Header.Channels, (int) frame.Header.BlockSize);
 
             for (var channelIndex = 0; channelIndex < frame.Header.Channels; channelIndex++)
             {

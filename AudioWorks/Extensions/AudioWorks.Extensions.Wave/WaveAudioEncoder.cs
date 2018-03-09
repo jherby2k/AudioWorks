@@ -21,7 +21,7 @@ namespace AudioWorks.Extensions.Wave
         public void Initialize(FileStream fileStream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
             _bitsPerSample = info.BitsPerSample;
-            _bytesPerSample = (int) Math.Ceiling(info.BitsPerSample / (double) 8);
+            _bytesPerSample = (int) Math.Ceiling(info.BitsPerSample / 8.0);
             _writer = new RiffWriter(fileStream);
 
             _writer.Initialize("WAVE");
@@ -31,14 +31,14 @@ namespace AudioWorks.Extensions.Wave
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-        public void Submit(SampleCollection samples)
+        public void Submit(SampleBuffer samples)
         {
             var dataSize = samples.Channels * samples.Frames * _bytesPerSample;
 
             if (_buffer == null)
                 _buffer = new byte[dataSize];
 
-            samples.CopyToPcm(_buffer, _bitsPerSample);
+            samples.CopyToInterleaved(_buffer, _bitsPerSample);
             _writer.Write(_buffer, 0, dataSize);
         }
 

@@ -77,7 +77,7 @@ namespace AudioWorks.Extensions.Lame
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-        public void Submit(SampleCollection samples)
+        public void Submit(SampleBuffer samples)
         {
             if (samples.Frames <= 0) return;
 

@@ -32,7 +32,7 @@ namespace AudioWorks.Extensions.ReplayGain
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-        public unsafe void Submit(SampleCollection samples)
+        public unsafe void Submit(SampleBuffer samples)
         {
             if (samples.Frames == 0) return;
 

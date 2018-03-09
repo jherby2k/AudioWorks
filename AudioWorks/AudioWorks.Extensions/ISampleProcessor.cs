@@ -11,6 +11,6 @@ namespace AudioWorks.Extensions
         /// Submits samples for processing.
         /// </summary>
         /// <param name="samples">The samples.</param>
-        void Submit([NotNull] SampleCollection samples);
+        void Submit([NotNull] SampleBuffer samples);
     }
 }

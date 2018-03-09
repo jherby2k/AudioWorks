@@ -27,10 +27,10 @@ namespace AudioWorks.Api
                         var framesSinceLastProgress = 0;
 
                         // Use an action block to process the sample collections asynchronously
-                        var block = new ActionBlock<SampleCollection>(samples =>
+                        var block = new ActionBlock<SampleBuffer>(samples =>
                             {
                                 sampleProcessor.Submit(samples);
-                                samples.Return();
+                                samples.ReturnToPool();
 
                                 if (progressQueue == null) return;
                                 if ((framesSinceLastProgress += samples.Frames) < minFramesToReport) return;

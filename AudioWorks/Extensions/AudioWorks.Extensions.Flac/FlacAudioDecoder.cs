@@ -22,7 +22,7 @@ namespace AudioWorks.Extensions.Flac
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-        public SampleCollection DecodeSamples()
+        public SampleBuffer DecodeSamples()
         {
             while (_decoder.GetState() != DecoderState.EndOfStream)
             {
@@ -40,7 +40,7 @@ namespace AudioWorks.Extensions.Flac
 
             _decoder.Finish();
             Finished = true;
-            return new SampleCollection(_decoder.AudioInfo.Channels, 0);
+            return new SampleBuffer(_decoder.AudioInfo.Channels, 0);
         }
 
         public void Dispose()

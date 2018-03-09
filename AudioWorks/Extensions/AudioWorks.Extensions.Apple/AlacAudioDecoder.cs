@@ -34,7 +34,7 @@ namespace AudioWorks.Extensions.Apple
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-        public SampleCollection DecodeSamples()
+        public SampleBuffer DecodeSamples()
         {
             if (_buffer == null)
                 _buffer = new int[_defaultFrameCount * _inputDescription.ChannelsPerFrame];
@@ -58,8 +58,8 @@ namespace AudioWorks.Extensions.Apple
                 if (frameCount == 0)
                     Finished = true;
 
-                var result = new SampleCollection((int) _inputDescription.ChannelsPerFrame, (int) frameCount);
-                result.CopyFromInterlaced(_buffer);
+                var result = new SampleBuffer((int) _inputDescription.ChannelsPerFrame, (int) frameCount);
+                result.CopyFromInterleaved(_buffer);
 
                 return result;
             }

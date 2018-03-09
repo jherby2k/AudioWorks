@@ -44,7 +44,7 @@ namespace AudioWorks.Extensions.Apple
             _audioFile.SetProperty(ExtendedAudioFilePropertyId.ClientDataFormat, inputDescription);
         }
 
-        public unsafe void Submit(SampleCollection samples)
+        public unsafe void Submit(SampleBuffer samples)
         {
             if (samples.Frames == 0) return;
 
