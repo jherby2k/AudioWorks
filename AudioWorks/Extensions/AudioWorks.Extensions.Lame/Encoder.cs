@@ -63,7 +63,7 @@ namespace AudioWorks.Extensions.Lame
             SafeNativeMethods.InitParams(_handle);
         }
 
-        internal unsafe void Encode(Span<float> leftSamples, Span<float> rightSamples)
+        internal unsafe void Encode(ReadOnlySpan<float> leftSamples, ReadOnlySpan<float> rightSamples)
         {
             if (_buffer == null)
                 _buffer = new byte[(int) Math.Ceiling(1.25 * leftSamples.Length) + 7200];

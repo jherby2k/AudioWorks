@@ -64,7 +64,7 @@ namespace AudioWorks.Extensions.Vorbis
             for (var channelIndex = 0; channelIndex < samples.Channels; channelIndex++)
             {
                 var channelBuffer = new Span<float>(buffers[channelIndex].ToPointer(), samples.Frames);
-                samples.GetChannel(channelIndex).CopyTo(channelBuffer);
+                samples.GetSamples(channelIndex).CopyTo(channelBuffer);
             }
 
             WriteFrames(samples.Frames);

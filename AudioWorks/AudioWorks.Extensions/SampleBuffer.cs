@@ -54,55 +54,7 @@ namespace AudioWorks.Extensions
         /// </summary>
         /// <param name="channel">The channel index.</param>
         /// <returns>The samples.</returns>
-        public Span<float> GetChannel(int channel) => _samples[channel].AsSpan().Slice(0, Frames);
-
-        /// <summary>
-        /// Populates this object with copies of the interleaved samples in <paramref name="source"/>.
-        /// </summary>
-        /// <param name="source">The interleaved source samples.</param>
-        public void CopyFromInterleaved(Span<int> source)
-        {
-            var index = 0;
-
-            for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
-                foreach (var channel in _samples)
-                    channel[frameIndex] = source[index++] / (float) 0x8000_0000;
-        }
-
-        /// <summary>
-        /// Populates this object with copies of the interleaved samples in <paramref name="source"/>.
-        /// </summary>
-        /// <param name="source">The interleaved source samples.</param>
-        /// <param name="bitsPerSample">The # of bits per sample.</param>
-        public void CopyFromInterleaved(Span<byte> source, int bitsPerSample)
-        {
-            // 1-8 bit samples are unsigned
-            if (bitsPerSample <= 8)
-            {
-                var divisor = (float) Math.Pow(2, bitsPerSample - 1);
-                var index = 0;
-
-                for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
-                    foreach (var channel in _samples)
-                        channel[frameIndex] = (source[index++] - 128) / divisor;
-            }
-            else
-            {
-                var bytesPerSample = (int) Math.Ceiling(bitsPerSample / (double) 8);
-                Span<byte> temp = stackalloc byte[4];
-                var index = 0;
-
-                for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
-                    foreach (var channel in _samples)
-                    {
-                        source.Slice(index, bytesPerSample).CopyTo(temp.Slice(4 - bytesPerSample));
-                        BinaryPrimitives.ReadInt32LittleEndian(temp);
-                        channel[frameIndex] =
-                            BinaryPrimitives.ReadInt32LittleEndian(temp) / (float) 0x8000_0000;
-                        index += bytesPerSample;
-                    }
-            }
-        }
+        public ReadOnlySpan<float> GetSamples(int channel) => _samples[channel].AsReadOnlySpan().Slice(0, Frames);
 
         /// <summary>
         /// Copies the samples to an interleaved array.
@@ -113,15 +65,11 @@ namespace AudioWorks.Extensions
         /// <param name="destination">The destination.</param>
         public void CopyToInterleaved(Span<float> destination)
         {
-            if (_samples.Length == 1)
-                _samples[0].CopyTo(destination);
-            {
-                var index = 0;
+            var index = 0;
 
-                for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
-                    foreach (var channel in _samples)
-                        destination[index++] = channel[frameIndex];
-            }
+            for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
+                foreach (var channel in _samples)
+                    destination[index++] = channel[frameIndex];
         }
 
         /// <summary>
@@ -166,15 +114,78 @@ namespace AudioWorks.Extensions
             }
             else
             {
-                var bytesPerSample = (int) Math.Ceiling(bitsPerSample / 8.0);
+                var bytesPerSample = (int)Math.Ceiling(bitsPerSample / 8.0);
                 Span<byte> temp = stackalloc byte[4];
 
                 for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
                     foreach (var channel in _samples)
                     {
                         BinaryPrimitives.WriteInt32LittleEndian(temp,
-                            (int) Math.Round(channel[frameIndex] * multiplier));
+                            (int)Math.Round(channel[frameIndex] * multiplier));
                         temp.Slice(0, bytesPerSample).CopyTo(destination.Slice(index));
+                        index += bytesPerSample;
+                    }
+            }
+        }
+
+        /// <summary>
+        /// Populates this object with copies of the samples in <paramref name="source"/>.
+        /// </summary>
+        /// <param name="channel">The channel index.</param>
+        /// <param name="source">The source samples.</param>
+        /// <param name="bitsPerSample">The # of bits per sample.</param>
+        public void CopyFrom(int channel, Span<int> source, int bitsPerSample)
+        {
+            var divisor = (float) Math.Pow(2, bitsPerSample - 1);
+            var samples = _samples[channel];
+
+            for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
+                samples[frameIndex] = source[frameIndex] / divisor;
+        }
+
+        /// <summary>
+        /// Populates this object with copies of the interleaved samples in <paramref name="source"/>.
+        /// </summary>
+        /// <param name="source">The interleaved source samples.</param>
+        public void CopyFromInterleaved(Span<int> source)
+        {
+            var index = 0;
+
+            for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
+                foreach (var channel in _samples)
+                    channel[frameIndex] = source[index++] / (float) 0x8000_0000;
+        }
+
+        /// <summary>
+        /// Populates this object with copies of the interleaved samples in <paramref name="source"/>.
+        /// </summary>
+        /// <param name="source">The interleaved source samples.</param>
+        /// <param name="bitsPerSample">The # of bits per sample.</param>
+        public void CopyFromInterleaved(Span<byte> source, int bitsPerSample)
+        {
+            // 1-8 bit samples are unsigned
+            if (bitsPerSample <= 8)
+            {
+                var divisor = (float) Math.Pow(2, bitsPerSample - 1);
+                var index = 0;
+
+                for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
+                    foreach (var channel in _samples)
+                        channel[frameIndex] = (source[index++] - 128) / divisor;
+            }
+            else
+            {
+                var bytesPerSample = (int) Math.Ceiling(bitsPerSample / (double) 8);
+                Span<byte> temp = stackalloc byte[4];
+                var index = 0;
+
+                for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
+                    foreach (var channel in _samples)
+                    {
+                        source.Slice(index, bytesPerSample).CopyTo(temp.Slice(4 - bytesPerSample));
+                        BinaryPrimitives.ReadInt32LittleEndian(temp);
+                        channel[frameIndex] =
+                            BinaryPrimitives.ReadInt32LittleEndian(temp) / (float) 0x8000_0000;
                         index += bytesPerSample;
                     }
             }
