@@ -10,7 +10,7 @@ namespace AudioWorks.Extensions
     /// </summary>
     public sealed class SampleBuffer
     {
-        static readonly ArrayPool<float> _pool = ArrayPool<float>.Create();
+        [NotNull] static readonly ArrayPool<float> _pool = ArrayPool<float>.Create();
 
         [NotNull, ItemNotNull] readonly float[][] _samples;
 
@@ -35,7 +35,7 @@ namespace AudioWorks.Extensions
         /// <paramref name="frames"/> is out of range.</exception>
         public SampleBuffer(int channels, int frames)
         {
-            if (channels <= 0 || channels > 2)
+            if (channels < 1 || channels > 2)
                 throw new ArgumentOutOfRangeException(nameof(channels),
                     $"{nameof(channels)} must be 1 or 2.");
             if (frames < 0)
@@ -54,7 +54,14 @@ namespace AudioWorks.Extensions
         /// </summary>
         /// <param name="channel">The channel index.</param>
         /// <returns>The samples.</returns>
-        public ReadOnlySpan<float> GetSamples(int channel) => _samples[channel].AsReadOnlySpan().Slice(0, Frames);
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="channel"/> is out of range.</exception>
+        public ReadOnlySpan<float> GetSamples(int channel)
+        {
+            if (channel < 0 || channel > 1)
+                throw new ArgumentOutOfRangeException(nameof(channel), "channel is out of range.");
+
+            return _samples[channel].AsReadOnlySpan().Slice(0, Frames);
+        }
 
         /// <summary>
         /// Copies the samples to an interleaved array.
@@ -63,8 +70,14 @@ namespace AudioWorks.Extensions
         /// The samples are floating-point values normalized to between -1.0 and 1.0.
         /// </remarks>
         /// <param name="destination">The destination.</param>
+        /// <exception cref="ArgumentException"><paramref name="destination"/> is not long enough to store the samples.
+        /// </exception>
         public void CopyToInterleaved(Span<float> destination)
         {
+            if (destination.Length < Frames * Channels)
+                throw new ArgumentException("destination is not long enough to store the samples.",
+                    nameof(destination));
+
             var index = 0;
 
             for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
@@ -80,8 +93,17 @@ namespace AudioWorks.Extensions
         /// </remarks>
         /// <param name="destination">The destination.</param>
         /// <param name="bitsPerSample">The # of bits per sample.</param>
+        /// <exception cref="ArgumentException"><paramref name="destination"/> is not long enough to store the samples.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="bitsPerSample"/> is out of range.</exception>
         public void CopyToInterleaved(Span<int> destination, int bitsPerSample)
         {
+            if (destination.Length < Frames * Channels)
+                throw new ArgumentException("destination is not long enough to store the samples.",
+                    nameof(destination));
+            if (bitsPerSample < 1 || bitsPerSample > 32)
+                throw new ArgumentOutOfRangeException(nameof(bitsPerSample), "bitsPerSample is out of range.");
+
             var multiplier = (float) Math.Pow(2, bitsPerSample - 1);
             var index = 0;
 
@@ -100,8 +122,19 @@ namespace AudioWorks.Extensions
         /// </remarks>
         /// <param name="destination">The destination.</param>
         /// <param name="bitsPerSample">The # of bits per sample.</param>
+        /// <exception cref="ArgumentException"><paramref name="destination"/> is not long enough to store the samples.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="bitsPerSample"/> is out of range.</exception>
         public void CopyToInterleaved(Span<byte> destination, int bitsPerSample)
         {
+            var bytesPerSample = (int) Math.Ceiling(bitsPerSample / 8.0);
+
+            if (destination.Length < Frames * Channels * bytesPerSample)
+                throw new ArgumentException("destination is not long enough to store the samples.",
+                    nameof(destination));
+            if (bitsPerSample < 1 || bitsPerSample > 32)
+                throw new ArgumentOutOfRangeException(nameof(bitsPerSample), "bitsPerSample is out of range.");
+
             var multiplier = (float) Math.Pow(2, bitsPerSample - 1);
             var index = 0;
 
@@ -114,7 +147,6 @@ namespace AudioWorks.Extensions
             }
             else
             {
-                var bytesPerSample = (int) Math.Ceiling(bitsPerSample / 8.0);
                 Span<byte> buffer = stackalloc byte[4];
 
                 for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
@@ -134,21 +166,36 @@ namespace AudioWorks.Extensions
         /// <param name="channel">The channel index.</param>
         /// <param name="source">The source samples.</param>
         /// <param name="bitsPerSample">The # of bits per sample.</param>
+        /// <exception cref="ArgumentException"><paramref name="source"/> does not contain enough samples to fill the
+        /// <see cref="SampleBuffer"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="channel"/> and/or
+        /// <paramref name="bitsPerSample"/> is out of range.</exception>
         public void CopyFrom(int channel, ReadOnlySpan<int> source, int bitsPerSample)
         {
+            if (channel < 0 || channel > 1)
+                throw new ArgumentOutOfRangeException(nameof(channel), "channel is out of range.");
+            if (source.Length < Frames)
+                throw new ArgumentException("source does not contain enough samples.", nameof(source));
+            if (bitsPerSample < 1 || bitsPerSample > 32)
+                throw new ArgumentOutOfRangeException(nameof(bitsPerSample), "bitsPerSample is out of range.");
+
             var divisor = (float) Math.Pow(2, bitsPerSample - 1);
-            var samples = _samples[channel];
 
             for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
-                samples[frameIndex] = source[frameIndex] / divisor;
+                _samples[channel][frameIndex] = source[frameIndex] / divisor;
         }
 
         /// <summary>
         /// Populates this object with copies of the interleaved samples in <paramref name="source"/>.
         /// </summary>
         /// <param name="source">The interleaved source samples.</param>
+        /// <exception cref="ArgumentException"><paramref name="source"/> does not contain enough samples to fill the
+        /// <see cref="SampleBuffer"/>.</exception>
         public void CopyFromInterleaved(ReadOnlySpan<int> source)
         {
+            if (source.Length < Frames * Channels)
+                throw new ArgumentException("source does not contain enough samples.", nameof(source));
+
             var index = 0;
 
             for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
@@ -161,13 +208,24 @@ namespace AudioWorks.Extensions
         /// </summary>
         /// <param name="source">The interleaved source samples.</param>
         /// <param name="bitsPerSample">The # of bits per sample.</param>
+        /// <exception cref="ArgumentException"><paramref name="source"/> does not contain enough samples to fill the
+        /// <see cref="SampleBuffer"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="bitsPerSample"/> is out of range.</exception>
         public void CopyFromInterleaved(ReadOnlySpan<byte> source, int bitsPerSample)
         {
+            var bytesPerSample = (int) Math.Ceiling(bitsPerSample / 8.0);
+
+            if (source.Length < Frames * Channels * bytesPerSample)
+                throw new ArgumentException("source does not contain enough samples.", nameof(source));
+            if (bitsPerSample < 1 || bitsPerSample > 32)
+                throw new ArgumentOutOfRangeException(nameof(bitsPerSample), "bitsPerSample is out of range.");
+
+            var index = 0;
+
             // 1-8 bit samples are unsigned
-            if (bitsPerSample <= 8)
+            if (bytesPerSample == 1)
             {
                 var divisor = (float) Math.Pow(2, bitsPerSample - 1);
-                var index = 0;
 
                 for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
                     foreach (var channel in _samples)
@@ -175,17 +233,15 @@ namespace AudioWorks.Extensions
             }
             else
             {
-                var bytesPerSample = (int) Math.Ceiling(bitsPerSample / (double) 8);
-                Span<byte> temp = stackalloc byte[4];
-                var index = 0;
+                Span<byte> buffer = stackalloc byte[4];
 
                 for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
                     foreach (var channel in _samples)
                     {
-                        source.Slice(index, bytesPerSample).CopyTo(temp.Slice(4 - bytesPerSample));
-                        BinaryPrimitives.ReadInt32LittleEndian(temp);
+                        source.Slice(index, bytesPerSample).CopyTo(buffer.Slice(4 - bytesPerSample));
+                        BinaryPrimitives.ReadInt32LittleEndian(buffer);
                         channel[frameIndex] =
-                            BinaryPrimitives.ReadInt32LittleEndian(temp) / (float) 0x8000_0000;
+                            BinaryPrimitives.ReadInt32LittleEndian(buffer) / (float) 0x8000_0000;
                         index += bytesPerSample;
                     }
             }
