@@ -163,11 +163,10 @@ namespace AudioWorks.Extensions
         /// <param name="bitsPerSample">The # of bits per sample.</param>
         public void CopyFromInterleaved(ReadOnlySpan<byte> source, int bitsPerSample)
         {
-            var divisor = (float) Math.Pow(2, bitsPerSample - 1);
-
             // 1-8 bit samples are unsigned
             if (bitsPerSample <= 8)
             {
+                var divisor = (float) Math.Pow(2, bitsPerSample - 1);
                 var index = 0;
 
                 for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
@@ -176,17 +175,17 @@ namespace AudioWorks.Extensions
             }
             else
             {
-                var bytesPerSample = (int) Math.Ceiling(bitsPerSample / 8.0);
-                Span<byte> buffer = stackalloc byte[4];
+                var bytesPerSample = (int) Math.Ceiling(bitsPerSample / (double) 8);
+                Span<byte> temp = stackalloc byte[4];
                 var index = 0;
 
                 for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
                     foreach (var channel in _samples)
                     {
-                        source.Slice(index, bytesPerSample).CopyTo(buffer);
-                        BinaryPrimitives.ReadInt32LittleEndian(buffer);
+                        source.Slice(index, bytesPerSample).CopyTo(temp.Slice(4 - bytesPerSample));
+                        BinaryPrimitives.ReadInt32LittleEndian(temp);
                         channel[frameIndex] =
-                            BinaryPrimitives.ReadInt32LittleEndian(buffer) / divisor;
+                            BinaryPrimitives.ReadInt32LittleEndian(temp) / (float) 0x8000_0000;
                         index += bytesPerSample;
                     }
             }
