@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Runtime.InteropServices;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 
@@ -12,6 +13,7 @@ namespace AudioWorks.Extensions.Vorbis
         [CanBeNull] FileStream _fileStream;
         [CanBeNull] OggStream _oggStream;
         [CanBeNull] VorbisEncoder _encoder;
+        [CanBeNull] byte[] _buffer;
 
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
         {
@@ -51,7 +53,7 @@ namespace AudioWorks.Extensions.Vorbis
 
             // ReSharper disable once PossibleNullReferenceException
             while (_oggStream.Flush(out var page))
-                WritePage(page, _fileStream);
+                WritePage(page);
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
@@ -97,22 +99,36 @@ namespace AudioWorks.Extensions.Vorbis
                     _oggStream.PacketIn(ref packet);
 
                     while (_oggStream.PageOut(out OggPage page))
-                        WritePage(page, _fileStream);
+                        WritePage(page);
                 }
             }
         }
 
-        static unsafe void WritePage(OggPage page, [NotNull] Stream stream)
+        void WritePage(OggPage page)
         {
 #if (WINDOWS)
-            stream.Write(new Span<byte>(page.Header.ToPointer(), page.HeaderLength).ToArray(), 0, page.HeaderLength);
-            stream.Write(new Span<byte>(page.Body.ToPointer(), page.BodyLength).ToArray(), 0, page.BodyLength);
+            WriteFromUnmanaged(page.Header, page.HeaderLength);
+            WriteFromUnmanaged(page.Body, page.BodyLength);
 #else
-            stream.Write(new Span<byte>(page.Header.ToPointer(), (int) page.HeaderLength).ToArray(), 0,
-                (int) page.HeaderLength);
-            stream.Write(new Span<byte>(page.Body.ToPointer(), (int) page.BodyLength).ToArray(), 0,
-                (int) page.BodyLength);
+            WriteFromUnmanaged(page.Header, (int) page.HeaderLength);
+            WriteFromUnmanaged(page.Body, (int) page.BodyLength);
 #endif
+        }
+
+        void WriteFromUnmanaged(IntPtr location, int length)
+        {
+            if (_buffer == null)
+                _buffer = new byte[4096];
+
+            var offset = 0;
+            while (offset < length)
+            {
+                var bytesCopied = Math.Min(length - offset, _buffer.Length);
+                Marshal.Copy(IntPtr.Add(location, offset), _buffer, 0, bytesCopied);
+                // ReSharper disable once PossibleNullReferenceException
+                _fileStream.Write(_buffer, 0, bytesCopied);
+                offset += bytesCopied;
+            }
         }
     }
 }

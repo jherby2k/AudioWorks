@@ -60,10 +60,10 @@ namespace AudioWorks.Extensions.Vorbis
                                 // Page out each packet, flushing at the end of the header
                                 if (packet.PacketNumber == 2)
                                     while (outputOggStream.Flush(out var outPage))
-                                        WritePage(outPage, tempStream);
+                                        WritePage(outPage, tempStream, buffer);
                                 else
                                     while (outputOggStream.PageOut(out var outPage))
-                                        WritePage(outPage, tempStream);
+                                        WritePage(outPage, tempStream, buffer);
                             }
                         } while (!SafeNativeMethods.OggPageEos(ref inPage));
 
@@ -82,17 +82,27 @@ namespace AudioWorks.Extensions.Vorbis
             }
         }
 
-        static unsafe void WritePage(OggPage page, [NotNull] Stream stream)
+        static void WritePage(OggPage page, [NotNull] Stream stream, [NotNull] byte[] buffer)
         {
 #if (WINDOWS)
-            stream.Write(new Span<byte>(page.Header.ToPointer(), page.HeaderLength).ToArray(), 0, page.HeaderLength);
-            stream.Write(new Span<byte>(page.Body.ToPointer(), page.BodyLength).ToArray(), 0, page.BodyLength);
+            WriteFromUnmanaged(page.Header, page.HeaderLength, stream, buffer);
+            WriteFromUnmanaged(page.Body, page.BodyLength, stream, buffer);
 #else
-            stream.Write(new Span<byte>(page.Header.ToPointer(), (int) page.HeaderLength).ToArray(), 0,
-                (int) page.HeaderLength);
-            stream.Write(new Span<byte>(page.Body.ToPointer(), (int) page.BodyLength).ToArray(), 0,
-                (int) page.BodyLength);
+            WriteFromUnmanaged(page.Header, (int) page.HeaderLength, stream, buffer);
+            WriteFromUnmanaged(page.Body, (int) page.BodyLength, stream, buffer);
 #endif
+        }
+
+        static void WriteFromUnmanaged(IntPtr location, int length, [NotNull] Stream stream, [NotNull] byte[] buffer)
+        {
+            var offset = 0;
+            while (offset < length)
+            {
+                var bytesCopied = Math.Min(length - offset, buffer.Length);
+                Marshal.Copy(IntPtr.Add(location, offset), buffer, 0, bytesCopied);
+                stream.Write(buffer, 0, bytesCopied);
+                offset += bytesCopied;
+            }
         }
     }
 }
