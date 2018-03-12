@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -36,8 +37,10 @@ namespace AudioWorks.Extensions.Apple
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public SampleBuffer DecodeSamples()
         {
+            var dataLength = _defaultFrameCount * _inputDescription.ChannelsPerFrame;
+
             if (_buffer == null)
-                _buffer = new int[_defaultFrameCount * _inputDescription.ChannelsPerFrame];
+                _buffer = ArrayPool<int>.Shared.Rent((int) dataLength);
 
             var bufferHandle = GCHandle.Alloc(_buffer, GCHandleType.Pinned);
 
@@ -49,7 +52,7 @@ namespace AudioWorks.Extensions.Apple
                     Buffers = new AudioBuffer[1]
                 };
                 bufferList.Buffers[0].NumberChannels = _inputDescription.ChannelsPerFrame;
-                bufferList.Buffers[0].DataByteSize = (uint) _buffer.Length;
+                bufferList.Buffers[0].DataByteSize = dataLength;
                 bufferList.Buffers[0].Data = bufferHandle.AddrOfPinnedObject();
 
                 var frameCount = _defaultFrameCount;
@@ -73,6 +76,8 @@ namespace AudioWorks.Extensions.Apple
         {
             _converter?.Dispose();
             _audioFile?.Dispose();
+            if (_buffer != null)
+                ArrayPool<int>.Shared.Return(_buffer);
             FreeUnmanaged();
             GC.SuppressFinalize(this);
         }

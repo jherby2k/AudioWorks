@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using AudioWorks.Common;
@@ -35,11 +36,13 @@ namespace AudioWorks.Extensions.Wave
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public SampleBuffer DecodeSamples()
         {
-            if (_buffer == null)
-                _buffer = new byte[_audioInfo.Channels * _defaultFrameCount * _bytesPerSample];
+            var length = _audioInfo.Channels * _defaultFrameCount * _bytesPerSample;
 
-            _reader.Read(_buffer, 0, _buffer.Length);
-            //TODO Throw if count is less than _buffer.Length
+            if (_buffer == null)
+                _buffer = ArrayPool<byte>.Shared.Rent(length);
+
+            _reader.Read(_buffer, 0, length);
+            //TODO Throw if count is less than length
 
             var result = new SampleBuffer(
                 _audioInfo.Channels,
@@ -54,6 +57,8 @@ namespace AudioWorks.Extensions.Wave
         public void Dispose()
         {
             _reader?.Dispose();
+            if (_buffer != null)
+                ArrayPool<byte>.Shared.Return(_buffer);
         }
     }
 }

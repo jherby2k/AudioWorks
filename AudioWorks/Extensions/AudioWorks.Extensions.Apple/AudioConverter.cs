@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using JetBrains.Annotations;
@@ -58,12 +59,17 @@ namespace AudioWorks.Extensions.Apple
 
         [SuppressMessage("Performance", "CA1801:Review unused parameters",
             Justification = "Part of native API")]
-        AudioConverterStatus InputCallback(IntPtr handle, ref uint numberPackets, ref AudioBufferList data, IntPtr packetDescriptions, IntPtr userData)
+        AudioConverterStatus InputCallback(
+            IntPtr handle,
+            ref uint numberPackets,
+            ref AudioBufferList data,
+            IntPtr packetDescriptions,
+            IntPtr userData)
         {
             if (_buffer == null)
             {
-                _buffer = new byte[numberPackets *
-                                   _audioFile.GetProperty<uint>(AudioFilePropertyId.PacketSizeUpperBound)];
+                _buffer = ArrayPool<byte>.Shared.Rent((int)
+                    (numberPackets * _audioFile.GetProperty<uint>(AudioFilePropertyId.PacketSizeUpperBound)));
                 _bufferHandle = GCHandle.Alloc(_buffer, GCHandleType.Pinned);
             }
 
@@ -91,6 +97,8 @@ namespace AudioWorks.Extensions.Apple
 
         ~AudioConverter()
         {
+            if (_buffer != null)
+                ArrayPool<byte>.Shared.Return(_buffer);
             FreeUnmanaged();
         }
     }
