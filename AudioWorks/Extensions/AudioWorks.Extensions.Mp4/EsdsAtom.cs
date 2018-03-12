@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp4
@@ -29,7 +29,7 @@ namespace AudioWorks.Extensions.Mp4
 
         internal ushort Channels { get; }
 
-        internal EsdsAtom([NotNull] IReadOnlyList<byte> data)
+        internal EsdsAtom(ReadOnlySpan<byte> data)
         {
             // Confirm this is an AAC descriptor
             if (data[12] != 0x3 || data[25] != 0x40)

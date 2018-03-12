@@ -1,5 +1,5 @@
 ﻿using System;
-using JetBrains.Annotations;
+using System.Buffers.Binary;
 
 namespace AudioWorks.Extensions.Mp4
 {
@@ -9,13 +9,10 @@ namespace AudioWorks.Extensions.Mp4
 
         internal uint PacketSize { get; }
 
-        internal SttsAtom([NotNull] byte[] data)
+        internal SttsAtom(ReadOnlySpan<byte> data)
         {
-            Array.Reverse(data, 16, 4);
-            PacketCount = BitConverter.ToUInt32(data, 16);
-
-            Array.Reverse(data, 20, 4);
-            PacketSize = BitConverter.ToUInt32(data, 20);
+            PacketCount = BinaryPrimitives.ReadUInt32BigEndian(data.Slice(16));
+            PacketSize = BinaryPrimitives.ReadUInt32BigEndian(data.Slice(20));
         }
     }
 }

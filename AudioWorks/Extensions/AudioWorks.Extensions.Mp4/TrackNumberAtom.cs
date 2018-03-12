@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers.Binary;
 using System.Collections.Generic;
 using System.Globalization;
 using JetBrains.Annotations;
@@ -32,21 +33,21 @@ namespace AudioWorks.Extensions.Mp4
 
         internal override byte[] GetBytes()
         {
-            var result = new byte[32];
+            Span<byte> result = stackalloc byte[32];
 
             // Write the atom header:
-            ConvertToBigEndianBytes(32).CopyTo(result, 0);
-            BitConverter.GetBytes(0x6e6b7274).CopyTo(result, 4); // 'nkrt'
+            BinaryPrimitives.WriteUInt32BigEndian(result, 32);
+            BinaryPrimitives.WriteInt32BigEndian(result.Slice(4), 0x74726b6e); // 'trkn'
 
             // Write the data atom header:
-            ConvertToBigEndianBytes(24).CopyTo(result, 8);
-            BitConverter.GetBytes(0x61746164).CopyTo(result, 12); // 'atad'
+            BinaryPrimitives.WriteUInt32BigEndian(result.Slice(8), 24);
+            BinaryPrimitives.WriteInt32BigEndian(result.Slice(12), 0x64617461); // 'data'
 
             // Set the track number (the rest of the bytes are set to 0):
             result[27] = TrackNumber;
             result[29] = TrackCount;
 
-            return result;
+            return result.ToArray();
         }
 
         [Pure, NotNull]

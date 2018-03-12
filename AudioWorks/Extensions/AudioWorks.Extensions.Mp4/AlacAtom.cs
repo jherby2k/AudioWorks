@@ -1,5 +1,5 @@
 ﻿using System;
-using JetBrains.Annotations;
+using System.Buffers.Binary;
 
 namespace AudioWorks.Extensions.Mp4
 {
@@ -11,12 +11,11 @@ namespace AudioWorks.Extensions.Mp4
 
         internal uint SampleRate { get; }
 
-        internal AlacAtom([NotNull] byte[] data)
+        internal AlacAtom(ReadOnlySpan<byte> data)
         {
             BitsPerSample = data[53];
             Channels = data[57];
-            Array.Reverse(data, 68, 4);
-            SampleRate = BitConverter.ToUInt32(data, 68);
+            SampleRate = BinaryPrimitives.ReadUInt32BigEndian(data.Slice(68));
         }
     }
 }

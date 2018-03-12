@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Buffers.Binary;
+using System.Buffers.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,23 +31,23 @@ namespace AudioWorks.Extensions.Mp4
         {
             var contents = Encoding.UTF8.GetBytes(Value);
 
-            var result = new byte[contents.Length + 24];
+            Span<byte> result = stackalloc byte[contents.Length + 24];
 
             // Write the atom header
-            ConvertToBigEndianBytes((uint)result.Length).CopyTo(result, 0);
-            CodePagesEncodingProvider.Instance.GetEncoding(1252).GetBytes(_fourCc).CopyTo(result, 4);
+            BinaryPrimitives.WriteUInt32BigEndian(result, (uint) result.Length);
+            CodePagesEncodingProvider.Instance.GetEncoding(1252).GetBytes(_fourCc).CopyTo(result.Slice(4));
 
             // Write the data atom header
-            ConvertToBigEndianBytes((uint)result.Length - 8).CopyTo(result, 8);
-            BitConverter.GetBytes(0x61746164).CopyTo(result, 12); // 'atad'
+            BinaryPrimitives.WriteUInt32BigEndian(result.Slice(8), (uint) result.Length - 8);
+            BinaryPrimitives.WriteInt32BigEndian(result.Slice(12), 0x64617461);  // 'data'
 
             // Set the type flag
             result[19] = 1;
 
             // Set the atom contents
-            contents.CopyTo(result, 24);
+            contents.CopyTo(result.Slice(24));
 
-            return result;
+            return result.ToArray();
         }
 
         [Pure, NotNull]

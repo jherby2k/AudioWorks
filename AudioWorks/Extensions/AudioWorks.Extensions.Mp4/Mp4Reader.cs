@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Buffers.Binary;
 using System.IO;
 using System.Text;
 using JetBrains.Annotations;
@@ -23,9 +23,7 @@ namespace AudioWorks.Extensions.Mp4
         internal uint ReadUInt32BigEndian()
         {
             Read(_buffer, 0, 4);
-            if (BitConverter.IsLittleEndian)
-                Array.Reverse(_buffer);
-            return BitConverter.ToUInt32(_buffer, 0);
+            return BinaryPrimitives.ReadUInt32BigEndian(_buffer);
         }
     }
 }
