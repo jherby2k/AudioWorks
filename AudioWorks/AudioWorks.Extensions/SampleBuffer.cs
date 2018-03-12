@@ -10,9 +10,6 @@ namespace AudioWorks.Extensions
     /// </summary>
     public sealed class SampleBuffer
     {
-        [NotNull] static readonly Lazy<ArrayPool<float>> _pool =
-            new Lazy<ArrayPool<float>>(ArrayPool<float>.Create, true);
-
         [NotNull, ItemNotNull] readonly float[][] _samples;
 
         /// <summary>
@@ -47,7 +44,7 @@ namespace AudioWorks.Extensions
 
             _samples = new float[channels][];
             for (var i = 0; i < _samples.Length; i++)
-                _samples[i] = _pool.Value.Rent(frames);
+                _samples[i] = ArrayPool<float>.Shared.Rent(frames);
         }
 
         /// <summary>
@@ -254,7 +251,7 @@ namespace AudioWorks.Extensions
         public void ReturnToPool()
         {
             foreach (var channel in _samples)
-                _pool.Value.Return(channel);
+                ArrayPool<float>.Shared.Return(channel);
         }
     }
 }
