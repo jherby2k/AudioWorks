@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Buffers.Binary;
-using System.Buffers.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -48,14 +47,6 @@ namespace AudioWorks.Extensions.Mp4
             contents.CopyTo(result.Slice(24));
 
             return result.ToArray();
-        }
-
-        [Pure, NotNull]
-        static byte[] ConvertToBigEndianBytes(uint value)
-        {
-            var result = BitConverter.GetBytes(value);
-            Array.Reverse(result);
-            return result;
         }
     }
 }
