@@ -194,11 +194,12 @@ namespace AudioWorks.Extensions
             if (source.Length < Frames * Channels)
                 throw new ArgumentException("source does not contain enough samples.", nameof(source));
 
-            var index = 0;
-
-            for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
-                foreach (var channel in _samples)
-                    channel[frameIndex] = source[index++] / (float) 0x8000_0000;
+            for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
+            {
+                var channel = _samples[channelIndex];
+                for (int frameIndex = 0, offset = channelIndex; frameIndex < Frames; frameIndex++, offset += Channels)
+                    channel[frameIndex] = source[offset] / (float) 0x8000_0000;
+            }
         }
 
         /// <summary>
@@ -212,36 +213,20 @@ namespace AudioWorks.Extensions
         public void CopyFromInterleaved(ReadOnlySpan<byte> source, int bitsPerSample)
         {
             var bytesPerSample = (int) Math.Ceiling(bitsPerSample / 8.0);
+            var divisor = (float) Math.Pow(2, bitsPerSample - 1);
 
             if (source.Length < Frames * Channels * bytesPerSample)
                 throw new ArgumentException("source does not contain enough samples.", nameof(source));
             if (bitsPerSample < 1 || bitsPerSample > 32)
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample), "bitsPerSample is out of range.");
 
-            var index = 0;
-
-            // 1-8 bit samples are unsigned
-            if (bytesPerSample == 1)
+            for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
             {
-                var divisor = (float) Math.Pow(2, bitsPerSample - 1);
-
-                for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
-                    foreach (var channel in _samples)
-                        channel[frameIndex] = (source[index++] - 128) / divisor;
-            }
-            else
-            {
-                Span<byte> buffer = stackalloc byte[4];
-
-                for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
-                    foreach (var channel in _samples)
-                    {
-                        source.Slice(index, bytesPerSample).CopyTo(buffer.Slice(4 - bytesPerSample));
-                        BinaryPrimitives.ReadInt32LittleEndian(buffer);
-                        channel[frameIndex] =
-                            BinaryPrimitives.ReadInt32LittleEndian(buffer) / (float) 0x8000_0000;
-                        index += bytesPerSample;
-                    }
+                var channel = _samples[channelIndex];
+                for (int frameIndex = 0, offset = channelIndex * bytesPerSample;
+                    frameIndex < Frames;
+                    frameIndex++, offset += Channels * bytesPerSample)
+                    channel[frameIndex] = ReadPackedInt(source.Slice(offset, bytesPerSample)) / divisor;
             }
         }
 
@@ -252,6 +237,22 @@ namespace AudioWorks.Extensions
         {
             foreach (var channel in _samples)
                 ArrayPool<float>.Shared.Return(channel);
+        }
+
+        [Pure]
+        static int ReadPackedInt(ReadOnlySpan<byte> buffer)
+        {
+            switch (buffer.Length)
+            {
+                case 1:
+                    return buffer[0] - 128;
+                case 2:
+                    return buffer[0] | ((sbyte) buffer[1] << 8);
+                case 3:
+                    return buffer[0] | buffer[1] << 8 | ((sbyte) buffer[2] << 16);
+                default:
+                    return buffer[0] | buffer[1] << 8 | buffer[2] << 16 | ((sbyte) buffer[3] << 24);
+            }
         }
     }
 }
