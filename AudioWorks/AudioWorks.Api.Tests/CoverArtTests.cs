@@ -89,7 +89,7 @@ namespace AudioWorks.Api.Tests
                         "TestFiles",
                         "Valid",
                         fileName))
-                .GetData()));
+                .Data.ToArray()));
         }
     }
 }

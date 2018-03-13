@@ -215,7 +215,7 @@ namespace AudioWorks.Extensions.Flac
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataObjectPictureSetData(
             [NotNull] MetadataBlockHandle handle,
-            byte[] data,
+            IntPtr data,
             uint length,
             [MarshalAs(UnmanagedType.Bool)] bool copy);
 

@@ -369,7 +369,7 @@ namespace AudioWorks.Api.Tests
                         "TestFiles",
                         "Valid",
                         fileName))
-                .Metadata.CoverArt?.GetData()));
+                .Metadata.CoverArt?.Data.ToArray()));
         }
 
         [Theory(DisplayName = "TaggedAudioFile's Rename method renames the file")]

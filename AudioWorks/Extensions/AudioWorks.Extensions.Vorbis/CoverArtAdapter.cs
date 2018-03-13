@@ -51,9 +51,9 @@ namespace AudioWorks.Extensions.Vorbis
                 writer.WriteBigEndian((uint) coverArt.ColorDepth);
                 writer.WriteBigEndian(0); // Always 0 for PNG and JPEG
 
-                var data = coverArt.GetData();
+                var data = coverArt.Data;
                 writer.WriteBigEndian((uint) data.Length);
-                writer.Write(data);
+                writer.Write(data.ToArray());
 
                 return Convert.ToBase64String(stream.ToArray());
             }

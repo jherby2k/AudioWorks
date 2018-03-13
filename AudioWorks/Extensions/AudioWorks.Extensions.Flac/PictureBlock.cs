@@ -44,9 +44,14 @@ namespace AudioWorks.Extensions.Flac
                 Marshal.OffsetOf<Picture>("ColorDepth").ToInt32()), depth);
         }
 
-        internal void SetData([NotNull] byte[] data)
+        internal unsafe void SetData(ReadOnlySpan<byte> data)
         {
-            SafeNativeMethods.MetadataObjectPictureSetData(Handle, data, (uint) data.Length, true);
+            fixed (byte* dataPointer = &MemoryMarshal.GetReference(data))
+                SafeNativeMethods.MetadataObjectPictureSetData(
+                    Handle,
+                    new IntPtr(dataPointer),
+                    (uint) data.Length,
+                    true);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Common
 {
@@ -47,10 +48,9 @@ namespace AudioWorks.Common
         string FileExtension { get; set; }
 
         /// <summary>
-        /// Gets a copy of the raw image data.
+        /// Gets the raw image data.
         /// </summary>
-        /// <returns>The raw image data.</returns>
-        [NotNull]
-        byte[] GetData();
+        /// <value>The data.</value>
+        ReadOnlySpan<byte> Data { get; }
     }
 }

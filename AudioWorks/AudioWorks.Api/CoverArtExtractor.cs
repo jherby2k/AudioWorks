@@ -64,8 +64,8 @@ namespace AudioWorks.Api
 
             using (var fileStream = result.Open(_overwrite ? FileMode.Create : FileMode.CreateNew, FileAccess.Write))
             {
-                var data = audioFile.Metadata.CoverArt.GetData();
-                fileStream.Write(data, 0, data.Length);
+                var data = audioFile.Metadata.CoverArt.Data;
+                fileStream.Write(data.ToArray(), 0, data.Length);
             }
 
             return result;

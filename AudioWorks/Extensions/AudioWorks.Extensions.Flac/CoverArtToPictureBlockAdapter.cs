@@ -7,7 +7,7 @@ namespace AudioWorks.Extensions.Flac
     {
         internal CoverArtToPictureBlockAdapter([NotNull] ICoverArt coverArt)
         {
-            SetData(coverArt.GetData());
+            SetData(coverArt.Data);
             SetType(PictureType.CoverFront);
             SetMimeType(coverArt.MimeType);
             SetWidth(coverArt.Width);

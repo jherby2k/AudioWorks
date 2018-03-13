@@ -31,6 +31,9 @@ namespace AudioWorks.Common
         /// <inheritdoc/>
         public string FileExtension { get; set; }
 
+        /// <inheritdoc/>
+        public ReadOnlySpan<byte> Data => _data;
+
         internal CoverArt([NotNull] Stream stream)
         {
             var format = Image.DetectFormat(stream) ??
@@ -67,12 +70,6 @@ namespace AudioWorks.Common
             Lossless = format.Name.Equals("PNG", StringComparison.OrdinalIgnoreCase);
             MimeType = format.DefaultMimeType;
             FileExtension = $".{format.FileExtensions.First()}";
-        }
-
-        /// <inheritdoc/>
-        public byte[] GetData()
-        {
-            return (byte[]) _data.Clone();
         }
     }
 }
