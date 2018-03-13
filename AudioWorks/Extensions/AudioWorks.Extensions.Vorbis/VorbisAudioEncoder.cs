@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -81,6 +82,8 @@ namespace AudioWorks.Extensions.Vorbis
         {
             _encoder?.Dispose();
             _oggStream?.Dispose();
+            if (_buffer != null)
+                ArrayPool<byte>.Shared.Return(_buffer);
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
@@ -118,11 +121,12 @@ namespace AudioWorks.Extensions.Vorbis
         void WriteFromUnmanaged(IntPtr location, int length)
         {
             if (_buffer == null)
-                _buffer = new byte[4096];
+                _buffer = ArrayPool<byte>.Shared.Rent(4096);
 
             var offset = 0;
             while (offset < length)
             {
+                // ReSharper disable once PossibleNullReferenceException
                 var bytesCopied = Math.Min(length - offset, _buffer.Length);
                 Marshal.Copy(IntPtr.Add(location, offset), _buffer, 0, bytesCopied);
                 // ReSharper disable once PossibleNullReferenceException

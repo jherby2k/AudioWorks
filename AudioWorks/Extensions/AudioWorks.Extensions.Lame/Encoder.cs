@@ -66,12 +66,15 @@ namespace AudioWorks.Extensions.Lame
         internal unsafe void Encode(ReadOnlySpan<float> leftSamples, ReadOnlySpan<float> rightSamples)
         {
             if (_buffer == null)
-                _buffer = new byte[(int) Math.Ceiling(1.25 * leftSamples.Length) + 7200];
+                _buffer = ArrayPool<byte>.Shared.Rent((int) Math.Ceiling(1.25 * leftSamples.Length) + 7200);
 
-            fixed (float* leftPointer = &MemoryMarshal.GetReference(leftSamples))
-            fixed (float* rightPointer = &MemoryMarshal.GetReference(rightSamples))
+            fixed (float* leftPointer = &MemoryMarshal.GetReference(leftSamples),
+                rightPointer = &MemoryMarshal.GetReference(rightSamples))
             {
-                var bytesEncoded = SafeNativeMethods.EncodeBufferIeeeFloat(_handle, new IntPtr(leftPointer), new IntPtr(rightPointer), leftSamples.Length, _buffer, _buffer.Length);
+                var bytesEncoded = SafeNativeMethods.EncodeBufferIeeeFloat(_handle, new IntPtr(leftPointer),
+                    // ReSharper disable once AssignNullToNotNullAttribute
+                    // ReSharper disable once PossibleNullReferenceException
+                    new IntPtr(rightPointer), leftSamples.Length, _buffer, _buffer.Length);
 
                 //TODO throw on negative values (errors)
                 _stream.Write(_buffer, 0, bytesEncoded);
@@ -101,6 +104,8 @@ namespace AudioWorks.Extensions.Lame
         public void Dispose()
         {
             _handle.Dispose();
+            if (_buffer != null)
+                ArrayPool<byte>.Shared.Return(_buffer);
         }
     }
 }

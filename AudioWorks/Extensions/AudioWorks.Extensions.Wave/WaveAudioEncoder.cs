@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using AudioWorks.Common;
@@ -36,7 +37,7 @@ namespace AudioWorks.Extensions.Wave
             var dataSize = samples.Channels * samples.Frames * _bytesPerSample;
 
             if (_buffer == null)
-                _buffer = new byte[dataSize];
+                _buffer = ArrayPool<byte>.Shared.Rent(dataSize);
 
             samples.CopyToInterleaved(_buffer, _bitsPerSample);
             _writer.Write(_buffer, 0, dataSize);
@@ -53,6 +54,8 @@ namespace AudioWorks.Extensions.Wave
         public void Dispose()
         {
             _writer?.Dispose();
+            if (_buffer != null)
+                ArrayPool<byte>.Shared.Return(_buffer);
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
