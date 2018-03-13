@@ -98,12 +98,11 @@ namespace AudioWorks.Extensions.Apple
             if (samples.Frames == 0) return;
 
             var bufferSize = samples.Frames * samples.Channels;
-            var bufferAddress = Marshal.AllocHGlobal(bufferSize * Marshal.SizeOf<int>());
-            try
-            {
-                var buffer = new Span<int>(bufferAddress.ToPointer(), bufferSize);
-                samples.CopyToInterleaved(buffer, 32);
+            Span<int> buffer = stackalloc int[bufferSize];
+            samples.CopyToInterleaved(buffer, 32);
 
+            fixed (int* bufferPointer = &MemoryMarshal.GetReference(buffer))
+            {
                 var bufferList = new AudioBufferList
                 {
                     NumberBuffers = 1,
@@ -111,14 +110,10 @@ namespace AudioWorks.Extensions.Apple
                 };
                 bufferList.Buffers[0].NumberChannels = (uint) samples.Channels;
                 bufferList.Buffers[0].DataByteSize = (uint) (bufferSize * Marshal.SizeOf<int>());
-                bufferList.Buffers[0].Data = bufferAddress;
+                bufferList.Buffers[0].Data = new IntPtr(bufferPointer);
 
                 // ReSharper disable once PossibleNullReferenceException
                 _audioFile.Write(bufferList, (uint) samples.Frames);
-            }
-            finally
-            {
-                Marshal.FreeHGlobal(bufferAddress);
             }
         }
 
