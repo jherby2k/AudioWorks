@@ -76,11 +76,12 @@ namespace AudioWorks.Extensions
                 throw new ArgumentException("destination is not long enough to store the samples.",
                     nameof(destination));
 
-            var index = 0;
-
-            for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
-                foreach (var channel in _samples)
-                    destination[index++] = channel[frameIndex];
+            for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
+            {
+                var channel = _samples[channelIndex];
+                for (int frameIndex = 0, offset = channelIndex; frameIndex < Frames; frameIndex++, offset += Channels)
+                    destination[offset] = channel[frameIndex];
+            }
         }
 
         /// <summary>
@@ -103,11 +104,13 @@ namespace AudioWorks.Extensions
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample), "bitsPerSample is out of range.");
 
             var multiplier = (float) Math.Pow(2, bitsPerSample - 1);
-            var index = 0;
 
-            for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
-                foreach (var channel in _samples)
-                    destination[index++] = (int) Math.Round(channel[frameIndex] * multiplier);
+            for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
+            {
+                var channel = _samples[channelIndex];
+                for (int frameIndex = 0, offset = channelIndex; frameIndex < Frames; frameIndex++, offset += Channels)
+                    destination[offset] = (int) Math.Round(channel[frameIndex] * multiplier);
+            }
         }
 
         /// <summary>
@@ -115,8 +118,7 @@ namespace AudioWorks.Extensions
         /// </summary>
         /// <remarks>
         /// The samples are stored as little-endian integers, aligned at the byte boundary. If
-        /// <paramref name="bitsPerSample"/> is 8 or less, they are unsigned. Otherwise,
-        /// they are signed.
+        /// <paramref name="bitsPerSample"/> is 8 or less, they are unsigned. Otherwise, they are signed.
         /// </remarks>
         /// <param name="destination">The destination.</param>
         /// <param name="bitsPerSample">The # of bits per sample.</param>
@@ -126,6 +128,7 @@ namespace AudioWorks.Extensions
         public void CopyToInterleaved(Span<byte> destination, int bitsPerSample)
         {
             var bytesPerSample = (int) Math.Ceiling(bitsPerSample / 8.0);
+            var multiplier = (float) Math.Pow(2, bitsPerSample - 1);
 
             if (destination.Length < Frames * Channels * bytesPerSample)
                 throw new ArgumentException("destination is not long enough to store the samples.",
@@ -133,28 +136,14 @@ namespace AudioWorks.Extensions
             if (bitsPerSample < 1 || bitsPerSample > 32)
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample), "bitsPerSample is out of range.");
 
-            var multiplier = (float) Math.Pow(2, bitsPerSample - 1);
-            var index = 0;
-
-            // 1-8 bit samples are unsigned
-            if (bitsPerSample <= 8)
+            for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
             {
-                for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
-                    foreach (var channel in _samples)
-                        destination[index++] = (byte) Math.Round(channel[frameIndex] * multiplier + 128);
-            }
-            else
-            {
-                Span<byte> buffer = stackalloc byte[4];
-
-                for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
-                    foreach (var channel in _samples)
-                    {
-                        BinaryPrimitives.WriteInt32LittleEndian(buffer,
-                            (int) Math.Round(channel[frameIndex] * multiplier));
-                        buffer.Slice(0, bytesPerSample).CopyTo(destination.Slice(index));
-                        index += bytesPerSample;
-                    }
+                var channel = _samples[channelIndex];
+                for (int frameIndex = 0, offset = channelIndex * bytesPerSample;
+                    frameIndex < Frames;
+                    frameIndex++, offset += Channels * bytesPerSample)
+                    WritePackedInt(destination.Slice(offset, bytesPerSample),
+                        (int) Math.Round(channel[frameIndex] * multiplier));
             }
         }
 
@@ -252,6 +241,26 @@ namespace AudioWorks.Extensions
                     return buffer[0] | buffer[1] << 8 | ((sbyte) buffer[2] << 16);
                 default:
                     return buffer[0] | buffer[1] << 8 | buffer[2] << 16 | ((sbyte) buffer[3] << 24);
+            }
+        }
+
+        static void WritePackedInt(Span<byte> buffer, int value)
+        {
+            switch (buffer.Length)
+            {
+                default:
+                    buffer[3] = (byte) ((uint) value >> 24);
+                    goto case 3;
+                case 3:
+                    buffer[2] = (byte) (((uint) value >> 16) & 0xFF);
+                    goto case 2;
+                case 2:
+                    buffer[1] = (byte) (((uint) value >> 8) & 0xFF);
+                    buffer[0] = (byte) value;
+                    return;
+                case 1:
+                    buffer[0] = (byte) (value + 128);
+                    return;
             }
         }
     }
