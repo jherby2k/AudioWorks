@@ -61,8 +61,9 @@ namespace AudioWorks.Extensions.Apple
                 if (frameCount == 0)
                     Finished = true;
 
-                var result = new SampleBuffer((int) _inputDescription.ChannelsPerFrame, (int) frameCount);
-                result.CopyFromInterleaved(_buffer);
+                var result = new SampleBuffer(
+                    _buffer.AsReadOnlySpan().Slice(0, (int) dataLength),
+                    (int) _inputDescription.ChannelsPerFrame, 32);
 
                 return result;
             }

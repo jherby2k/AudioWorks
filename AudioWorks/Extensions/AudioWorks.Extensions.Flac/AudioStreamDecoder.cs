@@ -22,17 +22,21 @@ namespace AudioWorks.Extensions.Flac
         protected override unsafe DecoderWriteStatus WriteCallback(IntPtr handle, ref Frame frame, IntPtr buffer,
             IntPtr userData)
         {
-            Samples = new SampleBuffer((int) frame.Header.Channels, (int) frame.Header.BlockSize);
-
-            for (var channelIndex = 0; channelIndex < frame.Header.Channels; channelIndex++)
-            {
-                // buffer is an array of pointers to each channel
-                var channelBuffer = new Span<int>(
-                    Marshal.ReadIntPtr(buffer, channelIndex * Marshal.SizeOf(buffer)).ToPointer(),
-                    (int)frame.Header.BlockSize);
-
-                Samples.CopyFrom(channelIndex, channelBuffer, (int) frame.Header.BitsPerSample);
-            }
+            if (frame.Header.Channels == 1)
+                Samples = new SampleBuffer(
+                    new Span<int>(
+                        Marshal.ReadIntPtr(buffer).ToPointer(),
+                        (int) frame.Header.BlockSize),
+                    (int) frame.Header.BitsPerSample);
+            else
+                Samples = new SampleBuffer(
+                    new Span<int>(
+                        Marshal.ReadIntPtr(buffer).ToPointer(),
+                        (int) frame.Header.BlockSize),
+                    new Span<int>(
+                        Marshal.ReadIntPtr(buffer, Marshal.SizeOf<IntPtr>()).ToPointer(),
+                        (int) frame.Header.BlockSize),
+                    (int) frame.Header.BitsPerSample);
 
             return DecoderWriteStatus.Continue;
         }

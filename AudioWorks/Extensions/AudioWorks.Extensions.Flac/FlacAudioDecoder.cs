@@ -40,7 +40,7 @@ namespace AudioWorks.Extensions.Flac
 
             _decoder.Finish();
             Finished = true;
-            return new SampleBuffer(_decoder.AudioInfo.Channels, 0);
+            return SampleBuffer.Empty;
         }
 
         public void Dispose()

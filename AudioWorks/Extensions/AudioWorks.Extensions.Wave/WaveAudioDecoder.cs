@@ -36,7 +36,7 @@ namespace AudioWorks.Extensions.Wave
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public SampleBuffer DecodeSamples()
         {
-            var length = _audioInfo.Channels * _defaultFrameCount * _bytesPerSample;
+            var length = _audioInfo.Channels * (int) Math.Min(_framesRemaining, _defaultFrameCount) * _bytesPerSample;
 
             if (_buffer == null)
                 _buffer = ArrayPool<byte>.Shared.Rent(length);
@@ -45,10 +45,9 @@ namespace AudioWorks.Extensions.Wave
             //TODO Throw if count is less than length
 
             var result = new SampleBuffer(
+                _buffer.AsReadOnlySpan().Slice(0, length),
                 _audioInfo.Channels,
-                (int) Math.Min(_framesRemaining, _defaultFrameCount));
-
-            result.CopyFromInterleaved(_buffer, _bitsPerSample);
+                _bitsPerSample);
 
             _framesRemaining -= result.Frames;
             return result;

@@ -10,6 +10,12 @@ namespace AudioWorks.Extensions
     /// </summary>
     public sealed class SampleBuffer
     {
+        /// <summary>
+        /// Gets a <see cref="SampleBuffer"/> with 0 frames.
+        /// </summary>
+        /// <value>An empty <see cref="SampleBuffer"/>.</value>
+        public static SampleBuffer Empty { get; } = new SampleBuffer();
+
         [NotNull, ItemNotNull] readonly float[][] _samples;
 
         /// <summary>
@@ -24,27 +30,140 @@ namespace AudioWorks.Extensions
         /// <value>The frame count.</value>
         public int Frames { get; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SampleBuffer"/> class.
-        /// </summary>
-        /// <param name="channels">The # of channels.</param>
-        /// <param name="frames">The # of frames.</param>
-        /// <exception cref="ArgumentOutOfRangeException">Throw in <paramref name="channels"/> or
-        /// <paramref name="frames"/> is out of range.</exception>
-        public SampleBuffer(int channels, int frames)
+        SampleBuffer()
         {
+            _samples = Array.Empty<float[]>();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SampleBuffer"/> class for a single channel, using integer
+        /// samples.
+        /// </summary>
+        /// <param name="monoSamples">The samples.</param>
+        /// <param name="bitsPerSample">The # of bits per sample.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="bitsPerSample"/> is out of range.
+        /// </exception>
+        public SampleBuffer(ReadOnlySpan<int> monoSamples, int bitsPerSample)
+        {
+            if (bitsPerSample < 1 || bitsPerSample > 32)
+                throw new ArgumentOutOfRangeException(nameof(bitsPerSample),
+                    $"{nameof(bitsPerSample)} is out of range.");
+
+            _samples = new float[1][];
+            Frames = monoSamples.Length;
+
+            var divisor = (float) Math.Pow(2, bitsPerSample - 1);
+
+            _samples[0] = ArrayPool<float>.Shared.Rent(Frames);
+            for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
+                _samples[0][frameIndex] = monoSamples[frameIndex] / divisor;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SampleBuffer"/> class for 2 channels, using integer samples.
+        /// </summary>
+        /// <param name="leftSamples">The left channel samples.</param>
+        /// <param name="rightSamples">The right channel samples.</param>
+        /// <param name="bitsPerSample">The # of bits per sample.</param>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="rightSamples"/> has a different length than
+        /// <paramref name="leftSamples"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="bitsPerSample"/> is out of range.
+        /// </exception>
+        public SampleBuffer(ReadOnlySpan<int> leftSamples, ReadOnlySpan<int> rightSamples, int bitsPerSample)
+        {
+            if (leftSamples.Length != rightSamples.Length)
+                throw new ArgumentException(
+                    $"{nameof(rightSamples)} does not match the length of {nameof(leftSamples)}", nameof(rightSamples));
+            if (bitsPerSample < 1 || bitsPerSample > 32)
+                throw new ArgumentOutOfRangeException(nameof(bitsPerSample),
+                    $"{nameof(bitsPerSample)} is out of range.");
+
+            _samples = new float[2][];
+            Frames = leftSamples.Length;
+
+            var divisor = (float) Math.Pow(2, bitsPerSample - 1);
+
+            _samples[0] = ArrayPool<float>.Shared.Rent(Frames);
+            _samples[1] = ArrayPool<float>.Shared.Rent(Frames);
+            for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
+            {
+                _samples[0][frameIndex] = leftSamples[frameIndex] / divisor;
+                _samples[1][frameIndex] = rightSamples[frameIndex] / divisor;
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SampleBuffer"/> class using interleaved integer samples.
+        /// </summary>
+        /// <param name="interleavedSamples">The interleaved samples.</param>
+        /// <param name="channels">The channels.</param>
+        /// <param name="bitsPerSample">The # of bits per sample.</param>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="interleavedSamples"/> is not a multiple of
+        /// channels.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="channels"/> or
+        /// <paramref name="bitsPerSample"/> is out of range.</exception>
+        public SampleBuffer(ReadOnlySpan<int> interleavedSamples, int channels, int bitsPerSample)
+        {
+            if (interleavedSamples.Length % channels != 0)
+                throw new ArgumentException($"{nameof(interleavedSamples)} has an invalid length.",
+                    nameof(interleavedSamples));
             if (channels < 1 || channels > 2)
                 throw new ArgumentOutOfRangeException(nameof(channels),
                     $"{nameof(channels)} must be 1 or 2.");
-            if (frames < 0)
-                throw new ArgumentOutOfRangeException(nameof(frames),
-                    $"{nameof(frames)} must be 0 or greater.");
-
-            Frames = frames;
+            if (bitsPerSample < 1 || bitsPerSample > 32)
+                throw new ArgumentOutOfRangeException(nameof(bitsPerSample),
+                    $"{nameof(bitsPerSample)} is out of range.");
 
             _samples = new float[channels][];
-            for (var i = 0; i < _samples.Length; i++)
-                _samples[i] = ArrayPool<float>.Shared.Rent(frames);
+            Frames = interleavedSamples.Length / channels;
+
+            var divisor = (float) Math.Pow(2, bitsPerSample - 1);
+
+            for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
+            {
+                var channel = _samples[channelIndex] = ArrayPool<float>.Shared.Rent(Frames);
+                for (int frameIndex = 0, offset = channelIndex; frameIndex < Frames; frameIndex++, offset += Channels)
+                    channel[frameIndex] = interleavedSamples[offset] / divisor;
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SampleBuffer"/> class using interleaved integer samples, which
+        /// are packed on the byte boundary according to <paramref name="bitsPerSample"/>.
+        /// </summary>
+        /// <param name="interleavedSamples">The interleaved samples.</param>
+        /// <param name="channels">The # of channels.</param>
+        /// <param name="bitsPerSample">The # of bits per sample.</param>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="interleavedSamples"/> is not a valid length.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="channels"/> or
+        /// <paramref name="bitsPerSample"/> is out of range.</exception>
+        public SampleBuffer(ReadOnlySpan<byte> interleavedSamples, int channels, int bitsPerSample)
+        {
+            var bytesPerSample = (int) Math.Ceiling(bitsPerSample / 8.0);
+            var divisor = (float) Math.Pow(2, bitsPerSample - 1);
+
+            if (interleavedSamples.Length % (channels * bytesPerSample) != 0)
+                throw new ArgumentException($"{nameof(interleavedSamples)} has an invalid length.",
+                    nameof(interleavedSamples));
+            if (channels < 1 || channels > 2)
+                throw new ArgumentOutOfRangeException(nameof(channels),
+                    $"{nameof(channels)} must be 1 or 2.");
+            if (bitsPerSample < 1 || bitsPerSample > 32)
+                throw new ArgumentOutOfRangeException(nameof(bitsPerSample),
+                    $"{nameof(bitsPerSample)} is out of range.");
+
+            _samples = new float[channels][];
+            Frames = interleavedSamples.Length / channels / bytesPerSample;
+
+            for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
+            {
+                var channel = _samples[channelIndex] = ArrayPool<float>.Shared.Rent(Frames);
+                for (int frameIndex = 0, offset = channelIndex * bytesPerSample;
+                    frameIndex < Frames;
+                    frameIndex++, offset += Channels * bytesPerSample)
+                    channel[frameIndex] = ReadPackedInt(interleavedSamples.Slice(offset, bytesPerSample)) / divisor;
+            }
         }
 
         /// <summary>
@@ -144,78 +263,6 @@ namespace AudioWorks.Extensions
                     frameIndex++, offset += Channels * bytesPerSample)
                     WritePackedInt(destination.Slice(offset, bytesPerSample),
                         (int) Math.Round(channel[frameIndex] * multiplier));
-            }
-        }
-
-        /// <summary>
-        /// Populates this object with copies of the samples in <paramref name="source"/>.
-        /// </summary>
-        /// <param name="channel">The channel index.</param>
-        /// <param name="source">The source samples.</param>
-        /// <param name="bitsPerSample">The # of bits per sample.</param>
-        /// <exception cref="ArgumentException"><paramref name="source"/> does not contain enough samples to fill the
-        /// <see cref="SampleBuffer"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="channel"/> and/or
-        /// <paramref name="bitsPerSample"/> is out of range.</exception>
-        public void CopyFrom(int channel, ReadOnlySpan<int> source, int bitsPerSample)
-        {
-            if (channel < 0 || channel > 1)
-                throw new ArgumentOutOfRangeException(nameof(channel), "channel is out of range.");
-            if (source.Length < Frames)
-                throw new ArgumentException("source does not contain enough samples.", nameof(source));
-            if (bitsPerSample < 1 || bitsPerSample > 32)
-                throw new ArgumentOutOfRangeException(nameof(bitsPerSample), "bitsPerSample is out of range.");
-
-            var divisor = (float) Math.Pow(2, bitsPerSample - 1);
-
-            for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
-                _samples[channel][frameIndex] = source[frameIndex] / divisor;
-        }
-
-        /// <summary>
-        /// Populates this object with copies of the interleaved samples in <paramref name="source"/>.
-        /// </summary>
-        /// <param name="source">The interleaved source samples.</param>
-        /// <exception cref="ArgumentException"><paramref name="source"/> does not contain enough samples to fill the
-        /// <see cref="SampleBuffer"/>.</exception>
-        public void CopyFromInterleaved(ReadOnlySpan<int> source)
-        {
-            if (source.Length < Frames * Channels)
-                throw new ArgumentException("source does not contain enough samples.", nameof(source));
-
-            for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
-            {
-                var channel = _samples[channelIndex];
-                for (int frameIndex = 0, offset = channelIndex; frameIndex < Frames; frameIndex++, offset += Channels)
-                    channel[frameIndex] = source[offset] / (float) 0x8000_0000;
-            }
-        }
-
-        /// <summary>
-        /// Populates this object with copies of the interleaved samples in <paramref name="source"/>.
-        /// </summary>
-        /// <param name="source">The interleaved source samples.</param>
-        /// <param name="bitsPerSample">The # of bits per sample.</param>
-        /// <exception cref="ArgumentException"><paramref name="source"/> does not contain enough samples to fill the
-        /// <see cref="SampleBuffer"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="bitsPerSample"/> is out of range.</exception>
-        public void CopyFromInterleaved(ReadOnlySpan<byte> source, int bitsPerSample)
-        {
-            var bytesPerSample = (int) Math.Ceiling(bitsPerSample / 8.0);
-            var divisor = (float) Math.Pow(2, bitsPerSample - 1);
-
-            if (source.Length < Frames * Channels * bytesPerSample)
-                throw new ArgumentException("source does not contain enough samples.", nameof(source));
-            if (bitsPerSample < 1 || bitsPerSample > 32)
-                throw new ArgumentOutOfRangeException(nameof(bitsPerSample), "bitsPerSample is out of range.");
-
-            for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
-            {
-                var channel = _samples[channelIndex];
-                for (int frameIndex = 0, offset = channelIndex * bytesPerSample;
-                    frameIndex < Frames;
-                    frameIndex++, offset += Channels * bytesPerSample)
-                    channel[frameIndex] = ReadPackedInt(source.Slice(offset, bytesPerSample)) / divisor;
             }
         }
 
