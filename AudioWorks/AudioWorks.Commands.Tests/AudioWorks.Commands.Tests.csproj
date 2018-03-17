@@ -46,9 +46,7 @@
     <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.1" />
-    <PackageReference Include="Microsoft.PowerShell.Commands.Diagnostics" Version="6.0.1" />
-    <PackageReference Include="Microsoft.PowerShell.SDK" Version="6.0.1" />
-    <PackageReference Include="Microsoft.WSMan.Management" Version="6.0.1" />
+    <PackageReference Include="Microsoft.PowerShell.SDK" Version="6.0.2" />
     <PackageReference Include="Moq" Version="4.8.2" />
     <PackageReference Include="xunit" Version="2.3.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
@@ -57,11 +55,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj" />
-    <ProjectReference Include="..\AudioWorks.Commands\AudioWorks.Commands.csproj" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="pwsh.exe -ExecutionPolicy Unrestricted -File &quot;$(ProjectDir)..\CopyExtensions.ps1&quot; -Configuration $(ConfigurationName) -ExtensionProjectRoot &quot;$(ProjectDir)..\Extensions&quot; -ExtensionOutputRoot $(OutDir)" />
+    <Exec Command="pwsh.exe -ExecutionPolicy Unrestricted -File &quot;$(ProjectDir)CopyModule.ps1&quot; -Configuration $(ConfigurationName) -ModuleProjectRoot &quot;$(ProjectDir)..\AudioWorks.Commands&quot; -ExtensionProjectRoot &quot;$(ProjectDir)..\Extensions&quot; -OutputRoot $(OutDir)" />
   </Target>
 
 </Project>
