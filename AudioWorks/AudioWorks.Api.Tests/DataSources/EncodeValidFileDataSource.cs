@@ -117,7 +117,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "FLAC",
                 null,
-                "3AA3CA0051ABAD0A57BF03F854F5D206"
+                "8C9EFD0837D816A6360BB8CF70A0D392"
             },
 
             new object[]
@@ -313,7 +313,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "815AAA13CE601B5FD9A090A67A8F7C39"
+                "16D8C1E7CBB033E4647A6B18997AE262"
             },
 
             new object[]
@@ -415,7 +415,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "176EDDA7813AB6127D3DBF0F535760F0"
+                "AFF3299FCB43E8224737433347FAFE9C"
             },
 
             new object[]
@@ -427,7 +427,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "176EDDA7813AB6127D3DBF0F535760F0"
+                "AFF3299FCB43E8224737433347FAFE9C"
             },
 
             new object[]
@@ -644,7 +644,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
                 "LameMP3",
                 null,
-                "9FDD958CF9D8ED55B783D0F16484CF72"
+                "3DF865506B4791EB5C872864FA68FEAD"
             },
 
             new object[]
@@ -652,7 +652,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "LameMP3",
                 null,
-                "9FDD958CF9D8ED55B783D0F16484CF72"
+                "3DF865506B4791EB5C872864FA68FEAD"
             },
 
             new object[]
@@ -964,7 +964,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "EF2FFD1A07C8A8DD1E4867A8E1BD8CC8"
+                "05F3507CACFEEC21E11191E6FCBE773F"
             },
 
             new object[]
@@ -975,7 +975,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "EF2FFD1A07C8A8DD1E4867A8E1BD8CC8"
+                "05F3507CACFEEC21E11191E6FCBE773F"
             },
 
             new object[]
