@@ -36,7 +36,8 @@ namespace AudioWorks.Api.Tests
             [NotNull] string sourceFileName,
             [NotNull] string encoderName,
             [CanBeNull] TestSettingDictionary settings,
-            [NotNull] string expectedHash)
+            [NotNull] string expected32BitHash,
+            [NotNull] string expected64BitHash)
         {
             var path = Path.Combine("Output", "Encode", "Valid");
             Directory.CreateDirectory(path);
@@ -55,7 +56,8 @@ namespace AudioWorks.Api.Tests
                 .Encode(audioFile).ToArray();
 
             Assert.Single(results);
-            Assert.Equal(expectedHash, HashUtility.CalculateHash(results[0]));
+            Assert.Equal(Environment.Is64BitProcess ? expected64BitHash : expected32BitHash,
+                HashUtility.CalculateHash(results[0]));
         }
     }
 }
