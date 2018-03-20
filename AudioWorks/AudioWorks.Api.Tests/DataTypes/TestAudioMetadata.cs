@@ -6,6 +6,11 @@ namespace AudioWorks.Api.Tests.DataTypes
 {
     public sealed class TestAudioMetadata : AudioMetadata, IXunitSerializable
     {
+        [UsedImplicitly]
+        public TestAudioMetadata()
+        {
+        }
+
         public void Deserialize([NotNull] IXunitSerializationInfo info)
         {
             foreach (var property in GetType().GetProperties())
