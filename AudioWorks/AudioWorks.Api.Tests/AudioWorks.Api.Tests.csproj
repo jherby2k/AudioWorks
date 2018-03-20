@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFrameworks>net471;netcoreapp2.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <IsPackable>false</IsPackable>
     <Description>Unit testing project for the AudioWorks API. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
@@ -13,32 +13,40 @@
     <CodeAnalysisRuleSet>CodeAnalysis.ruleset</CodeAnalysisRuleSet>
     <Configurations>Debug-Windows;Release-Windows;Debug-OSX;Release-OSX;Debug-Linux;Release-Linux</Configurations>
   </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp2.0'">
+    <DefineConstants>NETCOREAPP2_0</DefineConstants>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(TargetFramework)'=='net471'">
+    <DefineConstants>NET471</DefineConstants>
+  </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Windows|AnyCPU'">
-    <DefineConstants>DEBUG;TRACE;WINDOWS;NETCOREAPP2_0</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
     <Optimize>false</Optimize>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Windows|AnyCPU'">
-    <DefineConstants>RELEASE;TRACE;WINDOWS;NETCOREAPP2_0</DefineConstants>
+    <DefineConstants>RELEASE;TRACE;WINDOWS</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-OSX|AnyCPU'">
-    <DefineConstants>DEBUG;TRACE;OSX;NETCOREAPP2_0</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;OSX</DefineConstants>
     <Optimize>false</Optimize>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-OSX|AnyCPU'">
-    <DefineConstants>RELEASE;TRACE;OSX;NETCOREAPP2_0</DefineConstants>
+    <DefineConstants>RELEASE;TRACE;OSX</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Linux|AnyCPU'">
-    <DefineConstants>DEBUG;TRACE;LINUX;NETCOREAPP2_0</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;LINUX</DefineConstants>
     <Optimize>false</Optimize>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Linux|AnyCPU'">
-    <DefineConstants>RELEASE;TRACE;LINUX;NETCOREAPP2_0</DefineConstants>
+    <DefineConstants>RELEASE;TRACE;LINUX</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
