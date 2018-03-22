@@ -27,7 +27,7 @@ namespace AudioWorks.Extensions.Wave
             _reader = new RiffReader(fileStream);
             _bitsPerSample = _audioInfo.BitsPerSample;
             _bytesPerSample = (int) Math.Ceiling(_audioInfo.BitsPerSample / 8.0);
-            _framesRemaining = _audioInfo.SampleCount;
+            _framesRemaining = _audioInfo.FrameCount;
 
             _reader.Initialize();
             _reader.SeekToChunk("data");

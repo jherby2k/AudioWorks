@@ -97,14 +97,14 @@ namespace AudioWorks.Api.Tests
             }
         }
 
-        [Fact(DisplayName = "AudioInfo throws an exception if SampleCount is negative")]
-        public void SampleCountNegativeThrowsException()
+        [Fact(DisplayName = "AudioInfo throws an exception if FrameCount is negative")]
+        public void FrameCountNegativeThrowsException()
         {
             Assert.Throws<AudioInvalidException>(() => AudioInfo.CreateForLossless("Test", 2, 16, 44100, -1));
         }
 
-        [Fact(DisplayName = "AudioInfo's SampleCount property is properly serialized")]
-        public void SampleCountIsSerialized()
+        [Fact(DisplayName = "AudioInfo's FrameCount property is properly serialized")]
+        public void FrameCountIsSerialized()
         {
             var formatter = new BinaryFormatter();
             using (var stream = new MemoryStream())
@@ -112,7 +112,7 @@ namespace AudioWorks.Api.Tests
                 formatter.Serialize(stream, AudioInfo.CreateForLossless("Test", 2, 16, 44100, 1000));
                 stream.Position = 0;
 
-                Assert.Equal(1000, ((AudioInfo) formatter.Deserialize(stream)).SampleCount);
+                Assert.Equal(1000, ((AudioInfo) formatter.Deserialize(stream)).FrameCount);
             }
         }
 

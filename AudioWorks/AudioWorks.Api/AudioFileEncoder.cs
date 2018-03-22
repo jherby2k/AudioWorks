@@ -146,7 +146,7 @@ namespace AudioWorks.Api
                         encoderExport.Value.ProcessSamples(
                             audioFiles[i].Path,
                             progressQueue,
-                            (int) (audioFiles[i].Info.SampleCount / 100),
+                            (int) (audioFiles[i].Info.FrameCount / 100),
                             cancellationToken);
 
                         encoderExport.Value.Finish();

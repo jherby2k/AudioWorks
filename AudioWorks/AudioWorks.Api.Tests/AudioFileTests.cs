@@ -181,9 +181,9 @@ namespace AudioWorks.Api.Tests
                 .Info.BitRate);
         }
 
-        [Theory(DisplayName = "AudioFile's Info property has the expected SampleCount")]
+        [Theory(DisplayName = "AudioFile's Info property has the expected FrameCount")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndAudioInfo), MemberType = typeof(ValidFileDataSource))]
-        public void InfoHasExpectedSampleCount([NotNull] string fileName, [NotNull] TestAudioInfo expectedAudioInfo)
+        public void InfoHasExpectedFrameCount([NotNull] string fileName, [NotNull] TestAudioInfo expectedAudioInfo)
         {
             Assert.Equal(expectedAudioInfo.SampleCount, new AudioFile(
                     Path.Combine(
@@ -191,7 +191,7 @@ namespace AudioWorks.Api.Tests
                         "TestFiles",
                         "Valid",
                         fileName))
-                .Info.SampleCount);
+                .Info.FrameCount);
         }
 
         [Theory(DisplayName = "AudioFile's Info property has the expected PlayLength")]

@@ -49,8 +49,8 @@ namespace AudioWorks.Extensions.Lame
             _encoder = new Encoder(fileStream);
             _encoder.SetChannels(info.Channels);
             _encoder.SetSampleRate(info.SampleRate);
-            if (info.SampleCount > 0)
-                _encoder.SetSampleCount((uint) info.SampleCount);
+            if (info.FrameCount > 0)
+                _encoder.SetSampleCount((uint) info.FrameCount);
 
             if (settings.TryGetValue<int>("BitRate", out var bitRate))
             {

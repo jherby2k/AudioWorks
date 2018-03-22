@@ -72,7 +72,7 @@ namespace AudioWorks.Commands
         {
             var activity = $"Encoding {_sourceAudioFiles.Count} audio files in {Encoder} format";
             var totalFramesCompleted = 0L;
-            var totalFrames = (double) _sourceAudioFiles.Sum(audioFile => audioFile.Info.SampleCount);
+            var totalFrames = (double) _sourceAudioFiles.Sum(audioFile => audioFile.Info.FrameCount);
 
             // ReSharper disable once AssignNullToNotNullAttribute
             var encoder = new AudioFileEncoder(Encoder,

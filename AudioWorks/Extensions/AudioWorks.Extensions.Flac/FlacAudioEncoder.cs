@@ -30,8 +30,8 @@ namespace AudioWorks.Extensions.Flac
             _encoder.SetChannels((uint) info.Channels);
             _encoder.SetBitsPerSample((uint) info.BitsPerSample);
             _encoder.SetSampleRate((uint) info.SampleRate);
-            if (info.SampleCount > 0)
-                _encoder.SetTotalSamplesEstimate((ulong) info.SampleCount);
+            if (info.FrameCount > 0)
+                _encoder.SetTotalSamplesEstimate((ulong) info.FrameCount);
 
             // Use a default compression level of 5
             _encoder.SetCompressionLevel(
@@ -41,10 +41,10 @@ namespace AudioWorks.Extensions.Flac
 
             // Use a default seek point interval of 10 seconds
             if (!settings.TryGetValue<int>("SeekPointInterval", out var seekPointInterval))
-                seekPointInterval = info.SampleCount > 0 ? 10 : 0;
+                seekPointInterval = info.FrameCount > 0 ? 10 : 0;
             if (seekPointInterval > 0)
                 _metadataBlocks.Add(new SeekTableBlock(
-                    (uint) Math.Ceiling(info.PlayLength.TotalSeconds / seekPointInterval), (ulong) info.SampleCount));
+                    (uint) Math.Ceiling(info.PlayLength.TotalSeconds / seekPointInterval), (ulong) info.FrameCount));
 
             _metadataBlocks.Add(new MetadataToVorbisCommentAdapter(metadata));
             if (metadata.CoverArt != null)

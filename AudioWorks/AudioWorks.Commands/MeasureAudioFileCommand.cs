@@ -75,7 +75,7 @@ namespace AudioWorks.Commands
                 // Process progress notifications on the main thread
                 var activity = $"Performing {Analyzer} analysis on {_audioFiles.Count} audio files";
                 var totalFramesCompleted = 0L;
-                var totalFrames = (double) _audioFiles.Sum(audioFile => audioFile.Info.SampleCount);
+                var totalFrames = (double) _audioFiles.Sum(audioFile => audioFile.Info.FrameCount);
 
                 foreach (var framesCompleted in outputQueue.GetConsumingEnumerable(_cancellationSource.Token))
                 {

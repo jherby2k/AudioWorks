@@ -110,19 +110,19 @@ namespace AudioWorks.Common
         public int BitRate { get; }
 
         /// <summary>
-        /// Gets the sample count, or 0 if unknown.
+        /// Gets the frame count, or 0 if unknown.
         /// </summary>
-        /// <value>The sample count.</value>
-        public long SampleCount { get; }
+        /// <value>The frame count.</value>
+        public long FrameCount { get; }
 
         /// <summary>
         /// Gets the play length, which is 0 if the sample count is unknown.
         /// </summary>
         /// <value>The play length.</value>
         public TimeSpan PlayLength =>
-            SampleCount == 0
+            FrameCount == 0
                 ? TimeSpan.Zero
-                : new TimeSpan(0, 0, (int) Math.Round(SampleCount / (double) SampleRate));
+                : new TimeSpan(0, 0, (int) Math.Round(FrameCount / (double) SampleRate));
 
         AudioInfo(
             [NotNull] string format,
@@ -148,7 +148,7 @@ namespace AudioWorks.Common
             BitsPerSample = bitsPerSample;
             SampleRate = sampleRate;
             BitRate = bitRate;
-            SampleCount = sampleCount;
+            FrameCount = sampleCount;
         }
     }
 }

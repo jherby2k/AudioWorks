@@ -103,7 +103,7 @@ namespace AudioWorks.Api
                             analyzerExports[i].Value.ProcessSamples(
                                 audioFiles[i].Path,
                                 progressQueue,
-                                (int) (audioFiles[i].Info.SampleCount / 100),
+                                (int) (audioFiles[i].Info.FrameCount / 100),
                                 cancellationToken);
 
                             CopyFields(analyzerExports[i].Value.GetResult(), audioFiles[i].Metadata);
