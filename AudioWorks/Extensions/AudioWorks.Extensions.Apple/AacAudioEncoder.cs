@@ -17,6 +17,7 @@ namespace AudioWorks.Extensions.Apple
         [CanBeNull] FileStream _fileStream;
         [CanBeNull] AudioMetadata _metadata;
         [CanBeNull] SettingDictionary _settings;
+        int _bitsPerSample;
         [CanBeNull] ExtendedAudioFile _audioFile;
 
         public SettingInfoDictionary SettingInfo
@@ -49,6 +50,7 @@ namespace AudioWorks.Extensions.Apple
             _fileStream = fileStream;
             _metadata = metadata;
             _settings = settings;
+            _bitsPerSample = info.BitsPerSample;
 
             var inputDescription = GetInputDescription(info);
             _audioFile = new ExtendedAudioFile(GetOutputDescription(inputDescription), AudioFileType.M4A, fileStream);
@@ -99,7 +101,7 @@ namespace AudioWorks.Extensions.Apple
 
             var bufferSize = samples.Frames * samples.Channels;
             Span<int> buffer = stackalloc int[bufferSize];
-            samples.CopyToInterleaved(buffer, 32);
+            samples.CopyToInterleaved(buffer, _bitsPerSample);
 
             fixed (int* bufferPointer = &MemoryMarshal.GetReference(buffer))
             {
@@ -146,12 +148,12 @@ namespace AudioWorks.Extensions.Apple
             {
                 SampleRate = info.SampleRate,
                 AudioFormat = AudioFormat.LinearPcm,
-                Flags = AudioFormatFlags.PcmIsSignedInteger | AudioFormatFlags.PcmIsPacked,
+                Flags = AudioFormatFlags.PcmIsSignedInteger,
                 BytesPerPacket = 4 * (uint) info.Channels,
                 FramesPerPacket = 1,
                 BytesPerFrame = 4 * (uint) info.Channels,
                 ChannelsPerFrame = (uint) info.Channels,
-                BitsPerChannel = 32
+                BitsPerChannel = (uint) info.BitsPerSample
             };
         }
 

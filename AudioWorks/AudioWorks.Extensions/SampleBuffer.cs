@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Buffers;
-using System.Buffers.Binary;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions
@@ -14,6 +13,7 @@ namespace AudioWorks.Extensions
         /// Gets a <see cref="SampleBuffer"/> with 0 frames.
         /// </summary>
         /// <value>An empty <see cref="SampleBuffer"/>.</value>
+        [NotNull]
         public static SampleBuffer Empty { get; } = new SampleBuffer();
 
         [NotNull, ItemNotNull] readonly float[][] _samples;
@@ -45,7 +45,7 @@ namespace AudioWorks.Extensions
         /// </exception>
         public SampleBuffer(ReadOnlySpan<int> monoSamples, int bitsPerSample)
         {
-            if (bitsPerSample < 1 || bitsPerSample > 32)
+            if (bitsPerSample < 1 || bitsPerSample > 24)
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample),
                     $"{nameof(bitsPerSample)} is out of range.");
 
@@ -74,7 +74,7 @@ namespace AudioWorks.Extensions
             if (leftSamples.Length != rightSamples.Length)
                 throw new ArgumentException(
                     $"{nameof(rightSamples)} does not match the length of {nameof(leftSamples)}", nameof(rightSamples));
-            if (bitsPerSample < 1 || bitsPerSample > 32)
+            if (bitsPerSample < 1 || bitsPerSample > 24)
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample),
                     $"{nameof(bitsPerSample)} is out of range.");
 
@@ -110,7 +110,7 @@ namespace AudioWorks.Extensions
             if (channels < 1 || channels > 2)
                 throw new ArgumentOutOfRangeException(nameof(channels),
                     $"{nameof(channels)} must be 1 or 2.");
-            if (bitsPerSample < 1 || bitsPerSample > 32)
+            if (bitsPerSample < 1 || bitsPerSample > 24)
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample),
                     $"{nameof(bitsPerSample)} is out of range.");
 
@@ -149,7 +149,7 @@ namespace AudioWorks.Extensions
             if (channels < 1 || channels > 2)
                 throw new ArgumentOutOfRangeException(nameof(channels),
                     $"{nameof(channels)} must be 1 or 2.");
-            if (bitsPerSample < 1 || bitsPerSample > 32)
+            if (bitsPerSample < 1 || bitsPerSample > 24)
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample),
                     $"{nameof(bitsPerSample)} is out of range.");
 
@@ -219,7 +219,7 @@ namespace AudioWorks.Extensions
             if (destination.Length < Frames * Channels)
                 throw new ArgumentException("destination is not long enough to store the samples.",
                     nameof(destination));
-            if (bitsPerSample < 1 || bitsPerSample > 32)
+            if (bitsPerSample < 1 || bitsPerSample > 24)
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample), "bitsPerSample is out of range.");
 
             var multiplier = (float) Math.Pow(2, bitsPerSample - 1);
@@ -252,7 +252,7 @@ namespace AudioWorks.Extensions
             if (destination.Length < Frames * Channels * bytesPerSample)
                 throw new ArgumentException("destination is not long enough to store the samples.",
                     nameof(destination));
-            if (bitsPerSample < 1 || bitsPerSample > 32)
+            if (bitsPerSample < 1 || bitsPerSample > 24)
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample), "bitsPerSample is out of range.");
 
             for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
@@ -284,10 +284,8 @@ namespace AudioWorks.Extensions
                     return buffer[0] - 128;
                 case 2:
                     return buffer[0] | ((sbyte) buffer[1] << 8);
-                case 3:
-                    return buffer[0] | buffer[1] << 8 | ((sbyte) buffer[2] << 16);
                 default:
-                    return buffer[0] | buffer[1] << 8 | buffer[2] << 16 | ((sbyte) buffer[3] << 24);
+                    return buffer[0] | buffer[1] << 8 | ((sbyte) buffer[2] << 16);
             }
         }
 
@@ -296,9 +294,6 @@ namespace AudioWorks.Extensions
             switch (buffer.Length)
             {
                 default:
-                    buffer[3] = (byte) ((uint) value >> 24);
-                    goto case 3;
-                case 3:
                     buffer[2] = (byte) (((uint) value >> 16) & 0xFF);
                     goto case 2;
                 case 2:
