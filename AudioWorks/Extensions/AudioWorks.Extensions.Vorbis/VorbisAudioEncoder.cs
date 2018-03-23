@@ -97,11 +97,11 @@ namespace AudioWorks.Extensions.Vorbis
                 _encoder.Analysis(IntPtr.Zero);
                 _encoder.AddBlock();
 
-                while (_encoder.FlushPacket(out OggPacket packet))
+                while (_encoder.FlushPacket(out var packet))
                 {
                     _oggStream.PacketIn(ref packet);
 
-                    while (_oggStream.PageOut(out OggPage page))
+                    while (_oggStream.PageOut(out var page))
                         WritePage(page);
                 }
             }

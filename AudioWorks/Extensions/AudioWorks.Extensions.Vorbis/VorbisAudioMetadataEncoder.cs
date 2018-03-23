@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.IO;
 using System.Runtime.InteropServices;
 using AudioWorks.Common;
@@ -14,7 +15,7 @@ namespace AudioWorks.Extensions.Vorbis
         public void WriteMetadata(FileStream stream, AudioMetadata metadata, SettingDictionary settings)
         {
             // This buffer is used for both reading and writing:
-            var buffer = new byte[4096];
+            var buffer = ArrayPool<byte>.Shared.Rent(4096);
 
             using (var tempStream = new MemoryStream())
             {
@@ -70,12 +71,12 @@ namespace AudioWorks.Extensions.Vorbis
                         // Once the end of the input is reached, overwrite the original file and return
                         stream.Position = 0;
                         stream.SetLength(tempStream.Length);
-                        tempStream.Position = 0;
-                        tempStream.CopyTo(stream);
+                        tempStream.WriteTo(stream);
                     }
                 }
                 finally
                 {
+                    ArrayPool<byte>.Shared.Return(buffer);
                     inputOggStream?.Dispose();
                     outputOggStream?.Dispose();
                 }
