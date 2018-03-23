@@ -112,7 +112,7 @@
                 <ScriptBlock>"{0:f0} kbps" -f ($_.BitRate / 1000)</ScriptBlock>
               </ListItem>
               <ListItem>
-                <PropertyName>SampleCount</PropertyName>
+                <PropertyName>FrameCount</PropertyName>
               </ListItem>
               <ListItem>
                 <PropertyName>PlayLength</PropertyName>
