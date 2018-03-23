@@ -11,6 +11,7 @@ namespace AudioWorks.Common
     [Serializable]
     public sealed class CoverArt : ICoverArt
     {
+        readonly int _dataSize;
         [NotNull] readonly byte[] _data;
 
         /// <inheritdoc/>
@@ -32,7 +33,7 @@ namespace AudioWorks.Common
         public string FileExtension { get; set; }
 
         /// <inheritdoc/>
-        public ReadOnlySpan<byte> Data => _data;
+        public ReadOnlySpan<byte> Data => _data.AsReadOnlySpan().Slice(0, _dataSize);
 
         internal CoverArt([NotNull] Stream stream)
         {
@@ -48,24 +49,29 @@ namespace AudioWorks.Common
 
             // Bitmaps should be compressed in PNG format
             if (format.Name.Equals("BMP", StringComparison.OrdinalIgnoreCase))
-                using (var memoryStream = new MemoryStream())
+                using (var pngStream = new MemoryStream())
                 {
                     using (var image = Image.Load(stream))
-                        image.SaveAsPng(memoryStream);
-                    _data = memoryStream.ToArray();
-                    memoryStream.Position = 0;
-                    format = Image.DetectFormat(memoryStream);
+                        image.SaveAsPng(pngStream);
+                    _dataSize = (int) pngStream.Length;
+                    _data = pngStream.GetBuffer();
+                    pngStream.Position = 0;
+                    format = Image.DetectFormat(pngStream);
                 }
 
             // JPEG and PNG images should be stored verbatim
-            else if (stream is MemoryStream currentStream)
-                _data = currentStream.ToArray();
             else
-                using (var memoryStream = new MemoryStream())
+            {
+                _dataSize = (int) stream.Length;
+                if (stream is MemoryStream currentStream)
+                    _data = currentStream.ToArray();
+                else
                 {
-                    stream.CopyTo(memoryStream);
-                    _data = memoryStream.ToArray();
+                    _data = new byte[_dataSize];
+                    using (var memoryStream = new MemoryStream(_data))
+                        stream.CopyTo(memoryStream);
                 }
+            }
 
             Lossless = format.Name.Equals("PNG", StringComparison.OrdinalIgnoreCase);
             MimeType = format.DefaultMimeType;
