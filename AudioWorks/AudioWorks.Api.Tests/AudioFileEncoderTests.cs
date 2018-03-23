@@ -31,7 +31,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioFileEncoder's Encode method creates the expected audio file")]
         [MemberData(nameof(EncodeValidFileDataSource.Data), MemberType = typeof(EncodeValidFileDataSource))]
-        public void EncodeCreatesExpectedMetadata(
+        public void EncodeCreatesExpectedAudioFile(
             int index,
             [NotNull] string sourceFileName,
             [NotNull] string encoderName,
