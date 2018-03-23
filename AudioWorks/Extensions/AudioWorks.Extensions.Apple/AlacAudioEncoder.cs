@@ -52,7 +52,7 @@ namespace AudioWorks.Extensions.Apple
             Span<int> buffer = stackalloc int[bufferSize];
             samples.CopyToInterleaved(buffer, _bitsPerSample);
 
-            fixed (int* bufferPointer = &MemoryMarshal.GetReference(buffer))
+            fixed (int* bufferAddress = &MemoryMarshal.GetReference(buffer))
             {
                 var bufferList = new AudioBufferList
                 {
@@ -61,7 +61,7 @@ namespace AudioWorks.Extensions.Apple
                 };
                 bufferList.Buffers[0].NumberChannels = (uint) samples.Channels;
                 bufferList.Buffers[0].DataByteSize = (uint) (bufferSize * Marshal.SizeOf<int>());
-                bufferList.Buffers[0].Data = new IntPtr(bufferPointer);
+                bufferList.Buffers[0].Data = new IntPtr(bufferAddress);
 
                 // ReSharper disable once PossibleNullReferenceException
                 _audioFile.Write(bufferList, (uint) samples.Frames);

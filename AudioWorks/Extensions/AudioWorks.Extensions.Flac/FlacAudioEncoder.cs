@@ -71,8 +71,8 @@ namespace AudioWorks.Extensions.Flac
             Span<int> buffer = stackalloc int[bufferSize];
             samples.CopyToInterleaved(buffer, _bitsPerSample);
 
-            fixed (int* bufferPointer = &MemoryMarshal.GetReference(buffer))
-                _encoder.ProcessInterleaved(new IntPtr(bufferPointer), (uint) samples.Frames);
+            fixed (int* bufferAddress = &MemoryMarshal.GetReference(buffer))
+                _encoder.ProcessInterleaved(new IntPtr(bufferAddress), (uint) samples.Frames);
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]

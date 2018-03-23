@@ -39,7 +39,7 @@ namespace AudioWorks.Extensions.Apple
             var bufferSize = _defaultFrameCount * _outputDescription.ChannelsPerFrame;
             Span<int> buffer = stackalloc int[(int) bufferSize];
 
-            fixed (int* bufferPointer = &MemoryMarshal.GetReference(buffer))
+            fixed (int* bufferAddress = &MemoryMarshal.GetReference(buffer))
             {
                 var bufferList = new AudioBufferList
                 {
@@ -48,7 +48,7 @@ namespace AudioWorks.Extensions.Apple
                 };
                 bufferList.Buffers[0].NumberChannels = _outputDescription.ChannelsPerFrame;
                 bufferList.Buffers[0].DataByteSize = (uint) (bufferSize * Marshal.SizeOf<int>());
-                bufferList.Buffers[0].Data = new IntPtr(bufferPointer);
+                bufferList.Buffers[0].Data = new IntPtr(bufferAddress);
 
                 var frameCount = _defaultFrameCount;
                 _converter.FillBuffer(ref frameCount, ref bufferList, null);
