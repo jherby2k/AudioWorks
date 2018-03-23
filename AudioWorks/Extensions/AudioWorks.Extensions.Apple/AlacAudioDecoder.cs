@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -14,10 +13,9 @@ namespace AudioWorks.Extensions.Apple
         const uint _defaultFrameCount = 4096;
 
         [CanBeNull] AudioFile _audioFile;
-        AudioStreamBasicDescription _inputDescription;
+        AudioStreamBasicDescription _outputDescription;
         [CanBeNull] AudioConverter _converter;
         IntPtr _magicCookie;
-        [CanBeNull] int[] _buffer;
 
         public bool Finished { get; private set; }
 
@@ -25,35 +23,32 @@ namespace AudioWorks.Extensions.Apple
         {
             _audioFile = new AudioFile(AudioFileType.M4A, fileStream);
 
-            _inputDescription = _audioFile.GetProperty<AudioStreamBasicDescription>(AudioFilePropertyId.DataFormat);
-            if (_inputDescription.AudioFormat != AudioFormat.AppleLossless)
+            var inputDescription = _audioFile.GetProperty<AudioStreamBasicDescription>(AudioFilePropertyId.DataFormat);
+            if (inputDescription.AudioFormat != AudioFormat.AppleLossless)
                 throw new AudioUnsupportedException($"{fileStream.Name} is not an Apple Lossless file.", fileStream.Name);
-            var outputDescription = GetOutputDescription(_inputDescription);
 
-            _converter = new AudioConverter(ref _inputDescription, ref outputDescription, _audioFile);
+            _outputDescription = GetOutputDescription(inputDescription);
+
+            _converter = new AudioConverter(ref inputDescription, ref _outputDescription, _audioFile);
             _magicCookie = GetMagicCookie(_audioFile, _converter);
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-        public SampleBuffer DecodeSamples()
+        public unsafe SampleBuffer DecodeSamples()
         {
-            var dataLength = _defaultFrameCount * _inputDescription.ChannelsPerFrame;
+            var bufferSize = _defaultFrameCount * _outputDescription.ChannelsPerFrame;
+            Span<int> buffer = stackalloc int[(int) bufferSize];
 
-            if (_buffer == null)
-                _buffer = ArrayPool<int>.Shared.Rent((int) dataLength);
-
-            var bufferHandle = GCHandle.Alloc(_buffer, GCHandleType.Pinned);
-
-            try
+            fixed (int* bufferPointer = &MemoryMarshal.GetReference(buffer))
             {
                 var bufferList = new AudioBufferList
                 {
                     NumberBuffers = 1,
                     Buffers = new AudioBuffer[1]
                 };
-                bufferList.Buffers[0].NumberChannels = _inputDescription.ChannelsPerFrame;
-                bufferList.Buffers[0].DataByteSize = dataLength;
-                bufferList.Buffers[0].Data = bufferHandle.AddrOfPinnedObject();
+                bufferList.Buffers[0].NumberChannels = _outputDescription.ChannelsPerFrame;
+                bufferList.Buffers[0].DataByteSize = (uint) (bufferSize * Marshal.SizeOf<int>());
+                bufferList.Buffers[0].Data = new IntPtr(bufferPointer);
 
                 var frameCount = _defaultFrameCount;
                 _converter.FillBuffer(ref frameCount, ref bufferList, null);
@@ -62,14 +57,10 @@ namespace AudioWorks.Extensions.Apple
                     Finished = true;
 
                 var result = new SampleBuffer(
-                    _buffer.AsReadOnlySpan().Slice(0, (int) dataLength),
-                    (int) _inputDescription.ChannelsPerFrame, 32);
+                    buffer.Slice(0, (int) (frameCount * _outputDescription.ChannelsPerFrame)),
+                    (int) _outputDescription.ChannelsPerFrame, 32);
 
                 return result;
-            }
-            finally
-            {
-                bufferHandle.Free();
             }
         }
 
@@ -77,8 +68,6 @@ namespace AudioWorks.Extensions.Apple
         {
             _converter?.Dispose();
             _audioFile?.Dispose();
-            if (_buffer != null)
-                ArrayPool<int>.Shared.Return(_buffer);
             FreeUnmanaged();
             GC.SuppressFinalize(this);
         }
