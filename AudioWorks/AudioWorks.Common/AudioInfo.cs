@@ -33,7 +33,7 @@ namespace AudioWorks.Common
         {
             if (bitsPerSample < 1)
                 throw new AudioInvalidException($"{bitsPerSample} is not a valid # of bits per sample.");
-            if (bitsPerSample > 24)
+            if (bitsPerSample > 32)
                 throw new AudioUnsupportedException($"{bitsPerSample} is not a supported # of bits per sample.");
 
             return new AudioInfo(
