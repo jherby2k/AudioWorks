@@ -54,7 +54,7 @@ namespace AudioWorks.Extensions.Vorbis
 
             // ReSharper disable once PossibleNullReferenceException
             while (_oggStream.Flush(out var page))
-                WritePage(page);
+                WritePage(ref page);
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
@@ -102,12 +102,12 @@ namespace AudioWorks.Extensions.Vorbis
                     _oggStream.PacketIn(ref packet);
 
                     while (_oggStream.PageOut(out var page))
-                        WritePage(page);
+                        WritePage(ref page);
                 }
             }
         }
 
-        void WritePage(OggPage page)
+        void WritePage(ref OggPage page)
         {
 #if (WINDOWS)
             WriteFromUnmanaged(page.Header, page.HeaderLength);

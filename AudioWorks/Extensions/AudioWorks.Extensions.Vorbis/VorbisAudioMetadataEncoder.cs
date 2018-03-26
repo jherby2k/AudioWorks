@@ -74,7 +74,7 @@ namespace AudioWorks.Extensions.Vorbis
                                             outputOggStream.PacketIn(ref packet);
                                             while (outputOggStream.Flush(out var outPage))
                                             {
-                                                WritePage(outPage, tempStream, buffer);
+                                                WritePage(ref outPage, tempStream, buffer);
                                                 pagesWritten++;
                                             }
 
@@ -89,7 +89,7 @@ namespace AudioWorks.Extensions.Vorbis
                             {
                                 // Copy the existing data pages verbatim, with updated sequence numbers
                                 UpdateSequenceNumber(ref page, pagesWritten);
-                                WritePage(page, tempStream, buffer);
+                                WritePage(ref page, tempStream, buffer);
                                 pagesWritten++;
                             }
 
@@ -110,7 +110,7 @@ namespace AudioWorks.Extensions.Vorbis
             }
         }
 
-        static void WritePage(OggPage page, [NotNull] Stream stream, [NotNull] byte[] buffer)
+        static void WritePage(ref OggPage page, [NotNull] Stream stream, [NotNull] byte[] buffer)
         {
 #if (WINDOWS)
             WriteFromUnmanaged(page.Header, page.HeaderLength, stream, buffer);
