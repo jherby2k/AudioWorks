@@ -22,7 +22,7 @@ namespace AudioWorks.Extensions.Mp3
             // A frame begins with the first 11 bits set:
             while (true)
             {
-                if (ReadByte() != 0xff || ReadByte() < 0xe0) continue;
+                if (ReadByte() != 0xFF || ReadByte() < 0xE0) continue;
                 FrameStart = BaseStream.Seek(-2, SeekOrigin.Current);
                 return;
             }
@@ -41,7 +41,7 @@ namespace AudioWorks.Extensions.Mp3
             BaseStream.Position = initialPosition;
 
             // If another sync is detected, return success
-            return firstByte == 0xff && secondByte >= 0xe0;
+            return firstByte == 0xFF && secondByte >= 0xE0;
         }
 
         internal uint ReadUInt32BigEndian()

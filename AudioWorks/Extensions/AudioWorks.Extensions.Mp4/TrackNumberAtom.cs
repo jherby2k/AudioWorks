@@ -37,7 +37,7 @@ namespace AudioWorks.Extensions.Mp4
 
             // Write the atom header:
             BinaryPrimitives.WriteUInt32BigEndian(result, 32);
-            BinaryPrimitives.WriteInt32BigEndian(result.Slice(4), 0x74726b6e); // 'trkn'
+            BinaryPrimitives.WriteInt32BigEndian(result.Slice(4), 0x74726B6E); // 'trkn'
 
             // Write the data atom header:
             BinaryPrimitives.WriteUInt32BigEndian(result.Slice(8), 24);

@@ -32,7 +32,7 @@ namespace AudioWorks.Extensions.Mp4
         internal EsdsAtom(ReadOnlySpan<byte> data)
         {
             // Confirm this is an AAC descriptor
-            if (data[12] != 0x3 || data[25] != 0x40)
+            if (data[12] != 0x03 || data[25] != 0x40)
                 return;
 
             IsAac = true;

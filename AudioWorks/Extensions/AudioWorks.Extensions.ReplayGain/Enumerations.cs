@@ -11,7 +11,7 @@ namespace AudioWorks.Extensions.ReplayGain
     [Flags]
     enum Modes
     {
-        Global = 0x5,
+        Global = 0x05,
         SamplePeak = 0x11,
         TruePeak = 0x31
     }
