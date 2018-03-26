@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Buffers;
+using System.Buffers.Binary;
 using System.IO;
 using System.Runtime.InteropServices;
 using AudioWorks.Common;
@@ -26,12 +27,14 @@ namespace AudioWorks.Extensions.Vorbis
                 {
                     using (var sync = new OggSync())
                     {
-                        OggPage inPage;
+                        var headerWritten = false;
+                        OggPage page;
+                        var pagesWritten = 0u;
 
                         do
                         {
                             // Read from the buffer into a page
-                            while (!sync.PageOut(out inPage))
+                            while (!sync.PageOut(out page))
                             {
                                 var nativeBuffer = sync.Buffer(buffer.Length);
                                 var bytesRead = stream.Read(buffer, 0, buffer.Length);
@@ -40,33 +43,57 @@ namespace AudioWorks.Extensions.Vorbis
                             }
 
                             if (inputOggStream == null)
-                                inputOggStream = new OggStream(SafeNativeMethods.OggPageSerialNo(ref inPage));
+                                inputOggStream = new OggStream(SafeNativeMethods.OggPageSerialNo(ref page));
                             if (outputOggStream == null)
                                 outputOggStream = new OggStream(inputOggStream.SerialNumber);
 
-                            inputOggStream.PageIn(ref inPage);
-
-                            while (inputOggStream.PacketOut(out var packet))
+                            // Write new header page(s) using a modified comment packet
+                            if (!headerWritten)
                             {
-                                // Substitute the new comment packet
-                                if (packet.PacketNumber == 1)
-                                    using (var adapter = new MetadataToVorbisCommentAdapter(metadata))
-                                    {
-                                        adapter.HeaderOut(out var commentPacket);
-                                        outputOggStream.PacketIn(ref commentPacket);
-                                    }
-                                else
-                                    outputOggStream.PacketIn(ref packet);
+                                inputOggStream.PageIn(ref page);
 
-                                // Page out each packet, flushing at the end of the header
-                                if (packet.PacketNumber == 2)
-                                    while (outputOggStream.Flush(out var outPage))
-                                        WritePage(outPage, tempStream, buffer);
-                                else
-                                    while (outputOggStream.PageOut(out var outPage))
-                                        WritePage(outPage, tempStream, buffer);
+                                while (inputOggStream.PacketOut(out var packet))
+                                    switch (packet.PacketNumber)
+                                    {
+                                        case 0:
+                                            outputOggStream.PacketIn(ref packet);
+                                            break;
+
+                                        // Substitute the new comment packet
+                                        case 1:
+                                            using (var adapter = new MetadataToVorbisCommentAdapter(metadata))
+                                            {
+                                                adapter.HeaderOut(out var commentPacket);
+                                                outputOggStream.PacketIn(ref commentPacket);
+                                            }
+
+                                            break;
+
+                                        // Flush at the end of the header
+                                        case 2:
+                                            outputOggStream.PacketIn(ref packet);
+                                            while (outputOggStream.Flush(out var outPage))
+                                            {
+                                                WritePage(outPage, tempStream, buffer);
+                                                pagesWritten++;
+                                            }
+
+                                            headerWritten = true;
+                                            break;
+
+                                        default:
+                                            throw new AudioInvalidException("Missing header packet.");
+                                    }
                             }
-                        } while (!SafeNativeMethods.OggPageEos(ref inPage));
+                            else
+                            {
+                                // Copy the existing data pages verbatim, with updated sequence numbers
+                                UpdateSequenceNumber(ref page, pagesWritten);
+                                WritePage(page, tempStream, buffer);
+                                pagesWritten++;
+                            }
+
+                        } while (!SafeNativeMethods.OggPageEos(ref page));
 
                         // Once the end of the input is reached, overwrite the original file and return
                         stream.Position = 0;
@@ -104,6 +131,25 @@ namespace AudioWorks.Extensions.Vorbis
                 stream.Write(buffer, 0, bytesCopied);
                 offset += bytesCopied;
             }
+        }
+
+        static unsafe void UpdateSequenceNumber(ref OggPage page, uint sequenceNumber)
+        {
+            var headerSpan = new Span<byte>(page.Header.ToPointer(), page.HeaderLength);
+            var sequenceNumberSpan = headerSpan.Slice(18, 4);
+
+            // Only do the update if the sequence number has changed
+            if (BinaryPrimitives.ReadUInt32LittleEndian(sequenceNumberSpan) == sequenceNumber) return;
+
+            // Update the sequence number
+            BinaryPrimitives.WriteUInt32LittleEndian(sequenceNumberSpan, sequenceNumber);
+
+            // Recalculate the CRC
+            var crcSpan = headerSpan.Slice(22, 4);
+            crcSpan.Clear();
+            BinaryPrimitives.WriteUInt32LittleEndian(crcSpan,
+                Crc32.GetChecksum(new Span<byte>(page.Body.ToPointer(), page.BodyLength),
+                    Crc32.GetChecksum(headerSpan)));
         }
     }
 }
