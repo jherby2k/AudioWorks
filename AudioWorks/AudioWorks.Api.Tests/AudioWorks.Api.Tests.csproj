@@ -57,8 +57,8 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.1" />
     <PackageReference Include="Moq" Version="4.8.2" />
     <PackageReference Include="ObjectsComparer" Version="1.1.0" />
-    <PackageReference Include="xunit" Version="2.4.0-beta.2.build3967" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0-beta.2.build3967" />
+    <PackageReference Include="xunit" Version="2.4.0-beta.2.build3981" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0-beta.2.build3981" />
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.4.0-beta.2.build3967" />
   </ItemGroup>
 
