@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using AudioWorks.Common;
 using JetBrains.Annotations;
@@ -67,12 +68,12 @@ namespace AudioWorks.Extensions.Flac
         {
             if (samples.Frames == 0) return;
 
-            var bufferSize = samples.Frames * samples.Channels;
-            Span<int> buffer = stackalloc int[bufferSize];
+            Span<int> buffer = stackalloc int[samples.Frames * samples.Channels];
             samples.CopyToInterleaved(buffer, _bitsPerSample);
 
-            fixed (int* bufferAddress = &MemoryMarshal.GetReference(buffer))
-                _encoder.ProcessInterleaved(new IntPtr(bufferAddress), (uint) samples.Frames);
+            _encoder.ProcessInterleaved(
+                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer))),
+                (uint) samples.Frames);
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]

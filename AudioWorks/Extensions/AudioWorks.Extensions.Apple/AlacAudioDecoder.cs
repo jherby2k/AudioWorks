@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using AudioWorks.Common;
 using JetBrains.Annotations;
@@ -39,29 +40,26 @@ namespace AudioWorks.Extensions.Apple
             var bufferSize = _defaultFrameCount * _outputDescription.ChannelsPerFrame;
             Span<int> buffer = stackalloc int[(int) bufferSize];
 
-            fixed (int* bufferAddress = &MemoryMarshal.GetReference(buffer))
+            var bufferList = new AudioBufferList
             {
-                var bufferList = new AudioBufferList
-                {
-                    NumberBuffers = 1,
-                    Buffers = new AudioBuffer[1]
-                };
-                bufferList.Buffers[0].NumberChannels = _outputDescription.ChannelsPerFrame;
-                bufferList.Buffers[0].DataByteSize = (uint) (bufferSize * Marshal.SizeOf<int>());
-                bufferList.Buffers[0].Data = new IntPtr(bufferAddress);
+                NumberBuffers = 1,
+                Buffers = new AudioBuffer[1]
+            };
+            bufferList.Buffers[0].NumberChannels = _outputDescription.ChannelsPerFrame;
+            bufferList.Buffers[0].DataByteSize = (uint) (bufferSize * Marshal.SizeOf<int>());
+            bufferList.Buffers[0].Data = new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)));
 
-                var frameCount = _defaultFrameCount;
-                _converter.FillBuffer(ref frameCount, ref bufferList, null);
+            var frameCount = _defaultFrameCount;
+            _converter.FillBuffer(ref frameCount, ref bufferList, null);
 
-                if (frameCount == 0)
-                    Finished = true;
+            if (frameCount == 0)
+                Finished = true;
 
-                var result = new SampleBuffer(
-                    buffer.Slice(0, (int) (frameCount * _outputDescription.ChannelsPerFrame)),
-                    (int) _outputDescription.ChannelsPerFrame, 32);
+            var result = new SampleBuffer(
+                buffer.Slice(0, (int) (frameCount * _outputDescription.ChannelsPerFrame)),
+                (int) _outputDescription.ChannelsPerFrame, 32);
 
-                return result;
-            }
+            return result;
         }
 
         public void Dispose()

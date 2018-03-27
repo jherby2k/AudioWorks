@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using AudioWorks.Common;
 using JetBrains.Annotations;
@@ -52,20 +53,17 @@ namespace AudioWorks.Extensions.Apple
             Span<int> buffer = stackalloc int[bufferSize];
             samples.CopyToInterleaved(buffer, _bitsPerSample);
 
-            fixed (int* bufferAddress = &MemoryMarshal.GetReference(buffer))
+            var bufferList = new AudioBufferList
             {
-                var bufferList = new AudioBufferList
-                {
-                    NumberBuffers = 1,
-                    Buffers = new AudioBuffer[1]
-                };
-                bufferList.Buffers[0].NumberChannels = (uint) samples.Channels;
-                bufferList.Buffers[0].DataByteSize = (uint) (bufferSize * Marshal.SizeOf<int>());
-                bufferList.Buffers[0].Data = new IntPtr(bufferAddress);
+                NumberBuffers = 1,
+                Buffers = new AudioBuffer[1]
+            };
+            bufferList.Buffers[0].NumberChannels = (uint) samples.Channels;
+            bufferList.Buffers[0].DataByteSize = (uint) (bufferSize * Marshal.SizeOf<int>());
+            bufferList.Buffers[0].Data = new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)));
 
-                // ReSharper disable once PossibleNullReferenceException
-                _audioFile.Write(bufferList, (uint) samples.Frames);
-            }
+            // ReSharper disable once PossibleNullReferenceException
+            _audioFile.Write(bufferList, (uint) samples.Frames);
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
