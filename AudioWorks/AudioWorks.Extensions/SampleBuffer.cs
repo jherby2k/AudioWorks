@@ -223,12 +223,13 @@ namespace AudioWorks.Extensions
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample), "bitsPerSample is out of range.");
 
             var multiplier = (long) Math.Pow(2, bitsPerSample - 1);
+            var max = multiplier - 1;
 
             for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
             {
                 var channel = _samples[channelIndex];
                 for (int frameIndex = 0, offset = channelIndex; frameIndex < Frames; frameIndex++, offset += Channels)
-                    destination[offset] = (int) (channel[frameIndex] * multiplier);
+                    destination[offset] = (int) Math.Min(channel[frameIndex] * multiplier, max);
             }
         }
 
@@ -248,6 +249,7 @@ namespace AudioWorks.Extensions
         {
             var bytesPerSample = (int) Math.Ceiling(bitsPerSample / 8.0);
             var multiplier = (long) Math.Pow(2, bitsPerSample - 1);
+            var max = multiplier - 1;
 
             if (destination.Length < Frames * Channels * bytesPerSample)
                 throw new ArgumentException("destination is not long enough to store the samples.",
@@ -261,7 +263,7 @@ namespace AudioWorks.Extensions
                 for (int frameIndex = 0, offset = channelIndex * bytesPerSample;
                     frameIndex < Frames;
                     frameIndex++, offset += Channels * bytesPerSample)
-                    WritePackedInt(destination.Slice(offset, bytesPerSample), (int) (channel[frameIndex] * multiplier));
+                    WritePackedInt(destination.Slice(offset, bytesPerSample), (int) Math.Min(channel[frameIndex] * multiplier, max));
             }
         }
 
