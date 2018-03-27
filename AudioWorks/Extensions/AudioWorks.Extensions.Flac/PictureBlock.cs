@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 
@@ -47,11 +46,12 @@ namespace AudioWorks.Extensions.Flac
 
         internal unsafe void SetData(ReadOnlySpan<byte> data)
         {
-            SafeNativeMethods.MetadataObjectPictureSetData(
-                Handle,
-                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(data))),
-                (uint) data.Length,
-                true);
+            fixed (byte* dataPointer = &MemoryMarshal.GetReference(data))
+                SafeNativeMethods.MetadataObjectPictureSetData(
+                    Handle,
+                    new IntPtr(dataPointer),
+                    (uint) data.Length,
+                    true);
         }
     }
 }
