@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Commands", "AudioWorks.Commands\AudioWorks.Commands.csproj", "{53605AC7-B464-478F-ABA4-EBE6CB8BC968}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Commands", "src\AudioWorks.Commands\AudioWorks.Commands.csproj", "{53605AC7-B464-478F-ABA4-EBE6CB8BC968}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Commands.Tests", "AudioWorks.Commands.Tests\AudioWorks.Commands.Tests.csproj", "{6424C037-48CC-4518-BD51-D45275545FE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Commands.Tests", "tests\AudioWorks.Commands.Tests\AudioWorks.Commands.Tests.csproj", "{6424C037-48CC-4518-BD51-D45275545FE2}"
 	ProjectSection(ProjectDependencies) = postProject
 		{327C902A-DEF9-46AA-850E-1023BB2D8187} = {327C902A-DEF9-46AA-850E-1023BB2D8187}
 		{5716EF44-6F81-4C73-B16C-43B1952A4A44} = {5716EF44-6F81-4C73-B16C-43B1952A4A44}
@@ -19,13 +19,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Commands.Tests",
 		{8A917CF5-0610-4858-80E4-041C61E7DE72} = {8A917CF5-0610-4858-80E4-041C61E7DE72}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Api", "AudioWorks.Api\AudioWorks.Api.csproj", "{EBCF9266-D1CE-43F5-BB62-8E33FD4FE3F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Api", "src\AudioWorks.Api\AudioWorks.Api.csproj", "{EBCF9266-D1CE-43F5-BB62-8E33FD4FE3F1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Common", "AudioWorks.Common\AudioWorks.Common.csproj", "{5D6DB758-33DA-45B5-9C20-5775E526BC2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Common", "src\AudioWorks.Common\AudioWorks.Common.csproj", "{5D6DB758-33DA-45B5-9C20-5775E526BC2C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions", "AudioWorks.Extensions\AudioWorks.Extensions.csproj", "{D237F613-F6AF-4B79-B297-56A5EB75BB97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions", "src\AudioWorks.Extensions\AudioWorks.Extensions.csproj", "{D237F613-F6AF-4B79-B297-56A5EB75BB97}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestFiles", "TestFiles", "{ED5F2925-FC55-4D6B-8E32-7FD957F04B35}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestFiles", "tests\TestFiles", "{ED5F2925-FC55-4D6B-8E32-7FD957F04B35}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unsupported", "Unsupported", "{D2650C7C-32ED-48DC-9B13-A1905BE1F9E7}"
 	ProjectSection(SolutionItems) = preProject
@@ -47,9 +47,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Invalid", "Invalid", "{F91F
 		TestFiles\Invalid\Unexpectedly Truncated.wav = TestFiles\Invalid\Unexpectedly Truncated.wav
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{5C8B6EE1-CC71-4069-BD6A-E82E550FED11}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "src\Extensions", "{5C8B6EE1-CC71-4069-BD6A-E82E550FED11}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Wave", "Extensions\AudioWorks.Extensions.Wave\AudioWorks.Extensions.Wave.csproj", "{1447D6EA-60F7-44A8-A5DA-69A4287348CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Wave", "src\Extensions\AudioWorks.Extensions.Wave\AudioWorks.Extensions.Wave.csproj", "{1447D6EA-60F7-44A8-A5DA-69A4287348CF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Valid", "Valid", "{F3EE5042-D0AB-4B5C-8255-4A1D87A8C4A1}"
 	ProjectSection(SolutionItems) = preProject
@@ -145,7 +145,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Valid", "Valid", "{F3EE5042
 		TestFiles\Valid\Vorbis Quality 3 96000Hz Stereo.ogg = TestFiles\Valid\Vorbis Quality 3 96000Hz Stereo.ogg
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Api.Tests", "AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj", "{83565750-78B5-4481-AAF6-C2732E3CE040}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Api.Tests", "tests\AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj", "{83565750-78B5-4481-AAF6-C2732E3CE040}"
 	ProjectSection(ProjectDependencies) = postProject
 		{327C902A-DEF9-46AA-850E-1023BB2D8187} = {327C902A-DEF9-46AA-850E-1023BB2D8187}
 		{5716EF44-6F81-4C73-B16C-43B1952A4A44} = {5716EF44-6F81-4C73-B16C-43B1952A4A44}
@@ -158,21 +158,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Api.Tests", "Aud
 		{8A917CF5-0610-4858-80E4-041C61E7DE72} = {8A917CF5-0610-4858-80E4-041C61E7DE72}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Mp3", "Extensions\AudioWorks.Extensions.Mp3\AudioWorks.Extensions.Mp3.csproj", "{327C902A-DEF9-46AA-850E-1023BB2D8187}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Mp3", "src\Extensions\AudioWorks.Extensions.Mp3\AudioWorks.Extensions.Mp3.csproj", "{327C902A-DEF9-46AA-850E-1023BB2D8187}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Mp4", "Extensions\AudioWorks.Extensions.Mp4\AudioWorks.Extensions.Mp4.csproj", "{0F6C00B0-92C7-4755-B1C6-133E88E6333A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Mp4", "src\Extensions\AudioWorks.Extensions.Mp4\AudioWorks.Extensions.Mp4.csproj", "{0F6C00B0-92C7-4755-B1C6-133E88E6333A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Vorbis", "Extensions\AudioWorks.Extensions.Vorbis\AudioWorks.Extensions.Vorbis.csproj", "{5716EF44-6F81-4C73-B16C-43B1952A4A44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Vorbis", "src\Extensions\AudioWorks.Extensions.Vorbis\AudioWorks.Extensions.Vorbis.csproj", "{5716EF44-6F81-4C73-B16C-43B1952A4A44}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Flac", "Extensions\AudioWorks.Extensions.Flac\AudioWorks.Extensions.Flac.csproj", "{FD0CD1DC-F7D0-48E2-9E59-C5DD6AB4FAA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Flac", "src\Extensions\AudioWorks.Extensions.Flac\AudioWorks.Extensions.Flac.csproj", "{FD0CD1DC-F7D0-48E2-9E59-C5DD6AB4FAA1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Id3", "Extensions\AudioWorks.Extensions.Id3\AudioWorks.Extensions.Id3.csproj", "{EFF5C54D-EC06-4BE5-8440-9C48B8413F00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Id3", "src\Extensions\AudioWorks.Extensions.Id3\AudioWorks.Extensions.Id3.csproj", "{EFF5C54D-EC06-4BE5-8440-9C48B8413F00}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.ReplayGain", "Extensions\AudioWorks.Extensions.ReplayGain\AudioWorks.Extensions.ReplayGain.csproj", "{8A917CF5-0610-4858-80E4-041C61E7DE72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.ReplayGain", "src\Extensions\AudioWorks.Extensions.ReplayGain\AudioWorks.Extensions.ReplayGain.csproj", "{8A917CF5-0610-4858-80E4-041C61E7DE72}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Apple", "Extensions\AudioWorks.Extensions.Apple\AudioWorks.Extensions.Apple.csproj", "{524FE5BD-705A-43C5-B289-FD5086B00AEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Apple", "src\Extensions\AudioWorks.Extensions.Apple\AudioWorks.Extensions.Apple.csproj", "{524FE5BD-705A-43C5-B289-FD5086B00AEA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Lame", "Extensions\AudioWorks.Extensions.Lame\AudioWorks.Extensions.Lame.csproj", "{A6D283BB-E6A0-466F-841D-C7FAA7899901}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Lame", "src\Extensions\AudioWorks.Extensions.Lame\AudioWorks.Extensions.Lame.csproj", "{A6D283BB-E6A0-466F-841D-C7FAA7899901}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
