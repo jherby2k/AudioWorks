@@ -103,6 +103,7 @@ namespace AudioWorks.Extensions.Id3
                 : $"{metadata.TrackNumber}/{metadata.TrackCount}";
         }
 
+        [Pure]
         static TextCode GetTextCode([NotNull] string encoding)
         {
             return encoding.Equals("Latin1", StringComparison.Ordinal)
