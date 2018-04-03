@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Buffers;
+using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions
@@ -155,14 +156,54 @@ namespace AudioWorks.Extensions
             _samples = new float[channels][];
             Frames = interleavedSamples.Length / channels / bytesPerSample;
 
-            for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
+            switch (bytesPerSample)
             {
-                var channel = _samples[channelIndex] = ArrayPool<float>.Shared.Rent(Frames);
-                for (int frameIndex = 0, offset = channelIndex * bytesPerSample;
-                    frameIndex < Frames;
-                    frameIndex++, offset += Channels * bytesPerSample)
-                    channel[frameIndex] =
-                        (float) (ReadPackedInt(interleavedSamples.Slice(offset, bytesPerSample)) * multiplier);
+                case 1:
+                    var adjustment = Math.Pow(2, bitsPerSample - 1);
+                    for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
+                    {
+                        var channel = _samples[channelIndex] = ArrayPool<float>.Shared.Rent(Frames);
+                        for (int frameIndex = 0, offset = channelIndex;
+                            frameIndex < Frames;
+                            frameIndex++, offset += Channels)
+                            channel[frameIndex] = (float) ((interleavedSamples[offset] - adjustment) * multiplier);
+                    }
+                    break;
+
+                // Doing a non-portable cast is much faster than parsing the bytes manually
+                case 2:
+                    var shortSamples = interleavedSamples.NonPortableCast<byte, short>();
+                    for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
+                    {
+                        var channel = _samples[channelIndex] = ArrayPool<float>.Shared.Rent(Frames);
+                        for (int frameIndex = 0, offset = channelIndex;
+                            frameIndex < Frames;
+                            frameIndex++, offset += Channels)
+                            channel[frameIndex] = (float) (shortSamples[offset] * multiplier);
+                    }
+                    break;
+                case 3:
+                    var int24Samples = interleavedSamples.NonPortableCast<byte, Int24>();
+                    for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
+                    {
+                        var channel = _samples[channelIndex] = ArrayPool<float>.Shared.Rent(Frames);
+                        for (int frameIndex = 0, offset = channelIndex;
+                            frameIndex < Frames;
+                            frameIndex++, offset += Channels)
+                            channel[frameIndex] = (float) (int24Samples[offset].AsInt32() * multiplier);
+                    }
+                    break;
+                case 4:
+                    var intSamples = interleavedSamples.NonPortableCast<byte, int>();
+                    for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
+                    {
+                        var channel = _samples[channelIndex] = ArrayPool<float>.Shared.Rent(Frames);
+                        for (int frameIndex = 0, offset = channelIndex;
+                            frameIndex < Frames;
+                            frameIndex++, offset += Channels)
+                            channel[frameIndex] = (float) (intSamples[offset] * multiplier);
+                    }
+                    break;
             }
         }
 
@@ -276,22 +317,6 @@ namespace AudioWorks.Extensions
                 ArrayPool<float>.Shared.Return(channel);
         }
 
-        [Pure]
-        static int ReadPackedInt(ReadOnlySpan<byte> buffer)
-        {
-            switch (buffer.Length)
-            {
-                case 1:
-                    return buffer[0] - 128;
-                case 2:
-                    return buffer[0] | ((sbyte) buffer[1] << 8);
-                case 3:
-                    return buffer[0] | buffer[1] << 8 | ((sbyte) buffer[2] << 16);
-                default:
-                    return buffer[0] | buffer[1] << 8 | buffer[2] << 16 | ((sbyte) buffer[3] << 24);
-            }
-        }
-
         static void WritePackedInt(Span<byte> buffer, int value)
         {
             switch (buffer.Length)
@@ -310,6 +335,16 @@ namespace AudioWorks.Extensions
                     buffer[0] = (byte) (value + 128);
                     return;
             }
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        struct Int24
+        {
+            readonly byte _byte1;
+            readonly byte _byte2;
+            readonly byte _byte3;
+
+            internal int AsInt32() => _byte1 | _byte2 << 8 | ((sbyte) _byte3 << 16);
         }
     }
 }
