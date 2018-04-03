@@ -1,7 +1,6 @@
-using AudioWorks.Common;
 using Xunit;
 
-namespace AudioWorks.Api.Tests
+namespace AudioWorks.Common.Tests
 {
     public sealed class AudioMetadataInvalidExceptionTests
     {

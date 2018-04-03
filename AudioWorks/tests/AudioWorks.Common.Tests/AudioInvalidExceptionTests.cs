@@ -1,9 +1,8 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using AudioWorks.Common;
 using Xunit;
 
-namespace AudioWorks.Api.Tests
+namespace AudioWorks.Common.Tests
 {
     public sealed class AudioInvalidExceptionTests
     {

@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace AudioWorks.Api.Tests.DataSources
+namespace AudioWorks.Common.Tests.DataSources
 {
-    public static class UnsupportedImageFileDataSource
+    public static class InvalidImageFileDataSource
     {
         [NotNull, ItemNotNull] static readonly List<object[]> _data = new List<object[]>
         {
-            new object[] { "Text.txt" }
+            new object[] { "Not an Image.bmp" }
         };
 
         [NotNull, ItemNotNull]

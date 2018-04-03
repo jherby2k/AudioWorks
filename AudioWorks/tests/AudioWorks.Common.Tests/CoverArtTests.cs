@@ -1,10 +1,9 @@
 using System.IO;
-using AudioWorks.Api.Tests.DataSources;
-using AudioWorks.Common;
+using AudioWorks.Common.Tests.DataSources;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace AudioWorks.Api.Tests
+namespace AudioWorks.Common.Tests
 {
     public sealed class CoverArtTests
     {

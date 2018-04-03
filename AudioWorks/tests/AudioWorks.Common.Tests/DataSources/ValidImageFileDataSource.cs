@@ -2,7 +2,7 @@
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace AudioWorks.Api.Tests.DataSources
+namespace AudioWorks.Common.Tests.DataSources
 {
     public static class ValidImageFileDataSource
     {

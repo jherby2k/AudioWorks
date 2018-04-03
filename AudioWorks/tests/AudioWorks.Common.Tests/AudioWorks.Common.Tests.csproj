@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFrameworks>netcoreapp2.0;net471</TargetFrameworks>
     <RuntimeFrameworkVersion>2.0.6</RuntimeFrameworkVersion>
     <LangVersion>latest</LangVersion>
     <IsPackable>false</IsPackable>
-    <Description>Unit testing project for the AudioWorks PowerShell module. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
+    <Description>Unit testing project for the AudioWorks Common library. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
     <Authors>Jeremy Herbison</Authors>
     <Company />
     <Product>AudioWorks</Product>
@@ -14,53 +14,53 @@
     <CodeAnalysisRuleSet>CodeAnalysis.ruleset</CodeAnalysisRuleSet>
     <Configurations>Debug-Windows;Release-Windows;Debug-OSX;Release-OSX;Debug-Linux;Release-Linux</Configurations>
   </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp2.0'">
+    <DefineConstants>NETCOREAPP2_0</DefineConstants>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(TargetFramework)'=='net471'">
+    <DefineConstants>NET471</DefineConstants>
+  </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Windows|AnyCPU'">
-    <DefineConstants>DEBUG;TRACE;WINDOWS;NETCOREAPP2_0</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
     <Optimize>false</Optimize>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Windows|AnyCPU'">
-    <DefineConstants>RELEASE;TRACE;WINDOWS;NETCOREAPP2_0</DefineConstants>
+    <DefineConstants>RELEASE;TRACE;WINDOWS</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-OSX|AnyCPU'">
-    <DefineConstants>DEBUG;TRACE;OSX;NETCOREAPP2_0</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;OSX</DefineConstants>
     <Optimize>false</Optimize>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-OSX|AnyCPU'">
-    <DefineConstants>RELEASE;TRACE;OSX;NETCOREAPP2_0</DefineConstants>
+    <DefineConstants>RELEASE;TRACE;OSX</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Linux|AnyCPU'">
-    <DefineConstants>DEBUG;TRACE;LINUX;NETCOREAPP2_0</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;LINUX</DefineConstants>
     <Optimize>false</Optimize>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Linux|AnyCPU'">
-    <DefineConstants>RELEASE;TRACE;LINUX;NETCOREAPP2_0</DefineConstants>
+    <DefineConstants>RELEASE;TRACE;LINUX</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.1" />
-    <PackageReference Include="Microsoft.PowerShell.SDK" Version="6.0.2" />
-    <PackageReference Include="Moq" Version="4.8.2" />
     <PackageReference Include="xunit" Version="2.4.0-beta.2.build3981" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0-beta.2.build3981" />
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.4.0-beta.2.build3967" />
   </ItemGroup>
-
+  
   <ItemGroup>
-    <ProjectReference Include="..\AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj" />
-    <ProjectReference Include="..\AudioWorks.Common.Tests\AudioWorks.Common.Tests.csproj" />
+    <ProjectReference Include="..\..\src\AudioWorks.Common\AudioWorks.Common.csproj" />
   </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="pwsh.exe -ExecutionPolicy Unrestricted -File &quot;$(ProjectDir)CopyModule.ps1&quot; -Configuration $(ConfigurationName) -ModuleProjectRoot &quot;$(ProjectDir)..\..\src\AudioWorks.Commands&quot; -ExtensionProjectRoot &quot;$(ProjectDir)..\..\src\Extensions&quot; -OutputRoot $(OutDir)" />
-  </Target>
 
 </Project>

@@ -141,7 +141,7 @@ namespace AudioWorks.Extensions
         public SampleBuffer(ReadOnlySpan<byte> interleavedSamples, int channels, int bitsPerSample)
         {
             var bytesPerSample = (int) Math.Ceiling(bitsPerSample / 8.0);
-            var multiplier = 1 / Math.Pow(2, bitsPerSample - 1);
+            var multiplier = (float) (1 / Math.Pow(2, bitsPerSample - 1));
 
             if (interleavedSamples.Length % (channels * bytesPerSample) != 0)
                 throw new ArgumentException($"{nameof(interleavedSamples)} has an invalid length.",
@@ -159,14 +159,14 @@ namespace AudioWorks.Extensions
             switch (bytesPerSample)
             {
                 case 1:
-                    var adjustment = Math.Pow(2, bitsPerSample - 1);
+                    var adjustment = (float) Math.Pow(2, bitsPerSample - 1);
                     for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
                     {
                         var channel = _samples[channelIndex] = ArrayPool<float>.Shared.Rent(Frames);
                         for (int frameIndex = 0, offset = channelIndex;
                             frameIndex < Frames;
                             frameIndex++, offset += Channels)
-                            channel[frameIndex] = (float) ((interleavedSamples[offset] - adjustment) * multiplier);
+                            channel[frameIndex] = (interleavedSamples[offset] - adjustment) * multiplier;
                     }
                     break;
 
@@ -179,7 +179,7 @@ namespace AudioWorks.Extensions
                         for (int frameIndex = 0, offset = channelIndex;
                             frameIndex < Frames;
                             frameIndex++, offset += Channels)
-                            channel[frameIndex] = (float) (shortSamples[offset] * multiplier);
+                            channel[frameIndex] = shortSamples[offset] * multiplier;
                     }
                     break;
                 case 3:
@@ -190,7 +190,7 @@ namespace AudioWorks.Extensions
                         for (int frameIndex = 0, offset = channelIndex;
                             frameIndex < Frames;
                             frameIndex++, offset += Channels)
-                            channel[frameIndex] = (float) (int24Samples[offset].AsInt32() * multiplier);
+                            channel[frameIndex] = int24Samples[offset].AsInt32() * multiplier;
                     }
                     break;
                 case 4:
@@ -201,7 +201,7 @@ namespace AudioWorks.Extensions
                         for (int frameIndex = 0, offset = channelIndex;
                             frameIndex < Frames;
                             frameIndex++, offset += Channels)
-                            channel[frameIndex] = (float) (intSamples[offset] * multiplier);
+                            channel[frameIndex] = intSamples[offset] * multiplier;
                     }
                     break;
             }
@@ -263,14 +263,22 @@ namespace AudioWorks.Extensions
             if (bitsPerSample < 1 || bitsPerSample > 32)
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample), "bitsPerSample is out of range.");
 
-            var multiplier = (long) Math.Pow(2, bitsPerSample - 1);
-            var max = multiplier - 1;
+            var multiplier = (uint) Math.Pow(2, bitsPerSample - 1);
+            var max = (int) (multiplier - 1);
 
             for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
             {
                 var channel = _samples[channelIndex];
                 for (int frameIndex = 0, offset = channelIndex; frameIndex < Frames; frameIndex++, offset += Channels)
-                    destination[offset] = (int) Math.Min(channel[frameIndex] * multiplier, max);
+                    try
+                    {
+                        destination[offset] = Math.Min(checked((int) (channel[frameIndex] * multiplier)), max);
+                    }
+                    catch (OverflowException)
+                    {
+                        // Can occur at 32 bitsPerSample and +1.0
+                        destination[offset] = max;
+                    }
             }
         }
 
@@ -289,8 +297,8 @@ namespace AudioWorks.Extensions
         public void CopyToInterleaved(Span<byte> destination, int bitsPerSample)
         {
             var bytesPerSample = (int) Math.Ceiling(bitsPerSample / 8.0);
-            var multiplier = (long) Math.Pow(2, bitsPerSample - 1);
-            var max = multiplier - 1;
+            var multiplier = (uint) Math.Pow(2, bitsPerSample - 1);
+            var max = (int) (multiplier - 1);
 
             if (destination.Length < Frames * Channels * bytesPerSample)
                 throw new ArgumentException("destination is not long enough to store the samples.",
@@ -331,7 +339,8 @@ namespace AudioWorks.Extensions
                         for (int frameIndex = 0, offset = channelIndex;
                             frameIndex < Frames;
                             frameIndex++, offset += Channels)
-                            int24Destination[offset] = new Int24((int) Math.Min(channel[frameIndex] * multiplier, max));
+                            int24Destination[offset] =
+                                new Int24(Math.Min((int) (channel[frameIndex] * multiplier), max));
                     }
                     break;
                 case 4:
@@ -342,7 +351,15 @@ namespace AudioWorks.Extensions
                         for (int frameIndex = 0, offset = channelIndex;
                             frameIndex < Frames;
                             frameIndex++, offset += Channels)
-                            intDestination[offset] = (int) Math.Min(channel[frameIndex] * multiplier, max);
+                            try
+                            {
+                                intDestination[offset] = Math.Min(checked((int) (channel[frameIndex] * multiplier)), max);
+                            }
+                            catch (OverflowException)
+                            {
+                                // Can occur at 32 bitsPerSample and +1.0
+                                intDestination[offset] = max;
+                            }
                     }
                     break;
             }
