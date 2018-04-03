@@ -298,13 +298,53 @@ namespace AudioWorks.Extensions
             if (bitsPerSample < 1 || bitsPerSample > 32)
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample), "bitsPerSample is out of range.");
 
-            for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
+            switch (bytesPerSample)
             {
-                var channel = _samples[channelIndex];
-                for (int frameIndex = 0, offset = channelIndex * bytesPerSample;
-                    frameIndex < Frames;
-                    frameIndex++, offset += Channels * bytesPerSample)
-                    WritePackedInt(destination.Slice(offset, bytesPerSample), (int) Math.Min(channel[frameIndex] * multiplier, max));
+                case 1:
+                    for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
+                    {
+                        var channel = _samples[channelIndex];
+                        for (int frameIndex = 0, offset = channelIndex;
+                            frameIndex < Frames;
+                            frameIndex++, offset += Channels)
+                            destination[offset] = (byte) (Math.Min(channel[frameIndex] * multiplier, max) - multiplier);
+                    }
+                    break;
+
+                // Doing a non-portable cast is much faster than parsing the bytes manually
+                case 2:
+                    var shortDestination = destination.NonPortableCast<byte, short>();
+                    for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
+                    {
+                        var channel = _samples[channelIndex];
+                        for (int frameIndex = 0, offset = channelIndex;
+                            frameIndex < Frames;
+                            frameIndex++, offset += Channels)
+                            shortDestination[offset] = (short) Math.Min(channel[frameIndex] * multiplier, max);
+                    }
+                    break;
+                case 3:
+                    var int24Destination = destination.NonPortableCast<byte, Int24>();
+                    for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
+                    {
+                        var channel = _samples[channelIndex];
+                        for (int frameIndex = 0, offset = channelIndex;
+                            frameIndex < Frames;
+                            frameIndex++, offset += Channels)
+                            int24Destination[offset] = new Int24((int) Math.Min(channel[frameIndex] * multiplier, max));
+                    }
+                    break;
+                case 4:
+                    var intDestination = destination.NonPortableCast<byte, int>();
+                    for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
+                    {
+                        var channel = _samples[channelIndex];
+                        for (int frameIndex = 0, offset = channelIndex;
+                            frameIndex < Frames;
+                            frameIndex++, offset += Channels)
+                            intDestination[offset] = (int) Math.Min(channel[frameIndex] * multiplier, max);
+                    }
+                    break;
             }
         }
 
@@ -317,32 +357,19 @@ namespace AudioWorks.Extensions
                 ArrayPool<float>.Shared.Return(channel);
         }
 
-        static void WritePackedInt(Span<byte> buffer, int value)
-        {
-            switch (buffer.Length)
-            {
-                default:
-                    buffer[3] = (byte) ((uint) value >> 24);
-                    goto case 3;
-                case 3:
-                    buffer[2] = (byte) (((uint) value >> 16) & 0xFF);
-                    goto case 2;
-                case 2:
-                    buffer[1] = (byte) (((uint) value >> 8) & 0xFF);
-                    buffer[0] = (byte) value;
-                    return;
-                case 1:
-                    buffer[0] = (byte) (value + 128);
-                    return;
-            }
-        }
-
         [StructLayout(LayoutKind.Sequential)]
         struct Int24
         {
             readonly byte _byte1;
             readonly byte _byte2;
             readonly byte _byte3;
+
+            public Int24(int value)
+            {
+                _byte1 = (byte) value;
+                _byte2 = (byte) (((uint) value >> 8) & 0xFF);
+                _byte3 = (byte) (((uint) value >> 16) & 0xFF);
+            }
 
             internal int AsInt32() => _byte1 | _byte2 << 8 | ((sbyte) _byte3 << 16);
         }
