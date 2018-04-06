@@ -55,15 +55,17 @@ namespace AudioWorks.Extensions.Mp4
         {
             if (_atoms.Count == 0) return Array.Empty<byte>();
 
-            var data = _atoms.SelectMany(x => x.GetBytes()).ToArray();
+            var atomData = _atoms.Select(x => x.GetBytes()).ToArray();
+            var atomSize = atomData.Sum(data => data.Length) + 8;
 
-            using (var stream = new MemoryStream())
+            using (var stream = new MemoryStream(atomSize))
             using (var writer = new Mp4Writer(stream))
             {
-                writer.WriteBigEndian((uint) data.Length + 8);
+                writer.WriteBigEndian((uint) atomSize);
                 writer.Write(BitConverter.GetBytes(0x74736c69));
-                writer.Write(data);
-                return stream.ToArray();
+                foreach (var subAtomData in atomData)
+                    writer.Write(subAtomData);
+                return stream.GetBuffer();
             }
         }
     }

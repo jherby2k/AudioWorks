@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Buffers.Binary;
-using System.Buffers.Text;
-using System.Linq;
-using System.Text;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 
@@ -18,11 +15,11 @@ namespace AudioWorks.Extensions.Mp4
             Value = coverArt;
         }
 
-        public CoverAtom([NotNull] byte[] data)
+        public CoverAtom(ReadOnlySpan<byte> data)
         {
             // There could be more than one data atom. Ignore all but the first.
-            var imageData = new byte[BitConverter.ToUInt32(data.Skip(8).Take(4).Reverse().ToArray(), 0) - 16];
-            Array.Copy(data, 24, imageData, 0, imageData.Length);
+            var imageData = new byte[BinaryPrimitives.ReadUInt32BigEndian(data.Slice(8, 4)) - 16];
+            data.Slice(24, imageData.Length).CopyTo(imageData);
             Value = CoverArtFactory.Create(imageData);
         }
 
