@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.IO;
 using System.Runtime.InteropServices;
 using JetBrains.Annotations;
@@ -59,20 +60,34 @@ namespace AudioWorks.Extensions.Flac
                 Read = (readBuffer, bufferSize, numberOfRecords, handle) =>
                 {
                     var totalBufferSize = bufferSize.ToInt32() * numberOfRecords.ToInt32();
-                    var managedBuffer = new byte[totalBufferSize]; //TODO put this on the stack or make it reusable
-                    var bytesRead = stream.Read(managedBuffer, 0, totalBufferSize);
-                    Marshal.Copy(managedBuffer, 0, readBuffer, totalBufferSize);
-                    return new IntPtr(bytesRead);
+                    var buffer = ArrayPool<byte>.Shared.Rent(totalBufferSize);
+                    try
+                    {
+                        var bytesRead = stream.Read(buffer, 0, totalBufferSize);
+                        Marshal.Copy(buffer, 0, readBuffer, totalBufferSize);
+                        return new IntPtr(bytesRead);
+                    }
+                    finally
+                    {
+                        ArrayPool<byte>.Shared.Return(buffer);
+                    }
                 },
 
                 Write = (writeBuffer, bufferSize, numberOfRecords, handle) =>
                 {
                     var castNumberOfRecords = numberOfRecords.ToInt32();
                     var totalBufferSize = bufferSize.ToInt32() * castNumberOfRecords;
-                    var managedBuffer = new byte[totalBufferSize]; //TODO put this on the stack or make it reusable
-                    Marshal.Copy(writeBuffer, managedBuffer, 0, totalBufferSize);
-                    stream.Write(managedBuffer, 0, totalBufferSize);
-                    return new IntPtr(castNumberOfRecords);
+                    var buffer = ArrayPool<byte>.Shared.Rent(totalBufferSize);
+                    try
+                    {
+                        Marshal.Copy(writeBuffer, buffer, 0, totalBufferSize);
+                        stream.Write(buffer, 0, totalBufferSize);
+                        return new IntPtr(castNumberOfRecords);
+                    }
+                    finally
+                    {
+                        ArrayPool<byte>.Shared.Return(buffer);
+                    }
                 },
 
                 Seek = (handle, offset, whence) =>

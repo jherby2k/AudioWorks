@@ -56,12 +56,12 @@ namespace AudioWorks.Extensions.Mp3
             return result;
         }
 
-        static OptionalHeaderInfo ReadXingHeader([NotNull] FrameReader reader, [NotNull] FrameHeader header)
+        static OptionalHeader ReadXingHeader([NotNull] FrameReader reader, [NotNull] FrameHeader header)
         {
             // Xing header (if present) is located after the side info
             reader.BaseStream.Position = reader.FrameStart + 4 + header.SideInfoLength;
 
-            var result = new OptionalHeaderInfo();
+            var result = new OptionalHeader();
 
             var headerId = new string(reader.ReadChars(4)); //TODO read into Span
             if (!headerId.Equals("Xing", StringComparison.Ordinal) &&
@@ -78,12 +78,12 @@ namespace AudioWorks.Extensions.Mp3
             return result;
         }
 
-        static OptionalHeaderInfo ReadVbriHeader([NotNull] FrameReader reader)
+        static OptionalHeader ReadVbriHeader([NotNull] FrameReader reader)
         {
             // VBRI header (if present) is located 32 bytes past the frame header
             reader.BaseStream.Position = reader.FrameStart + 36;
 
-            var result = new OptionalHeaderInfo();
+            var result = new OptionalHeader();
 
             var headerId = new string(reader.ReadChars(4)); //TODO read into Span
             if (!headerId.Equals("VBRI", StringComparison.Ordinal)) return result;
@@ -95,7 +95,7 @@ namespace AudioWorks.Extensions.Mp3
             return result;
         }
 
-        static int DetermineBitRate([NotNull] FrameHeader frameHeader, OptionalHeaderInfo optionalHeader)
+        static int DetermineBitRate([NotNull] FrameHeader frameHeader, OptionalHeader optionalHeader)
         {
             // If the BitRate can't be calculated because of an incomplete or missing VBR header, assume CBR
             if (optionalHeader.Incomplete)
@@ -103,8 +103,7 @@ namespace AudioWorks.Extensions.Mp3
 
             return (int) Math.Round(
                 optionalHeader.ByteCount * 8 /
-                (optionalHeader.FrameCount * frameHeader.SamplesPerFrame /
-                 (double) frameHeader.SampleRate));
+                (optionalHeader.FrameCount * frameHeader.SamplesPerFrame / (double) frameHeader.SampleRate));
         }
     }
 }

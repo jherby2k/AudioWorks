@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Buffers.Binary;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
 
@@ -14,10 +12,11 @@ namespace AudioWorks.Extensions.Mp4
         [NotNull]
         internal string Value { get; }
 
-        internal TextAtom([NotNull] IReadOnlyCollection<byte> data)
+        internal TextAtom(ReadOnlySpan<byte> data)
         {
-            _fourCc = new string(CodePagesEncodingProvider.Instance.GetEncoding(1252).GetChars(data.Take(4).ToArray()));
-            Value = new string(Encoding.UTF8.GetChars(data.Skip(24).Take(data.Count - 24).ToArray()));
+            _fourCc = new string(CodePagesEncodingProvider.Instance.GetEncoding(1252)
+                .GetChars(data.Slice(0, 4).ToArray()));
+            Value = new string(Encoding.UTF8.GetChars(data.Slice(24).ToArray()));
         }
 
         internal TextAtom([NotNull] string fourCc, [NotNull] string value)
@@ -30,23 +29,23 @@ namespace AudioWorks.Extensions.Mp4
         {
             var contents = Encoding.UTF8.GetBytes(Value);
 
-            Span<byte> result = stackalloc byte[contents.Length + 24];
+            var result = new byte[contents.Length + 24];
 
             // Write the atom header
             BinaryPrimitives.WriteUInt32BigEndian(result, (uint) result.Length);
-            CodePagesEncodingProvider.Instance.GetEncoding(1252).GetBytes(_fourCc).CopyTo(result.Slice(4));
+            CodePagesEncodingProvider.Instance.GetEncoding(1252).GetBytes(_fourCc).CopyTo(result.AsSpan().Slice(4));
 
             // Write the data atom header
-            BinaryPrimitives.WriteUInt32BigEndian(result.Slice(8), (uint) result.Length - 8);
-            BinaryPrimitives.WriteInt32BigEndian(result.Slice(12), 0x64617461);  // 'data'
+            BinaryPrimitives.WriteUInt32BigEndian(result.AsSpan().Slice(8), (uint) result.Length - 8);
+            BinaryPrimitives.WriteInt32BigEndian(result.AsSpan().Slice(12), 0x64617461);  // 'data'
 
             // Set the type flag
             result[19] = 1;
 
             // Set the atom contents
-            contents.CopyTo(result.Slice(24));
+            contents.CopyTo(result.AsSpan().Slice(24));
 
-            return result.ToArray();
+            return result;
         }
     }
 }

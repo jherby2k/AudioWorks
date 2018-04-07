@@ -1,6 +1,6 @@
 ﻿namespace AudioWorks.Extensions.Mp3
 {
-    struct OptionalHeaderInfo
+    struct OptionalHeader
     {
         internal uint FrameCount { get; set; }
 

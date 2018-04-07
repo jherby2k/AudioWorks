@@ -12,7 +12,7 @@ namespace AudioWorks.Extensions.Mp4
 
         internal byte TrackCount { get; }
 
-        internal TrackNumberAtom([NotNull] IReadOnlyList<byte> data)
+        internal TrackNumberAtom(ReadOnlySpan<byte> data)
         {
             TrackNumber = data[27];
             TrackCount = data[29];
