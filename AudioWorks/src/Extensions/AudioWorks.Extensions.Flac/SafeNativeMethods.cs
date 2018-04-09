@@ -182,9 +182,9 @@ namespace AudioWorks.Extensions.Flac
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataObjectVorbisCommentEntryFromNameValuePair(
-            out VorbisCommentEntry vorbisComment,
-            [NotNull] byte[] key,
-            [NotNull] byte[] value);
+            out VorbisCommentEntry entry,
+            IntPtr key,
+            IntPtr value);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_object_vorbiscomment_append_comment",
             CallingConvention = CallingConvention.Cdecl)]

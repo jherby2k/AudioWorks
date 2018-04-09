@@ -146,7 +146,14 @@ namespace AudioWorks.Extensions.Vorbis
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern void VorbisCommentAddTag(
             ref VorbisComment comment,
-            [NotNull] byte[] tag,
+            IntPtr tag,
+            IntPtr contents);
+
+        [DllImport(_vorbisLibrary, EntryPoint = "vorbis_comment_add_tag",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void VorbisCommentAddTag(
+            ref VorbisComment comment,
+            IntPtr tag,
             [NotNull] byte[] contents);
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_comment_clear",

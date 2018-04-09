@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Buffers.Text;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using AudioWorks.Common;
@@ -32,9 +34,18 @@ namespace AudioWorks.Extensions.Flac
                     {
                         var entry = Marshal.PtrToStructure<VorbisCommentEntry>(IntPtr.Add(vorbisComment.Comments,
                             commentIndex * Marshal.SizeOf<VorbisCommentEntry>()));
-                        var comment = Encoding.UTF8.GetString((byte*) entry.Entry.ToPointer(), (int) entry.Length)
-                            .Split(new[] { '=' }, 2);
-                        AudioMetadata.Set(comment[0], comment[1]);
+
+                        var commentBytes = new Span<byte>(entry.Entry.ToPointer(), (int) entry.Length);
+                        var delimiter = commentBytes.IndexOf((byte) 0x3D); // '='
+                        var fieldBytes = commentBytes.Slice(0, delimiter);
+                        var valueBytes = commentBytes.Slice(delimiter + 1);
+                        AudioMetadata.Set(
+                            Encoding.ASCII.GetString(
+                                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(fieldBytes)),
+                                fieldBytes.Length),
+                            Encoding.UTF8.GetString(
+                                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes)),
+                                valueBytes.Length));
                     }
                     break;
 
