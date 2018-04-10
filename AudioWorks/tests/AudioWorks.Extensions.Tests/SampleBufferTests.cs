@@ -49,8 +49,7 @@ namespace AudioWorks.Extensions.Tests
             var inSamples = new[] { minValue, maxValue };
             var outSamples = new float[inSamples.Length];
 
-            var buffer = new SampleBuffer(inSamples, bitsPerSample);
-            buffer.GetSamples(0).CopyTo(outSamples);
+            new SampleBuffer(inSamples, bitsPerSample).GetSamples(0).CopyTo(outSamples);
 
             Assert.All(outSamples, sample =>
                 Assert.True(sample >= -1.0 && sample <= 1.0));
@@ -92,8 +91,7 @@ namespace AudioWorks.Extensions.Tests
             }
 
             var outSamples = new int[inSamples.Length];
-            var buffer = new SampleBuffer(inSamples, 2, bitsPerSample);
-            buffer.CopyToInterleaved(outSamples, bitsPerSample);
+            new SampleBuffer(inSamples, 2, bitsPerSample).CopyToInterleaved(outSamples, bitsPerSample);
 
             Assert.Equal(inSamples, outSamples);
         }
