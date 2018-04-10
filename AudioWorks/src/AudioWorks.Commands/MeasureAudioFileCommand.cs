@@ -17,7 +17,7 @@ namespace AudioWorks.Commands
     /// measurements as metadata.</para>
     /// </summary>
     [PublicAPI]
-    [Cmdlet(VerbsDiagnostic.Measure, "AudioFile"), OutputType(new[] { typeof(ITaggedAudioFile) })]
+    [Cmdlet(VerbsDiagnostic.Measure, "AudioFile"), OutputType(typeof(ITaggedAudioFile))]
     public sealed class MeasureAudioFileCommand : Cmdlet, IDynamicParameters, IDisposable
     {
         [NotNull] readonly CancellationTokenSource _cancellationSource = new CancellationTokenSource();

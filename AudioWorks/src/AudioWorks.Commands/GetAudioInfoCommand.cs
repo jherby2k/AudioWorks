@@ -11,7 +11,7 @@ namespace AudioWorks.Commands
     /// immutable information that can't be changed without re-encoding the file.</para>
     /// </summary>
     [PublicAPI]
-    [Cmdlet(VerbsCommon.Get, "AudioInfo"), OutputType(new[] { typeof(AudioInfo) })]
+    [Cmdlet(VerbsCommon.Get, "AudioInfo"), OutputType(typeof(AudioInfo))]
     public sealed class GetAudioInfoCommand : Cmdlet
     {
         /// <summary>

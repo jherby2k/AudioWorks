@@ -1,7 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Management.Automation;
-using AudioWorks.Common;
+﻿using AudioWorks.Common;
 using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
+using System.Management.Automation;
 
 namespace AudioWorks.Commands
 {
@@ -12,7 +12,7 @@ namespace AudioWorks.Commands
     /// <para type="description">If no metadata fields are specified, all fields are cleared.</para>
     /// </summary>
     [PublicAPI]
-    [Cmdlet(VerbsCommon.Clear, "AudioMetadata"), OutputType(new[] { typeof(ITaggedAudioFile) })]
+    [Cmdlet(VerbsCommon.Clear, "AudioMetadata"), OutputType(typeof(ITaggedAudioFile))]
     public sealed class ClearAudioMetadataCommand : Cmdlet
     {
         /// <summary>

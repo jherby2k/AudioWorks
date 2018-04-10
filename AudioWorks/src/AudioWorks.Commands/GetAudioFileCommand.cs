@@ -11,7 +11,7 @@ namespace AudioWorks.Commands
     /// metadata, and can be manipulated in various ways by the other AudioWorks cmdlets.</para>
     /// </summary>
     [PublicAPI]
-    [Cmdlet(VerbsCommon.Get, "AudioFile", DefaultParameterSetName = "ByPath"), OutputType(new[] { typeof(ITaggedAudioFile) })]
+    [Cmdlet(VerbsCommon.Get, "AudioFile", DefaultParameterSetName = "ByPath"), OutputType(typeof(ITaggedAudioFile))]
     public sealed class GetAudioFileCommand : PSCmdlet
     {
         /// <summary>
@@ -30,7 +30,7 @@ namespace AudioWorks.Commands
         /// characters, enclose it in single quotation marks. Single quotation marks tell Windows PowerShell not to
         /// interpret any characters as escape sequences.</para>
         /// </summary>
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = "ByLiteralPath"), Alias(new[] { "PSPath" })]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = "ByLiteralPath"), Alias("PSPath")]
         public string LiteralPath { get; set; }
 
         /// <inheritdoc/>
