@@ -52,11 +52,11 @@ namespace AudioWorks.Extensions
             _samples = new float[1][];
             Frames = monoSamples.Length;
 
-            var multiplier = 1 / Math.Pow(2, bitsPerSample - 1);
+            var multiplier = 1 / (float) Math.Pow(2, bitsPerSample - 1);
 
             _samples[0] = ArrayPool<float>.Shared.Rent(Frames);
             for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
-                _samples[0][frameIndex] = (float) (monoSamples[frameIndex] * multiplier);
+                _samples[0][frameIndex] = monoSamples[frameIndex] * multiplier;
         }
 
         /// <summary>
@@ -81,14 +81,14 @@ namespace AudioWorks.Extensions
             _samples = new float[2][];
             Frames = leftSamples.Length;
 
-            var multiplier = 1 / Math.Pow(2, bitsPerSample - 1);
+            var multiplier = 1 / (float) Math.Pow(2, bitsPerSample - 1);
 
             _samples[0] = ArrayPool<float>.Shared.Rent(Frames);
             _samples[1] = ArrayPool<float>.Shared.Rent(Frames);
             for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
             {
-                _samples[0][frameIndex] = (float) (leftSamples[frameIndex] * multiplier);
-                _samples[1][frameIndex] = (float) (rightSamples[frameIndex] * multiplier);
+                _samples[0][frameIndex] = leftSamples[frameIndex] * multiplier;
+                _samples[1][frameIndex] = rightSamples[frameIndex] * multiplier;
             }
         }
 
@@ -117,13 +117,13 @@ namespace AudioWorks.Extensions
             _samples = new float[channels][];
             Frames = interleavedSamples.Length / channels;
 
-            var multiplier = 1 / Math.Pow(2, bitsPerSample - 1);
+            var multiplier = 1 / (float) Math.Pow(2, bitsPerSample - 1);
 
             for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
             {
                 var channel = _samples[channelIndex] = ArrayPool<float>.Shared.Rent(Frames);
                 for (int frameIndex = 0, offset = channelIndex; frameIndex < Frames; frameIndex++, offset += Channels)
-                    channel[frameIndex] = (float) (interleavedSamples[offset] * multiplier);
+                    channel[frameIndex] = interleavedSamples[offset] * multiplier;
             }
         }
 
@@ -141,7 +141,7 @@ namespace AudioWorks.Extensions
         public SampleBuffer(ReadOnlySpan<byte> interleavedSamples, int channels, int bitsPerSample)
         {
             var bytesPerSample = (int) Math.Ceiling(bitsPerSample / 8.0);
-            var multiplier = (float) (1 / Math.Pow(2, bitsPerSample - 1));
+            var multiplier = 1 / (float) Math.Pow(2, bitsPerSample - 1);
 
             if (interleavedSamples.Length % (channels * bytesPerSample) != 0)
                 throw new ArgumentException($"{nameof(interleavedSamples)} has an invalid length.",
