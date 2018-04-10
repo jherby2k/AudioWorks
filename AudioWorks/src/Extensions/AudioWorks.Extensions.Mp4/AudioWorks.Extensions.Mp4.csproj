@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -11,6 +11,7 @@
     <Copyright>Copyright © 2018 Jeremy Herbison</Copyright>
     <CodeAnalysisRuleSet>CodeAnalysis.ruleset</CodeAnalysisRuleSet>
     <Configurations>Debug-Windows;Release-Windows;Debug-OSX;Release-OSX;Debug-Linux;Release-Linux</Configurations>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 

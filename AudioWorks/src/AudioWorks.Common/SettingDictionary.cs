@@ -20,9 +20,9 @@ namespace AudioWorks.Common
         [ContractAnnotation("=> false, value:null; => true, value:notnull")]
         public bool TryGetValue<TValue>([NotNull] string key, out TValue value)
         {
-            if (TryGetValue(key, out var objectValue) && objectValue is TValue)
+            if (TryGetValue(key, out var objectValue) && objectValue is TValue typedValue)
             {
-                value = (TValue)objectValue;
+                value = typedValue;
                 return true;
             }
 

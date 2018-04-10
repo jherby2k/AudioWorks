@@ -1,8 +1,7 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Buffers.Binary;
-using System.Collections.Generic;
 using System.Globalization;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp4
 {
@@ -31,7 +30,7 @@ namespace AudioWorks.Extensions.Mp4
                     : (byte) 0;
         }
 
-        internal override byte[] GetBytes()
+        internal override unsafe byte[] GetBytes()
         {
             Span<byte> result = stackalloc byte[32];
 
@@ -48,14 +47,6 @@ namespace AudioWorks.Extensions.Mp4
             result[29] = TrackCount;
 
             return result.ToArray();
-        }
-
-        [Pure, NotNull]
-        static byte[] ConvertToBigEndianBytes(uint value)
-        {
-            var result = BitConverter.GetBytes(value);
-            Array.Reverse(result);
-            return result;
         }
     }
 }

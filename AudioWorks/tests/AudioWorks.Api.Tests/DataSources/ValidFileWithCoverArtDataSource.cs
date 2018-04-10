@@ -98,12 +98,6 @@ namespace AudioWorks.Api.Tests.DataSources
         };
 
         [NotNull, ItemNotNull]
-        public static IEnumerable<object[]> FileNames
-        {
-            [UsedImplicitly] get => _data.Select(item => new[] { item[0] });
-        }
-
-        [NotNull, ItemNotNull]
         public static IEnumerable<object[]> FileNamesAndWidth
         {
             [UsedImplicitly] get => _data.Select(item => new[] { item[0], item[1] });
