@@ -1,7 +1,7 @@
-﻿using System.Management.Automation;
-using AudioWorks.Api;
+﻿using AudioWorks.Api;
 using AudioWorks.Common;
 using JetBrains.Annotations;
+using System.Management.Automation;
 
 namespace AudioWorks.Commands
 {
@@ -32,6 +32,12 @@ namespace AudioWorks.Commands
         /// </summary>
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "ByLiteralPath"), Alias("PSPath")]
         public string LiteralPath { get; set; }
+
+        /// <inheritdoc/>
+        protected override void BeginProcessing()
+        {
+            Telemetry.TrackFirstLaunch();
+        }
 
         /// <inheritdoc/>
         protected override void ProcessRecord()
