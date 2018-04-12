@@ -46,9 +46,14 @@ namespace AudioWorks.Extensions.Tests
         [InlineData(32, -0x8000_0000, 0x7FFF_FFFF)]
         public void SamplesStayInRange(int bitsPerSample, int minValue, int maxValue)
         {
-            var inSamples = new[] { minValue, maxValue };
-            var outSamples = new float[inSamples.Length];
+            var inSamples = new int[4096];
+            for (int i = 1, j = minValue, k = maxValue; i < inSamples.Length; i += 2, j++, k--)
+            {
+                inSamples[i - 1] = Math.Min(j, maxValue);
+                inSamples[i] = Math.Max(k, minValue);
+            }
 
+            var outSamples = new float[inSamples.Length];
             new SampleBuffer(inSamples, bitsPerSample).GetSamples(0).CopyTo(outSamples);
 
             Assert.All(outSamples, sample =>
