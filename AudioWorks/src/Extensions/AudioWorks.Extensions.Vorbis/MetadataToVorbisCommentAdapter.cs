@@ -88,7 +88,7 @@ namespace AudioWorks.Extensions.Vorbis
             // Optimization - avoid allocating on the heap
             Span<byte> tagSpan = stackalloc byte[Encoding.ASCII.GetByteCount(tag) + 1];
             Encoding.ASCII.GetBytes(
-                (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(tag.AsReadOnlySpan())), tag.Length,
+                (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(tag.AsSpan())), tag.Length,
                 (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(tagSpan)), tagSpan.Length);
 
             var valueSize = Encoding.UTF8.GetByteCount(contents) + 1;
@@ -96,7 +96,7 @@ namespace AudioWorks.Extensions.Vorbis
             {
                 Span<byte> contentsSpan = stackalloc byte[valueSize];
                 Encoding.UTF8.GetBytes(
-                    (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(contents.AsReadOnlySpan())), contents.Length,
+                    (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(contents.AsSpan())), contents.Length,
                     (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(contentsSpan)), contentsSpan.Length);
 
                 SafeNativeMethods.VorbisCommentAddTag(ref _comment,

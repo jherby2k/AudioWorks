@@ -1,7 +1,7 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Buffers;
 using System.Runtime.InteropServices;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions
 {
@@ -49,12 +49,12 @@ namespace AudioWorks.Extensions
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample),
                     $"{nameof(bitsPerSample)} is out of range.");
 
-            _samples = new float[1][];
             Frames = monoSamples.Length;
+            _samples = new float[1][];
+            _samples[0] = ArrayPool<float>.Shared.Rent(Frames);
 
             var multiplier = 1 / (float) Math.Pow(2, bitsPerSample - 1);
 
-            _samples[0] = ArrayPool<float>.Shared.Rent(Frames);
             for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
                 _samples[0][frameIndex] = monoSamples[frameIndex] * multiplier;
         }
@@ -78,13 +78,13 @@ namespace AudioWorks.Extensions
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample),
                     $"{nameof(bitsPerSample)} is out of range.");
 
-            _samples = new float[2][];
             Frames = leftSamples.Length;
+            _samples = new float[2][];
+            _samples[0] = ArrayPool<float>.Shared.Rent(Frames);
+            _samples[1] = ArrayPool<float>.Shared.Rent(Frames);
 
             var multiplier = 1 / (float) Math.Pow(2, bitsPerSample - 1);
 
-            _samples[0] = ArrayPool<float>.Shared.Rent(Frames);
-            _samples[1] = ArrayPool<float>.Shared.Rent(Frames);
             for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
             {
                 _samples[0][frameIndex] = leftSamples[frameIndex] * multiplier;
@@ -114,8 +114,8 @@ namespace AudioWorks.Extensions
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample),
                     $"{nameof(bitsPerSample)} is out of range.");
 
-            _samples = new float[channels][];
             Frames = interleavedSamples.Length / channels;
+            _samples = new float[channels][];
 
             var multiplier = 1 / (float) Math.Pow(2, bitsPerSample - 1);
 
@@ -153,8 +153,8 @@ namespace AudioWorks.Extensions
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample),
                     $"{nameof(bitsPerSample)} is out of range.");
 
-            _samples = new float[channels][];
             Frames = interleavedSamples.Length / channels / bytesPerSample;
+            _samples = new float[channels][];
 
             switch (bytesPerSample)
             {
@@ -172,7 +172,7 @@ namespace AudioWorks.Extensions
 
                 // Doing a non-portable cast is much faster than parsing the bytes manually
                 case 2:
-                    var shortSamples = interleavedSamples.NonPortableCast<byte, short>();
+                    var shortSamples = MemoryMarshal.Cast<byte, short>(interleavedSamples);
                     for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
                     {
                         var channel = _samples[channelIndex] = ArrayPool<float>.Shared.Rent(Frames);
@@ -183,7 +183,7 @@ namespace AudioWorks.Extensions
                     }
                     break;
                 case 3:
-                    var int24Samples = interleavedSamples.NonPortableCast<byte, Int24>();
+                    var int24Samples = MemoryMarshal.Cast<byte, Int24>(interleavedSamples);
                     for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
                     {
                         var channel = _samples[channelIndex] = ArrayPool<float>.Shared.Rent(Frames);
@@ -194,7 +194,7 @@ namespace AudioWorks.Extensions
                     }
                     break;
                 case 4:
-                    var intSamples = interleavedSamples.NonPortableCast<byte, int>();
+                    var intSamples = MemoryMarshal.Cast<byte, int>(interleavedSamples);
                     for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
                     {
                         var channel = _samples[channelIndex] = ArrayPool<float>.Shared.Rent(Frames);
@@ -218,7 +218,7 @@ namespace AudioWorks.Extensions
             if (channel < 0 || channel > 1)
                 throw new ArgumentOutOfRangeException(nameof(channel), "channel is out of range.");
 
-            return _samples[channel].AsReadOnlySpan().Slice(0, Frames);
+            return _samples[channel].AsSpan().Slice(0, Frames);
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace AudioWorks.Extensions
 
                 // Doing a non-portable cast is much faster than parsing the bytes manually
                 case 2:
-                    var shortDestination = destination.NonPortableCast<byte, short>();
+                    var shortDestination = MemoryMarshal.Cast<byte, short>(destination);
                     for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
                     {
                         var channel = _samples[channelIndex];
@@ -332,7 +332,7 @@ namespace AudioWorks.Extensions
                     }
                     break;
                 case 3:
-                    var int24Destination = destination.NonPortableCast<byte, Int24>();
+                    var int24Destination = MemoryMarshal.Cast<byte, Int24>(destination);
                     for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
                     {
                         var channel = _samples[channelIndex];
@@ -344,7 +344,7 @@ namespace AudioWorks.Extensions
                     }
                     break;
                 case 4:
-                    var intDestination = destination.NonPortableCast<byte, int>();
+                    var intDestination = MemoryMarshal.Cast<byte, int>(destination);
                     for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
                     {
                         var channel = _samples[channelIndex];

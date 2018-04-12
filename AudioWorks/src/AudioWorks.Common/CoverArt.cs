@@ -33,7 +33,7 @@ namespace AudioWorks.Common
         public string FileExtension { get; set; }
 
         /// <inheritdoc/>
-        public ReadOnlySpan<byte> Data => _data.AsReadOnlySpan().Slice(0, _dataSize);
+        public ReadOnlySpan<byte> Data => _data.AsSpan().Slice(0, _dataSize);
 
         internal CoverArt([NotNull] Stream stream)
         {

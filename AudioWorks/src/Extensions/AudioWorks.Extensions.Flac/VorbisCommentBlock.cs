@@ -18,12 +18,12 @@ namespace AudioWorks.Extensions.Flac
             // Optimization - avoid allocating on the heap
             Span<byte> keySpan = stackalloc byte[Encoding.ASCII.GetByteCount(key) + 1];
             Encoding.ASCII.GetBytes(
-                (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(key.AsReadOnlySpan())), key.Length,
+                (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(key.AsSpan())), key.Length,
                 (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keySpan)), keySpan.Length);
 
             Span<byte> valueSpan = stackalloc byte[Encoding.UTF8.GetByteCount(value) + 1];
             Encoding.UTF8.GetBytes(
-                (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(value.AsReadOnlySpan())), value.Length,
+                (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(value.AsSpan())), value.Length,
                 (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueSpan)), valueSpan.Length);
 
             SafeNativeMethods.MetadataObjectVorbisCommentEntryFromNameValuePair(

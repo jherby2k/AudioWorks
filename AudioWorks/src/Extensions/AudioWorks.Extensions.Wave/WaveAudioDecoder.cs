@@ -45,7 +45,7 @@ namespace AudioWorks.Extensions.Wave
             //TODO Throw if count is less than length
 
             var result = new SampleBuffer(
-                _buffer.AsReadOnlySpan().Slice(0, length),
+                _buffer.AsSpan().Slice(0, length),
                 _audioInfo.Channels,
                 _bitsPerSample);
 
