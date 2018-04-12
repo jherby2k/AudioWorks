@@ -20,9 +20,9 @@ namespace AudioWorks.Commands
 
         internal static void TrackFirstLaunch()
         {
-            if (IsolatedStorageFile.GetUserStoreForAssembly().FileExists("FIRST_LAUNCH_TELEMETRY_GATHERED")) return;
-
-            IsolatedStorageFile.GetUserStoreForAssembly().CreateFile("FIRST_LAUNCH_TELEMETRY_GATHERED");
+            var store = IsolatedStorageFile.GetUserStoreForAssembly();
+            if (store.FileExists("FIRST_LAUNCH_TELEMETRY_GATHERED")) return;
+            store.CreateFile("FIRST_LAUNCH_TELEMETRY_GATHERED");
 
             TrackEvent("FirstLaunch");
         }
