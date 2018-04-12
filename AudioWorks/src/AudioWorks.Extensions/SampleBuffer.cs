@@ -1,7 +1,8 @@
-﻿using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Buffers;
+using System.Numerics;
 using System.Runtime.InteropServices;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions
 {
@@ -55,8 +56,20 @@ namespace AudioWorks.Extensions
 
             var multiplier = 1 / (float) Math.Pow(2, bitsPerSample - 1);
 
-            for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
-                _samples[0][frameIndex] = monoSamples[frameIndex] * multiplier;
+            // Vectorized code is 40-50% faster with AVX2
+            if (Vector.IsHardwareAccelerated)
+            {
+                var intSampleVectors = MemoryMarshal.Cast<int, Vector<int>>(monoSamples);
+                var sampleVectors = MemoryMarshal.Cast<float, Vector<float>>(_samples[0].AsSpan().Slice(0, Frames));
+
+                for (var vectorIndex = 0; vectorIndex < intSampleVectors.Length; vectorIndex++)
+                    sampleVectors[vectorIndex] = Vector.ConvertToSingle(intSampleVectors[vectorIndex]) * multiplier;
+                for (var frameIndex = intSampleVectors.Length * Vector<int>.Count; frameIndex < Frames; frameIndex++)
+                    _samples[0][frameIndex] = monoSamples[frameIndex] * multiplier;
+            }
+            else
+                for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
+                    _samples[0][frameIndex] = monoSamples[frameIndex] * multiplier;
         }
 
         /// <summary>
@@ -85,11 +98,32 @@ namespace AudioWorks.Extensions
 
             var multiplier = 1 / (float) Math.Pow(2, bitsPerSample - 1);
 
-            for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
+            // Vectorized code is 40-50% faster with AVX2
+            if (Vector.IsHardwareAccelerated)
             {
-                _samples[0][frameIndex] = leftSamples[frameIndex] * multiplier;
-                _samples[1][frameIndex] = rightSamples[frameIndex] * multiplier;
+                var leftIntSampleVectors = MemoryMarshal.Cast<int, Vector<int>>(leftSamples);
+                var rightIntSampleVectors = MemoryMarshal.Cast<int, Vector<int>>(rightSamples);
+                var leftSampleVectors = MemoryMarshal.Cast<float, Vector<float>>(_samples[0].AsSpan().Slice(0, Frames));
+                var rightSampleVectors = MemoryMarshal.Cast<float, Vector<float>>(_samples[1].AsSpan().Slice(0, Frames));
+
+                for (var vectorIndex = 0; vectorIndex < leftIntSampleVectors.Length; vectorIndex++)
+                {
+                    leftSampleVectors[vectorIndex] = Vector.ConvertToSingle(leftIntSampleVectors[vectorIndex]) * multiplier;
+                    rightSampleVectors[vectorIndex] = Vector.ConvertToSingle(rightIntSampleVectors[vectorIndex]) * multiplier;
+                }
+
+                for (var frameIndex = leftIntSampleVectors.Length * Vector<int>.Count; frameIndex < Frames; frameIndex++)
+                {
+                    _samples[0][frameIndex] = leftSamples[frameIndex] * multiplier;
+                    _samples[1][frameIndex] = rightSamples[frameIndex] * multiplier;
+                }
             }
+            else
+                for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
+                {
+                    _samples[0][frameIndex] = leftSamples[frameIndex] * multiplier;
+                    _samples[1][frameIndex] = rightSamples[frameIndex] * multiplier;
+                }
         }
 
         /// <summary>
@@ -381,7 +415,7 @@ namespace AudioWorks.Extensions
             readonly byte _byte2;
             readonly byte _byte3;
 
-            public Int24(int value)
+            internal Int24(int value)
             {
                 _byte1 = (byte) value;
                 _byte2 = (byte) (((uint) value >> 8) & 0xFF);
