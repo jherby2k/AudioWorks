@@ -78,7 +78,8 @@ namespace AudioWorks.Commands
         {
             var activity = $"Encoding {_sourceAudioFiles.Count} audio files in {Encoder} format";
             var totalFramesCompleted = 0L;
-            var totalFrames = (double) _sourceAudioFiles.Sum(audioFile => audioFile.Info.FrameCount);
+            var totalFrames = _sourceAudioFiles.Sum(audioFile => audioFile.Info.FrameCount);
+            var percentComplete = 0;
 
             // ReSharper disable once AssignNullToNotNullAttribute
             var encoder = new AudioFileEncoder(Encoder,
@@ -109,9 +110,11 @@ namespace AudioWorks.Commands
                 foreach (var framesCompleted in outputQueue.GetConsumingEnumerable(_cancellationSource.Token))
                 {
                     // If the audio files have estimated frame counts, make sure this doesn't go over 100%
-                    totalFramesCompleted = (long) Math.Min(totalFramesCompleted + framesCompleted, totalFrames);
-                    var percentComplete =
-                        (int) Math.Floor(totalFramesCompleted / totalFrames * 100);
+                    totalFramesCompleted = Math.Min(totalFramesCompleted + framesCompleted, totalFrames);
+                    var newPercentComplete = (int) (totalFramesCompleted / (float) totalFrames * 100);
+                    if (newPercentComplete <= percentComplete) continue;
+
+                    percentComplete = newPercentComplete;
                     WriteProgress(new ProgressRecord(0, activity, $"{percentComplete}% complete")
                     {
                         PercentComplete = percentComplete

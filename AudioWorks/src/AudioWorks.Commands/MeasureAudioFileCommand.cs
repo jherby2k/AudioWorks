@@ -81,14 +81,17 @@ namespace AudioWorks.Commands
                 // Process progress notifications on the main thread
                 var activity = $"Performing {Analyzer} analysis on {_audioFiles.Count} audio files";
                 var totalFramesCompleted = 0L;
-                var totalFrames = (double) _audioFiles.Sum(audioFile => audioFile.Info.FrameCount);
+                var totalFrames = _audioFiles.Sum(audioFile => audioFile.Info.FrameCount);
+                var percentComplete = 0;
 
                 foreach (var framesCompleted in outputQueue.GetConsumingEnumerable(_cancellationSource.Token))
                 {
                     // If the audio files have estimated frame counts, make this doesn't go over 100%
-                    totalFramesCompleted = (long) Math.Min(totalFramesCompleted + framesCompleted, totalFrames);
-                    var percentComplete =
-                        (int) Math.Floor(totalFramesCompleted / totalFrames * 100);
+                    totalFramesCompleted = Math.Min(totalFramesCompleted + framesCompleted, totalFrames);
+                    var newPercentComplete = (int) (totalFramesCompleted / (float) totalFrames * 100);
+                    if (newPercentComplete <= percentComplete) continue;
+
+                    percentComplete = newPercentComplete;
                     WriteProgress(new ProgressRecord(0, activity, $"{percentComplete}% complete")
                     {
                         PercentComplete = percentComplete
