@@ -22,6 +22,12 @@ namespace AudioWorks.Commands
         public ITaggedAudioFile AudioFile { get; set; }
 
         /// <inheritdoc/>
+        protected override void BeginProcessing()
+        {
+            Telemetry.TrackFirstLaunch();
+        }
+
+        /// <inheritdoc/>
         protected override void ProcessRecord()
         {
             WriteObject(AudioFile.Metadata);

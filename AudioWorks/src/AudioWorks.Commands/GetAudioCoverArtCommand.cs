@@ -33,6 +33,12 @@ namespace AudioWorks.Commands
         public string LiteralPath { get; set; }
 
         /// <inheritdoc/>
+        protected override void BeginProcessing()
+        {
+            Telemetry.TrackFirstLaunch();
+        }
+
+        /// <inheritdoc/>
         protected override void ProcessRecord()
         {
             try

@@ -54,6 +54,8 @@ namespace AudioWorks.Commands
         /// <inheritdoc/>
         protected override void BeginProcessing()
         {
+            Telemetry.TrackFirstLaunch();
+
             _extractor = new CoverArtExtractor(
                 SessionState.Path.GetUnresolvedProviderPathFromPSPath(Path),
                 Name,

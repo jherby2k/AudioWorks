@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using JetBrains.Annotations;
@@ -17,25 +18,29 @@ namespace AudioWorks.Commands
             TelemetryConfiguration.Active.InstrumentationKey = _instrumentationKey;
         }
 
-        internal static void TrackEvent([NotNull] string eventName, [CanBeNull] IDictionary<string, string> properties = null)
-        {
-            // TODO check if enabled
-
-            if (_client == null)
-                _client = new TelemetryClient();
-
-            _client.TrackEvent(eventName, properties);
-        }
-
         internal static void TrackFirstLaunch()
         {
-            TrackEvent("FirstLaunch", new Dictionary<string, string>
+            if (IsolatedStorageFile.GetUserStoreForAssembly().FileExists("FIRST_LAUNCH_TELEMETRY_GATHERED")) return;
+
+            IsolatedStorageFile.GetUserStoreForAssembly().CreateFile("FIRST_LAUNCH_TELEMETRY_GATHERED");
+
+            TrackEvent("FirstLaunch");
+        }
+
+        static void TrackEvent([NotNull] string eventName, [CanBeNull] IDictionary<string, string> properties = null)
+        {
+            //TODO Allow telemetry to be disabled.
+
+            if (_client == null)
             {
-                ["Version"] = Assembly.GetExecutingAssembly().GetName().Version.ToString(),
-                ["Framework"] = RuntimeInformation.FrameworkDescription,
-                ["Architecture"] = RuntimeInformation.ProcessArchitecture.ToString(),
-                ["OSDescription"] = RuntimeInformation.OSDescription
-            });
+                _client = new TelemetryClient();
+                _client.Context.Device.OperatingSystem = RuntimeInformation.OSDescription;
+                _client.Context.Component.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                _client.Context.Properties["Framework"] = RuntimeInformation.FrameworkDescription;
+                _client.Context.Properties["Architecture"] = RuntimeInformation.ProcessArchitecture.ToString();
+            }
+
+            _client.TrackEvent(eventName, properties);
         }
     }
 }
