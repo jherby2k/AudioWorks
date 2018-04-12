@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0;net471</TargetFrameworks>
-    <RuntimeFrameworkVersion>2.0.6</RuntimeFrameworkVersion>
-    <LangVersion>latest</LangVersion>
+    <TargetFrameworks>netcoreapp2.1;net471</TargetFrameworks>
+    <RuntimeFrameworkVersion>2.1.0-preview2-26406-04</RuntimeFrameworkVersion>
+    <LangVersion>7.3</LangVersion>
     <IsPackable>false</IsPackable>
     <Description>Unit testing project for the AudioWorks Extension API. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
     <Authors>Jeremy Herbison</Authors>
@@ -15,8 +15,8 @@
     <Configurations>Debug-Windows;Release-Windows;Debug-OSX;Release-OSX;Debug-Linux;Release-Linux</Configurations>
   </PropertyGroup>
   
-  <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp2.0'">
-    <DefineConstants>NETCOREAPP2_0</DefineConstants>
+  <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp2.1'">
+    <DefineConstants>NETCOREAPP2_1</DefineConstants>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(TargetFramework)'=='net471'">
