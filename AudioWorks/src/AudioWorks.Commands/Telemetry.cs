@@ -12,6 +12,7 @@ namespace AudioWorks.Commands
     {
         [NotNull] const string _instrumentationKey = "f36d131d-ef59-4b6a-8788-403d0ef14927";
         [CanBeNull] static TelemetryClient _client;
+        static readonly object _syncRoot = new object();
 
         static Telemetry()
         {
@@ -21,8 +22,11 @@ namespace AudioWorks.Commands
         internal static void TrackFirstLaunch()
         {
             var store = IsolatedStorageFile.GetUserStoreForAssembly();
-            if (store.FileExists("FIRST_LAUNCH_TELEMETRY_GATHERED")) return;
-            store.CreateFile("FIRST_LAUNCH_TELEMETRY_GATHERED");
+            lock (_syncRoot)
+            {
+                if (store.FileExists("FIRST_LAUNCH_TELEMETRY_GATHERED")) return;
+                store.CreateFile("FIRST_LAUNCH_TELEMETRY_GATHERED");
+            }
 
             TrackEvent("FirstLaunch");
         }
