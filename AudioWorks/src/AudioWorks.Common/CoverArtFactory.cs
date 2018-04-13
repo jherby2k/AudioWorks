@@ -11,7 +11,7 @@ namespace AudioWorks.Common
     /// </summary>
     public static class CoverArtFactory
     {
-        [NotNull] static readonly string[] _acceptedExtensions = { ".bmp", ".png", ".jpg", ".jpeg" };
+        [NotNull, ItemNotNull] static readonly string[] _acceptedExtensions = { ".bmp", ".png", ".jpg", ".jpeg" };
 
         /// <summary>
         /// Creates a new <see cref="ICoverArt"/> object from a byte array.
@@ -42,7 +42,7 @@ namespace AudioWorks.Common
         /// <exception cref="ImageInvalidException">Thrown if <paramref name="path"/> is not a valid image file.
         /// </exception>
         [NotNull]
-        public static ICoverArt Create(string path)
+        public static ICoverArt Create([NotNull] string path)
         {
             if (string.IsNullOrEmpty(path))
                 throw new ArgumentNullException(nameof(path), "Value cannot be null or empty.");
