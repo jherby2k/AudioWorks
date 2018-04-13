@@ -9,7 +9,7 @@ namespace AudioWorks.Extensions
     /// <summary>
     /// Represents a block of audio samples.
     /// </summary>
-    public sealed class SampleBuffer
+    public sealed class SampleBuffer : IDisposable
     {
         /// <summary>
         /// Gets a <see cref="SampleBuffer"/> with 0 frames.
@@ -17,13 +17,13 @@ namespace AudioWorks.Extensions
         /// <value>An empty <see cref="SampleBuffer"/>.</value>
         public static SampleBuffer Empty { get; } = new SampleBuffer();
 
-        [NotNull, ItemNotNull] readonly float[][] _samples;
+        [NotNull, ItemNotNull] readonly IMemoryOwner<float>[] _buffers;
 
         /// <summary>
         /// Gets the # of channels.
         /// </summary>
         /// <value>The # of channels.</value>
-        public int Channels => _samples.Length;
+        public int Channels => _buffers.Length;
 
         /// <summary>
         /// Gets the frame count.
@@ -33,7 +33,7 @@ namespace AudioWorks.Extensions
 
         SampleBuffer()
         {
-            _samples = Array.Empty<float[]>();
+            _buffers = Array.Empty<IMemoryOwner<float>>();
         }
 
         /// <summary>
@@ -51,25 +51,27 @@ namespace AudioWorks.Extensions
                     $"{nameof(bitsPerSample)} is out of range.");
 
             Frames = monoSamples.Length;
-            _samples = new float[1][];
-            _samples[0] = ArrayPool<float>.Shared.Rent(Frames);
+            _buffers = new IMemoryOwner<float>[1];
+            _buffers[0] = MemoryPool<float>.Shared.Rent(Frames);
 
             var multiplier = 1 / (float) Math.Pow(2, bitsPerSample - 1);
+            var buffer = _buffers[0].Memory.Span.Slice(0, Frames);
 
             // Vectorized code is 40-50% faster with AVX2
             if (Vector.IsHardwareAccelerated)
             {
-                var intSampleVectors = MemoryMarshal.Cast<int, Vector<int>>(monoSamples);
-                var sampleVectors = MemoryMarshal.Cast<float, Vector<float>>(_samples[0].AsSpan().Slice(0, Frames));
+                var bufferVectors = MemoryMarshal.Cast<float, Vector<float>>(buffer);
+                var sampleVectors = MemoryMarshal.Cast<int, Vector<int>>(monoSamples);
 
-                for (var vectorIndex = 0; vectorIndex < intSampleVectors.Length; vectorIndex++)
-                    sampleVectors[vectorIndex] = Vector.ConvertToSingle(intSampleVectors[vectorIndex]) * multiplier;
-                for (var frameIndex = intSampleVectors.Length * Vector<int>.Count; frameIndex < Frames; frameIndex++)
-                    _samples[0][frameIndex] = monoSamples[frameIndex] * multiplier;
+                for (var vectorIndex = 0; vectorIndex < sampleVectors.Length; vectorIndex++)
+                    bufferVectors[vectorIndex] = Vector.ConvertToSingle(sampleVectors[vectorIndex]) * multiplier;
+
+                for (var frameIndex = bufferVectors.Length * Vector<int>.Count; frameIndex < Frames; frameIndex++)
+                    buffer[frameIndex] = monoSamples[frameIndex] * multiplier;
             }
             else
                 for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
-                    _samples[0][frameIndex] = monoSamples[frameIndex] * multiplier;
+                    buffer[frameIndex] = monoSamples[frameIndex] * multiplier;
         }
 
         /// <summary>
@@ -92,37 +94,39 @@ namespace AudioWorks.Extensions
                     $"{nameof(bitsPerSample)} is out of range.");
 
             Frames = leftSamples.Length;
-            _samples = new float[2][];
-            _samples[0] = ArrayPool<float>.Shared.Rent(Frames);
-            _samples[1] = ArrayPool<float>.Shared.Rent(Frames);
+            _buffers = new IMemoryOwner<float>[2];
+            _buffers[0] = MemoryPool<float>.Shared.Rent(Frames);
+            _buffers[1] = MemoryPool<float>.Shared.Rent(Frames);
 
             var multiplier = 1 / (float) Math.Pow(2, bitsPerSample - 1);
+            var leftBuffer = _buffers[0].Memory.Span.Slice(0, Frames);
+            var rightBuffer = _buffers[1].Memory.Span.Slice(0, Frames);
 
             // Vectorized code is 40-50% faster with AVX2
             if (Vector.IsHardwareAccelerated)
             {
-                var leftIntSampleVectors = MemoryMarshal.Cast<int, Vector<int>>(leftSamples);
-                var rightIntSampleVectors = MemoryMarshal.Cast<int, Vector<int>>(rightSamples);
-                var leftSampleVectors = MemoryMarshal.Cast<float, Vector<float>>(_samples[0].AsSpan().Slice(0, Frames));
-                var rightSampleVectors = MemoryMarshal.Cast<float, Vector<float>>(_samples[1].AsSpan().Slice(0, Frames));
+                var leftBufferVectors = MemoryMarshal.Cast<float, Vector<float>>(leftBuffer);
+                var rightBufferVectors = MemoryMarshal.Cast<float, Vector<float>>(rightBuffer);
+                var leftSampleVectors = MemoryMarshal.Cast<int, Vector<int>>(leftSamples);
+                var rightSampleVectors = MemoryMarshal.Cast<int, Vector<int>>(rightSamples);
 
-                for (var vectorIndex = 0; vectorIndex < leftIntSampleVectors.Length; vectorIndex++)
+                for (var vectorIndex = 0; vectorIndex < leftSampleVectors.Length; vectorIndex++)
                 {
-                    leftSampleVectors[vectorIndex] = Vector.ConvertToSingle(leftIntSampleVectors[vectorIndex]) * multiplier;
-                    rightSampleVectors[vectorIndex] = Vector.ConvertToSingle(rightIntSampleVectors[vectorIndex]) * multiplier;
+                    leftBufferVectors[vectorIndex] = Vector.ConvertToSingle(leftSampleVectors[vectorIndex]) * multiplier;
+                    rightBufferVectors[vectorIndex] = Vector.ConvertToSingle(rightSampleVectors[vectorIndex]) * multiplier;
                 }
 
-                for (var frameIndex = leftIntSampleVectors.Length * Vector<int>.Count; frameIndex < Frames; frameIndex++)
+                for (var frameIndex = leftBufferVectors.Length * Vector<int>.Count; frameIndex < Frames; frameIndex++)
                 {
-                    _samples[0][frameIndex] = leftSamples[frameIndex] * multiplier;
-                    _samples[1][frameIndex] = rightSamples[frameIndex] * multiplier;
+                    leftBuffer[frameIndex] = leftSamples[frameIndex] * multiplier;
+                    rightBuffer[frameIndex] = rightSamples[frameIndex] * multiplier;
                 }
             }
             else
                 for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
                 {
-                    _samples[0][frameIndex] = leftSamples[frameIndex] * multiplier;
-                    _samples[1][frameIndex] = rightSamples[frameIndex] * multiplier;
+                    leftBuffer[frameIndex] = leftSamples[frameIndex] * multiplier;
+                    rightBuffer[frameIndex] = rightSamples[frameIndex] * multiplier;
                 }
         }
 
@@ -149,15 +153,18 @@ namespace AudioWorks.Extensions
                     $"{nameof(bitsPerSample)} is out of range.");
 
             Frames = interleavedSamples.Length / channels;
-            _samples = new float[channels][];
+            _buffers = new IMemoryOwner<float>[channels];
 
             var multiplier = 1 / (float) Math.Pow(2, bitsPerSample - 1);
 
             for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
             {
-                var channel = _samples[channelIndex] = ArrayPool<float>.Shared.Rent(Frames);
-                for (int frameIndex = 0, offset = channelIndex; frameIndex < Frames; frameIndex++, offset += Channels)
-                    channel[frameIndex] = interleavedSamples[offset] * multiplier;
+                _buffers[channelIndex] = MemoryPool<float>.Shared.Rent(Frames);
+                var channelBuffer = _buffers[channelIndex].Memory.Span.Slice(0, Frames);
+                for (int frameIndex = 0, offset = channelIndex;
+                    frameIndex < channelBuffer.Length;
+                    frameIndex++, offset += Channels)
+                    channelBuffer[frameIndex] = interleavedSamples[offset] * multiplier;
             }
         }
 
@@ -188,7 +195,9 @@ namespace AudioWorks.Extensions
                     $"{nameof(bitsPerSample)} is out of range.");
 
             Frames = interleavedSamples.Length / channels / bytesPerSample;
-            _samples = new float[channels][];
+            _buffers = new IMemoryOwner<float>[channels];
+            for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
+                _buffers[channelIndex] = MemoryPool<float>.Shared.Rent(Frames);
 
             switch (bytesPerSample)
             {
@@ -196,11 +205,11 @@ namespace AudioWorks.Extensions
                     var adjustment = (float) Math.Pow(2, bitsPerSample - 1);
                     for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
                     {
-                        var channel = _samples[channelIndex] = ArrayPool<float>.Shared.Rent(Frames);
+                        var channelBuffer = _buffers[channelIndex].Memory.Span.Slice(0, Frames);
                         for (int frameIndex = 0, offset = channelIndex;
-                            frameIndex < Frames;
+                            frameIndex < channelBuffer.Length;
                             frameIndex++, offset += Channels)
-                            channel[frameIndex] = (interleavedSamples[offset] - adjustment) * multiplier;
+                            channelBuffer[frameIndex] = (interleavedSamples[offset] - adjustment) * multiplier;
                     }
                     break;
 
@@ -209,33 +218,33 @@ namespace AudioWorks.Extensions
                     var shortSamples = MemoryMarshal.Cast<byte, short>(interleavedSamples);
                     for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
                     {
-                        var channel = _samples[channelIndex] = ArrayPool<float>.Shared.Rent(Frames);
+                        var channelBuffer = _buffers[channelIndex].Memory.Span.Slice(0, Frames);
                         for (int frameIndex = 0, offset = channelIndex;
-                            frameIndex < Frames;
+                            frameIndex < channelBuffer.Length;
                             frameIndex++, offset += Channels)
-                            channel[frameIndex] = shortSamples[offset] * multiplier;
+                            channelBuffer[frameIndex] = shortSamples[offset] * multiplier;
                     }
                     break;
                 case 3:
                     var int24Samples = MemoryMarshal.Cast<byte, Int24>(interleavedSamples);
                     for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
                     {
-                        var channel = _samples[channelIndex] = ArrayPool<float>.Shared.Rent(Frames);
+                        var channelBuffer = _buffers[channelIndex].Memory.Span.Slice(0, Frames);
                         for (int frameIndex = 0, offset = channelIndex;
-                            frameIndex < Frames;
+                            frameIndex < channelBuffer.Length;
                             frameIndex++, offset += Channels)
-                            channel[frameIndex] = int24Samples[offset].AsInt32() * multiplier;
+                            channelBuffer[frameIndex] = int24Samples[offset].AsInt32() * multiplier;
                     }
                     break;
                 case 4:
                     var intSamples = MemoryMarshal.Cast<byte, int>(interleavedSamples);
                     for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
                     {
-                        var channel = _samples[channelIndex] = ArrayPool<float>.Shared.Rent(Frames);
+                        var channelBuffer = _buffers[channelIndex].Memory.Span.Slice(0, Frames);
                         for (int frameIndex = 0, offset = channelIndex;
-                            frameIndex < Frames;
+                            frameIndex < channelBuffer.Length;
                             frameIndex++, offset += Channels)
-                            channel[frameIndex] = intSamples[offset] * multiplier;
+                            channelBuffer[frameIndex] = intSamples[offset] * multiplier;
                     }
                     break;
             }
@@ -252,7 +261,7 @@ namespace AudioWorks.Extensions
             if (channel < 0 || channel > 1)
                 throw new ArgumentOutOfRangeException(nameof(channel), "channel is out of range.");
 
-            return _samples[channel].AsSpan().Slice(0, Frames);
+            return _buffers[channel].Memory.Span.Slice(0, Frames);
         }
 
         /// <summary>
@@ -272,9 +281,11 @@ namespace AudioWorks.Extensions
 
             for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
             {
-                var channel = _samples[channelIndex];
-                for (int frameIndex = 0, offset = channelIndex; frameIndex < Frames; frameIndex++, offset += Channels)
-                    destination[offset] = channel[frameIndex];
+                var channelBuffer = _buffers[channelIndex].Memory.Span.Slice(0, Frames);
+                for (int frameIndex = 0, offset = channelIndex;
+                    frameIndex < channelBuffer.Length;
+                    frameIndex++, offset += Channels)
+                    destination[offset] = channelBuffer[frameIndex];
             }
         }
 
@@ -302,11 +313,13 @@ namespace AudioWorks.Extensions
 
             for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
             {
-                var channel = _samples[channelIndex];
-                for (int frameIndex = 0, offset = channelIndex; frameIndex < Frames; frameIndex++, offset += Channels)
+                var channelBuffer = _buffers[channelIndex].Memory.Span.Slice(0, Frames);
+                for (int frameIndex = 0, offset = channelIndex;
+                    frameIndex < channelBuffer.Length;
+                    frameIndex++, offset += Channels)
                     try
                     {
-                        destination[offset] = Math.Min(checked((int) (channel[frameIndex] * multiplier)), max);
+                        destination[offset] = Math.Min(checked((int) (channelBuffer[frameIndex] * multiplier)), max);
                     }
                     catch (OverflowException)
                     {
@@ -345,11 +358,11 @@ namespace AudioWorks.Extensions
                 case 1:
                     for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
                     {
-                        var channel = _samples[channelIndex];
+                        var channelBuffer = _buffers[channelIndex].Memory.Span.Slice(0, Frames);
                         for (int frameIndex = 0, offset = channelIndex;
-                            frameIndex < Frames;
+                            frameIndex < channelBuffer.Length;
                             frameIndex++, offset += Channels)
-                            destination[offset] = (byte) (Math.Min(channel[frameIndex] * multiplier, max) - multiplier);
+                            destination[offset] = (byte) (Math.Min(channelBuffer[frameIndex] * multiplier, max) - multiplier);
                     }
                     break;
 
@@ -358,36 +371,35 @@ namespace AudioWorks.Extensions
                     var shortDestination = MemoryMarshal.Cast<byte, short>(destination);
                     for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
                     {
-                        var channel = _samples[channelIndex];
+                        var channelBuffer = _buffers[channelIndex].Memory.Span.Slice(0, Frames);
                         for (int frameIndex = 0, offset = channelIndex;
-                            frameIndex < Frames;
+                            frameIndex < channelBuffer.Length;
                             frameIndex++, offset += Channels)
-                            shortDestination[offset] = (short) Math.Min(channel[frameIndex] * multiplier, max);
+                            shortDestination[offset] = (short) Math.Min(channelBuffer[frameIndex] * multiplier, max);
                     }
                     break;
                 case 3:
                     var int24Destination = MemoryMarshal.Cast<byte, Int24>(destination);
                     for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
                     {
-                        var channel = _samples[channelIndex];
+                        var channelBuffer = _buffers[channelIndex].Memory.Span.Slice(0, Frames);
                         for (int frameIndex = 0, offset = channelIndex;
-                            frameIndex < Frames;
+                            frameIndex < channelBuffer.Length;
                             frameIndex++, offset += Channels)
-                            int24Destination[offset] =
-                                new Int24(Math.Min((int) (channel[frameIndex] * multiplier), max));
+                            int24Destination[offset] = new Int24(Math.Min((int) (channelBuffer[frameIndex] * multiplier), max));
                     }
                     break;
                 case 4:
                     var intDestination = MemoryMarshal.Cast<byte, int>(destination);
                     for (var channelIndex = 0; channelIndex < Channels; channelIndex++)
                     {
-                        var channel = _samples[channelIndex];
+                        var channelBuffer = _buffers[channelIndex].Memory.Span.Slice(0, Frames);
                         for (int frameIndex = 0, offset = channelIndex;
-                            frameIndex < Frames;
+                            frameIndex < channelBuffer.Length;
                             frameIndex++, offset += Channels)
                             try
                             {
-                                intDestination[offset] = Math.Min(checked((int) (channel[frameIndex] * multiplier)), max);
+                                intDestination[offset] = Math.Min(checked((int) (channelBuffer[frameIndex] * multiplier)), max);
                             }
                             catch (OverflowException)
                             {
@@ -399,13 +411,11 @@ namespace AudioWorks.Extensions
             }
         }
 
-        /// <summary>
-        /// Returns this <see cref="SampleBuffer"/>'s internal storage to the array pool.
-        /// </summary>
-        public void ReturnToPool()
+        /// <inheritdoc/>
+        public void Dispose()
         {
-            foreach (var channel in _samples)
-                ArrayPool<float>.Shared.Return(channel);
+            foreach (var buffer in _buffers)
+                buffer.Dispose();
         }
 
         [StructLayout(LayoutKind.Sequential)]
