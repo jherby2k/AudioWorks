@@ -54,24 +54,7 @@ namespace AudioWorks.Extensions
             _buffers = new IMemoryOwner<float>[1];
             _buffers[0] = MemoryPool<float>.Shared.Rent(Frames);
 
-            var multiplier = 1 / (float) Math.Pow(2, bitsPerSample - 1);
-            var buffer = _buffers[0].Memory.Span.Slice(0, Frames);
-
-            // Vectorized code is 40-50% faster with AVX2
-            if (Vector.IsHardwareAccelerated)
-            {
-                var bufferVectors = MemoryMarshal.Cast<float, Vector<float>>(buffer);
-                var sampleVectors = MemoryMarshal.Cast<int, Vector<int>>(monoSamples);
-
-                for (var vectorIndex = 0; vectorIndex < sampleVectors.Length; vectorIndex++)
-                    bufferVectors[vectorIndex] = Vector.ConvertToSingle(sampleVectors[vectorIndex]) * multiplier;
-
-                for (var frameIndex = bufferVectors.Length * Vector<int>.Count; frameIndex < Frames; frameIndex++)
-                    buffer[frameIndex] = monoSamples[frameIndex] * multiplier;
-            }
-            else
-                for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
-                    buffer[frameIndex] = monoSamples[frameIndex] * multiplier;
+            ConvertToFloat(monoSamples, _buffers[0].Memory.Span.Slice(0, Frames), bitsPerSample);
         }
 
         /// <summary>
@@ -98,36 +81,8 @@ namespace AudioWorks.Extensions
             _buffers[0] = MemoryPool<float>.Shared.Rent(Frames);
             _buffers[1] = MemoryPool<float>.Shared.Rent(Frames);
 
-            var multiplier = 1 / (float) Math.Pow(2, bitsPerSample - 1);
-            var leftBuffer = _buffers[0].Memory.Span.Slice(0, Frames);
-            var rightBuffer = _buffers[1].Memory.Span.Slice(0, Frames);
-
-            // Vectorized code is 40-50% faster with AVX2
-            if (Vector.IsHardwareAccelerated)
-            {
-                var leftBufferVectors = MemoryMarshal.Cast<float, Vector<float>>(leftBuffer);
-                var rightBufferVectors = MemoryMarshal.Cast<float, Vector<float>>(rightBuffer);
-                var leftSampleVectors = MemoryMarshal.Cast<int, Vector<int>>(leftSamples);
-                var rightSampleVectors = MemoryMarshal.Cast<int, Vector<int>>(rightSamples);
-
-                for (var vectorIndex = 0; vectorIndex < leftSampleVectors.Length; vectorIndex++)
-                {
-                    leftBufferVectors[vectorIndex] = Vector.ConvertToSingle(leftSampleVectors[vectorIndex]) * multiplier;
-                    rightBufferVectors[vectorIndex] = Vector.ConvertToSingle(rightSampleVectors[vectorIndex]) * multiplier;
-                }
-
-                for (var frameIndex = leftBufferVectors.Length * Vector<int>.Count; frameIndex < Frames; frameIndex++)
-                {
-                    leftBuffer[frameIndex] = leftSamples[frameIndex] * multiplier;
-                    rightBuffer[frameIndex] = rightSamples[frameIndex] * multiplier;
-                }
-            }
-            else
-                for (var frameIndex = 0; frameIndex < Frames; frameIndex++)
-                {
-                    leftBuffer[frameIndex] = leftSamples[frameIndex] * multiplier;
-                    rightBuffer[frameIndex] = rightSamples[frameIndex] * multiplier;
-                }
+            ConvertToFloat(leftSamples, _buffers[0].Memory.Span.Slice(0, Frames), bitsPerSample);
+            ConvertToFloat(rightSamples, _buffers[1].Memory.Span.Slice(0, Frames), bitsPerSample);
         }
 
         /// <summary>
@@ -233,7 +188,7 @@ namespace AudioWorks.Extensions
                         for (int frameIndex = 0, offset = channelIndex;
                             frameIndex < channelBuffer.Length;
                             frameIndex++, offset += Channels)
-                            channelBuffer[frameIndex] = int24Samples[offset].AsInt32() * multiplier;
+                            channelBuffer[frameIndex] = int24Samples[offset] * multiplier;
                     }
                     break;
                 case 4:
@@ -418,6 +373,27 @@ namespace AudioWorks.Extensions
                 buffer.Dispose();
         }
 
+        static void ConvertToFloat(ReadOnlySpan<int> source, Span<float> destination, int bitDepth)
+        {
+            var multiplier = 1 / (float)Math.Pow(2, bitDepth - 1);
+
+            // Vectorized code is 40-50% faster with AVX2
+            if (Vector.IsHardwareAccelerated)
+            {
+                var sourceVectors = MemoryMarshal.Cast<int, Vector<int>>(source);
+                var destinationVectors = MemoryMarshal.Cast<float, Vector<float>>(destination);
+
+                for (var vectorIndex = 0; vectorIndex < sourceVectors.Length; vectorIndex++)
+                    destinationVectors[vectorIndex] = Vector.ConvertToSingle(sourceVectors[vectorIndex]) * multiplier;
+
+                for (var frameIndex = sourceVectors.Length * Vector<int>.Count; frameIndex < source.Length; frameIndex++)
+                    destination[frameIndex] = source[frameIndex] * multiplier;
+            }
+            else
+                for (var frameIndex = 0; frameIndex < source.Length; frameIndex++)
+                    destination[frameIndex] = source[frameIndex] * multiplier;
+        }
+
         [StructLayout(LayoutKind.Sequential)]
         struct Int24
         {
@@ -432,7 +408,8 @@ namespace AudioWorks.Extensions
                 _byte3 = (byte) (((uint) value >> 16) & 0xFF);
             }
 
-            internal int AsInt32() => _byte1 | _byte2 << 8 | ((sbyte) _byte3 << 16);
+            public static implicit operator int(Int24 int24) =>
+                int24._byte1 | int24._byte2 << 8 | ((sbyte) int24._byte3 << 16);
         }
     }
 }
