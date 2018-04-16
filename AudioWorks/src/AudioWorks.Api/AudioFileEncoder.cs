@@ -71,9 +71,8 @@ namespace AudioWorks.Api
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            _encoderFactory = ExtensionProvider.GetFactories<IAudioEncoder>("Name", name).SingleOrDefault();
-            if (_encoderFactory == null)
-                throw new ArgumentException($"No '{name}' encoder is available.", nameof(name));
+            _encoderFactory = ExtensionProvider.GetFactories<IAudioEncoder>("Name", name).SingleOrDefault() ??
+                              throw new ArgumentException($"No '{name}' encoder is available.", nameof(name));
 
             _settings = settings ?? new SettingDictionary();
             if (encodedDirectoryName != null)
@@ -117,6 +116,7 @@ namespace AudioWorks.Api
                         var outputDirectory = _directoryNameSubstituter?.Substitute(audioFiles[i].Metadata) ??
                                               Path.GetDirectoryName(audioFiles[i].Path);
 
+                        // ReSharper disable once AssignNullToNotNullAttribute
                         Directory.CreateDirectory(outputDirectory);
 
                         // The output file names default to the input file names

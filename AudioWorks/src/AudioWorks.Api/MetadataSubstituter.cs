@@ -31,6 +31,7 @@ namespace AudioWorks.Api
             _replacer.Replace(_encoded, match =>
             {
                 var propertyName = match.Value.Substring(1, match.Value.Length - 2);
+                // ReSharper disable once PossibleNullReferenceException
                 var propertyValue = (string) typeof(AudioMetadata).GetProperty(propertyName).GetValue(metadata);
 
                 if (string.IsNullOrEmpty(propertyValue))

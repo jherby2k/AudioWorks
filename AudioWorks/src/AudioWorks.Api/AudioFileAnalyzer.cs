@@ -33,9 +33,8 @@ namespace AudioWorks.Api
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            _analyzerFactory = ExtensionProvider.GetFactories<IAudioAnalyzer>("Name", name).SingleOrDefault();
-            if (_analyzerFactory == null)
-                throw new ArgumentException($"No '{name}' analyzer is available.", nameof(name));
+            _analyzerFactory = ExtensionProvider.GetFactories<IAudioAnalyzer>("Name", name).SingleOrDefault() ??
+                               throw new ArgumentException($"No '{name}' analyzer is available.", nameof(name));
 
             _settings = settings ?? new SettingDictionary();
             _progressDescription = $"Performing {name} analysis";

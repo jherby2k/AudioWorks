@@ -286,8 +286,6 @@ namespace AudioWorks.Extensions
         public void CopyToInterleaved(Span<byte> destination, int bitsPerSample)
         {
             var bytesPerSample = (int) Math.Ceiling(bitsPerSample / 8.0);
-            var multiplier = (uint) Math.Pow(2, bitsPerSample - 1);
-            var max = (int) (multiplier - 1);
 
             if (destination.Length < Frames * Channels * bytesPerSample)
                 throw new ArgumentException("destination is not long enough to store the samples.",

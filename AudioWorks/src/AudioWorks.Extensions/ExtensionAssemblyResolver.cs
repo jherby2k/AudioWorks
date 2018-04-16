@@ -32,6 +32,7 @@ namespace AudioWorks.Extensions
             // .NET Framework should look for dependencies in the extensions's directory
             var extensionDir = Path.GetDirectoryName(Assembly.Location);
             AppDomain.CurrentDomain.AssemblyResolve += (context, name) =>
+                // ReSharper disable once AssignNullToNotNullAttribute
                 Assembly.LoadFrom(Path.Combine(extensionDir, $"{name.Name}.dll"));
         }
 

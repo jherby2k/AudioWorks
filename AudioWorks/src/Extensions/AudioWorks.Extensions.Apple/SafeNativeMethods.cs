@@ -22,6 +22,7 @@ namespace AudioWorks.Extensions.Apple
         {
             // Prefix the PATH variable with the default Apple Application Support installation directory
             var newPath = new StringBuilder(Path.Combine(
+                // ReSharper disable once AssignNullToNotNullAttribute
                 Environment.GetEnvironmentVariable("CommonProgramFiles"),
                 "Apple",
                 "Apple Application Support"));

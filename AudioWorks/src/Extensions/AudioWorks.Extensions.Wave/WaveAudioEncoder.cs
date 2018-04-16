@@ -42,6 +42,7 @@ namespace AudioWorks.Extensions.Wave
                 _buffer = ArrayPool<byte>.Shared.Rent(dataSize);
 
             samples.CopyToInterleaved(_buffer, _bitsPerSample);
+            // ReSharper disable once AssignNullToNotNullAttribute
             _writer.Write(_buffer, 0, dataSize);
         }
 
