@@ -79,7 +79,7 @@ namespace AudioWorks.Extensions.Lame
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public void Submit(SampleBuffer samples)
         {
-            if (samples.Frames <= 0) return;
+            if (samples.Frames == 0) return;
 
             // If there is only one channel, set the right channel to null
             _encoder.Encode(samples.GetSamples(0), samples.Channels == 1 ? null : samples.GetSamples(1));

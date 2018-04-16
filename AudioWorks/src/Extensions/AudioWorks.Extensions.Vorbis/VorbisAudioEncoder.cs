@@ -60,7 +60,7 @@ namespace AudioWorks.Extensions.Vorbis
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public unsafe void Submit(SampleBuffer samples)
         {
-            if (samples.Frames <= 0) return;
+            if (samples.Frames == 0) return;
 
             // Request an unmanaged buffer for each channel, then copy the samples to to them
             var buffers = new Span<IntPtr>(_encoder.GetBuffer(samples.Frames).ToPointer(), samples.Channels);
