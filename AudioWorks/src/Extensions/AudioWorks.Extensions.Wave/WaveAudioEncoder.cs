@@ -34,6 +34,8 @@ namespace AudioWorks.Extensions.Wave
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public void Submit(SampleBuffer samples)
         {
+            if (samples.Frames == 0) return;
+
             var dataSize = samples.Channels * samples.Frames * _bytesPerSample;
 
             if (_buffer == null)
