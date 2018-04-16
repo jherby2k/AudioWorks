@@ -11,6 +11,17 @@ namespace AudioWorks.Extensions.Tests
             Assert.Equal(0, SampleBuffer.Empty.Frames);
         }
 
+        [Fact(DisplayName = "32-bit integers don't overflow")]
+        public void IntegersDontOverflow()
+        {
+            var inSamples = new[] { int.MaxValue, int.MinValue };
+
+            var outSamples = new int[inSamples.Length];
+            new SampleBuffer(inSamples, 32).CopyToInterleaved(outSamples, 32);
+
+            Assert.True(true);
+        }
+
         [Theory(DisplayName = "Integers stay in range after conversion to float")]
         [InlineData(1, -1, 0)]
         [InlineData(2, -2, 1)]
