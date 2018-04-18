@@ -81,8 +81,18 @@ namespace AudioWorks.Extensions.Lame
         {
             if (samples.Frames == 0) return;
 
-            // If there is only one channel, set the right channel to null
-            _encoder.Encode(samples.GetSamples(0), samples.Channels == 1 ? null : samples.GetSamples(1));
+            Span<float> leftSamples = stackalloc float[samples.Frames];
+            if (samples.Channels == 1)
+            {
+                samples.CopyTo(leftSamples);
+                _encoder.Encode(leftSamples, null);
+            }
+            else
+            {
+                Span<float> rightSamples = stackalloc float[samples.Frames];
+                samples.CopyTo(leftSamples, rightSamples);
+                _encoder.Encode(leftSamples, rightSamples);
+            }
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]

@@ -18,8 +18,8 @@ namespace AudioWorks.Extensions
         /// <value>An empty <see cref="SampleBuffer"/>.</value>
         public static SampleBuffer Empty { get; } = new SampleBuffer();
 
-        [NotNull, ItemNotNull] IMemoryOwner<float>[] _buffers;
-        bool _isInterleaved;
+        [NotNull, ItemNotNull] readonly IMemoryOwner<float>[] _buffers;
+        readonly bool _isInterleaved;
 
         /// <summary>
         /// Gets the # of channels.
@@ -169,28 +169,26 @@ namespace AudioWorks.Extensions
             }
         }
 
-        /// <summary>
-        /// Gets the samples for a single channel of audio.
-        /// </summary>
-        /// <param name="channel">The channel index.</param>
-        /// <returns>The samples.</returns>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="channel"/> is out of range.</exception>
-        public ReadOnlySpan<float> GetSamples(int channel)
+        public void CopyTo(Span<float> monoDestination)
         {
-            if (channel < 0 || channel > 1)
-                throw new ArgumentOutOfRangeException(nameof(channel), "channel is out of range.");
+            if (Channels != 1)
+                throw new InvalidOperationException("Not a single-channel SampleBuffer.");
+
+            _buffers[0].Memory.Span.Slice(0, Frames).CopyTo(monoDestination);
+        }
+
+        public void CopyTo(Span<float> leftDestination, Span<float> rightDestination)
+        {
+            if (Channels != 2)
+                throw new InvalidOperationException("Not a 2-channel SampleBuffer.");
 
             if (_isInterleaved)
+                DeInterleave(_buffers[0].Memory.Span.Slice(0, Frames * 2), leftDestination, rightDestination);
+            else
             {
-                // Switch to non-interleaved, re-using the current buffer for the left channel
-                Array.Resize(ref _buffers, 2);
-                _buffers[1] = MemoryPool<float>.Shared.Rent(Frames);
-                DeInterleave(_buffers[0].Memory.Span.Slice(0, Frames * 2),
-                    _buffers[0].Memory.Span, _buffers[1].Memory.Span);
-                _isInterleaved = false;
+                _buffers[0].Memory.Span.Slice(0, Frames).CopyTo(leftDestination);
+                _buffers[1].Memory.Span.Slice(0, Frames).CopyTo(rightDestination);
             }
-
-            return _buffers[channel].Memory.Span.Slice(0, Frames);
         }
 
         /// <summary>

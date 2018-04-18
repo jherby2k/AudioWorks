@@ -65,7 +65,7 @@ namespace AudioWorks.Extensions.Tests
             }
 
             var outSamples = new float[inSamples.Length];
-            new SampleBuffer(inSamples, bitsPerSample).GetSamples(0).CopyTo(outSamples);
+            new SampleBuffer(inSamples, bitsPerSample).CopyTo(outSamples);
 
             Assert.All(outSamples, sample =>
                 Assert.True(sample >= -1.0 && sample <= 1.0));

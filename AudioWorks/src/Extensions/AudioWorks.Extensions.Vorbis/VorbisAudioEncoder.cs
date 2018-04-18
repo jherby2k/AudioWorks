@@ -64,10 +64,16 @@ namespace AudioWorks.Extensions.Vorbis
 
             // Request an unmanaged buffer for each channel, then copy the samples to to them
             var buffers = new Span<IntPtr>(_encoder.GetBuffer(samples.Frames).ToPointer(), samples.Channels);
-            for (var channelIndex = 0; channelIndex < samples.Channels; channelIndex++)
+            if (samples.Channels == 1)
             {
-                var channelBuffer = new Span<float>(buffers[channelIndex].ToPointer(), samples.Frames);
-                samples.GetSamples(channelIndex).CopyTo(channelBuffer);
+                var monoBuffer = new Span<float>(buffers[0].ToPointer(), samples.Frames);
+                samples.CopyTo(monoBuffer);
+            }
+            else
+            {
+                var leftBuffer = new Span<float>(buffers[0].ToPointer(), samples.Frames);
+                var rightBuffer = new Span<float>(buffers[1].ToPointer(), samples.Frames);
+                samples.CopyTo(leftBuffer, rightBuffer);
             }
 
             WriteFrames(samples.Frames);

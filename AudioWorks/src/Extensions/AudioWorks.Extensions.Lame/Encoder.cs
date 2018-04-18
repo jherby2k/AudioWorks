@@ -2,6 +2,7 @@
 using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 
@@ -68,17 +69,15 @@ namespace AudioWorks.Extensions.Lame
             if (_buffer == null)
                 _buffer = ArrayPool<byte>.Shared.Rent((int) Math.Ceiling(1.25 * leftSamples.Length) + 7200);
 
-            fixed (float* leftAddress = &MemoryMarshal.GetReference(leftSamples),
-                rightAddress = &MemoryMarshal.GetReference(rightSamples))
-            {
-                var bytesEncoded = SafeNativeMethods.EncodeBufferIeeeFloat(_handle, new IntPtr(leftAddress),
-                    // ReSharper disable once AssignNullToNotNullAttribute
-                    // ReSharper disable once PossibleNullReferenceException
-                    new IntPtr(rightAddress), leftSamples.Length, _buffer, _buffer.Length);
+            var bytesEncoded = SafeNativeMethods.EncodeBufferIeeeFloat(_handle,
+                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(leftSamples))),
+                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(rightSamples))),
+                // ReSharper disable once AssignNullToNotNullAttribute
+                // ReSharper disable once PossibleNullReferenceException
+                leftSamples.Length, _buffer, _buffer.Length);
 
-                //TODO throw on negative values (errors)
-                _stream.Write(_buffer, 0, bytesEncoded);
-            }
+            //TODO throw on negative values (errors)
+            _stream.Write(_buffer, 0, bytesEncoded);
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
