@@ -75,10 +75,10 @@ namespace AudioWorks.Extensions.Vorbis
         };
 
         [Pure]
-        internal static uint GetChecksum(Span<byte> data, uint seed = 0)
+        internal static uint GetChecksum(ReadOnlySpan<byte> data, uint seed = 0)
         {
-            for (byte i = 0; i < data.Length; i++)
-                seed = (seed << 8) ^ _lookup[((seed >> 24) & 0xFF) ^ data[i]];
+            foreach (var value in data)
+                seed = (seed << 8) ^ _lookup[((seed >> 24) & 0xFF) ^ value];
             return seed;
         }
     }
