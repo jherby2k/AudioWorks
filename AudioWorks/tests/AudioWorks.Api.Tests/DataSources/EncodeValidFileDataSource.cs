@@ -1103,8 +1103,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "4CB78D36FAB745D482915719DF649DA2",
-                "4CB78D36FAB745D482915719DF649DA2"
+                "31DB825BFE49FC6C88BD42528C56D8E9",
+                "31DB825BFE49FC6C88BD42528C56D8E9"
             },
 
             new object[]
@@ -1193,8 +1193,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["Quality"] = -1,
                     ["SerialNumber"] = 1
                 },
-                "10EB7A1F488C7D45EAB7E332730A34EA",
-                "10EB7A1F488C7D45EAB7E332730A34EA"
+                "F236873FDC61D3143260868E0889D9CF",
+                "F236873FDC61D3143260868E0889D9CF"
             },
 
             new object[]
@@ -1218,11 +1218,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary
                 {
                     // Minimum bit rate
-                    ["BitRate"] = 32,
+                    ["BitRate"] = 45,
                     ["SerialNumber"] = 1
                 },
-                "520DA0716139BF621661EF9148BB921D",
-                "520DA0716139BF621661EF9148BB921D"
+                "11B26EED6F26094F87DD47A04B039E26",
+                "11B26EED6F26094F87DD47A04B039E26"
             },
 
             new object[]
