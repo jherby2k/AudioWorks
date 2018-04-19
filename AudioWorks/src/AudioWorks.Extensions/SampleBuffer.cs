@@ -169,6 +169,14 @@ namespace AudioWorks.Extensions
             }
         }
 
+        /// <summary>
+        /// Copies the single channel of audio samples in normalized floating-point format.
+        /// </summary>
+        /// <remarks>
+        /// The samples are floating-point values normalized within -1.0 and 1.0.
+        /// </remarks>
+        /// <param name="monoDestination">The destination.</param>
+        /// <exception cref="InvalidOperationException">Thrown if the Channels property does not equal 1.</exception>
         public void CopyTo(Span<float> monoDestination)
         {
             if (Channels != 1)
@@ -177,6 +185,15 @@ namespace AudioWorks.Extensions
             _buffers[0].Memory.Span.Slice(0, Frames).CopyTo(monoDestination);
         }
 
+        /// <summary>
+        /// Copies both channels of audio samples in normalized floating-point format.
+        /// </summary>
+        /// <remarks>
+        /// The samples are floating-point values normalized within -1.0 and 1.0.
+        /// </remarks>
+        /// <param name="leftDestination">The destination for the left channel.</param>
+        /// <param name="rightDestination">The destination for the right channel.</param>
+        /// <exception cref="InvalidOperationException">Thrown if the Channels property does not equal 2.</exception>
         public void CopyTo(Span<float> leftDestination, Span<float> rightDestination)
         {
             if (Channels != 2)
@@ -192,10 +209,11 @@ namespace AudioWorks.Extensions
         }
 
         /// <summary>
-        /// Copies the samples to an interleaved array.
+        /// Copies the interleaved channels of audio samples, in normalized floating-point format.
         /// </summary>
         /// <remarks>
-        /// The samples are floating-point values normalized to between -1.0 and 1.0.
+        /// The samples are floating-point values normalized within -1.0 and 1.0. Stereo samples are interleaved,
+        /// beginning with the left channel.
         /// </remarks>
         /// <param name="destination">The destination.</param>
         /// <exception cref="ArgumentException"><paramref name="destination"/> is not long enough to store the samples.
@@ -213,10 +231,11 @@ namespace AudioWorks.Extensions
         }
 
         /// <summary>
-        /// Copies the samples to an interleaved array of integer samples.
+        /// Copies the interleaved channels of audio samples, in integer format.
         /// </summary>
         /// <remarks>
-        /// The samples are signed and right-justified.
+        /// The samples are signed and right-justified. Stereo samples are interleaved, beginning with the left
+        /// channel.
         /// </remarks>
         /// <param name="destination">The destination.</param>
         /// <param name="bitsPerSample">The # of bits per sample.</param>
@@ -242,11 +261,12 @@ namespace AudioWorks.Extensions
         }
 
         /// <summary>
-        /// Copies the samples to an interleaved and packed array of integer samples.
+        /// Copies the interleaved channels of audio samples, in packed integer format.
         /// </summary>
         /// <remarks>
         /// The samples are stored as little-endian integers, aligned at the byte boundary. If
-        /// <paramref name="bitsPerSample"/> is 8 or less, they are unsigned. Otherwise, they are signed.
+        /// <paramref name="bitsPerSample"/> is 8 or less, they are unsigned. Otherwise, they are signed. Stereo
+        /// samples are interleaved, beginning with the left channel.
         /// </remarks>
         /// <param name="destination">The destination.</param>
         /// <param name="bitsPerSample">The # of bits per sample.</param>
