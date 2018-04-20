@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using AudioWorks.Api.Tests.DataSources;
@@ -9,12 +10,12 @@ using Xunit;
 
 namespace AudioWorks.Api.Tests
 {
+    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class AudioFileEncoderTests
     {
         [Fact(DisplayName = "AudioFileEncoder's constructor throws an exception if the name is null")]
         public void ConstructorNameNullThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => new AudioFileEncoder(null));
         }
 

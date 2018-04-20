@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace AudioWorks.Common.Tests
 {
+    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class SettingInfoDictionaryTests
     {
         [Fact(DisplayName = "ValidateSettings throws an exception if settings is null")]
         public void ValidateSettingsNullSettingsThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() =>
                 new SettingInfoDictionary().ValidateSettings(null));
         }

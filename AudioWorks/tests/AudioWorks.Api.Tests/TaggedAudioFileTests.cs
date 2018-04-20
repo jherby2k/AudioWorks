@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using AudioWorks.Api.Tests.DataSources;
@@ -11,6 +12,7 @@ using Xunit;
 
 namespace AudioWorks.Api.Tests
 {
+    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class TaggedAudioFileTests
     {
         static TaggedAudioFileTests()
@@ -21,7 +23,6 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "TaggedAudioFile's constructor throws an exception if the path is null")]
         public void ConstructorPathNullThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => new TaggedAudioFile(null));
         }
 
@@ -71,7 +72,6 @@ namespace AudioWorks.Api.Tests
         [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
         public void MetadataNullThrowsException([NotNull] string fileName)
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() =>
                 new TaggedAudioFile(Path.Combine(
                     new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,

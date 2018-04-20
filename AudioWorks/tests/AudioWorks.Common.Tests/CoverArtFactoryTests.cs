@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using AudioWorks.Common.Tests.DataSources;
 using JetBrains.Annotations;
@@ -6,19 +7,18 @@ using Xunit;
 
 namespace AudioWorks.Common.Tests
 {
+    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class CoverArtFactoryTests
     {
         [Fact(DisplayName = "CoverArtFactory's Create method throws an exception if the path is null")]
         public void CreateDataNullThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => CoverArtFactory.Create((byte[]) null));
         }
 
         [Fact(DisplayName = "CoverArtFactory's Create method throws an exception if the path is null")]
         public void CreatePathNullThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => CoverArtFactory.Create((string) null));
         }
 
