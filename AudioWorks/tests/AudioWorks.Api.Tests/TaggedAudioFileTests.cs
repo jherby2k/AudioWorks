@@ -454,21 +454,14 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "TaggedAudioFile's SaveMetadata method throws an exception if an unexpected setting is provided")]
-        [MemberData(nameof(SaveMetadataInvalidSettingsDataSource.Data), MemberType = typeof(SaveMetadataInvalidSettingsDataSource))]
-        public void SaveMetadataUnexpectedSettingThrowsException(
-            int index,
-            [NotNull] string fileName,
-            [CanBeNull] TestSettingDictionary settings)
+        [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
+        public void SaveMetadataUnexpectedSettingThrowsException([NotNull] string fileName)
         {
-            var path = Path.Combine("Output", "SaveMetadata", "UnexpectedSetting", $"{index:00} - {fileName}");
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
-            File.Copy(Path.Combine(
+            Assert.Throws<ArgumentException>(() => new TaggedAudioFile(Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
-                fileName), path, true);
-
-            Assert.Throws<ArgumentException>(() => new TaggedAudioFile(path).SaveMetadata(settings));
+                fileName)).SaveMetadata(new SettingDictionary { ["Foo"] = "Bar" }));
         }
 
         [Theory(DisplayName = "TaggedAudioFile's Metadata property is properly serialized")]

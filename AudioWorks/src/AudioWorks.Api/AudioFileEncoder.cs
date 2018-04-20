@@ -74,7 +74,15 @@ namespace AudioWorks.Api
             _encoderFactory = ExtensionProvider.GetFactories<IAudioEncoder>("Name", name).SingleOrDefault() ??
                               throw new ArgumentException($"No '{name}' encoder is available.", nameof(name));
 
-            _settings = settings ?? new SettingDictionary();
+            if (settings != null)
+            {
+                // Make sure the provided settings are clean
+                AudioEncoderManager.GetSettingInfo(name).ValidateSettings(settings);
+                _settings = settings;
+            }
+            else
+                _settings = new SettingDictionary();
+
             if (encodedDirectoryName != null)
                 _directoryNameSubstituter = new DirectoryNameSubstituter(encodedDirectoryName);
             if (encodedFileName != null)
