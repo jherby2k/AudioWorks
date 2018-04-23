@@ -11,6 +11,62 @@ namespace AudioWorks.Extensions.Tests
             Assert.Equal(0, SampleBuffer.Empty.Frames);
         }
 
+        [Fact(DisplayName = "CopyTo (mono) throws an exception when the object has been disposed")]
+        public void CopyToMonoThrowsExceptionWhenDisposed()
+        {
+            var samples = new SampleBuffer(new[] { 0 }, 16);
+            var outSamples = new float[1];
+
+            samples.Dispose();
+
+            Assert.Throws<ObjectDisposedException>(() => samples.CopyTo(outSamples));
+        }
+
+        [Fact(DisplayName = "CopyTo (stereo) throws an exception when the object has been disposed")]
+        public void CopyToStereoThrowsExceptionWhenDisposed()
+        {
+            var samples = new SampleBuffer(new[] { 0 }, new[] { 0 }, 16);
+            var leftOutSamples = new float[1];
+            var rightOutSamples = new float[1];
+
+            samples.Dispose();
+
+            Assert.Throws<ObjectDisposedException>(() => samples.CopyTo(leftOutSamples, rightOutSamples));
+        }
+
+        [Fact(DisplayName = "CopyToInterleaved (float) throws an exception when the object has been disposed")]
+        public void CopyToInterleavedFloatThrowsExceptionWhenDisposed()
+        {
+            var samples = new SampleBuffer(new[] { 0 }, 16);
+            var outSamples = new float[1];
+
+            samples.Dispose();
+
+            Assert.Throws<ObjectDisposedException>(() => samples.CopyToInterleaved(outSamples));
+        }
+
+        [Fact(DisplayName = "CopyToInterleaved (int) throws an exception when the object has been disposed")]
+        public void CopyToInterleavedIntThrowsExceptionWhenDisposed()
+        {
+            var samples = new SampleBuffer(new[] { 0 }, 16);
+            var outSamples = new int[1];
+
+            samples.Dispose();
+
+            Assert.Throws<ObjectDisposedException>(() => samples.CopyToInterleaved(outSamples, 16));
+        }
+
+        [Fact(DisplayName = "CopyToInterleaved (packed) throws an exception when the object has been disposed")]
+        public void CopyToInterleavedPackedThrowsExceptionWhenDisposed()
+        {
+            var samples = new SampleBuffer(new[] { 0 }, 16);
+            var outSamples = new byte[4];
+
+            samples.Dispose();
+
+            Assert.Throws<ObjectDisposedException>(() => samples.CopyToInterleaved(outSamples, 16));
+        }
+
         [Fact(DisplayName = "32-bit integers don't overflow")]
         public void IntegersDontOverflow()
         {
