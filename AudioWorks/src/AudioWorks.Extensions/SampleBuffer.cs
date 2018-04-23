@@ -20,6 +20,7 @@ namespace AudioWorks.Extensions
 
         [CanBeNull] readonly IMemoryOwner<float> _buffer;
         readonly bool _isInterleaved;
+        bool _isDisposed;
 
         /// <summary>
         /// Gets the # of channels.
@@ -181,9 +182,11 @@ namespace AudioWorks.Extensions
         /// The samples are floating-point values normalized within -1.0 and 1.0.
         /// </remarks>
         /// <param name="monoDestination">The destination.</param>
+        /// <exception cref="ObjectDisposedException">This <see cref="SampleBuffer"/> has been disposed.</exception>
         /// <exception cref="InvalidOperationException">Thrown if the Channels property does not equal 1.</exception>
         public void CopyTo(Span<float> monoDestination)
         {
+            if (_isDisposed) throw new ObjectDisposedException(GetType().ToString());
             if (_buffer == null) return;
 
             if (Channels != 1)
@@ -200,9 +203,11 @@ namespace AudioWorks.Extensions
         /// </remarks>
         /// <param name="leftDestination">The destination for the left channel.</param>
         /// <param name="rightDestination">The destination for the right channel.</param>
+        /// <exception cref="ObjectDisposedException">This <see cref="SampleBuffer"/> has been disposed.</exception>
         /// <exception cref="InvalidOperationException">Thrown if the Channels property does not equal 2.</exception>
         public void CopyTo(Span<float> leftDestination, Span<float> rightDestination)
         {
+            if (_isDisposed) throw new ObjectDisposedException(GetType().ToString());
             if (_buffer == null) return;
 
             if (Channels != 2)
@@ -225,10 +230,12 @@ namespace AudioWorks.Extensions
         /// beginning with the left channel.
         /// </remarks>
         /// <param name="destination">The destination.</param>
+        /// <exception cref="ObjectDisposedException">This <see cref="SampleBuffer"/> has been disposed.</exception>
         /// <exception cref="ArgumentException"><paramref name="destination"/> is not long enough to store the samples.
         /// </exception>
         public void CopyToInterleaved(Span<float> destination)
         {
+            if (_isDisposed) throw new ObjectDisposedException(GetType().ToString());
             if (_buffer == null) return;
 
             if (destination.Length < Frames * Channels)
@@ -250,11 +257,13 @@ namespace AudioWorks.Extensions
         /// </remarks>
         /// <param name="destination">The destination.</param>
         /// <param name="bitsPerSample">The # of bits per sample.</param>
+        /// <exception cref="ObjectDisposedException">This <see cref="SampleBuffer"/> has been disposed.</exception>
         /// <exception cref="ArgumentException"><paramref name="destination"/> is not long enough to store the samples.
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="bitsPerSample"/> is out of range.</exception>
         public void CopyToInterleaved(Span<int> destination, int bitsPerSample)
         {
+            if (_isDisposed) throw new ObjectDisposedException(GetType().ToString());
             if (_buffer == null) return;
 
             if (destination.Length < Frames * Channels)
@@ -283,11 +292,13 @@ namespace AudioWorks.Extensions
         /// </remarks>
         /// <param name="destination">The destination.</param>
         /// <param name="bitsPerSample">The # of bits per sample.</param>
+        /// <exception cref="ObjectDisposedException">This <see cref="SampleBuffer"/> has been disposed.</exception>
         /// <exception cref="ArgumentException"><paramref name="destination"/> is not long enough to store the samples.
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="bitsPerSample"/> is out of range.</exception>
         public void CopyToInterleaved(Span<byte> destination, int bitsPerSample)
         {
+            if (_isDisposed) throw new ObjectDisposedException(GetType().ToString());
             if (_buffer == null) return;
 
             var bytesPerSample = (int) Math.Ceiling(bitsPerSample / 8.0);
@@ -349,7 +360,10 @@ namespace AudioWorks.Extensions
         /// <inheritdoc/>
         public void Dispose()
         {
+            if (_isDisposed) return;
+
             _buffer?.Dispose();
+            _isDisposed = true;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
