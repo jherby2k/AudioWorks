@@ -20,7 +20,7 @@ namespace AudioWorks.Extensions.Vorbis
         {
             ["SerialNumber"] = new IntSettingInfo(int.MinValue, int.MaxValue),
             ["Quality"] = new IntSettingInfo(-1, 10),
-            ["BitRate"] = new IntSettingInfo(32, 500),
+            ["BitRate"] = new IntSettingInfo(45, 500),
             ["Managed"] = new BoolSettingInfo()
         };
 
@@ -60,14 +60,20 @@ namespace AudioWorks.Extensions.Vorbis
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public unsafe void Submit(SampleBuffer samples)
         {
-            if (samples.Frames <= 0) return;
+            if (samples.Frames == 0) return;
 
             // Request an unmanaged buffer for each channel, then copy the samples to to them
             var buffers = new Span<IntPtr>(_encoder.GetBuffer(samples.Frames).ToPointer(), samples.Channels);
-            for (var channelIndex = 0; channelIndex < samples.Channels; channelIndex++)
+            if (samples.Channels == 1)
             {
-                var channelBuffer = new Span<float>(buffers[channelIndex].ToPointer(), samples.Frames);
-                samples.GetSamples(channelIndex).CopyTo(channelBuffer);
+                var monoBuffer = new Span<float>(buffers[0].ToPointer(), samples.Frames);
+                samples.CopyTo(monoBuffer);
+            }
+            else
+            {
+                var leftBuffer = new Span<float>(buffers[0].ToPointer(), samples.Frames);
+                var rightBuffer = new Span<float>(buffers[1].ToPointer(), samples.Frames);
+                samples.CopyTo(leftBuffer, rightBuffer);
             }
 
             WriteFrames(samples.Frames);

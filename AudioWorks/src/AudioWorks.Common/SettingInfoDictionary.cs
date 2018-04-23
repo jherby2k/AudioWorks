@@ -17,9 +17,12 @@ namespace AudioWorks.Common
         /// Validates a settings dictionary against this <see cref="SettingInfoDictionary"/>.
         /// </summary>
         /// <param name="settings">The settings.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="settings"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more settings are not valid.</exception>
         public void ValidateSettings([NotNull] SettingDictionary settings)
         {
+            if (settings == null) throw new ArgumentNullException(nameof(settings));
+
             foreach (var setting in settings)
             {
                 if (!TryGetValue(setting.Key, out var settingInfo))

@@ -1,19 +1,21 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;
+using AudioWorks.Common;
 using JetBrains.Annotations;
 using Xunit;
 
 namespace AudioWorks.Api.Tests
 {
+    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class AudioFileEncoderTests
     {
         [Fact(DisplayName = "AudioFileEncoder's constructor throws an exception if the name is null")]
         public void ConstructorNameNullThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => new AudioFileEncoder(null));
         }
 
@@ -27,6 +29,13 @@ namespace AudioWorks.Api.Tests
         public void ConstructorEncodedDirectoryNameInvalidThrowsException()
         {
             Assert.Throws<ArgumentException>(() => new AudioFileEncoder("Wave", null, "{Invalid}"));
+        }
+
+        [Fact(DisplayName = "AudioFileEncoder's constructor throws an exception if an unexpected setting is provided")]
+        public void ConstructorUnexpectedSettingThrowsException()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                new AudioFileEncoder("Wave", new SettingDictionary { ["Foo"] = "Bar" }));
         }
 
         [Theory(DisplayName = "AudioFileEncoder's Encode method creates the expected audio file")]

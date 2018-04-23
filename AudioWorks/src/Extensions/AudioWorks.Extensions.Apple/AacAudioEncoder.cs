@@ -17,6 +17,8 @@ namespace AudioWorks.Extensions.Apple
         [CanBeNull] FileStream _fileStream;
         [CanBeNull] AudioMetadata _metadata;
         [CanBeNull] SettingDictionary _settings;
+        int _bitsPerSample;
+        int _bytesPerSample;
         [CanBeNull] ExtendedAudioFile _audioFile;
 
         public SettingInfoDictionary SettingInfo
@@ -49,6 +51,8 @@ namespace AudioWorks.Extensions.Apple
             _fileStream = fileStream;
             _metadata = metadata;
             _settings = settings;
+            _bitsPerSample = info.BitsPerSample;
+            _bytesPerSample = (int) Math.Ceiling(_bitsPerSample / 8.0);
 
             var inputDescription = GetInputDescription(info);
             _audioFile = new ExtendedAudioFile(GetOutputDescription(inputDescription), AudioFileType.M4A, fileStream);
@@ -97,9 +101,9 @@ namespace AudioWorks.Extensions.Apple
         {
             if (samples.Frames == 0) return;
 
-            var bufferSize = samples.Frames * samples.Channels;
-            Span<int> buffer = stackalloc int[bufferSize];
-            samples.CopyToInterleaved(buffer, 32);
+            var bufferSize = samples.Frames * samples.Channels * _bytesPerSample;
+            Span<byte> buffer = stackalloc byte[bufferSize];
+            samples.CopyToInterleaved(buffer, _bitsPerSample);
 
             var bufferList = new AudioBufferList
             {
@@ -107,7 +111,7 @@ namespace AudioWorks.Extensions.Apple
                 Buffers = new AudioBuffer[1]
             };
             bufferList.Buffers[0].NumberChannels = (uint) samples.Channels;
-            bufferList.Buffers[0].DataByteSize = (uint) (bufferSize * Marshal.SizeOf<int>());
+            bufferList.Buffers[0].DataByteSize = (uint) bufferSize;
             bufferList.Buffers[0].Data = new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)));
 
             // ReSharper disable once PossibleNullReferenceException
@@ -139,16 +143,18 @@ namespace AudioWorks.Extensions.Apple
         [Pure]
         static AudioStreamBasicDescription GetInputDescription([NotNull] AudioInfo info)
         {
+            var bytePerSample = (uint) Math.Ceiling(info.BitsPerSample / 8.0);
+
             return new AudioStreamBasicDescription
             {
                 SampleRate = info.SampleRate,
                 AudioFormat = AudioFormat.LinearPcm,
                 Flags = AudioFormatFlags.PcmIsSignedInteger | AudioFormatFlags.PcmIsPacked,
-                BytesPerPacket = 4 * (uint) info.Channels,
+                BytesPerPacket = bytePerSample * (uint) info.Channels,
                 FramesPerPacket = 1,
-                BytesPerFrame = 4 * (uint) info.Channels,
+                BytesPerFrame = bytePerSample * (uint) info.Channels,
                 ChannelsPerFrame = (uint) info.Channels,
-                BitsPerChannel = 32
+                BitsPerChannel = (uint) info.BitsPerSample
             };
         }
 

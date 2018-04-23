@@ -6,12 +6,12 @@ using Xunit;
 
 namespace AudioWorks.Common.Tests
 {
+    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class AudioMetadataTests
     {
         [Fact(DisplayName = "AudioMetadata throws an exception if Title is null")]
         public void TitleNullThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata{ Title = null });
         }
 
@@ -55,7 +55,6 @@ namespace AudioWorks.Common.Tests
         [Fact(DisplayName = "AudioMetadata throws an exception if Artist is null")]
         public void ArtistNullThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Artist = null });
         }
 
@@ -99,7 +98,6 @@ namespace AudioWorks.Common.Tests
         [Fact(DisplayName = "AudioMetadata throws an exception if Album is null")]
         public void AlbumNullThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Album = null });
         }
 
@@ -143,7 +141,6 @@ namespace AudioWorks.Common.Tests
         [Fact(DisplayName = "AudioMetadata throws an exception if AlbumArtist is null")]
         public void AlbumArtistNullThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { AlbumArtist = null });
         }
 
@@ -187,7 +184,6 @@ namespace AudioWorks.Common.Tests
         [Fact(DisplayName = "AudioMetadata throws an exception if Composer is null")]
         public void ComposerNullThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Composer = null });
         }
 
@@ -231,7 +227,6 @@ namespace AudioWorks.Common.Tests
         [Fact(DisplayName = "AudioMetadata throws an exception if Genre is null")]
         public void GenreNullThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Genre = null });
         }
 
@@ -275,7 +270,6 @@ namespace AudioWorks.Common.Tests
         [Fact(DisplayName = "AudioMetadata throws an exception if Comment is null")]
         public void CommentNullThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Comment = null });
         }
 
@@ -319,7 +313,6 @@ namespace AudioWorks.Common.Tests
         [Fact(DisplayName = "AudioMetadata throws an exception if Day is null")]
         public void DayNullThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Day = null });
         }
 
@@ -387,7 +380,6 @@ namespace AudioWorks.Common.Tests
         [Fact(DisplayName = "AudioMetadata throws an exception if Month is null")]
         public void MonthNullThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Month = null });
         }
 
@@ -455,7 +447,6 @@ namespace AudioWorks.Common.Tests
         [Fact(DisplayName = "AudioMetadata throws an exception if Year is null")]
         public void YearNullThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Year = null });
         }
 
@@ -523,7 +514,6 @@ namespace AudioWorks.Common.Tests
         [Fact(DisplayName = "AudioMetadata throws an exception if TrackNumber is null")]
         public void TrackNumberNullThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { TrackNumber = null });
         }
 
@@ -591,7 +581,6 @@ namespace AudioWorks.Common.Tests
         [Fact(DisplayName = "AudioMetadata throws an exception if TrackCount is null")]
         public void TrackCountNullThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { TrackCount = null });
         }
 
@@ -659,7 +648,6 @@ namespace AudioWorks.Common.Tests
         [Fact(DisplayName = "AudioMetadata throws an exception if TrackPeak is null")]
         public void TrackPeakNullThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { TrackPeak = null });
         }
 
@@ -721,7 +709,6 @@ namespace AudioWorks.Common.Tests
         [Fact(DisplayName = "AudioMetadata throws an exception if AlbumPeak is null")]
         public void AlbumPeakNullThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { AlbumPeak = null });
         }
 
@@ -783,7 +770,6 @@ namespace AudioWorks.Common.Tests
         [Fact(DisplayName = "AudioMetadata throws an exception if TrackGain is null")]
         public void TrackGainNullThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { TrackGain = null });
         }
 
@@ -839,7 +825,6 @@ namespace AudioWorks.Common.Tests
         [Fact(DisplayName = "AudioMetadata throws an exception if AlbumGain is null")]
         public void AlbumGainNullThrowsException()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { AlbumGain = null });
         }
 

@@ -34,12 +34,15 @@ namespace AudioWorks.Extensions.Wave
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public void Submit(SampleBuffer samples)
         {
+            if (samples.Frames == 0) return;
+
             var dataSize = samples.Channels * samples.Frames * _bytesPerSample;
 
             if (_buffer == null)
                 _buffer = ArrayPool<byte>.Shared.Rent(dataSize);
 
             samples.CopyToInterleaved(_buffer, _bitsPerSample);
+            // ReSharper disable once AssignNullToNotNullAttribute
             _writer.Write(_buffer, 0, dataSize);
         }
 
