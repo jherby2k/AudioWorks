@@ -52,8 +52,8 @@ namespace AudioWorks.Extensions
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample),
                     $"{nameof(bitsPerSample)} is out of range.");
 
-            Frames = monoSamples.Length;
             Channels = 1;
+            Frames = monoSamples.Length;
             _buffer = MemoryPool<float>.Shared.Rent(Frames);
 
             // ReSharper disable once PossibleNullReferenceException
@@ -79,8 +79,8 @@ namespace AudioWorks.Extensions
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample),
                     $"{nameof(bitsPerSample)} is out of range.");
 
-            Frames = leftSamples.Length;
             Channels = 2;
+            Frames = leftSamples.Length;
             _buffer = MemoryPool<float>.Shared.Rent(Frames * 2);
 
             // ReSharper disable once PossibleNullReferenceException
@@ -110,10 +110,10 @@ namespace AudioWorks.Extensions
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample),
                     $"{nameof(bitsPerSample)} is out of range.");
 
-            Frames = interleavedSamples.Length / channels;
             Channels = channels;
+            Frames = interleavedSamples.Length / channels;
             _buffer = MemoryPool<float>.Shared.Rent(Frames * channels);
-            if (channels == 2)
+            if (channels > 1)
                 _isInterleaved = true;
 
             // ReSharper disable once PossibleNullReferenceException
@@ -145,10 +145,10 @@ namespace AudioWorks.Extensions
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample),
                     $"{nameof(bitsPerSample)} is out of range.");
 
-            Frames = interleavedSamples.Length / channels / bytesPerSample;
             Channels = channels;
+            Frames = interleavedSamples.Length / channels / bytesPerSample;
             _buffer = MemoryPool<float>.Shared.Rent(Frames * channels);
-            if (channels == 2)
+            if (channels > 1)
                 _isInterleaved = true;
 
             switch (bytesPerSample)
