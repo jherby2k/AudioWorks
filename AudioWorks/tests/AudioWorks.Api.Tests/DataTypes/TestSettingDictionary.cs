@@ -20,6 +20,7 @@ namespace AudioWorks.Api.Tests.DataTypes
             {
                 var splitItem = item.Split('|');
                 Add(splitItem[0],
+                    // ReSharper disable once AssignNullToNotNullAttribute
                     Convert.ChangeType(splitItem[1], Type.GetType(splitItem[2]), CultureInfo.InvariantCulture));
             }
         }

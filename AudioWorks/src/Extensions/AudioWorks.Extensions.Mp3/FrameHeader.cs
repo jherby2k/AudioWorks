@@ -55,13 +55,6 @@ namespace AudioWorks.Extensions.Mp3
             throw new AudioInvalidException("Not a valid MPEG header.");
         }
 
-        enum MpegVersion
-        {
-            TwoPointFive = 0b00000000,
-            Two = 0b00000010,
-            One = 0b00000011
-        }
-
         static void VerifyLayer(ReadOnlySpan<byte> data)
         {
             switch ((data[1] >> 1) & 0b00000011)
@@ -127,6 +120,13 @@ namespace AudioWorks.Extensions.Mp3
             if (channels == 1)
                 return mpegVersion == MpegVersion.One ? 17 : 9;
             return mpegVersion == MpegVersion.One ? 32 : 17;
+        }
+
+        enum MpegVersion
+        {
+            [UsedImplicitly] TwoPointFive = 0b00000000,
+            Two = 0b00000010,
+            One = 0b00000011
         }
     }
 }

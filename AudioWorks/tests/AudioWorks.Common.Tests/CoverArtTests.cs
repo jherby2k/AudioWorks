@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using AudioWorks.Common.Tests.DataSources;
 using JetBrains.Annotations;
@@ -5,6 +6,7 @@ using Xunit;
 
 namespace AudioWorks.Common.Tests
 {
+    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class CoverArtTests
     {
         [Theory(DisplayName = "CoverArt has the expected Width property value")]
