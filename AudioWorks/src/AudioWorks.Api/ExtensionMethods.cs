@@ -1,7 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.IO;
 using System.Threading;
-using System.Threading.Tasks.Dataflow;
 using AudioWorks.Common;
 using AudioWorks.Extensions;
 using JetBrains.Annotations;
@@ -26,33 +25,21 @@ namespace AudioWorks.Api
                     {
                         var framesSinceLastProgress = 0;
 
-                        // Use an action block to process the sample collections asynchronously
-                        var block = new ActionBlock<SampleBuffer>(samples =>
-                            {
-                                sampleProcessor.Submit(samples);
-                                samples.Dispose();
-
-                                if (progressQueue == null) return;
-                                if ((framesSinceLastProgress += samples.Frames) < minFramesToReport) return;
-                                progressQueue.Add(framesSinceLastProgress, cancellationToken);
-                                framesSinceLastProgress = 0;
-                            },
-                            new ExecutionDataflowBlockOptions
-                            {
-                                CancellationToken = cancellationToken,
-                                SingleProducerConstrained = true
-                            });
-
                         using (var decoderExport = decoderFactory.CreateExport())
                         {
                             decoderExport.Value.Initialize(inputStream);
-                            while (!decoderExport.Value.Finished)
-                                if (!block.Post(decoderExport.Value.DecodeSamples()))
-                                    break;
-                        }
 
-                        block.Complete();
-                        block.Completion.Wait(cancellationToken);
+                            while (!decoderExport.Value.Finished && !cancellationToken.IsCancellationRequested)
+                                using (var samples = decoderExport.Value.DecodeSamples())
+                                {
+                                    sampleProcessor.Submit(samples);
+
+                                    if (progressQueue == null ||
+                                        (framesSinceLastProgress += samples.Frames) < minFramesToReport) continue;
+                                    progressQueue.Add(framesSinceLastProgress, cancellationToken);
+                                    framesSinceLastProgress = 0;
+                                }
+                        }
 
                         // Report any unreported frames
                         if (framesSinceLastProgress > 0)
