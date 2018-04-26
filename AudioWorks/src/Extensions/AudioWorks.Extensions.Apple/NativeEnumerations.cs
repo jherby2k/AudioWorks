@@ -23,8 +23,8 @@ namespace AudioWorks.Extensions.Apple
         Alac20BitSourceData = 0b00000010,
         Alac24BitSourceData = 0b00000011,
         Alac32BitSourceData = 0b00000100,
+        PcmIsFloat = 0b00000001,
         PcmIsSignedInteger = 0b00000100,
-        PcmIsPacked = 0b00001000,
         PcmIsAlignedHigh = 0b00010000
     }
 

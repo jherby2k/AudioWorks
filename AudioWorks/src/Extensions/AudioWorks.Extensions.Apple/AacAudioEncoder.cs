@@ -97,9 +97,8 @@ namespace AudioWorks.Extensions.Apple
         {
             if (samples.Frames == 0) return;
 
-            var bufferSize = samples.Frames * samples.Channels;
-            Span<int> buffer = stackalloc int[bufferSize];
-            samples.CopyToInterleaved(buffer, 32);
+            Span<float> buffer = stackalloc float[samples.Frames * samples.Channels];
+            samples.CopyToInterleaved(buffer);
 
             var bufferList = new AudioBufferList
             {
@@ -107,7 +106,7 @@ namespace AudioWorks.Extensions.Apple
                 Buffers = new AudioBuffer[1]
             };
             bufferList.Buffers[0].NumberChannels = (uint) samples.Channels;
-            bufferList.Buffers[0].DataByteSize = (uint) (bufferSize * Marshal.SizeOf<int>());
+            bufferList.Buffers[0].DataByteSize = (uint) (buffer.Length * Marshal.SizeOf<float>());
             bufferList.Buffers[0].Data = new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)));
 
             // ReSharper disable once PossibleNullReferenceException
@@ -143,10 +142,10 @@ namespace AudioWorks.Extensions.Apple
             {
                 SampleRate = info.SampleRate,
                 AudioFormat = AudioFormat.LinearPcm,
-                Flags = AudioFormatFlags.PcmIsSignedInteger | AudioFormatFlags.PcmIsPacked,
-                BytesPerPacket = 4 * (uint) info.Channels,
+                Flags = AudioFormatFlags.PcmIsFloat,
+                BytesPerPacket = (uint) (Marshal.SizeOf<float>() * info.Channels),
                 FramesPerPacket = 1,
-                BytesPerFrame = 4 * (uint) info.Channels,
+                BytesPerFrame = (uint) (Marshal.SizeOf<float>() * info.Channels),
                 ChannelsPerFrame = (uint) info.Channels,
                 BitsPerChannel = 32
             };
