@@ -27,6 +27,7 @@ namespace AudioWorks.Commands
         /// <summary>
         /// <para type="description">Specifies the type of analysis to perform.</para>
         /// </summary>
+        [CanBeNull]
         [Parameter(Mandatory = true, Position = 0)]
         [ArgumentCompleter(typeof(AnalyzerCompleter))]
         public string Analyzer { get; set; }
@@ -34,6 +35,7 @@ namespace AudioWorks.Commands
         /// <summary>
         /// <para type="description">Specifies the audio file.</para>
         /// </summary>
+        [CanBeNull]
         [Parameter(Mandatory = true, Position = 1, ValueFromPipeline = true)]
         public ITaggedAudioFile AudioFile { get; set; }
 
@@ -63,6 +65,7 @@ namespace AudioWorks.Commands
             {
                 Task.Factory.StartNew(q =>
                             new AudioFileAnalyzer(
+                                    // ReSharper disable once AssignNullToNotNullAttribute
                                     Analyzer,
                                     SettingAdapter.ParametersToSettings(_parameters))
                                 .Analyze(

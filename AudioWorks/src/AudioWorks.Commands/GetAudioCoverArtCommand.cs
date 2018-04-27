@@ -21,6 +21,7 @@ namespace AudioWorks.Commands
         /// <para type="description">Use a dot (.) to specify the current location. Use the wildcard character (*) to
         /// specify all the items in the current location.</para>
         /// </summary>
+        [CanBeNull]
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByPath")]
         public string Path { get; set; }
 
@@ -30,12 +31,14 @@ namespace AudioWorks.Commands
         /// characters, enclose it in single quotation marks. Single quotation marks tell Windows PowerShell not to
         /// interpret any characters as escape sequences.</para>
         /// </summary>
+        [CanBeNull]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "ByLiteralPath"), Alias("PSPath")]
         public string LiteralPath { get; set; }
 
         /// <summary>
         /// <para type="description">Specifies the file information.</para>
         /// </summary>
+        [CanBeNull]
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByFileInfo")]
         public FileInfo FileInfo { get; set; }
 

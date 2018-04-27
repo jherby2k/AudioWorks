@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Management.Automation;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 
@@ -18,12 +19,14 @@ namespace AudioWorks.Commands
         /// <para type="description">The file extension will be selected automatically and should not be included.
         /// </para>
         /// </summary>
+        [NotNull, SuppressMessage("ReSharper", "NotNullMemberIsNotInitialized")]
         [Parameter(Mandatory = true, Position = 0)]
         public string Name { get; set; }
 
         /// <summary>
         /// <para type="description">Specifies the audio file.</para>
         /// </summary>
+        [NotNull, SuppressMessage("ReSharper", "NotNullMemberIsNotInitialized")]
         [Parameter(Mandatory = true, Position = 1, ValueFromPipeline = true)]
         public ITaggedAudioFile AudioFile { get; set; }
 

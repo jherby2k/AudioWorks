@@ -20,6 +20,7 @@ namespace AudioWorks.Commands
         /// <summary>
         /// <para type="description">Specifies the audio file.</para>
         /// </summary>
+        [CanBeNull]
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public ITaggedAudioFile AudioFile { get; set; }
 
@@ -41,7 +42,9 @@ namespace AudioWorks.Commands
         {
             try
             {
+                // ReSharper disable once PossibleNullReferenceException
                 if (ShouldProcess(AudioFile.Path))
+                    // ReSharper disable once PossibleNullReferenceException
                     AudioFile.SaveMetadata(SettingAdapter.ParametersToSettings(_parameters));
             }
             catch (AudioUnsupportedException e)
