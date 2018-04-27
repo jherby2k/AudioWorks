@@ -25,32 +25,6 @@ namespace AudioWorks.Api
         readonly bool _overwrite;
 
         /// <summary>
-        /// Encodes the specified audio files.
-        /// </summary>
-        /// <param name="audioFiles">The audio files.</param>
-        /// <returns>A new audio file.</returns>
-        [NotNull, ItemNotNull]
-        public IEnumerable<ITaggedAudioFile> Encode(
-            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
-        {
-            return Encode(CancellationToken.None, audioFiles);
-        }
-
-        /// <summary>
-        /// Encodes the specified audio files.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <param name="audioFiles">The audio files.</param>
-        /// <returns>A new audio file.</returns>
-        [NotNull, ItemNotNull]
-        public IEnumerable<ITaggedAudioFile> Encode(
-            CancellationToken cancellationToken,
-            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
-        {
-            return Encode(null, cancellationToken, audioFiles);
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="AudioFileEncoder"/> class.
         /// </summary>
         /// <param name="name">The name of the encoder.</param>
@@ -88,6 +62,32 @@ namespace AudioWorks.Api
             if (encodedFileName != null)
                 _fileNameSubstituter = new FileNameSubstituter(encodedFileName);
             _overwrite = overwrite;
+        }
+
+        /// <summary>
+        /// Encodes the specified audio files.
+        /// </summary>
+        /// <param name="audioFiles">The audio files.</param>
+        /// <returns>A new audio file.</returns>
+        [NotNull, ItemNotNull]
+        public IEnumerable<ITaggedAudioFile> Encode(
+            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
+        {
+            return Encode(CancellationToken.None, audioFiles);
+        }
+
+        /// <summary>
+        /// Encodes the specified audio files.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <param name="audioFiles">The audio files.</param>
+        /// <returns>A new audio file.</returns>
+        [NotNull, ItemNotNull]
+        public IEnumerable<ITaggedAudioFile> Encode(
+            CancellationToken cancellationToken,
+            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
+        {
+            return Encode(null, cancellationToken, audioFiles);
         }
 
         /// <summary>
