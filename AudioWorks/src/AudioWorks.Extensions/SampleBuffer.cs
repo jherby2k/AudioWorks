@@ -610,27 +610,22 @@ namespace AudioWorks.Extensions
         [StructLayout(LayoutKind.Sequential)]
         struct Int24
         {
-            readonly byte _byte1;
-            readonly byte _byte2;
-            readonly byte _byte3;
-
-            Int24(byte byte1, byte byte2, byte byte3)
-            {
-                _byte1 = byte1;
-                _byte2 = byte2;
-                _byte3 = byte3;
-            }
+            byte _byte1;
+            byte _byte2;
+            byte _byte3;
 
             public static explicit operator Int24(float value)
             {
-                return new Int24(
-                    (byte) value,
-                    (byte) (((uint) value >> 8) & 0xFF),
-                    (byte) (((uint) value >> 16) & 0xFF));
+                return new Int24
+                {
+                    _byte1 = (byte) value,
+                    _byte2 = (byte) (((uint) value >> 8) & 0xFF),
+                    _byte3 = (byte) (((uint) value >> 16) & 0xFF)
+                };
             }
 
-            public static implicit operator int(Int24 int24) =>
-                int24._byte1 | int24._byte2 << 8 | ((sbyte) int24._byte3 << 16);
+            public static implicit operator int(Int24 value) =>
+                value._byte1 | value._byte2 << 8 | ((sbyte) value._byte3 << 16);
         }
     }
 }
