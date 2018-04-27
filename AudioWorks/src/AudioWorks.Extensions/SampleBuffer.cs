@@ -436,7 +436,7 @@ namespace AudioWorks.Extensions
             var max = multiplier - 1;
 
             for (var sampleIndex = 0; sampleIndex < source.Length; sampleIndex++)
-                destination[sampleIndex] = (Int24) Math.Min(source[sampleIndex] * multiplier, max);
+                destination[sampleIndex] = new Int24(Math.Min(source[sampleIndex] * multiplier, max));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -610,18 +610,15 @@ namespace AudioWorks.Extensions
         [StructLayout(LayoutKind.Sequential)]
         struct Int24
         {
-            byte _byte1;
-            byte _byte2;
-            byte _byte3;
+            readonly byte _byte1;
+            readonly byte _byte2;
+            readonly byte _byte3;
 
-            public static explicit operator Int24(float value)
+            public Int24(float value)
             {
-                return new Int24
-                {
-                    _byte1 = (byte) value,
-                    _byte2 = (byte) (((uint) value >> 8) & 0xFF),
-                    _byte3 = (byte) (((uint) value >> 16) & 0xFF)
-                };
+                _byte1 = (byte) value;
+                _byte2 = (byte) (((uint) value >> 8) & 0xFF);
+                _byte3 = (byte) (((uint) value >> 16) & 0xFF);
             }
 
             public static implicit operator int(Int24 value) =>
