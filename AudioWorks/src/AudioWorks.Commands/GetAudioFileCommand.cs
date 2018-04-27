@@ -1,7 +1,8 @@
-﻿using AudioWorks.Api;
+﻿using System.IO;
+using System.Management.Automation;
+using AudioWorks.Api;
 using AudioWorks.Common;
 using JetBrains.Annotations;
-using System.Management.Automation;
 
 namespace AudioWorks.Commands
 {
@@ -33,6 +34,12 @@ namespace AudioWorks.Commands
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "ByLiteralPath"), Alias("PSPath")]
         public string LiteralPath { get; set; }
 
+        /// <summary>
+        /// <para type="description">Specifies the file information.</para>
+        /// </summary>
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByFileInfo")]
+        public FileInfo FileInfo { get; set; }
+
         /// <inheritdoc/>
         protected override void BeginProcessing()
         {
@@ -44,8 +51,11 @@ namespace AudioWorks.Commands
         {
             try
             {
-                foreach (var path in this.GetFileSystemPaths(Path, LiteralPath))
-                    WriteObject(new TaggedAudioFile(path));
+                if (FileInfo != null)
+                    WriteObject(new TaggedAudioFile(FileInfo.FullName));
+                else
+                    foreach (var path in this.GetFileSystemPaths(Path, LiteralPath))
+                        WriteObject(new TaggedAudioFile(path));
             }
             catch (ItemNotFoundException e)
             {
