@@ -436,7 +436,7 @@ namespace AudioWorks.Extensions
             var max = multiplier - 1;
 
             for (var sampleIndex = 0; sampleIndex < source.Length; sampleIndex++)
-                destination[sampleIndex] = new Int24((int) Math.Min(source[sampleIndex] * multiplier, max));
+                destination[sampleIndex] = (Int24) Math.Min(source[sampleIndex] * multiplier, max);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -614,11 +614,19 @@ namespace AudioWorks.Extensions
             readonly byte _byte2;
             readonly byte _byte3;
 
-            internal Int24(int value)
+            Int24(byte byte1, byte byte2, byte byte3)
             {
-                _byte1 = (byte) value;
-                _byte2 = (byte) (((uint) value >> 8) & 0xFF);
-                _byte3 = (byte) (((uint) value >> 16) & 0xFF);
+                _byte1 = byte1;
+                _byte2 = byte2;
+                _byte3 = byte3;
+            }
+
+            public static explicit operator Int24(float value)
+            {
+                return new Int24(
+                    (byte) value,
+                    (byte) (((uint) value >> 8) & 0xFF),
+                    (byte) (((uint) value >> 16) & 0xFF));
             }
 
             public static implicit operator int(Int24 int24) =>
