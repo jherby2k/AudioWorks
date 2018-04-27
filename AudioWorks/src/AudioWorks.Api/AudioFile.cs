@@ -18,6 +18,25 @@ namespace AudioWorks.Api
         /// <inheritdoc/>
         public AudioInfo Info { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AudioFile"/> class.
+        /// </summary>
+        /// <param name="path">The fully-qualified path to the file.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="path"/> is null or empty.</exception>
+        /// <exception cref="FileNotFoundException">Thrown if <paramref name="path"/> does not exist.</exception>
+        /// <exception cref="DirectoryNotFoundException">Throw in the directory does not exist.</exception>
+        /// <exception cref="UnauthorizedAccessException">Thrown if <paramref name="path"/> cannot be accessed due to
+        /// permissions.</exception>
+        /// <exception cref="PathTooLongException">Thrown if <paramref name="path"/> is too long.</exception>
+        public AudioFile([NotNull] string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                throw new ArgumentNullException(nameof(path), "Value cannot be null or empty.");
+
+            Path = IO.Path.GetFullPath(path);
+            Info = LoadInfo();
+        }
+
         /// <inheritdoc/>
         public virtual void Rename(string name, bool replace)
         {
@@ -26,7 +45,7 @@ namespace AudioWorks.Api
 
             // If the name isn't changing, do nothing
             if (name.Equals(IO.Path.GetFileNameWithoutExtension(Path), StringComparison.OrdinalIgnoreCase))
-                 return;
+                return;
 
             // ReSharper disable once AssignNullToNotNullAttribute
             var newPath = IO.Path.Combine(IO.Path.GetDirectoryName(Path), name + IO.Path.GetExtension(Path));
@@ -35,23 +54,6 @@ namespace AudioWorks.Api
                 File.Delete(newPath);
             File.Move(Path, newPath);
             Path = newPath;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AudioFile"/> class.
-        /// </summary>
-        /// <param name="path">The fully-qualified path to the file.</param>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="path"/> is null or empty.</exception>
-        /// <exception cref="FileNotFoundException">Thrown if <paramref name="path"/> does not exist.</exception>
-        public AudioFile([NotNull] string path)
-        {
-            if (string.IsNullOrEmpty(path))
-                throw new ArgumentNullException(nameof(path), "Value cannot be null or empty.");
-            if (!File.Exists(path))
-                throw new FileNotFoundException($"The file '{path}' cannot be found.", path);
-
-            Path = IO.Path.GetFullPath(path);
-            Info = LoadInfo();
         }
 
         [NotNull]
