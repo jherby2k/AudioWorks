@@ -30,7 +30,7 @@ namespace AudioWorks.Extensions.Mp4
                     : (byte) 0;
         }
 
-        internal override unsafe byte[] GetBytes()
+        internal override byte[] GetBytes()
         {
             Span<byte> result = stackalloc byte[32];
 
