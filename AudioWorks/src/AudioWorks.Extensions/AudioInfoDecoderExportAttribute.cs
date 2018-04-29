@@ -7,8 +7,7 @@ using JetBrains.Annotations;
 namespace AudioWorks.Extensions
 {
     /// <summary>
-    /// Classes marked with this attribute will be loaded by AudioWorks when attempting to read an audio file from the
-    /// filesystem, if the file extension matches.
+    /// Classes marked with this attribute will be loaded by AudioWorks.
     /// </summary>
     /// <remarks>
     /// Classes marked with this attribute must implement <see cref="IAudioInfoDecoder"/>.

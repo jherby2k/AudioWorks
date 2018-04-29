@@ -7,8 +7,7 @@ using JetBrains.Annotations;
 namespace AudioWorks.Extensions
 {
     /// <summary>
-    /// Classes marked with this attribute will be loaded by AudioWorks when attempting to save metadata to an audio
-    /// file, if the file extension matches.
+    /// Classes marked with this attribute will be loaded by AudioWorks.
     /// </summary>
     /// <remarks>
     /// Classes marked with this attribute must implement <see cref="IAudioMetadataEncoder"/>.

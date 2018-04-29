@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Composition;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace AudioWorks.Extensions.Apple
         [CanBeNull] AudioMetadata _metadata;
         [CanBeNull] SettingDictionary _settings;
         [CanBeNull] ExtendedAudioFile _audioFile;
+        [CanBeNull] Export<IAudioFilter> _replayGainExport;
 
         public SettingInfoDictionary SettingInfo
         {
@@ -35,6 +37,14 @@ namespace AudioWorks.Extensions.Apple
                     ExtensionProvider.GetFactories<IAudioMetadataEncoder>("Extension", FileExtension).FirstOrDefault();
                 if (metadataEncoderFactory != null)
                     using (var export = metadataEncoderFactory.CreateExport())
+                        foreach (var settingInfo in export.Value.SettingInfo)
+                            result.Add(settingInfo.Key, settingInfo.Value);
+
+                // Merge the external ReplayGain filter's SettingInfo
+                var filterFactory =
+                    ExtensionProvider.GetFactories<IAudioFilter>("Name", "ReplayGain").FirstOrDefault();
+                if (filterFactory != null)
+                    using (var export = filterFactory.CreateExport())
                         foreach (var settingInfo in export.Value.SettingInfo)
                             result.Add(settingInfo.Key, settingInfo.Value);
 
@@ -91,11 +101,16 @@ namespace AudioWorks.Extensions.Apple
 
             // Setting the ConverterConfig property to null resynchronizes the converter settings
             _audioFile.SetProperty(ExtendedAudioFilePropertyId.ConverterConfig, IntPtr.Zero);
+
+            InitializeReplayGainFilter(info, metadata, settings);
         }
 
         public unsafe void Submit(SampleBuffer samples)
         {
             if (samples.Frames == 0) return;
+
+            if (_replayGainExport != null)
+                samples = _replayGainExport.Value.Process(samples);
 
             Span<float> buffer = stackalloc float[samples.Frames * samples.Channels];
             samples.CopyToInterleaved(buffer);
@@ -133,6 +148,7 @@ namespace AudioWorks.Extensions.Apple
         public void Dispose()
         {
             _audioFile?.Dispose();
+            _replayGainExport?.Dispose();
         }
 
         [Pure]
@@ -196,6 +212,20 @@ namespace AudioWorks.Extensions.Apple
             }
 
             return result;
+        }
+
+        void InitializeReplayGainFilter(
+            [NotNull] AudioInfo info,
+            [NotNull] AudioMetadata metadata,
+            [NotNull] SettingDictionary settings)
+        {
+            var filterFactory =
+                ExtensionProvider.GetFactories<IAudioFilter>("Name", "ReplayGain").FirstOrDefault();
+            if (filterFactory == null) return;
+
+            _replayGainExport = filterFactory.CreateExport();
+            // ReSharper disable once PossibleNullReferenceException
+            _replayGainExport.Value.Initialize(info, metadata, settings);
         }
 
         static void SetConverterProperty<T>(IntPtr converter, AudioConverterPropertyId propertyId, T value)

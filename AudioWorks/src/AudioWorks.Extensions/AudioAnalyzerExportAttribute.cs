@@ -5,8 +5,7 @@ using JetBrains.Annotations;
 namespace AudioWorks.Extensions
 {
     /// <summary>
-    /// Classes marked with this attribute will be loaded by AudioWorks when attempting to analyze an audio file, if
-    /// the name matches.
+    /// Classes marked with this attribute will be loaded by AudioWorks.
     /// </summary>
     /// <remarks>
     /// Classes marked with this attribute must implement <see cref="IAudioAnalyzer"/>.

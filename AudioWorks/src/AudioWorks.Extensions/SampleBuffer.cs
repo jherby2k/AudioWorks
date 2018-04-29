@@ -39,6 +39,35 @@ namespace AudioWorks.Extensions
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="SampleBuffer"/> class using interleaved floating-point
+        /// samples.
+        /// </summary>
+        /// <param name="interleavedSamples">The interleaved samples.</param>
+        /// <param name="channels">The channels.</param>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="interleavedSamples"/> is not a multiple of
+        /// channels.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="channels"/> is out of range.
+        /// </exception>
+        public SampleBuffer(ReadOnlySpan<float> interleavedSamples, int channels)
+        {
+            if (interleavedSamples.Length % channels != 0)
+                throw new ArgumentException($"{nameof(interleavedSamples)} has an invalid length.",
+                    nameof(interleavedSamples));
+            if (channels < 1 || channels > 2)
+                throw new ArgumentOutOfRangeException(nameof(channels),
+                    $"{nameof(channels)} must be 1 or 2.");
+
+            Channels = channels;
+            Frames = interleavedSamples.Length / channels;
+            _buffer = MemoryPool<float>.Shared.Rent(Frames * channels);
+            if (channels > 1)
+                _isInterleaved = true;
+
+            // ReSharper disable once PossibleNullReferenceException
+            interleavedSamples.CopyTo(_buffer.Memory.Span);
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SampleBuffer"/> class for a single channel, using integer
         /// samples.
         /// </summary>
