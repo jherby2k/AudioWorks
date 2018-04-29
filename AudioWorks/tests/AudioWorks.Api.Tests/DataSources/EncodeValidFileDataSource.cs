@@ -717,6 +717,51 @@ namespace AudioWorks.Api.Tests.DataSources
                 "D72D6FE7B4F9B706AB937210C5291756"
             },
 
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    // TrackGain requested but not available
+                    ["ApplyGain"] = "Track",
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "47E95BDCA389DEC124CFD925C278F64A",
+                "F50ED3DA24B6C1DE20C8A9C293AD87F7"
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    // Scaled to TrackGain
+                    ["ApplyGain"] = "Track",
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "2DF4BB413A0566BC4A38670EB902873F",
+                "BFEEE28EA746E1DB29B42958280C009C"
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    // Scaled to AlbumGain
+                    ["ApplyGain"] = "Album",
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "D4B4EE9F33C89116D8853D367587AD15",
+                "4D96370F97B50DAD9228FF657B9AF01E"
+            },
+
             #endregion
 
             #region Lame MP3 Encoding
