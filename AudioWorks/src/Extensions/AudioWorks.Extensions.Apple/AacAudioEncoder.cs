@@ -60,6 +60,8 @@ namespace AudioWorks.Extensions.Apple
             _metadata = metadata;
             _settings = settings;
 
+            InitializeReplayGainFilter(info, metadata, settings);
+
             var inputDescription = GetInputDescription(info);
             _audioFile = new ExtendedAudioFile(GetOutputDescription(inputDescription), AudioFileType.M4A, fileStream);
             _audioFile.SetProperty(ExtendedAudioFilePropertyId.ClientDataFormat, inputDescription);
@@ -101,8 +103,6 @@ namespace AudioWorks.Extensions.Apple
 
             // Setting the ConverterConfig property to null resynchronizes the converter settings
             _audioFile.SetProperty(ExtendedAudioFilePropertyId.ConverterConfig, IntPtr.Zero);
-
-            InitializeReplayGainFilter(info, metadata, settings);
         }
 
         public unsafe void Submit(SampleBuffer samples)
