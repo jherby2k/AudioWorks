@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Composition;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace AudioWorks.Extensions.Lame
     public sealed class LameAudioEncoder : IAudioEncoder, IDisposable
     {
         [CanBeNull] Encoder _encoder;
+        [CanBeNull] Export<IAudioFilter> _replayGainExport;
 
         public SettingInfoDictionary SettingInfo
         {
@@ -31,6 +33,14 @@ namespace AudioWorks.Extensions.Lame
                         foreach (var settingInfo in export.Value.SettingInfo)
                             result.Add(settingInfo.Key, settingInfo.Value);
 
+                // Merge the external ReplayGain filter's SettingInfo
+                var filterFactory =
+                    ExtensionProvider.GetFactories<IAudioFilter>("Name", "ReplayGain").FirstOrDefault();
+                if (filterFactory != null)
+                    using (var export = filterFactory.CreateExport())
+                        foreach (var settingInfo in export.Value.SettingInfo)
+                            result.Add(settingInfo.Key, settingInfo.Value);
+
                 return result;
             }
         }
@@ -39,6 +49,8 @@ namespace AudioWorks.Extensions.Lame
 
         public void Initialize(FileStream fileStream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
+            InitializeReplayGainFilter(info, metadata, settings);
+
             // Call the external ID3 encoder, if available
             var metadataEncoderFactory =
                 ExtensionProvider.GetFactories<IAudioMetadataEncoder>("Extension", FileExtension).FirstOrDefault();
@@ -81,6 +93,9 @@ namespace AudioWorks.Extensions.Lame
         {
             if (samples.Frames == 0) return;
 
+            if (_replayGainExport != null)
+                samples = _replayGainExport.Value.Process(samples);
+
             Span<float> leftSamples = stackalloc float[samples.Frames];
             if (samples.Channels == 1)
             {
@@ -105,6 +120,21 @@ namespace AudioWorks.Extensions.Lame
         public void Dispose()
         {
             _encoder?.Dispose();
+            _replayGainExport?.Dispose();
+        }
+
+        void InitializeReplayGainFilter(
+            [NotNull] AudioInfo info,
+            [NotNull] AudioMetadata metadata,
+            [NotNull] SettingDictionary settings)
+        {
+            var filterFactory =
+                ExtensionProvider.GetFactories<IAudioFilter>("Name", "ReplayGain").FirstOrDefault();
+            if (filterFactory == null) return;
+
+            _replayGainExport = filterFactory.CreateExport();
+            // ReSharper disable once PossibleNullReferenceException
+            _replayGainExport.Value.Initialize(info, metadata, settings);
         }
     }
 }

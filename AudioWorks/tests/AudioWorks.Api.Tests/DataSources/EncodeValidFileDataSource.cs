@@ -1088,6 +1088,45 @@ namespace AudioWorks.Api.Tests.DataSources
                 "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6"
             },
 
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "LameMP3",
+                new TestSettingDictionary
+                {
+                    // TrackGain requested but not available
+                    ["ApplyGain"] = "Track"
+                },
+                "34C345AB6BDA4A4C172D74046EC683D7",
+                "34C345AB6BDA4A4C172D74046EC683D7"
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "LameMP3",
+                new TestSettingDictionary
+                {
+                    // Scaled to TrackGain
+                    ["ApplyGain"] = "Track"
+                },
+                "D297129E81AAB0E1078766300A4E295D",
+                "D297129E81AAB0E1078766300A4E295D"
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "LameMP3",
+                new TestSettingDictionary
+                {
+                    // Scaled to AlbumGain
+                    ["ApplyGain"] = "Album"
+                },
+                "9EB11045A3333DA3CAA399E61619C521",
+                "9EB11045A3333DA3CAA399E61619C521"
+            },
+
             #endregion
 
             #region Ogg Vorbis Encoding
