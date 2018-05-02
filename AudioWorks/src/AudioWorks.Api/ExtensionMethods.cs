@@ -1,4 +1,4 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
 using System.IO;
 using System.Threading;
 using AudioWorks.Common;
@@ -12,7 +12,7 @@ namespace AudioWorks.Api
         internal static void ProcessSamples(
             [NotNull] this ISampleProcessor sampleProcessor,
             [NotNull] string inputFilePath,
-            [CanBeNull] BlockingCollection<int> progressQueue,
+            [CanBeNull] IProgress<int> progress,
             int minFramesToReport,
             CancellationToken cancellationToken)
         {
@@ -29,21 +29,25 @@ namespace AudioWorks.Api
                         {
                             decoderExport.Value.Initialize(inputStream);
 
-                            while (!decoderExport.Value.Finished && !cancellationToken.IsCancellationRequested)
+                            while (!decoderExport.Value.Finished)
+                            {
+                                cancellationToken.ThrowIfCancellationRequested();
+
                                 using (var samples = decoderExport.Value.DecodeSamples())
                                 {
                                     sampleProcessor.Submit(samples);
 
-                                    if (progressQueue == null ||
+                                    if (progress == null ||
                                         (framesSinceLastProgress += samples.Frames) < minFramesToReport) continue;
-                                    progressQueue.Add(framesSinceLastProgress, cancellationToken);
+                                    progress.Report(framesSinceLastProgress);
                                     framesSinceLastProgress = 0;
                                 }
+                            }
                         }
 
                         // Report any unreported frames
                         if (framesSinceLastProgress > 0)
-                            progressQueue?.Add(framesSinceLastProgress, cancellationToken);
+                            progress?.Report(framesSinceLastProgress);
 
                         return;
                     }

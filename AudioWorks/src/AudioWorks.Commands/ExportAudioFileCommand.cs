@@ -76,11 +76,6 @@ namespace AudioWorks.Commands
         /// <inheritdoc/>
         protected override void EndProcessing()
         {
-            var activity = $"Encoding {_sourceAudioFiles.Count} audio files in {Encoder} format";
-            var totalFramesCompleted = 0L;
-            var totalFrames = _sourceAudioFiles.Sum(audioFile => audioFile.Info.FrameCount);
-            var percentComplete = 0;
-
             // ReSharper disable once AssignNullToNotNullAttribute
             var encoder = new AudioFileEncoder(Encoder,
                 SettingAdapter.ParametersToSettings(_parameters),
@@ -88,41 +83,35 @@ namespace AudioWorks.Commands
                 Name,
                 Replace);
 
-            using (var outputQueue = new BlockingCollection<int>())
+            var activity = $"Encoding {_sourceAudioFiles.Count} audio files in {Encoder} format";
+            var totalFramesCompleted = 0L;
+            var totalFrames = _sourceAudioFiles.Sum(audioFile => audioFile.Info.FrameCount);
+            var percentComplete = 0;
+
+            using (var progressQueue = new BlockingCollection<ProgressRecord>())
             {
-                // Encoding will take place in a background task
-                var encodeTask = Task.Factory.StartNew(q => encoder.Encode(
-                        (BlockingCollection<int>) q,
-                        _cancellationSource.Token,
-                        _sourceAudioFiles.ToArray()),
-                    outputQueue,
-                    _cancellationSource.Token,
-                    TaskCreationOptions.DenyChildAttach | TaskCreationOptions.LongRunning,
-                    TaskScheduler.Default);
-
-                // Close the output queue once encoding completes
-                encodeTask.ContinueWith((t, q) =>
-                        ((BlockingCollection<int>) q).CompleteAdding(),
-                    outputQueue,
-                    TaskScheduler.Default);
-
-                // Progress notifications will be processed on the main thread
-                foreach (var framesCompleted in outputQueue.GetConsumingEnumerable(_cancellationSource.Token))
+                var progress = new SimpleProgress<int>(framesCompleted =>
                 {
                     // If the audio files have estimated frame counts, make sure this doesn't go over 100%
                     totalFramesCompleted = Math.Min(totalFramesCompleted + framesCompleted, totalFrames);
                     var newPercentComplete = (int) (totalFramesCompleted / (float) totalFrames * 100);
-                    if (newPercentComplete <= percentComplete) continue;
+                    if (newPercentComplete <= percentComplete) return;
 
                     percentComplete = newPercentComplete;
-                    WriteProgress(new ProgressRecord(0, activity, $"{percentComplete}% complete")
+                    progressQueue.Add(new ProgressRecord(0, activity, $"{percentComplete}% complete")
                     {
                         PercentComplete = percentComplete
                     });
-                }
+                });
 
-                if (!encodeTask.IsCanceled)
-                    WriteObject(encodeTask.Result, true);
+                var encodeTask = encoder.EncodeAsync(progress, _cancellationSource.Token, _sourceAudioFiles.ToArray());
+                encodeTask.ContinueWith(task => progressQueue.CompleteAdding(), TaskScheduler.Current);
+
+                // Process progress notifications on the main thread
+                foreach (var progressRecord in progressQueue.GetConsumingEnumerable(_cancellationSource.Token))
+                    WriteProgress(progressRecord);
+
+                WriteObject(encodeTask.Result, true);
             }
         }
 

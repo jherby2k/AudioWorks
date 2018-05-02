@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Composition;
 using System.Linq;
 using System.Threading;
@@ -46,10 +45,10 @@ namespace AudioWorks.Api
         /// <param name="audioFiles">The audio files.</param>
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
-        public void Analyze(
+        public async Task AnalyzeAsync(
             [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
         {
-            Analyze(CancellationToken.None, audioFiles);
+            await AnalyzeAsync(CancellationToken.None, audioFiles).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -59,23 +58,23 @@ namespace AudioWorks.Api
         /// <param name="audioFiles">The audio files.</param>
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
-        public void Analyze(
+        public async Task AnalyzeAsync(
             CancellationToken cancellationToken,
             [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
         {
-            Analyze(null, cancellationToken, audioFiles);
+            await AnalyzeAsync(null, cancellationToken, audioFiles).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Analyzes the specified audio files.
         /// </summary>
-        /// <param name="progressQueue">The progress queue, or <c>null</c>.</param>
+        /// <param name="progress">The progress queue, or <c>null</c>.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <param name="audioFiles">The audio files.</param>
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
-        public void Analyze(
-            [CanBeNull] BlockingCollection<int> progressQueue,
+        public async Task AnalyzeAsync(
+            [CanBeNull] IProgress<int> progress,
             CancellationToken cancellationToken,
             [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
         {
@@ -83,30 +82,32 @@ namespace AudioWorks.Api
             if (audioFiles.Any(audioFile => audioFile == null))
                 throw new ArgumentException("One or more audio files are null.", nameof(audioFiles));
 
+            var analyzerExports = new Export<IAudioAnalyzer>[audioFiles.Length];
+            var exportTasks = new Task[audioFiles.Length];
+
             using (var groupToken = new GroupToken())
             {
-                var analyzerExports = new Export<IAudioAnalyzer>[audioFiles.Length];
                 try
                 {
-                    // Initialize the analyzers sequentially
                     for (var i = 0; i < audioFiles.Length; i++)
                     {
                         analyzerExports[i] = _analyzerFactory.CreateExport();
                         analyzerExports[i].Value.Initialize(audioFiles[i].Info, _settings, groupToken);
-                    }
 
-                    // Process the audio files in parallel
-                    Parallel.For(0, audioFiles.Length, new ParallelOptions { CancellationToken = cancellationToken },
-                        i =>
+                        var i1 = i;
+                        exportTasks[i] = Task.Run(() =>
                         {
-                            analyzerExports[i].Value.ProcessSamples(
-                                audioFiles[i].Path,
-                                progressQueue,
-                                (int) (audioFiles[i].Info.FrameCount / 100),
+                            analyzerExports[i1].Value.ProcessSamples(
+                                audioFiles[i1].Path,
+                                progress,
+                                (int) (audioFiles[i1].Info.FrameCount / 100),
                                 cancellationToken);
 
-                            CopyFields(analyzerExports[i].Value.GetResult(), audioFiles[i].Metadata);
-                        });
+                            CopyFields(analyzerExports[i1].Value.GetResult(), audioFiles[i1].Metadata);
+                        }, cancellationToken);
+                    }
+
+                    await Task.WhenAll(exportTasks).ConfigureAwait(false);
 
                     // Obtain the group results sequentially
                     for (var i = 0; i < audioFiles.Length; i++)

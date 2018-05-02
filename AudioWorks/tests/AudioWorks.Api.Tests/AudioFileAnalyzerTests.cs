@@ -28,7 +28,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioFileAnalyzer's Analyze method creates the expected metadata")]
         [MemberData(nameof(AnalyzeValidFileDataSource.Data), MemberType = typeof(AnalyzeValidFileDataSource))]
-        public void AnalyzeCreatesExpectedMetadata(
+        public async void AnalyzeAsyncCreatesExpectedMetadata(
             [NotNull] string fileName,
             [NotNull] string analyzerName,
             [CanBeNull] TestSettingDictionary settings,
@@ -40,14 +40,14 @@ namespace AudioWorks.Api.Tests
                 "Valid",
                 fileName));
 
-            new AudioFileAnalyzer(analyzerName, settings).Analyze(audioFile);
+            await new AudioFileAnalyzer(analyzerName, settings).AnalyzeAsync(audioFile).ConfigureAwait(false);
 
             Assert.True(new Comparer().Compare(expectedMetadata, audioFile.Metadata, out var differences), string.Join(" ", differences));
         }
 
         [Theory(DisplayName = "AudioFileAnalyzer's Analyze method creates the expected metadata for a group")]
         [MemberData(nameof(AnalyzeGroupDataSource.Data), MemberType = typeof(AnalyzeGroupDataSource))]
-        public void AnalyzeCreatesExpectedMetadataForGroup(
+        public async void AnalyzeAsyncCreatesExpectedMetadataForGroup(
             [NotNull] string[] fileNames,
             [NotNull] string analyzerName,
             [CanBeNull] TestSettingDictionary settings,
@@ -60,7 +60,7 @@ namespace AudioWorks.Api.Tests
                     fileName)))
                 .ToArray<ITaggedAudioFile>();
 
-            new AudioFileAnalyzer(analyzerName, settings).Analyze(audioFiles);
+            await new AudioFileAnalyzer(analyzerName, settings).AnalyzeAsync(audioFiles).ConfigureAwait(false);
 
             var i = 0;
             var comparer = new Comparer();

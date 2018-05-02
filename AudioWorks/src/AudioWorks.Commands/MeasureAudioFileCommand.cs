@@ -61,49 +61,40 @@ namespace AudioWorks.Commands
         /// <inheritdoc/>
         protected override void EndProcessing()
         {
-            using (var outputQueue = new BlockingCollection<int>())
+            // ReSharper disable once AssignNullToNotNullAttribute
+            var analyzer = new AudioFileAnalyzer(Analyzer, SettingAdapter.ParametersToSettings(_parameters));
+
+            var activity = $"Performing {Analyzer} analysis on {_audioFiles.Count} audio files";
+            var totalFramesCompleted = 0L;
+            var totalFrames = _audioFiles.Sum(audioFile => audioFile.Info.FrameCount);
+            var percentComplete = 0;
+
+            using (var progressQueue = new BlockingCollection<ProgressRecord>())
             {
-                Task.Factory.StartNew(q =>
-                            new AudioFileAnalyzer(
-                                    // ReSharper disable once AssignNullToNotNullAttribute
-                                    Analyzer,
-                                    SettingAdapter.ParametersToSettings(_parameters))
-                                .Analyze(
-                                    (BlockingCollection<int>) q,
-                                    _cancellationSource.Token,
-                                    _audioFiles.ToArray()),
-                        outputQueue,
-                        _cancellationSource.Token,
-                        TaskCreationOptions.DenyChildAttach | TaskCreationOptions.LongRunning,
-                        TaskScheduler.Default)
-                    .ContinueWith((t, q) =>
-                            ((BlockingCollection<int>) q).CompleteAdding(),
-                        outputQueue,
-                        TaskScheduler.Default);
-
-                // Process progress notifications on the main thread
-                var activity = $"Performing {Analyzer} analysis on {_audioFiles.Count} audio files";
-                var totalFramesCompleted = 0L;
-                var totalFrames = _audioFiles.Sum(audioFile => audioFile.Info.FrameCount);
-                var percentComplete = 0;
-
-                foreach (var framesCompleted in outputQueue.GetConsumingEnumerable(_cancellationSource.Token))
+                var progress = new SimpleProgress<int>(framesCompleted =>
                 {
-                    // If the audio files have estimated frame counts, make this doesn't go over 100%
+                    // If the audio files have estimated frame counts, make sure this doesn't go over 100%
                     totalFramesCompleted = Math.Min(totalFramesCompleted + framesCompleted, totalFrames);
                     var newPercentComplete = (int) (totalFramesCompleted / (float) totalFrames * 100);
-                    if (newPercentComplete <= percentComplete) continue;
+                    if (newPercentComplete <= percentComplete) return;
 
                     percentComplete = newPercentComplete;
-                    WriteProgress(new ProgressRecord(0, activity, $"{percentComplete}% complete")
+                    progressQueue.Add(new ProgressRecord(0, activity, $"{percentComplete}% complete")
                     {
                         PercentComplete = percentComplete
                     });
-                }
-            }
+                });
 
-            if (PassThru)
-                WriteObject(_audioFiles, true);
+                analyzer.AnalyzeAsync(progress, _cancellationSource.Token, _audioFiles.ToArray())
+                    .ContinueWith(task => progressQueue.CompleteAdding(), TaskScheduler.Current);
+
+                // Process progress notifications on the main thread
+                foreach (var progressRecord in progressQueue.GetConsumingEnumerable(_cancellationSource.Token))
+                    WriteProgress(progressRecord);
+
+                if (PassThru)
+                    WriteObject(_audioFiles, true);
+            }
         }
 
         /// <inheritdoc/>

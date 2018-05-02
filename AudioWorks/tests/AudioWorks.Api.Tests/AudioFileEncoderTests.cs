@@ -40,7 +40,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioFileEncoder's Encode method creates the expected audio file")]
         [MemberData(nameof(EncodeValidFileDataSource.Data), MemberType = typeof(EncodeValidFileDataSource))]
-        public void EncodeCreatesExpectedAudioFile(
+        public async void EncodeAsyncCreatesExpectedAudioFile(
             int index,
             [NotNull] string sourceFileName,
             [NotNull] string encoderName,
@@ -56,13 +56,13 @@ namespace AudioWorks.Api.Tests
                 "Valid",
                 sourceFileName));
 
-            var results = new AudioFileEncoder(
+            var results = (await new AudioFileEncoder(
                     encoderName,
                     settings,
                     path,
                     $"{index:00} - {Path.GetFileNameWithoutExtension(sourceFileName)}",
                     true)
-                .Encode(audioFile).ToArray();
+                .EncodeAsync(audioFile).ConfigureAwait(false)).ToArray();
 
             Assert.Single(results);
             Assert.Equal(Environment.Is64BitProcess ? expected64BitHash : expected32BitHash,
