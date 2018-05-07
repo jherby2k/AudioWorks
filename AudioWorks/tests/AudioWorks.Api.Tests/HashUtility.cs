@@ -17,7 +17,7 @@ namespace AudioWorks.Api.Tests
             using (var md5 = MD5.Create())
             using (var fileStream = File.OpenRead(audioFile.Path))
                 return BitConverter.ToString(md5.ComputeHash(fileStream))
-#if NETCOREAPP2_1
+#if NETCOREAPP2_0
                     .Replace("-", string.Empty, StringComparison.InvariantCulture);
 #else
                     .Replace("-", string.Empty);
@@ -33,7 +33,7 @@ namespace AudioWorks.Api.Tests
 
             using (var md5 = MD5.Create())
                 return BitConverter.ToString(md5.ComputeHash(data))
-#if NETCOREAPP2_1
+#if NETCOREAPP2_0
                     .Replace("-", string.Empty, StringComparison.InvariantCulture);
 #else
                     .Replace("-", string.Empty);
