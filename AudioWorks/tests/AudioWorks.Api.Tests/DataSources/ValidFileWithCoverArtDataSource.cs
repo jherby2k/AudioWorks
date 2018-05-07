@@ -94,7 +94,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 false,
                 "image/jpeg",
                 "9790278B4ADC6F23407AA11BD065F229"
-            },
+            }
         };
 
         [NotNull, ItemNotNull]

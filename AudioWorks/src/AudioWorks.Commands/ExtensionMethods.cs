@@ -23,7 +23,7 @@ namespace AudioWorks.Commands
 
             if (!string.IsNullOrEmpty(literalPath))
             {
-                var providerPath = cmdlet.SessionState.Path.GetUnresolvedProviderPathFromPSPath(literalPath, out provider, out PSDriveInfo _);
+                var providerPath = cmdlet.SessionState.Path.GetUnresolvedProviderPathFromPSPath(literalPath, out provider, out _);
                 if (provider.ImplementingType == typeof(FileSystemProvider))
                     return new[] { providerPath };
             }
