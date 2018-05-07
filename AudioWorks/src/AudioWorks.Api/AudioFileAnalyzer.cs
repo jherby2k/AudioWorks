@@ -127,7 +127,7 @@ namespace AudioWorks.Api
             foreach (var property in typeof(AudioMetadata).GetProperties())
             {
                 var value = property.GetValue(source);
-                if (!string.IsNullOrEmpty((string)value))
+                if (!string.IsNullOrEmpty((string) value))
                     property.SetValue(destination, value);
             }
         }
