@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Buffers;
+using System.Composition;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using AudioWorks.Common;
 using JetBrains.Annotations;
@@ -15,19 +17,38 @@ namespace AudioWorks.Extensions.Vorbis
         [CanBeNull] OggStream _oggStream;
         [CanBeNull] VorbisEncoder _encoder;
         [CanBeNull] byte[] _buffer;
+        [CanBeNull] Export<IAudioFilter> _replayGainExport;
 
-        public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
+        public SettingInfoDictionary SettingInfo
         {
-            ["SerialNumber"] = new IntSettingInfo(int.MinValue, int.MaxValue),
-            ["Quality"] = new IntSettingInfo(-1, 10),
-            ["BitRate"] = new IntSettingInfo(45, 500),
-            ["Managed"] = new BoolSettingInfo()
-        };
+            get
+            {
+                var result = new SettingInfoDictionary
+                {
+                    ["SerialNumber"] = new IntSettingInfo(int.MinValue, int.MaxValue),
+                    ["Quality"] = new IntSettingInfo(-1, 10),
+                    ["BitRate"] = new IntSettingInfo(45, 500),
+                    ["Managed"] = new BoolSettingInfo()
+                };
+
+                // Merge the external ReplayGain filter's SettingInfo
+                var filterFactory =
+                    ExtensionProvider.GetFactories<IAudioFilter>("Name", "ReplayGain").FirstOrDefault();
+                if (filterFactory != null)
+                    using (var export = filterFactory.CreateExport())
+                        foreach (var settingInfo in export.Value.SettingInfo)
+                            result.Add(settingInfo.Key, settingInfo.Value);
+
+                return result;
+            }
+        }
 
         public string FileExtension { get; } = ".ogg";
 
         public void Initialize(FileStream fileStream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
+            InitializeReplayGainFilter(info, metadata, settings);
+
             _fileStream = fileStream;
             _oggStream = new OggStream(settings.TryGetValue("SerialNumber", out var serialNumberValue)
                 ? (int) serialNumberValue
@@ -62,6 +83,9 @@ namespace AudioWorks.Extensions.Vorbis
         {
             if (samples.Frames == 0) return;
 
+            if (_replayGainExport != null)
+                samples = _replayGainExport.Value.Process(samples);
+
             // Request an unmanaged buffer for each channel, then copy the samples to to them
             var buffers = new Span<IntPtr>(_encoder.GetBuffer(samples.Frames).ToPointer(), samples.Channels);
             if (samples.Channels == 1)
@@ -90,6 +114,21 @@ namespace AudioWorks.Extensions.Vorbis
             _oggStream?.Dispose();
             if (_buffer != null)
                 ArrayPool<byte>.Shared.Return(_buffer);
+            _replayGainExport?.Dispose();
+        }
+
+        void InitializeReplayGainFilter(
+            [NotNull] AudioInfo info,
+            [NotNull] AudioMetadata metadata,
+            [NotNull] SettingDictionary settings)
+        {
+            var filterFactory =
+                ExtensionProvider.GetFactories<IAudioFilter>("Name", "ReplayGain").FirstOrDefault();
+            if (filterFactory == null) return;
+
+            _replayGainExport = filterFactory.CreateExport();
+            // ReSharper disable once PossibleNullReferenceException
+            _replayGainExport.Value.Initialize(info, metadata, settings);
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]

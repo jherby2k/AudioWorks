@@ -1394,6 +1394,48 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "C3C78067859D261A13ADB86AE699E0B8",
                 "C3C78067859D261A13ADB86AE699E0B8"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    // TrackGain requested but not available
+                    ["ApplyGain"] = "Track",
+                    ["SerialNumber"] = 1
+                },
+                "45666989AC5E44A62F01CC2BDCB91744",
+                "45666989AC5E44A62F01CC2BDCB91744"
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    // Scaled to TrackGain
+                    ["ApplyGain"] = "Track",
+                    ["SerialNumber"] = 1
+                },
+                "44C4E291AB3DF95E545995F9D3EAA32A",
+                "44C4E291AB3DF95E545995F9D3EAA32A"
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    // Scaled to AlbumGain
+                    ["ApplyGain"] = "Album",
+                    ["SerialNumber"] = 1
+                },
+                "ECF9270A3FFB3CE2486D118D21C85C23",
+                "ECF9270A3FFB3CE2486D118D21C85C23"
             }
 
             #endregion
