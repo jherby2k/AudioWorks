@@ -18,11 +18,6 @@ namespace AudioWorks.Api.Tests.DataTypes
 
         public long SampleCount { get; set; }
 
-        [UsedImplicitly]
-        public TestAudioInfo()
-        {
-        }
-
         public void Deserialize([NotNull] IXunitSerializationInfo info)
         {
             foreach (var property in GetType().GetProperties())

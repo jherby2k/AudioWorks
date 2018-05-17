@@ -9,11 +9,6 @@ namespace AudioWorks.Api.Tests.DataTypes
 {
     public sealed class TestSettingDictionary : SettingDictionary, IXunitSerializable
     {
-        [UsedImplicitly]
-        public TestSettingDictionary()
-        {
-        }
-
         public void Deserialize([NotNull] IXunitSerializationInfo info)
         {
             foreach (var item in info.GetValue<string[]>("Items"))
