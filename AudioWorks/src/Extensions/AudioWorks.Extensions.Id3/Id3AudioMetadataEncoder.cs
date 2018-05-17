@@ -79,7 +79,7 @@ namespace AudioWorks.Extensions.Id3
             }
             catch (TagNotFoundException)
             {
-                return 0u;
+                return 0;
             }
         }
 
