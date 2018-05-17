@@ -12,22 +12,22 @@ namespace AudioWorks.Common
     [Serializable]
     public class AudioMetadata
     {
-        [NotNull] string _title = string.Empty;
-        [NotNull] string _artist = string.Empty;
-        [NotNull] string _album = string.Empty;
-        [NotNull] string _albumArtist = string.Empty;
-        [NotNull] string _composer = string.Empty;
-        [NotNull] string _genre = string.Empty;
-        [NotNull] string _comment = string.Empty;
-        [NotNull] string _day = string.Empty;
-        [NotNull] string _month = string.Empty;
-        [NotNull] string _year = string.Empty;
-        [NotNull] string _trackNumber = string.Empty;
-        [NotNull] string _trackCount = string.Empty;
-        [NotNull] string _trackPeak = string.Empty;
-        [NotNull] string _albumPeak = string.Empty;
-        [NotNull] string _trackGain = string.Empty;
-        [NotNull] string _albumGain = string.Empty;
+        [NotNull] string _title;
+        [NotNull] string _artist;
+        [NotNull] string _album;
+        [NotNull] string _albumArtist;
+        [NotNull] string _composer;
+        [NotNull] string _genre;
+        [NotNull] string _comment;
+        [NotNull] string _day;
+        [NotNull] string _month;
+        [NotNull] string _year;
+        [NotNull] string _trackNumber;
+        [NotNull] string _trackCount;
+        [NotNull] string _trackPeak;
+        [NotNull] string _albumPeak;
+        [NotNull] string _trackGain;
+        [NotNull] string _albumGain;
 
         /// <summary>
         /// Gets or sets the title. To clear the title, set an empty <paramref name="value"/>.
@@ -356,6 +356,58 @@ namespace AudioWorks.Common
         /// <value>The cover art.</value>
         [CanBeNull]
         public ICoverArt CoverArt { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AudioMetadata"/> class.
+        /// </summary>
+        public AudioMetadata()
+        {
+            _title = string.Empty;
+            _artist = string.Empty;
+            _album = string.Empty;
+            _albumArtist = string.Empty;
+            _composer = string.Empty;
+            _genre = string.Empty;
+            _comment = string.Empty;
+            _day = string.Empty;
+            _month = string.Empty;
+            _year = string.Empty;
+            _trackNumber = string.Empty;
+            _trackCount = string.Empty;
+            _trackPeak = string.Empty;
+            _albumPeak = string.Empty;
+            _trackGain = string.Empty;
+            _albumGain = string.Empty;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AudioMetadata"/> class by copying an existing
+        /// <see cref="AudioMetadata"/> object.
+        /// </summary>
+        /// <param name="metadata">The <see cref="AudioMetadata"/> object to copy.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="metadata"/> is null.</exception>
+        public AudioMetadata([NotNull] AudioMetadata metadata)
+        {
+            if (metadata == null) throw new ArgumentNullException(nameof(metadata));
+
+            _title = metadata.Title;
+            _artist = metadata.Artist;
+            _album = metadata.Album;
+            _albumArtist = metadata.AlbumArtist;
+            _composer = metadata.Composer;
+            _genre = metadata.Genre;
+            _comment = metadata.Comment;
+            _day = metadata.Day;
+            _month = metadata.Month;
+            _year = metadata.Year;
+            _trackNumber = metadata.TrackNumber;
+            _trackCount = metadata.TrackCount;
+            _trackPeak = metadata.TrackPeak;
+            _albumPeak = metadata.AlbumPeak;
+            _trackGain = metadata.TrackGain;
+            _albumGain = metadata.AlbumGain;
+            CoverArt = metadata.CoverArt;
+        }
 
         /// <summary>
         /// Clears all properties.

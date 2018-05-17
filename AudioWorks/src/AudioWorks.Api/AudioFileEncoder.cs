@@ -146,8 +146,11 @@ namespace AudioWorks.Api
 
                             outputStream = File.Open(tempOutputPath, FileMode.OpenOrCreate);
 
-                            encoderExport.Value.Initialize(outputStream, audioFile.Info,
-                                audioFile.Metadata,
+                            // Copy the source metadata, so it can't be modified
+                            encoderExport.Value.Initialize(
+                                outputStream,
+                                audioFile.Info,
+                                new AudioMetadata(audioFile.Metadata),
                                 _settings);
 
                             encoderExport.Value.ProcessSamples(
