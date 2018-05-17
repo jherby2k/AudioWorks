@@ -29,18 +29,28 @@ namespace AudioWorks.Extensions
 
         void ResolveFullFramework()
         {
-            // .NET Framework should look for dependencies in the extensions's directory
-            var extensionDir = Path.GetDirectoryName(Assembly.Location);
-            AppDomain.CurrentDomain.AssemblyResolve += (context, name) =>
-                // ReSharper disable once AssignNullToNotNullAttribute
-                Assembly.LoadFrom(Path.Combine(extensionDir, $"{name.Name}.dll"));
+            // .NET Framework should look for dependencies in the root directory and the extension's directory
+
+            // ReSharper disable AssignNullToNotNullAttribute
+            var assemblyFiles = Directory.GetFiles(
+                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "*.dll")
+                .Concat(Directory.GetFiles(
+                    Path.GetDirectoryName(Path.GetDirectoryName(Assembly.Location)), "*.dll"));
+            // ReSharper restore AssignNullToNotNullAttribute
+
+            AppDomain.CurrentDomain.AssemblyResolve += (context, args) => assemblyFiles
+                .Where(assemblyFile => AssemblyName.ReferenceMatchesDefinition(
+                    AssemblyName.GetAssemblyName(assemblyFile),
+                    new AssemblyName(args.Name)))
+                .Select(Assembly.LoadFrom).FirstOrDefault();
         }
 
         void ResolveWithLoader()
         {
-            // .NET Core can additionally resolve dependencies from each extension's deps.json file
+            // .NET Core can resolve dependencies from each extension's deps.json file
             var dependencyContext = DependencyContext.Load(Assembly);
             var assemblyResolver = new PackageCompilationAssemblyResolver();
+
             AssemblyLoadContext.Default.Resolving += (context, name) =>
             {
                 var runtimeLibrary = dependencyContext.RuntimeLibraries.FirstOrDefault(library =>
