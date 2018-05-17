@@ -45,7 +45,7 @@
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.0" />
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="4.5.0-rc1" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="4.4.0" />
   </ItemGroup>
 
   <ItemGroup>
