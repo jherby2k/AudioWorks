@@ -101,6 +101,7 @@ namespace AudioWorks.Commands
                     lastAudioFilesCompleted = token.AudioFilesCompleted;
                     lastPercentComplete = percentComplete;
 
+                    // ReSharper disable once AccessToDisposedClosure
                     progressQueue.Add(new ProgressRecord(0, activity,
                         $"{token.AudioFilesCompleted} of {_sourceAudioFiles.Count} audio files encoded")
                     {
@@ -110,6 +111,7 @@ namespace AudioWorks.Commands
                 });
 
                 var encodeTask = encoder.EncodeAsync(progress, _cancellationSource.Token, _sourceAudioFiles.ToArray());
+                // ReSharper disable once AccessToDisposedClosure
                 encodeTask.ContinueWith(task => progressQueue.CompleteAdding(), TaskScheduler.Current);
 
                 // Process progress notifications on the main thread
