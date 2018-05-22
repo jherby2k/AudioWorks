@@ -82,42 +82,42 @@ namespace AudioWorks.Api
             if (audioFiles.Any(audioFile => audioFile == null))
                 throw new ArgumentException("One or more audio files are null.", nameof(audioFiles));
 
+            var groupToken = new GroupToken();
             var analyzerExports = new Export<IAudioAnalyzer>[audioFiles.Length];
-            var exportTasks = new Task[audioFiles.Length];
 
-            using (var groupToken = new GroupToken())
+            try
             {
-                try
+                var processTasks = new Task[audioFiles.Length];
+
+                for (var i = 0; i < audioFiles.Length; i++)
                 {
-                    for (var i = 0; i < audioFiles.Length; i++)
+                    analyzerExports[i] = _analyzerFactory.CreateExport();
+                    analyzerExports[i].Value.Initialize(audioFiles[i].Info, _settings, groupToken);
+
+                    var i1 = i;
+                    processTasks[i] = Task.Run(() =>
                     {
-                        analyzerExports[i] = _analyzerFactory.CreateExport();
-                        analyzerExports[i].Value.Initialize(audioFiles[i].Info, _settings, groupToken);
+                        analyzerExports[i1].Value.ProcessSamples(
+                            audioFiles[i1].Path,
+                            progress,
+                            (int) (audioFiles[i1].Info.FrameCount / 100),
+                            cancellationToken);
 
-                        var i1 = i;
-                        exportTasks[i] = Task.Run(() =>
-                        {
-                            analyzerExports[i1].Value.ProcessSamples(
-                                audioFiles[i1].Path,
-                                progress,
-                                (int) (audioFiles[i1].Info.FrameCount / 100),
-                                cancellationToken);
-
-                            CopyFields(analyzerExports[i1].Value.GetResult(), audioFiles[i1].Metadata);
-                        }, cancellationToken);
-                    }
-
-                    await Task.WhenAll(exportTasks).ConfigureAwait(false);
-
-                    // Obtain the group results sequentially
-                    for (var i = 0; i < audioFiles.Length; i++)
-                        CopyFields(analyzerExports[i].Value.GetGroupResult(), audioFiles[i].Metadata);
+                        CopyFields(analyzerExports[i1].Value.GetResult(), audioFiles[i1].Metadata);
+                    }, cancellationToken);
                 }
-                finally
-                {
-                    foreach (var analyzerExport in analyzerExports)
-                        analyzerExport?.Dispose();
-                }
+
+                await Task.WhenAll(processTasks).ConfigureAwait(false);
+
+                // Obtain the group results sequentially
+                for (var i = 0; i < audioFiles.Length; i++)
+                    CopyFields(analyzerExports[i].Value.GetGroupResult(), audioFiles[i].Metadata);
+            }
+            finally
+            {
+                foreach (var analyzerExport in analyzerExports)
+                    analyzerExport?.Dispose();
+                groupToken.Dispose();
             }
         }
 
