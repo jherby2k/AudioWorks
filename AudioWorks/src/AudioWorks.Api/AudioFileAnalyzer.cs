@@ -74,7 +74,7 @@ namespace AudioWorks.Api
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
         public async Task AnalyzeAsync(
-            [CanBeNull] IProgress<int> progress,
+            [CanBeNull] IProgress<ProgressToken> progress,
             CancellationToken cancellationToken,
             [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
         {
@@ -82,8 +82,16 @@ namespace AudioWorks.Api
             if (audioFiles.Any(audioFile => audioFile == null))
                 throw new ArgumentException("One or more audio files are null.", nameof(audioFiles));
 
+            progress?.Report(new ProgressToken
+            {
+                AudioFilesCompleted = 0,
+                FramesCompleted = 0
+            });
+
             var groupToken = new GroupToken();
             var analyzerExports = new Export<IAudioAnalyzer>[audioFiles.Length];
+            var audioFilesCompleted = 0;
+            var totalFramesCompleted = 0;
 
             try
             {
@@ -95,15 +103,24 @@ namespace AudioWorks.Api
                     analyzerExports[i].Value.Initialize(audioFiles[i].Info, _settings, groupToken);
 
                     var i1 = i;
+                    var itemProgress = progress == null
+                        ? null
+                        : new SimpleProgress<int>(framesCompleted => progress.Report(new ProgressToken
+                        {
+                            AudioFilesCompleted = audioFilesCompleted,
+                            FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
+                        }));
+
                     processTasks[i] = Task.Run(() =>
                     {
                         analyzerExports[i1].Value.ProcessSamples(
                             audioFiles[i1].Path,
-                            progress,
-                            (int) (audioFiles[i1].Info.FrameCount / 100),
+                            itemProgress,
                             cancellationToken);
 
                         CopyFields(analyzerExports[i1].Value.GetResult(), audioFiles[i1].Metadata);
+
+                        Interlocked.Increment(ref audioFilesCompleted);
                     }, cancellationToken);
                 }
 
@@ -119,6 +136,12 @@ namespace AudioWorks.Api
                     analyzerExport?.Dispose();
                 groupToken.Dispose();
             }
+
+            progress?.Report(new ProgressToken
+            {
+                AudioFilesCompleted = audioFilesCompleted,
+                FramesCompleted = totalFramesCompleted
+            });
         }
 
         static void CopyFields([NotNull] AudioMetadata source, [NotNull] AudioMetadata destination)

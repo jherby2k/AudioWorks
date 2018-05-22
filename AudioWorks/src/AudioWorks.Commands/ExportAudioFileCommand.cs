@@ -84,23 +84,28 @@ namespace AudioWorks.Commands
                 Replace);
 
             var activity = $"Encoding {_sourceAudioFiles.Count} audio files in {Encoder} format";
-            var totalFramesCompleted = 0L;
-            var totalFrames = _sourceAudioFiles.Sum(audioFile => audioFile.Info.FrameCount);
-            var percentComplete = 0;
+            var totalFrames = (double) _sourceAudioFiles.Sum(audioFile => audioFile.Info.FrameCount);
+            var lastAudioFilesCompleted = 0;
+            var lastPercentComplete = 0;
 
             using (var progressQueue = new BlockingCollection<ProgressRecord>())
             {
-                var progress = new SimpleProgress<int>(framesCompleted =>
+                var progress = new SimpleProgress<ProgressToken>(token =>
                 {
-                    // If the audio files have estimated frame counts, make sure this doesn't go over 100%
-                    totalFramesCompleted = Math.Min(totalFramesCompleted + framesCompleted, totalFrames);
-                    var newPercentComplete = (int) (totalFramesCompleted / (float) totalFrames * 100);
-                    if (newPercentComplete <= percentComplete) return;
+                    var percentComplete = (int) Math.Round(token.FramesCompleted / totalFrames * 100);
 
-                    percentComplete = newPercentComplete;
-                    progressQueue.Add(new ProgressRecord(0, activity, $"{percentComplete}% complete")
+                    // Only report progress if something has changed
+                    if (percentComplete <= lastPercentComplete && token.AudioFilesCompleted <= lastAudioFilesCompleted)
+                        return;
+
+                    lastAudioFilesCompleted = token.AudioFilesCompleted;
+                    lastPercentComplete = percentComplete;
+
+                    progressQueue.Add(new ProgressRecord(0, activity,
+                        $"{token.AudioFilesCompleted} of {_sourceAudioFiles.Count} audio files encoded")
                     {
-                        PercentComplete = percentComplete
+                        // If the audio files have estimated frame counts, make sure this doesn't go over 100%
+                        PercentComplete = Math.Min(percentComplete, 100)
                     });
                 });
 

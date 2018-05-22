@@ -98,7 +98,7 @@ namespace AudioWorks.Api
         /// <returns>A new audio file.</returns>
         [NotNull, ItemNotNull]
         public async Task<IEnumerable<ITaggedAudioFile>> EncodeAsync(
-            [CanBeNull] IProgress<int> progress,
+            [CanBeNull] IProgress<ProgressToken> progress,
             CancellationToken cancellationToken,
             [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
         {
@@ -106,10 +106,18 @@ namespace AudioWorks.Api
             if (audioFiles.Any(audioFile => audioFile == null))
                 throw new ArgumentException("One or more audio files are null.", nameof(audioFiles));
 
+            progress?.Report(new ProgressToken
+            {
+                AudioFilesCompleted = 0,
+                FramesCompleted = 0
+            });
+
             var encoderExports = new Export<IAudioEncoder>[audioFiles.Length];
             var tempOutputPaths = new string[audioFiles.Length];
             var finalOutputPaths = new string[audioFiles.Length];
             var outputStreams = new FileStream[audioFiles.Length];
+            var audioFilesCompleted = 0;
+            var totalFramesCompleted = 0;
 
             try
             {
@@ -154,15 +162,24 @@ namespace AudioWorks.Api
                             _settings);
 
                         var i1 = i;
+                        var itemProgress = progress == null
+                            ? null
+                            : new SimpleProgress<int>(framesCompleted => progress.Report(new ProgressToken
+                            {
+                                AudioFilesCompleted = audioFilesCompleted,
+                                FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
+                            }));
+
                         processTasks[i] = Task.Run(() =>
                         {
                             encoderExports[i1].Value.ProcessSamples(
                                 audioFiles[i1].Path,
-                                progress,
-                                (int) (audioFiles[i1].Info.FrameCount / 100),
+                                itemProgress,
                                 cancellationToken);
 
                             encoderExports[i1].Value.Finish();
+
+                            Interlocked.Increment(ref audioFilesCompleted);
                         }, cancellationToken);
                     }
 
@@ -192,6 +209,12 @@ namespace AudioWorks.Api
                     File.Delete(finalOutputPaths[i]);
                     File.Move(tempOutputPaths[i], finalOutputPaths[i]);
                 }
+
+            progress?.Report(new ProgressToken
+            {
+                AudioFilesCompleted = audioFilesCompleted,
+                FramesCompleted = totalFramesCompleted
+            });
 
             return finalOutputPaths.Select(path => new TaggedAudioFile(path));
         }
