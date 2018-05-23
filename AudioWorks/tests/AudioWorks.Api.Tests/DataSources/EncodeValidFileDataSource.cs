@@ -344,8 +344,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "2A2BF15D757CB23E6B1FA2A0818EF367",
-                "2A2BF15D757CB23E6B1FA2A0818EF367"
+                "50F7F27DBCCE5874118C3DE9B0F0306D",
+                "50F7F27DBCCE5874118C3DE9B0F0306D"
             },
 
             new object[]
@@ -357,8 +357,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "03305CCE91A686386908415EF35BDE0D",
-                "03305CCE91A686386908415EF35BDE0D"
+                "4A2E22037B18F3318920EA47BA76825C",
+                "4A2E22037B18F3318920EA47BA76825C"
             },
 
             new object[]
@@ -370,8 +370,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "DD63909696697914797CE17AE9F3FA41",
-                "DD63909696697914797CE17AE9F3FA41"
+                "C299C20C8EF4ED5B6B5664E6B81C3244",
+                "C299C20C8EF4ED5B6B5664E6B81C3244"
             },
 
             new object[]
@@ -383,8 +383,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "72F27226338669DE7E20483A633C5D56",
-                "72F27226338669DE7E20483A633C5D56"
+                "26442948986C55394D8AE960E66101C3",
+                "26442948986C55394D8AE960E66101C3"
             },
 
             new object[]
@@ -396,8 +396,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "B8031645E618B513852BD0291D78C736",
-                "B8031645E618B513852BD0291D78C736"
+                "C8E2DD6861F837C845A52A4C34523C85",
+                "C8E2DD6861F837C845A52A4C34523C85"
             },
 
             new object[]
@@ -409,8 +409,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "FA61875BD1BB22BFF395F068070BDA17",
-                "FA61875BD1BB22BFF395F068070BDA17"
+                "9A2F8D8A4BCEF6064025DC788DF06C55",
+                "9A2F8D8A4BCEF6064025DC788DF06C55"
             },
 
             new object[]
@@ -422,8 +422,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "16D8C1E7CBB033E4647A6B18997AE262",
-                "16D8C1E7CBB033E4647A6B18997AE262"
+                "36A4FA66194B49D1DA1C111E7D444EB3",
+                "36A4FA66194B49D1DA1C111E7D444EB3"
             },
 
             new object[]
@@ -436,8 +436,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2016, 12, 1),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "6303A79069EEDD654E293CF151BD725F",
-                "6303A79069EEDD654E293CF151BD725F"
+                "2F72E377036957C669D858AEA26DF62F",
+                "2F72E377036957C669D858AEA26DF62F"
             },
 
             new object[]
@@ -450,8 +450,53 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2018, 12, 1)
                 },
-                "B542CBCE107BA357EB8C5F1EBBB0A667",
-                "B542CBCE107BA357EB8C5F1EBBB0A667"
+                "F57326FFFD308ED69B83F7F451938D55",
+                "F57326FFFD308ED69B83F7F451938D55"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "ALAC",
+                new TestSettingDictionary
+                {
+                    // 2048 bytes padding (default)
+                    ["Padding"] = 2048,
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "4A2E22037B18F3318920EA47BA76825C",
+                "4A2E22037B18F3318920EA47BA76825C"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "ALAC",
+                new TestSettingDictionary
+                {
+                    // Disabled padding
+                    ["Padding"] = 0,
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "03305CCE91A686386908415EF35BDE0D",
+                "03305CCE91A686386908415EF35BDE0D"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "ALAC",
+                new TestSettingDictionary
+                {
+                    // Maximum padding
+                    ["Padding"] = int.MaxValue,
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                "not03305CCE91A686386908415EF35BDE0D",
+                "not03305CCE91A686386908415EF35BDE0D"
             },
 
             #endregion
@@ -467,8 +512,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "2B37D74AC9368DFFDE43DF697E23F8A2",
-                "75F55C40222A16F8CCDEF4D8376A06D2"
+                "09CD8B8C8E9D8BC09121D8C9F871F9B7",
+                "D281CFECEEBE5A14D0D3D953D12F71DC"
             },
 
             new object[]
@@ -480,8 +525,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "47E95BDCA389DEC124CFD925C278F64A",
-                "F50ED3DA24B6C1DE20C8A9C293AD87F7"
+                "9A0F6E1984B428F236E1209C13AED4D1",
+                "47189DECF29E68A40F60645F97714BE3"
             },
 
             new object[]
@@ -493,8 +538,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "4642FB191D7F89907144F590E77F441E",
-                "BBB345254D66856AB4EB9B08929B59FB"
+                "CB39DFBF414790022574435C2D30297D",
+                "589C93B14B5A2C8EF39239949A7729FF"
             },
 
             new object[]
@@ -506,8 +551,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "9A2D6CCB9B664FC8060379BAB297473A",
-                "A45BE0A6F3D5238EE40A301DBA4B557E"
+                "E0C34EA1479C8979D3AF3A2C98D4E699",
+                "BA760ADA182CA749797AC1B978266CB1"
             },
 
             new object[]
@@ -519,8 +564,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "E01E3C672F19640B0E1621928DA287B7",
-                "4D0867E6F01696E55BE0F640B759D11C"
+                "7BAD797AA7C5F71C7168C24077271029",
+                "A3DC2D21D29A05456284B0B8C09E1F94"
             },
 
             new object[]
@@ -532,8 +577,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "8496B2283B46C9834C4590F8E2A7E02A",
-                "AFF3299FCB43E8224737433347FAFE9C"
+                "57FCD0244E6B8DB26713BB6A64A94172",
+                "B8E8CCF5EFBA855262F0B29C4871A9B5"
             },
 
             new object[]
@@ -545,8 +590,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "8496B2283B46C9834C4590F8E2A7E02A",
-                "AFF3299FCB43E8224737433347FAFE9C"
+                "57FCD0244E6B8DB26713BB6A64A94172",
+                "B8E8CCF5EFBA855262F0B29C4871A9B5"
             },
 
             new object[]
@@ -560,8 +605,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "47E95BDCA389DEC124CFD925C278F64A",
-                "F50ED3DA24B6C1DE20C8A9C293AD87F7"
+                "9A0F6E1984B428F236E1209C13AED4D1",
+                "47189DECF29E68A40F60645F97714BE3"
             },
 
             new object[]
@@ -575,8 +620,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "EFDF64F92260F52FE3028C69CA6EDB97",
-                "EFDF64F92260F52FE3028C69CA6EDB97"
+                "78299761793D1A6EC79CBB9233156FD8",
+                "78299761793D1A6EC79CBB9233156FD8"
             },
 
             new object[]
@@ -590,8 +635,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "DA7DBA974FD60B34713EFB2434C81156",
-                "0F680DD08334DF1EDA820136FBF46292"
+                "7EDD94F25082AEEE82B2AA87E795AB6D",
+                "560039278EF9183F0FB2C47E5744E475"
             },
 
             new object[]
@@ -605,8 +650,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "32F81D150015EF59E5368657333E4D86",
-                "056E67CA4BAE1A1E985E8AD94AD0EA50"
+                "0177BB1DEB19854CA8495C4CBBB25366",
+                "DB44ACD7770861D4A3C6D7EE644C5E1C"
             },
 
             new object[]
@@ -620,8 +665,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "60363743DF5D8930E3E001FD5EEC7DD0",
-                "316B2604CF68FE96D4E593A03B029B9D"
+                "9E77C0824474E3600F1A919715609A1B",
+                "2321A80FDC5F36A1860523948548F8E5"
             },
 
             new object[]
@@ -635,8 +680,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "D9C3259A10706BBB5D8D304920024093",
-                "A314BC49F2651FF3B516EA14CE61E470"
+                "EBD496E30A953A8D0FE11C2609EFABC3",
+                "A67A5F8D1A55CD2A29EEFA54E583AEA1"
             },
 
             new object[]
@@ -650,8 +695,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "2A9FD430844A8414F808BA6103A33D5A",
-                "993B37F6A32F4E08004F5AA60F15EDA2"
+                "DE5F94EC1EACB75A3D049AE9960A7ACB",
+                "8F6858F8F86AA821789D926E0B4F63B6"
             },
 
             new object[]
@@ -665,8 +710,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "2A1E501C1249D5AADCD4502DD26A027A",
-                "931E93A50E4859B51FD34105C298B65A"
+                "B26C14FD53A4027C26FA3A57CB96AF4C",
+                "EEEAF1FB2801EF0FB49B9B87350B5587"
             },
 
             new object[]
@@ -681,8 +726,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "2A1E501C1249D5AADCD4502DD26A027A",
-                "931E93A50E4859B51FD34105C298B65A"
+                "B26C14FD53A4027C26FA3A57CB96AF4C",
+                "EEEAF1FB2801EF0FB49B9B87350B5587"
             },
 
             new object[]
@@ -697,8 +742,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "46C5CE5B3ED6618629B9FD9CCA820D59",
-                "359F3DFFCA7DF8ADF32921EA303822BB"
+                "B65D496ADABF3DBCDB24136A9655C295",
+                "6AD4BD76918C74B976FD7774163CD7ED"
             },
 
             new object[]
@@ -713,8 +758,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "872B3C73AB15D6609F12F77413EA1A63",
-                "D72D6FE7B4F9B706AB937210C5291756"
+                "365D7E965534C8690B4694B27D0CF1C9",
+                "4E99289AFF43EA387442E30EAFB7305A"
             },
 
             new object[]
@@ -728,8 +773,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "47E95BDCA389DEC124CFD925C278F64A",
-                "F50ED3DA24B6C1DE20C8A9C293AD87F7"
+                "9A0F6E1984B428F236E1209C13AED4D1",
+                "47189DECF29E68A40F60645F97714BE3"
             },
 
             new object[]
@@ -743,8 +788,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "2DF4BB413A0566BC4A38670EB902873F",
-                "BFEEE28EA746E1DB29B42958280C009C"
+                "DDA8DBB070EA36F77455A41A2628B6AA",
+                "14145EA9D279E2FA457AD85F19DC0896"
             },
 
             new object[]
@@ -758,8 +803,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "D4B4EE9F33C89116D8853D367587AD15",
-                "4D96370F97B50DAD9228FF657B9AF01E"
+                "5502D724D98AA24FE49FA8AFB0FC63A6",
+                "90D1426E435372B957E6558E4DC5D7FD"
             },
 
             #endregion

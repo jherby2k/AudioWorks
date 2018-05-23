@@ -12,7 +12,8 @@ namespace AudioWorks.Extensions.Mp4
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
         {
             ["CreationTime"] = new DateTimeSettingInfo(),
-            ["ModificationTime"] = new DateTimeSettingInfo()
+            ["ModificationTime"] = new DateTimeSettingInfo(),
+            ["Padding"] = new IntSettingInfo(0, int.MaxValue)
         };
 
         public void WriteMetadata(FileStream stream, AudioMetadata metadata, SettingDictionary settings)
@@ -46,6 +47,12 @@ namespace AudioWorks.Extensions.Mp4
                 // Generate a new ilst
                 var ilstData = GenerateIlst(originalMp4, metadata);
                 tempStream.Write(ilstData, 0, ilstData.Length);
+
+                // Write a 2048 byte free atom by default
+                var freeData = settings.TryGetValue("Padding", out int freeSize)
+                    ? new FreeAtom((uint) freeSize).GetBytes()
+                    : new FreeAtom(2048).GetBytes();
+                tempStream.Write(freeData, 0, freeData.Length);
 
                 // Update the ilst and parent atom sizes
                 tempMp4.UpdateAtomSizes((uint) tempStream.Length - tempMp4.CurrentAtom.End);
