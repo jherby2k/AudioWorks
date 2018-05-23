@@ -28,20 +28,20 @@ namespace AudioWorks.Extensions.Flac
                     if (metadata.CoverArt != null)
                         pictureBlock = new CoverArtToPictureBlockAdapter(metadata.CoverArt);
 
-                    // Iterate over the existing blocks, replacing and deleting as needed:
+                    // Iterate over the existing blocks, replacing and deleting as needed
                     using (var iterator = chain.GetIterator())
                         UpdateChain(iterator, comments, pictureBlock, padding);
 
-                    // If FLAC requests a temporary file, use a MemoryStream instead. Then overwrite the original:
                     if (chain.CheckIfTempFileNeeded(!padding.HasValue))
-                        using (var tempStream = new MemoryStream())
+                        using (var tempStream = new TempFileStream())
                         {
                             chain.WriteWithTempFile(!padding.HasValue, tempStream);
 
-                            // Clear the original stream, and copy the temporary one over it:
+                            // Clear the original stream, and copy the temporary one over it
                             stream.Position = 0;
                             stream.SetLength(tempStream.Length);
-                            tempStream.WriteTo(stream);
+                            tempStream.Position = 0;
+                            tempStream.CopyTo(stream);
                         }
                     else
                         chain.Write(!padding.HasValue);

@@ -50,12 +50,13 @@ namespace AudioWorks.Extensions.Id3
             else if (existingTagLength > 0)
             {
                 // Remove the ID3v2 tag, if present
-                using (var tempStream = new MemoryStream())
+                using (var tempStream = new TempFileStream())
                 {
                     stream.CopyTo(tempStream);
                     stream.Position = 0;
                     stream.SetLength(stream.Length - existingTagLength);
-                    tempStream.WriteTo(stream);
+                    tempStream.Position = 0;
+                    tempStream.CopyTo(stream);
                 }
             }
 
@@ -95,7 +96,7 @@ namespace AudioWorks.Extensions.Id3
         {
             // Copy the audio to memory, then rewrite the whole stream
             stream.Position = existingTagLength;
-            using (var tempStream = new MemoryStream())
+            using (var tempStream = new TempFileStream())
             {
                 // Copy the MP3 portion to memory
                 stream.CopyTo(tempStream);
@@ -104,7 +105,8 @@ namespace AudioWorks.Extensions.Id3
                 stream.Position = 0;
                 stream.SetLength(tagModel.Header.TagSizeWithHeaderFooter + tagModel.Header.PaddingSize + tempStream.Length);
                 TagManager.Serialize(tagModel, stream);
-                tempStream.WriteTo(stream);
+                tempStream.Position = 0;
+                tempStream.CopyTo(stream);
             }
         }
     }

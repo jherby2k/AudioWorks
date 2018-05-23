@@ -18,7 +18,7 @@ namespace AudioWorks.Extensions.Vorbis
             // This buffer is used for both reading and writing:
             var buffer = ArrayPool<byte>.Shared.Rent(4096);
 
-            using (var tempStream = new MemoryStream())
+            using (var tempStream = new TempFileStream())
             {
                 OggStream inputOggStream = null;
                 OggStream outputOggStream = null;
@@ -98,7 +98,8 @@ namespace AudioWorks.Extensions.Vorbis
                         // Once the end of the input is reached, overwrite the original file and return
                         stream.Position = 0;
                         stream.SetLength(tempStream.Length);
-                        tempStream.WriteTo(stream);
+                        tempStream.Position = 0;
+                        tempStream.CopyTo(stream);
                     }
                 }
                 finally

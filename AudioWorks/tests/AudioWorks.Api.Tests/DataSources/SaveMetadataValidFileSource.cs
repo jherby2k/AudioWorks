@@ -501,7 +501,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["Padding"] = int.MaxValue
                 },
-                "not2A66A8458C32EC663AE48C6294E829AB"
+                "EC00DE9B9C621367890D6055D1F067C1"
             },
 
             // PNG CoverArt (ALAC)

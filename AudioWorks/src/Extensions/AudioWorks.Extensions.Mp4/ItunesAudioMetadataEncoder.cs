@@ -19,7 +19,7 @@ namespace AudioWorks.Extensions.Mp4
         public void WriteMetadata(FileStream stream, AudioMetadata metadata, SettingDictionary settings)
         {
             // Create a temporary stream to hold the new atom structure
-            using (var tempStream = new MemoryStream())
+            using (var tempStream = new TempFileStream())
             {
                 var originalMp4 = new Mp4Model(stream);
                 var tempMp4 = new Mp4Model(tempStream);
@@ -77,7 +77,8 @@ namespace AudioWorks.Extensions.Mp4
                 // Overwrite the original stream with the new, optimized one
                 stream.Position = 0;
                 stream.SetLength(tempStream.Length);
-                tempStream.WriteTo(stream);
+                tempStream.Position = 0;
+                tempStream.CopyTo(stream);
             }
         }
 

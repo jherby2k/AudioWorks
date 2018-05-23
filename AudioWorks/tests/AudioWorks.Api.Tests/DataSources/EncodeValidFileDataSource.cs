@@ -460,7 +460,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "ALAC",
                 new TestSettingDictionary
                 {
-                    // 2048 bytes padding (default)
+                    // Default padding (explicit)
                     ["Padding"] = 2048,
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
@@ -495,8 +495,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "not03305CCE91A686386908415EF35BDE0D",
-                "not03305CCE91A686386908415EF35BDE0D"
+                "1C983589D6D603C4975D02635D3DE7EC",
+                "1C983589D6D603C4975D02635D3DE7EC"
             },
 
             #endregion
