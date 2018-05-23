@@ -873,7 +873,7 @@ namespace AudioWorks.Common.Tests
                 formatter.Serialize(stream, new AudioMetadata { AlbumGain = "0.80" });
                 stream.Position = 0;
 
-                Assert.Equal("0.80", ((AudioMetadata)formatter.Deserialize(stream)).AlbumGain);
+                Assert.Equal("0.80", ((AudioMetadata) formatter.Deserialize(stream)).AlbumGain);
             }
         }
     }
