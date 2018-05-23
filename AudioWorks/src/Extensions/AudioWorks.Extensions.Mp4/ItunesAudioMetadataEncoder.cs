@@ -44,17 +44,15 @@ namespace AudioWorks.Extensions.Mp4
                     .Where(info => !info.FourCc.Equals("ilst", StringComparison.Ordinal)))
                     originalMp4.CopyAtom(childAtom, tempStream);
 
-                // Generate a new ilst
-                var ilstData = GenerateIlst(originalMp4, metadata);
-                tempStream.Write(ilstData, 0, ilstData.Length);
+                // Write the new ilst atom
+                WriteIlst(originalMp4, metadata, tempStream);
 
                 // Write a 2048 byte free atom by default
-                var freeData = settings.TryGetValue("Padding", out int freeSize)
-                    ? new FreeAtom((uint) freeSize).GetBytes()
-                    : new FreeAtom(2048).GetBytes();
-                tempStream.Write(freeData, 0, freeData.Length);
+                if (!settings.TryGetValue("Padding", out int freeSize))
+                    freeSize = 2048;
+                new FreeAtom((uint) freeSize).Write(tempStream);
 
-                // Update the ilst and parent atom sizes
+                // Update the parent atom sizes
                 tempMp4.UpdateAtomSizes((uint) tempStream.Length - tempMp4.CurrentAtom.End);
 
                 // Update the time stamps, if requested
@@ -83,10 +81,10 @@ namespace AudioWorks.Extensions.Mp4
             }
         }
 
-        [NotNull]
-        static byte[] GenerateIlst(
+        static void WriteIlst(
             [NotNull] Mp4Model originalMp4,
-            [NotNull] AudioMetadata metadata)
+            [NotNull] AudioMetadata metadata,
+            [NotNull] Stream output)
         {
             // Always store images in JPEG format for AAC, since it is also lossy
             originalMp4.DescendToAtom("moov", "trak", "mdia", "minf", "stbl", "stsd", "mp4a", "esds");
@@ -101,7 +99,7 @@ namespace AudioWorks.Extensions.Mp4
                     .Where(reverseDnsAtom => reverseDnsAtom.Name.Equals("iTunSMPB", StringComparison.Ordinal)))
                     adaptedMetadata.Prepend(reverseDnsAtom);
 
-            return adaptedMetadata.GetBytes();
+            adaptedMetadata.Write(output);
         }
     }
 }

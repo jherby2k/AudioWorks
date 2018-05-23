@@ -25,5 +25,11 @@ namespace AudioWorks.Extensions.Mp4
             Array.Reverse(buffer);
             Write(buffer);
         }
+
+        internal void WriteZeros(int count)
+        {
+            for (var i = 0; i < count; i++)
+                Write((byte) 0);
+        }
     }
 }

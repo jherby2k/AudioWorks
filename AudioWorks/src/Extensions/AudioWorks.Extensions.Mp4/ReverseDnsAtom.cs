@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
 
@@ -17,9 +18,9 @@ namespace AudioWorks.Extensions.Mp4
             _data = data;
         }
 
-        internal override byte[] GetBytes()
+        internal override void Write(Stream output)
         {
-            return _data;
+            output.Write(_data, 0, _data.Length);
         }
     }
 }

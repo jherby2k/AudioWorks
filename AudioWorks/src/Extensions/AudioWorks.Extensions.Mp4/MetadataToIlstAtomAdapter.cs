@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 
@@ -50,22 +48,26 @@ namespace AudioWorks.Extensions.Mp4
             _atoms.Insert(0, atom);
         }
 
-        [Pure, NotNull]
-        internal byte[] GetBytes()
+        internal void Write([NotNull] Stream output)
         {
-            if (_atoms.Count == 0) return Array.Empty<byte>();
+            if (_atoms.Count == 0) return;
 
-            var atomData = _atoms.Select(x => x.GetBytes()).ToArray();
-            var atomSize = atomData.Sum(data => data.Length) + 8;
+            var startPosition = output.Position;
 
-            using (var stream = new MemoryStream(atomSize))
-            using (var writer = new Mp4Writer(stream))
+            using (var writer = new Mp4Writer(output))
             {
-                writer.WriteBigEndian((uint) atomSize);
-                writer.Write(BitConverter.GetBytes(0x74736c69));
-                foreach (var subAtomData in atomData)
-                    writer.Write(subAtomData);
-                return stream.GetBuffer();
+                // Write the atom header, but we don't know the size yet
+                writer.Seek(4, SeekOrigin.Current);
+                writer.WriteBigEndian(0x696c7374); // 'ilst'
+
+                foreach (var atom in _atoms)
+                    atom.Write(output);
+
+                // Update the size
+                var size = output.Position - startPosition;
+                writer.BaseStream.Position = startPosition;
+                writer.WriteBigEndian((uint) size);
+                writer.Seek((int) size - 4, SeekOrigin.Current);
             }
         }
     }

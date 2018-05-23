@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Buffers.Binary;
+using System.IO;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 
@@ -23,25 +24,24 @@ namespace AudioWorks.Extensions.Mp4
             Value = CoverArtFactory.Create(imageData);
         }
 
-        internal override byte[] GetBytes()
+        internal override void Write(Stream output)
         {
-            var result = new byte[Value.Data.Length + 24];
+            using (var writer = new Mp4Writer(output))
+            {
+                // Write the atom header
+                writer.WriteBigEndian((uint) Value.Data.Length + 24);
+                writer.WriteBigEndian(0x636F7672); // 'covr'
 
-            // Write the atom header
-            BinaryPrimitives.WriteUInt32BigEndian(result, (uint) result.Length);
-            BinaryPrimitives.WriteInt32BigEndian(result.AsSpan().Slice(4), 0x636F7672); // 'covr'
+                // Write the data atom header
+                writer.WriteBigEndian((uint) Value.Data.Length + 16);
+                writer.WriteBigEndian(0x64617461); // 'data'
 
-            // Write the data atom header
-            BinaryPrimitives.WriteUInt32BigEndian(result.AsSpan().Slice(8), (uint) result.Length - 8);
-            BinaryPrimitives.WriteInt32BigEndian(result.AsSpan().Slice(12), 0x64617461); // 'data'
+                // Set the type flag to PNG or JPEG
+                writer.WriteBigEndian(Value.Lossless ? 14u : 13u);
+                writer.WriteZeros(4);
 
-            // Set the type flag to PNG or JPEG
-            result[19] = (byte) (Value.Lossless ? 0x0E : 0x0D);
-
-            // Set the atom contents
-            Value.Data.CopyTo(result.AsSpan().Slice(24));
-
-            return result;
+                writer.Write(Value.Data.ToArray());
+            }
         }
     }
 }

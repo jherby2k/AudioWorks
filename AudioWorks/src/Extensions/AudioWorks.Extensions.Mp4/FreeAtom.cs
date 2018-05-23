@@ -1,5 +1,4 @@
-﻿using System;
-using System.Buffers.Binary;
+﻿using System.IO;
 
 namespace AudioWorks.Extensions.Mp4
 {
@@ -12,17 +11,18 @@ namespace AudioWorks.Extensions.Mp4
             _size = size;
         }
 
-        internal override byte[] GetBytes()
+        internal override void Write(Stream output)
         {
-            if (_size <= 8) return Array.Empty<byte>();
+            if (_size <= 8) return;
 
-            var result = new byte[_size];
+            using (var writer = new Mp4Writer(output))
+            {
+                // Write the atom header
+                writer.WriteBigEndian(_size);
+                writer.WriteBigEndian(0x66726565);  // 'free'
 
-            // Write the atom header
-            BinaryPrimitives.WriteUInt32BigEndian(result, _size);
-            BinaryPrimitives.WriteInt32BigEndian(result.AsSpan().Slice(4), 0x66726565);  // 'free'
-
-            return result;
+                writer.WriteZeros((int) _size - 8);
+            }
         }
     }
 }

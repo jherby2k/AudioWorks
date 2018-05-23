@@ -1,7 +1,7 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Buffers.Binary;
+﻿using System;
 using System.Globalization;
+using System.IO;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp4
 {
@@ -30,23 +30,24 @@ namespace AudioWorks.Extensions.Mp4
                     : (byte) 0;
         }
 
-        internal override byte[] GetBytes()
+        internal override void Write(Stream output)
         {
-            Span<byte> result = stackalloc byte[32];
+            using (var writer = new Mp4Writer(output))
+            {
+                // Write the atom header
+                writer.WriteBigEndian(32);
+                writer.WriteBigEndian(0x74726B6E); // 'trkn'
 
-            // Write the atom header:
-            BinaryPrimitives.WriteUInt32BigEndian(result, 32);
-            BinaryPrimitives.WriteInt32BigEndian(result.Slice(4), 0x74726B6E); // 'trkn'
+                // Write the data atom header
+                writer.WriteBigEndian(24);
+                writer.WriteBigEndian(0x64617461); // 'data'
 
-            // Write the data atom header:
-            BinaryPrimitives.WriteUInt32BigEndian(result.Slice(8), 24);
-            BinaryPrimitives.WriteInt32BigEndian(result.Slice(12), 0x64617461); // 'data'
-
-            // Set the track number (the rest of the bytes are set to 0):
-            result[27] = TrackNumber;
-            result[29] = TrackCount;
-
-            return result.ToArray();
+                writer.WriteZeros(11);
+                writer.Write(TrackNumber);
+                writer.WriteZeros(1);
+                writer.Write(TrackCount);
+                writer.WriteZeros(2);
+            }
         }
     }
 }
