@@ -18,7 +18,7 @@ namespace AudioWorks.Extensions.Wave
         internal void Initialize()
         {
             BaseStream.Position = 0;
-            if (!string.Equals("RIFF", new string(ReadChars(4)), StringComparison.OrdinalIgnoreCase))
+            if (!new string(ReadChars(4)).Equals("RIFF", StringComparison.OrdinalIgnoreCase))
                 throw new AudioInvalidException("Not a valid RIFF stream.");
 
             RiffChunkSize = ReadUInt32();
@@ -38,7 +38,7 @@ namespace AudioWorks.Extensions.Wave
             var currentChunkId = new string(ReadChars(4));
             var currentChunkLength = ReadUInt32();
 
-            while (!string.Equals(chunkId, currentChunkId, StringComparison.Ordinal))
+            while (!currentChunkId.Equals(chunkId, StringComparison.Ordinal))
             {
                 // Chunks are word-aligned:
                 BaseStream.Seek(currentChunkLength + currentChunkLength % 2, SeekOrigin.Current);

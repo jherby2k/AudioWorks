@@ -25,7 +25,7 @@ namespace AudioWorks.Extensions.ReplayGain
         {
             _analyzer = new R128Analyzer((uint) info.Channels, (uint) info.SampleRate,
                 settings.TryGetValue("PeakAnalysis", out var peakAnalysis) &&
-                string.Equals("Interpolated", (string) peakAnalysis, StringComparison.Ordinal));
+                ((string) peakAnalysis).Equals("Interpolated", StringComparison.Ordinal));
 
             _groupState = (GroupState) groupToken.GetOrSetGroupState(new GroupState());
             // ReSharper disable once PossibleNullReferenceException

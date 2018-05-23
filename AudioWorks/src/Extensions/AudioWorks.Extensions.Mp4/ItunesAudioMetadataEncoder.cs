@@ -27,9 +27,9 @@ namespace AudioWorks.Extensions.Mp4
 
                 // Copy the ftyp and moov atoms to the temporary stream
                 originalMp4.CopyAtom(topAtoms.Single(atom =>
-                        string.Equals("ftyp", atom.FourCc, StringComparison.Ordinal)), tempStream);
+                    atom.FourCc.Equals("ftyp", StringComparison.Ordinal)), tempStream);
                 originalMp4.CopyAtom(topAtoms.Single(atom =>
-                        string.Equals("moov", atom.FourCc, StringComparison.Ordinal)), tempStream);
+                    atom.FourCc.Equals("moov", StringComparison.Ordinal)), tempStream);
 
                 // Move to the start of the ilst atom, or where it should be
                 originalMp4.DescendToAtom("moov", "udta", "meta");
@@ -62,12 +62,12 @@ namespace AudioWorks.Extensions.Mp4
 
                 // Update the stco atom to reflect the new location of mdat
                 tempMp4.UpdateStco((uint) (tempStream.Length - topAtoms.Single(atom =>
-                                               string.Equals("mdat", atom.FourCc, StringComparison.Ordinal)).Start));
+                                               atom.FourCc.Equals("mdat", StringComparison.Ordinal)).Start));
 
                 // Copy the mdat atom to the temporary stream, after the moov atom
                 tempStream.Seek(0, SeekOrigin.End);
                 originalMp4.CopyAtom(topAtoms.Single(atom =>
-                    string.Equals("mdat", atom.FourCc, StringComparison.Ordinal)), tempStream);
+                    atom.FourCc.Equals("mdat", StringComparison.Ordinal)), tempStream);
 
                 // Overwrite the original stream with the new, optimized one
                 stream.Position = 0;
@@ -86,18 +86,13 @@ namespace AudioWorks.Extensions.Mp4
             var adaptedMetadata = new MetadataToIlstAtomAdapter(metadata,
                 new EsdsAtom(originalMp4.ReadAtom(originalMp4.CurrentAtom)).IsAac);
 
-            // If there is an existing ilst atom, "Reverse DNS" subatoms may need to be preserved
+            // If there is an existing ilst atom, The iTunSMPB "Reverse DNS" subatom should be preserved
             if (originalMp4.DescendToAtom("moov", "udta", "meta", "ilst"))
                 foreach (var reverseDnsAtom in originalMp4.GetChildAtomInfo()
-                    .Where(childAtom => string.Equals("----", childAtom.FourCc, StringComparison.Ordinal))
-                    .Select(childAtom => new ReverseDnsAtom(originalMp4.ReadAtom(childAtom))))
-                    switch (reverseDnsAtom.Name)
-                    {
-                        // Always preserve the iTunSMPB (gapless playback) atom
-                        case "iTunSMPB":
-                            adaptedMetadata.Prepend(reverseDnsAtom);
-                            break;
-                    }
+                    .Where(childAtom => childAtom.FourCc.Equals("----", StringComparison.Ordinal))
+                    .Select(childAtom => new ReverseDnsAtom(originalMp4.ReadAtom(childAtom)))
+                    .Where(reverseDnsAtom => reverseDnsAtom.Name.Equals("iTunSMPB", StringComparison.Ordinal)))
+                    adaptedMetadata.Prepend(reverseDnsAtom);
 
             return adaptedMetadata.GetBytes();
         }

@@ -59,7 +59,7 @@ namespace AudioWorks.Extensions.Mp4
                         if (subAtom.End > _stream.Length)
                             throw new EndOfStreamException($"{fourCc} atom is missing.");
 
-                        if (string.Equals(subAtom.FourCc, fourCc, StringComparison.Ordinal))
+                        if (fourCc.Equals(subAtom.FourCc, StringComparison.Ordinal))
                         {
                             _atomInfoStack.Push(subAtom);
                             _stream.Seek(GetDataLength(fourCc), SeekOrigin.Current);
@@ -71,7 +71,7 @@ namespace AudioWorks.Extensions.Mp4
                     } while (_stream.Position < (_atomInfoStack.Count == 0 ? _stream.Length : _atomInfoStack.Peek().End));
             }
 
-            return string.Equals(_atomInfoStack.Peek().FourCc, hierarchy.Last(), StringComparison.Ordinal);
+            return hierarchy.Last().Equals(_atomInfoStack.Peek().FourCc, StringComparison.Ordinal);
         }
 
         internal void Reset()

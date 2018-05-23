@@ -24,13 +24,10 @@ namespace AudioWorks.Extensions.Mp4
                 if (esds.IsAac)
                 {
                     mp4.Reset();
-                    return AudioInfo.CreateForLossy(
-                        "AAC",
-                        esds.Channels,
-                        (int) esds.SampleRate,
-                        sampleCount,
+                    return AudioInfo.CreateForLossy("AAC", esds.Channels, (int) esds.SampleRate, sampleCount,
                         CalculateBitRate(mp4.GetChildAtomInfo().Single(atom =>
-                                string.Equals("mdat", atom.FourCc, StringComparison.Ordinal)).Size, sampleCount,
+                                atom.FourCc.Equals("mdat", StringComparison.Ordinal)).Size,
+                            sampleCount,
                             esds.SampleRate));
                 }
 
