@@ -1,5 +1,5 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions
 {
@@ -9,7 +9,8 @@ namespace AudioWorks.Extensions
     /// <seealso cref="Stream" />
     public sealed class TempFileStream : Stream
     {
-        readonly FileStream _fileStream = File.Open(Path.GetTempFileName(), FileMode.Truncate);
+        [NotNull]
+        readonly FileStream _fileStream = File.Create(Path.GetTempFileName(), 4096, FileOptions.DeleteOnClose);
 
         /// <inheritdoc/>
         public override void Flush() => _fileStream.Flush();
@@ -48,17 +49,8 @@ namespace AudioWorks.Extensions
         /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {
-            try
-            {
-                var fileName = _fileStream.Name;
-                if (disposing)
-                    _fileStream.Dispose();
-                File.Delete(fileName);
-            }
-            catch (Exception)
-            {
-                // Ignore any errors during disposal
-            }
+            if (disposing)
+                _fileStream.Dispose();
 
             base.Dispose(disposing);
         }
