@@ -49,7 +49,7 @@
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.0" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-dev001312" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0004" />
     <PackageReference Include="System.Memory" Version="4.5.0-rc1" />
   </ItemGroup>
 
