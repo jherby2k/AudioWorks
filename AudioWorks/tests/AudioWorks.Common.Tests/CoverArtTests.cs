@@ -14,7 +14,7 @@ namespace AudioWorks.Common.Tests
             MemberType = typeof(ValidImageFileDataSource))]
         public void HasExpectedWidth([NotNull] string fileName, int expectedWidth)
         {
-            Assert.Equal(expectedWidth, CoverArtFactory.Create(
+            Assert.Equal(expectedWidth, CoverArtFactory.GetOrCreate(
                     Path.Combine(
                         new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                         "TestFiles",
@@ -28,7 +28,7 @@ namespace AudioWorks.Common.Tests
             MemberType = typeof(ValidImageFileDataSource))]
         public void HasExpectedHeight([NotNull] string fileName, int expectedHeight)
         {
-            Assert.Equal(expectedHeight, CoverArtFactory.Create(
+            Assert.Equal(expectedHeight, CoverArtFactory.GetOrCreate(
                     Path.Combine(
                         new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                         "TestFiles",
@@ -42,7 +42,7 @@ namespace AudioWorks.Common.Tests
             MemberType = typeof(ValidImageFileDataSource))]
         public void HasExpectedColorDepth([NotNull] string fileName, int expectedColorDepth)
         {
-            Assert.Equal(expectedColorDepth, CoverArtFactory.Create(
+            Assert.Equal(expectedColorDepth, CoverArtFactory.GetOrCreate(
                     Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
@@ -56,7 +56,7 @@ namespace AudioWorks.Common.Tests
             MemberType = typeof(ValidImageFileDataSource))]
         public void HasExpectedLossless([NotNull] string fileName, bool expectedLossless)
         {
-            Assert.Equal(expectedLossless, CoverArtFactory.Create(
+            Assert.Equal(expectedLossless, CoverArtFactory.GetOrCreate(
                     Path.Combine(
                         new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                         "TestFiles",
@@ -70,7 +70,7 @@ namespace AudioWorks.Common.Tests
             MemberType = typeof(ValidImageFileDataSource))]
         public void HasExpectedMimeType([NotNull] string fileName, [NotNull] string mimeType)
         {
-            Assert.Equal(mimeType, CoverArtFactory.Create(
+            Assert.Equal(mimeType, CoverArtFactory.GetOrCreate(
                     Path.Combine(
                         new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                         "TestFiles",
@@ -84,7 +84,7 @@ namespace AudioWorks.Common.Tests
             MemberType = typeof(ValidImageFileDataSource))]
         public void GetDataReturnsExpectedValue([NotNull] string fileName, [NotNull] string expectedHash)
         {
-            Assert.Equal(expectedHash, HashUtility.CalculateHash(CoverArtFactory.Create(
+            Assert.Equal(expectedHash, HashUtility.CalculateHash(CoverArtFactory.GetOrCreate(
                     Path.Combine(
                         new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                         "TestFiles",

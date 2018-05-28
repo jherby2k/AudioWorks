@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using JetBrains.Annotations;
 using SixLabors.ImageSharp;
 
@@ -12,28 +15,38 @@ namespace AudioWorks.Common
     public static class CoverArtFactory
     {
         [NotNull, ItemNotNull] static readonly string[] _acceptedExtensions = { ".bmp", ".png", ".jpg", ".jpeg" };
+        [NotNull] static readonly Dictionary<string, WeakReference<CoverArt>> _internedCovers =
+            new Dictionary<string, WeakReference<CoverArt>>();
 
         /// <summary>
-        /// Creates a new <see cref="ICoverArt"/> object from a byte array.
+        /// Returns an <see cref="ICoverArt"/> object from a byte array.
         /// </summary>
+        /// <remarks>
+        /// If an identical image has already been loaded into memory, this method will return a copy of the existing
+        /// <see cref="ICoverArt"/> instance.
+        /// </remarks>
         /// <param name="data">The raw image data.</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="data"/> is null.</exception>
         /// <exception cref="ImageUnsupportedException">Thrown if <paramref name="data"/> is not in a supported image
         /// format.</exception>
         /// <exception cref="ImageInvalidException">Thrown if <paramref name="data"/> is not a valid image.</exception>
         [NotNull]
-        public static ICoverArt Create([NotNull] byte[] data)
+        public static ICoverArt GetOrCreate([NotNull] byte[] data)
         {
             if (data == null)
                 throw new ArgumentNullException(nameof(data), "Value cannot be null.");
 
             using (var memoryStream = new MemoryStream(data))
-                return new CoverArt(memoryStream);
+                return GetOrCreate(memoryStream);
         }
 
         /// <summary>
-        /// Creates a new <see cref="ICoverArt"/> object from an image file.
+        /// Returns an <see cref="ICoverArt"/> object for an image file.
         /// </summary>
+        /// <remarks>
+        /// If an identical image has already been loaded into memory, this method will return a copy of the existing
+        /// <see cref="ICoverArt"/> instance.
+        /// </remarks>
         /// <param name="path">The fully-qualified path to the file.</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="path"/> is null or empty.</exception>
         /// <exception cref="FileNotFoundException">Thrown if <paramref name="path"/> does not exist.</exception>
@@ -42,7 +55,7 @@ namespace AudioWorks.Common
         /// <exception cref="ImageInvalidException">Thrown if <paramref name="path"/> is not a valid image file.
         /// </exception>
         [NotNull]
-        public static ICoverArt Create([NotNull] string path)
+        public static ICoverArt GetOrCreate([NotNull] string path)
         {
             if (string.IsNullOrEmpty(path))
                 throw new ArgumentNullException(nameof(path), "Value cannot be null or empty.");
@@ -53,7 +66,7 @@ namespace AudioWorks.Common
                 throw new ImageUnsupportedException("Not a supported image file format.", path);
 
             using (var fileStream = File.OpenRead(path))
-                return new CoverArt(fileStream);
+                return GetOrCreate(fileStream);
         }
 
         /// <summary>
@@ -76,6 +89,43 @@ namespace AudioWorks.Common
                 image.SaveAsJpeg(tempStream);
                 tempStream.Position = 0;
                 return new CoverArt(tempStream);
+            }
+        }
+
+        [NotNull]
+        static ICoverArt GetOrCreate([NotNull] Stream stream)
+        {
+            var hash = GetHash(stream);
+            lock (_internedCovers)
+            {
+                // See if the cover is already interned
+                if (_internedCovers.TryGetValue(hash, out var coverReference))
+                {
+                    // If the reference is alive, use it
+                    if (coverReference.TryGetTarget(out var coverArt))
+                        return coverArt;
+
+                    // If the reference is dead, remove it
+                    _internedCovers.Remove(hash);
+                }
+
+                // Intern the cover
+                var result = new CoverArt(stream);
+                _internedCovers.Add(hash, new WeakReference<CoverArt>(result));
+                return result;
+            }
+        }
+
+        [Pure, NotNull]
+        [SuppressMessage("Microsoft.Security", "CA5351:Do not use insecure cryptographic algorithm MD5.",
+            Justification = "Usage is not security critical")]
+        static string GetHash([NotNull] Stream stream)
+        {
+            using (var md5 = MD5.Create())
+            {
+                var result = BitConverter.ToString(md5.ComputeHash(stream));
+                stream.Position = 0;
+                return result;
             }
         }
     }

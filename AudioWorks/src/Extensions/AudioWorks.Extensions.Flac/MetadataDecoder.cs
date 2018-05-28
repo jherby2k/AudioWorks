@@ -51,7 +51,7 @@ namespace AudioWorks.Extensions.Flac
                 case MetadataType.Picture:
                     var picture = Marshal.PtrToStructure<PictureMetadataBlock>(metadataBlock).Picture;
                     if (picture.Type == PictureType.CoverFront || picture.Type == PictureType.Other)
-                        AudioMetadata.CoverArt = CoverArtFactory.Create(
+                        AudioMetadata.CoverArt = CoverArtFactory.GetOrCreate(
                             new Span<byte>(picture.Data.ToPointer(), (int) picture.DataLength).ToArray());
                     break;
             }

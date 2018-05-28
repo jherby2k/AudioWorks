@@ -54,10 +54,10 @@ namespace AudioWorks.Commands
             try
             {
                 if (FileInfo != null)
-                    WriteObject(CoverArtFactory.Create(FileInfo.FullName));
+                    WriteObject(CoverArtFactory.GetOrCreate(FileInfo.FullName));
                 else
                     foreach (var path in this.GetFileSystemPaths(Path, LiteralPath))
-                        WriteObject(CoverArtFactory.Create(path));
+                        WriteObject(CoverArtFactory.GetOrCreate(path));
             }
             catch (ItemNotFoundException e)
             {

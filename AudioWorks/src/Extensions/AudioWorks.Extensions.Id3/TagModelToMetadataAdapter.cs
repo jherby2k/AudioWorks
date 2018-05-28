@@ -88,7 +88,7 @@ namespace AudioWorks.Extensions.Id3
                         break;
 
                     case FramePicture framePicture:
-                        CoverArt = CoverArtFactory.Create(framePicture.PictureData);
+                        CoverArt = CoverArtFactory.GetOrCreate(framePicture.PictureData);
                         break;
                 }
         }

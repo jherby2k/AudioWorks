@@ -25,7 +25,7 @@ namespace AudioWorks.Extensions.Vorbis
                 // Seek past the width, height, color depth and type
                 reader.BaseStream.Seek(16, SeekOrigin.Current);
 
-                return CoverArtFactory.Create(reader.ReadBytes((int) reader.ReadUInt32BigEndian()));
+                return CoverArtFactory.GetOrCreate(reader.ReadBytes((int) reader.ReadUInt32BigEndian()));
             }
         }
 

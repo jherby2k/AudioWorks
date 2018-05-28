@@ -430,7 +430,7 @@ namespace AudioWorks.Api.Tests
             File.Copy(Path.Combine(sourceDirectory, fileName), path, true);
             var audioFile = new TaggedAudioFile(path) { Metadata = metadata };
             if (imageFileName != null)
-                audioFile.Metadata.CoverArt = CoverArtFactory.Create(Path.Combine(sourceDirectory, imageFileName));
+                audioFile.Metadata.CoverArt = CoverArtFactory.GetOrCreate(Path.Combine(sourceDirectory, imageFileName));
 
             audioFile.SaveMetadata(settings);
 

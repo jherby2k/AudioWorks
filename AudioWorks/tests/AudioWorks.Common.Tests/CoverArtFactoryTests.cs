@@ -13,19 +13,19 @@ namespace AudioWorks.Common.Tests
         [Fact(DisplayName = "CoverArtFactory's Create method throws an exception if the path is null")]
         public void CreateDataNullThrowsException()
         {
-            Assert.Throws<ArgumentNullException>(() => CoverArtFactory.Create((byte[]) null));
+            Assert.Throws<ArgumentNullException>(() => CoverArtFactory.GetOrCreate((byte[]) null));
         }
 
         [Fact(DisplayName = "CoverArtFactory's Create method throws an exception if the path is null")]
         public void CreatePathNullThrowsException()
         {
-            Assert.Throws<ArgumentNullException>(() => CoverArtFactory.Create((string) null));
+            Assert.Throws<ArgumentNullException>(() => CoverArtFactory.GetOrCreate((string) null));
         }
 
         [Fact(DisplayName = "CoverArtFactory's Create method throws an exception if the path cannot be found")]
         public void CreatePathNotFoundThrowsException()
         {
-            Assert.Throws<FileNotFoundException>(() => CoverArtFactory.Create("Foo"));
+            Assert.Throws<FileNotFoundException>(() => CoverArtFactory.GetOrCreate("Foo"));
         }
 
         [Theory(DisplayName = "CoverArtFactory's Create method throws an exception if the path is an unsupported file")]
@@ -33,7 +33,7 @@ namespace AudioWorks.Common.Tests
         public void CreatePathUnsupportedThrowsException([NotNull] string fileName)
         {
             Assert.Throws<ImageUnsupportedException>(() =>
-                CoverArtFactory.Create(Path.Combine(
+                CoverArtFactory.GetOrCreate(Path.Combine(
                     new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                     "TestFiles",
                     "Unsupported",
@@ -45,7 +45,7 @@ namespace AudioWorks.Common.Tests
         public void CreatePathInvalidThrowsException([NotNull] string fileName)
         {
             Assert.Throws<ImageInvalidException>(() =>
-                CoverArtFactory.Create(Path.Combine(
+                CoverArtFactory.GetOrCreate(Path.Combine(
                     new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                     "TestFiles",
                     "Invalid",
