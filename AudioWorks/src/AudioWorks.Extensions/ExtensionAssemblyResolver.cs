@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyModel;
-using Microsoft.Extensions.DependencyModel.Resolution;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +6,8 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using JetBrains.Annotations;
+using Microsoft.Extensions.DependencyModel;
+using Microsoft.Extensions.DependencyModel.Resolution;
 
 namespace AudioWorks.Extensions
 {
@@ -47,9 +47,14 @@ namespace AudioWorks.Extensions
 
         void ResolveWithLoader()
         {
-            // .NET Core can resolve dependencies from each extension's deps.json file
+            // .NET Core can additionally look for dependencies in each extension's deps.json file
             var dependencyContext = DependencyContext.Load(Assembly);
-            var assemblyResolver = new PackageCompilationAssemblyResolver();
+            var dependencyResolver = new CompositeCompilationAssemblyResolver(new ICompilationAssemblyResolver[]
+            {
+                new AppBaseCompilationAssemblyResolver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)),
+                new AppBaseCompilationAssemblyResolver(Path.GetDirectoryName(Assembly.Location)),
+                new PackageCompilationAssemblyResolver()
+            });
 
             AssemblyLoadContext.Default.Resolving += (context, name) =>
             {
@@ -61,7 +66,7 @@ namespace AudioWorks.Extensions
                 if (runtimeLibrary != null)
                 {
                     var assemblies = new List<string>(1);
-                    assemblyResolver.TryResolveAssemblyPaths(new CompilationLibrary(
+                    dependencyResolver.TryResolveAssemblyPaths(new CompilationLibrary(
                         runtimeLibrary.Type,
                         runtimeLibrary.Name,
                         runtimeLibrary.Version,
