@@ -16,7 +16,7 @@ namespace AudioWorks.Common.Tests
 
             using (var md5 = MD5.Create())
                 return BitConverter.ToString(md5.ComputeHash(data))
-#if NETCOREAPP2_0
+#if NETCOREAPP2_1
                     .Replace("-", string.Empty, StringComparison.InvariantCulture);
 #else
                     .Replace("-", string.Empty);
