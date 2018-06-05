@@ -43,78 +43,79 @@ namespace AudioWorks.Extensions
                 new PackageSource("https://api.nuget.org/v3/index.json"),
                 Repository.Provider.GetCoreV3());
 
-            var packageSearchResource = customRepository.GetResourceAsync<PackageSearchResource>().Result;
-            var availablePackages = packageSearchResource.SearchAsync("AudioWorks.Extensions",
-                new SearchFilter(true), 0, 100, new NugetLogger(), CancellationToken.None).Result;
-
-            var project = new ExtensionNuGetProject("C:\\Project");
-
-            var settings = Settings.LoadDefaultSettings(project.Root);
+            var projectRoot = "C:\\Project";
+            var settings = Settings.LoadDefaultSettings(projectRoot);
             var packageManager = new NuGetPackageManager(
                 new SourceRepositoryProvider(settings, Repository.Provider.GetCoreV3()),
                 settings,
-                project.Root);
+                projectRoot);
 
-            // Install any packages not already installed
-            var installedPackages = packageManager
-                .GetInstalledPackagesInDependencyOrder(project, CancellationToken.None).Result.ToArray();
-            foreach (var package in availablePackages
-                .Select(item => item.Identity)
-                .Except(installedPackages, new PackageIdentityComparer()))
+            var packageSearchResource = customRepository.GetResourceAsync<PackageSearchResource>().Result;
+            var publishedPackages = packageSearchResource.SearchAsync("AudioWorks.Extensions",
+                new SearchFilter(true), 0, 100, new NugetLogger(), CancellationToken.None).Result.ToArray();
+
+            foreach (var publishedPackage in publishedPackages)
             {
+                var extensionDir = new DirectoryInfo(Path.Combine(projectRoot, publishedPackage.Identity.ToString()));
+                if (extensionDir.Exists) break;
+
+                extensionDir.Create();
+                var stagingRootDir = extensionDir.CreateSubdirectory("Staging");
+
+                var project = new ExtensionNuGetProject(stagingRootDir.FullName);
+
                 packageManager.InstallPackageAsync(
                     project,
-                    package,
+                    publishedPackage.Identity,
                     new ResolutionContext(DependencyBehavior.Lowest, true, false, VersionConstraints.None),
                     new ExtensionProjectContext(new NugetLogger()),
                     customRepository,
                     new[] { defaultRepository },
                     CancellationToken.None).Wait();
 
-                // Create a bin folder for the extension
-                var extensionDir = Path.Combine(@"C:\Project\bin", package.Id);
-                if (Directory.Exists(extensionDir))
-                    Directory.Delete(extensionDir, true);
-                Directory.CreateDirectory(extensionDir);
-
-                // Copy newly installed assemblies into the bin folder
-                foreach (var dependency in project.InstalledPackages)
+                // Copy newly installed packages into the extension folder
+                foreach (var installedPackage in project.InstalledPackages)
                 {
-                    var sourceDir = project.GetInstalledPath(dependency);
-                    CopyDirectory(Path.Combine(sourceDir, "lib", "netstandard2.0"), extensionDir);
-                    CopyDirectory(Path.Combine(sourceDir, "contentFiles", "any", "netstandard2.0"), extensionDir);
+                    var stagingDir = project.GetInstalledPath(installedPackage);
+
+                    var runtimesDir = new DirectoryInfo(Path.Combine(stagingDir, "runtimes"));
+                    if (runtimesDir.Exists)
+                        CopyDirectory(runtimesDir, extensionDir.CreateSubdirectory("runtimes"));
+
+                    var libDir = new DirectoryInfo(Path.Combine(stagingDir, "lib"));
+                    if (libDir.Exists)
+                        CopyDirectory(
+                            libDir.GetDirectories("netstandard*").OrderByDescending(dir => dir.Name).First(),
+                            extensionDir);
+
+                    var contentDir = new DirectoryInfo(Path.Combine(stagingDir, "contentFiles", "any"));
+                    if (contentDir.Exists)
+                        CopyDirectory(
+                            contentDir.GetDirectories("netstandard*").OrderByDescending(dir => dir.Name).First(),
+                            extensionDir);
                 }
 
-                project.ClearInstalledPackagesList();
-
-                // Remove obsolete versions by simply deleting the directory
-                //foreach (var obsoletePackage in packageManager
-                //    .GetInstalledPackagesInDependencyOrder(project, CancellationToken.None).Result
-                //    .GroupBy(package => package.Id)
-                //    .Select(group => group.OrderByDescending(package => package.Version).Skip(1))
-                //    .SelectMany(package => package))
-                //{
-                //    Directory.Delete(Path.Combine(project.Root, $"{obsoletePackage.Id}.{obsoletePackage.Version}"), true);
-                //}
+                stagingRootDir.Delete(true);
             }
+
+            // Remove any extensions that aren't published
+            foreach (var obsoleteExtension in new DirectoryInfo(projectRoot).GetDirectories()
+                .Select(dir => dir.Name)
+                .Except(publishedPackages.Select(package => package.Identity.ToString()),
+                    StringComparer.OrdinalIgnoreCase))
+                Directory.Delete(Path.Combine(projectRoot, obsoleteExtension), true);
         }
 
-        static void CopyDirectory([NotNull] string source, [NotNull] string destination)
-        {
-            CopyDirectory(new DirectoryInfo(source), destination);
-        }
-
-        static void CopyDirectory([NotNull] DirectoryInfo source, [NotNull] string destination)
+        static void CopyDirectory([NotNull] DirectoryInfo source, [NotNull] DirectoryInfo destination)
         {
             if (!source.Exists) return;
 
-            Directory.CreateDirectory(destination);
-
-            foreach (var file in source.GetFiles())
-                file.CopyTo(Path.Combine(destination, file.Name));
+            foreach (var file in source.GetFiles()
+                .Where(file => !file.Extension.Equals(".xml", StringComparison.OrdinalIgnoreCase)))
+                file.CopyTo(Path.Combine(destination.FullName, file.Name));
 
             foreach (var subdir in source.GetDirectories())
-                CopyDirectory(subdir, Path.Combine(destination, subdir.Name));
+                CopyDirectory(subdir, destination.CreateSubdirectory(subdir.Name));
         }
     }
 }
