@@ -22,7 +22,7 @@ namespace AudioWorks.Extensions
 
         static ExtensionContainerBase()
         {
-            UpdateExtensionsAsync().Wait();
+            UpdateExtensions();
 
             CompositionHost = new ContainerConfiguration().WithAssemblies(
                     new DirectoryInfo(Path.Combine(
@@ -34,16 +34,18 @@ namespace AudioWorks.Extensions
                 .CreateContainer();
         }
 
-        static async Task UpdateExtensionsAsync()
+        static void UpdateExtensions()
         {
-            var sourceRepository = new SourceRepository(
+            var customRepository = new SourceRepository(
                 new PackageSource("https://www.myget.org/F/audioworks-extensions/api/v3/index.json"),
                 Repository.Provider.GetCoreV3());
+            var defaultRepository = new SourceRepository(
+                new PackageSource("https://api.nuget.org/v3/index.json"),
+                Repository.Provider.GetCoreV3());
 
-            var packageSearchResource =
-                await sourceRepository.GetResourceAsync<PackageSearchResource>().ConfigureAwait(false);
-            var searchMetadata = await packageSearchResource.SearchAsync("AudioWorks.Extensions",
-                new SearchFilter(true), 0, 100, new NugetLogger(), CancellationToken.None).ConfigureAwait(false);
+            var packageSearchResource = customRepository.GetResourceAsync<PackageSearchResource>().Result;
+            var availablePackages = packageSearchResource.SearchAsync("AudioWorks.Extensions",
+                new SearchFilter(true), 0, 100, new NugetLogger(), CancellationToken.None).Result;
 
             var project = new ExtensionNuGetProject("C:\\Project");
 
@@ -54,25 +56,20 @@ namespace AudioWorks.Extensions
                 project.Root);
 
             // Install any packages not already installed
-            var installedPackages = (await packageManager
-                .GetInstalledPackagesInDependencyOrder(project, CancellationToken.None).ConfigureAwait(false)).ToArray();
-            foreach (var package in searchMetadata
+            var installedPackages = packageManager
+                .GetInstalledPackagesInDependencyOrder(project, CancellationToken.None).Result.ToArray();
+            foreach (var package in availablePackages
                 .Select(item => item.Identity)
                 .Except(installedPackages, new PackageIdentityComparer()))
             {
-                await packageManager.InstallPackageAsync(
+                packageManager.InstallPackageAsync(
                     project,
                     package,
                     new ResolutionContext(DependencyBehavior.Lowest, true, false, VersionConstraints.None),
                     new ExtensionProjectContext(new NugetLogger()),
-                    sourceRepository,
-                    new[]
-                    {
-                        new SourceRepository(
-                            new PackageSource("https://api.nuget.org/v3/index.json"),
-                            Repository.Provider.GetCoreV3())
-                    },
-                    CancellationToken.None).ConfigureAwait(false);
+                    customRepository,
+                    new[] { defaultRepository },
+                    CancellationToken.None).Wait();
 
                 // Create a bin folder for the extension
                 var extensionDir = Path.Combine(@"C:\Project\bin", package.Id);
