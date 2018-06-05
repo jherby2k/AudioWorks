@@ -13,7 +13,7 @@ namespace AudioWorks.Extensions.Mp4
         {
             ["CreationTime"] = new DateTimeSettingInfo(),
             ["ModificationTime"] = new DateTimeSettingInfo(),
-            ["Padding"] = new IntSettingInfo(0, int.MaxValue)
+            ["Padding"] = new IntSettingInfo(0, 16_777_216)
         };
 
         public void WriteMetadata(FileStream stream, AudioMetadata metadata, SettingDictionary settings)

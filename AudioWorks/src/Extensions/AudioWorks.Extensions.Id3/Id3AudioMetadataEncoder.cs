@@ -15,7 +15,7 @@ namespace AudioWorks.Extensions.Id3
         {
             ["TagVersion"] = new StringSettingInfo("2.3", "2.4"),
             ["TagEncoding"] = new StringSettingInfo("Latin1", "UTF16"),
-            ["TagPadding"] = new IntSettingInfo(0, 268_435_456)
+            ["TagPadding"] = new IntSettingInfo(0, 16_777_216)
         };
 
         public void WriteMetadata(FileStream stream, AudioMetadata metadata, SettingDictionary settings)

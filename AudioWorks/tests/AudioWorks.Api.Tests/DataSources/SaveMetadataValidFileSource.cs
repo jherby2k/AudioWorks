@@ -499,9 +499,9 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 new TestSettingDictionary
                 {
-                    ["Padding"] = int.MaxValue
+                    ["Padding"] = 16_777_216
                 },
-                "EC00DE9B9C621367890D6055D1F067C1"
+                "D4615919A461B54512B3863ADD487D4B"
             },
 
             // PNG CoverArt (ALAC)

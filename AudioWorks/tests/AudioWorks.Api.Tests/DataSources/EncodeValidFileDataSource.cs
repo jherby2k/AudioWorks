@@ -491,12 +491,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary
                 {
                     // Maximum padding
-                    ["Padding"] = int.MaxValue,
+                    ["Padding"] = 16_777_216,
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "1C983589D6D603C4975D02635D3DE7EC",
-                "1C983589D6D603C4975D02635D3DE7EC"
+                "815E83D61745D4E117E12D31543C47BF",
+                "815E83D61745D4E117E12D31543C47BF"
             },
 
             #endregion
@@ -955,10 +955,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary
                 {
                     // Maximum tag padding
-                    ["TagPadding"] = 268_435_456
+                    ["TagPadding"] = 16_777_216
                 },
-                "655CE292707399097673F7EFFA439784",
-                "655CE292707399097673F7EFFA439784"
+                "2572B2613BC3B8E63048527A247A7906",
+                "2572B2613BC3B8E63048527A247A7906"
             },
 
             new object[]
