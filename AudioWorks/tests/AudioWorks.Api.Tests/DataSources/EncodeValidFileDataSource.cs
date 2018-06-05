@@ -861,8 +861,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
                 null,
-                "55F290095FDCE602C43380CC4F5D1101",
-                "55F290095FDCE602C43380CC4F5D1101"
+                "0E420A25F4CAE013B6328E5A52E38B3D",
+                "0E420A25F4CAE013B6328E5A52E38B3D"
             },
 
             new object[]
@@ -870,8 +870,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
                 "LameMP3",
                 null,
-                "3DF865506B4791EB5C872864FA68FEAD",
-                "3DF865506B4791EB5C872864FA68FEAD"
+                "78575206A37994E84C29BE944D7C7A4F",
+                "78575206A37994E84C29BE944D7C7A4F"
             },
 
             new object[]
@@ -879,8 +879,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "LameMP3",
                 null,
-                "3DF865506B4791EB5C872864FA68FEAD",
-                "3DF865506B4791EB5C872864FA68FEAD"
+                "78575206A37994E84C29BE944D7C7A4F",
+                "78575206A37994E84C29BE944D7C7A4F"
             },
 
             new object[]
@@ -892,8 +892,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     // Default tag version
                     ["TagVersion"] = "2.3"
                 },
-                "55F290095FDCE602C43380CC4F5D1101",
-                "55F290095FDCE602C43380CC4F5D1101"
+                "0E420A25F4CAE013B6328E5A52E38B3D",
+                "0E420A25F4CAE013B6328E5A52E38B3D"
             },
 
             new object[]
@@ -905,8 +905,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     // Tag version 2.4
                     ["TagVersion"] = "2.4"
                 },
-                "7B26B3378995DB4716016DF78074B37A",
-                "7B26B3378995DB4716016DF78074B37A"
+                "6D7E02945EFBFAB16E41827E4C7F9D7F",
+                "6D7E02945EFBFAB16E41827E4C7F9D7F"
             },
 
             new object[]
@@ -918,8 +918,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     // Default tag encoding
                     ["TagEncoding"] = "Latin1"
                 },
-                "55F290095FDCE602C43380CC4F5D1101",
-                "55F290095FDCE602C43380CC4F5D1101"
+                "0E420A25F4CAE013B6328E5A52E38B3D",
+                "0E420A25F4CAE013B6328E5A52E38B3D"
             },
 
             new object[]
@@ -931,8 +931,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     // UTF-16 tag encoding
                     ["TagEncoding"] = "UTF16"
                 },
-                "AB114692E780A51DBBE029446A29F4AF",
-                "AB114692E780A51DBBE029446A29F4AF"
+                "92ED87DB059CA2A609E8AADF0AF84909",
+                "92ED87DB059CA2A609E8AADF0AF84909"
             },
 
             new object[]
@@ -941,7 +941,20 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LameMP3",
                 new TestSettingDictionary
                 {
-                    // Tag padding disabled (default)
+                    // Default tag padding (explicit)
+                    ["TagPadding"] = 2048
+                },
+                "0E420A25F4CAE013B6328E5A52E38B3D",
+                "0E420A25F4CAE013B6328E5A52E38B3D"
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "LameMP3",
+                new TestSettingDictionary
+                {
+                    // Tag padding disabled
                     ["TagPadding"] = 0
                 },
                 "55F290095FDCE602C43380CC4F5D1101",
@@ -1155,8 +1168,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     // Scaled to TrackGain
                     ["ApplyGain"] = "Track"
                 },
-                "D297129E81AAB0E1078766300A4E295D",
-                "D297129E81AAB0E1078766300A4E295D"
+                "56C04FEBD02CB1127649A21E70B78C0E",
+                "56C04FEBD02CB1127649A21E70B78C0E"
             },
 
             new object[]
@@ -1168,8 +1181,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     // Scaled to AlbumGain
                     ["ApplyGain"] = "Album"
                 },
-                "9EB11045A3333DA3CAA399E61619C521",
-                "9EB11045A3333DA3CAA399E61619C521"
+                "F8A627B834782D13EBB9A9B722094F05",
+                "F8A627B834782D13EBB9A9B722094F05"
             },
 
             #endregion

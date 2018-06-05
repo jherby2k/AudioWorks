@@ -36,9 +36,11 @@ namespace AudioWorks.Extensions.Id3
                         ? 4
                         : 3);
 
-                // Set the padding (default to 0)
+                // Set the padding (default to 2048)
                 if (settings.TryGetValue<int>("TagPadding", out var padding))
                     tagModel.Header.PaddingSize = (uint) padding;
+                else
+                    tagModel.Header.PaddingSize = 2048;
 
                 tagModel.UpdateSize();
 

@@ -573,7 +573,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
-                "076B838A43E883DCC9F0D0ABE8A263D6"
+                "D44FACB05A7F0CB3CB5F5A31B9B52022"
             },
 
             // Day unset
@@ -600,7 +600,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
-                "9626E070B41FBF47B77592F454A0D782"
+                "C64330448267EA7595D19378766B38C5"
             },
 
             // Month unset
@@ -627,7 +627,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
-                "9626E070B41FBF47B77592F454A0D782"
+                "C64330448267EA7595D19378766B38C5"
             },
 
             // TrackNumber unset
@@ -654,7 +654,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
-                "0D7BA308B6C08BC1B91926DC99B7BBC9"
+                "8E71F084665F7763560EAEF79292B1ED"
             },
 
             // TrackCount unset
@@ -681,7 +681,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
-                "CD89FBB650E8822D0D0ADFBC3FAA2B50"
+                "B4BAD75711B480844A735B8EF169F82A"
             },
 
             // Existing tag
@@ -740,7 +740,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["TagVersion"] = "2.4"
                 },
-                "2036C7EE00BC0F607DF9E729D466DE85"
+                "E00628B6DA2A93F2832EAC420B2D8DF0"
             },
 
             // UTF-16 encoding
@@ -771,7 +771,38 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["TagEncoding"] = "UTF16"
                 },
-                "85BF987703B5AD8DA099181ECF3681FD"
+                "476D2A59E830366CBFF9F0AE0305B8E2"
+            },
+
+            // Default padding (explicit)
+            new object[]
+            {
+                "Lame CBR 128 44100Hz Stereo.mp3",
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
+                },
+                null,
+                new TestSettingDictionary
+                {
+                    ["TagPadding"] = 2048
+                },
+                "D44FACB05A7F0CB3CB5F5A31B9B52022"
             },
 
             // No padding
@@ -805,7 +836,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "076B838A43E883DCC9F0D0ABE8A263D6"
             },
 
-            // 100 bytes of padding
+            // Maximum padding
             new object[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
@@ -831,9 +862,9 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 new TestSettingDictionary
                 {
-                    ["TagPadding"] = 100
+                    ["TagPadding"] = 16_777_216
                 },
-                "FB11A9074E54FF8F52946036D791E6D8"
+                "189A55453749DA1FFAFFEAC6A06DF99B"
             },
 
             // Existing v1 tag
@@ -861,7 +892,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
-                "076B838A43E883DCC9F0D0ABE8A263D6"
+                "D44FACB05A7F0CB3CB5F5A31B9B52022"
             },
 
             // Existing tag removal
@@ -891,7 +922,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "PNG 24-bit 1280 x 935.png",
                 null,
-                "25FC9C419A284C6B6A7BF31E1C7880D1"
+                "0C3A7576B5A8E17BCC2FD93A3F45C635"
             },
 
             // JPEG CoverArt
@@ -901,7 +932,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "JPEG 24-bit 1280 x 935.jpg",
                 null,
-                "25FC9C419A284C6B6A7BF31E1C7880D1"
+                "0C3A7576B5A8E17BCC2FD93A3F45C635"
             },
 
             #endregion
