@@ -48,12 +48,14 @@
   </PropertyGroup>
   
   <ItemGroup Condition="$(DefineConstants.Contains(WINDOWS))">
-    <Content Include="x64\libmp3lame.dll">
+    <None Include="x64\libmp3lame.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="x86\libmp3lame.dll">
+      <Pack>true</Pack>
+    </None>
+    <None Include="x86\libmp3lame.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+      <Pack>true</Pack>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

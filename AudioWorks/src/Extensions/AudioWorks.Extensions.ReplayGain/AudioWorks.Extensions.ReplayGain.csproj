@@ -48,12 +48,14 @@
   </PropertyGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains(WINDOWS))">
-    <Content Include="x64\libebur128.dll">
+    <None Include="x64\libebur128.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="x86\libebur128.dll">
+      <Pack>true</Pack>
+    </None>
+    <None Include="x86\libebur128.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+      <Pack>true</Pack>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
