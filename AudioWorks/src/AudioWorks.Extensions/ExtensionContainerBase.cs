@@ -41,18 +41,20 @@ namespace AudioWorks.Extensions
             Directory.CreateDirectory(_projectRoot);
 
             var customRepository = new SourceRepository(new PackageSource(_customUrl), Repository.Provider.GetCoreV3());
-            var defaultRepository = new SourceRepository(new PackageSource(_defaultUrl), Repository.Provider.GetCoreV3());
+            var defaultRepository =
+                new SourceRepository(new PackageSource(_defaultUrl), Repository.Provider.GetCoreV3());
 
             var settings = Settings.LoadDefaultSettings(_projectRoot);
             var packageManager = new NuGetPackageManager(
                 new SourceRepositoryProvider(settings, Repository.Provider.GetCoreV3()),
                 settings,
                 _projectRoot);
-            var logger = new NugetLogger();
+
+            var nugetLogger = new NugetLogger();
 
             var packageSearchResource = customRepository.GetResourceAsync<PackageSearchResource>().Result;
             var publishedPackages = packageSearchResource.SearchAsync("AudioWorks.Extensions",
-                new SearchFilter(true), 0, 100, logger, CancellationToken.None).Result.ToArray();
+                new SearchFilter(true), 0, 100, nugetLogger, CancellationToken.None).Result.ToArray();
 
             foreach (var publishedPackage in publishedPackages)
             {
@@ -68,7 +70,7 @@ namespace AudioWorks.Extensions
                     project,
                     publishedPackage.Identity,
                     new ResolutionContext(DependencyBehavior.Lowest, true, false, VersionConstraints.None),
-                    new ExtensionProjectContext(logger),
+                    new ExtensionProjectContext(nugetLogger),
                     customRepository,
                     new[] { defaultRepository },
                     CancellationToken.None).Wait();
