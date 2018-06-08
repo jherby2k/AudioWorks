@@ -9,18 +9,38 @@ namespace AudioWorks.Extensions
 {
     sealed class ExtensionProjectContext : INuGetProjectContext
     {
+        [NotNull] readonly ILogger _logger;
+
         public ExtensionProjectContext([NotNull] ILogger logger)
         {
+            _logger = logger;
+
             PackageExtractionContext =
                 new PackageExtractionContext(PackageSaveMode.Defaultv3, XmlDocFileSaveMode.Skip, logger, null);
         }
 
         public void Log(MessageLevel level, string message, [CanBeNull, ItemCanBeNull] params object[] args)
         {
+            switch (level)
+            {
+                case MessageLevel.Info:
+                    _logger.LogInformation(message);
+                    break;
+                case MessageLevel.Warning:
+                    _logger.LogWarning(message);
+                    break;
+                case MessageLevel.Debug:
+                    _logger.LogDebug(message);
+                    break;
+                case MessageLevel.Error:
+                    _logger.LogError(message);
+                    break;
+            }
         }
 
-        public void ReportError([CanBeNull] string message)
+        public void ReportError([NotNull] string message)
         {
+            _logger.LogError(message);
         }
 
         public FileConflictAction ResolveFileConflict([CanBeNull] string message) => FileConflictAction.Overwrite;

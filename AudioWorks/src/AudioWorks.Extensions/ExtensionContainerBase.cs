@@ -14,9 +14,13 @@ namespace AudioWorks.Extensions
 {
     abstract class ExtensionContainerBase
     {
-        const string _projectRoot = "C:\\Project";
-        const string _customUrl = "https://www.myget.org/F/audioworks-extensions/api/v3/index.json";
-        const string _defaultUrl = "https://api.nuget.org/v3/index.json";
+        [NotNull] const string _customUrl = "https://www.myget.org/F/audioworks-extensions/api/v3/index.json";
+        [NotNull] const string _defaultUrl = "https://api.nuget.org/v3/index.json";
+
+        [NotNull] static readonly string _projectRoot = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "AudioWorks",
+            "Extensions");
 
         [NotNull]
         protected static CompositionHost CompositionHost { get; }
@@ -34,6 +38,8 @@ namespace AudioWorks.Extensions
 
         static void UpdateExtensions()
         {
+            Directory.CreateDirectory(_projectRoot);
+
             var customRepository = new SourceRepository(new PackageSource(_customUrl), Repository.Provider.GetCoreV3());
             var defaultRepository = new SourceRepository(new PackageSource(_defaultUrl), Repository.Provider.GetCoreV3());
 
@@ -42,10 +48,11 @@ namespace AudioWorks.Extensions
                 new SourceRepositoryProvider(settings, Repository.Provider.GetCoreV3()),
                 settings,
                 _projectRoot);
+            var logger = new NugetLogger();
 
             var packageSearchResource = customRepository.GetResourceAsync<PackageSearchResource>().Result;
             var publishedPackages = packageSearchResource.SearchAsync("AudioWorks.Extensions",
-                new SearchFilter(true), 0, 100, new NugetLogger(), CancellationToken.None).Result.ToArray();
+                new SearchFilter(true), 0, 100, logger, CancellationToken.None).Result.ToArray();
 
             foreach (var publishedPackage in publishedPackages)
             {
@@ -61,15 +68,15 @@ namespace AudioWorks.Extensions
                     project,
                     publishedPackage.Identity,
                     new ResolutionContext(DependencyBehavior.Lowest, true, false, VersionConstraints.None),
-                    new ExtensionProjectContext(new NugetLogger()),
+                    new ExtensionProjectContext(logger),
                     customRepository,
                     new[] { defaultRepository },
                     CancellationToken.None).Wait();
 
                 // Copy newly installed packages into the extension folder
-                foreach (var installedPackage in project.InstalledPackages)
+                foreach (var installedPackage in project.GetInstalledPackagesAsync(CancellationToken.None).Result)
                 {
-                    var packageDir = new DirectoryInfo(project.GetInstalledPath(installedPackage));
+                    var packageDir = new DirectoryInfo(project.GetInstalledPath(installedPackage.PackageIdentity));
 
                     foreach (var subDir in packageDir.GetDirectories())
                         switch (subDir.Name)
