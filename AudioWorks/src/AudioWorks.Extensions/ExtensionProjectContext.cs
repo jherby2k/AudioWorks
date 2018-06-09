@@ -1,39 +1,33 @@
 ﻿using System;
 using System.Xml.Linq;
+using AudioWorks.Common;
 using JetBrains.Annotations;
-using NuGet.Common;
+using Microsoft.Extensions.Logging;
 using NuGet.Packaging;
 using NuGet.ProjectManagement;
+using LogLevel = NuGet.Common.LogLevel;
 
 namespace AudioWorks.Extensions
 {
     sealed class ExtensionProjectContext : INuGetProjectContext
     {
-        [NotNull] readonly ILogger _logger;
+        [NotNull] readonly ILogger _logger = LoggingManager.CreateLogger<ExtensionProjectContext>();
 
-        public ExtensionProjectContext([NotNull] ILogger logger)
-        {
-            _logger = logger;
-
-            PackageExtractionContext =
-                new PackageExtractionContext(PackageSaveMode.Defaultv3, XmlDocFileSaveMode.Skip, logger, null);
-        }
-
-        public void Log(MessageLevel level, string message, [CanBeNull, ItemCanBeNull] params object[] args)
+        public void Log(MessageLevel level, string message, [NotNull, ItemNotNull] params object[] args)
         {
             switch (level)
             {
                 case MessageLevel.Info:
-                    _logger.LogInformation(message);
+                    _logger.LogInformation(message, args);
                     break;
                 case MessageLevel.Warning:
-                    _logger.LogWarning(message);
+                    _logger.LogWarning(message, args);
                     break;
                 case MessageLevel.Debug:
-                    _logger.LogDebug(message);
+                    _logger.LogDebug(message, args);
                     break;
                 case MessageLevel.Error:
-                    _logger.LogError(message);
+                    _logger.LogError(message, args);
                     break;
             }
         }
@@ -46,13 +40,17 @@ namespace AudioWorks.Extensions
         public FileConflictAction ResolveFileConflict([CanBeNull] string message) => FileConflictAction.Overwrite;
 
         [CanBeNull]
-        public PackageExtractionContext PackageExtractionContext { get; set; }
+        public PackageExtractionContext PackageExtractionContext { get; set; } = new PackageExtractionContext(
+            PackageSaveMode.Defaultv3,
+            XmlDocFileSaveMode.Skip,
+            new NugetLogger<PackageExtractionContext>(LogLevel.Verbose),
+            null);
 
         [CanBeNull]
-        public ISourceControlManagerProvider SourceControlManagerProvider { get; }
+        public ISourceControlManagerProvider SourceControlManagerProvider => null;
 
         [CanBeNull]
-        public ExecutionContext ExecutionContext { get; }
+        public ExecutionContext ExecutionContext => null;
 
         [CanBeNull]
         public XDocument OriginalPackagesConfig { get; set; }
