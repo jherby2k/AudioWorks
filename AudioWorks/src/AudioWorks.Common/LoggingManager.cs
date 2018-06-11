@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 
@@ -15,11 +16,12 @@ namespace AudioWorks.Common
 
         static LoggingManager()
         {
-            NLog.Config.SimpleConfigurator.ConfigureForFileLogging(
-                Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                    "AudioWorks",
-                    "log.txt"));
+            if (ConfigurationManager.Configuration.GetValue("FileLogging", true))
+                NLog.Config.SimpleConfigurator.ConfigureForFileLogging(
+                    Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                        "AudioWorks",
+                        "log.txt"), NLog.LogLevel.Debug);
         }
 
         /// <summary>

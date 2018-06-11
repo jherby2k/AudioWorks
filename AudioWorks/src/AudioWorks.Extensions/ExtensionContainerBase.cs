@@ -3,19 +3,27 @@ using System.Composition.Hosting;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using AudioWorks.Common;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using NuGet.Common;
 using NuGet.Configuration;
 using NuGet.PackageManagement;
 using NuGet.Protocol;
 using NuGet.Protocol.Core.Types;
 using NuGet.Resolver;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace AudioWorks.Extensions
 {
     abstract class ExtensionContainerBase
     {
-        [NotNull] const string _customUrl = "https://www.myget.org/F/audioworks-extensions/api/v3/index.json";
-        [NotNull] const string _defaultUrl = "https://api.nuget.org/v3/index.json";
+        [NotNull] static readonly string _customUrl = ConfigurationManager.Configuration.GetValue("ExtensionRepository",
+            "https://www.myget.org/F/audioworks-extensions/api/v3/index.json");
+
+        [NotNull] static readonly string _defaultUrl = ConfigurationManager.Configuration.GetValue("DefaultRepository",
+            "https://api.nuget.org/v3/index.json");
 
         [NotNull] static readonly string _projectRoot = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
@@ -27,7 +35,8 @@ namespace AudioWorks.Extensions
 
         static ExtensionContainerBase()
         {
-            UpdateExtensions();
+            if (ConfigurationManager.Configuration.GetValue("AutomaticExtensionDownloads", true))
+                UpdateExtensions();
 
             CompositionHost = new ContainerConfiguration().WithAssemblies(
                     new DirectoryInfo(_projectRoot).GetDirectories()
@@ -50,76 +59,104 @@ namespace AudioWorks.Extensions
                 settings,
                 _projectRoot);
 
-            var nugetLogger = new NugetLogger();
+            var logger = LoggingManager.CreateLogger<ExtensionContainerBase>();
 
-            var packageSearchResource = customRepository.GetResourceAsync<PackageSearchResource>().Result;
-            var publishedPackages = packageSearchResource.SearchAsync("AudioWorks.Extensions",
-                new SearchFilter(true), 0, 100, nugetLogger, CancellationToken.None).Result.ToArray();
-
-            foreach (var publishedPackage in publishedPackages)
+            try
             {
-                var extensionDir = new DirectoryInfo(Path.Combine(_projectRoot, publishedPackage.Identity.ToString()));
-                if (extensionDir.Exists) continue;
+                var packageSearchResource =
+                    customRepository.GetResourceAsync<PackageSearchResource>(CancellationToken.None).Result;
+                var publishedPackages = packageSearchResource.SearchAsync("AudioWorks.Extensions",
+                        new SearchFilter(true), 0, 100, NullLogger.Instance, CancellationToken.None)
+                    .Result.ToArray();
 
-                extensionDir.Create();
-                var stagingRootDir = extensionDir.CreateSubdirectory("Staging");
+                logger.LogInformation($"Discovered {publishedPackages.Length} packages published at '{_customUrl}'.");
 
-                var project = new ExtensionNuGetProject(stagingRootDir.FullName);
-
-                packageManager.InstallPackageAsync(
-                    project,
-                    publishedPackage.Identity,
-                    new ResolutionContext(DependencyBehavior.Lowest, true, false, VersionConstraints.None),
-                    new ExtensionProjectContext(nugetLogger),
-                    customRepository,
-                    new[] { defaultRepository },
-                    CancellationToken.None).Wait();
-
-                // Copy newly installed packages into the extension folder
-                foreach (var installedPackage in project.GetInstalledPackagesAsync(CancellationToken.None).Result)
+                foreach (var publishedPackage in publishedPackages)
                 {
-                    var packageDir = new DirectoryInfo(project.GetInstalledPath(installedPackage.PackageIdentity));
+                    var extensionDir =
+                        new DirectoryInfo(Path.Combine(_projectRoot, publishedPackage.Identity.ToString()));
+                    if (extensionDir.Exists) continue;
 
-                    foreach (var subDir in packageDir.GetDirectories())
-                        switch (subDir.Name)
-                        {
-                            case "lib":
-                                CopyDirectory(subDir
-                                        .GetDirectories("netstandard*").OrderByDescending(dir => dir.Name)
-                                        .FirstOrDefault(),
-                                    extensionDir);
-                                break;
-                            case "contentFiles":
-                                CopyDirectory(subDir
-                                        .GetDirectories("any").FirstOrDefault()?
-                                        .GetDirectories("netstandard*").OrderByDescending(dir => dir.Name)
-                                        .FirstOrDefault(),
-                                    extensionDir);
-                                break;
-                        }
+                    extensionDir.Create();
+                    var stagingRootDir = extensionDir.CreateSubdirectory("Staging");
+
+                    var project = new ExtensionNuGetProject(stagingRootDir.FullName);
+
+                    packageManager.InstallPackageAsync(
+                        project,
+                        publishedPackage.Identity,
+                        new ResolutionContext(DependencyBehavior.Lowest, true, false, VersionConstraints.None),
+                        new ExtensionProjectContext(),
+                        customRepository,
+                        new[] { defaultRepository },
+                        CancellationToken.None).Wait();
+
+                    // Move newly installed packages into the extension folder
+                    foreach (var installedPackage in project.GetInstalledPackagesAsync(CancellationToken.None).Result)
+                    {
+                        var packageDir = new DirectoryInfo(project.GetInstalledPath(installedPackage.PackageIdentity));
+
+                        foreach (var subDir in packageDir.GetDirectories())
+                            switch (subDir.Name)
+                            {
+                                case "lib":
+                                    MoveContents(subDir
+                                            .GetDirectories("netstandard*").OrderByDescending(dir => dir.Name)
+                                            .FirstOrDefault(),
+                                        extensionDir, logger);
+                                    break;
+                                case "contentFiles":
+                                    MoveContents(subDir
+                                            .GetDirectories("any").FirstOrDefault()?
+                                            .GetDirectories("netstandard*").OrderByDescending(dir => dir.Name)
+                                            .FirstOrDefault(),
+                                        extensionDir, logger);
+                                    break;
+                            }
+                    }
+
+                    stagingRootDir.Delete(true);
                 }
 
-                stagingRootDir.Delete(true);
-            }
+                // Remove any extensions that aren't published
+                foreach (var obsoleteExtension in new DirectoryInfo(_projectRoot).GetDirectories()
+                    .Select(dir => dir.Name)
+                    .Except(publishedPackages.Select(package => package.Identity.ToString()),
+                        StringComparer.OrdinalIgnoreCase))
+                {
+                    Directory.Delete(Path.Combine(_projectRoot, obsoleteExtension), true);
 
-            // Remove any extensions that aren't published
-            foreach (var obsoleteExtension in new DirectoryInfo(_projectRoot).GetDirectories()
-                .Select(dir => dir.Name)
-                .Except(publishedPackages.Select(package => package.Identity.ToString()),
-                    StringComparer.OrdinalIgnoreCase))
-                Directory.Delete(Path.Combine(_projectRoot, obsoleteExtension), true);
+                    logger.LogInformation($"Deleted unlisted extension in '{obsoleteExtension}'.");
+                }
+
+            }
+            catch (Exception e)
+            {
+                if (e is AggregateException aggregate)
+                    foreach (var inner in aggregate.InnerExceptions)
+                        logger.LogError(inner, e.Message);
+                else
+                    logger.LogError(e, e.Message);
+            }
         }
 
-        static void CopyDirectory([CanBeNull] DirectoryInfo source, [NotNull] DirectoryInfo destination)
+        static void MoveContents([CanBeNull] DirectoryInfo source, [NotNull] DirectoryInfo destination, ILogger logger)
         {
             if (source == null || !source.Exists) return;
 
             foreach (var file in source.GetFiles()
                 .Where(file => file.Extension.Equals(".dll", StringComparison.OrdinalIgnoreCase)))
-                file.CopyTo(Path.Combine(destination.FullName, file.Name));
+            {
+                logger.LogInformation("Moving '{0}' to '{1}'",
+                    file.FullName, destination.FullName);
+
+                file.MoveTo(Path.Combine(destination.FullName, file.Name));
+            }
 
             foreach (var subdir in source.GetDirectories())
-                CopyDirectory(subdir, destination.CreateSubdirectory(subdir.Name));
+                MoveContents(subdir, destination.CreateSubdirectory(subdir.Name), logger);
+
+            source.Delete();
         }
     }
 }

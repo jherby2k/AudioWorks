@@ -3,9 +3,10 @@ using System.Xml.Linq;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
+using NuGet.Common;
 using NuGet.Packaging;
 using NuGet.ProjectManagement;
-using LogLevel = NuGet.Common.LogLevel;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace AudioWorks.Extensions
 {
@@ -43,7 +44,7 @@ namespace AudioWorks.Extensions
         public PackageExtractionContext PackageExtractionContext { get; set; } = new PackageExtractionContext(
             PackageSaveMode.Defaultv3,
             XmlDocFileSaveMode.Skip,
-            new NugetLogger<PackageExtractionContext>(LogLevel.Verbose),
+            NullLogger.Instance,
             null);
 
         [CanBeNull]

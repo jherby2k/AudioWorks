@@ -1,0 +1,6 @@
+{
+  "FileLogging": true,
+  "AutomaticExtensionDownloads": true,
+  "ExtensionRepository": "https://www.myget.org/F/audioworks-extensions/api/v3/index.json",
+  "DefaultRepository":  "https://api.nuget.org/v3/index.json"
+}
