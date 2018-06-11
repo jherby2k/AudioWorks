@@ -156,7 +156,7 @@ namespace AudioWorks.Extensions
             foreach (var subdir in source.GetDirectories())
                 MoveContents(subdir, destination.CreateSubdirectory(subdir.Name), logger);
 
-            source.Delete();
+            source.Delete(true);
         }
     }
 }
