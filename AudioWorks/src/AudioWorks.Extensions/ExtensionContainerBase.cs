@@ -69,7 +69,8 @@ namespace AudioWorks.Extensions
                         new SearchFilter(true), 0, 100, NullLogger.Instance, CancellationToken.None)
                     .Result.ToArray();
 
-                logger.LogInformation($"Discovered {publishedPackages.Length} packages published at '{_customUrl}'.");
+                logger.LogInformation($"Discovered {0} packages published at '{1}'.",
+                    publishedPackages.Length, _customUrl);
 
                 foreach (var publishedPackage in publishedPackages)
                 {
@@ -126,7 +127,8 @@ namespace AudioWorks.Extensions
                 {
                     Directory.Delete(Path.Combine(_projectRoot, obsoleteExtension), true);
 
-                    logger.LogInformation($"Deleted unlisted extension in '{obsoleteExtension}'.");
+                    logger.LogInformation("Deleted unlisted extension in '{0}'.",
+                        obsoleteExtension);
                 }
 
             }
@@ -147,7 +149,7 @@ namespace AudioWorks.Extensions
             foreach (var file in source.GetFiles()
                 .Where(file => file.Extension.Equals(".dll", StringComparison.OrdinalIgnoreCase)))
             {
-                logger.LogInformation("Moving '{0}' to '{1}'",
+                logger.LogInformation("Moving '{0}' to '{1}'.",
                     file.FullName, destination.FullName);
 
                 file.MoveTo(Path.Combine(destination.FullName, file.Name));
