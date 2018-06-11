@@ -2,9 +2,11 @@
 using System.IO.IsolatedStorage;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using AudioWorks.Common;
 using JetBrains.Annotations;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.Extensions.Configuration;
 
 namespace AudioWorks.Commands
 {
@@ -33,7 +35,7 @@ namespace AudioWorks.Commands
 
         static void TrackEvent([NotNull] string eventName, [CanBeNull] IDictionary<string, string> properties = null)
         {
-            //TODO Allow telemetry to be disabled.
+            if (!ConfigurationManager.Configuration.GetValue("EnableTelemetry", true)) return;
 
             if (_client == null)
             {
