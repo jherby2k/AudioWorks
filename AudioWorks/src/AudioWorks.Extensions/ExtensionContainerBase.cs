@@ -73,7 +73,7 @@ namespace AudioWorks.Extensions
                 var packageSearchResourceTask =
                     customRepository.GetResourceAsync<PackageSearchResource>(cancelSource.Token);
 
-                // Workaround - GetResourceAsync doesn't seem to honor the cancellation token
+                // Workaround - GetResourceAsync.Result can block even when the token is canceled
                 packageSearchResourceTask.Wait(cancelSource.Token);
                 if (packageSearchResourceTask.IsCanceled)
                 {
@@ -86,14 +86,23 @@ namespace AudioWorks.Extensions
                         new SearchFilter(true), 0, 100, NullLogger.Instance, cancelSource.Token)
                     .Result.ToArray();
 
-                logger.LogInformation($"Discovered {0} packages published at '{1}'.",
+                logger.LogInformation("Discovered {0} packages published at '{1}'.",
                     publishedPackages.Length, _customUrl);
 
                 foreach (var publishedPackage in publishedPackages)
                 {
                     var extensionDir =
                         new DirectoryInfo(Path.Combine(_projectRoot, publishedPackage.Identity.ToString()));
-                    if (extensionDir.Exists) continue;
+                    if (extensionDir.Exists)
+                    {
+                        logger.LogInformation("Package '{0}' is already installed.",
+                            publishedPackage.Identity.ToString());
+
+                        continue;
+                    }
+
+                    logger.LogInformation("Installing package '{0}'.",
+                        publishedPackage.Identity.ToString());
 
                     extensionDir.Create();
                     var stagingRootDir = extensionDir.CreateSubdirectory("Staging");
@@ -107,7 +116,8 @@ namespace AudioWorks.Extensions
                         new ExtensionProjectContext(),
                         customRepository,
                         new[] { defaultRepository },
-                        cancelSource.Token).Wait(cancelSource.Token);
+                        cancelSource.Token)
+                        .Wait(cancelSource.Token);
 
                     // Move newly installed packages into the extension folder
                     foreach (var installedPackage in project.GetInstalledPackagesAsync(cancelSource.Token).Result)
