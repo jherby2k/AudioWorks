@@ -35,8 +35,12 @@ namespace AudioWorks.Extensions
 
         static ExtensionContainerBase()
         {
+            var logger = LoggingManager.CreateLogger<ExtensionContainerBase>();
+
             if (ConfigurationManager.Configuration.GetValue("AutomaticExtensionDownloads", true))
-                UpdateExtensions();
+                UpdateExtensions(logger);
+            else
+                logger.LogInformation("Automatic extension downloads are disabled.");
 
             CompositionHost = new ContainerConfiguration().WithAssemblies(
                     new DirectoryInfo(_projectRoot).GetDirectories()
@@ -45,8 +49,10 @@ namespace AudioWorks.Extensions
                 .CreateContainer();
         }
 
-        static void UpdateExtensions()
+        static void UpdateExtensions([NotNull] ILogger logger)
         {
+            logger.LogInformation("Beginning automatic extension updates.");
+
             Directory.CreateDirectory(_projectRoot);
 
             var customRepository = new SourceRepository(new PackageSource(_customUrl), Repository.Provider.GetCoreV3());
@@ -59,14 +65,25 @@ namespace AudioWorks.Extensions
                 settings,
                 _projectRoot);
 
-            var logger = LoggingManager.CreateLogger<ExtensionContainerBase>();
+            var cancelSource = new CancellationTokenSource(
+                    ConfigurationManager.Configuration.GetValue("AutomaticExtensionDownloadTimeout", 30) * 1000);
 
             try
             {
-                var packageSearchResource =
-                    customRepository.GetResourceAsync<PackageSearchResource>(CancellationToken.None).Result;
+                var packageSearchResourceTask =
+                    customRepository.GetResourceAsync<PackageSearchResource>(cancelSource.Token);
+
+                // Workaround - GetResourceAsync doesn't seem to honor the cancellation token
+                packageSearchResourceTask.Wait(cancelSource.Token);
+                if (packageSearchResourceTask.IsCanceled)
+                {
+                    logger.LogError("Timed out retrieving resource at '{0}'.", _customUrl);
+                    return;
+                }
+                var packageSearchResource = packageSearchResourceTask.Result;
+
                 var publishedPackages = packageSearchResource.SearchAsync("AudioWorks.Extensions",
-                        new SearchFilter(true), 0, 100, NullLogger.Instance, CancellationToken.None)
+                        new SearchFilter(true), 0, 100, NullLogger.Instance, cancelSource.Token)
                     .Result.ToArray();
 
                 logger.LogInformation($"Discovered {0} packages published at '{1}'.",
@@ -90,10 +107,10 @@ namespace AudioWorks.Extensions
                         new ExtensionProjectContext(),
                         customRepository,
                         new[] { defaultRepository },
-                        CancellationToken.None).Wait();
+                        cancelSource.Token).Wait(cancelSource.Token);
 
                     // Move newly installed packages into the extension folder
-                    foreach (var installedPackage in project.GetInstalledPackagesAsync(CancellationToken.None).Result)
+                    foreach (var installedPackage in project.GetInstalledPackagesAsync(cancelSource.Token).Result)
                     {
                         var packageDir = new DirectoryInfo(project.GetInstalledPath(installedPackage.PackageIdentity));
 
@@ -139,6 +156,10 @@ namespace AudioWorks.Extensions
                         logger.LogError(inner, e.Message);
                 else
                     logger.LogError(e, e.Message);
+            }
+            finally
+            {
+                cancelSource.Dispose();
             }
         }
 
