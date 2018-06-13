@@ -30,18 +30,13 @@ namespace AudioWorks.Extensions
             "AudioWorks",
             "Extensions");
 
-        [NotNull]
-        protected static CompositionHost CompositionHost { get; }
+        protected static object SyncRoot { get; } = new object();
 
-        static ExtensionContainerBase()
+        [CanBeNull]
+        protected static CompositionHost CompositionHost { get; private set; }
+
+        protected static void ComposeExtensions()
         {
-            var logger = LoggingManager.CreateLogger<ExtensionContainerBase>();
-
-            if (ConfigurationManager.Configuration.GetValue("AutomaticExtensionDownloads", true))
-                UpdateExtensions(logger);
-            else
-                logger.LogInformation("Automatic extension downloads are disabled.");
-
             CompositionHost = new ContainerConfiguration().WithAssemblies(
                     new DirectoryInfo(_projectRoot).GetDirectories()
                         .SelectMany(extensionDir => extensionDir.GetFiles("AudioWorks.Extensions.*.dll"))
@@ -49,8 +44,16 @@ namespace AudioWorks.Extensions
                 .CreateContainer();
         }
 
-        static void UpdateExtensions([NotNull] ILogger logger)
+        protected static void InstallExtensions()
         {
+            var logger = LoggingManager.CreateLogger<ExtensionContainerBase>();
+
+            if (!ConfigurationManager.Configuration.GetValue("AutomaticExtensionDownloads", true))
+            {
+                logger.LogInformation("Automatic extension downloads are disabled.");
+                return;
+            }
+
             logger.LogInformation("Beginning automatic extension updates.");
 
             Directory.CreateDirectory(_projectRoot);

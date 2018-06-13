@@ -24,6 +24,13 @@ namespace AudioWorks.Extensions
 
         void Initialize()
         {
+            lock (SyncRoot)
+                if (CompositionHost == null)
+                {
+                    InstallExtensions();
+                    ComposeExtensions();
+                }
+
             CompositionHost.SatisfyImports(this);
         }
     }
