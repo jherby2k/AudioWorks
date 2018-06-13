@@ -19,18 +19,7 @@ namespace AudioWorks.Extensions
 
         ExtensionContainer()
         {
-            Initialize();
-        }
-
-        void Initialize()
-        {
-            lock (SyncRoot)
-                if (CompositionHost == null)
-                {
-                    InstallExtensions();
-                    ComposeExtensions();
-                }
-
+            ExtensionDownloader.DownloadOnce();
             CompositionHost.SatisfyImports(this);
         }
     }

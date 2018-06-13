@@ -57,5 +57,14 @@ namespace AudioWorks.Common
         [NotNull]
         [CLSCompliant(false)]
         public static ILogger CreateLogger<T>() => _loggerFactory.CreateLogger<T>();
+
+        /// <summary>
+        /// Creates a new <see cref="ILogger" /> instance using the specified category name.
+        /// </summary>
+        /// <param name="categoryName">The category name.</param>
+        /// <returns>The logger.</returns>
+        [NotNull]
+        [CLSCompliant(false)]
+        public static ILogger CreateLogger(string categoryName) => _loggerFactory.CreateLogger(categoryName);
     }
 }
