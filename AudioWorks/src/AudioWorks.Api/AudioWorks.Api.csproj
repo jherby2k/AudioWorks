@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netcoreapp2.1;netstandard2.0</TargetFrameworks>
     <LangVersion>7.3</LangVersion>
     <Version>0.1.0-beta</Version>
     <Authors>Jeremy Herbison</Authors>
@@ -19,36 +19,36 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Windows|AnyCPU'">
-    <DefineConstants>DEBUG;TRACE;WINDOWS;NETSTANDARD2_0</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
     <Optimize>false</Optimize>
-    <DocumentationFile>bin\Debug-Windows\netstandard2.0\AudioWorks.Api.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug-Windows\$(TargetFramework)\AudioWorks.Api.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Windows|AnyCPU'">
-    <DefineConstants>RELEASE;TRACE;WINDOWS;NETSTANDARD2_0</DefineConstants>
-    <DocumentationFile>bin\Release-Windows\netstandard2.0\AudioWorks.Api.xml</DocumentationFile>
+    <DefineConstants>RELEASE;TRACE;WINDOWS</DefineConstants>
+    <DocumentationFile>bin\Release-Windows\$(TargetFramework)\AudioWorks.Api.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-OSX|AnyCPU'">
-    <DefineConstants>DEBUG;TRACE;OSX;NETSTANDARD2_0</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;OSX</DefineConstants>
     <Optimize>false</Optimize>
-    <DocumentationFile>bin\Debug-OSX\netstandard2.0\AudioWorks.Api.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug-OSX\$(TargetFramework)\AudioWorks.Api.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-OSX|AnyCPU'">
-    <DefineConstants>RELEASE;TRACE;OSX;NETSTANDARD2_0</DefineConstants>
-    <DocumentationFile>bin\Release-OSX\netstandard2.0\AudioWorks.Api.xml</DocumentationFile>
+    <DefineConstants>RELEASE;TRACE;OSX</DefineConstants>
+    <DocumentationFile>bin\Release-OSX\$(TargetFramework)\AudioWorks.Api.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Linux|AnyCPU'">
-    <DefineConstants>DEBUG;TRACE;LINUX;NETSTANDARD2_0</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;LINUX</DefineConstants>
     <Optimize>false</Optimize>
-    <DocumentationFile>bin\Debug-Linux\netstandard2.0\AudioWorks.Api.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug-Linux\$(TargetFramework)\AudioWorks.Api.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Linux|AnyCPU'">
-    <DefineConstants>RELEASE;TRACE;LINUX;NETSTANDARD2_0</DefineConstants>
-    <DocumentationFile>bin\Release-Linux\netstandard2.0\AudioWorks.Api.xml</DocumentationFile>
+    <DefineConstants>RELEASE;TRACE;LINUX</DefineConstants>
+    <DocumentationFile>bin\Release-Linux\$(TargetFramework)\AudioWorks.Api.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

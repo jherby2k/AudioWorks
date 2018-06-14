@@ -1,5 +1,6 @@
-﻿using System.IO;
-using System.Runtime.InteropServices;
+﻿using System;
+using System.Buffers;
+using System.IO;
 using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Vorbis
@@ -7,12 +8,15 @@ namespace AudioWorks.Extensions.Vorbis
     [AudioInfoDecoderExport(".ogg")]
     public sealed class VorbisAudioInfoDecoder : IAudioInfoDecoder
     {
-        public AudioInfo ReadAudioInfo(FileStream stream)
+        public unsafe AudioInfo ReadAudioInfo(FileStream stream)
         {
-            var buffer = new byte[4096];
-
             OggStream oggStream = null;
             SafeNativeMethods.VorbisCommentInit(out var vorbisComment);
+#if NETCOREAPP2_1
+            Span<byte> buffer = stackalloc byte[4096];
+#else
+            var buffer = ArrayPool<byte>.Shared.Rent(4096);
+#endif
 
             try
             {
@@ -26,12 +30,20 @@ namespace AudioWorks.Extensions.Vorbis
                         // Read from the buffer into a page:
                         while (!sync.PageOut(out page))
                         {
+#if NETCOREAPP2_1
+                            var bytesRead = stream.Read(buffer);
+#else
                             var bytesRead = stream.Read(buffer, 0, buffer.Length);
+#endif
                             if (bytesRead == 0)
                                 throw new AudioInvalidException("No Ogg stream was found.", stream.Name);
 
-                            var nativeBuffer = sync.Buffer(bytesRead);
-                            Marshal.Copy(buffer, 0, nativeBuffer, bytesRead);
+                            var nativeBuffer = new Span<byte>(sync.Buffer(bytesRead).ToPointer(), bytesRead);
+#if NETCOREAPP2_1
+                            buffer.Slice(0, bytesRead).CopyTo(nativeBuffer);
+#else
+                            buffer.AsSpan().Slice(0, bytesRead).CopyTo(nativeBuffer);
+#endif
                             sync.Wrote(bytesRead);
                         }
 
@@ -63,6 +75,9 @@ namespace AudioWorks.Extensions.Vorbis
             }
             finally
             {
+#if !NETCOREAPP2_1
+                ArrayPool<byte>.Shared.Return(buffer);
+#endif
                 SafeNativeMethods.VorbisCommentClear(ref vorbisComment);
                 oggStream?.Dispose();
             }

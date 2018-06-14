@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -28,6 +29,18 @@ namespace AudioWorks.Extensions
 
         [NotNull] static readonly string _defaultUrl = ConfigurationManager.Configuration.GetValue("DefaultRepository",
             "https://api.nuget.org/v3/index.json");
+
+        [NotNull] static readonly string[] _netCoreCompatibleFrameworks =
+        {
+            "netcoreapp2.1", "netcoreapp2.0", "netcoreapp1.1", "netcoreapp1.0", "netstandard2.0", "netstandard1.6",
+            "netstandard1.5", "netstandard1.4", "netstandard1.3", "netstandard1.2", "netstandard1.1", "netstandard1.0"
+        };
+
+        [NotNull] static readonly string[] _netStandardCompatibleFrameworks =
+        {
+            "netstandard2.0", "netstandard1.6", "netstandard1.5", "netstandard1.4", "netstandard1.3", "netstandard1.2",
+            "netstandard1.1", "netstandard1.0"
+        };
 
         [NotNull] static readonly object _syncRoot = new object();
         static bool _alreadyDownloaded;
@@ -129,19 +142,29 @@ namespace AudioWorks.Extensions
                                         switch (subDir.Name)
                                         {
                                             case "lib":
-                                                MoveContents(subDir
-                                                        .GetDirectories("netstandard*")
-                                                        .OrderByDescending(dir => dir.Name)
-                                                        .FirstOrDefault(),
-                                                    extensionDir, logger);
+                                                CopyContents(
+                                                    SelectDirectory(subDir.GetDirectories(), _netCoreCompatibleFrameworks),
+                                                    extensionDir.CreateSubdirectory("netcoreapp2.1"),
+                                                    logger);
+                                                CopyContents(
+                                                    SelectDirectory(subDir.GetDirectories(), _netStandardCompatibleFrameworks),
+                                                    extensionDir.CreateSubdirectory("netstandard2.0"),
+                                                    logger);
                                                 break;
+
                                             case "contentFiles":
-                                                MoveContents(subDir
-                                                        .GetDirectories("any").FirstOrDefault()?
-                                                        .GetDirectories("netstandard*")
-                                                        .OrderByDescending(dir => dir.Name)
-                                                        .FirstOrDefault(),
-                                                    extensionDir, logger);
+                                                CopyContents(
+                                                    SelectDirectory(
+                                                        subDir.GetDirectories("any").FirstOrDefault()?.GetDirectories(),
+                                                        _netCoreCompatibleFrameworks),
+                                                    extensionDir.CreateSubdirectory("netcoreapp2.1"),
+                                                    logger);
+                                                CopyContents(
+                                                    SelectDirectory(
+                                                        subDir.GetDirectories("any").FirstOrDefault()?.GetDirectories(),
+                                                        _netStandardCompatibleFrameworks),
+                                                    extensionDir.CreateSubdirectory("netstandard2.0"),
+                                                    logger);
                                                 break;
                                         }
                                 }
@@ -179,7 +202,20 @@ namespace AudioWorks.Extensions
             }
         }
 
-        static void MoveContents(
+        [CanBeNull]
+        static DirectoryInfo SelectDirectory(
+            [CanBeNull, ItemNotNull] IEnumerable<DirectoryInfo> directories,
+            [NotNull, ItemNotNull] IEnumerable<string> compatibleTfms)
+        {
+            // Select netcore frameworks before netstandard, then by descending version
+            return directories?
+                .Where(dir => compatibleTfms.Contains(dir.Name, StringComparer.OrdinalIgnoreCase))
+                .OrderBy(dir => dir.Name.Substring(0, dir.Name.Length - 3))
+                .ThenByDescending(dir => Version.Parse(dir.Name.Substring(dir.Name.Length - 3)))
+                .FirstOrDefault();
+        }
+
+        static void CopyContents(
             [CanBeNull] DirectoryInfo source,
             [NotNull] DirectoryInfo destination,
             [NotNull] ILogger logger)
@@ -192,13 +228,11 @@ namespace AudioWorks.Extensions
                 logger.LogInformation("Moving '{0}' to '{1}'.",
                     file.FullName, destination.FullName);
 
-                file.MoveTo(Path.Combine(destination.FullName, file.Name));
+                file.CopyTo(Path.Combine(destination.FullName, file.Name));
             }
 
             foreach (var subdir in source.GetDirectories())
-                MoveContents(subdir, destination.CreateSubdirectory(subdir.Name), logger);
-
-            source.Delete(true);
+                CopyContents(subdir, destination.CreateSubdirectory(subdir.Name), logger);
         }
     }
 }

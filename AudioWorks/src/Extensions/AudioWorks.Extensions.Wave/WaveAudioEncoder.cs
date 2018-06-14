@@ -13,7 +13,9 @@ namespace AudioWorks.Extensions.Wave
         int _bitsPerSample;
         int _bytesPerSample;
         [CanBeNull] RiffWriter _writer;
+#if !NETCOREAPP2_1
         [CanBeNull] byte[] _buffer;
+#endif
 
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary();
 
@@ -36,6 +38,11 @@ namespace AudioWorks.Extensions.Wave
         {
             if (samples.Frames == 0) return;
 
+#if NETCOREAPP2_1
+            Span<byte> buffer = stackalloc byte[samples.Channels * samples.Frames * _bytesPerSample];
+            samples.CopyToInterleaved(buffer, _bitsPerSample);
+            _writer.Write(buffer);
+#else
             var dataSize = samples.Channels * samples.Frames * _bytesPerSample;
 
             if (_buffer == null)
@@ -44,6 +51,7 @@ namespace AudioWorks.Extensions.Wave
             samples.CopyToInterleaved(_buffer, _bitsPerSample);
             // ReSharper disable once AssignNullToNotNullAttribute
             _writer.Write(_buffer, 0, dataSize);
+#endif
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
@@ -57,8 +65,10 @@ namespace AudioWorks.Extensions.Wave
         public void Dispose()
         {
             _writer?.Dispose();
+#if !NETCOREAPP2_1
             if (_buffer != null)
                 ArrayPool<byte>.Shared.Return(_buffer);
+#endif
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
@@ -72,14 +82,6 @@ namespace AudioWorks.Extensions.Wave
             _writer.Write((ushort) (_bytesPerSample * audioInfo.Channels));
             _writer.Write((ushort) audioInfo.BitsPerSample);
             _writer.FinishChunk();
-        }
-
-        static void ConvertInt32ToBytes(int value, [NotNull] byte[] buffer)
-        {
-            buffer[0] = (byte) value;
-            buffer[1] = (byte) (value >> 8);
-            buffer[2] = (byte) (value >> 16);
-            buffer[3] = (byte) (value >> 24);
         }
     }
 }

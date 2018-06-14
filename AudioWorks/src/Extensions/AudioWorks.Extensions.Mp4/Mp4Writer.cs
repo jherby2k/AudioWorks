@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers.Binary;
 using System.IO;
 using System.Text;
 using JetBrains.Annotations;
@@ -14,16 +15,24 @@ namespace AudioWorks.Extensions.Mp4
 
         internal void WriteBigEndian(uint value)
         {
-            var buffer = BitConverter.GetBytes(value);
-            Array.Reverse(buffer);
+            Span<byte> buffer = stackalloc byte[4];
+            BinaryPrimitives.WriteUInt32BigEndian(buffer, value);
+#if NETCOREAPP2_1
             Write(buffer);
+#else
+            Write(buffer.ToArray());
+#endif
         }
 
         internal void WriteBigEndian(ulong value)
         {
-            var buffer = BitConverter.GetBytes(value);
-            Array.Reverse(buffer);
+            Span<byte> buffer = stackalloc byte[8];
+            BinaryPrimitives.WriteUInt64BigEndian(buffer, value);
+#if NETCOREAPP2_1
             Write(buffer);
+#else
+            Write(buffer.ToArray());
+#endif
         }
 
         internal void WriteZeros(int count)

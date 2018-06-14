@@ -4,7 +4,6 @@ using System.Composition;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 
@@ -16,8 +15,10 @@ namespace AudioWorks.Extensions.Vorbis
         [CanBeNull] FileStream _fileStream;
         [CanBeNull] OggStream _oggStream;
         [CanBeNull] VorbisEncoder _encoder;
-        [CanBeNull] byte[] _buffer;
         [CanBeNull] Export<IAudioFilter> _replayGainExport;
+#if !NETCOREAPP2_1
+        [CanBeNull] byte[] _buffer;
+#endif
 
         public SettingInfoDictionary SettingInfo
         {
@@ -112,9 +113,11 @@ namespace AudioWorks.Extensions.Vorbis
         {
             _encoder?.Dispose();
             _oggStream?.Dispose();
+            _replayGainExport?.Dispose();
+#if !NETCOREAPP2_1
             if (_buffer != null)
                 ArrayPool<byte>.Shared.Return(_buffer);
-            _replayGainExport?.Dispose();
+#endif
         }
 
         void InitializeReplayGainFilter(
@@ -154,7 +157,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         void WritePage(ref OggPage page)
         {
-#if (WINDOWS)
+#if WINDOWS
             WriteFromUnmanaged(page.Header, page.HeaderLength);
             WriteFromUnmanaged(page.Body, page.BodyLength);
 #else
@@ -163,21 +166,28 @@ namespace AudioWorks.Extensions.Vorbis
 #endif
         }
 
-        void WriteFromUnmanaged(IntPtr location, int length)
+        unsafe void WriteFromUnmanaged(IntPtr location, int length)
         {
+#if NETCOREAPP2_1
+            // ReSharper disable once PossibleNullReferenceException
+            _fileStream.Write(new Span<byte>(location.ToPointer(), length));
+#else
             if (_buffer == null)
                 _buffer = ArrayPool<byte>.Shared.Rent(4096);
 
+            Span<byte> data = new Span<byte>(location.ToPointer(), length);
             var offset = 0;
+
             while (offset < length)
             {
                 // ReSharper disable once PossibleNullReferenceException
                 var bytesCopied = Math.Min(length - offset, _buffer.Length);
-                Marshal.Copy(IntPtr.Add(location, offset), _buffer, 0, bytesCopied);
+                data.Slice(offset, bytesCopied).CopyTo(_buffer);
                 // ReSharper disable once PossibleNullReferenceException
                 _fileStream.Write(_buffer, 0, bytesCopied);
                 offset += bytesCopied;
             }
+#endif
         }
     }
 }

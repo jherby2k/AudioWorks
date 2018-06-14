@@ -2,7 +2,6 @@
 using System.Buffers;
 using System.Buffers.Binary;
 using System.IO;
-using System.Runtime.InteropServices;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 
@@ -13,15 +12,17 @@ namespace AudioWorks.Extensions.Vorbis
     {
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary();
 
-        public void WriteMetadata(FileStream stream, AudioMetadata metadata, SettingDictionary settings)
+        public unsafe void WriteMetadata(FileStream stream, AudioMetadata metadata, SettingDictionary settings)
         {
-            // This buffer is used for both reading and writing:
-            var buffer = ArrayPool<byte>.Shared.Rent(4096);
-
             using (var tempStream = new TempFileStream())
             {
                 OggStream inputOggStream = null;
                 OggStream outputOggStream = null;
+#if NETCOREAPP2_1
+                Span<byte> buffer = stackalloc byte[4096];
+#else
+                var buffer = ArrayPool<byte>.Shared.Rent(4096);
+#endif
 
                 try
                 {
@@ -36,9 +37,20 @@ namespace AudioWorks.Extensions.Vorbis
                             // Read from the buffer into a page
                             while (!sync.PageOut(out page))
                             {
-                                var nativeBuffer = sync.Buffer(buffer.Length);
+#if NETCOREAPP2_1
+                                var bytesRead = stream.Read(buffer);
+#else
                                 var bytesRead = stream.Read(buffer, 0, buffer.Length);
-                                Marshal.Copy(buffer, 0, nativeBuffer, bytesRead);
+#endif
+                                if (bytesRead == 0)
+                                    throw new AudioInvalidException("No Ogg stream was found.", stream.Name);
+
+                                var nativeBuffer = new Span<byte>(sync.Buffer(bytesRead).ToPointer(), bytesRead);
+#if NETCOREAPP2_1
+                                buffer.Slice(0, bytesRead).CopyTo(nativeBuffer);
+#else
+                                buffer.AsSpan().Slice(0, bytesRead).CopyTo(nativeBuffer);
+#endif
                                 sync.Wrote(bytesRead);
                             }
 
@@ -74,7 +86,11 @@ namespace AudioWorks.Extensions.Vorbis
                                             outputOggStream.PacketIn(ref packet);
                                             while (outputOggStream.Flush(out var outPage))
                                             {
+#if NETCOREAPP2_1
+                                                WritePage(ref outPage, tempStream);
+#else
                                                 WritePage(ref outPage, tempStream, buffer);
+#endif
                                                 pagesWritten++;
                                             }
 
@@ -89,7 +105,11 @@ namespace AudioWorks.Extensions.Vorbis
                             {
                                 // Copy the existing data pages verbatim, with updated sequence numbers
                                 UpdateSequenceNumber(ref page, pagesWritten);
+#if NETCOREAPP2_1
+                                WritePage(ref page, tempStream);
+#else
                                 WritePage(ref page, tempStream, buffer);
+#endif
                                 pagesWritten++;
                             }
 
@@ -104,16 +124,35 @@ namespace AudioWorks.Extensions.Vorbis
                 }
                 finally
                 {
+#if !NETCOREAPP2_1
                     ArrayPool<byte>.Shared.Return(buffer);
+#endif
                     inputOggStream?.Dispose();
                     outputOggStream?.Dispose();
                 }
             }
         }
 
+#if NETCOREAPP2_1
+        static void WritePage(ref OggPage page, [NotNull] Stream stream)
+        {
+#if WINDOWS
+            WriteFromUnmanaged(page.Header, page.HeaderLength, stream);
+            WriteFromUnmanaged(page.Body, page.BodyLength, stream);
+#else
+            WriteFromUnmanaged(page.Header, (int) page.HeaderLength, stream);
+            WriteFromUnmanaged(page.Body, (int) page.BodyLength, stream);
+#endif
+        }
+
+        static unsafe void WriteFromUnmanaged(IntPtr location, int length, [NotNull] Stream stream)
+        {
+            stream.Write(new Span<byte>(location.ToPointer(), length));
+        }
+#else
         static void WritePage(ref OggPage page, [NotNull] Stream stream, [NotNull] byte[] buffer)
         {
-#if (WINDOWS)
+#if WINDOWS
             WriteFromUnmanaged(page.Header, page.HeaderLength, stream, buffer);
             WriteFromUnmanaged(page.Body, page.BodyLength, stream, buffer);
 #else
@@ -122,17 +161,20 @@ namespace AudioWorks.Extensions.Vorbis
 #endif
         }
 
-        static void WriteFromUnmanaged(IntPtr location, int length, [NotNull] Stream stream, [NotNull] byte[] buffer)
+        static unsafe void WriteFromUnmanaged(IntPtr location, int length, [NotNull] Stream stream, [NotNull] byte[] buffer)
         {
+            Span<byte> data = new Span<byte>(location.ToPointer(), length);
             var offset = 0;
+
             while (offset < length)
             {
                 var bytesCopied = Math.Min(length - offset, buffer.Length);
-                Marshal.Copy(IntPtr.Add(location, offset), buffer, 0, bytesCopied);
+                data.Slice(offset, bytesCopied).CopyTo(buffer);
                 stream.Write(buffer, 0, bytesCopied);
                 offset += bytesCopied;
             }
         }
+#endif
 
         static unsafe void UpdateSequenceNumber(ref OggPage page, uint sequenceNumber)
         {

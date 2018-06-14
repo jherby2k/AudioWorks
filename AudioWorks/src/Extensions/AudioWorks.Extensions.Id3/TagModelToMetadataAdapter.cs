@@ -78,11 +78,21 @@ namespace AudioWorks.Extensions.Id3
                                 break;
 
                             case "REPLAYGAIN_TRACK_GAIN":
+#if NETCOREAPP2_1
+                                TrackGain = frameTextUserDef.Text.Replace(" dB", string.Empty,
+                                    StringComparison.OrdinalIgnoreCase);
+#else
                                 TrackGain = frameTextUserDef.Text.Replace(" dB", string.Empty);
+#endif
                                 break;
 
                             case "REPLAYGAIN_ALBUM_GAIN":
+#if NETCOREAPP2_1
+                                AlbumGain = frameTextUserDef.Text.Replace(" dB", string.Empty,
+                                    StringComparison.OrdinalIgnoreCase);
+#else
                                 AlbumGain = frameTextUserDef.Text.Replace(" dB", string.Empty);
+#endif
                                 break;
                         }
                         break;

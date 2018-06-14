@@ -8,7 +8,7 @@ namespace AudioWorks.Extensions.Vorbis
     {
         internal IntPtr Header;
 
-#if (WINDOWS)
+#if WINDOWS
         internal readonly int HeaderLength;
 #else
         internal readonly long HeaderLength;
@@ -16,7 +16,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         internal IntPtr Body;
 
-#if (WINDOWS)
+#if WINDOWS
         internal readonly int BodyLength;
 #else
         internal readonly long BodyLength;

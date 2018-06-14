@@ -36,16 +36,23 @@ namespace AudioWorks.Extensions.Flac
 
                         var commentBytes = new Span<byte>(entry.Entry.ToPointer(), (int) entry.Length);
                         var delimiter = commentBytes.IndexOf((byte) 0x3D); // '='
-                        var fieldBytes = commentBytes.Slice(0, delimiter);
+#if NETCOREAPP2_1
+                        AudioMetadata.Set(
+                            Encoding.ASCII.GetString(commentBytes.Slice(0, delimiter)),
+                            Encoding.UTF8.GetString(commentBytes.Slice(delimiter + 1)));
+#else
+                        var keyBytes = commentBytes.Slice(0, delimiter);
                         var valueBytes = commentBytes.Slice(delimiter + 1);
                         AudioMetadata.Set(
                             Encoding.ASCII.GetString(
-                                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(fieldBytes)),
-                                fieldBytes.Length),
+                                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)),
+                                keyBytes.Length),
                             Encoding.UTF8.GetString(
                                 (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes)),
                                 valueBytes.Length));
+#endif
                     }
+
                     break;
 
                 case MetadataType.Picture:

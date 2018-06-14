@@ -83,32 +83,40 @@ namespace AudioWorks.Extensions.Vorbis
             GC.SuppressFinalize(this);
         }
 
-        unsafe void AddTag([NotNull] string tag, [NotNull] string contents)
+        unsafe void AddTag([NotNull] string key, [NotNull] string value)
         {
             // Optimization - avoid allocating on the heap
-            Span<byte> tagSpan = stackalloc byte[Encoding.ASCII.GetByteCount(tag) + 1];
+            Span<byte> keySpan = stackalloc byte[Encoding.ASCII.GetMaxByteCount(key.Length) + 1];
+#if NETCOREAPP2_1
+            Encoding.ASCII.GetBytes(key, keySpan);
+#else
             Encoding.ASCII.GetBytes(
-                (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(tag.AsSpan())), tag.Length,
-                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(tagSpan)), tagSpan.Length);
+                (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(key.AsSpan())), key.Length,
+                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keySpan)), keySpan.Length);
+#endif
 
-            var valueSize = Encoding.UTF8.GetByteCount(contents) + 1;
+            var valueSize = Encoding.UTF8.GetMaxByteCount(value.Length) + 1;
             if (valueSize < 0x2000_0000)
             {
-                Span<byte> contentsSpan = stackalloc byte[valueSize];
+                Span<byte> valueSpan = stackalloc byte[valueSize];
+#if NETCOREAPP2_1
+                Encoding.ASCII.GetBytes(value, valueSpan);
+#else
                 Encoding.UTF8.GetBytes(
-                    (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(contents.AsSpan())), contents.Length,
-                    (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(contentsSpan)), contentsSpan.Length);
+                    (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(value.AsSpan())), value.Length,
+                    (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueSpan)), valueSpan.Length);
+#endif
 
                 SafeNativeMethods.VorbisCommentAddTag(ref _comment,
-                    new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(tagSpan))),
-                    new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(contentsSpan))));
+                    new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(keySpan))),
+                    new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueSpan))));
             }
             else
             {
                 // Use heap allocations for comments > 512kB (usually pictures)
                 SafeNativeMethods.VorbisCommentAddTag(ref _comment,
-                    new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(tagSpan))),
-                    Encoding.UTF8.GetBytes(contents));
+                    new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(keySpan))),
+                    Encoding.UTF8.GetBytes(value));
             }
             _unmanagedMemoryAllocated = true;
         }

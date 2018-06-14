@@ -40,7 +40,11 @@ namespace AudioWorks.Extensions.Mp4
                 writer.WriteBigEndian(Value.Lossless ? 14u : 13u);
                 writer.WriteZeros(4);
 
+#if NETCOREAPP2_1
+                writer.Write(Value.Data);
+#else
                 writer.Write(Value.Data.ToArray());
+#endif
             }
         }
     }

@@ -1,6 +1,8 @@
 ﻿using AudioWorks.Common;
 using System;
 using System.Globalization;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace AudioWorks.Extensions.Vorbis
@@ -14,49 +16,63 @@ namespace AudioWorks.Extensions.Vorbis
 
             for (var i = 0; i < vorbisComment.Comments; i++)
             {
-                var comment = Encoding.UTF8
-                    .GetString(new Span<byte>(commentPtrs[i].ToPointer(), commentLengths[i]).ToArray())
-                    .Split(new[] { '=' }, 2);
+                var commentBytes = new Span<byte>(commentPtrs[i].ToPointer(), commentLengths[i]);
+                var delimiter = commentBytes.IndexOf((byte) 0x3D); // '='
+
+#if NETCOREAPP2_1
+                var key = Encoding.ASCII.GetString(commentBytes.Slice(0, delimiter));
+                var value = Encoding.UTF8.GetString(commentBytes.Slice(delimiter + 1));
+#else
+                var keyBytes = commentBytes.Slice(0, delimiter);
+                var valueBytes = commentBytes.Slice(delimiter + 1);
+
+                var key = Encoding.ASCII.GetString(
+                    (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)),
+                    keyBytes.Length);
+                var value = Encoding.UTF8.GetString(
+                    (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes)),
+                    valueBytes.Length);
+#endif
 
                 try
                 {
-                    switch (comment[0].ToUpperInvariant())
+                    switch (key.ToUpperInvariant())
                     {
                         case "TITLE":
-                            Title = comment[1];
+                            Title = value;
                             break;
 
                         case "ARTIST":
-                            Artist = comment[1];
+                            Artist = value;
                             break;
 
                         case "ALBUM":
-                            Album = comment[1];
+                            Album = value;
                             break;
 
                         case "ALBUMARTIST":
-                            AlbumArtist = comment[1];
+                            AlbumArtist = value;
                             break;
 
                         case "COMPOSER":
-                            Composer = comment[1];
+                            Composer = value;
                             break;
 
                         case "GENRE":
-                            Genre = comment[1];
+                            Genre = value;
                             break;
 
                         case "DESCRIPTION":
                         case "COMMENT":
-                            Comment = comment[1];
+                            Comment = value;
                             break;
 
                         case "DATE":
                         case "YEAR":
                             // Descriptions are allowed after whitespace
-                            comment[1] = comment[1].Split(' ')[0];
+                            value = value.Split(' ')[0];
                             // The DATE comment may contain a full date, or only the year
-                            if (DateTime.TryParse(comment[1], CultureInfo.CurrentCulture,
+                            if (DateTime.TryParse(value, CultureInfo.CurrentCulture,
                                 DateTimeStyles.NoCurrentDateDefault, out var result))
                             {
                                 Day = result.Day.ToString(CultureInfo.InvariantCulture);
@@ -64,12 +80,12 @@ namespace AudioWorks.Extensions.Vorbis
                                 Year = result.Year.ToString(CultureInfo.InvariantCulture);
                             }
                             else
-                                Year = comment[1];
+                                Year = value;
                             break;
 
                         case "TRACKNUMBER":
                             // The track number and count may be packed into the same comment
-                            var segments = comment[1].Split('/');
+                            var segments = value.Split('/');
                             TrackNumber = segments[0];
                             if (segments.Length > 1)
                                 TrackCount = segments[1];
@@ -78,27 +94,35 @@ namespace AudioWorks.Extensions.Vorbis
                         case "TRACKCOUNT":
                         case "TRACKTOTAL":
                         case "TOTALTRACKS":
-                            TrackCount = comment[1];
+                            TrackCount = value;
                             break;
 
                         case "REPLAYGAIN_TRACK_PEAK":
-                            TrackPeak = comment[1];
+                            TrackPeak = value;
                             break;
 
                         case "REPLAYGAIN_ALBUM_PEAK":
-                            AlbumPeak = comment[1];
+                            AlbumPeak = value;
                             break;
 
                         case "REPLAYGAIN_TRACK_GAIN":
-                            TrackGain = comment[1].Replace(" dB", string.Empty);
+#if NETCOREAPP2_1
+                            TrackGain = value.Replace(" dB", string.Empty, StringComparison.OrdinalIgnoreCase);
+#else
+                            TrackGain = value.Replace(" dB", string.Empty);
+#endif
                             break;
 
                         case "REPLAYGAIN_ALBUM_GAIN":
-                            AlbumGain = comment[1].Replace(" dB", string.Empty);
+#if NETCOREAPP2_1
+                            AlbumGain = value.Replace(" dB", string.Empty, StringComparison.OrdinalIgnoreCase);
+#else
+                            AlbumGain = value.Replace(" dB", string.Empty);
+#endif
                             break;
 
                         case "METADATA_BLOCK_PICTURE":
-                            CoverArt = CoverArtAdapter.FromComment(comment[1]);
+                            CoverArt = CoverArtAdapter.FromComment(value);
                             break;
                     }
                 }

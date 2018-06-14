@@ -39,18 +39,30 @@ namespace AudioWorks.Extensions.Mp3
         [NotNull]
         static FrameHeader ReadFrameHeader([NotNull] FrameReader reader)
         {
+#if NETCOREAPP2_1
+            Span<byte> buffer = stackalloc byte[4];
+#else
+            var buffer = new byte[4];
+#endif
+
             // Seek to the first valid frame header:
             FrameHeader result = null;
             do
             {
                 try
                 {
+                    //TODO throw if read < 4 bytes
                     reader.SeekToNextFrame();
-                    result = new FrameHeader(reader.ReadBytes(4)); //TODO read into Span
+#if NETCOREAPP2_1
+                    reader.Read(buffer);
+#else
+                    reader.Read(buffer, 0, 4);
+#endif
+                    result = new FrameHeader(buffer);
                 }
                 catch (AudioException)
                 {
-                    // If the frame header appears wrong, its probably a bad sync
+                    // If the frame header appears wrong, it is probably a bad sync
                 }
             } while (result == null || !reader.VerifyFrameSync(result));
             return result;
@@ -63,7 +75,7 @@ namespace AudioWorks.Extensions.Mp3
 
             var result = new OptionalHeader();
 
-            var headerId = new string(reader.ReadChars(4)); //TODO read into Span
+            var headerId = new string(reader.ReadChars(4));
             if (!headerId.Equals("Xing", StringComparison.Ordinal) &&
                 !headerId.Equals("Info", StringComparison.Ordinal))
                 return result;
@@ -85,8 +97,7 @@ namespace AudioWorks.Extensions.Mp3
 
             var result = new OptionalHeader();
 
-            var headerId = new string(reader.ReadChars(4)); //TODO read into Span
-            if (!headerId.Equals("VBRI", StringComparison.Ordinal)) return result;
+            if (!new string(reader.ReadChars(4)).Equals("VBRI", StringComparison.Ordinal)) return result;
 
             reader.BaseStream.Seek(6, SeekOrigin.Current);
             result.ByteCount = reader.ReadUInt32BigEndian();

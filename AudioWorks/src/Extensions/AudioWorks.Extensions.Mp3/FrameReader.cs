@@ -1,4 +1,5 @@
-﻿using System.Buffers.Binary;
+﻿using System;
+using System.Buffers.Binary;
 using System.IO;
 using System.Text;
 using JetBrains.Annotations;
@@ -9,7 +10,9 @@ namespace AudioWorks.Extensions.Mp3
     {
         internal long FrameStart { get; private set; }
 
+#if !NETCOREAPP2_1
         [NotNull] readonly byte[] _buffer = new byte[4];
+#endif
 
         internal FrameReader([NotNull] Stream input)
             : base(input, Encoding.ASCII, true)
@@ -45,8 +48,15 @@ namespace AudioWorks.Extensions.Mp3
 
         internal uint ReadUInt32BigEndian()
         {
-            Read(_buffer, 0, 4); //TODO read into Span
+            //TODO throw if read length is < 4
+#if NETCOREAPP2_1
+            Span<byte> buffer = stackalloc byte[4];
+            Read(buffer);
+            return BinaryPrimitives.ReadUInt32BigEndian(buffer);
+#else
+            Read(_buffer, 0, 4);
             return BinaryPrimitives.ReadUInt32BigEndian(_buffer);
+#endif
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
@@ -10,8 +11,21 @@ namespace AudioWorks.Extensions.Mp4
         [NotNull] readonly byte[] _data;
 
         [NotNull]
+#if NETCOREAPP2_1
+        internal string Name
+        {
+            get
+            {
+                Span<char> charBuffer = stackalloc char[8];
+                CodePagesEncodingProvider.Instance.GetEncoding(1252)
+                    .GetChars(_data.AsSpan().Slice(48, 8), charBuffer);
+                return new string(charBuffer);
+            }
+        }
+#else
         internal string Name => new string(CodePagesEncodingProvider.Instance.GetEncoding(1252)
             .GetChars(_data.Skip(48).Take(8).ToArray()));
+#endif
 
         internal ReverseDnsAtom([NotNull] byte[] data)
         {
