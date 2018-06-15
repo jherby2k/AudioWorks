@@ -13,7 +13,9 @@ namespace AudioWorks.Extensions.Lame
         [NotNull] readonly EncoderHandle _handle = SafeNativeMethods.Init();
         [NotNull] readonly Stream _stream;
         long _startPosition;
+#if !NETCOREAPP2_1
         [CanBeNull] byte[] _buffer;
+#endif
 
         internal Encoder([NotNull] Stream stream)
         {
@@ -66,45 +68,92 @@ namespace AudioWorks.Extensions.Lame
 
         internal unsafe void Encode(ReadOnlySpan<float> leftSamples, ReadOnlySpan<float> rightSamples)
         {
+#if NETCOREAPP2_1
+            Span<byte> buffer = stackalloc byte[(int) Math.Ceiling(1.25 * leftSamples.Length) + 7200];
+
+            var bytesEncoded = SafeNativeMethods.EncodeBufferIeeeFloat(
+                _handle,
+                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(leftSamples))),
+                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(rightSamples))),
+                leftSamples.Length,
+                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer))),
+                buffer.Length);
+
+            //TODO throw on negative values (errors)
+            _stream.Write(buffer.Slice(0, bytesEncoded));
+#else
             if (_buffer == null)
                 _buffer = ArrayPool<byte>.Shared.Rent((int) Math.Ceiling(1.25 * leftSamples.Length) + 7200);
 
-            var bytesEncoded = SafeNativeMethods.EncodeBufferIeeeFloat(_handle,
+            var bytesEncoded = SafeNativeMethods.EncodeBufferIeeeFloat(
+                _handle,
                 new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(leftSamples))),
                 new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(rightSamples))),
+                leftSamples.Length,
                 // ReSharper disable once AssignNullToNotNullAttribute
+                _buffer,
                 // ReSharper disable once PossibleNullReferenceException
-                leftSamples.Length, _buffer, _buffer.Length);
+                _buffer.Length);
 
             //TODO throw on negative values (errors)
             _stream.Write(_buffer, 0, bytesEncoded);
+#endif
         }
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
+#if NETCOREAPP2_1
+        internal unsafe void Flush()
+        {
+            Span<byte> buffer = stackalloc byte[7200];
+            var bytesFlushed = SafeNativeMethods.EncodeFlush(
+                _handle,
+                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer))),
+                buffer.Length);
+            _stream.Write(buffer.Slice(0, bytesFlushed));
+        }
+#else
         internal void Flush()
         {
+            // ReSharper disable once AssignNullToNotNullAttribute
+            // ReSharper disable once PossibleNullReferenceException
             var bytesFlushed = SafeNativeMethods.EncodeFlush(_handle, _buffer, _buffer.Length);
-            if (bytesFlushed > 0)
-                _stream.Write(_buffer, 0, bytesFlushed);
-            //TODO really need to check for > 0?
+            _stream.Write(_buffer, 0, bytesFlushed);
         }
+#endif
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
+#if NETCOREAPP2_1
+        internal unsafe void UpdateLameTag()
+        {
+            _stream.Position = _startPosition;
+
+            var bufferSize = SafeNativeMethods.GetLameTagFrame(_handle, IntPtr.Zero, UIntPtr.Zero);
+            Span<byte> buffer = stackalloc byte[(int) bufferSize.ToUInt32()];
+            _stream.Write(buffer.Slice(0, (int) SafeNativeMethods.GetLameTagFrame(
+                _handle,
+                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer))),
+                bufferSize).ToUInt32()));
+        }
+#else
         internal void UpdateLameTag()
         {
             _stream.Position = _startPosition;
+
+            // ReSharper disable once AssignNullToNotNullAttribute
             _stream.Write(_buffer, 0,
+                // ReSharper disable once AssignNullToNotNullAttribute
+                // ReSharper disable once PossibleNullReferenceException
                 (int) SafeNativeMethods.GetLameTagFrame(_handle, _buffer, new UIntPtr((uint) _buffer.Length))
                     .ToUInt32());
         }
+#endif
+
 
         public void Dispose()
         {
             _handle.Dispose();
+#if !NETCOREAPP2_1
             if (_buffer != null)
                 ArrayPool<byte>.Shared.Return(_buffer);
+#endif
         }
     }
 }

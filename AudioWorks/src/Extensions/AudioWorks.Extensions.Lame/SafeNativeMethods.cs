@@ -87,21 +87,33 @@ namespace AudioWorks.Extensions.Lame
             IntPtr leftSamples,
             IntPtr rightSamples,
             int sampleCount,
+#if NETCOREAPP2_1
+            IntPtr buffer,
+#else
             [NotNull] [In, Out] byte[] buffer,
+#endif
             int bufferSize);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_encode_flush",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int EncodeFlush(
             [NotNull] EncoderHandle handle,
+#if NETCOREAPP2_1
+            IntPtr buffer,
+#else
             [NotNull] [In, Out] byte[] buffer,
+#endif
             int bufferSize);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_get_lametag_frame",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern UIntPtr GetLameTagFrame(
             [NotNull] EncoderHandle handle,
+#if NETCOREAPP2_1
+            IntPtr buffer,
+#else
             [NotNull] [In, Out] byte[] buffer,
+#endif
             UIntPtr bufferSize);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_close",
