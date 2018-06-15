@@ -128,49 +128,60 @@ namespace AudioWorks.Extensions
                                     publishedPackage.Identity.ToString());
 
                                 extensionDir.Create();
-                                var stagingRootDir = extensionDir.CreateSubdirectory("Staging");
+                                var stagingDir = extensionDir.CreateSubdirectory("Staging");
 
-                                var project = new ExtensionNuGetProject(stagingRootDir.FullName);
+                                var project = new ExtensionNuGetProject(stagingDir.FullName);
 
-                                packageManager.InstallPackageAsync(
-                                        project,
-                                        publishedPackage.Identity,
-                                        new ResolutionContext(DependencyBehavior.Lowest, true, false,
-                                            VersionConstraints.None),
-                                        new ExtensionProjectContext(),
-                                        customRepository,
-                                        new[] { defaultRepository },
-                                        cancelSource.Token)
-                                    .Wait(cancelSource.Token);
-
-                                // Move newly installed packages into the extension folder
-                                foreach (var installedPackage in project.GetInstalledPackagesAsync(cancelSource.Token)
-                                    .Result)
+                                try
                                 {
-                                    var packageDir =
-                                        new DirectoryInfo(project.GetInstalledPath(installedPackage.PackageIdentity));
+                                    packageManager.InstallPackageAsync(
+                                            project,
+                                            publishedPackage.Identity,
+                                            new ResolutionContext(DependencyBehavior.Lowest, true, false,
+                                                VersionConstraints.None),
+                                            new ExtensionProjectContext(),
+                                            customRepository,
+                                            new[] { defaultRepository },
+                                            cancelSource.Token)
+                                        .Wait(cancelSource.Token);
 
-                                    foreach (var subDir in packageDir.GetDirectories())
-                                        switch (subDir.Name)
-                                        {
-                                            case "lib":
-                                                CopyContents(
-                                                    SelectDirectory(subDir.GetDirectories()),
-                                                    extensionDir,
-                                                    logger);
-                                                break;
+                                    // Move newly installed packages into the extension folder
+                                    foreach (var installedPackage in project
+                                        .GetInstalledPackagesAsync(cancelSource.Token)
+                                        .Result)
+                                    {
+                                        var packageDir = new DirectoryInfo(
+                                            project.GetInstalledPath(installedPackage.PackageIdentity));
 
-                                            case "contentFiles":
-                                                CopyContents(
-                                                    SelectDirectory(subDir.GetDirectories("any").FirstOrDefault()
-                                                        ?.GetDirectories()),
-                                                    extensionDir,
-                                                    logger);
-                                                break;
-                                        }
+                                        foreach (var subDir in packageDir.GetDirectories())
+                                            switch (subDir.Name)
+                                            {
+                                                case "lib":
+                                                    MoveContents(
+                                                        SelectDirectory(subDir.GetDirectories()),
+                                                        extensionDir,
+                                                        logger);
+                                                    break;
+
+                                                case "contentFiles":
+                                                    MoveContents(
+                                                        SelectDirectory(subDir.GetDirectories("any").FirstOrDefault()
+                                                            ?.GetDirectories()),
+                                                        extensionDir,
+                                                        logger);
+                                                    break;
+                                            }
+                                    }
+
+                                    stagingDir.Delete(true);
                                 }
+                                catch (OperationCanceledException e)
+                                {
+                                    extensionDir.Delete(true);
 
-                                stagingRootDir.Delete(true);
+                                    // Set a useful message for logging purposes
+                                    throw new OperationCanceledException("The download timed out.", e);
+                                }
                             }
 
                             // Remove any extensions that aren't published
@@ -193,6 +204,10 @@ namespace AudioWorks.Extensions
                             else
                                 logger.LogError(e, e.Message);
                         }
+                        finally
+                        {
+                            cancelSource.Dispose();
+                        }
                     }
                 }
                 finally
@@ -214,7 +229,7 @@ namespace AudioWorks.Extensions
                 .FirstOrDefault();
         }
 
-        static void CopyContents(
+        static void MoveContents(
             [CanBeNull] DirectoryInfo source,
             [NotNull] DirectoryInfo destination,
             [NotNull] ILogger logger)
@@ -227,11 +242,11 @@ namespace AudioWorks.Extensions
                 logger.LogInformation("Moving '{0}' to '{1}'.",
                     file.FullName, destination.FullName);
 
-                file.CopyTo(Path.Combine(destination.FullName, file.Name));
+                file.MoveTo(Path.Combine(destination.FullName, file.Name));
             }
 
             foreach (var subdir in source.GetDirectories())
-                CopyContents(subdir, destination.CreateSubdirectory(subdir.Name), logger);
+                MoveContents(subdir, destination.CreateSubdirectory(subdir.Name), logger);
         }
     }
 }
