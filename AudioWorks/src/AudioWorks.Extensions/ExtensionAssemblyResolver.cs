@@ -17,13 +17,12 @@ namespace AudioWorks.Extensions
         internal ExtensionAssemblyResolver([NotNull] string path)
         {
             Assembly = Assembly.LoadFrom(path);
+            var extensionDir = Path.GetDirectoryName(path);
 
-            // ReSharper disable AssignNullToNotNullAttribute
+            // Resolve dependencies from both the main and extension directories
             var assemblyFiles = Directory.GetFiles(
                     Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "*.dll")
-                .Concat(Directory.GetFiles(
-                    Path.GetDirectoryName(Path.GetDirectoryName(Assembly.Location)), "*.dll"));
-            // ReSharper restore AssignNullToNotNullAttribute
+                .Concat(Directory.GetFiles(extensionDir, "*.dll"));
 
             if (RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework",
                 StringComparison.Ordinal))
