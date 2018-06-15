@@ -17,9 +17,6 @@ namespace AudioWorks.Extensions.Wave
         int _bitsPerSample;
         int _bytesPerSample;
         long _framesRemaining;
-#if !NETCOREAPP2_1
-        byte[] _buffer;
-#endif
 
         public bool Finished => _framesRemaining == 0;
 
@@ -35,40 +32,48 @@ namespace AudioWorks.Extensions.Wave
             _reader.SeekToChunk("data");
         }
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public SampleBuffer DecodeSamples()
         {
-            //TODO Throw if read count is less than length
-            var length = _audioInfo.Channels * (int) Math.Min(_framesRemaining, _defaultFrameCount) * _bytesPerSample;
-
 #if NETCOREAPP2_1
-            Span<byte> buffer = stackalloc byte[length];
+            // ReSharper disable once PossibleNullReferenceException
+            Span<byte> buffer = stackalloc byte[_audioInfo.Channels *
+                                                (int) Math.Min(_framesRemaining, _defaultFrameCount)
+                                                * _bytesPerSample];
+            // ReSharper disable once PossibleNullReferenceException
             _reader.Read(buffer);
+            //TODO Throw if read count is less than buffer size
 
             var result = new SampleBuffer(buffer, _audioInfo.Channels, _bitsPerSample);
-#else
-            if (_buffer == null)
-                _buffer = ArrayPool<byte>.Shared.Rent(length);
-
-            _reader.Read(_buffer, 0, length);
-
-            var result = new SampleBuffer(
-                _buffer.AsSpan().Slice(0, length),
-                _audioInfo.Channels,
-                _bitsPerSample);
-#endif
-
             _framesRemaining -= result.Frames;
             return result;
+#else
+            // ReSharper disable once PossibleNullReferenceException
+            var length = _audioInfo.Channels * (int) Math.Min(_framesRemaining, _defaultFrameCount) * _bytesPerSample;
+
+            var buffer = ArrayPool<byte>.Shared.Rent(length);
+            try
+            {
+                // ReSharper disable once PossibleNullReferenceException
+                _reader.Read(buffer, 0, length);
+                //TODO Throw if read count is less than length
+
+                var result = new SampleBuffer(
+                    buffer.AsSpan().Slice(0, length),
+                    _audioInfo.Channels,
+                    _bitsPerSample);
+                _framesRemaining -= result.Frames;
+                return result;
+            }
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(buffer);
+            }
+#endif
         }
 
         public void Dispose()
         {
             _reader?.Dispose();
-#if !NETCOREAPP2_1
-            if (_buffer != null)
-                ArrayPool<byte>.Shared.Return(_buffer);
-#endif
         }
     }
 }

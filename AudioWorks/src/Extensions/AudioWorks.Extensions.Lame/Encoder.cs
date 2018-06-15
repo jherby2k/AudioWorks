@@ -13,9 +13,6 @@ namespace AudioWorks.Extensions.Lame
         [NotNull] readonly EncoderHandle _handle = SafeNativeMethods.Init();
         [NotNull] readonly Stream _stream;
         long _startPosition;
-#if !NETCOREAPP2_1
-        [CanBeNull] byte[] _buffer;
-#endif
 
         internal Encoder([NotNull] Stream stream)
         {
@@ -62,7 +59,6 @@ namespace AudioWorks.Extensions.Lame
         internal void InitializeParameters()
         {
             _startPosition = _stream.Position;
-
             SafeNativeMethods.InitParams(_handle);
         }
 
@@ -82,21 +78,24 @@ namespace AudioWorks.Extensions.Lame
             //TODO throw on negative values (errors)
             _stream.Write(buffer.Slice(0, bytesEncoded));
 #else
-            if (_buffer == null)
-                _buffer = ArrayPool<byte>.Shared.Rent((int) Math.Ceiling(1.25 * leftSamples.Length) + 7200);
+            var buffer = ArrayPool<byte>.Shared.Rent((int) Math.Ceiling(1.25 * leftSamples.Length) + 7200);
+            try
+            {
+                var bytesEncoded = SafeNativeMethods.EncodeBufferIeeeFloat(
+                    _handle,
+                    new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(leftSamples))),
+                    new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(rightSamples))),
+                    leftSamples.Length,
+                    buffer,
+                    buffer.Length);
 
-            var bytesEncoded = SafeNativeMethods.EncodeBufferIeeeFloat(
-                _handle,
-                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(leftSamples))),
-                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(rightSamples))),
-                leftSamples.Length,
-                // ReSharper disable once AssignNullToNotNullAttribute
-                _buffer,
-                // ReSharper disable once PossibleNullReferenceException
-                _buffer.Length);
-
-            //TODO throw on negative values (errors)
-            _stream.Write(_buffer, 0, bytesEncoded);
+                //TODO throw on negative values (errors)
+                _stream.Write(buffer, 0, bytesEncoded);
+            }
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(buffer);
+            }
 #endif
         }
 
@@ -113,10 +112,16 @@ namespace AudioWorks.Extensions.Lame
 #else
         internal void Flush()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
-            // ReSharper disable once PossibleNullReferenceException
-            var bytesFlushed = SafeNativeMethods.EncodeFlush(_handle, _buffer, _buffer.Length);
-            _stream.Write(_buffer, 0, bytesFlushed);
+            var buffer = ArrayPool<byte>.Shared.Rent(7200);
+            try
+            {
+                var bytesFlushed = SafeNativeMethods.EncodeFlush(_handle, buffer, buffer.Length);
+                _stream.Write(buffer, 0, bytesFlushed);
+            }
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(buffer);
+            }
         }
 #endif
 
@@ -137,23 +142,22 @@ namespace AudioWorks.Extensions.Lame
         {
             _stream.Position = _startPosition;
 
-            // ReSharper disable once AssignNullToNotNullAttribute
-            _stream.Write(_buffer, 0,
-                // ReSharper disable once AssignNullToNotNullAttribute
-                // ReSharper disable once PossibleNullReferenceException
-                (int) SafeNativeMethods.GetLameTagFrame(_handle, _buffer, new UIntPtr((uint) _buffer.Length))
-                    .ToUInt32());
+            var bufferSize = SafeNativeMethods.GetLameTagFrame(_handle, Array.Empty<byte>(), UIntPtr.Zero);
+            var buffer = ArrayPool<byte>.Shared.Rent((int) bufferSize.ToUInt32());
+            try
+            {
+                _stream.Write(buffer, 0, (int) SafeNativeMethods.GetLameTagFrame(_handle, buffer, bufferSize));
+            }
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(buffer);
+            }
         }
 #endif
-
 
         public void Dispose()
         {
             _handle.Dispose();
-#if !NETCOREAPP2_1
-            if (_buffer != null)
-                ArrayPool<byte>.Shared.Return(_buffer);
-#endif
         }
     }
 }

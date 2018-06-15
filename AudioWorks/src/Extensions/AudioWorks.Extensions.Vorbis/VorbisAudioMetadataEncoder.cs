@@ -86,11 +86,7 @@ namespace AudioWorks.Extensions.Vorbis
                                             outputOggStream.PacketIn(ref packet);
                                             while (outputOggStream.Flush(out var outPage))
                                             {
-#if NETCOREAPP2_1
                                                 WritePage(ref outPage, tempStream);
-#else
-                                                WritePage(ref outPage, tempStream, buffer);
-#endif
                                                 pagesWritten++;
                                             }
 
@@ -105,11 +101,7 @@ namespace AudioWorks.Extensions.Vorbis
                             {
                                 // Copy the existing data pages verbatim, with updated sequence numbers
                                 UpdateSequenceNumber(ref page, pagesWritten);
-#if NETCOREAPP2_1
                                 WritePage(ref page, tempStream);
-#else
-                                WritePage(ref page, tempStream, buffer);
-#endif
                                 pagesWritten++;
                             }
 
@@ -133,7 +125,6 @@ namespace AudioWorks.Extensions.Vorbis
             }
         }
 
-#if NETCOREAPP2_1
         static void WritePage(ref OggPage page, [NotNull] Stream stream)
         {
 #if WINDOWS
@@ -147,34 +138,29 @@ namespace AudioWorks.Extensions.Vorbis
 
         static unsafe void WriteFromUnmanaged(IntPtr location, int length, [NotNull] Stream stream)
         {
+#if NETCOREAPP2_1
             stream.Write(new Span<byte>(location.ToPointer(), length));
-        }
 #else
-        static void WritePage(ref OggPage page, [NotNull] Stream stream, [NotNull] byte[] buffer)
-        {
-#if WINDOWS
-            WriteFromUnmanaged(page.Header, page.HeaderLength, stream, buffer);
-            WriteFromUnmanaged(page.Body, page.BodyLength, stream, buffer);
-#else
-            WriteFromUnmanaged(page.Header, (int) page.HeaderLength, stream, buffer);
-            WriteFromUnmanaged(page.Body, (int) page.BodyLength, stream, buffer);
-#endif
-        }
-
-        static unsafe void WriteFromUnmanaged(IntPtr location, int length, [NotNull] Stream stream, [NotNull] byte[] buffer)
-        {
-            Span<byte> data = new Span<byte>(location.ToPointer(), length);
-            var offset = 0;
-
-            while (offset < length)
+            var buffer = ArrayPool<byte>.Shared.Rent(4096);
+            try
             {
-                var bytesCopied = Math.Min(length - offset, buffer.Length);
-                data.Slice(offset, bytesCopied).CopyTo(buffer);
-                stream.Write(buffer, 0, bytesCopied);
-                offset += bytesCopied;
+                Span<byte> data = new Span<byte>(location.ToPointer(), length);
+                var offset = 0;
+
+                while (offset < length)
+                {
+                    var bytesCopied = Math.Min(length - offset, buffer.Length);
+                    data.Slice(offset, bytesCopied).CopyTo(buffer);
+                    stream.Write(buffer, 0, bytesCopied);
+                    offset += bytesCopied;
+                }
             }
-        }
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(buffer);
+            }
 #endif
+        }
 
         static unsafe void UpdateSequenceNumber(ref OggPage page, uint sequenceNumber)
         {

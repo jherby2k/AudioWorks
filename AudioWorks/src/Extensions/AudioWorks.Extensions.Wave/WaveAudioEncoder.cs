@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Buffers;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using AudioWorks.Common;
 using JetBrains.Annotations;
@@ -13,9 +12,6 @@ namespace AudioWorks.Extensions.Wave
         int _bitsPerSample;
         int _bytesPerSample;
         [CanBeNull] RiffWriter _writer;
-#if !NETCOREAPP2_1
-        [CanBeNull] byte[] _buffer;
-#endif
 
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary();
 
@@ -33,7 +29,6 @@ namespace AudioWorks.Extensions.Wave
             _writer.BeginChunk("data");
         }
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public void Submit(SampleBuffer samples)
         {
             if (samples.Frames == 0) return;
@@ -41,23 +36,29 @@ namespace AudioWorks.Extensions.Wave
 #if NETCOREAPP2_1
             Span<byte> buffer = stackalloc byte[samples.Channels * samples.Frames * _bytesPerSample];
             samples.CopyToInterleaved(buffer, _bitsPerSample);
+            // ReSharper disable once PossibleNullReferenceException
             _writer.Write(buffer);
 #else
             var dataSize = samples.Channels * samples.Frames * _bytesPerSample;
 
-            if (_buffer == null)
-                _buffer = ArrayPool<byte>.Shared.Rent(dataSize);
-
-            samples.CopyToInterleaved(_buffer, _bitsPerSample);
-            // ReSharper disable once AssignNullToNotNullAttribute
-            _writer.Write(_buffer, 0, dataSize);
+            var buffer = ArrayPool<byte>.Shared.Rent(dataSize);
+            try
+            {
+                samples.CopyToInterleaved(buffer, _bitsPerSample);
+                // ReSharper disable once PossibleNullReferenceException
+                _writer.Write(buffer, 0, dataSize);
+            }
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(buffer);
+            }
 #endif
         }
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public void Finish()
         {
-            // Finish the data and RIFF chunks
+            // Finish both data and RIFF chunks
+            // ReSharper disable once PossibleNullReferenceException
             _writer.FinishChunk();
             _writer.FinishChunk();
         }
@@ -65,15 +66,11 @@ namespace AudioWorks.Extensions.Wave
         public void Dispose()
         {
             _writer?.Dispose();
-#if !NETCOREAPP2_1
-            if (_buffer != null)
-                ArrayPool<byte>.Shared.Return(_buffer);
-#endif
         }
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         void WriteFmtChunk([NotNull] AudioInfo audioInfo)
         {
+            // ReSharper disable once PossibleNullReferenceException
             _writer.BeginChunk("fmt ", 16);
             _writer.Write((ushort) 1);
             _writer.Write((ushort) audioInfo.Channels);
