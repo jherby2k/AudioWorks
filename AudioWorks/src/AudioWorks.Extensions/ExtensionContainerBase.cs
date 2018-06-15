@@ -8,24 +8,24 @@ namespace AudioWorks.Extensions
 {
     abstract class ExtensionContainerBase
     {
-        [NotNull]
-        protected static CompositionHost CompositionHost { get; } = new ContainerConfiguration()
-            .WithAssemblies(
-                new DirectoryInfo(Path.Combine(
-                        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                        "AudioWorks",
-                        "Extensions"))
-                    .GetDirectories()
-                    .SelectMany(extensionDir => extensionDir
+        [NotNull] static readonly Lazy<CompositionHost> _compositionHost = new Lazy<CompositionHost>(() =>
+            new ContainerConfiguration()
+                .WithAssemblies(
+                    new DirectoryInfo(Path.Combine(
+                            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                            "AudioWorks",
+                            "Extensions",
 #if NETCOREAPP2_1
-                        .GetDirectories("netcoreapp2.1")
+                            "netcoreapp2.1"))
 #else
-                        .GetDirectories("netstandard2.0")
+                        "netstandard2.0"))
 #endif
-                        .First()
-                        .GetFiles("AudioWorks.Extensions.*.dll"))
-                    .Select(fileInfo => new ExtensionAssemblyResolver(fileInfo.FullName)
-                        .Assembly))
-            .CreateContainer();
+                        .GetDirectories()
+                        .SelectMany(extensionDir => extensionDir.GetFiles("AudioWorks.Extensions.*.dll"))
+                        .Select(fileInfo => new ExtensionAssemblyResolver(fileInfo.FullName).Assembly))
+                .CreateContainer());
+
+        [NotNull]
+        protected static CompositionHost CompositionHost => _compositionHost.Value;
     }
 }

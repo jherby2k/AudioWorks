@@ -22,7 +22,13 @@ namespace AudioWorks.Extensions
         [NotNull] static readonly string _projectRoot = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "AudioWorks",
-            "Extensions");
+            "Extensions",
+#if NETCOREAPP2_1
+            "netcoreapp2.1"
+#else
+            "netstandard2.0"
+#endif
+            );
 
         [NotNull] static readonly string _customUrl = ConfigurationManager.Configuration.GetValue("ExtensionRepository",
             "https://www.myget.org/F/audioworks-extensions/api/v3/index.json");
@@ -30,17 +36,23 @@ namespace AudioWorks.Extensions
         [NotNull] static readonly string _defaultUrl = ConfigurationManager.Configuration.GetValue("DefaultRepository",
             "https://api.nuget.org/v3/index.json");
 
-        [NotNull] static readonly string[] _netCoreCompatibleFrameworks =
+        [NotNull] static readonly List<string> _compatibleTfms = new List<string>(new[]
         {
-            "netcoreapp2.1", "netcoreapp2.0", "netcoreapp1.1", "netcoreapp1.0", "netstandard2.0", "netstandard1.6",
-            "netstandard1.5", "netstandard1.4", "netstandard1.3", "netstandard1.2", "netstandard1.1", "netstandard1.0"
-        };
-
-        [NotNull] static readonly string[] _netStandardCompatibleFrameworks =
-        {
-            "netstandard2.0", "netstandard1.6", "netstandard1.5", "netstandard1.4", "netstandard1.3", "netstandard1.2",
-            "netstandard1.1", "netstandard1.0"
-        };
+#if NETCOREAPP2_1
+            "netcoreapp2.1",
+            "netcoreapp2.0",
+            "netcoreapp1.1",
+            "netcoreapp1.0",
+#endif
+            "netstandard2.0",
+            "netstandard1.6",
+            "netstandard1.5",
+            "netstandard1.4",
+            "netstandard1.3",
+            "netstandard1.2",
+            "netstandard1.1",
+            "netstandard1.0"
+        });
 
         [NotNull] static readonly object _syncRoot = new object();
         static bool _alreadyDownloaded;
@@ -143,27 +155,16 @@ namespace AudioWorks.Extensions
                                         {
                                             case "lib":
                                                 CopyContents(
-                                                    SelectDirectory(subDir.GetDirectories(), _netCoreCompatibleFrameworks),
-                                                    extensionDir.CreateSubdirectory("netcoreapp2.1"),
-                                                    logger);
-                                                CopyContents(
-                                                    SelectDirectory(subDir.GetDirectories(), _netStandardCompatibleFrameworks),
-                                                    extensionDir.CreateSubdirectory("netstandard2.0"),
+                                                    SelectDirectory(subDir.GetDirectories()),
+                                                    extensionDir,
                                                     logger);
                                                 break;
 
                                             case "contentFiles":
                                                 CopyContents(
-                                                    SelectDirectory(
-                                                        subDir.GetDirectories("any").FirstOrDefault()?.GetDirectories(),
-                                                        _netCoreCompatibleFrameworks),
-                                                    extensionDir.CreateSubdirectory("netcoreapp2.1"),
-                                                    logger);
-                                                CopyContents(
-                                                    SelectDirectory(
-                                                        subDir.GetDirectories("any").FirstOrDefault()?.GetDirectories(),
-                                                        _netStandardCompatibleFrameworks),
-                                                    extensionDir.CreateSubdirectory("netstandard2.0"),
+                                                    SelectDirectory(subDir.GetDirectories("any").FirstOrDefault()
+                                                        ?.GetDirectories()),
+                                                    extensionDir,
                                                     logger);
                                                 break;
                                         }
@@ -203,15 +204,13 @@ namespace AudioWorks.Extensions
         }
 
         [CanBeNull]
-        static DirectoryInfo SelectDirectory(
-            [CanBeNull, ItemNotNull] IEnumerable<DirectoryInfo> directories,
-            [NotNull, ItemNotNull] IEnumerable<string> compatibleTfms)
+        static DirectoryInfo SelectDirectory([CanBeNull, ItemNotNull] IEnumerable<DirectoryInfo> directories)
         {
-            // Select netcore frameworks before netstandard, then by descending version
+            // Select the first directory in the list of compatible TFMs
             return directories?
-                .Where(dir => compatibleTfms.Contains(dir.Name, StringComparer.OrdinalIgnoreCase))
-                .OrderBy(dir => dir.Name.Substring(0, dir.Name.Length - 3))
-                .ThenByDescending(dir => Version.Parse(dir.Name.Substring(dir.Name.Length - 3)))
+                .Where(dir => _compatibleTfms.Contains(dir.Name, StringComparer.OrdinalIgnoreCase))
+                .OrderBy(dir => _compatibleTfms
+                    .FindIndex(tfm => tfm.Equals(dir.Name, StringComparison.OrdinalIgnoreCase)))
                 .FirstOrDefault();
         }
 
