@@ -59,7 +59,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="pwsh.exe -ExecutionPolicy Unrestricted -File &quot;$(ProjectDir)CopyModule.ps1&quot; -Configuration $(ConfigurationName) -ModuleProjectRoot &quot;$(ProjectDir)..\..\src\AudioWorks.Commands&quot; -OutputRoot $(OutDir)" />
+    <Exec Command="pwsh.exe -ExecutionPolicy Unrestricted -File &quot;$(ProjectDir)CopyModule.ps1&quot; -Configuration $(ConfigurationName) -Framework $(TargetFramework) -ModuleProjectRoot &quot;$(ProjectDir)..\..\src\AudioWorks.Commands&quot; -OutputRoot $(OutDir)" />
   </Target>
 
 </Project>
