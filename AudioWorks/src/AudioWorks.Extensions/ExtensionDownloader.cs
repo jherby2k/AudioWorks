@@ -22,7 +22,13 @@ namespace AudioWorks.Extensions
         [NotNull] static readonly string _projectRoot = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "AudioWorks",
-            "Extensions");
+            "Extensions",
+#if NETCOREAPP2_1
+            "netcoreapp2.1"
+#else
+            "netstandard2.0"
+#endif
+            );
 
         [NotNull] static readonly string _customUrl = ConfigurationManager.Configuration.GetValue("ExtensionRepository",
             "https://www.myget.org/F/audioworks-extensions/api/v3/index.json");
@@ -30,17 +36,23 @@ namespace AudioWorks.Extensions
         [NotNull] static readonly string _defaultUrl = ConfigurationManager.Configuration.GetValue("DefaultRepository",
             "https://api.nuget.org/v3/index.json");
 
-        [NotNull] static readonly string[] _netCoreCompatibleFrameworks =
+        [NotNull] static readonly List<string> _compatibleTfms = new List<string>(new[]
         {
-            "netcoreapp2.1", "netcoreapp2.0", "netcoreapp1.1", "netcoreapp1.0", "netstandard2.0", "netstandard1.6",
-            "netstandard1.5", "netstandard1.4", "netstandard1.3", "netstandard1.2", "netstandard1.1", "netstandard1.0"
-        };
-
-        [NotNull] static readonly string[] _netStandardCompatibleFrameworks =
-        {
-            "netstandard2.0", "netstandard1.6", "netstandard1.5", "netstandard1.4", "netstandard1.3", "netstandard1.2",
-            "netstandard1.1", "netstandard1.0"
-        };
+#if NETCOREAPP2_1
+            "netcoreapp2.1",
+            "netcoreapp2.0",
+            "netcoreapp1.1",
+            "netcoreapp1.0",
+#endif
+            "netstandard2.0",
+            "netstandard1.6",
+            "netstandard1.5",
+            "netstandard1.4",
+            "netstandard1.3",
+            "netstandard1.2",
+            "netstandard1.1",
+            "netstandard1.0"
+        });
 
         [NotNull] static readonly object _syncRoot = new object();
         static bool _alreadyDownloaded;
@@ -116,60 +128,60 @@ namespace AudioWorks.Extensions
                                     publishedPackage.Identity.ToString());
 
                                 extensionDir.Create();
-                                var stagingRootDir = extensionDir.CreateSubdirectory("Staging");
+                                var stagingDir = extensionDir.CreateSubdirectory("Staging");
 
-                                var project = new ExtensionNuGetProject(stagingRootDir.FullName);
+                                var project = new ExtensionNuGetProject(stagingDir.FullName);
 
-                                packageManager.InstallPackageAsync(
-                                        project,
-                                        publishedPackage.Identity,
-                                        new ResolutionContext(DependencyBehavior.Lowest, true, false,
-                                            VersionConstraints.None),
-                                        new ExtensionProjectContext(),
-                                        customRepository,
-                                        new[] { defaultRepository },
-                                        cancelSource.Token)
-                                    .Wait(cancelSource.Token);
-
-                                // Move newly installed packages into the extension folder
-                                foreach (var installedPackage in project.GetInstalledPackagesAsync(cancelSource.Token)
-                                    .Result)
+                                try
                                 {
-                                    var packageDir =
-                                        new DirectoryInfo(project.GetInstalledPath(installedPackage.PackageIdentity));
+                                    packageManager.InstallPackageAsync(
+                                            project,
+                                            publishedPackage.Identity,
+                                            new ResolutionContext(DependencyBehavior.Lowest, true, false,
+                                                VersionConstraints.None),
+                                            new ExtensionProjectContext(),
+                                            customRepository,
+                                            new[] { defaultRepository },
+                                            cancelSource.Token)
+                                        .Wait(cancelSource.Token);
 
-                                    foreach (var subDir in packageDir.GetDirectories())
-                                        switch (subDir.Name)
-                                        {
-                                            case "lib":
-                                                CopyContents(
-                                                    SelectDirectory(subDir.GetDirectories(), _netCoreCompatibleFrameworks),
-                                                    extensionDir.CreateSubdirectory("netcoreapp2.1"),
-                                                    logger);
-                                                CopyContents(
-                                                    SelectDirectory(subDir.GetDirectories(), _netStandardCompatibleFrameworks),
-                                                    extensionDir.CreateSubdirectory("netstandard2.0"),
-                                                    logger);
-                                                break;
+                                    // Move newly installed packages into the extension folder
+                                    foreach (var installedPackage in project
+                                        .GetInstalledPackagesAsync(cancelSource.Token)
+                                        .Result)
+                                    {
+                                        var packageDir = new DirectoryInfo(
+                                            project.GetInstalledPath(installedPackage.PackageIdentity));
 
-                                            case "contentFiles":
-                                                CopyContents(
-                                                    SelectDirectory(
-                                                        subDir.GetDirectories("any").FirstOrDefault()?.GetDirectories(),
-                                                        _netCoreCompatibleFrameworks),
-                                                    extensionDir.CreateSubdirectory("netcoreapp2.1"),
-                                                    logger);
-                                                CopyContents(
-                                                    SelectDirectory(
-                                                        subDir.GetDirectories("any").FirstOrDefault()?.GetDirectories(),
-                                                        _netStandardCompatibleFrameworks),
-                                                    extensionDir.CreateSubdirectory("netstandard2.0"),
-                                                    logger);
-                                                break;
-                                        }
+                                        foreach (var subDir in packageDir.GetDirectories())
+                                            switch (subDir.Name)
+                                            {
+                                                case "lib":
+                                                    MoveContents(
+                                                        SelectDirectory(subDir.GetDirectories()),
+                                                        extensionDir,
+                                                        logger);
+                                                    break;
+
+                                                case "contentFiles":
+                                                    MoveContents(
+                                                        SelectDirectory(subDir.GetDirectories("any").FirstOrDefault()
+                                                            ?.GetDirectories()),
+                                                        extensionDir,
+                                                        logger);
+                                                    break;
+                                            }
+                                    }
+
+                                    stagingDir.Delete(true);
                                 }
+                                catch (OperationCanceledException e)
+                                {
+                                    extensionDir.Delete(true);
 
-                                stagingRootDir.Delete(true);
+                                    // Set a useful message for logging purposes
+                                    throw new OperationCanceledException("The download timed out.", e);
+                                }
                             }
 
                             // Remove any extensions that aren't published
@@ -192,6 +204,10 @@ namespace AudioWorks.Extensions
                             else
                                 logger.LogError(e, e.Message);
                         }
+                        finally
+                        {
+                            cancelSource.Dispose();
+                        }
                     }
                 }
                 finally
@@ -203,19 +219,17 @@ namespace AudioWorks.Extensions
         }
 
         [CanBeNull]
-        static DirectoryInfo SelectDirectory(
-            [CanBeNull, ItemNotNull] IEnumerable<DirectoryInfo> directories,
-            [NotNull, ItemNotNull] IEnumerable<string> compatibleTfms)
+        static DirectoryInfo SelectDirectory([CanBeNull, ItemNotNull] IEnumerable<DirectoryInfo> directories)
         {
-            // Select netcore frameworks before netstandard, then by descending version
+            // Select the first directory in the list of compatible TFMs
             return directories?
-                .Where(dir => compatibleTfms.Contains(dir.Name, StringComparer.OrdinalIgnoreCase))
-                .OrderBy(dir => dir.Name.Substring(0, dir.Name.Length - 3))
-                .ThenByDescending(dir => Version.Parse(dir.Name.Substring(dir.Name.Length - 3)))
+                .Where(dir => _compatibleTfms.Contains(dir.Name, StringComparer.OrdinalIgnoreCase))
+                .OrderBy(dir => _compatibleTfms
+                    .FindIndex(tfm => tfm.Equals(dir.Name, StringComparison.OrdinalIgnoreCase)))
                 .FirstOrDefault();
         }
 
-        static void CopyContents(
+        static void MoveContents(
             [CanBeNull] DirectoryInfo source,
             [NotNull] DirectoryInfo destination,
             [NotNull] ILogger logger)
@@ -228,11 +242,11 @@ namespace AudioWorks.Extensions
                 logger.LogInformation("Moving '{0}' to '{1}'.",
                     file.FullName, destination.FullName);
 
-                file.CopyTo(Path.Combine(destination.FullName, file.Name));
+                file.MoveTo(Path.Combine(destination.FullName, file.Name));
             }
 
             foreach (var subdir in source.GetDirectories())
-                CopyContents(subdir, destination.CreateSubdirectory(subdir.Name), logger);
+                MoveContents(subdir, destination.CreateSubdirectory(subdir.Name), logger);
         }
     }
 }
