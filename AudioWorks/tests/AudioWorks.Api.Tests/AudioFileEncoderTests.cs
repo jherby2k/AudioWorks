@@ -34,8 +34,17 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "AudioFileEncoder's constructor throws an exception if an unexpected setting is provided")]
         public void ConstructorUnexpectedSettingThrowsException()
         {
+            //TODO move this into a SettingDictionary test class
             Assert.Throws<ArgumentException>(() =>
-                new AudioFileEncoder("Wave", new SettingDictionary { ["Foo"] = "Bar" }));
+                new AudioFileEncoder("Wave", null, null, new SettingDictionary { ["Foo"] = "Bar" }));
+        }
+
+        [Fact(DisplayName = "AudioFileEncoder's Settings property throws an exception if an unexpected setting is provided")]
+        public void SettingsUnexpectedSettingThrowsException()
+        {
+            //TODO move this into a SettingDictionary test class
+            var encoder = new AudioFileEncoder("Wave");
+            Assert.Throws<ArgumentException>(() => encoder.Settings["Foo"] = "Bar");
         }
 
         [Theory(DisplayName = "AudioFileEncoder's Encode method creates the expected audio file")]
@@ -57,11 +66,11 @@ namespace AudioWorks.Api.Tests
                 sourceFileName));
 
             var results = (await new AudioFileEncoder(
-                    encoderName,
-                    settings,
-                    path,
-                    $"{index:00} - {Path.GetFileNameWithoutExtension(sourceFileName)}",
-                    true)
+                        encoderName,
+                        path,
+                        $"{index:00} - {Path.GetFileNameWithoutExtension(sourceFileName)}",
+                        settings)
+                    { Overwrite = true }
                 .EncodeAsync(audioFile).ConfigureAwait(false)).ToArray();
 
             Assert.Single(results);

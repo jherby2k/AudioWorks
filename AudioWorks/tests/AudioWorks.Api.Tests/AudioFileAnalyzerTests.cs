@@ -42,7 +42,9 @@ namespace AudioWorks.Api.Tests
 
             await new AudioFileAnalyzer(analyzerName, settings).AnalyzeAsync(audioFile).ConfigureAwait(false);
 
-            Assert.True(new Comparer().Compare(expectedMetadata, audioFile.Metadata, out var differences), string.Join(" ", differences));
+            Assert.True(
+                new Comparer().Compare(expectedMetadata, audioFile.Metadata, out var differences),
+                string.Join(" ", differences));
         }
 
         [Theory(DisplayName = "AudioFileAnalyzer's Analyze method creates the expected metadata for a group")]

@@ -16,8 +16,14 @@ namespace AudioWorks.Api
     public sealed class AudioFileAnalyzer
     {
         [NotNull] readonly ExportFactory<IAudioAnalyzer> _analyzerFactory;
-        [NotNull] readonly SettingDictionary _settings;
         [NotNull] readonly string _progressDescription;
+
+        /// <summary>
+        /// Gets the settings.
+        /// </summary>
+        /// <value>The settings.</value>
+        [NotNull]
+        public SettingDictionary Settings { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioFileAnalyzer"/> class.
@@ -35,7 +41,9 @@ namespace AudioWorks.Api
             _analyzerFactory = ExtensionProvider.GetFactories<IAudioAnalyzer>("Name", name).SingleOrDefault() ??
                                throw new ArgumentException($"No '{name}' analyzer is available.", nameof(name));
 
-            _settings = settings ?? new SettingDictionary();
+            using (var export = _analyzerFactory.CreateExport())
+                Settings = new ValidatingSettingDictionary(export.Value.SettingInfo, settings);
+
             _progressDescription = $"Performing {name} analysis";
         }
 
@@ -100,7 +108,7 @@ namespace AudioWorks.Api
                 for (var i = 0; i < audioFiles.Length; i++)
                 {
                     analyzerExports[i] = _analyzerFactory.CreateExport();
-                    analyzerExports[i].Value.Initialize(audioFiles[i].Info, _settings, groupToken);
+                    analyzerExports[i].Value.Initialize(audioFiles[i].Info, Settings, groupToken);
 
                     var i1 = i;
                     var itemProgress = progress == null

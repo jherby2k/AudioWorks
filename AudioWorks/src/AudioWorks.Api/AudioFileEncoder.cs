@@ -20,26 +20,35 @@ namespace AudioWorks.Api
         [CanBeNull] readonly MetadataSubstituter _fileNameSubstituter;
         [CanBeNull] readonly MetadataSubstituter _directoryNameSubstituter;
         [NotNull] readonly ExportFactory<IAudioEncoder> _encoderFactory;
-        [NotNull] readonly SettingDictionary _settings;
-        readonly bool _overwrite;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether existing files should be overwritten.
+        /// </summary>
+        /// <value><c>true</c> if files should be overwritten; otherwise, <c>false</c>.</value>
+        public bool Overwrite { get; set; }
+
+        /// <summary>
+        /// Gets the settings.
+        /// </summary>
+        /// <value>The settings.</value>
+        [NotNull]
+        public SettingDictionary Settings { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioFileEncoder"/> class.
         /// </summary>
         /// <param name="name">The name of the encoder.</param>
-        /// <param name="settings">The settings.</param>
         /// <param name="encodedDirectoryName">The encoded directory name, or null.</param>
         /// <param name="encodedFileName">The encode file name, or null.</param>
-        /// <param name="overwrite">if set to <c>true</c>, any existing file will be overwritten.</param>
+        /// <param name="settings">The settings.</param>
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="name"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if <see paramref="name"/> is not the name of an available encoder.
         /// </exception>
         public AudioFileEncoder(
             [NotNull] string name,
-            [CanBeNull] SettingDictionary settings = null,
             [CanBeNull] string encodedDirectoryName = null,
             [CanBeNull] string encodedFileName = null,
-            bool overwrite = false)
+            [CanBeNull] SettingDictionary settings = null)
         {
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
@@ -47,20 +56,13 @@ namespace AudioWorks.Api
             _encoderFactory = ExtensionProvider.GetFactories<IAudioEncoder>("Name", name).SingleOrDefault() ??
                               throw new ArgumentException($"No '{name}' encoder is available.", nameof(name));
 
-            if (settings != null)
-            {
-                // Make sure the provided settings are clean
-                AudioEncoderManager.GetSettingInfo(name).ValidateSettings(settings);
-                _settings = settings;
-            }
-            else
-                _settings = new SettingDictionary();
-
             if (encodedDirectoryName != null)
                 _directoryNameSubstituter = new DirectoryNameSubstituter(encodedDirectoryName);
             if (encodedFileName != null)
                 _fileNameSubstituter = new FileNameSubstituter(encodedFileName);
-            _overwrite = overwrite;
+
+            using (var export = _encoderFactory.CreateExport())
+                Settings = new ValidatingSettingDictionary(export.Value.SettingInfo, settings);
         }
 
         /// <summary>
@@ -146,7 +148,7 @@ namespace AudioWorks.Api
                         // If the output file already exists, write to a temporary file first
                         if (File.Exists(finalOutputPaths[i]))
                         {
-                            if (!_overwrite)
+                            if (!Overwrite)
                                 throw new IOException($"The file '{finalOutputPaths[i]}' already exists.");
 
                             tempOutputPaths[i] = Path.Combine(outputDirectory, Path.GetRandomFileName());
@@ -159,7 +161,7 @@ namespace AudioWorks.Api
                             outputStreams[i],
                             audioFiles[i].Info,
                             new AudioMetadata(audioFiles[i].Metadata),
-                            _settings);
+                            Settings);
 
                         var i1 = i;
                         var itemProgress = progress == null

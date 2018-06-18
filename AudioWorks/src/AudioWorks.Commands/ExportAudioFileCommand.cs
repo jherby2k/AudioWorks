@@ -77,11 +77,12 @@ namespace AudioWorks.Commands
         protected override void EndProcessing()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
-            var encoder = new AudioFileEncoder(Encoder,
-                SettingAdapter.ParametersToSettings(_parameters),
-                SessionState.Path.GetUnresolvedProviderPathFromPSPath(Path),
-                Name,
-                Replace);
+            var encoder = new AudioFileEncoder(
+                    Encoder,
+                    SessionState.Path.GetUnresolvedProviderPathFromPSPath(Path),
+                    Name,
+                    SettingAdapter.ParametersToSettings(_parameters))
+                { Overwrite = Replace };
 
             var activity = $"Encoding {_sourceAudioFiles.Count} audio files in {Encoder} format";
             var totalFrames = (double) _sourceAudioFiles.Sum(audioFile => audioFile.Info.FrameCount);
