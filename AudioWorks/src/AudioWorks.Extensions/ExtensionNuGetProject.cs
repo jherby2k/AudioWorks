@@ -17,18 +17,15 @@ namespace AudioWorks.Extensions
         }
 
         [NotNull]
-        public override async Task<IEnumerable<PackageReference>> GetInstalledPackagesAsync(CancellationToken token)
+        public override Task<IEnumerable<PackageReference>> GetInstalledPackagesAsync(CancellationToken token)
         {
-            return await Task.Run(() =>
-            {
-                var result = new List<PackageReference>();
-                foreach (var nuspecFile in new DirectoryInfo(Root).GetDirectories()
-                    .SelectMany(dir => dir.GetFiles("*.nuspec")))
-                    using (var stream = nuspecFile.OpenRead())
-                        result.Add(new PackageReference(new NuspecReader(stream).GetIdentity(),
-                            NuGetFramework.AnyFramework));
-                return result;
-            }, token).ConfigureAwait(false);
+            var result = new List<PackageReference>();
+            foreach (var nuspecFile in new DirectoryInfo(Root).GetDirectories()
+                .SelectMany(dir => dir.GetFiles("*.nuspec")))
+                using (var stream = nuspecFile.OpenRead())
+                    result.Add(new PackageReference(new NuspecReader(stream).GetIdentity(),
+                        NuGetFramework.AnyFramework));
+            return Task.FromResult(result.AsEnumerable());
         }
     }
 }
