@@ -57,7 +57,7 @@
     <PackageReference Include="NuGet.Client" Version="4.2.0" />
     <PackageReference Include="NuGet.PackageManagement.NetStandard" Version="4.6.0" />
     <PackageReference Include="System.Composition" Version="1.2.0" />
-    <PackageReference Include="System.Memory" Version="4.5.0" />
+    <PackageReference Include="System.Memory" Version="4.5.1" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
   </ItemGroup>
 
