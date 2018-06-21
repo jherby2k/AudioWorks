@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Common
@@ -25,6 +27,15 @@ namespace AudioWorks.Common
             : base(typeof(string))
         {
             AcceptedValues = acceptedValues;
+        }
+
+        /// <inheritdoc/>
+        public override void Validate(object value)
+        {
+            base.Validate(value);
+
+            if (!AcceptedValues.Contains(value))
+                throw new ArgumentException($"{value} is not one of the accepted values.", nameof(value));
         }
     }
 }

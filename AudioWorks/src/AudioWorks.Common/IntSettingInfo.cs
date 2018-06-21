@@ -33,10 +33,21 @@ namespace AudioWorks.Common
             : base(typeof(int))
         {
             if (minValue >= maxValue)
-                throw new ArgumentException("maxValue must be larger than minValue.");
+                throw new ArgumentException($"{nameof(maxValue)} must be larger than {nameof(minValue)}.");
 
             MinValue = minValue;
             MaxValue = maxValue;
+        }
+
+        /// <inheritdoc/>
+        public override void Validate(object value)
+        {
+            base.Validate(value);
+
+            if ((int) value > MaxValue)
+                throw new ArgumentOutOfRangeException(nameof(value), $"Maximum value is {MaxValue}.");
+            if ((int) value < MinValue)
+                throw new ArgumentOutOfRangeException(nameof(value), $"Minimum value is {MinValue}.");
         }
     }
 }

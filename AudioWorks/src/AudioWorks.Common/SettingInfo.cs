@@ -25,5 +25,16 @@ namespace AudioWorks.Common
         {
             ValueType = valueType ?? throw new ArgumentNullException(nameof(valueType));
         }
+
+        /// <summary>
+        /// Validates the specified value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        public virtual void Validate([NotNull] object value)
+        {
+            if (value == null) throw new ArgumentNullException(nameof(value));
+            if (value.GetType() != ValueType)
+                throw new ArgumentException($"{nameof(value)} is not of type {ValueType}.", nameof(value));
+        }
     }
 }
