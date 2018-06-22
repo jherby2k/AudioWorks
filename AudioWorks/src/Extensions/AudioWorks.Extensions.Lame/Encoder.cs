@@ -72,7 +72,7 @@ namespace AudioWorks.Extensions.Lame
                 new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(leftSamples))),
                 new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(rightSamples))),
                 leftSamples.Length,
-                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer))),
+                new IntPtr(Unsafe.AsPointer(ref buffer.GetPinnableReference())),
                 buffer.Length);
 
             //TODO throw on negative values (errors)
@@ -105,7 +105,7 @@ namespace AudioWorks.Extensions.Lame
             Span<byte> buffer = stackalloc byte[7200];
             var bytesFlushed = SafeNativeMethods.EncodeFlush(
                 _handle,
-                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer))),
+                new IntPtr(Unsafe.AsPointer(ref buffer.GetPinnableReference())),
                 buffer.Length);
             _stream.Write(buffer.Slice(0, bytesFlushed));
         }
@@ -134,7 +134,7 @@ namespace AudioWorks.Extensions.Lame
             Span<byte> buffer = stackalloc byte[(int) bufferSize.ToUInt32()];
             _stream.Write(buffer.Slice(0, (int) SafeNativeMethods.GetLameTagFrame(
                 _handle,
-                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer))),
+                new IntPtr(Unsafe.AsPointer(ref buffer.GetPinnableReference())),
                 bufferSize).ToUInt32()));
         }
 #else

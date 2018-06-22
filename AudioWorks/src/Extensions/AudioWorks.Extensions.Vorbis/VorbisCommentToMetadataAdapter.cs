@@ -1,9 +1,8 @@
-﻿using AudioWorks.Common;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Text;
+using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Vorbis
 {
@@ -27,10 +26,10 @@ namespace AudioWorks.Extensions.Vorbis
                 var valueBytes = commentBytes.Slice(delimiter + 1);
 
                 var key = Encoding.ASCII.GetString(
-                    (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)),
+                    (byte*) Unsafe.AsPointer(ref keyBytes.GetPinnableReference()),
                     keyBytes.Length);
                 var value = Encoding.UTF8.GetString(
-                    (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes)),
+                    (byte*) Unsafe.AsPointer(ref valueBytes.GetPinnableReference()),
                     valueBytes.Length);
 #endif
 

@@ -25,22 +25,22 @@ namespace AudioWorks.Extensions.Flac
             var keyLength = Encoding.ASCII.GetBytes(
                                 (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(key.AsSpan())),
                                 key.Length,
-                                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keySpan)),
+                                (byte*) Unsafe.AsPointer(ref keySpan.GetPinnableReference()),
                                 keySpan.Length)
                             + 1;
 
             var valueLength = Encoding.UTF8.GetBytes(
                                   (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(value.AsSpan())),
                                   value.Length,
-                                  (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueSpan)),
+                                  (byte*) Unsafe.AsPointer(ref valueSpan.GetPinnableReference()),
                                   valueSpan.Length)
                               + 1;
 #endif
 
             SafeNativeMethods.MetadataObjectVorbisCommentEntryFromNameValuePair(
                 out var entry,
-                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(keySpan.Slice(0, keyLength)))),
-                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueSpan.Slice(0, valueLength)))));
+                new IntPtr(Unsafe.AsPointer(ref keySpan.Slice(0, keyLength).GetPinnableReference())),
+                new IntPtr(Unsafe.AsPointer(ref valueSpan.Slice(0, valueLength).GetPinnableReference())));
 
             // The comment takes ownership of the new entry if 'copy' is false
             SafeNativeMethods.MetadataObjectVorbisCommentAppendComment(Handle, entry, false);

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 
@@ -72,7 +71,7 @@ namespace AudioWorks.Extensions.Flac
             samples.CopyToInterleaved(buffer, _bitsPerSample);
 
             _encoder.ProcessInterleaved(
-                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer))),
+                new IntPtr(Unsafe.AsPointer(ref buffer.GetPinnableReference())),
                 (uint) samples.Frames);
         }
 

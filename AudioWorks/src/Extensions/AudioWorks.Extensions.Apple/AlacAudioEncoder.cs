@@ -59,7 +59,7 @@ namespace AudioWorks.Extensions.Apple
             };
             bufferList.Buffers[0].NumberChannels = (uint) samples.Channels;
             bufferList.Buffers[0].DataByteSize = (uint) (buffer.Length * Marshal.SizeOf<int>());
-            bufferList.Buffers[0].Data = new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)));
+            bufferList.Buffers[0].Data = new IntPtr(Unsafe.AsPointer(ref buffer.GetPinnableReference()));
 
             // ReSharper disable once PossibleNullReferenceException
             _audioFile.Write(bufferList, (uint) samples.Frames);
