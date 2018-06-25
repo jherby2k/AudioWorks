@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.ReplayGain
@@ -20,9 +21,12 @@ namespace AudioWorks.Extensions.ReplayGain
                 calculateTruePeaks ? Modes.Global | Modes.TruePeak : Modes.Global | Modes.SamplePeak);
         }
 
-        internal void AddFrames(IntPtr frames, uint count)
+        internal void AddFrames(Span<float> samples, uint frames)
         {
-            SafeNativeMethods.AddFramesFloat(Handle, frames, new UIntPtr(count));
+            SafeNativeMethods.AddFramesFloat(
+                Handle,
+                Unsafe.AsRef(samples.GetPinnableReference()),
+                new UIntPtr(frames));
         }
 
         internal double GetPeak()

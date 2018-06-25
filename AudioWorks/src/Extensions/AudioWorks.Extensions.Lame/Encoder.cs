@@ -62,17 +62,17 @@ namespace AudioWorks.Extensions.Lame
             SafeNativeMethods.InitParams(_handle);
         }
 
-        internal unsafe void Encode(ReadOnlySpan<float> leftSamples, ReadOnlySpan<float> rightSamples)
+        internal void Encode(ReadOnlySpan<float> leftSamples, ReadOnlySpan<float> rightSamples)
         {
 #if NETCOREAPP2_1
             Span<byte> buffer = stackalloc byte[(int) Math.Ceiling(1.25 * leftSamples.Length) + 7200];
 
             var bytesEncoded = SafeNativeMethods.EncodeBufferIeeeFloat(
                 _handle,
-                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(leftSamples))),
-                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(rightSamples))),
+                Unsafe.AsRef(MemoryMarshal.GetReference(leftSamples)),
+                Unsafe.AsRef(MemoryMarshal.GetReference(rightSamples)),
                 leftSamples.Length,
-                new IntPtr(Unsafe.AsPointer(ref buffer.GetPinnableReference())),
+                ref buffer.GetPinnableReference(),
                 buffer.Length);
 
             //TODO throw on negative values (errors)
@@ -83,8 +83,8 @@ namespace AudioWorks.Extensions.Lame
             {
                 var bytesEncoded = SafeNativeMethods.EncodeBufferIeeeFloat(
                     _handle,
-                    new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(leftSamples))),
-                    new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(rightSamples))),
+                    Unsafe.AsRef(MemoryMarshal.GetReference(leftSamples)),
+                    Unsafe.AsRef(MemoryMarshal.GetReference(rightSamples)),
                     leftSamples.Length,
                     buffer,
                     buffer.Length);
@@ -100,12 +100,12 @@ namespace AudioWorks.Extensions.Lame
         }
 
 #if NETCOREAPP2_1
-        internal unsafe void Flush()
+        internal void Flush()
         {
             Span<byte> buffer = stackalloc byte[7200];
             var bytesFlushed = SafeNativeMethods.EncodeFlush(
                 _handle,
-                new IntPtr(Unsafe.AsPointer(ref buffer.GetPinnableReference())),
+                ref buffer.GetPinnableReference(),
                 buffer.Length);
             _stream.Write(buffer.Slice(0, bytesFlushed));
         }
@@ -126,15 +126,16 @@ namespace AudioWorks.Extensions.Lame
 #endif
 
 #if NETCOREAPP2_1
-        internal unsafe void UpdateLameTag()
+        internal void UpdateLameTag()
         {
             _stream.Position = _startPosition;
 
-            var bufferSize = SafeNativeMethods.GetLameTagFrame(_handle, IntPtr.Zero, UIntPtr.Zero);
+            byte empty = 0;
+            var bufferSize = SafeNativeMethods.GetLameTagFrame(_handle, ref empty, UIntPtr.Zero);
             Span<byte> buffer = stackalloc byte[(int) bufferSize.ToUInt32()];
             _stream.Write(buffer.Slice(0, (int) SafeNativeMethods.GetLameTagFrame(
                 _handle,
-                new IntPtr(Unsafe.AsPointer(ref buffer.GetPinnableReference())),
+                ref buffer.GetPinnableReference(),
                 bufferSize).ToUInt32()));
         }
 #else

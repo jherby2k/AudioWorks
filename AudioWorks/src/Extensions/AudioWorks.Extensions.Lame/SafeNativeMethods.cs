@@ -84,11 +84,11 @@ namespace AudioWorks.Extensions.Lame
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int EncodeBufferIeeeFloat(
             [NotNull] EncoderHandle handle,
-            IntPtr leftSamples,
-            IntPtr rightSamples,
+            in float leftSamples,
+            in float rightSamples,
             int sampleCount,
 #if NETCOREAPP2_1
-            IntPtr buffer,
+            ref byte buffer,
 #else
             [NotNull] [In, Out] byte[] buffer,
 #endif
@@ -99,7 +99,7 @@ namespace AudioWorks.Extensions.Lame
         internal static extern int EncodeFlush(
             [NotNull] EncoderHandle handle,
 #if NETCOREAPP2_1
-            IntPtr buffer,
+            ref byte buffer,
 #else
             [NotNull] [In, Out] byte[] buffer,
 #endif
@@ -110,7 +110,7 @@ namespace AudioWorks.Extensions.Lame
         internal static extern UIntPtr GetLameTagFrame(
             [NotNull] EncoderHandle handle,
 #if NETCOREAPP2_1
-            IntPtr buffer,
+            ref byte buffer,
 #else
             [NotNull] [In, Out] byte[] buffer,
 #endif
