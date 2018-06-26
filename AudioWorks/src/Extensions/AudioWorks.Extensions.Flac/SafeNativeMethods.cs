@@ -153,7 +153,7 @@ namespace AudioWorks.Extensions.Flac
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamEncoderProcessInterleaved(
             [NotNull] StreamEncoderHandle handle,
-            IntPtr buffer,
+            in int buffer,
             uint samples);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_finish",
@@ -215,7 +215,7 @@ namespace AudioWorks.Extensions.Flac
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataObjectPictureSetData(
             [NotNull] MetadataBlockHandle handle,
-            IntPtr data,
+            ref byte data,
             uint length,
             [MarshalAs(UnmanagedType.Bool)] bool copy);
 
