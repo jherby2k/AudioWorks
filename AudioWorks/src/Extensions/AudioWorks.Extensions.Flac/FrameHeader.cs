@@ -3,7 +3,7 @@
 namespace AudioWorks.Extensions.Flac
 {
     [StructLayout(LayoutKind.Explicit)]
-    struct FrameHeader
+    readonly struct FrameHeader
     {
         [FieldOffset(0)] internal readonly uint BlockSize;
 

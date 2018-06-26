@@ -3,7 +3,7 @@
 namespace AudioWorks.Extensions.Flac
 {
     [StructLayout(LayoutKind.Explicit)]
-    struct VorbisCommentMetadataBlock
+    readonly struct VorbisCommentMetadataBlock
     {
         [FieldOffset(0)]
         readonly MetadataType Type;
@@ -15,6 +15,6 @@ namespace AudioWorks.Extensions.Flac
         readonly uint Length;
 
         [FieldOffset(16)]
-        internal VorbisComment VorbisComment;
+        internal readonly VorbisComment VorbisComment;
     }
 }

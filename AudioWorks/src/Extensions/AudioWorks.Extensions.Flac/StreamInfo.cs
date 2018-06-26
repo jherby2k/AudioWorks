@@ -3,7 +3,7 @@
 namespace AudioWorks.Extensions.Flac
 {
     [StructLayout(LayoutKind.Sequential)]
-    struct StreamInfo
+    readonly struct StreamInfo
     {
         readonly uint MinBlockSize;
 

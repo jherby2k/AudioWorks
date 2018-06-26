@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 namespace AudioWorks.Extensions.Vorbis
 {
     [StructLayout(LayoutKind.Sequential)]
-    struct VorbisComment
+    readonly struct VorbisComment
     {
-        internal IntPtr UserComments;
+        internal readonly IntPtr UserComments;
 
-        internal IntPtr CommentLengths;
+        internal readonly IntPtr CommentLengths;
 
         internal readonly int Comments;
 

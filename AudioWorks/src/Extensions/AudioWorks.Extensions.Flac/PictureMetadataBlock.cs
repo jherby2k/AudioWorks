@@ -3,7 +3,7 @@
 namespace AudioWorks.Extensions.Flac
 {
     [StructLayout(LayoutKind.Explicit)]
-    struct PictureMetadataBlock
+    readonly struct PictureMetadataBlock
     {
         [FieldOffset(0)] readonly MetadataType Type;
 

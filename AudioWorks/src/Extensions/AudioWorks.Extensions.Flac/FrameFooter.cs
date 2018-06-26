@@ -3,7 +3,7 @@
 namespace AudioWorks.Extensions.Flac
 {
     [StructLayout(LayoutKind.Sequential)]
-    struct FrameFooter
+    readonly struct FrameFooter
     {
         readonly ushort Crc;
     }

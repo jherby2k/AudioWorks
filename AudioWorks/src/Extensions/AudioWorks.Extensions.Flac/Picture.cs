@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace AudioWorks.Extensions.Flac
 {
     [StructLayout(LayoutKind.Sequential)]
-    struct Picture
+    readonly struct Picture
     {
         internal readonly PictureType Type;
 
@@ -22,6 +22,6 @@ namespace AudioWorks.Extensions.Flac
 
         internal readonly uint DataLength;
 
-        internal IntPtr Data;
+        internal readonly IntPtr Data;
     }
 }
