@@ -37,8 +37,7 @@ namespace AudioWorks.Extensions.Apple
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public unsafe SampleBuffer DecodeSamples()
         {
-            var bufferSize = _defaultFrameCount * _outputDescription.ChannelsPerFrame;
-            Span<int> buffer = stackalloc int[(int) bufferSize];
+            Span<int> buffer = stackalloc int[(int) (_defaultFrameCount * _outputDescription.ChannelsPerFrame)];
 
             var bufferList = new AudioBufferList
             {
@@ -46,7 +45,7 @@ namespace AudioWorks.Extensions.Apple
                 Buffers = new AudioBuffer[1]
             };
             bufferList.Buffers[0].NumberChannels = _outputDescription.ChannelsPerFrame;
-            bufferList.Buffers[0].DataByteSize = (uint) (bufferSize * Marshal.SizeOf<int>());
+            bufferList.Buffers[0].DataByteSize = (uint) (buffer.Length * Marshal.SizeOf<int>());
             bufferList.Buffers[0].Data = new IntPtr(Unsafe.AsPointer(ref buffer.GetPinnableReference()));
 
             var frameCount = _defaultFrameCount;
