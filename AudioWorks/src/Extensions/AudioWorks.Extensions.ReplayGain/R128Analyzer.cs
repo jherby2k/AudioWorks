@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.ReplayGain
@@ -23,10 +22,7 @@ namespace AudioWorks.Extensions.ReplayGain
 
         internal void AddFrames(Span<float> samples, uint frames)
         {
-            SafeNativeMethods.AddFramesFloat(
-                Handle,
-                Unsafe.AsRef(samples.GetPinnableReference()),
-                new UIntPtr(frames));
+            SafeNativeMethods.AddFramesFloat(Handle, samples.GetPinnableReference(), new UIntPtr(frames));
         }
 
         internal double GetPeak()
