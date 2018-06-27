@@ -57,20 +57,20 @@ namespace AudioWorks.Extensions.Vorbis
                             }
 
                             if (inputOggStream == null)
-                                inputOggStream = new OggStream(SafeNativeMethods.OggPageSerialNo(ref page));
+                                inputOggStream = new OggStream(SafeNativeMethods.OggPageSerialNo(page));
                             if (outputOggStream == null)
                                 outputOggStream = new OggStream(inputOggStream.SerialNumber);
 
                             // Write new header page(s) using a modified comment packet
                             if (!headerWritten)
                             {
-                                inputOggStream.PageIn(ref page);
+                                inputOggStream.PageIn(page);
 
                                 while (inputOggStream.PacketOut(out var packet))
                                     switch (packet.PacketNumber)
                                     {
                                         case 0:
-                                            outputOggStream.PacketIn(ref packet);
+                                            outputOggStream.PacketIn(packet);
                                             break;
 
                                         // Substitute the new comment packet
@@ -78,17 +78,17 @@ namespace AudioWorks.Extensions.Vorbis
                                             using (var adapter = new MetadataToVorbisCommentAdapter(metadata))
                                             {
                                                 adapter.HeaderOut(out var commentPacket);
-                                                outputOggStream.PacketIn(ref commentPacket);
+                                                outputOggStream.PacketIn(commentPacket);
                                             }
 
                                             break;
 
                                         // Flush at the end of the header
                                         case 2:
-                                            outputOggStream.PacketIn(ref packet);
+                                            outputOggStream.PacketIn(packet);
                                             while (outputOggStream.Flush(out var outPage))
                                             {
-                                                WritePage(ref outPage, tempStream);
+                                                WritePage(outPage, tempStream);
                                                 pagesWritten++;
                                             }
 
@@ -103,11 +103,11 @@ namespace AudioWorks.Extensions.Vorbis
                             {
                                 // Copy the existing data pages verbatim, with updated sequence numbers
                                 UpdateSequenceNumber(ref page, pagesWritten);
-                                WritePage(ref page, tempStream);
+                                WritePage(page, tempStream);
                                 pagesWritten++;
                             }
 
-                        } while (!SafeNativeMethods.OggPageEos(ref page));
+                        } while (!SafeNativeMethods.OggPageEos(page));
 
                         // Once the end of the input is reached, overwrite the original file and return
                         stream.Position = 0;
@@ -127,7 +127,7 @@ namespace AudioWorks.Extensions.Vorbis
             }
         }
 
-        static void WritePage(ref OggPage page, [NotNull] Stream stream)
+        static void WritePage(in OggPage page, [NotNull] Stream stream)
         {
 #if WINDOWS
             WriteFromUnmanaged(page.Header, page.HeaderLength, stream);

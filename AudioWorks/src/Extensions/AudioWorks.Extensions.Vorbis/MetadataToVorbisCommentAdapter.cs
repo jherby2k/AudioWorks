@@ -65,7 +65,7 @@ namespace AudioWorks.Extensions.Vorbis
             Justification = "Native method is always expected to return 0")]
         internal void HeaderOut(out OggPacket packet)
         {
-            SafeNativeMethods.VorbisCommentHeaderOut(ref _comment, out packet);
+            SafeNativeMethods.VorbisCommentHeaderOut(_comment, out packet);
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
@@ -76,7 +76,7 @@ namespace AudioWorks.Extensions.Vorbis
             out OggPacket second,
             out OggPacket third)
         {
-            SafeNativeMethods.VorbisAnalysisHeaderOut(dspState, ref _comment, out first, out second, out third);
+            SafeNativeMethods.VorbisAnalysisHeaderOut(dspState, _comment, out first, out second, out third);
         }
 
         public void Dispose()
@@ -109,14 +109,14 @@ namespace AudioWorks.Extensions.Vorbis
                     (byte*) Unsafe.AsPointer(ref valueSpan.GetPinnableReference()), valueSpan.Length);
 #endif
 
-                SafeNativeMethods.VorbisCommentAddTag(ref _comment,
+                SafeNativeMethods.VorbisCommentAddTag(_comment,
                     new IntPtr(Unsafe.AsPointer(ref keySpan.GetPinnableReference())),
                     new IntPtr(Unsafe.AsPointer(ref valueSpan.GetPinnableReference())));
             }
             else
             {
                 // Use heap allocations for comments > 512kB (usually pictures)
-                SafeNativeMethods.VorbisCommentAddTag(ref _comment,
+                SafeNativeMethods.VorbisCommentAddTag(_comment,
                     new IntPtr(Unsafe.AsPointer(ref keySpan.GetPinnableReference())),
                     Encoding.UTF8.GetBytes(value));
             }

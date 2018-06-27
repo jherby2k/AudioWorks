@@ -17,9 +17,9 @@ namespace AudioWorks.Extensions.Vorbis
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
-        internal void HeaderIn(ref VorbisComment comment, ref OggPacket packet)
+        internal void HeaderIn(in VorbisComment comment, in OggPacket packet)
         {
-            SafeNativeMethods.VorbisSynthesisHeaderIn(_info, ref comment, ref packet);
+            SafeNativeMethods.VorbisSynthesisHeaderIn(_info, comment, packet);
         }
 
         [Pure]

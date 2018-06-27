@@ -68,14 +68,14 @@ namespace AudioWorks.Extensions.Vorbis
             using (var comment = new MetadataToVorbisCommentAdapter(metadata))
             {
                 comment.HeaderOut(_encoder.DspState, out var first, out var second, out var third);
-                _oggStream.PacketIn(ref first);
-                _oggStream.PacketIn(ref second);
-                _oggStream.PacketIn(ref third);
+                _oggStream.PacketIn(first);
+                _oggStream.PacketIn(second);
+                _oggStream.PacketIn(third);
             }
 
             // ReSharper disable once PossibleNullReferenceException
             while (_oggStream.Flush(out var page))
-                WritePage(ref page);
+                WritePage(page);
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
@@ -142,15 +142,15 @@ namespace AudioWorks.Extensions.Vorbis
 
                 while (_encoder.FlushPacket(out var packet))
                 {
-                    _oggStream.PacketIn(ref packet);
+                    _oggStream.PacketIn(packet);
 
                     while (_oggStream.PageOut(out var page))
-                        WritePage(ref page);
+                        WritePage(page);
                 }
             }
         }
 
-        void WritePage(ref OggPage page)
+        void WritePage(in OggPage page)
         {
 #if WINDOWS
             WriteFromUnmanaged(page.Header, page.HeaderLength);

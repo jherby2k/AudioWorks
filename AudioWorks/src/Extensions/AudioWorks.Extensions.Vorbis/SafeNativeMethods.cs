@@ -39,14 +39,14 @@ namespace AudioWorks.Extensions.Vorbis
         [DllImport(_oggLibrary, EntryPoint = "ogg_page_serialno",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int OggPageSerialNo(
-            ref OggPage page);
+            in OggPage page);
 
         [Pure]
         [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport(_oggLibrary, EntryPoint = "ogg_page_eos",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern bool OggPageEos(
-            ref OggPage page);
+            in OggPage page);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_sync_init",
             CallingConvention = CallingConvention.Cdecl)]
@@ -106,7 +106,7 @@ namespace AudioWorks.Extensions.Vorbis
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int OggStreamPageIn(
             IntPtr streamState,
-            ref OggPage page);
+            in OggPage page);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_stream_pageout",
             CallingConvention = CallingConvention.Cdecl)]
@@ -118,7 +118,7 @@ namespace AudioWorks.Extensions.Vorbis
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int OggStreamPacketIn(
             IntPtr streamState,
-            ref OggPacket packet);
+            in OggPacket packet);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_stream_packetout",
             CallingConvention = CallingConvention.Cdecl)]
@@ -145,14 +145,14 @@ namespace AudioWorks.Extensions.Vorbis
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_comment_add_tag",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern void VorbisCommentAddTag(
-            ref VorbisComment comment,
+            in VorbisComment comment,
             IntPtr tag,
             IntPtr contents);
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_comment_add_tag",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern void VorbisCommentAddTag(
-            ref VorbisComment comment,
+            in VorbisComment comment,
             IntPtr tag,
             [NotNull] byte[] contents);
 
@@ -164,7 +164,7 @@ namespace AudioWorks.Extensions.Vorbis
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_commentheader_out",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int VorbisCommentHeaderOut(
-            ref VorbisComment comment,
+            in VorbisComment comment,
             out OggPacket packet);
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_info_init",
@@ -216,7 +216,7 @@ namespace AudioWorks.Extensions.Vorbis
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int VorbisAnalysisHeaderOut(
             IntPtr dspState,
-            ref VorbisComment comment,
+            in VorbisComment comment,
             out OggPacket first,
             out OggPacket second,
             out OggPacket third);
@@ -277,13 +277,13 @@ namespace AudioWorks.Extensions.Vorbis
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_synthesis_idheader",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern bool VorbisSynthesisIdHeader(
-            ref OggPacket packet);
+            in OggPacket packet);
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_synthesis_headerin",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int VorbisSynthesisHeaderIn(
             IntPtr info,
-            ref VorbisComment comment,
-            ref OggPacket packet);
+            in VorbisComment comment,
+            in OggPacket packet);
     }
 }
