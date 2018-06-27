@@ -1,6 +1,10 @@
-﻿using System;
+﻿#if NETCOREAPP2_1
+using System;
+#endif
 using System.IO;
+#if !NETCOREAPP2_1
 using System.Linq;
+#endif
 using System.Text;
 using JetBrains.Annotations;
 

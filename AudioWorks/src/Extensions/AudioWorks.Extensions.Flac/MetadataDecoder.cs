@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+#if !NETCOREAPP2_1
 using System.Runtime.CompilerServices;
+#endif
 using System.Runtime.InteropServices;
 using System.Text;
 using AudioWorks.Common;

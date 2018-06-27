@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+#if !NETCOREAPP2_1
 using System.Runtime.InteropServices;
+#endif
 using System.Text;
 using JetBrains.Annotations;
 

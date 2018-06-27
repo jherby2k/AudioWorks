@@ -1,5 +1,7 @@
 ﻿using System;
+#if NETCOREAPP2_1
 using System.Buffers.Binary;
+#endif
 using System.IO;
 using JetBrains.Annotations;
 

@@ -1,5 +1,7 @@
 ﻿using System;
+#if !NETCOREAPP2_1
 using System.Buffers;
+#endif
 using System.Composition;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;

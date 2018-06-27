@@ -1,6 +1,7 @@
 ﻿using System;
+#if !NETCOREAPP2_1
 using System.Buffers;
-using System.Diagnostics.CodeAnalysis;
+#endif
 using System.IO;
 using AudioWorks.Common;
 using JetBrains.Annotations;
