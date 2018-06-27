@@ -13,7 +13,7 @@ namespace AudioWorks.Extensions.Lame
     {
         const string _lameLibrary = "libmp3lame";
 
-#if (WINDOWS)
+#if WINDOWS
         static SafeNativeMethods()
         {
             // Select an architecture-appropriate directory by prefixing the PATH variable

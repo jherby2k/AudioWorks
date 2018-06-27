@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Security;
 using JetBrains.Annotations;
-#if (WINDOWS)
+#if WINDOWS
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -13,7 +13,7 @@ namespace AudioWorks.Extensions.Vorbis
     [SuppressUnmanagedCodeSecurity]
     static class SafeNativeMethods
     {
-#if (LINUX)
+#if LINUX
         const string _oggLibrary = "libogg.so.0";
         const string _vorbisLibrary = "libvorbis.so.0";
 #else
@@ -21,7 +21,7 @@ namespace AudioWorks.Extensions.Vorbis
         const string _vorbisLibrary = "libvorbis";
 #endif
 
-#if (WINDOWS)
+#if WINDOWS
         static SafeNativeMethods()
         {
             // Select an architecture-appropriate directory by prefixing the PATH variable
@@ -58,7 +58,7 @@ namespace AudioWorks.Extensions.Vorbis
         internal static extern int OggSyncPageOut(IntPtr syncState,
             out OggPage page);
 
-#if (WINDOWS)
+#if WINDOWS
         [DllImport(_oggLibrary, EntryPoint = "ogg_sync_buffer",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern IntPtr OggSyncBuffer(
@@ -88,7 +88,7 @@ namespace AudioWorks.Extensions.Vorbis
         internal static extern int OggSyncClear(
             IntPtr syncState);
 
-#if (WINDOWS)
+#if WINDOWS
         [DllImport(_oggLibrary, EntryPoint = "ogg_stream_init",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int OggStreamInit(

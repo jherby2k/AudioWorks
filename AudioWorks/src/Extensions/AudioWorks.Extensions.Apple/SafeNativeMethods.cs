@@ -3,7 +3,7 @@ using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
 using JetBrains.Annotations;
-#if (WINDOWS)
+#if WINDOWS
 using System.IO;
 using System.Text;
 #endif
@@ -13,7 +13,7 @@ namespace AudioWorks.Extensions.Apple
     [SuppressUnmanagedCodeSecurity]
     static class SafeNativeMethods
     {
-#if (OSX)
+#if OSX
         const string _coreAudioLibrary = "CoreAudio";
 #else
         const string _coreAudioLibrary = "CoreAudioToolbox";

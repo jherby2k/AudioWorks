@@ -3,7 +3,7 @@ using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
 using JetBrains.Annotations;
-#if (WINDOWS)
+#if WINDOWS
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -14,13 +14,13 @@ namespace AudioWorks.Extensions.Flac
     [SuppressUnmanagedCodeSecurity]
     static class SafeNativeMethods
     {
-#if (LINUX)
+#if LINUX
         const string _flacLibrary = "libFLAC.so.8";
 #else
         const string _flacLibrary = "libFLAC";
 #endif
 
-#if (WINDOWS)
+#if WINDOWS
         static SafeNativeMethods()
         {
             // Select an architecture-appropriate directory by prefixing the PATH variable

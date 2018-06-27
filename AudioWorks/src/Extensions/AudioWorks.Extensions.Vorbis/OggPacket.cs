@@ -8,7 +8,7 @@ namespace AudioWorks.Extensions.Vorbis
     {
         readonly IntPtr Packet;
 
-#if (WINDOWS)
+#if WINDOWS
         readonly int Bytes;
 
         readonly int BeginningOfStream;

@@ -21,7 +21,7 @@ namespace AudioWorks.Extensions.Vorbis
             return SafeNativeMethods.OggSyncPageOut(_state, out page) == 1;
         }
 
-#if (WINDOWS)
+#if WINDOWS
         internal IntPtr Buffer(int size)
 #else
         internal IntPtr Buffer(long size)
@@ -32,7 +32,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
-#if (WINDOWS)
+#if WINDOWS
         internal void Wrote(int bytes)
 #else
         internal void Wrote(long bytes)

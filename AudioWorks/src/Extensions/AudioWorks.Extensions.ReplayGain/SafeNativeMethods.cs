@@ -3,7 +3,7 @@ using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
 using JetBrains.Annotations;
-#if (WINDOWS)
+#if WINDOWS
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -16,7 +16,7 @@ namespace AudioWorks.Extensions.ReplayGain
     {
         const string _ebur128Library = "libebur128";
 
-#if (WINDOWS)
+#if WINDOWS
         static SafeNativeMethods()
         {
             // Select an architecture-appropriate directory by prefixing the PATH variable
