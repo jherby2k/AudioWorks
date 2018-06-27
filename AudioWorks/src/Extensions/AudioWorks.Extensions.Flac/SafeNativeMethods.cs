@@ -148,6 +148,14 @@ namespace AudioWorks.Extensions.Flac
             [CanBeNull] NativeCallbacks.StreamEncoderMetadataCallback metadataCallback,
             IntPtr userData);
 
+        [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_process",
+            CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool StreamEncoderProcess(
+            [NotNull] StreamEncoderHandle handle,
+            in IntPtr buffer,
+            uint samples);
+
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_process_interleaved",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]

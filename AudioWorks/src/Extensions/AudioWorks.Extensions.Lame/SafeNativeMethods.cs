@@ -94,6 +94,19 @@ namespace AudioWorks.Extensions.Lame
 #endif
             int bufferSize);
 
+        [DllImport(_lameLibrary, EntryPoint = "lame_encode_buffer_interleaved_ieee_float",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int EncodeBufferInterleavedIeeeFloat(
+            [NotNull] EncoderHandle handle,
+            in float samples,
+            int sampleCount,
+#if NETCOREAPP2_1
+            ref byte buffer,
+#else
+            [NotNull] [In, Out] byte[] buffer,
+#endif
+            int bufferSize);
+
         [DllImport(_lameLibrary, EntryPoint = "lame_encode_flush",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int EncodeFlush(

@@ -19,8 +19,16 @@ namespace AudioWorks.Extensions
         public static SampleBuffer Empty { get; } = new SampleBuffer();
 
         [CanBeNull] readonly IMemoryOwner<float> _buffer;
-        readonly bool _isInterleaved;
         bool _isDisposed;
+
+        /// <summary>
+        /// Gets a value indicating whether the samples are interleaved internally.
+        /// </summary>
+        /// <remarks>
+        /// Always returns <c>false</c> when <see cref="Channels"/> equals 1.
+        /// </remarks>
+        /// <value><c>true</c> if the samples are interleaved; otherwise, <c>false</c>.</value>
+        public bool IsInterleaved { get; }
 
         /// <summary>
         /// Gets the # of channels.
@@ -61,7 +69,7 @@ namespace AudioWorks.Extensions
             Frames = interleavedSamples.Length / channels;
             _buffer = MemoryPool<float>.Shared.Rent(Frames * channels);
             if (channels > 1)
-                _isInterleaved = true;
+                IsInterleaved = true;
 
             // ReSharper disable once PossibleNullReferenceException
             interleavedSamples.CopyTo(_buffer.Memory.Span);
@@ -143,7 +151,7 @@ namespace AudioWorks.Extensions
             Frames = interleavedSamples.Length / channels;
             _buffer = MemoryPool<float>.Shared.Rent(Frames * channels);
             if (channels > 1)
-                _isInterleaved = true;
+                IsInterleaved = true;
 
             // ReSharper disable once PossibleNullReferenceException
             Convert(interleavedSamples, _buffer.Memory.Span, bitsPerSample);
@@ -178,7 +186,7 @@ namespace AudioWorks.Extensions
             Frames = interleavedSamples.Length / channels / bytesPerSample;
             _buffer = MemoryPool<float>.Shared.Rent(Frames * channels);
             if (channels > 1)
-                _isInterleaved = true;
+                IsInterleaved = true;
 
             switch (bytesPerSample)
             {
@@ -242,12 +250,47 @@ namespace AudioWorks.Extensions
             if (Channels != 2)
                 throw new InvalidOperationException("Not a 2-channel SampleBuffer.");
 
-            if (_isInterleaved)
+            if (IsInterleaved)
                 DeInterleave(_buffer.Memory.Span.Slice(0, Frames * 2), leftDestination, rightDestination);
             else
             {
                 _buffer.Memory.Span.Slice(0, Frames).CopyTo(leftDestination);
                 _buffer.Memory.Span.Slice(Frames, Frames).CopyTo(rightDestination);
+            }
+        }
+
+        /// <summary>
+        /// Copies both channels of audio samples in integer format.
+        /// </summary>
+        /// <remarks>
+        /// The samples are floating-point values normalized within -1.0 and 1.0.
+        /// </remarks>
+        /// <param name="leftDestination">The destination for the left channel.</param>
+        /// <param name="rightDestination">The destination for the right channel.</param>
+        /// <param name="bitsPerSample">The # of bits per sample.</param>
+        /// <exception cref="ObjectDisposedException">This <see cref="SampleBuffer"/> has been disposed.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if the Channels property does not equal 2.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="bitsPerSample"/> is out of range.</exception>
+        public void CopyTo(Span<int> leftDestination, Span<int> rightDestination, int bitsPerSample)
+        {
+            if (_isDisposed) throw new ObjectDisposedException(GetType().ToString());
+            if (_buffer == null) return;
+
+            if (Channels != 2)
+                throw new InvalidOperationException("Not a 2-channel SampleBuffer.");
+
+            if (IsInterleaved)
+            {
+                Span<float> leftBuffer = stackalloc float[Frames];
+                Span<float> rightBuffer = stackalloc float[Frames];
+                DeInterleave(_buffer.Memory.Span.Slice(0, Frames * 2), leftBuffer, rightBuffer);
+                Convert(leftBuffer, leftDestination, bitsPerSample);
+                Convert(rightBuffer, rightDestination, bitsPerSample);
+            }
+            else
+            {
+                Convert(_buffer.Memory.Span.Slice(0, Frames), leftDestination, bitsPerSample);
+                Convert(_buffer.Memory.Span.Slice(Frames, Frames), rightDestination, bitsPerSample);
             }
         }
 
@@ -271,7 +314,7 @@ namespace AudioWorks.Extensions
                 throw new ArgumentException("destination is not long enough to store the samples.",
                     nameof(destination));
 
-            if (Channels == 1 || _isInterleaved)
+            if (Channels == 1 || IsInterleaved)
                 _buffer.Memory.Span.Slice(0, Frames * Channels).CopyTo(destination);
             else
                 Interleave(_buffer.Memory.Span.Slice(0, Frames), _buffer.Memory.Span.Slice(Frames, Frames), destination);
@@ -301,13 +344,13 @@ namespace AudioWorks.Extensions
             if (bitsPerSample < 1 || bitsPerSample > 32)
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample), "bitsPerSample is out of range.");
 
-            if (Channels == 1 || _isInterleaved)
+            if (Channels == 1 || IsInterleaved)
                 Convert(_buffer.Memory.Span.Slice(0, Frames * Channels), destination, bitsPerSample);
             else
             {
-                Span<float> interleavedSamples = stackalloc float[Frames * 2];
-                Interleave(_buffer.Memory.Span.Slice(0, Frames), _buffer.Memory.Span.Slice(Frames, Frames), interleavedSamples);
-                Convert(interleavedSamples, destination, bitsPerSample);
+                Span<float> interleavedBuffer = stackalloc float[Frames * 2];
+                Interleave(_buffer.Memory.Span.Slice(0, Frames), _buffer.Memory.Span.Slice(Frames, Frames), interleavedBuffer);
+                Convert(interleavedBuffer, destination, bitsPerSample);
             }
         }
 
@@ -341,46 +384,46 @@ namespace AudioWorks.Extensions
             switch (bytesPerSample)
             {
                 case 1:
-                    if (Channels == 1 || _isInterleaved)
+                    if (Channels == 1 || IsInterleaved)
                         Convert(_buffer.Memory.Span.Slice(0, Frames * Channels), destination, bitsPerSample);
                     else
                     {
-                        Span<float> interleavedSamples = stackalloc float[Frames * 2];
-                        Interleave(_buffer.Memory.Span.Slice(0, Frames), _buffer.Memory.Span.Slice(Frames, Frames), interleavedSamples);
-                        Convert(interleavedSamples, destination, bitsPerSample);
+                        Span<float> interleavedBuffer = stackalloc float[Frames * 2];
+                        Interleave(_buffer.Memory.Span.Slice(0, Frames), _buffer.Memory.Span.Slice(Frames, Frames), interleavedBuffer);
+                        Convert(interleavedBuffer, destination, bitsPerSample);
                     }
                     break;
                 case 2:
                     var int16Destination = MemoryMarshal.Cast<byte, short>(destination);
-                    if (Channels == 1 || _isInterleaved)
+                    if (Channels == 1 || IsInterleaved)
                         Convert(_buffer.Memory.Span.Slice(0, Frames * Channels), int16Destination, bitsPerSample);
                     else
                     {
-                        Span<float> interleavedSamples = stackalloc float[Frames * 2];
-                        Interleave(_buffer.Memory.Span.Slice(0, Frames), _buffer.Memory.Span.Slice(Frames, Frames), interleavedSamples);
-                        Convert(interleavedSamples, int16Destination, bitsPerSample);
+                        Span<float> interleavedBuffer = stackalloc float[Frames * 2];
+                        Interleave(_buffer.Memory.Span.Slice(0, Frames), _buffer.Memory.Span.Slice(Frames, Frames), interleavedBuffer);
+                        Convert(interleavedBuffer, int16Destination, bitsPerSample);
                     }
                     break;
                 case 3:
                     var int24Destination = MemoryMarshal.Cast<byte, Int24>(destination);
-                    if (Channels == 1 || _isInterleaved)
+                    if (Channels == 1 || IsInterleaved)
                         Convert(_buffer.Memory.Span.Slice(0, Frames * Channels), int24Destination, bitsPerSample);
                     else
                     {
-                        Span<float> interleavedSamples = stackalloc float[Frames * 2];
-                        Interleave(_buffer.Memory.Span.Slice(0, Frames), _buffer.Memory.Span.Slice(Frames, Frames), interleavedSamples);
-                        Convert(interleavedSamples, int24Destination, bitsPerSample);
+                        Span<float> interleavedBuffer = stackalloc float[Frames * 2];
+                        Interleave(_buffer.Memory.Span.Slice(0, Frames), _buffer.Memory.Span.Slice(Frames, Frames), interleavedBuffer);
+                        Convert(interleavedBuffer, int24Destination, bitsPerSample);
                     }
                     break;
                 case 4:
                     var int32Destination = MemoryMarshal.Cast<byte, int>(destination);
-                    if (Channels == 1 || _isInterleaved)
+                    if (Channels == 1 || IsInterleaved)
                         Convert(_buffer.Memory.Span.Slice(0, Frames * Channels), int32Destination, bitsPerSample);
                     else
                     {
-                        Span<float> interleavedSamples = stackalloc float[Frames * 2];
-                        Interleave(_buffer.Memory.Span.Slice(0, Frames), _buffer.Memory.Span.Slice(Frames, Frames), interleavedSamples);
-                        Convert(interleavedSamples, int32Destination, bitsPerSample);
+                        Span<float> interleavedBuffer = stackalloc float[Frames * 2];
+                        Interleave(_buffer.Memory.Span.Slice(0, Frames), _buffer.Memory.Span.Slice(Frames, Frames), interleavedBuffer);
+                        Convert(interleavedBuffer, int32Destination, bitsPerSample);
                     }
                     break;
             }

@@ -4,8 +4,6 @@ using System.Buffers;
 #endif
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Lame
@@ -71,8 +69,8 @@ namespace AudioWorks.Extensions.Lame
 
             var bytesEncoded = SafeNativeMethods.EncodeBufferIeeeFloat(
                 _handle,
-                Unsafe.AsRef(MemoryMarshal.GetReference(leftSamples)),
-                Unsafe.AsRef(MemoryMarshal.GetReference(rightSamples)),
+                leftSamples.GetPinnableReference(),
+                rightSamples.GetPinnableReference(),
                 leftSamples.Length,
                 ref buffer.GetPinnableReference(),
                 buffer.Length);
@@ -85,9 +83,44 @@ namespace AudioWorks.Extensions.Lame
             {
                 var bytesEncoded = SafeNativeMethods.EncodeBufferIeeeFloat(
                     _handle,
-                    Unsafe.AsRef(MemoryMarshal.GetReference(leftSamples)),
-                    Unsafe.AsRef(MemoryMarshal.GetReference(rightSamples)),
+                    leftSamples.GetPinnableReference(),
+                    rightSamples.GetPinnableReference(),
                     leftSamples.Length,
+                    buffer,
+                    buffer.Length);
+
+                //TODO throw on negative values (errors)
+                _stream.Write(buffer, 0, bytesEncoded);
+            }
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(buffer);
+            }
+#endif
+        }
+
+        internal void EncodeInterleaved(ReadOnlySpan<float> samples, int frameCount)
+        {
+#if NETCOREAPP2_1
+            Span<byte> buffer = stackalloc byte[(int) Math.Ceiling(1.25 * frameCount) + 7200];
+
+            var bytesEncoded = SafeNativeMethods.EncodeBufferInterleavedIeeeFloat(
+                _handle,
+                samples.GetPinnableReference(),
+                frameCount,
+                ref buffer.GetPinnableReference(),
+                buffer.Length);
+
+            //TODO throw on negative values (errors)
+            _stream.Write(buffer.Slice(0, bytesEncoded));
+#else
+            var buffer = ArrayPool<byte>.Shared.Rent((int) Math.Ceiling(1.25 * frameCount) + 7200);
+            try
+            {
+                var bytesEncoded = SafeNativeMethods.EncodeBufferInterleavedIeeeFloat(
+                    _handle,
+                    samples.GetPinnableReference(),
+                    frameCount,
                     buffer,
                     buffer.Length);
 

@@ -66,9 +66,20 @@ namespace AudioWorks.Extensions.Flac
         {
             if (samples.Frames == 0) return;
 
-            Span<int> buffer = stackalloc int[samples.Frames * samples.Channels];
-            samples.CopyToInterleaved(buffer, _bitsPerSample);
-            _encoder.ProcessInterleaved(buffer, (uint) samples.Frames);
+            if (samples.Channels == 1 || samples.IsInterleaved)
+            {
+                Span<int> buffer = stackalloc int[samples.Frames * samples.Channels];
+                samples.CopyToInterleaved(buffer, _bitsPerSample);
+                _encoder.ProcessInterleaved(buffer, (uint) samples.Frames);
+            }
+            else
+            {
+                // Performance optimization when the submitted samples are not interleaved
+                Span<int> leftBuffer = stackalloc int[samples.Frames];
+                Span<int> rightBuffer = stackalloc int[samples.Frames];
+                samples.CopyTo(leftBuffer, rightBuffer, _bitsPerSample);
+                _encoder.Process(leftBuffer, rightBuffer);
+            }
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
