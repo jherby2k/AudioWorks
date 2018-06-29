@@ -4,6 +4,7 @@ using System.Buffers;
 #endif
 using System.Buffers.Binary;
 using System.IO;
+using System.Runtime.CompilerServices;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 
@@ -127,6 +128,7 @@ namespace AudioWorks.Extensions.Vorbis
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void WritePage(in OggPage page, [NotNull] Stream stream)
         {
 #if WINDOWS
@@ -138,6 +140,7 @@ namespace AudioWorks.Extensions.Vorbis
 #endif
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static unsafe void WriteFromUnmanaged(IntPtr location, int length, [NotNull] Stream stream)
         {
 #if NETCOREAPP2_1
