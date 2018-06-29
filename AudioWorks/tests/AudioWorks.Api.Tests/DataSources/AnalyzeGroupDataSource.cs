@@ -257,21 +257,21 @@ namespace AudioWorks.Api.Tests.DataSources
                         TrackPeak = "0.814056",
                         AlbumPeak = "0.999634",
                         TrackGain = "-1.15",
-                        AlbumGain = "-5.70"
+                        AlbumGain = "-5.69"
                     },
                     new TestAudioMetadata
                     {
                         TrackPeak = "0.997467",
                         AlbumPeak = "0.999634",
                         TrackGain = "-6.28",
-                        AlbumGain = "-5.70"
+                        AlbumGain = "-5.69"
                     },
                     new TestAudioMetadata
                     {
                         TrackPeak = "0.999634",
                         AlbumPeak = "0.999634",
                         TrackGain = "-7.02",
-                        AlbumGain = "-5.70"
+                        AlbumGain = "-5.69"
                     }
                 }
             },
