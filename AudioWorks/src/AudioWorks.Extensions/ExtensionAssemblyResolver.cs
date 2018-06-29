@@ -5,17 +5,23 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
+using AudioWorks.Common;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensions
 {
     sealed class ExtensionAssemblyResolver
     {
+        readonly ILogger _logger = LoggingManager.CreateLogger<ExtensionAssemblyResolver>();
+
         [NotNull]
         internal Assembly Assembly { get; }
 
         internal ExtensionAssemblyResolver([NotNull] string path)
         {
+            _logger.LogInformation("Loading extension '{0}'.", path);
+
             Assembly = Assembly.LoadFrom(path);
             var extensionDir = Path.GetDirectoryName(path);
 
@@ -33,22 +39,47 @@ namespace AudioWorks.Extensions
                 ResolveWithLoader(assemblyFiles);
         }
 
-        static void ResolveFullFramework([NotNull, ItemNotNull] IEnumerable<string> assemblyFiles)
+        void ResolveFullFramework([NotNull, ItemNotNull] IEnumerable<string> assemblyFiles)
         {
-            AppDomain.CurrentDomain.AssemblyResolve += (context, args) => assemblyFiles
-                .Where(assemblyFile => AssemblyName.ReferenceMatchesDefinition(
-                    AssemblyName.GetAssemblyName(assemblyFile),
-                    new AssemblyName(args.Name)))
-                .Select(Assembly.LoadFrom).FirstOrDefault();
+            AppDomain.CurrentDomain.AssemblyResolve += (context, args) =>
+            {
+                var assemblyName = new AssemblyName(args.Name);
+
+                _logger.LogInformation("Attempting to resolve a dependency on '{1}'.", assemblyName);
+
+                var result = assemblyFiles
+                    .Where(assemblyFile => AssemblyName.ReferenceMatchesDefinition(
+                        AssemblyName.GetAssemblyName(assemblyFile), assemblyName))
+                    .Select(Assembly.LoadFrom).FirstOrDefault();
+
+                if (result != null)
+                    _logger.LogInformation("Located dependency '{0}'.", result.FullName);
+                else
+                    _logger.LogCritical("Unable to locate dependency '{0}'.", assemblyName);
+
+                return result;
+            };
         }
 
-        static void ResolveWithLoader([NotNull, ItemNotNull] IEnumerable<string> assemblyFiles)
+        void ResolveWithLoader([NotNull, ItemNotNull] IEnumerable<string> assemblyFiles)
         {
-            AssemblyLoadContext.Default.Resolving += (context, name) => assemblyFiles
-                .Where(assemblyFile => AssemblyName.ReferenceMatchesDefinition(
-                    AssemblyName.GetAssemblyName(assemblyFile),
-                    new AssemblyName(name.Name)))
-                .Select(AssemblyLoadContext.Default.LoadFromAssemblyPath).FirstOrDefault();
+            AssemblyLoadContext.Default.Resolving += (context, name) =>
+            {
+                _logger.LogDebug("Attempting to resolve a dependency on '{1}'.", name.FullName);
+
+                var result = assemblyFiles
+                    .Where(assemblyFile => AssemblyName.ReferenceMatchesDefinition(
+                        AssemblyName.GetAssemblyName(assemblyFile),
+                        new AssemblyName(name.Name)))
+                    .Select(AssemblyLoadContext.Default.LoadFromAssemblyPath).FirstOrDefault();
+
+                if (result != null)
+                    _logger.LogDebug("Located dependency '{0}'.", result.FullName);
+                else
+                    _logger.LogDebug("Unable to locate dependency '{0}'.", name.FullName);
+
+                return result;
+            };
         }
     }
 }
