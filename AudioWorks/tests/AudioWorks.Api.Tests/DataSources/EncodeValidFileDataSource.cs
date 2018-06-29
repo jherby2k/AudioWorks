@@ -1197,8 +1197,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "0B5272E75B75C90ED3711BB704A69085",
-                "0B5272E75B75C90ED3711BB704A69085"
+                "C3379168580C0B08178735BEBF80EA72",
+                "C3379168580C0B08178735BEBF80EA72"
             },
 
             new object[]
@@ -1209,8 +1209,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "7EFC100445D91271A30106D377E78625",
-                "7EFC100445D91271A30106D377E78625"
+                "1F962FD6341344AE7A3D01C2ACDC01F1",
+                "1F962FD6341344AE7A3D01C2ACDC01F1"
             },
 
             new object[]
@@ -1221,8 +1221,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "45666989AC5E44A62F01CC2BDCB91744",
-                "45666989AC5E44A62F01CC2BDCB91744"
+                "BAD08F056C5BA8308C7B9D1D2E1C2564",
+                "BAD08F056C5BA8308C7B9D1D2E1C2564"
             },
 
             new object[]
@@ -1233,8 +1233,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "101752F38289276639BEE8F8B6A4DE77",
-                "101752F38289276639BEE8F8B6A4DE77"
+                "2D2C106A4DB35969205DCCDAF5229539",
+                "2D2C106A4DB35969205DCCDAF5229539"
             },
 
             new object[]
@@ -1245,8 +1245,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "31DB825BFE49FC6C88BD42528C56D8E9",
-                "31DB825BFE49FC6C88BD42528C56D8E9"
+                "5F3982A0B34D80B598CBF57265804EA0",
+                "5F3982A0B34D80B598CBF57265804EA0"
             },
 
             new object[]
@@ -1257,8 +1257,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "197910C7058AEB741296309AF7174BFD",
-                "197910C7058AEB741296309AF7174BFD"
+                "1ACAE5D89454C496451F897C6BD32FD0",
+                "1ACAE5D89454C496451F897C6BD32FD0"
             },
 
             new object[]
@@ -1269,8 +1269,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "8ECF9A3242E6D8B195A941AF0024ED13",
-                "8ECF9A3242E6D8B195A941AF0024ED13"
+                "EC59CDECA88BD881B225A5616E82C42C",
+                "EC59CDECA88BD881B225A5616E82C42C"
             },
 
             new object[]
@@ -1281,8 +1281,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "8ECF9A3242E6D8B195A941AF0024ED13",
-                "8ECF9A3242E6D8B195A941AF0024ED13"
+                "EC59CDECA88BD881B225A5616E82C42C",
+                "EC59CDECA88BD881B225A5616E82C42C"
             },
 
             new object[]
@@ -1294,8 +1294,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     // Minimum serial #
                     ["SerialNumber"] = int.MinValue
                 },
-                "1839CB684855C73D273C3CE3F516E0BC",
-                "1839CB684855C73D273C3CE3F516E0BC"
+                "AACC33C1A52E37098DBBD948039ACF06",
+                "AACC33C1A52E37098DBBD948039ACF06"
             },
 
             new object[]
@@ -1307,8 +1307,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     // Maximum serial #
                     ["SerialNumber"] = int.MaxValue
                 },
-                "7D72014E4FA665CE618768EFD9413142",
-                "7D72014E4FA665CE618768EFD9413142"
+                "626A3AE3A7452955075D5578A7A60830",
+                "626A3AE3A7452955075D5578A7A60830"
             },
 
             new object[]
@@ -1317,12 +1317,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Vorbis",
                 new TestSettingDictionary
                 {
-                    // Default quality
+                    // Default quality (explicit)
                     ["Quality"] = 5,
                     ["SerialNumber"] = 1
                 },
-                "45666989AC5E44A62F01CC2BDCB91744",
-                "45666989AC5E44A62F01CC2BDCB91744"
+                "BAD08F056C5BA8308C7B9D1D2E1C2564",
+                "BAD08F056C5BA8308C7B9D1D2E1C2564"
             },
 
             new object[]
@@ -1335,8 +1335,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["Quality"] = -1,
                     ["SerialNumber"] = 1
                 },
-                "F236873FDC61D3143260868E0889D9CF",
-                "F236873FDC61D3143260868E0889D9CF"
+                "7FC140C80519059284FD728CD4198515",
+                "7FC140C80519059284FD728CD4198515"
             },
 
             new object[]
@@ -1349,8 +1349,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["Quality"] = 10,
                     ["SerialNumber"] = 1
                 },
-                "42ADAC7AE2CFA4C9EA418193C3E18B46",
-                "42ADAC7AE2CFA4C9EA418193C3E18B46"
+                "0B65C4E0389B976E508AEB677F686170",
+                "0B65C4E0389B976E508AEB677F686170"
             },
 
             new object[]
@@ -1363,8 +1363,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["BitRate"] = 45,
                     ["SerialNumber"] = 1
                 },
-                "11B26EED6F26094F87DD47A04B039E26",
-                "11B26EED6F26094F87DD47A04B039E26"
+                "ACAA5AA94409B153370D9A6E22A1BFF0",
+                "ACAA5AA94409B153370D9A6E22A1BFF0"
             },
 
             new object[]
@@ -1377,8 +1377,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["BitRate"] = 500,
                     ["SerialNumber"] = 1
                 },
-                "C87733A5F35D8015E0DC873596975DCB",
-                "C87733A5F35D8015E0DC873596975DCB"
+                "E4737F95A8FA00DEFBE1CCCD1C8EC00C",
+                "E4737F95A8FA00DEFBE1CCCD1C8EC00C"
             },
 
             new object[]
@@ -1391,8 +1391,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["BitRate"] = 128,
                     ["SerialNumber"] = 1
                 },
-                "C3C78067859D261A13ADB86AE699E0B8",
-                "C3C78067859D261A13ADB86AE699E0B8"
+                "5064ACFC5474CE3FCA65E5C16C5322E0",
+                "5064ACFC5474CE3FCA65E5C16C5322E0"
             },
 
             new object[]
@@ -1401,13 +1401,13 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Vorbis",
                 new TestSettingDictionary
                 {
-                    // Managed bit rate explicitly disabled
+                    // Managed bit rate disabled (explicit)
                     ["BitRate"] = 128,
                     ["Managed"] = false,
                     ["SerialNumber"] = 1
                 },
-                "C3C78067859D261A13ADB86AE699E0B8",
-                "C3C78067859D261A13ADB86AE699E0B8"
+                "5064ACFC5474CE3FCA65E5C16C5322E0",
+                "5064ACFC5474CE3FCA65E5C16C5322E0"
             },
 
             new object[]
@@ -1421,8 +1421,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["Managed"] = true,
                     ["SerialNumber"] = 1
                 },
-                "4E482E37F344F485CA594BDD82C3F314",
-                "4E482E37F344F485CA594BDD82C3F314"
+                "6419168FF3EF995A41F17FCAF44E9C4A",
+                "6419168FF3EF995A41F17FCAF44E9C4A"
             },
 
             new object[]
@@ -1435,8 +1435,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["Managed"] = true,
                     ["SerialNumber"] = 1
                 },
-                "45666989AC5E44A62F01CC2BDCB91744",
-                "45666989AC5E44A62F01CC2BDCB91744"
+                "BAD08F056C5BA8308C7B9D1D2E1C2564",
+                "BAD08F056C5BA8308C7B9D1D2E1C2564"
             },
 
             new object[]
@@ -1450,8 +1450,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["BitRate"] = 128,
                     ["SerialNumber"] = 1
                 },
-                "C3C78067859D261A13ADB86AE699E0B8",
-                "C3C78067859D261A13ADB86AE699E0B8"
+                "5064ACFC5474CE3FCA65E5C16C5322E0",
+                "5064ACFC5474CE3FCA65E5C16C5322E0"
             },
 
             new object[]
@@ -1464,8 +1464,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ApplyGain"] = "Track",
                     ["SerialNumber"] = 1
                 },
-                "45666989AC5E44A62F01CC2BDCB91744",
-                "45666989AC5E44A62F01CC2BDCB91744"
+                "BAD08F056C5BA8308C7B9D1D2E1C2564",
+                "BAD08F056C5BA8308C7B9D1D2E1C2564"
             },
 
             new object[]
@@ -1478,8 +1478,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ApplyGain"] = "Track",
                     ["SerialNumber"] = 1
                 },
-                "44C4E291AB3DF95E545995F9D3EAA32A",
-                "44C4E291AB3DF95E545995F9D3EAA32A"
+                "CFCCC97C8BE4941921C95F2D501CF66C",
+                "CFCCC97C8BE4941921C95F2D501CF66C"
             },
 
             new object[]
@@ -1492,8 +1492,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ApplyGain"] = "Album",
                     ["SerialNumber"] = 1
                 },
-                "ECF9270A3FFB3CE2486D118D21C85C23",
-                "ECF9270A3FFB3CE2486D118D21C85C23"
+                "E89F1CDE37BFB3E81D96B1BD044F8D07",
+                "E89F1CDE37BFB3E81D96B1BD044F8D07"
             }
 
             #endregion

@@ -964,7 +964,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
-                "11F166F272E635021ABD6BAF37A3BFA5"
+                "4087AB586A43226EB7F59E44DE576186"
             },
 
             // Day unset
@@ -991,7 +991,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
-                "63BB3732D651F6D3A8496091FCF14725"
+                "32F0045D8D0BB7ECC261552CBFE0A3C6"
             },
 
             // Month unset
@@ -1018,7 +1018,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
-                "63BB3732D651F6D3A8496091FCF14725"
+                "32F0045D8D0BB7ECC261552CBFE0A3C6"
             },
 
             // TrackNumber unset
@@ -1045,7 +1045,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
-                "ED7210753CB1A870F74DB01E959D2FFE"
+                "A56486BA4A903B4664CAF17835AE053C"
             },
 
             // TrackCount unset
@@ -1072,7 +1072,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
-                "17F5C68F72027655E21870F0E7F06CB8"
+                "2D5659E77B842E3A3B460C5A7EB78E11"
             },
 
             // Existing tag
@@ -1100,7 +1100,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
-                "11F166F272E635021ABD6BAF37A3BFA5"
+                "4087AB586A43226EB7F59E44DE576186"
             },
 
             // Existing tag removal
@@ -1110,7 +1110,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 null,
                 null,
-                "873E47897BB3645B63B5B8D8B932198E"
+                "31429CC7725403FABC43DDCAAE4F9FA8"
             },
 
             // Nothing to do
@@ -1120,7 +1120,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 null,
                 null,
-                "873E47897BB3645B63B5B8D8B932198E"
+                "31429CC7725403FABC43DDCAAE4F9FA8"
             },
 
             // PNG CoverArt (Converted)
@@ -1130,7 +1130,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "PNG 24-bit 1280 x 935.png",
                 null,
-                "8BE9DB1A5CDECC97DF66B2B307E9A723"
+                "84F712FCF93628B0B27AAF2D0D133A95"
             },
 
             // JPEG CoverArt
@@ -1140,7 +1140,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "JPEG 24-bit 1280 x 935.jpg",
                 null,
-                "8BE9DB1A5CDECC97DF66B2B307E9A723"
+                "84F712FCF93628B0B27AAF2D0D133A95"
             }
 
             #endregion
