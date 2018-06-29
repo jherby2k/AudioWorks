@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +23,8 @@ namespace AudioWorks.Common
             var logFile = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "AudioWorks",
-                "log.txt");
+                "Log Files",
+                $"{DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss", CultureInfo.InvariantCulture)}.log");
 
             // Log at "Info" level by default
             switch (ConfigurationManager.Configuration.GetValue("LogLevel", 2))
