@@ -71,7 +71,11 @@ namespace AudioWorks.Common
         }
 
         /// <inheritdoc/>
+#if NETCOREAPP2_1
+        public override void GetObjectData([NotNull] SerializationInfo info, StreamingContext context)
+#else
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
+#endif
         {
             base.GetObjectData(info, context);
             info.AddValue("Path", Path);

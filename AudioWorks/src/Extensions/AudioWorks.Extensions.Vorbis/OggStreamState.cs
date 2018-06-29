@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 namespace AudioWorks.Extensions.Vorbis
 {
     [StructLayout(LayoutKind.Sequential)]
-    struct OggStreamState
+    readonly struct OggStreamState
     {
         readonly IntPtr BodyData;
 
-#if (WINDOWS)
+#if WINDOWS
         readonly int BodyStorage;
 
         readonly int BodyFill;
@@ -26,7 +26,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         readonly IntPtr GranuleValues;
 
-#if (WINDOWS)
+#if WINDOWS
         readonly int LacingStorage;
 
         readonly int LacingFill;
@@ -53,7 +53,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         readonly int BeginningOfStream;
 
-#if (WINDOWS)
+#if WINDOWS
         internal readonly int SerialNumber;
 #else
         internal readonly long SerialNumber;

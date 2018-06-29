@@ -4,9 +4,9 @@ using System.Runtime.InteropServices;
 namespace AudioWorks.Extensions.Flac
 {
     [StructLayout(LayoutKind.Sequential)]
-    struct Frame
+    readonly struct Frame
     {
-        internal FrameHeader Header;
+        internal readonly FrameHeader Header;
 
         readonly IntPtr SubFrames;
 

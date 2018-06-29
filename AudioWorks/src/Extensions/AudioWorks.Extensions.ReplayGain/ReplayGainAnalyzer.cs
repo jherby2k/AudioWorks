@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Runtime.CompilerServices;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 
@@ -32,16 +31,13 @@ namespace AudioWorks.Extensions.ReplayGain
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-        public unsafe void Submit(SampleBuffer samples)
+        public void Submit(SampleBuffer samples)
         {
             if (samples.Frames == 0) return;
 
             Span<float> buffer = stackalloc float[samples.Frames * samples.Channels];
             samples.CopyToInterleaved(buffer);
-
-            _analyzer.AddFrames(
-                new IntPtr(Unsafe.AsPointer(ref buffer.GetPinnableReference())),
-                (uint) samples.Frames);
+            _analyzer.AddFrames(buffer, (uint) samples.Frames);
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]

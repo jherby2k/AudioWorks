@@ -1,5 +1,7 @@
 ﻿using System;
+#if !NETCOREAPP2_1
 using System.Buffers;
+#endif
 using System.IO;
 using AudioWorks.Common;
 
@@ -48,16 +50,16 @@ namespace AudioWorks.Extensions.Vorbis
                         }
 
                         if (oggStream == null)
-                            oggStream = new OggStream(SafeNativeMethods.OggPageSerialNo(ref page));
+                            oggStream = new OggStream(SafeNativeMethods.OggPageSerialNo(page));
 
-                        oggStream.PageIn(ref page);
+                        oggStream.PageIn(page);
 
                         while (oggStream.PacketOut(out var packet))
                         {
-                            if (!SafeNativeMethods.VorbisSynthesisIdHeader(ref packet))
+                            if (!SafeNativeMethods.VorbisSynthesisIdHeader(packet))
                                 throw new AudioUnsupportedException("Not a Vorbis file.", stream.Name);
 
-                            decoder.HeaderIn(ref vorbisComment, ref packet);
+                            decoder.HeaderIn(vorbisComment, packet);
 
                             var info = decoder.GetInfo();
                             return AudioInfo.CreateForLossy(
@@ -67,7 +69,7 @@ namespace AudioWorks.Extensions.Vorbis
                                 0,
                                 info.BitrateNominal > 0 ? info.BitrateNominal : 0);
                         }
-                    } while (!SafeNativeMethods.OggPageEos(ref page));
+                    } while (!SafeNativeMethods.OggPageEos(page));
 
                     throw new AudioInvalidException("The end of the Ogg stream was reached without finding the header.",
                         stream.Name);

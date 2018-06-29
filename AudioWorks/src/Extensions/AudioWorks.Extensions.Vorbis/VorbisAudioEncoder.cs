@@ -1,10 +1,11 @@
 ﻿using System;
+#if !NETCOREAPP2_1
 using System.Buffers;
+#endif
 using System.Composition;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 
@@ -67,14 +68,14 @@ namespace AudioWorks.Extensions.Vorbis
             using (var comment = new MetadataToVorbisCommentAdapter(metadata))
             {
                 comment.HeaderOut(_encoder.DspState, out var first, out var second, out var third);
-                _oggStream.PacketIn(ref first);
-                _oggStream.PacketIn(ref second);
-                _oggStream.PacketIn(ref third);
+                _oggStream.PacketIn(first);
+                _oggStream.PacketIn(second);
+                _oggStream.PacketIn(third);
             }
 
             // ReSharper disable once PossibleNullReferenceException
             while (_oggStream.Flush(out var page))
-                WritePage(ref page);
+                WritePage(page);
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
@@ -130,7 +131,6 @@ namespace AudioWorks.Extensions.Vorbis
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         void WriteFrames(int frames)
         {
             _encoder.Wrote(frames);
@@ -142,16 +142,15 @@ namespace AudioWorks.Extensions.Vorbis
 
                 while (_encoder.FlushPacket(out var packet))
                 {
-                    _oggStream.PacketIn(ref packet);
+                    _oggStream.PacketIn(packet);
 
                     while (_oggStream.PageOut(out var page))
-                        WritePage(ref page);
+                        WritePage(page);
                 }
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        void WritePage(ref OggPage page)
+        void WritePage(in OggPage page)
         {
 #if WINDOWS
             WriteFromUnmanaged(page.Header, page.HeaderLength);
@@ -162,7 +161,6 @@ namespace AudioWorks.Extensions.Vorbis
 #endif
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         unsafe void WriteFromUnmanaged(IntPtr location, int length)
         {
 #if NETCOREAPP2_1

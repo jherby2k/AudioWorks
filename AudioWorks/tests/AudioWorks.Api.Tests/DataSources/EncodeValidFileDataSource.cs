@@ -165,8 +165,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
                 null,
-                "3983A342A074A7E8871FEF4FBE0AC73F",
-                "3983A342A074A7E8871FEF4FBE0AC73F"
+                "0137D7EA15464514D6C8445D4940654A",
+                "0137D7EA15464514D6C8445D4940654A"
             },
 
             new object[]
@@ -192,8 +192,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "FLAC",
                 null,
-                "A6B18F2B4DDC51DC37154410E701251F",
-                "A6B18F2B4DDC51DC37154410E701251F"
+                "CAA2E90C27940A68EFE083E439527C27",
+                "CAA2E90C27940A68EFE083E439527C27"
             },
 
             new object[]
@@ -201,8 +201,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
                 "FLAC",
                 null,
-                "90DE035E77A93A3DA90AAA129928259B",
-                "90DE035E77A93A3DA90AAA129928259B"
+                "2F737CBE53D42EFCE49B231FE6C9132B",
+                "2F737CBE53D42EFCE49B231FE6C9132B"
             },
 
             new object[]
@@ -210,8 +210,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "FLAC",
                 null,
-                "8C9EFD0837D816A6360BB8CF70A0D392",
-                "8C9EFD0837D816A6360BB8CF70A0D392"
+                "F396A80ABD33E1E30B7C1F5485808F1B",
+                "F396A80ABD33E1E30B7C1F5485808F1B"
             },
 
             new object[]
@@ -223,8 +223,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     // Default compression
                     ["CompressionLevel"] = 5
                 },
-                "3983A342A074A7E8871FEF4FBE0AC73F",
-                "3983A342A074A7E8871FEF4FBE0AC73F"
+                "0137D7EA15464514D6C8445D4940654A",
+                "0137D7EA15464514D6C8445D4940654A"
             },
 
             new object[]
@@ -249,8 +249,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     // Maximum compression
                     ["CompressionLevel"] = 8
                 },
-                "C73F21F10850A4542EEA2435226F1DEB",
-                "C73F21F10850A4542EEA2435226F1DEB"
+                "63CB2495C4A463A41B019F8A8D86AB3F",
+                "63CB2495C4A463A41B019F8A8D86AB3F"
             },
 
             new object[]
@@ -262,8 +262,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     // Default seek point interval
                     ["SeekPointInterval"] = 10
                 },
-                "3983A342A074A7E8871FEF4FBE0AC73F",
-                "3983A342A074A7E8871FEF4FBE0AC73F"
+                "0137D7EA15464514D6C8445D4940654A",
+                "0137D7EA15464514D6C8445D4940654A"
             },
 
             new object[]
@@ -275,8 +275,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     // Disabled seek points
                     ["SeekPointInterval"] = 0
                 },
-                "7DBB3E3E8079E60932AA5F8B4D9CD57C",
-                "7DBB3E3E8079E60932AA5F8B4D9CD57C"
+                "260617EF462F485D9470044D8F16D05A",
+                "260617EF462F485D9470044D8F16D05A"
             },
 
             new object[]
@@ -288,8 +288,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     // Maximum seek point interval
                     ["SeekPointInterval"] = 600
                 },
-                "3983A342A074A7E8871FEF4FBE0AC73F",
-                "3983A342A074A7E8871FEF4FBE0AC73F"
+                "0137D7EA15464514D6C8445D4940654A",
+                "0137D7EA15464514D6C8445D4940654A"
             },
 
             new object[]
@@ -301,8 +301,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     // Default padding
                     ["Padding"] = 8192
                 },
-                "3983A342A074A7E8871FEF4FBE0AC73F",
-                "3983A342A074A7E8871FEF4FBE0AC73F"
+                "0137D7EA15464514D6C8445D4940654A",
+                "0137D7EA15464514D6C8445D4940654A"
             },
 
             new object[]
@@ -314,8 +314,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     // Disabled padding
                     ["Padding"] = 0
                 },
-                "FFB7D9F0F4CDF37EDBA799FE371424A7",
-                "FFB7D9F0F4CDF37EDBA799FE371424A7"
+                "D0886BDBA9B11ED9644F52B6832DD066",
+                "D0886BDBA9B11ED9644F52B6832DD066"
             },
 
             new object[]
@@ -327,8 +327,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     // Maximum padding
                     ["Padding"] = 16_775_369
                 },
-                "F03F417B853C560705CD424AD329EFBC",
-                "F03F417B853C560705CD424AD329EFBC"
+                "D231A96C6D04252FE4A98C9BB9409885",
+                "D231A96C6D04252FE4A98C9BB9409885"
             },
 
             #endregion

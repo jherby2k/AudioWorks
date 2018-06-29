@@ -4,10 +4,10 @@ using System.Runtime.InteropServices;
 namespace AudioWorks.Extensions.Flac
 {
     [StructLayout(LayoutKind.Sequential)]
-    struct VorbisCommentEntry
+    readonly struct VorbisCommentEntry
     {
         internal readonly uint Length;
 
-        internal IntPtr Entry;
+        internal readonly IntPtr Entry;
     }
 }

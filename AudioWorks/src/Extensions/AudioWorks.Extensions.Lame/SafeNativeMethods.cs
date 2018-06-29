@@ -13,7 +13,7 @@ namespace AudioWorks.Extensions.Lame
     {
         const string _lameLibrary = "libmp3lame";
 
-#if (WINDOWS)
+#if WINDOWS
         static SafeNativeMethods()
         {
             // Select an architecture-appropriate directory by prefixing the PATH variable
@@ -84,11 +84,24 @@ namespace AudioWorks.Extensions.Lame
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int EncodeBufferIeeeFloat(
             [NotNull] EncoderHandle handle,
-            IntPtr leftSamples,
-            IntPtr rightSamples,
+            in float leftSamples,
+            in float rightSamples,
             int sampleCount,
 #if NETCOREAPP2_1
-            IntPtr buffer,
+            ref byte buffer,
+#else
+            [NotNull] [In, Out] byte[] buffer,
+#endif
+            int bufferSize);
+
+        [DllImport(_lameLibrary, EntryPoint = "lame_encode_buffer_interleaved_ieee_float",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int EncodeBufferInterleavedIeeeFloat(
+            [NotNull] EncoderHandle handle,
+            in float samples,
+            int sampleCount,
+#if NETCOREAPP2_1
+            ref byte buffer,
 #else
             [NotNull] [In, Out] byte[] buffer,
 #endif
@@ -99,7 +112,7 @@ namespace AudioWorks.Extensions.Lame
         internal static extern int EncodeFlush(
             [NotNull] EncoderHandle handle,
 #if NETCOREAPP2_1
-            IntPtr buffer,
+            ref byte buffer,
 #else
             [NotNull] [In, Out] byte[] buffer,
 #endif
@@ -110,7 +123,7 @@ namespace AudioWorks.Extensions.Lame
         internal static extern UIntPtr GetLameTagFrame(
             [NotNull] EncoderHandle handle,
 #if NETCOREAPP2_1
-            IntPtr buffer,
+            ref byte buffer,
 #else
             [NotNull] [In, Out] byte[] buffer,
 #endif

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 
@@ -49,7 +50,7 @@ namespace AudioWorks.Extensions.Flac
             fixed (byte* dataPointer = &MemoryMarshal.GetReference(data))
                 SafeNativeMethods.MetadataObjectPictureSetData(
                     Handle,
-                    new IntPtr(dataPointer),
+                    ref Unsafe.AsRef<byte>(dataPointer),
                     (uint) data.Length,
                     true);
         }

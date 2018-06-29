@@ -8,7 +8,7 @@ namespace AudioWorks.Extensions.Vorbis
     {
         readonly IntPtr _state;
 
-#if (WINDOWS)
+#if WINDOWS
         internal int SerialNumber => Marshal.PtrToStructure<OggStreamState>(_state).SerialNumber;
 #else
         internal long SerialNumber => Marshal.PtrToStructure<OggStreamState>(_state).SerialNumber;
@@ -16,7 +16,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
-#if (WINDOWS)
+#if WINDOWS
         internal OggStream(int serialNumber)
 #else
         internal OggStream(long serialNumber)
@@ -28,9 +28,9 @@ namespace AudioWorks.Extensions.Vorbis
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
-        internal void PageIn(ref OggPage page)
+        internal void PageIn(in OggPage page)
         {
-            SafeNativeMethods.OggStreamPageIn(_state, ref page);
+            SafeNativeMethods.OggStreamPageIn(_state, page);
         }
 
         internal bool PageOut(out OggPage page)
@@ -40,9 +40,9 @@ namespace AudioWorks.Extensions.Vorbis
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
-        internal void PacketIn(ref OggPacket packet)
+        internal void PacketIn(in OggPacket packet)
         {
-            SafeNativeMethods.OggStreamPacketIn(_state, ref packet);
+            SafeNativeMethods.OggStreamPacketIn(_state, packet);
         }
 
         internal bool PacketOut(out OggPacket packet)

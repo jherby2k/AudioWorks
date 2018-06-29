@@ -3,7 +3,7 @@ using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
 using JetBrains.Annotations;
-#if (WINDOWS)
+#if WINDOWS
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -14,13 +14,13 @@ namespace AudioWorks.Extensions.Flac
     [SuppressUnmanagedCodeSecurity]
     static class SafeNativeMethods
     {
-#if (LINUX)
+#if LINUX
         const string _flacLibrary = "libFLAC.so.8";
 #else
         const string _flacLibrary = "libFLAC";
 #endif
 
-#if (WINDOWS)
+#if WINDOWS
         static SafeNativeMethods()
         {
             // Select an architecture-appropriate directory by prefixing the PATH variable
@@ -148,12 +148,20 @@ namespace AudioWorks.Extensions.Flac
             [CanBeNull] NativeCallbacks.StreamEncoderMetadataCallback metadataCallback,
             IntPtr userData);
 
+        [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_process",
+            CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool StreamEncoderProcess(
+            [NotNull] StreamEncoderHandle handle,
+            in IntPtr buffer,
+            uint samples);
+
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_process_interleaved",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamEncoderProcessInterleaved(
             [NotNull] StreamEncoderHandle handle,
-            IntPtr buffer,
+            in int buffer,
             uint samples);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_finish",
@@ -215,7 +223,7 @@ namespace AudioWorks.Extensions.Flac
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataObjectPictureSetData(
             [NotNull] MetadataBlockHandle handle,
-            IntPtr data,
+            ref byte data,
             uint length,
             [MarshalAs(UnmanagedType.Bool)] bool copy);
 

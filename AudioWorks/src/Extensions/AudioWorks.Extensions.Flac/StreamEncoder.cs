@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
@@ -66,9 +68,23 @@ namespace AudioWorks.Extensions.Flac
                 IntPtr.Zero);
         }
 
-        internal bool ProcessInterleaved(IntPtr buffer, uint sampleCount)
+        internal unsafe bool Process(ReadOnlySpan<int> leftBuffer, ReadOnlySpan<int> rightBuffer)
         {
-            return SafeNativeMethods.StreamEncoderProcessInterleaved(_handle, buffer, sampleCount);
+            Span<IntPtr> buffers = stackalloc IntPtr[2];
+            buffers[0] = new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(leftBuffer)));
+            buffers[1] = new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(rightBuffer)));
+            return SafeNativeMethods.StreamEncoderProcess(
+                _handle,
+                buffers.GetPinnableReference(),
+                (uint) leftBuffer.Length);
+        }
+
+        internal bool ProcessInterleaved(ReadOnlySpan<int> buffer, uint frames)
+        {
+            return SafeNativeMethods.StreamEncoderProcessInterleaved(
+                _handle,
+                buffer.GetPinnableReference(),
+                frames);
         }
 
         internal bool Finish()

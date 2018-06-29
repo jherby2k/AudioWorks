@@ -3,7 +3,7 @@
 namespace AudioWorks.Extensions.Flac
 {
     [StructLayout(LayoutKind.Sequential)]
-    struct StreamInfoMetadataBlock
+    readonly struct StreamInfoMetadataBlock
     {
         readonly MetadataType Type;
 
@@ -11,6 +11,6 @@ namespace AudioWorks.Extensions.Flac
 
         readonly uint Length;
 
-        internal StreamInfo StreamInfo;
+        internal readonly StreamInfo StreamInfo;
     }
 }

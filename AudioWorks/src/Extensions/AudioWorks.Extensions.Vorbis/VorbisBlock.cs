@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace AudioWorks.Extensions.Vorbis
 {
     [StructLayout(LayoutKind.Sequential)]
-    struct VorbisBlock
+    readonly struct VorbisBlock
     {
         readonly IntPtr Pcm;
 
