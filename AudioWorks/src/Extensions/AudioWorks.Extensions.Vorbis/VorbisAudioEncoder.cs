@@ -4,6 +4,7 @@ using System.Composition;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 
@@ -129,6 +130,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         void WriteFrames(int frames)
         {
             _encoder.Wrote(frames);
@@ -148,6 +150,7 @@ namespace AudioWorks.Extensions.Vorbis
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         void WritePage(ref OggPage page)
         {
 #if WINDOWS
@@ -159,6 +162,7 @@ namespace AudioWorks.Extensions.Vorbis
 #endif
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         unsafe void WriteFromUnmanaged(IntPtr location, int length)
         {
 #if NETCOREAPP2_1
