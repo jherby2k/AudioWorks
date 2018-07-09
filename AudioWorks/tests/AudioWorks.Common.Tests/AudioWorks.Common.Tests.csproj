@@ -54,8 +54,8 @@
     <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.2" />
-    <PackageReference Include="xunit" Version="2.4.0-beta.2.build4010" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0-beta.2.build4010" />
+    <PackageReference Include="xunit" Version="2.4.0-rc.1.build4038" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0-rc.1.build4038" />
   </ItemGroup>
   
   <ItemGroup>
