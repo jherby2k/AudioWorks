@@ -67,7 +67,7 @@ namespace AudioWorks.Extensions.Vorbis
                                 info.Channels,
                                 info.Rate,
                                 0,
-                                info.BitrateNominal > 0 ? info.BitrateNominal : 0);
+                                info.BitRateNominal > 0 ? info.BitRateNominal : 0);
                         }
                     } while (!SafeNativeMethods.OggPageEos(page));
 

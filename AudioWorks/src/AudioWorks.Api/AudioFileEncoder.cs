@@ -17,8 +17,8 @@ namespace AudioWorks.Api
     [PublicAPI]
     public sealed class AudioFileEncoder
     {
-        [CanBeNull] readonly MetadataSubstituter _fileNameSubstituter;
-        [CanBeNull] readonly MetadataSubstituter _directoryNameSubstituter;
+        [CanBeNull] readonly EncodedString _encodedFileName;
+        [CanBeNull] readonly EncodedString _encodedDirectoryName;
         [NotNull] readonly ExportFactory<IAudioEncoder> _encoderFactory;
 
         /// <summary>
@@ -57,9 +57,9 @@ namespace AudioWorks.Api
                               throw new ArgumentException($"No '{name}' encoder is available.", nameof(name));
 
             if (encodedDirectoryName != null)
-                _directoryNameSubstituter = new DirectoryNameSubstituter(encodedDirectoryName);
+                _encodedDirectoryName = new EncodedDirectoryName(encodedDirectoryName);
             if (encodedFileName != null)
-                _fileNameSubstituter = new FileNameSubstituter(encodedFileName);
+                _encodedFileName = new EncodedFileName(encodedFileName);
 
             using (var export = _encoderFactory.CreateExport())
                 Settings = new ValidatingSettingDictionary(export.Value.SettingInfo, settings);
@@ -129,15 +129,15 @@ namespace AudioWorks.Api
 
                     for (var i = 0; i < audioFiles.Length; i++)
                     {
-                        // The output directory defaults to the audiofile's current directory
-                        var outputDirectory = _directoryNameSubstituter?.Substitute(audioFiles[i].Metadata) ??
+                        // The output directory defaults to the AudioFile's current directory
+                        var outputDirectory = _encodedDirectoryName?.Replace(audioFiles[i].Metadata) ??
                                               Path.GetDirectoryName(audioFiles[i].Path);
 
                         // ReSharper disable once AssignNullToNotNullAttribute
                         Directory.CreateDirectory(outputDirectory);
 
                         // The output file names default to the input file names
-                        var outputFileName = _fileNameSubstituter?.Substitute(audioFiles[i].Metadata) ??
+                        var outputFileName = _encodedFileName?.Replace(audioFiles[i].Metadata) ??
                                              Path.GetFileNameWithoutExtension(audioFiles[i].Path);
 
                         encoderExports[i] = _encoderFactory.CreateExport();

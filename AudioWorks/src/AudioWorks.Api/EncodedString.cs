@@ -6,13 +6,13 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Api
 {
-    abstract class MetadataSubstituter
+    abstract class EncodedString
     {
         [NotNull] static readonly Regex _replacer = new Regex(@"\{[^{]+\}");
         [NotNull] readonly string _encoded;
         [NotNull] readonly char[] _invalidChars;
 
-        internal MetadataSubstituter([NotNull] string encoded, [NotNull] char[] invalidChars)
+        internal EncodedString([NotNull] string encoded, [NotNull] char[] invalidChars)
         {
             var validProperties = typeof(AudioMetadata).GetProperties()
                 .Select(propertyInfo => propertyInfo.Name).ToArray();
@@ -30,7 +30,7 @@ namespace AudioWorks.Api
         }
 
         [NotNull]
-        internal string Substitute([NotNull] AudioMetadata metadata) =>
+        internal string Replace([NotNull] AudioMetadata metadata) =>
             _replacer.Replace(_encoded, match =>
             {
                 var propertyName = match.Value.Substring(1, match.Value.Length - 2);

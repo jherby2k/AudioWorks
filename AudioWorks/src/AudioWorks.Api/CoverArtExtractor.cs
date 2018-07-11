@@ -10,8 +10,8 @@ namespace AudioWorks.Api
     /// </summary>
     public sealed class CoverArtExtractor
     {
-        [CanBeNull] readonly MetadataSubstituter _fileNameSubstituter;
-        [CanBeNull] readonly MetadataSubstituter _directoryNameSubstituter;
+        [CanBeNull] readonly EncodedString _encodedFileName;
+        [CanBeNull] readonly EncodedString _encodedDirectoryName;
         readonly bool _overwrite;
 
         /// <summary>
@@ -26,9 +26,9 @@ namespace AudioWorks.Api
             bool overwrite = false)
         {
             if (encodedDirectoryName != null)
-                _directoryNameSubstituter = new DirectoryNameSubstituter(encodedDirectoryName);
+                _encodedDirectoryName = new EncodedDirectoryName(encodedDirectoryName);
             if (encodedFileName != null)
-                _fileNameSubstituter = new FileNameSubstituter(encodedFileName);
+                _encodedFileName = new EncodedFileName(encodedFileName);
             _overwrite = overwrite;
         }
 
@@ -48,15 +48,15 @@ namespace AudioWorks.Api
 
             if (audioFile.Metadata.CoverArt == null) return null;
 
-            // The output directory defaults to the audiofile's current directory
-            var outputDirectory = _directoryNameSubstituter?.Substitute(audioFile.Metadata) ??
+            // The output directory defaults to the AudioFile's current directory
+            var outputDirectory = _encodedDirectoryName?.Replace(audioFile.Metadata) ??
                                   Path.GetDirectoryName(audioFile.Path);
 
             // ReSharper disable once AssignNullToNotNullAttribute
             Directory.CreateDirectory(outputDirectory);
 
             // The output file names default to the input file names
-            var outputFileName = _fileNameSubstituter?.Substitute(audioFile.Metadata) ??
+            var outputFileName = _encodedFileName?.Replace(audioFile.Metadata) ??
                                  Path.GetFileNameWithoutExtension(audioFile.Path);
 
             var result = new FileInfo(Path.Combine(

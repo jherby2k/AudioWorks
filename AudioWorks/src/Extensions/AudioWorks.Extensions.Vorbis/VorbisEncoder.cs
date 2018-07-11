@@ -27,7 +27,7 @@ namespace AudioWorks.Extensions.Vorbis
         {
             SafeNativeMethods.VorbisInfoInit(_info);
 
-            // Use 3-step setup so bitrate management can be disabled
+            // Use 3-step setup so BitRate management can be disabled
             SafeNativeMethods.VorbisEncodeSetupManaged(_info, channels, sampleRate,
                 -1, nominalBitRate, -1);
             if (!managed)

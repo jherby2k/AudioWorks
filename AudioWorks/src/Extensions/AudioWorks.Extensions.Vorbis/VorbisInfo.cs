@@ -12,13 +12,13 @@ namespace AudioWorks.Extensions.Vorbis
 
         internal readonly int Rate;
 
-        readonly int BitrateUpper;
+        readonly int BitRateUpper;
 
-        internal readonly int BitrateNominal;
+        internal readonly int BitRateNominal;
 
-        readonly int BitrateLower;
+        readonly int BitRateLower;
 
-        readonly int BitrateWindow;
+        readonly int BitRateWindow;
 
         readonly IntPtr CodecSetup;
     }

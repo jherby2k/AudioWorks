@@ -3,9 +3,9 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Api
 {
-    sealed class FileNameSubstituter : MetadataSubstituter
+    sealed class EncodedFileName : EncodedString
     {
-        internal FileNameSubstituter([NotNull] string encodedDirectoryName)
+        internal EncodedFileName([NotNull] string encodedDirectoryName)
             : base(encodedDirectoryName, Path.GetInvalidFileNameChars())
         {
         }
