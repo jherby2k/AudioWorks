@@ -57,7 +57,7 @@ namespace AudioWorks.Extensions.Apple
             return unmanagedValue;
         }
 
-        internal T GetProperty<T>(AudioFilePropertyId id) where T : struct
+        internal T GetProperty<T>(AudioFilePropertyId id) where T : unmanaged
         {
             var size = (uint) Marshal.SizeOf(typeof(T));
             var unmanagedValue = Marshal.AllocHGlobal((int)size);

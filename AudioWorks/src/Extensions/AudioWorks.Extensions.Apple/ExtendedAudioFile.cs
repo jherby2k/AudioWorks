@@ -17,7 +17,7 @@ namespace AudioWorks.Extensions.Apple
             SafeNativeMethods.ExtAudioFileWrapAudioFile(Handle, true, out _handle);
         }
 
-        internal void SetProperty<T>(ExtendedAudioFilePropertyId id, T value) where T : struct
+        internal void SetProperty<T>(ExtendedAudioFilePropertyId id, T value) where T : unmanaged
         {
             var unmanagedValueSize = Marshal.SizeOf(typeof(T));
             var unmanagedValue = Marshal.AllocHGlobal(unmanagedValueSize);
@@ -32,7 +32,7 @@ namespace AudioWorks.Extensions.Apple
             }
         }
 
-        internal T GetProperty<T>(ExtendedAudioFilePropertyId id) where T : struct
+        internal T GetProperty<T>(ExtendedAudioFilePropertyId id) where T : unmanaged
         {
             var unmanagedValueSize = (uint) Marshal.SizeOf(typeof(T));
             var unmanagedValue = Marshal.AllocHGlobal((int) unmanagedValueSize);
