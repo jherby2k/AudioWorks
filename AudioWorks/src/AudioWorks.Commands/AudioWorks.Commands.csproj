@@ -62,9 +62,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.5.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.6.4" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.0" PrivateAssets="all" />
-    <PackageReference Include="PowerShellStandard.Library" Version="5.1.0-preview-04" />
+    <PackageReference Include="PowerShellStandard.Library" Version="5.1.0-preview-05" />
   </ItemGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains(NETSTANDARD2_0)) AND $(DefineConstants.Contains(WINDOWS))">
