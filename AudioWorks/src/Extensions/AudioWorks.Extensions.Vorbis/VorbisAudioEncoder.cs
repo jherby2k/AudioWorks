@@ -130,11 +130,10 @@ namespace AudioWorks.Extensions.Vorbis
             _replayGainExport.Value.Initialize(info, metadata, settings);
         }
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         void WriteFrames(int frames)
         {
+            // ReSharper disable once PossibleNullReferenceException
             _encoder.Wrote(frames);
 
             while (_encoder.BlockOut())
@@ -142,10 +141,13 @@ namespace AudioWorks.Extensions.Vorbis
                 _encoder.Analysis(IntPtr.Zero);
                 _encoder.AddBlock();
 
+                // ReSharper disable once PossibleNullReferenceException
                 while (_encoder.FlushPacket(out var packet))
                 {
+                    // ReSharper disable once PossibleNullReferenceException
                     _oggStream.PacketIn(packet);
 
+                    // ReSharper disable once PossibleNullReferenceException
                     while (_oggStream.PageOut(out var page))
                         WritePage(page);
                 }

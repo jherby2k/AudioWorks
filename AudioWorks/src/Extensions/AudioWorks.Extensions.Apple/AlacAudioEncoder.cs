@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -65,13 +64,13 @@ namespace AudioWorks.Extensions.Apple
             _audioFile.Write(bufferList, (uint) samples.Frames);
         }
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
         public void Finish()
         {
+            // ReSharper disable once PossibleNullReferenceException
             _audioFile.Dispose();
             _audioFile = null;
 
+            // ReSharper disable once PossibleNullReferenceException
             _fileStream.Position = 0;
 
             // Call the external MP4 encoder for writing iTunes-compatible atoms
@@ -79,6 +78,7 @@ namespace AudioWorks.Extensions.Apple
                 ExtensionProvider.GetFactories<IAudioMetadataEncoder>("Extension", FileExtension).FirstOrDefault();
             if (metadataEncoderFactory == null) return;
             using (var export = metadataEncoderFactory.CreateExport())
+                // ReSharper disable twice AssignNullToNotNullAttribute
                 export.Value.WriteMetadata(_fileStream, _metadata, _settings);
         }
 

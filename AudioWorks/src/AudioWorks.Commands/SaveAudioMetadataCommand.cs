@@ -42,9 +42,8 @@ namespace AudioWorks.Commands
         {
             try
             {
-                // ReSharper disable once PossibleNullReferenceException
+                // ReSharper disable twice PossibleNullReferenceException
                 if (ShouldProcess(AudioFile.Path))
-                    // ReSharper disable once PossibleNullReferenceException
                     AudioFile.SaveMetadata(SettingAdapter.ParametersToSettings(_parameters));
             }
             catch (AudioUnsupportedException e)
