@@ -65,9 +65,15 @@ namespace AudioWorks.Extensions.Vorbis
                             return AudioInfo.CreateForLossy(
                                 "Vorbis",
                                 info.Channels,
+#if WINDOWS
                                 info.Rate,
                                 0,
                                 info.BitRateNominal > 0 ? info.BitRateNominal : 0);
+#else
+                                (int) info.Rate,
+                                0,
+                                info.BitRateNominal > 0 ? (int) info.BitRateNominal : 0);
+#endif
                         }
                     } while (!SafeNativeMethods.OggPageEos(page));
 
