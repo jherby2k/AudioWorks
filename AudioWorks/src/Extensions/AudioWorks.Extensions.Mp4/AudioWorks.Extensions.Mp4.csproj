@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.1;netstandard2.0</TargetFrameworks>
     <LangVersion>7.3</LangVersion>
-    <Version>0.1.3-beta</Version>
+    <Version>0.1.0-beta</Version>
     <Authors>Jeremy Herbison</Authors>
     <Company />
     <Product>AudioWorks</Product>
@@ -15,13 +15,11 @@
     <CodeAnalysisRuleSet>CodeAnalysis.ruleset</CodeAnalysisRuleSet>
     <Configurations>Debug-Windows;Release-Windows;Debug-OSX;Release-OSX;Debug-Linux;Release-Linux</Configurations>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Windows|AnyCPU'">
     <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
-    <Optimize>false</Optimize>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Windows|AnyCPU'">
@@ -30,7 +28,6 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-OSX|AnyCPU'">
     <DefineConstants>DEBUG;TRACE;OSX</DefineConstants>
-    <Optimize>false</Optimize>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-OSX|AnyCPU'">
@@ -39,11 +36,33 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Linux|AnyCPU'">
     <DefineConstants>DEBUG;TRACE;LINUX</DefineConstants>
-    <Optimize>false</Optimize>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Linux|AnyCPU'">
     <DefineConstants>RELEASE;TRACE;LINUX</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(DefineConstants.Contains(DEBUG))">
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(DefineConstants.Contains(RELEASE))">
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(DefineConstants.Contains(WINDOWS))">
+    <PackageId>AudioWorks.Extensions.Mp4.Windows</PackageId>
+    <PackageTags>Windows</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(DefineConstants.Contains(OSX))">
+    <PackageId>AudioWorks.Extensions.Mp4.OSX</PackageId>
+    <PackageTags>OSX</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(DefineConstants.Contains(LINUX))">
+    <PackageId>AudioWorks.Extensions.Mp4.Linux</PackageId>
+    <PackageTags>Linux</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
