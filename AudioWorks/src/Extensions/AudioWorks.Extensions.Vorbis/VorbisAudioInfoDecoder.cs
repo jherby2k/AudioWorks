@@ -68,11 +68,11 @@ namespace AudioWorks.Extensions.Vorbis
 #if WINDOWS
                                 info.Rate,
                                 0,
-                                info.BitRateNominal > 0 ? info.BitRateNominal : 0);
+                                Math.Max(info.BitRateNominal, 0));
 #else
                                 (int) info.Rate,
                                 0,
-                                info.BitRateNominal > 0 ? (int) info.BitRateNominal : 0);
+                                Math.Max((int) info.BitRateNominal, 0));
 #endif
                         }
                     } while (!SafeNativeMethods.OggPageEos(page));

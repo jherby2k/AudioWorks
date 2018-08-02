@@ -20,8 +20,6 @@ namespace AudioWorks.Extensions.Vorbis
         readonly int BitRateLower;
 
         readonly int BitRateWindow;
-
-        readonly IntPtr CodecSetup;
 #else
         internal readonly long Rate;
 
@@ -32,8 +30,7 @@ namespace AudioWorks.Extensions.Vorbis
         readonly long BitRateLower;
 
         readonly long BitRateWindow;
-
-        readonly IntPtr CodecSetup;
 #endif
+        readonly IntPtr CodecSetup;
     }
 }
