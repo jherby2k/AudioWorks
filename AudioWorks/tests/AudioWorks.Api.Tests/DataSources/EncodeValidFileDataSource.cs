@@ -333,6 +333,7 @@ namespace AudioWorks.Api.Tests.DataSources
 
             #endregion
 
+#if !LINUX
             #region ALAC Encoding
 
             new object[]
@@ -808,6 +809,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             #endregion
+#endif
 
             #region Lame MP3 Encoding
 
