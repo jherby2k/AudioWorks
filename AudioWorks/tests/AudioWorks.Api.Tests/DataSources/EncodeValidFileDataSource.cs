@@ -102,6 +102,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "D55BD1987676A7D6C2A04BF09C10F64F"
             },
 
+#if !LINUX
             new object[]
             {
                 "ALAC 16-bit 44100Hz Mono.m4a",
@@ -137,6 +138,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "D55BD1987676A7D6C2A04BF09C10F64F",
                 "D55BD1987676A7D6C2A04BF09C10F64F"
             },
+#endif
 
             #endregion
 
