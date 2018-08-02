@@ -169,7 +169,11 @@ namespace AudioWorks.Extensions.Vorbis
 
         static unsafe void UpdateSequenceNumber(ref OggPage page, uint sequenceNumber)
         {
+#if WINDOWS
             var headerSpan = new Span<byte>(page.Header.ToPointer(), page.HeaderLength);
+#else
+            var headerSpan = new Span<byte>(page.Header.ToPointer(), (int) page.HeaderLength);
+#endif
             var sequenceNumberSpan = headerSpan.Slice(18, 4);
 
             // Only do the update if the sequence number has changed
@@ -182,7 +186,11 @@ namespace AudioWorks.Extensions.Vorbis
             var crcSpan = headerSpan.Slice(22, 4);
             crcSpan.Clear();
             BinaryPrimitives.WriteUInt32LittleEndian(crcSpan,
+#if WINDOWS
                 Crc32.GetChecksum(new Span<byte>(page.Body.ToPointer(), page.BodyLength),
+#else
+                Crc32.GetChecksum(new Span<byte>(page.Body.ToPointer(), (int) page.BodyLength),
+#endif
                     Crc32.GetChecksum(headerSpan)));
         }
     }
