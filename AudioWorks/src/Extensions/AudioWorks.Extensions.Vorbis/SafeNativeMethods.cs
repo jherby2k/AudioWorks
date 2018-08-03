@@ -16,7 +16,7 @@ namespace AudioWorks.Extensions.Vorbis
 #if LINUX
         const string _oggLibrary = "libogg.so.0";
         const string _vorbisLibrary = "libvorbis.so.0";
-        const string _vorbisEncLibrary = "libvorbisenc.so.0";
+        const string _vorbisEncLibrary = "libvorbisenc.so.2";
 #else
         const string _oggLibrary = "libogg";
         const string _vorbisLibrary = "libvorbis";
