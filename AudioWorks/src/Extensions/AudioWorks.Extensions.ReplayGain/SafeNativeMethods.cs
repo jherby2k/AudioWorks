@@ -14,7 +14,11 @@ namespace AudioWorks.Extensions.ReplayGain
     [SuppressUnmanagedCodeSecurity]
     static class SafeNativeMethods
     {
+#if LINUX
+        const string _ebur128Library = "libebur128.so.1";
+#else
         const string _ebur128Library = "libebur128";
+#endif
 
 #if WINDOWS
         static SafeNativeMethods()
@@ -29,13 +33,13 @@ namespace AudioWorks.Extensions.ReplayGain
 
             Environment.SetEnvironmentVariable("PATH", newPath.ToString());
         }
+#endif
 
         [DllImport(_ebur128Library, EntryPoint = "ebur128_init",
             CallingConvention = CallingConvention.Cdecl)]
-        internal static extern StateHandle Init(uint channels, uint samplerate, Modes modes);
+#if WINDOWS
+        internal static extern StateHandle Init(uint channels, uint sampleRate, Modes modes);
 #else
-        [DllImport(_ebur128Library, EntryPoint = "ebur128_init",
-            CallingConvention = CallingConvention.Cdecl)]
         internal static extern StateHandle Init(uint channels, ulong samplerate, Modes modes);
 #endif
 

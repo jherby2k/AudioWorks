@@ -16,6 +16,7 @@ namespace AudioWorks.Extensions.Vorbis
 #if LINUX
         const string _oggLibrary = "libogg.so.0";
         const string _vorbisLibrary = "libvorbis.so.0";
+        const string _vorbisEncLibrary = "libvorbisenc.so.0";
 #else
         const string _oggLibrary = "libogg";
         const string _vorbisLibrary = "libvorbis";
@@ -58,47 +59,38 @@ namespace AudioWorks.Extensions.Vorbis
         internal static extern int OggSyncPageOut(IntPtr syncState,
             out OggPage page);
 
-#if WINDOWS
         [DllImport(_oggLibrary, EntryPoint = "ogg_sync_buffer",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern IntPtr OggSyncBuffer(
             IntPtr syncState,
+#if WINDOWS
             int size);
+#else
+            long size);
+#endif
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_sync_wrote",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int OggSyncWrote(
             IntPtr syncState,
+#if WINDOWS
             int bytes);
 #else
-        [DllImport(_oggLibrary, EntryPoint = "ogg_sync_buffer",
-            CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IntPtr OggSyncBuffer(
-            IntPtr syncState,
-            long size);
-
-        [DllImport(_oggLibrary, EntryPoint = "ogg_sync_wrote",
-            CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int OggSyncWrote(
-            IntPtr syncState,
             long bytes);
 #endif
+
         [DllImport(_oggLibrary, EntryPoint = "ogg_sync_clear",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int OggSyncClear(
             IntPtr syncState);
 
-#if WINDOWS
         [DllImport(_oggLibrary, EntryPoint = "ogg_stream_init",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int OggStreamInit(
             IntPtr streamState,
+#if WINDOWS
             int serialNumber);
 #else
-        [DllImport(_oggLibrary, EntryPoint = "ogg_stream_init",
-            CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int OggStreamInit(
-            IntPtr streamState,
             long serialNumber);
 #endif
 
@@ -198,7 +190,11 @@ namespace AudioWorks.Extensions.Vorbis
         internal static extern int VorbisEncodeSetupInit(
             IntPtr info);
 
+#if LINUX
+        [DllImport(_vorbisEncLibrary, EntryPoint = "vorbis_encode_init_vbr",
+#else
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_encode_init_vbr",
+#endif
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int VorbisEncodeInitVbr(
             IntPtr info,
