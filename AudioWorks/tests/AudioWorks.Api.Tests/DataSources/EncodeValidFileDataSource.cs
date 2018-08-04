@@ -1364,11 +1364,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary
                 {
                     // Minimum bit rate
-                    ["BitRate"] = 32,
+                    ["BitRate"] = 45,
                     ["SerialNumber"] = 1
                 },
-                "B7B442329AA7054D4D4B317F9DE477A9",
-                "B7B442329AA7054D4D4B317F9DE477A9"
+                "0F9B9459E5E02BD639E086C50904ACD7",
+                "0F9B9459E5E02BD639E086C50904ACD7"
             },
 
             new object[]

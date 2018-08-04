@@ -28,7 +28,7 @@ namespace AudioWorks.Extensions.Vorbis
                 {
                     ["SerialNumber"] = new IntSettingInfo(int.MinValue, int.MaxValue),
                     ["Quality"] = new IntSettingInfo(-1, 10),
-                    ["BitRate"] = new IntSettingInfo(32, 500),
+                    ["BitRate"] = new IntSettingInfo(45, 500),
                     ["ForceCBR"] = new BoolSettingInfo()
                 };
 
