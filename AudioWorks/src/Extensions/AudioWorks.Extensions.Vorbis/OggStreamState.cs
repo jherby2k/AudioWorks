@@ -55,11 +55,13 @@ namespace AudioWorks.Extensions.Vorbis
 
 #if WINDOWS
         internal readonly int SerialNumber;
-#else
-        internal readonly long SerialNumber;
-#endif
 
         readonly int PageNumber;
+#else
+        internal readonly long SerialNumber;
+
+        readonly long PageNumber;
+#endif
 
         readonly long PacketNumber;
 
