@@ -7,11 +7,10 @@ namespace AudioWorks.Extensions.Vorbis
 {
     sealed class VorbisDecoder : IDisposable
     {
-        readonly IntPtr _info;
+        readonly IntPtr _info = Marshal.AllocHGlobal(Marshal.SizeOf<VorbisInfo>());
 
         internal VorbisDecoder()
         {
-            _info = Marshal.AllocHGlobal(Marshal.SizeOf<VorbisInfo>());
             SafeNativeMethods.VorbisInfoInit(_info);
         }
 

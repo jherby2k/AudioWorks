@@ -28,8 +28,8 @@ namespace AudioWorks.Extensions.Vorbis
                 {
                     ["SerialNumber"] = new IntSettingInfo(int.MinValue, int.MaxValue),
                     ["Quality"] = new IntSettingInfo(-1, 10),
-                    ["BitRate"] = new IntSettingInfo(45, 500),
-                    ["Managed"] = new BoolSettingInfo()
+                    ["BitRate"] = new IntSettingInfo(32, 500),
+                    ["ForceCBR"] = new BoolSettingInfo()
                 };
 
                 // Merge the external ReplayGain filter's SettingInfo
@@ -56,9 +56,15 @@ namespace AudioWorks.Extensions.Vorbis
                 : new Random().Next());
 
             // Default to a quality setting of 5
-            if (settings.TryGetValue<int>("BitRate", out var bitRate))
-                _encoder = new VorbisEncoder(info.Channels, info.SampleRate, bitRate * 1000,
-                    settings.TryGetValue<bool>("Managed", out var managed) && managed);
+            if (settings.TryGetValue("BitRate", out int bitRate))
+            {
+                if (settings.TryGetValue("ForceCBR", out bool cbr) && cbr)
+                    _encoder = new VorbisEncoder(info.Channels, info.SampleRate,
+                        bitRate * 1000, bitRate * 1000, bitRate * 1000);
+                else
+                    _encoder = new VorbisEncoder(info.Channels, info.SampleRate,
+                        -1, bitRate * 1000, -1);
+            }
             else
                 _encoder = new VorbisEncoder(info.Channels, info.SampleRate,
                     settings.TryGetValue<int>("Quality", out var quality)

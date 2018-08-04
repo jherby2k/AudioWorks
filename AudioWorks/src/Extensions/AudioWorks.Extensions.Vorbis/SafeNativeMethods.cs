@@ -169,26 +169,27 @@ namespace AudioWorks.Extensions.Vorbis
         internal static extern void VorbisInfoClear(
             IntPtr info);
 
-        [DllImport(_vorbisLibrary, EntryPoint = "vorbis_encode_setup_managed",
+#if LINUX
+        [DllImport(_vorbisEncLibrary, EntryPoint = "vorbis_encode_init",
+#else
+        [DllImport(_vorbisLibrary, EntryPoint = "vorbis_encode_init",
+#endif
             CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int VorbisEncodeSetupManaged(
+        internal static extern int VorbisEncodeInit(
             IntPtr info,
+#if WINDOWS
             int channels,
             int sampleRate,
             int maximumBitRate,
             int nominalBitRate,
             int minimumBitRate);
-
-        [DllImport(_vorbisLibrary, EntryPoint = "vorbis_encode_ctl",
-            CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int VorbisEncodeCtl(IntPtr info,
-            int request,
-            IntPtr argument);
-
-        [DllImport(_vorbisLibrary, EntryPoint = "vorbis_encode_setup_init",
-            CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int VorbisEncodeSetupInit(
-            IntPtr info);
+#else
+            long channels,
+            long sampleRate,
+            long maximumBitRate,
+            long nominalBitRate,
+            long minimumBitRate);
+#endif
 
 #if LINUX
         [DllImport(_vorbisEncLibrary, EntryPoint = "vorbis_encode_init_vbr",
@@ -198,8 +199,13 @@ namespace AudioWorks.Extensions.Vorbis
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int VorbisEncodeInitVbr(
             IntPtr info,
+#if WINDOWS
             int channels,
             int rate,
+#else
+            long channels,
+            long rate,
+#endif
             float baseQuality);
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_analysis_init",

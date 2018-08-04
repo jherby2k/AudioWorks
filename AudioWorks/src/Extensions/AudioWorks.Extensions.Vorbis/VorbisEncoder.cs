@@ -23,17 +23,10 @@ namespace AudioWorks.Extensions.Vorbis
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native methods are always expected to return 0")]
-        internal VorbisEncoder(int channels, int sampleRate, int nominalBitRate, bool managed)
+        internal VorbisEncoder(int channels, int sampleRate, int maxBitRate, int nominalBitRate, int minBitRate)
         {
             SafeNativeMethods.VorbisInfoInit(_info);
-
-            // Use 3-step setup so BitRate management can be disabled
-            SafeNativeMethods.VorbisEncodeSetupManaged(_info, channels, sampleRate,
-                -1, nominalBitRate, -1);
-            if (!managed)
-                SafeNativeMethods.VorbisEncodeCtl(_info, 0x15, IntPtr.Zero);
-            SafeNativeMethods.VorbisEncodeSetupInit(_info);
-
+            SafeNativeMethods.VorbisEncodeInit(_info, channels, sampleRate, maxBitRate, nominalBitRate, minBitRate);
             SafeNativeMethods.VorbisAnalysisInit(DspState, _info);
             SafeNativeMethods.VorbisBlockInit(DspState, _block);
         }

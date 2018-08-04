@@ -1364,11 +1364,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary
                 {
                     // Minimum bit rate
-                    ["BitRate"] = 45,
+                    ["BitRate"] = 32,
                     ["SerialNumber"] = 1
                 },
-                "ACAA5AA94409B153370D9A6E22A1BFF0",
-                "ACAA5AA94409B153370D9A6E22A1BFF0"
+                "B7B442329AA7054D4D4B317F9DE477A9",
+                "B7B442329AA7054D4D4B317F9DE477A9"
             },
 
             new object[]
@@ -1381,8 +1381,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["BitRate"] = 500,
                     ["SerialNumber"] = 1
                 },
-                "E4737F95A8FA00DEFBE1CCCD1C8EC00C",
-                "E4737F95A8FA00DEFBE1CCCD1C8EC00C"
+                "A5E58EDDF584651D768E809B45AF0E57",
+                "A5E58EDDF584651D768E809B45AF0E57"
             },
 
             new object[]
@@ -1391,38 +1391,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Vorbis",
                 new TestSettingDictionary
                 {
-                    // Managed bit rate disabled (default)
+                    // Forced bit rate disabled (default)
                     ["BitRate"] = 128,
-                    ["SerialNumber"] = 1
-                },
-                "5064ACFC5474CE3FCA65E5C16C5322E0",
-                "5064ACFC5474CE3FCA65E5C16C5322E0"
-            },
-
-            new object[]
-            {
-                "LPCM 16-bit 44100Hz Stereo.wav",
-                "Vorbis",
-                new TestSettingDictionary
-                {
-                    // Managed bit rate disabled (explicit)
-                    ["BitRate"] = 128,
-                    ["Managed"] = false,
-                    ["SerialNumber"] = 1
-                },
-                "5064ACFC5474CE3FCA65E5C16C5322E0",
-                "5064ACFC5474CE3FCA65E5C16C5322E0"
-            },
-
-            new object[]
-            {
-                "LPCM 16-bit 44100Hz Stereo.wav",
-                "Vorbis",
-                new TestSettingDictionary
-                {
-                    // Managed bit rate enabled
-                    ["BitRate"] = 128,
-                    ["Managed"] = true,
                     ["SerialNumber"] = 1
                 },
                 "6419168FF3EF995A41F17FCAF44E9C4A",
@@ -1435,8 +1405,38 @@ namespace AudioWorks.Api.Tests.DataSources
                 "Vorbis",
                 new TestSettingDictionary
                 {
-                    // Managed bit rate ignored without bit rate
-                    ["Managed"] = true,
+                    // Forced bit rate disabled (explicit)
+                    ["BitRate"] = 128,
+                    ["ForceCBR"] = false,
+                    ["SerialNumber"] = 1
+                },
+                "6419168FF3EF995A41F17FCAF44E9C4A",
+                "6419168FF3EF995A41F17FCAF44E9C4A"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    // Forced bit rate enabled
+                    ["BitRate"] = 128,
+                    ["ForceCBR"] = true,
+                    ["SerialNumber"] = 1
+                },
+                "1DE19792FF2C7D898197AE88677BABFD",
+                "1DE19792FF2C7D898197AE88677BABFD"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    // Forced bit rate ignored without bit rate
+                    ["ForceCBR"] = true,
                     ["SerialNumber"] = 1
                 },
                 "BAD08F056C5BA8308C7B9D1D2E1C2564",
@@ -1454,8 +1454,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["BitRate"] = 128,
                     ["SerialNumber"] = 1
                 },
-                "5064ACFC5474CE3FCA65E5C16C5322E0",
-                "5064ACFC5474CE3FCA65E5C16C5322E0"
+                "6419168FF3EF995A41F17FCAF44E9C4A",
+                "6419168FF3EF995A41F17FCAF44E9C4A"
             },
 
             new object[]
