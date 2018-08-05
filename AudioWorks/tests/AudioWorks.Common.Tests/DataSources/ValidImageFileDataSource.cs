@@ -16,7 +16,11 @@ namespace AudioWorks.Common.Tests.DataSources
                 24,
                 true,
                 "image/png",
+#if LINUX
+                "33165370ACA751B80A027F931B1E2E9C"
+#else
                 "AE46988A9D44F2797469B8B79CA77A33"
+#endif
             },
 
             new object[]

@@ -964,7 +964,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
+#if LINUX
+                "920ABDF9377A176F1E3BC23A3854B436"
+#else
                 "4087AB586A43226EB7F59E44DE576186"
+#endif
             },
 
             // Day unset
@@ -991,7 +995,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
+#if LINUX
+                "AE84B97E3D1DC72C8F037F1FB391F176"
+#else
                 "32F0045D8D0BB7ECC261552CBFE0A3C6"
+#endif
             },
 
             // Month unset
@@ -1018,7 +1026,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
+#if LINUX
+                "AE84B97E3D1DC72C8F037F1FB391F176"
+#else
                 "32F0045D8D0BB7ECC261552CBFE0A3C6"
+#endif
             },
 
             // TrackNumber unset
@@ -1045,7 +1057,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
+#if LINUX
+                "65D70AA25438FADE7F5BD8F3EA50AF14"
+#else
                 "A56486BA4A903B4664CAF17835AE053C"
+#endif
             },
 
             // TrackCount unset
@@ -1072,7 +1088,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
+#if LINUX
+                "E27562A26A75428980854641331A0EDA"
+#else
                 "2D5659E77B842E3A3B460C5A7EB78E11"
+#endif
             },
 
             // Existing tag
@@ -1100,7 +1120,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 null,
                 null,
+#if LINUX
+                "920ABDF9377A176F1E3BC23A3854B436"
+#else
                 "4087AB586A43226EB7F59E44DE576186"
+#endif
             },
 
             // Existing tag removal
@@ -1110,7 +1134,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 null,
                 null,
+#if LINUX
+                "BF300A616B52AB534976E2578ACF1C56"
+#else
                 "31429CC7725403FABC43DDCAAE4F9FA8"
+#endif
             },
 
             // Nothing to do
@@ -1120,7 +1148,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 null,
                 null,
+#if LINUX
+                "BF300A616B52AB534976E2578ACF1C56"
+#else
                 "31429CC7725403FABC43DDCAAE4F9FA8"
+#endif
             },
 
             // PNG CoverArt (Converted)
@@ -1130,7 +1162,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "PNG 24-bit 1280 x 935.png",
                 null,
+#if LINUX
+                "51F12E935F83BD01695FDC5E479AD43F"
+#else
                 "84F712FCF93628B0B27AAF2D0D133A95"
+#endif
             },
 
             // JPEG CoverArt
@@ -1140,7 +1176,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "JPEG 24-bit 1280 x 935.jpg",
                 null,
+#if LINUX
+                "51F12E935F83BD01695FDC5E479AD43F"
+#else
                 "84F712FCF93628B0B27AAF2D0D133A95"
+#endif
             }
 
             #endregion
