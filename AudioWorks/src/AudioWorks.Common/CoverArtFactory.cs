@@ -26,18 +26,15 @@ namespace AudioWorks.Common
         /// <see cref="ICoverArt"/> instance.
         /// </remarks>
         /// <param name="data">The raw image data.</param>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="data"/> is null.</exception>
         /// <exception cref="ImageUnsupportedException">Thrown if <paramref name="data"/> is not in a supported image
         /// format.</exception>
         /// <exception cref="ImageInvalidException">Thrown if <paramref name="data"/> is not a valid image.</exception>
         [NotNull]
-        public static ICoverArt GetOrCreate([NotNull] byte[] data)
+        public static unsafe ICoverArt GetOrCreate(ReadOnlySpan<byte> data)
         {
-            if (data == null)
-                throw new ArgumentNullException(nameof(data), "Value cannot be null.");
-
-            using (var memoryStream = new MemoryStream(data))
-                return GetOrCreate(memoryStream);
+            fixed (byte* dataAddress = &data.GetPinnableReference())
+                using (var memoryStream = new UnmanagedMemoryStream(dataAddress, data.Length))
+                    return GetOrCreate(memoryStream);
         }
 
         /// <summary>

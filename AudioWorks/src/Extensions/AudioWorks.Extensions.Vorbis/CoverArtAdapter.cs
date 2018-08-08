@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers.Binary;
 using System.IO;
 using System.Text;
 using AudioWorks.Common;
@@ -11,22 +12,23 @@ namespace AudioWorks.Extensions.Vorbis
         [Pure, CanBeNull]
         internal static ICoverArt FromComment([NotNull] string comment)
         {
-            using (var stream = new MemoryStream(Convert.FromBase64String(comment)))
-            using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
-            {
-                // If the image isn't a "Front Cover" or "Other", return null
-                var imageType = reader.ReadUInt32BigEndian();
-                if (imageType != 3 && imageType != 0) return null;
+            Span<byte> commentSpan = Convert.FromBase64String(comment);
 
-                // Seek past the mime type and description
-                reader.BaseStream.Seek(reader.ReadUInt32BigEndian(), SeekOrigin.Current);
-                reader.BaseStream.Seek(reader.ReadUInt32BigEndian(), SeekOrigin.Current);
+            // If the image isn't a "Front Cover" or "Other", return null
+            var imageType = BinaryPrimitives.ReadUInt32BigEndian(commentSpan);
+            if (imageType != 3 && imageType != 0) return null;
 
-                // Seek past the width, height, color depth and type
-                reader.BaseStream.Seek(16, SeekOrigin.Current);
+            var offset = 4;
 
-                return CoverArtFactory.GetOrCreate(reader.ReadBytes((int) reader.ReadUInt32BigEndian()));
-            }
+            // Seek past the mime type and description
+            offset += (int) BinaryPrimitives.ReadUInt32BigEndian(commentSpan.Slice(offset)) + 4;
+            offset += (int) BinaryPrimitives.ReadUInt32BigEndian(commentSpan.Slice(offset)) + 4;
+
+            // Seek past the width, height, color depth and type
+            offset += 16;
+
+            return CoverArtFactory.GetOrCreate(
+                commentSpan.Slice(offset + 4, (int) BinaryPrimitives.ReadUInt32BigEndian(commentSpan.Slice(offset))));
         }
 
         [Pure, NotNull]

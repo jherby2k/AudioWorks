@@ -19,9 +19,8 @@ namespace AudioWorks.Extensions.Mp4
         public CoverAtom(ReadOnlySpan<byte> data)
         {
             // There could be more than one data atom. Ignore all but the first.
-            var imageData = new byte[BinaryPrimitives.ReadUInt32BigEndian(data.Slice(8, 4)) - 16];
-            data.Slice(24, imageData.Length).CopyTo(imageData);
-            Value = CoverArtFactory.GetOrCreate(imageData);
+            Value = CoverArtFactory.GetOrCreate(data.Slice(24,
+                (int) BinaryPrimitives.ReadUInt32BigEndian(data.Slice(8, 4)) - 16));
         }
 
         internal override void Write(Stream output)
