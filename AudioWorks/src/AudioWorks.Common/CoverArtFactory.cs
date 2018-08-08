@@ -84,7 +84,7 @@ namespace AudioWorks.Common
             if (!coverArt.Lossless) return coverArt;
 
             using (var tempStream = new MemoryStream())
-            using (var image = Image.Load(coverArt.Data.ToArray()))
+            using (var image = Image.Load(coverArt.Data))
             {
                 image.SaveAsJpeg(tempStream);
                 tempStream.Position = 0;
