@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Png;
 
 namespace AudioWorks.Common
 {
@@ -51,8 +52,13 @@ namespace AudioWorks.Common
             if (format.Name.Equals("BMP", StringComparison.OrdinalIgnoreCase))
                 using (var pngStream = new MemoryStream())
                 {
+                    // Only create an alpha channel if necessary
                     using (var image = Image.Load(stream))
-                        image.SaveAsPng(pngStream);
+                        if (ColorDepth <= 24)
+                            image.SaveAsPng(pngStream, new PngEncoder { PngColorType = PngColorType.Rgb });
+                        else
+                            image.SaveAsPng(pngStream);
+
                     _dataSize = (int) pngStream.Length;
                     _data = pngStream.GetBuffer();
                     pngStream.Position = 0;
