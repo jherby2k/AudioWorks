@@ -217,8 +217,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "90DE035E77A93A3DA90AAA129928259B",
                 "90DE035E77A93A3DA90AAA129928259B"
 #else
-                "2F737CBE53D42EFCE49B231FE6C9132B",
-                "2F737CBE53D42EFCE49B231FE6C9132B"
+                "76954D618CB59B4905396575F956E550",
+                "76954D618CB59B4905396575F956E550"
 #endif
             },
 
@@ -231,8 +231,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "8C9EFD0837D816A6360BB8CF70A0D392",
                 "8C9EFD0837D816A6360BB8CF70A0D392"
 #else
-                "F396A80ABD33E1E30B7C1F5485808F1B",
-                "F396A80ABD33E1E30B7C1F5485808F1B"
+                "C65FBDA188A36CBFFAC74286A66D85FA",
+                "C65FBDA188A36CBFFAC74286A66D85FA"
 #endif
             },
 
@@ -472,8 +472,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "9A2F8D8A4BCEF6064025DC788DF06C55",
-                "9A2F8D8A4BCEF6064025DC788DF06C55"
+                "FAF8B7679D0B2446D83BA248CB491410",
+                "FAF8B7679D0B2446D83BA248CB491410"
             },
 
             new object[]
@@ -485,8 +485,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "36A4FA66194B49D1DA1C111E7D444EB3",
-                "36A4FA66194B49D1DA1C111E7D444EB3"
+                "38406F719F6EF9E5F5D4E7862AA5C351",
+                "38406F719F6EF9E5F5D4E7862AA5C351"
             },
 
             new object[]
@@ -640,8 +640,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "57FCD0244E6B8DB26713BB6A64A94172",
-                "B8E8CCF5EFBA855262F0B29C4871A9B5"
+                "9AC3DEF9B464D0E1AB2D4F91C1A08B83",
+                "DC77F4678649D575CE3E91DB950CDF55"
             },
 
             new object[]
@@ -653,8 +653,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
-                "57FCD0244E6B8DB26713BB6A64A94172",
-                "B8E8CCF5EFBA855262F0B29C4871A9B5"
+                "9AC3DEF9B464D0E1AB2D4F91C1A08B83",
+                "DC77F4678649D575CE3E91DB950CDF55"
             },
 
             new object[]
@@ -968,8 +968,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "230577EAC431F91BDB7DF5BBAAF655A0",
                 "230577EAC431F91BDB7DF5BBAAF655A0"
 #else
-                "78575206A37994E84C29BE944D7C7A4F",
-                "78575206A37994E84C29BE944D7C7A4F"
+                "8E61943EEA4008E8921618B76FB4C870",
+                "8E61943EEA4008E8921618B76FB4C870"
 #endif
             },
 
@@ -982,8 +982,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "230577EAC431F91BDB7DF5BBAAF655A0",
                 "230577EAC431F91BDB7DF5BBAAF655A0"
 #else
-                "78575206A37994E84C29BE944D7C7A4F",
-                "78575206A37994E84C29BE944D7C7A4F"
+                "8E61943EEA4008E8921618B76FB4C870",
+                "8E61943EEA4008E8921618B76FB4C870"
 #endif
             },
 
@@ -1487,8 +1487,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "CDA9A8AF5DFEDE173FA113A0BA8316AF",
                 "CDA9A8AF5DFEDE173FA113A0BA8316AF"
 #else
-                "EC59CDECA88BD881B225A5616E82C42C",
-                "EC59CDECA88BD881B225A5616E82C42C"
+                "450B66579C480F81CAEA3404C3C5B08E",
+                "450B66579C480F81CAEA3404C3C5B08E"
 #endif
             },
 
@@ -1504,8 +1504,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "CDA9A8AF5DFEDE173FA113A0BA8316AF",
                 "CDA9A8AF5DFEDE173FA113A0BA8316AF"
 #else
-                "EC59CDECA88BD881B225A5616E82C42C",
-                "EC59CDECA88BD881B225A5616E82C42C"
+                "450B66579C480F81CAEA3404C3C5B08E",
+                "450B66579C480F81CAEA3404C3C5B08E"
 #endif
             },
 

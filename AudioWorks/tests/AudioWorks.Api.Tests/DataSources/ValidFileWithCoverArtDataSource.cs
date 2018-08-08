@@ -16,7 +16,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 24,
                 true,
                 "image/png",
-                "6895D34A230827FE1F7C3141AC0454FA"
+                "85E02F6C2BCF8112E16E63660CADFE02"
             },
 
             new object[]
@@ -27,7 +27,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 24,
                 false,
                 "image/jpeg",
-                "9790278B4ADC6F23407AA11BD065F229"
+                "4BFBE209E1183AE63DBBED12EEE773B8"
             },
 
             new object[]
@@ -38,7 +38,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 24,
                 true,
                 "image/png",
-                "6895D34A230827FE1F7C3141AC0454FA"
+                "85E02F6C2BCF8112E16E63660CADFE02"
             },
 
             new object[]
@@ -49,7 +49,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 24,
                 false,
                 "image/jpeg",
-                "9790278B4ADC6F23407AA11BD065F229"
+                "4BFBE209E1183AE63DBBED12EEE773B8"
             },
 
             new object[]
@@ -60,7 +60,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 24,
                 true,
                 "image/png",
-                "6895D34A230827FE1F7C3141AC0454FA"
+                "85E02F6C2BCF8112E16E63660CADFE02"
             },
 
             new object[]
@@ -71,7 +71,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 24,
                 false,
                 "image/jpeg",
-                "9790278B4ADC6F23407AA11BD065F229"
+                "4BFBE209E1183AE63DBBED12EEE773B8"
             },
 
             new object[]
@@ -82,7 +82,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 24,
                 true,
                 "image/png",
-                "6895D34A230827FE1F7C3141AC0454FA"
+                "85E02F6C2BCF8112E16E63660CADFE02"
             },
 
             new object[]
@@ -93,7 +93,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 24,
                 false,
                 "image/jpeg",
-                "9790278B4ADC6F23407AA11BD065F229"
+                "4BFBE209E1183AE63DBBED12EEE773B8"
             }
         };
 

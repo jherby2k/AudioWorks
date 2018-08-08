@@ -17,9 +17,9 @@ namespace AudioWorks.Common.Tests.DataSources
                 true,
                 "image/png",
 #if LINUX
-                "B2D991698611CBB564226E8FCAAA20B8"
+                "C7B06AE783981771FA3806BBFF114EFF"
 #else
-                "61E83D0BB5F697E04773C675969E69FC"
+                "85E02F6C2BCF8112E16E63660CADFE02"
 #endif
             },
 
@@ -31,7 +31,7 @@ namespace AudioWorks.Common.Tests.DataSources
                 24,
                 true,
                 "image/png",
-                "6895D34A230827FE1F7C3141AC0454FA"
+                "85E02F6C2BCF8112E16E63660CADFE02"
             },
 
             new object[]
@@ -42,7 +42,7 @@ namespace AudioWorks.Common.Tests.DataSources
                 24,
                 false,
                 "image/jpeg",
-                "9790278B4ADC6F23407AA11BD065F229"
+                "4BFBE209E1183AE63DBBED12EEE773B8"
             }
         };
 
