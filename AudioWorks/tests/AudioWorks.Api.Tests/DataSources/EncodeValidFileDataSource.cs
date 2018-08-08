@@ -214,8 +214,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC",
                 null,
 #if LINUX
-                "90DE035E77A93A3DA90AAA129928259B",
-                "90DE035E77A93A3DA90AAA129928259B"
+                "CC3E8D9A5B48AE40CB9D0EDD38D433B5",
+                "CC3E8D9A5B48AE40CB9D0EDD38D433B5"
 #else
                 "76954D618CB59B4905396575F956E550",
                 "76954D618CB59B4905396575F956E550"
@@ -228,8 +228,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC",
                 null,
 #if LINUX
-                "8C9EFD0837D816A6360BB8CF70A0D392",
-                "8C9EFD0837D816A6360BB8CF70A0D392"
+                "93016EE621E1F515BDAF0D405917DA25",
+                "93016EE621E1F515BDAF0D405917DA25"
 #else
                 "C65FBDA188A36CBFFAC74286A66D85FA",
                 "C65FBDA188A36CBFFAC74286A66D85FA"
@@ -965,8 +965,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LameMP3",
                 null,
 #if LINUX
-                "230577EAC431F91BDB7DF5BBAAF655A0",
-                "230577EAC431F91BDB7DF5BBAAF655A0"
+                "FB1B7DECB2C2A2C9CAA1FBB917A81472",
+                "FB1B7DECB2C2A2C9CAA1FBB917A81472"
 #else
                 "8E61943EEA4008E8921618B76FB4C870",
                 "8E61943EEA4008E8921618B76FB4C870"
@@ -979,8 +979,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LameMP3",
                 null,
 #if LINUX
-                "230577EAC431F91BDB7DF5BBAAF655A0",
-                "230577EAC431F91BDB7DF5BBAAF655A0"
+                "FB1B7DECB2C2A2C9CAA1FBB917A81472",
+                "FB1B7DECB2C2A2C9CAA1FBB917A81472"
 #else
                 "8E61943EEA4008E8921618B76FB4C870",
                 "8E61943EEA4008E8921618B76FB4C870"
@@ -1484,8 +1484,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["SerialNumber"] = 1
                 },
 #if LINUX
-                "CDA9A8AF5DFEDE173FA113A0BA8316AF",
-                "CDA9A8AF5DFEDE173FA113A0BA8316AF"
+                "45F1D896C34D5FF1B2A04766ABF0E0D1",
+                "45F1D896C34D5FF1B2A04766ABF0E0D1"
 #else
                 "450B66579C480F81CAEA3404C3C5B08E",
                 "450B66579C480F81CAEA3404C3C5B08E"
@@ -1501,8 +1501,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["SerialNumber"] = 1
                 },
 #if LINUX
-                "CDA9A8AF5DFEDE173FA113A0BA8316AF",
-                "CDA9A8AF5DFEDE173FA113A0BA8316AF"
+                "45F1D896C34D5FF1B2A04766ABF0E0D1",
+                "45F1D896C34D5FF1B2A04766ABF0E0D1"
 #else
                 "450B66579C480F81CAEA3404C3C5B08E",
                 "450B66579C480F81CAEA3404C3C5B08E"

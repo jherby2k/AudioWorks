@@ -1163,7 +1163,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "PNG 24-bit 1280 x 935.png",
                 null,
 #if LINUX
-                "51F12E935F83BD01695FDC5E479AD43F"
+                "5C771ACA31F957E028BE07E3489DCBC3"
 #else
                 "11F7914067B4DAB1D219EA7ACF88ED81"
 #endif
@@ -1177,7 +1177,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "JPEG 24-bit 1280 x 935.jpg",
                 null,
 #if LINUX
-                "51F12E935F83BD01695FDC5E479AD43F"
+                "5C771ACA31F957E028BE07E3489DCBC3"
 #else
                 "11F7914067B4DAB1D219EA7ACF88ED81"
 #endif
