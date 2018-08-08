@@ -32,8 +32,10 @@ namespace AudioWorks.Common
             {
                 Directory.CreateDirectory(settingsPath);
                 File.Copy(
-                    // ReSharper disable once AssignNullToNotNullAttribute
-                    Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), settingsFileName),
+                    Path.Combine(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
+                        settingsFileName),
                     settingsFile);
             }
 
