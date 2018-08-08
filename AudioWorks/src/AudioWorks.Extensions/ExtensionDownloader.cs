@@ -105,29 +105,30 @@ namespace AudioWorks.Extensions
 
                             var publishedPackages = packageSearchResource.SearchAsync("AudioWorks.Extensions",
                                     new SearchFilter(true), 0, 100, NullLogger.Instance, cancellationTokenSource.Token)
-                                .Result.ToArray();
+                                .Result
+#if NETCOREAPP2_1
+#if OSX
+                                .Where(package => package.Tags.Contains("OSX", StringComparison.OrdinalIgnoreCase))
+#elif LINUX
+                                .Where(package => package.Tags.Contains("Linux", StringComparison.OrdinalIgnoreCase))
+#else
+                                .Where(package => package.Tags.Contains("Windows", StringComparison.OrdinalIgnoreCase))
+#endif
+#else
+#if OSX
+                                .Where(package => package.Tags.ToUpperInvariant().Contains("OSX"))
+#elif LINUX
+                                .Where(package => package.Tags.ToUpperInvariant().Contains("LINUX"))
+#else
+                                .Where(package => package.Tags.ToUpperInvariant().Contains("WINDOWS"))
+#endif
+#endif
+                                .ToArray();
 
                             logger.LogInformation("Discovered {0} packages published at '{1}'.",
                                 publishedPackages.Length, _customUrl);
 
-                            foreach (var publishedPackage in publishedPackages
-#if NETCOREAPP2_1
-#if OSX
-                                .Where(package => package.Tags.Contains("OSX", StringComparison.OrdinalIgnoreCase)))
-#elif LINUX
-                                .Where(package => package.Tags.Contains("Linux", StringComparison.OrdinalIgnoreCase)))
-#else
-                                .Where(package => package.Tags.Contains("Windows", StringComparison.OrdinalIgnoreCase)))
-#endif
-#else
-#if OSX
-                                .Where(package => package.Tags.ToUpperInvariant().Contains("OSX")))
-#elif LINUX
-                                .Where(package => package.Tags.ToUpperInvariant().Contains("LINUX")))
-#else
-                                .Where(package => package.Tags.ToUpperInvariant().Contains("WINDOWS")))
-#endif
-#endif
+                            foreach (var publishedPackage in publishedPackages)
                             {
                                 var extensionDir =
                                     new DirectoryInfo(Path.Combine(_projectRoot, publishedPackage.Identity.ToString()));
