@@ -45,6 +45,7 @@ namespace AudioWorks.Extensions
             PackageSaveMode.Defaultv3,
             XmlDocFileSaveMode.Skip,
             NullLogger.Instance,
+            null,
             null);
 
         [CanBeNull]

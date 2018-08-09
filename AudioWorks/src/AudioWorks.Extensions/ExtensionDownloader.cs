@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Configuration;
@@ -86,26 +87,20 @@ namespace AudioWorks.Extensions
                             settings,
                             _projectRoot);
 
-                        var cancellationTokenSource = GetCancellationTokenSource();
-
                         try
                         {
-                            var packageSearchResourceTask =
-                                customRepository.GetResourceAsync<PackageSearchResource>(cancellationTokenSource.Token);
-
-                            // Workaround - GetResourceAsync.Result can block even when the token is canceled
-                            packageSearchResourceTask.Wait(cancellationTokenSource.Token);
-                            if (packageSearchResourceTask.IsCanceled)
-                            {
-                                logger.LogError("Timed out retrieving resource at '{0}'.", _customUrl);
-                                return;
-                            }
-
-                            var packageSearchResource = packageSearchResourceTask.Result;
-
-                            var publishedPackages = packageSearchResource.SearchAsync("AudioWorks.Extensions",
-                                    new SearchFilter(true), 0, 100, NullLogger.Instance, cancellationTokenSource.Token)
-                                .Result
+                            // Search on the thread pool to avoid deadlocks
+                            var publishedPackages = Task.Run(async () =>
+                                {
+                                    var cancellationTokenSource = GetCancellationTokenSource();
+                                    return await (await customRepository
+                                            .GetResourceAsync<PackageSearchResource>(cancellationTokenSource.Token)
+                                            .ConfigureAwait(false))
+                                        .SearchAsync("AudioWorks.Extensions",
+                                            new SearchFilter(true), 0, 100, NullLogger.Instance,
+                                            cancellationTokenSource.Token)
+                                        .ConfigureAwait(false);
+                                }).Result
 #if NETCOREAPP2_1
 #if OSX
                                 .Where(package => package.Tags.Contains("OSX", StringComparison.OrdinalIgnoreCase))
@@ -148,50 +143,60 @@ namespace AudioWorks.Extensions
 
                                 var project = new ExtensionNuGetProject(stagingDir.FullName);
 
-                                // Reset the cancellation timeout for each package
-                                cancellationTokenSource.Dispose();
-                                cancellationTokenSource = GetCancellationTokenSource();
-
-                                packageManager.InstallPackageAsync(
-                                        project,
-                                        publishedPackage.Identity,
-                                        new ResolutionContext(DependencyBehavior.Lowest, true, false,
-                                            VersionConstraints.None),
-                                        new ExtensionProjectContext(),
-                                        customRepository,
-                                        new[] { defaultRepository },
-                                        cancellationTokenSource.Token)
-                                    .Wait();
-
-                                // Move newly installed packages into the extension folder
-                                foreach (var installedPackage in project
-                                    .GetInstalledPackagesAsync(cancellationTokenSource.Token)
-                                    .Result)
+                                try
                                 {
-                                    var packageDir = new DirectoryInfo(
-                                        project.GetInstalledPath(installedPackage.PackageIdentity));
+                                    // Download on the thread pool to avoid deadlocks
+                                    Task.Run(async () =>
+                                    {
+                                        using (var cancellationTokenSource = GetCancellationTokenSource())
+                                            await packageManager.InstallPackageAsync(
+                                                    project,
+                                                    publishedPackage.Identity,
+                                                    new ResolutionContext(DependencyBehavior.Lowest, true, false,
+                                                        VersionConstraints.None),
+                                                    new ExtensionProjectContext(),
+                                                    customRepository,
+                                                    new[] { defaultRepository },
+                                                    cancellationTokenSource.Token)
+                                                .ConfigureAwait(false);
+                                    }).Wait();
 
-                                    foreach (var subDir in packageDir.GetDirectories())
-                                        switch (subDir.Name)
-                                        {
-                                            case "lib":
-                                                MoveContents(
-                                                    SelectDirectory(subDir.GetDirectories()),
-                                                    extensionDir,
-                                                    logger);
-                                                break;
+                                    // Move newly installed packages into the extension folder
+                                    foreach (var installedPackage in project
+                                        .GetInstalledPackagesAsync(CancellationToken.None)
+                                        .Result)
+                                    {
+                                        var packageDir = new DirectoryInfo(
+                                            project.GetInstalledPath(installedPackage.PackageIdentity));
 
-                                            case "contentFiles":
-                                                MoveContents(
-                                                    SelectDirectory(subDir.GetDirectories("any").FirstOrDefault()
-                                                        ?.GetDirectories()),
-                                                    extensionDir,
-                                                    logger);
-                                                break;
-                                        }
+                                        foreach (var subDir in packageDir.GetDirectories())
+                                            switch (subDir.Name)
+                                            {
+                                                case "lib":
+                                                    MoveContents(
+                                                        SelectDirectory(subDir.GetDirectories()),
+                                                        extensionDir,
+                                                        logger);
+                                                    break;
+
+                                                case "contentFiles":
+                                                    MoveContents(
+                                                        SelectDirectory(subDir.GetDirectories("any").FirstOrDefault()
+                                                            ?.GetDirectories()),
+                                                        extensionDir,
+                                                        logger);
+                                                    break;
+                                            }
+                                    }
                                 }
+                                finally
+                                {
+                                    stagingDir.Delete(true);
 
-                                stagingDir.Delete(true);
+                                    // If the download was cancelled, clean up an empty extension directory
+                                    if (!extensionDir.EnumerateFileSystemInfos().Any())
+                                        extensionDir.Delete();
+                                }
                             }
 
                             // Remove any extensions that aren't published
@@ -210,13 +215,12 @@ namespace AudioWorks.Extensions
                         {
                             if (e is AggregateException aggregate)
                                 foreach (var inner in aggregate.InnerExceptions)
-                                    logger.LogError(inner, e.Message);
+                                    if (inner is TaskCanceledException)
+                                        logger.LogWarning("The configured timeout was exceeded.");
+                                    else
+                                        logger.LogError(inner, e.Message);
                             else
                                 logger.LogError(e, e.Message);
-                        }
-                        finally
-                        {
-                            cancellationTokenSource.Dispose();
                         }
                     }
                 }
