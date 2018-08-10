@@ -22,7 +22,6 @@ namespace AudioWorks.Extensions
 
         ExtensionContainer()
         {
-            ExtensionDownloader.DownloadOnce();
             CompositionHost.SatisfyImports(this);
 
             LoggingManager.CreateLogger<ExtensionContainer<T>>()
