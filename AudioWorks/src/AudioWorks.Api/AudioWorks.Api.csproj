@@ -14,41 +14,40 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <CodeAnalysisRuleSet>CodeAnalysis.ruleset</CodeAnalysisRuleSet>
     <Configurations>Debug-Windows;Release-Windows;Debug-OSX;Release-OSX;Debug-Linux;Release-Linux</Configurations>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Windows|AnyCPU'">
     <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
-    <Optimize>false</Optimize>
-    <DocumentationFile>bin\Debug-Windows\$(TargetFramework)\AudioWorks.Api.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Windows|AnyCPU'">
     <DefineConstants>RELEASE;TRACE;WINDOWS</DefineConstants>
-    <DocumentationFile>bin\Release-Windows\$(TargetFramework)\AudioWorks.Api.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-OSX|AnyCPU'">
     <DefineConstants>DEBUG;TRACE;OSX</DefineConstants>
-    <Optimize>false</Optimize>
-    <DocumentationFile>bin\Debug-OSX\$(TargetFramework)\AudioWorks.Api.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-OSX|AnyCPU'">
     <DefineConstants>RELEASE;TRACE;OSX</DefineConstants>
-    <DocumentationFile>bin\Release-OSX\$(TargetFramework)\AudioWorks.Api.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Linux|AnyCPU'">
     <DefineConstants>DEBUG;TRACE;LINUX</DefineConstants>
-    <Optimize>false</Optimize>
-    <DocumentationFile>bin\Debug-Linux\$(TargetFramework)\AudioWorks.Api.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Linux|AnyCPU'">
     <DefineConstants>RELEASE;TRACE;LINUX</DefineConstants>
-    <DocumentationFile>bin\Release-Linux\$(TargetFramework)\AudioWorks.Api.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(DefineConstants.Contains(DEBUG))">
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(DefineConstants.Contains(RELEASE))">
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\AudioWorks.Api.xml</DocumentationFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
