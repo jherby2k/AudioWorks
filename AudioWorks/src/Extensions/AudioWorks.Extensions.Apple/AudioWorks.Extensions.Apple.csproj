@@ -17,19 +17,19 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Windows|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)'=='Debug-Windows'">
     <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Windows|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)'=='Release-Windows'">
     <DefineConstants>RELEASE;TRACE;WINDOWS</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-OSX|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)'=='Debug-OSX'">
     <DefineConstants>DEBUG;TRACE;OSX</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-OSX|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)'=='Release-OSX'">
     <DefineConstants>RELEASE;TRACE;OSX</DefineConstants>
   </PropertyGroup>
 
