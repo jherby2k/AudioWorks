@@ -11,6 +11,6 @@ Release is tentatively planned for the third quarter of 2018 (this is dependent 
 
 Platform | Status
 -------- | ------
-Windows  | ![AppVeyor Status](https://ci.appveyor.com/api/projects/status/github/jherby2k/AudioWorks?branch=master&svg=true)
-Linux    | N/A
+Windows  | [![Build status](https://ci.appveyor.com/api/projects/status/k7yiy48qkoa5701t/branch/master?svg=true)](https://ci.appveyor.com/project/jherby2k/audioworks-n8ay6/branch/master)
+Linux    | [![Build status](https://ci.appveyor.com/api/projects/status/8kh6urve97ibwubv/branch/master?svg=true)](https://ci.appveyor.com/project/jherby2k/audioworks-n6p0s/branch/master)
 MacOS    | N/A
