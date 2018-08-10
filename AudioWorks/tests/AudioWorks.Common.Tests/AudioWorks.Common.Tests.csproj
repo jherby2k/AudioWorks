@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RuntimeFrameworkVersion>2.1.2</RuntimeFrameworkVersion>
     <LangVersion>7.3</LangVersion>
     <IsPackable>false</IsPackable>
     <Description>Unit testing project for the AudioWorks Common library. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
