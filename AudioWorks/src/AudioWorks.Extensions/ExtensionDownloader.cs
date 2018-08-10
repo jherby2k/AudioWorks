@@ -213,9 +213,13 @@ namespace AudioWorks.Extensions
                         }
                         catch (Exception e)
                         {
+                            // Timeout on search throws a TaskCanceled inside an Aggregate
+                            // Timeout on install throws an OperationCanceled inside an InvalidOperation inside an Aggregate
                             if (e is AggregateException aggregate)
                                 foreach (var inner in aggregate.InnerExceptions)
-                                    if (inner is TaskCanceledException)
+                                    if (inner is OperationCanceledException ||
+                                        inner is InvalidOperationException invalidInner &&
+                                        invalidInner.InnerException is OperationCanceledException)
                                         logger.LogWarning("The configured timeout was exceeded.");
                                     else
                                         logger.LogError(inner, e.Message);
