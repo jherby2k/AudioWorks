@@ -16,30 +16,31 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Windows|AnyCPU'">
-    <DefineConstants>DEBUG;TRACE;WINDOWS;NETCOREAPP2_1</DefineConstants>
-    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Windows|AnyCPU'">
-    <DefineConstants>RELEASE;TRACE;WINDOWS;NETCOREAPP2_1</DefineConstants>
+    <DefineConstants>RELEASE;TRACE;WINDOWS</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-OSX|AnyCPU'">
-    <DefineConstants>DEBUG;TRACE;OSX;NETCOREAPP2_1</DefineConstants>
-    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE;OSX</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-OSX|AnyCPU'">
-    <DefineConstants>RELEASE;TRACE;OSX;NETCOREAPP2_1</DefineConstants>
+    <DefineConstants>RELEASE;TRACE;OSX</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Linux|AnyCPU'">
-    <DefineConstants>DEBUG;TRACE;LINUX;NETCOREAPP2_1</DefineConstants>
-    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE;LINUX</DefineConstants>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Linux|AnyCPU'">
-    <DefineConstants>RELEASE;TRACE;LINUX;NETCOREAPP2_1</DefineConstants>
+    <DefineConstants>RELEASE;TRACE;LINUX</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(DefineConstants.Contains(DEBUG))">
+    <Optimize>false</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
