@@ -42,6 +42,13 @@
     <DefineConstants>RELEASE;TRACE;LINUX</DefineConstants>
   </PropertyGroup>
 
+  <!-- Disable shadow copies because NuGet.PackageManagement.dll is public key signed -->
+  <ItemGroup Condition="'$(TargetFramework)'=='net471'">
+    <None Update="xunit.runner.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
     <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" />
