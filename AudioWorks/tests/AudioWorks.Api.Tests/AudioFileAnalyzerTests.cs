@@ -49,7 +49,7 @@ namespace AudioWorks.Api.Tests
 
             Assert.True(
 #if LINUX
-                new Comparer().Compare(LinuxUtility.GetRelease().Equals("Ubuntu 16.04.5 LTS", StringComparison.Ordinal)
+                new Comparer().Compare(LinuxUtility.GetRelease().StartsWith("Ubuntu 16.04", StringComparison.Ordinal)
                         ? expectedUbuntu1604Metadata
                         : expectedUbuntu1804Metadata,
                     audioFile.Metadata, out var differences),
@@ -86,7 +86,7 @@ namespace AudioWorks.Api.Tests
             Assert.All(audioFiles, audioFile =>
 #if LINUX
                 Assert.True(comparer.Compare(
-                        LinuxUtility.GetRelease().Equals("Ubuntu 16.04.5 LTS", StringComparison.Ordinal)
+                        LinuxUtility.GetRelease().StartsWith("Ubuntu 16.04", StringComparison.Ordinal)
                             ? expectedUbuntu1604Metadata[i++]
                             : expectedUbuntu1804Metadata[i++],
                         audioFile.Metadata, out var differences),

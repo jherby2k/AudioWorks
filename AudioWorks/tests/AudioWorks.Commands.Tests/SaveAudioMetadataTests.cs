@@ -214,7 +214,7 @@ namespace AudioWorks.Commands.Tests
             }
 
 #if LINUX
-            Assert.Equal(LinuxUtility.GetRelease().Equals("Ubuntu 16.04.5 LTS", StringComparison.Ordinal)
+            Assert.Equal(LinuxUtility.GetRelease().StartsWith("Ubuntu 16.04", StringComparison.Ordinal)
                 ? expectedUbuntu1604Hash
                 : expectedUbuntu1804Hash,
                 HashUtility.CalculateHash(audioFile));
