@@ -149,7 +149,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "FLAC",
                 null,
-                "44AA2E52CED28503D02D51957B19DF74",
+                "ADF68390D58F5312FE3B01D75FE5BE57",
                 "44AA2E52CED28503D02D51957B19DF74"
             },
 
@@ -158,8 +158,13 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "FLAC",
                 null,
+#if LINUX
+                "9A4394FF3EA062E68526EFBCC3851FB9",
+                "588ACB7827AF0D1A6A18751EEFEA3604"
+#else
                 "19B38AABCF5C7B1BC6142B131111D700",
                 "588ACB7827AF0D1A6A18751EEFEA3604"
+#endif
             },
 
             new object[]
@@ -168,7 +173,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC",
                 null,
 #if LINUX
-                "3983A342A074A7E8871FEF4FBE0AC73F",
+                "75A88A48CC2EDE69F79E4D86F3B67B11",
                 "3983A342A074A7E8871FEF4FBE0AC73F"
 #else
                 "3DBDA80BB4810C91CC868478D189DDE7",
@@ -181,8 +186,13 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "FLAC",
                 null,
+#if LINUX
+                "EFAA1634FCAC4C0AA6544F085DCAA315",
+                "8A532C4C9D61AF027BC6F684C59FE9A6"
+#else
                 "5DA29CFCDB61B4B496A892980A83444D",
                 "8A532C4C9D61AF027BC6F684C59FE9A6"
+#endif
             },
 
             new object[]
@@ -190,8 +200,13 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "FLAC",
                 null,
+#if LINUX
+                "20A6542862C62E47F75FA91CA3863F21",
+                "4A4DE0494E31D82F446421C876FB10EA"
+#else
                 "6D32DE3A9790FB007534AB9C0CF21E15",
                 "4A4DE0494E31D82F446421C876FB10EA"
+#endif
             },
 
             new object[]
@@ -200,7 +215,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC",
                 null,
 #if LINUX
-                "A6B18F2B4DDC51DC37154410E701251F",
+                "AE5FE89E167550019A672C46D81B765E",
                 "A6B18F2B4DDC51DC37154410E701251F"
 #else
                 "B54A449EEC15659FD1262224913253E8",
@@ -214,7 +229,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC",
                 null,
 #if LINUX
-                "CC3E8D9A5B48AE40CB9D0EDD38D433B5",
+                "4E48D943C0D10F7B59490398AA68C305",
                 "CC3E8D9A5B48AE40CB9D0EDD38D433B5"
 #else
                 "EF128FFA32E07D10E5E6D57B860A7730",
@@ -228,7 +243,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC",
                 null,
 #if LINUX
-                "93016EE621E1F515BDAF0D405917DA25",
+                "075CCCEB8C9263F21C95CDF5C2B9D691",
                 "93016EE621E1F515BDAF0D405917DA25"
 #else
                 "EFDE9011E3A36492501F41E795EA5FC8",
@@ -246,7 +261,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CompressionLevel"] = 5
                 },
 #if LINUX
-                "3983A342A074A7E8871FEF4FBE0AC73F",
+                "75A88A48CC2EDE69F79E4D86F3B67B11",
                 "3983A342A074A7E8871FEF4FBE0AC73F"
 #else
                 "3DBDA80BB4810C91CC868478D189DDE7",
@@ -263,8 +278,13 @@ namespace AudioWorks.Api.Tests.DataSources
                     // Minimum compression
                     ["CompressionLevel"] = 0
                 },
+#if LINUX
+                "1F6BE17A7FCDCC0D879F4A067B4CEF8B",
+                "D352B276E4712ABBA3A8F1B9CA8BAB55"
+#else
                 "D352B276E4712ABBA3A8F1B9CA8BAB55",
                 "D352B276E4712ABBA3A8F1B9CA8BAB55"
+#endif
             },
 
             new object[]
@@ -277,7 +297,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["CompressionLevel"] = 8
                 },
 #if LINUX
-                "C73F21F10850A4542EEA2435226F1DEB",
+                "78D765C28F4817CB0189B8A1238F2C27",
                 "C73F21F10850A4542EEA2435226F1DEB"
 #else
                 "682A631EE08BE5075C5A1B81A6D9EDC8",
@@ -295,7 +315,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["SeekPointInterval"] = 10
                 },
 #if LINUX
-                "3983A342A074A7E8871FEF4FBE0AC73F",
+                "75A88A48CC2EDE69F79E4D86F3B67B11",
                 "3983A342A074A7E8871FEF4FBE0AC73F"
 #else
                 "3DBDA80BB4810C91CC868478D189DDE7",
@@ -313,7 +333,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["SeekPointInterval"] = 0
                 },
 #if LINUX
-                "7DBB3E3E8079E60932AA5F8B4D9CD57C",
+                "2ED9148F4629DDBCCF43BF903E8F237E",
                 "7DBB3E3E8079E60932AA5F8B4D9CD57C"
 #else
                 "69CF6B3C80AC9A39F163BE8971515319",
@@ -331,7 +351,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["SeekPointInterval"] = 600
                 },
 #if LINUX
-                "3983A342A074A7E8871FEF4FBE0AC73F",
+                "75A88A48CC2EDE69F79E4D86F3B67B11",
                 "3983A342A074A7E8871FEF4FBE0AC73F"
 #else
                 "3DBDA80BB4810C91CC868478D189DDE7",
@@ -349,7 +369,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["Padding"] = 8192
                 },
 #if LINUX
-                "3983A342A074A7E8871FEF4FBE0AC73F",
+                "75A88A48CC2EDE69F79E4D86F3B67B11",
                 "3983A342A074A7E8871FEF4FBE0AC73F"
 #else
                 "3DBDA80BB4810C91CC868478D189DDE7",
@@ -367,7 +387,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["Padding"] = 0
                 },
 #if LINUX
-                "FFB7D9F0F4CDF37EDBA799FE371424A7",
+                "F303C709C209A5B6A986D7EBF0CCC07B",
                 "FFB7D9F0F4CDF37EDBA799FE371424A7"
 #else
                 "38B5F185CEAFF8F67029A01F45F230C7",
@@ -385,7 +405,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["Padding"] = 16_775_369
                 },
 #if LINUX
-                "F03F417B853C560705CD424AD329EFBC",
+                "67E4AB6AD90E9FFE867ED57E6AFCC09C",
                 "F03F417B853C560705CD424AD329EFBC"
 #else
                 "CC2803ABBA9A1FA57D715A4DF8BF9466",
@@ -881,7 +901,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LameMP3",
                 null,
 #if LINUX
-                "F2BD0875E273743A8908F96DCCFDFC44",
+                "362C1DC415B6ED27B3BB0C43EEC7614A",
                 "F2BD0875E273743A8908F96DCCFDFC44"
 #else
                 "7CB68FB7ACC70E8CD928E7DB437B16FE",
@@ -895,7 +915,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LameMP3",
                 null,
 #if LINUX
-                "1CB5B915B3A72CBE76087E16F96A0A3E",
+                "3FBE256A1ABC2C530FAAA632929F9AC2",
                 "1CB5B915B3A72CBE76087E16F96A0A3E"
 #else
                 "C02CA44F3E1CCA3D8BA0DE922C49946E",
@@ -909,7 +929,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LameMP3",
                 null,
 #if LINUX
-                "10E44CEE38E66E9737677BE52E7A286D",
+                "B46B30D5E331FE64F24C620CFD5C717D",
                 "10E44CEE38E66E9737677BE52E7A286D"
 #else
                 "34C345AB6BDA4A4C172D74046EC683D7",
@@ -923,7 +943,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LameMP3",
                 null,
 #if LINUX
-                "1454732B48913F2A3898164BA366DA01",
+                "F2FFFC7C7001A93C0CC19466D51FC597",
                 "1454732B48913F2A3898164BA366DA01"
 #else
                 "A333E74AFF4107E6C6C987AB27DF4B36",
@@ -937,7 +957,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LameMP3",
                 null,
 #if LINUX
-                "AD56C3A1ACD627DBDA4B5A28AFE0355D",
+                "BFF278600EB87215603D727BAA7905BD",
                 "AD56C3A1ACD627DBDA4B5A28AFE0355D"
 #else
                 "C0204097396B92D06E2B1BEBA90D0BD9",
@@ -951,7 +971,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LameMP3",
                 null,
 #if LINUX
-                "32EEC2B69A048975FB3BD034E8B392A4",
+                "EED1BD58A65E3CA92EEC176F156DEF24",
                 "32EEC2B69A048975FB3BD034E8B392A4"
 #else
                 "0E420A25F4CAE013B6328E5A52E38B3D",
@@ -965,7 +985,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LameMP3",
                 null,
 #if LINUX
-                "FB1B7DECB2C2A2C9CAA1FBB917A81472",
+                "E73399A30F5497FD72E1AEE0A3E76EAF",
                 "FB1B7DECB2C2A2C9CAA1FBB917A81472"
 #else
                 "8E61943EEA4008E8921618B76FB4C870",
@@ -979,7 +999,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LameMP3",
                 null,
 #if LINUX
-                "FB1B7DECB2C2A2C9CAA1FBB917A81472",
+                "E73399A30F5497FD72E1AEE0A3E76EAF",
                 "FB1B7DECB2C2A2C9CAA1FBB917A81472"
 #else
                 "8E61943EEA4008E8921618B76FB4C870",
@@ -997,7 +1017,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["TagVersion"] = "2.3"
                 },
 #if LINUX
-                "32EEC2B69A048975FB3BD034E8B392A4",
+                "EED1BD58A65E3CA92EEC176F156DEF24",
                 "32EEC2B69A048975FB3BD034E8B392A4"
 #else
                 "0E420A25F4CAE013B6328E5A52E38B3D",
@@ -1015,7 +1035,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["TagVersion"] = "2.4"
                 },
 #if LINUX
-                "24F1B744BDA5C6A94B9FE6136DEC4614",
+                "8EEAF387756C09E867E45CAEF8649C53",
                 "24F1B744BDA5C6A94B9FE6136DEC4614"
 #else
                 "6D7E02945EFBFAB16E41827E4C7F9D7F",
@@ -1033,7 +1053,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["TagEncoding"] = "Latin1"
                 },
 #if LINUX
-                "32EEC2B69A048975FB3BD034E8B392A4",
+                "EED1BD58A65E3CA92EEC176F156DEF24",
                 "32EEC2B69A048975FB3BD034E8B392A4"
 #else
                 "0E420A25F4CAE013B6328E5A52E38B3D",
@@ -1051,7 +1071,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["TagEncoding"] = "UTF16"
                 },
 #if LINUX
-                "1B5C266B6D799765BA1272BE28A7C435",
+                "A7C95E4A6B3071F8C9498D4A705E2685",
                 "1B5C266B6D799765BA1272BE28A7C435"
 #else
                 "92ED87DB059CA2A609E8AADF0AF84909",
@@ -1069,7 +1089,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["TagPadding"] = 2048
                 },
 #if LINUX
-                "32EEC2B69A048975FB3BD034E8B392A4",
+                "EED1BD58A65E3CA92EEC176F156DEF24",
                 "32EEC2B69A048975FB3BD034E8B392A4"
 #else
                 "0E420A25F4CAE013B6328E5A52E38B3D",
@@ -1087,7 +1107,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["TagPadding"] = 0
                 },
 #if LINUX
-                "5737ED221E55314FD5B9FA167C1C1651",
+                "2773A9EAC3A6E07FA1C71DD5FC730267",
                 "5737ED221E55314FD5B9FA167C1C1651"
 #else
                 "55F290095FDCE602C43380CC4F5D1101",
@@ -1105,7 +1125,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["TagPadding"] = 16_777_216
                 },
 #if LINUX
-                "D270226F14E850B208624CD2AC59512D",
+                "D05EA326944389E530612EAF314BB588",
                 "D270226F14E850B208624CD2AC59512D"
 #else
                 "2572B2613BC3B8E63048527A247A7906",
@@ -1123,7 +1143,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["TagVersion"] = "2.4"
                 },
 #if LINUX
-                "10E44CEE38E66E9737677BE52E7A286D",
+                "B46B30D5E331FE64F24C620CFD5C717D",
                 "10E44CEE38E66E9737677BE52E7A286D"
 #else
                 "34C345AB6BDA4A4C172D74046EC683D7",
@@ -1141,7 +1161,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["TagEncoding"] = "UTF16"
                 },
 #if LINUX
-                "10E44CEE38E66E9737677BE52E7A286D",
+                "B46B30D5E331FE64F24C620CFD5C717D",
                 "10E44CEE38E66E9737677BE52E7A286D"
 #else
                 "34C345AB6BDA4A4C172D74046EC683D7",
@@ -1159,7 +1179,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["TagPadding"] = 100
                 },
 #if LINUX
-                "10E44CEE38E66E9737677BE52E7A286D",
+                "B46B30D5E331FE64F24C620CFD5C717D",
                 "10E44CEE38E66E9737677BE52E7A286D"
 #else
                 "34C345AB6BDA4A4C172D74046EC683D7",
@@ -1177,7 +1197,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["VBRQuality"] = 3
                 },
 #if LINUX
-                "10E44CEE38E66E9737677BE52E7A286D",
+                "B46B30D5E331FE64F24C620CFD5C717D",
                 "10E44CEE38E66E9737677BE52E7A286D"
 #else
                 "34C345AB6BDA4A4C172D74046EC683D7",
@@ -1195,7 +1215,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["VBRQuality"] = 9
                 },
 #if LINUX
-                "65D418A236D86A8CE33E07A76C98DF08",
+                "472A428EDB8AD18369EEC4F748F80A59",
                 "65D418A236D86A8CE33E07A76C98DF08"
 #else
                 "BB8B33BD589DA49D751C883B8A0FF653",
@@ -1212,8 +1232,13 @@ namespace AudioWorks.Api.Tests.DataSources
                     // Maximum VBR quality
                     ["VBRQuality"] = 0
                 },
+#if LINUX
+                "E539FECE8D80128F11BA73148B92209F",
+                "5DE234656056DFDAAD30E4DA9FD26366"
+#else
                 "5DE234656056DFDAAD30E4DA9FD26366",
                 "5DE234656056DFDAAD30E4DA9FD26366"
+#endif
             },
 
             new object[]
@@ -1225,8 +1250,13 @@ namespace AudioWorks.Api.Tests.DataSources
                     // Minimum bit rate
                     ["BitRate"] = 8
                 },
+#if LINUX
+                "30520C93D354F17F637671B99BE75083",
+                "2BBC83E74AB1A4EB150BC6E1EB9920B5"
+#else
                 "2BBC83E74AB1A4EB150BC6E1EB9920B5",
                 "2BBC83E74AB1A4EB150BC6E1EB9920B5"
+#endif
             },
 
             new object[]
@@ -1238,8 +1268,13 @@ namespace AudioWorks.Api.Tests.DataSources
                     // Maximum bit rate
                     ["BitRate"] = 320
                 },
+#if LINUX
+                "464C9EE0662B447224805438FAC9D10E",
+                "BEB5029A08011BCEDFFA99173B763E7F"
+#else
                 "BEB5029A08011BCEDFFA99173B763E7F",
                 "BEB5029A08011BCEDFFA99173B763E7F"
+#endif
             },
 
             new object[]
@@ -1251,8 +1286,13 @@ namespace AudioWorks.Api.Tests.DataSources
                     // Forced bit rate disabled (default)
                     ["BitRate"] = 128
                 },
+#if LINUX
+                "9CD9C9FCE1E42F79EDBAA84BA1B8D8C4",
+                "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6"
+#else
                 "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6",
                 "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6"
+#endif
             },
 
             new object[]
@@ -1265,8 +1305,13 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["BitRate"] = 128,
                     ["ForceCBR"] = false
                 },
+#if LINUX
+                "9CD9C9FCE1E42F79EDBAA84BA1B8D8C4",
+                "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6"
+#else
                 "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6",
                 "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6"
+#endif
             },
 
             new object[]
@@ -1279,8 +1324,13 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["BitRate"] = 128,
                     ["ForceCBR"] = true
                 },
+#if LINUX
+                "5BE352395ADE20729E8F68977C3043C7",
+                "EACCA2FD6404ACA1AB46027FAE6A667B"
+#else
                 "EACCA2FD6404ACA1AB46027FAE6A667B",
                 "EACCA2FD6404ACA1AB46027FAE6A667B"
+#endif
             },
 
             new object[]
@@ -1293,7 +1343,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ForceCBR"] = true
                 },
 #if LINUX
-                "10E44CEE38E66E9737677BE52E7A286D",
+                "B46B30D5E331FE64F24C620CFD5C717D",
                 "10E44CEE38E66E9737677BE52E7A286D"
 #else
                 "34C345AB6BDA4A4C172D74046EC683D7",
@@ -1311,8 +1361,13 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["VBRQuality"] = 3,
                     ["BitRate"] = 128
                 },
+#if LINUX
+                "9CD9C9FCE1E42F79EDBAA84BA1B8D8C4",
+                "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6"
+#else
                 "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6",
                 "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6"
+#endif
             },
 
             new object[]
@@ -1325,7 +1380,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ApplyGain"] = "Track"
                 },
 #if LINUX
-                "10E44CEE38E66E9737677BE52E7A286D",
+                "B46B30D5E331FE64F24C620CFD5C717D",
                 "10E44CEE38E66E9737677BE52E7A286D"
 #else
                 "34C345AB6BDA4A4C172D74046EC683D7",
@@ -1343,7 +1398,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ApplyGain"] = "Track"
                 },
 #if LINUX
-                "8EFA63733A5527E08092CAD86E86F76E",
+                "C6F6B42CCBC2435DC612F643A76E46FC",
                 "8EFA63733A5527E08092CAD86E86F76E"
 #else
                 "56C04FEBD02CB1127649A21E70B78C0E",
@@ -1361,7 +1416,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ApplyGain"] = "Album"
                 },
 #if LINUX
-                "FB96F0590FB1A603C847DEF075D8FC5F",
+                "F1C20FE496BD523FFC1088A44091D84F",
                 "FB96F0590FB1A603C847DEF075D8FC5F"
 #else
                 "F8A627B834782D13EBB9A9B722094F05",

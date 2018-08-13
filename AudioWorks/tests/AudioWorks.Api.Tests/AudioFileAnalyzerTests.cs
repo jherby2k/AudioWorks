@@ -32,7 +32,12 @@ namespace AudioWorks.Api.Tests
             [NotNull] string fileName,
             [NotNull] string analyzerName,
             [CanBeNull] TestSettingDictionary settings,
+#if LINUX
+            [NotNull] TestAudioMetadata expectedUbuntu1604Metadata,
+            [NotNull] TestAudioMetadata expectedUbuntu1804Metadata)
+#else
             [NotNull] TestAudioMetadata expectedMetadata)
+#endif
         {
             var audioFile = new TaggedAudioFile(Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
@@ -43,7 +48,14 @@ namespace AudioWorks.Api.Tests
             await new AudioFileAnalyzer(analyzerName, settings).AnalyzeAsync(audioFile).ConfigureAwait(false);
 
             Assert.True(
+#if LINUX
+                new Comparer().Compare(LinuxUtility.GetRelease().Equals("Ubuntu 16.04.5 LTS", StringComparison.Ordinal)
+                        ? expectedUbuntu1604Metadata
+                        : expectedUbuntu1804Metadata,
+                    audioFile.Metadata, out var differences),
+#else
                 new Comparer().Compare(expectedMetadata, audioFile.Metadata, out var differences),
+#endif
                 string.Join(" ", differences));
         }
 
@@ -53,7 +65,12 @@ namespace AudioWorks.Api.Tests
             [NotNull] string[] fileNames,
             [NotNull] string analyzerName,
             [CanBeNull] TestSettingDictionary settings,
+#if LINUX
+            [NotNull] TestAudioMetadata[] expectedUbuntu1604Metadata,
+            [NotNull] TestAudioMetadata[] expectedUbuntu1804Metadata)
+#else
             [NotNull] TestAudioMetadata[] expectedMetadata)
+#endif
         {
             var audioFiles = fileNames.Select(fileName => new TaggedAudioFile(Path.Combine(
                     new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
@@ -67,7 +84,15 @@ namespace AudioWorks.Api.Tests
             var i = 0;
             var comparer = new Comparer();
             Assert.All(audioFiles, audioFile =>
+#if LINUX
+                Assert.True(comparer.Compare(
+                        LinuxUtility.GetRelease().Equals("Ubuntu 16.04.5 LTS", StringComparison.Ordinal)
+                            ? expectedUbuntu1604Metadata[i++]
+                            : expectedUbuntu1804Metadata[i++],
+                        audioFile.Metadata, out var differences),
+#else
                 Assert.True(comparer.Compare(expectedMetadata[i++], audioFile.Metadata, out var differences),
+#endif
                     string.Join(" ", differences)));
         }
     }

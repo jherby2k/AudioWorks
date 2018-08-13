@@ -54,8 +54,13 @@ namespace AudioWorks.Api.Tests
             [NotNull] string sourceFileName,
             [NotNull] string encoderName,
             [CanBeNull] TestSettingDictionary settings,
+#if LINUX
+            [NotNull] string expectedUbuntu1604Hash,
+            [NotNull] string expectedUbuntu1804Hash)
+#else
             [NotNull] string expected32BitHash,
             [NotNull] string expected64BitHash)
+#endif
         {
             var path = Path.Combine("Output", "Encode", "Valid");
             Directory.CreateDirectory(path);
@@ -74,7 +79,13 @@ namespace AudioWorks.Api.Tests
                 .EncodeAsync(audioFile).ConfigureAwait(false)).ToArray();
 
             Assert.Single(results);
+#if LINUX
+            Assert.Equal(LinuxUtility.GetRelease().Equals("Ubuntu 16.04.5 LTS", StringComparison.Ordinal)
+                ? expectedUbuntu1604Hash
+                : expectedUbuntu1804Hash,
+#else
             Assert.Equal(Environment.Is64BitProcess ? expected64BitHash : expected32BitHash,
+#endif
                 HashUtility.CalculateHash(results[0]));
         }
     }
