@@ -149,8 +149,13 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "FLAC",
                 null,
+#if LINUX
                 "ADF68390D58F5312FE3B01D75FE5BE57",
                 "44AA2E52CED28503D02D51957B19DF74"
+#else
+                "44AA2E52CED28503D02D51957B19DF74",
+                "44AA2E52CED28503D02D51957B19DF74"
+#endif
             },
 
             new object[]
