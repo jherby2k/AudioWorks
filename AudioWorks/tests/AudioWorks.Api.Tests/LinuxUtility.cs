@@ -4,10 +4,10 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Api.Tests
 {
-    static class LinuxUtility
+    public static class LinuxUtility
     {
         [NotNull]
-        internal static string GetRelease()
+        public static string GetRelease()
         {
             var process = new Process
             {

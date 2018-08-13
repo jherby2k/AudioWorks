@@ -178,7 +178,12 @@ namespace AudioWorks.Commands.Tests
             [NotNull] AudioMetadata metadata,
             [CanBeNull] string imageFileName,
             [CanBeNull] SettingDictionary settings,
+#if LINUX
+            [NotNull] string expectedUbuntu1604Hash,
+            [NotNull] string expectedUbuntu1804Hash)
+#else
             [NotNull] string expectedHash)
+#endif
         {
             var sourceDirectory = Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
@@ -208,7 +213,14 @@ namespace AudioWorks.Commands.Tests
                 ps.Invoke();
             }
 
+#if LINUX
+            Assert.Equal(LinuxUtility.GetRelease().Equals("Ubuntu 16.04.5 LTS", StringComparison.Ordinal)
+                ? expectedUbuntu1604Hash
+                : expectedUbuntu1804Hash,
+                HashUtility.CalculateHash(audioFile));
+#else
             Assert.Equal(expectedHash, HashUtility.CalculateHash(audioFile));
+#endif
         }
 
         [Theory(DisplayName = "Save-AudioMetadata method returns an error if the file is unsupported")]
