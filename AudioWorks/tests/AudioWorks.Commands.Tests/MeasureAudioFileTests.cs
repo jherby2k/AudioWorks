@@ -3,6 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using AudioWorks.Api;
+#if LINUX
+using AudioWorks.Api.Tests;
+#endif
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
