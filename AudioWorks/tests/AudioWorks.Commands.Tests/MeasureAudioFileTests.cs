@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using AudioWorks.Api;
-using AudioWorks.Api.Tests;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
