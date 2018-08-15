@@ -85,8 +85,9 @@ namespace AudioWorks.Extensions
                             return await (await customRepository
                                     .GetResourceAsync<PackageSearchResource>(cancellationTokenSource.Token)
                                     .ConfigureAwait(false))
-                                .SearchAsync("AudioWorks.Extensions",
-                                    new SearchFilter(true), 0, 100, NullLogger.Instance,
+                                .SearchAsync("AudioWorks.Extensions", new SearchFilter(
+                                        ConfigurationManager.Configuration.GetValue("IncludePreReleaseExtensions",
+                                            false)), 0, 100, NullLogger.Instance,
                                     cancellationTokenSource.Token)
                                 .ConfigureAwait(false);
                         }).Result

@@ -1,9 +1,10 @@
 {
   "FileLogging": true,
   "LogLevel": 2,
-  "EnableTelemetry":  true, 
+  "EnableTelemetry":  true,
   "AutomaticExtensionDownloads": true,
-  "AutomaticExtensionDownloadTimeout": 30, 
+  "AutomaticExtensionDownloadTimeout": 30,
+  "IncludePreReleaseExtensions": true,
   "ExtensionRepository": "https://www.myget.org/F/audioworks-extensions/api/v3/index.json",
   "DefaultRepository":  "https://api.nuget.org/v3/index.json"
 }
