@@ -51,11 +51,17 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <None Update="AudioWorks.Commands.format.ps1xml">
+    <None Include="AudioWorks.Commands.dll-Help.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
     </None>
-    <None Update="AudioWorks.Commands.psd1">
+    <None Include="AudioWorks.Commands.format.ps1xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
+    </None>
+    <None Include="AudioWorks.Commands.psd1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
     </None>
   </ItemGroup>
 

@@ -1,0 +1,1926 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<helpItems schema="maml" xmlns="http://msh">
+  <!-- Cmdlet: Export-AudioCoverArt -->
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+    <command:details>
+      <command:name>Export-AudioCoverArt</command:name>
+      <command:verb>Export</command:verb>
+      <command:noun>AudioCoverArt</command:noun>
+      <maml:description>
+        <maml:para>Exports an audio file.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>The Export-AudioFile cmdlet creates a new audio file using the specified encoder.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <!-- Parameter set: __AllParameterSets -->
+      <command:syntaxItem>
+        <maml:name>Export-AudioCoverArt</maml:name>
+        <!-- Parameter: Path -->
+        <command:parameter required="true" globbing="false" pipelineInput="false" position="0">
+          <maml:name>Path</maml:name>
+          <maml:description>
+            <maml:para>Specifies the output directory path.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: AudioFile -->
+        <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="1">
+          <maml:name>AudioFile</maml:name>
+          <maml:description>
+            <maml:para>Specifies the source audio file.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">ITaggedAudioFile</command:parameterValue>
+          <dev:type>
+            <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: Name -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Name</maml:name>
+          <maml:description>
+            <maml:para>Specifies the output file name.</maml:para>
+            <maml:para>The file extension will be selected automatically and should not be included. If this parameter is omitted, the name will be the same as the source audio file.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: Replace -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Replace</maml:name>
+          <maml:description>
+            <maml:para>Indicates that existing files should be replaced.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <!-- Parameter: Path -->
+      <command:parameter required="true" globbing="false" pipelineInput="false" position="0">
+        <maml:name>Path</maml:name>
+        <maml:description>
+          <maml:para>Specifies the output directory path.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: AudioFile -->
+      <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="1">
+        <maml:name>AudioFile</maml:name>
+        <maml:description>
+          <maml:para>Specifies the source audio file.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">ITaggedAudioFile</command:parameterValue>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: Name -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Name</maml:name>
+        <maml:description>
+          <maml:para>Specifies the output file name.</maml:para>
+          <maml:para>The file extension will be selected automatically and should not be included. If this parameter is omitted, the name will be the same as the source audio file.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: Replace -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Replace</maml:name>
+        <maml:description>
+          <maml:para>Indicates that existing files should be replaced.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+        <maml:description>
+          <maml:para>Specifies the source audio file.</maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <!-- OutputType: FileInfo -->
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.IO.FileInfo</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:returnValue>
+    </command:returnValues>
+  </command:command>
+  <!-- Cmdlet: Get-AudioCoverArt -->
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+    <command:details>
+      <command:name>Get-AudioCoverArt</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>AudioCoverArt</command:noun>
+      <maml:description>
+        <maml:para>Gets an object that represents an audio file or album's cover art.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>The Get-AudioCoverArt cmdlet gets objects that represent cover art. Cover art can be applied to and extracted from audio files when supported by the audio format.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <!-- Parameter set: ByPath -->
+      <command:syntaxItem>
+        <maml:name>Get-AudioCoverArt</maml:name>
+        <!-- Parameter: Path -->
+        <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="0">
+          <maml:name>Path</maml:name>
+          <maml:description>
+            <maml:para>Specifies the path to an item. This cmdlet gets the item at the specified location. Wildcards are permitted. This parameter is required, but the parameter name ("Path") is optional.</maml:para>
+            <maml:para>Use a dot (.) to specify the current location. Use the wildcard character (*) to specify all the items in the current location.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <!-- Parameter set: ByLiteralPath -->
+      <command:syntaxItem>
+        <maml:name>Get-AudioCoverArt</maml:name>
+        <!-- Parameter: LiteralPath -->
+        <command:parameter required="true" globbing="false" pipelineInput="false" position="0" aliases="PSPath">
+          <maml:name>LiteralPath</maml:name>
+          <maml:description>
+            <maml:para>Specifies a path to the item. Unlike the Path parameter, the value of LiteralPath is used exactly as it is typed. No characters are interpreted as wildcards. If the path includes escape characters, enclose it in single quotation marks. Single quotation marks tell Windows PowerShell not to interpret any characters as escape sequences.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <!-- Parameter set: ByFileInfo -->
+      <command:syntaxItem>
+        <maml:name>Get-AudioCoverArt</maml:name>
+        <!-- Parameter: FileInfo -->
+        <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="0">
+          <maml:name>FileInfo</maml:name>
+          <maml:description>
+            <maml:para>Specifies the file information.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">FileInfo</command:parameterValue>
+          <dev:type>
+            <maml:name>System.IO.FileInfo</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <!-- Parameter: Path -->
+      <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="0">
+        <maml:name>Path</maml:name>
+        <maml:description>
+          <maml:para>Specifies the path to an item. This cmdlet gets the item at the specified location. Wildcards are permitted. This parameter is required, but the parameter name ("Path") is optional.</maml:para>
+          <maml:para>Use a dot (.) to specify the current location. Use the wildcard character (*) to specify all the items in the current location.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: LiteralPath -->
+      <command:parameter required="true" globbing="false" pipelineInput="false" position="0" aliases="PSPath">
+        <maml:name>LiteralPath</maml:name>
+        <maml:description>
+          <maml:para>Specifies a path to the item. Unlike the Path parameter, the value of LiteralPath is used exactly as it is typed. No characters are interpreted as wildcards. If the path includes escape characters, enclose it in single quotation marks. Single quotation marks tell Windows PowerShell not to interpret any characters as escape sequences.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" globbing="false" pipelineInput="false" position="0" aliases="PSPath">
+        <maml:name>PSPath</maml:name>
+        <maml:description>
+          <maml:para>Specifies a path to the item. Unlike the Path parameter, the value of LiteralPath is used exactly as it is typed. No characters are interpreted as wildcards. If the path includes escape characters, enclose it in single quotation marks. Single quotation marks tell Windows PowerShell not to interpret any characters as escape sequences.</maml:para>
+          <maml:para>This is an alias of the LiteralPath parameter.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: FileInfo -->
+      <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="0">
+        <maml:name>FileInfo</maml:name>
+        <maml:description>
+          <maml:para>Specifies the file information.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">FileInfo</command:parameterValue>
+        <dev:type>
+          <maml:name>System.IO.FileInfo</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <maml:description>
+          <maml:para>Specifies the path to an item. This cmdlet gets the item at the specified location. Wildcards are permitted. This parameter is required, but the parameter name ("Path") is optional.</maml:para>
+          <maml:para>Use a dot (.) to specify the current location. Use the wildcard character (*) to specify all the items in the current location.</maml:para>
+        </maml:description>
+      </command:inputType>
+      <command:inputType>
+        <dev:type>
+          <maml:name>System.IO.FileInfo</maml:name>
+          <maml:uri />
+        </dev:type>
+        <maml:description>
+          <maml:para>Specifies the file information.</maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <!-- OutputType: ICoverArt -->
+      <command:returnValue>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ICoverArt</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:returnValue>
+    </command:returnValues>
+  </command:command>
+  <!-- Cmdlet: Export-AudioFile -->
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+    <command:details>
+      <command:name>Export-AudioFile</command:name>
+      <command:verb>Export</command:verb>
+      <command:noun>AudioFile</command:noun>
+      <maml:description>
+        <maml:para>Exports an audio file.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>The Export-AudioFile cmdlet creates a new audio file using the specified encoder.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <!-- Parameter set: __AllParameterSets -->
+      <command:syntaxItem>
+        <maml:name>Export-AudioFile</maml:name>
+        <!-- Parameter: Encoder -->
+        <command:parameter required="true" globbing="false" pipelineInput="false" position="0">
+          <maml:name>Encoder</maml:name>
+          <maml:description>
+            <maml:para>Specifies the encoder to use.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: Path -->
+        <command:parameter required="true" globbing="false" pipelineInput="false" position="1">
+          <maml:name>Path</maml:name>
+          <maml:description>
+            <maml:para>Specifies the output directory path.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: AudioFile -->
+        <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="2">
+          <maml:name>AudioFile</maml:name>
+          <maml:description>
+            <maml:para>Specifies the source audio file.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">ITaggedAudioFile</command:parameterValue>
+          <dev:type>
+            <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: Name -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Name</maml:name>
+          <maml:description>
+            <maml:para>Specifies the output file name.</maml:para>
+            <maml:para>The file extension will be selected automatically and should not be included. If this parameter is omitted, the name will be the same as the source audio file.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: Replace -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Replace</maml:name>
+          <maml:description>
+            <maml:para>Indicates that existing files should be replaced.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <!-- Parameter: Encoder -->
+      <command:parameter required="true" globbing="false" pipelineInput="false" position="0">
+        <maml:name>Encoder</maml:name>
+        <maml:description>
+          <maml:para>Specifies the encoder to use.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: Path -->
+      <command:parameter required="true" globbing="false" pipelineInput="false" position="1">
+        <maml:name>Path</maml:name>
+        <maml:description>
+          <maml:para>Specifies the output directory path.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: AudioFile -->
+      <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="2">
+        <maml:name>AudioFile</maml:name>
+        <maml:description>
+          <maml:para>Specifies the source audio file.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">ITaggedAudioFile</command:parameterValue>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: Name -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Name</maml:name>
+        <maml:description>
+          <maml:para>Specifies the output file name.</maml:para>
+          <maml:para>The file extension will be selected automatically and should not be included. If this parameter is omitted, the name will be the same as the source audio file.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: Replace -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Replace</maml:name>
+        <maml:description>
+          <maml:para>Indicates that existing files should be replaced.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+        <maml:description>
+          <maml:para>Specifies the source audio file.</maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <!-- OutputType: ITaggedAudioFile -->
+      <command:returnValue>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:returnValue>
+    </command:returnValues>
+  </command:command>
+  <!-- Cmdlet: Get-AudioFile -->
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+    <command:details>
+      <command:name>Get-AudioFile</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>AudioFile</command:noun>
+      <maml:description>
+        <maml:para>Gets an object that represents an audio file.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>The Get-AudioFile cmdlet gets objects that represent audio files. Audio files expose metadata, and can be manipulated in various ways by the other AudioWorks cmdlets.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <!-- Parameter set: ByPath -->
+      <command:syntaxItem>
+        <maml:name>Get-AudioFile</maml:name>
+        <!-- Parameter: Path -->
+        <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="0">
+          <maml:name>Path</maml:name>
+          <maml:description>
+            <maml:para>Specifies the path to an item. This cmdlet gets the item at the specified location. Wildcards are permitted. This parameter is required, but the parameter name ("Path") is optional.</maml:para>
+            <maml:para>Use a dot (.) to specify the current location. Use the wildcard character (*) to specify all the items in the current location.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <!-- Parameter set: ByLiteralPath -->
+      <command:syntaxItem>
+        <maml:name>Get-AudioFile</maml:name>
+        <!-- Parameter: LiteralPath -->
+        <command:parameter required="true" globbing="false" pipelineInput="false" position="0" aliases="PSPath">
+          <maml:name>LiteralPath</maml:name>
+          <maml:description>
+            <maml:para>Specifies a path to the item. Unlike the Path parameter, the value of LiteralPath is used exactly as it is typed. No characters are interpreted as wildcards. If the path includes escape characters, enclose it in single quotation marks. Single quotation marks tell Windows PowerShell not to interpret any characters as escape sequences.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <!-- Parameter set: ByFileInfo -->
+      <command:syntaxItem>
+        <maml:name>Get-AudioFile</maml:name>
+        <!-- Parameter: FileInfo -->
+        <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="0">
+          <maml:name>FileInfo</maml:name>
+          <maml:description>
+            <maml:para>Specifies the file information.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">FileInfo</command:parameterValue>
+          <dev:type>
+            <maml:name>System.IO.FileInfo</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <!-- Parameter: Path -->
+      <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="0">
+        <maml:name>Path</maml:name>
+        <maml:description>
+          <maml:para>Specifies the path to an item. This cmdlet gets the item at the specified location. Wildcards are permitted. This parameter is required, but the parameter name ("Path") is optional.</maml:para>
+          <maml:para>Use a dot (.) to specify the current location. Use the wildcard character (*) to specify all the items in the current location.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: LiteralPath -->
+      <command:parameter required="true" globbing="false" pipelineInput="false" position="0" aliases="PSPath">
+        <maml:name>LiteralPath</maml:name>
+        <maml:description>
+          <maml:para>Specifies a path to the item. Unlike the Path parameter, the value of LiteralPath is used exactly as it is typed. No characters are interpreted as wildcards. If the path includes escape characters, enclose it in single quotation marks. Single quotation marks tell Windows PowerShell not to interpret any characters as escape sequences.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" globbing="false" pipelineInput="false" position="0" aliases="PSPath">
+        <maml:name>PSPath</maml:name>
+        <maml:description>
+          <maml:para>Specifies a path to the item. Unlike the Path parameter, the value of LiteralPath is used exactly as it is typed. No characters are interpreted as wildcards. If the path includes escape characters, enclose it in single quotation marks. Single quotation marks tell Windows PowerShell not to interpret any characters as escape sequences.</maml:para>
+          <maml:para>This is an alias of the LiteralPath parameter.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: FileInfo -->
+      <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="0">
+        <maml:name>FileInfo</maml:name>
+        <maml:description>
+          <maml:para>Specifies the file information.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">FileInfo</command:parameterValue>
+        <dev:type>
+          <maml:name>System.IO.FileInfo</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <maml:description>
+          <maml:para>Specifies the path to an item. This cmdlet gets the item at the specified location. Wildcards are permitted. This parameter is required, but the parameter name ("Path") is optional.</maml:para>
+          <maml:para>Use a dot (.) to specify the current location. Use the wildcard character (*) to specify all the items in the current location.</maml:para>
+        </maml:description>
+      </command:inputType>
+      <command:inputType>
+        <dev:type>
+          <maml:name>System.IO.FileInfo</maml:name>
+          <maml:uri />
+        </dev:type>
+        <maml:description>
+          <maml:para>Specifies the file information.</maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <!-- OutputType: ITaggedAudioFile -->
+      <command:returnValue>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:returnValue>
+    </command:returnValues>
+  </command:command>
+  <!-- Cmdlet: Measure-AudioFile -->
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+    <command:details>
+      <command:name>Measure-AudioFile</command:name>
+      <command:verb>Measure</command:verb>
+      <command:noun>AudioFile</command:noun>
+      <maml:description>
+        <maml:para>Analyzes an audio file.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>The Measure-AudioFile cmdlet performs analysis on an audio file, then stores these measurements as metadata.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <!-- Parameter set: __AllParameterSets -->
+      <command:syntaxItem>
+        <maml:name>Measure-AudioFile</maml:name>
+        <!-- Parameter: Analyzer -->
+        <command:parameter required="true" globbing="false" pipelineInput="false" position="0">
+          <maml:name>Analyzer</maml:name>
+          <maml:description>
+            <maml:para>Specifies the type of analysis to perform.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: AudioFile -->
+        <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="1">
+          <maml:name>AudioFile</maml:name>
+          <maml:description>
+            <maml:para>Specifies the audio file.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">ITaggedAudioFile</command:parameterValue>
+          <dev:type>
+            <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: PassThru -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>PassThru</maml:name>
+          <maml:description>
+            <maml:para>Returns an object representing the item with which you are working. By default, this cmdlet does not generate any output.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <!-- Parameter: Analyzer -->
+      <command:parameter required="true" globbing="false" pipelineInput="false" position="0">
+        <maml:name>Analyzer</maml:name>
+        <maml:description>
+          <maml:para>Specifies the type of analysis to perform.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: AudioFile -->
+      <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="1">
+        <maml:name>AudioFile</maml:name>
+        <maml:description>
+          <maml:para>Specifies the audio file.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">ITaggedAudioFile</command:parameterValue>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: PassThru -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>PassThru</maml:name>
+        <maml:description>
+          <maml:para>Returns an object representing the item with which you are working. By default, this cmdlet does not generate any output.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+        <maml:description>
+          <maml:para>Specifies the audio file.</maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <!-- OutputType: ITaggedAudioFile -->
+      <command:returnValue>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:returnValue>
+    </command:returnValues>
+  </command:command>
+  <!-- Cmdlet: Rename-AudioFile -->
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+    <command:details>
+      <command:name>Rename-AudioFile</command:name>
+      <command:verb>Rename</command:verb>
+      <command:noun>AudioFile</command:noun>
+      <maml:description>
+        <maml:para>Renames an audio file.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>The Rename-AudioFile cmdlet renames audio files.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <!-- Parameter set: __AllParameterSets -->
+      <command:syntaxItem>
+        <maml:name>Rename-AudioFile</maml:name>
+        <!-- Parameter: Name -->
+        <command:parameter required="true" globbing="false" pipelineInput="false" position="0">
+          <maml:name>Name</maml:name>
+          <maml:description>
+            <maml:para>Specifies the new file name.</maml:para>
+            <maml:para>The file extension will be selected automatically and should not be included.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: AudioFile -->
+        <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="1">
+          <maml:name>AudioFile</maml:name>
+          <maml:description>
+            <maml:para>Specifies the audio file.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">ITaggedAudioFile</command:parameterValue>
+          <dev:type>
+            <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: PassThru -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>PassThru</maml:name>
+          <maml:description>
+            <maml:para>Returns an object representing the item with which you are working. By default, this cmdlet does not generate any output.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <!-- Parameter: Replace -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Replace</maml:name>
+          <maml:description>
+            <maml:para>Indicates that existing files should be replaced.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <!-- Parameter: Name -->
+      <command:parameter required="true" globbing="false" pipelineInput="false" position="0">
+        <maml:name>Name</maml:name>
+        <maml:description>
+          <maml:para>Specifies the new file name.</maml:para>
+          <maml:para>The file extension will be selected automatically and should not be included.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: AudioFile -->
+      <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="1">
+        <maml:name>AudioFile</maml:name>
+        <maml:description>
+          <maml:para>Specifies the audio file.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">ITaggedAudioFile</command:parameterValue>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: Replace -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Replace</maml:name>
+        <maml:description>
+          <maml:para>Indicates that existing files should be replaced.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <!-- Parameter: PassThru -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>PassThru</maml:name>
+        <maml:description>
+          <maml:para>Returns an object representing the item with which you are working. By default, this cmdlet does not generate any output.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+        <maml:description>
+          <maml:para>Specifies the audio file.</maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <!-- OutputType: ITaggedAudioFile -->
+      <command:returnValue>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:returnValue>
+    </command:returnValues>
+  </command:command>
+  <!-- Cmdlet: Get-AudioInfo -->
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+    <command:details>
+      <command:name>Get-AudioInfo</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>AudioInfo</command:noun>
+      <maml:description>
+        <maml:para>Gets information about an audio file.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>The Get-AudioInfo cmdlet gets information about audio files. This consists of immutable information that can't be changed without re-encoding the file.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <!-- Parameter set: __AllParameterSets -->
+      <command:syntaxItem>
+        <maml:name>Get-AudioInfo</maml:name>
+        <!-- Parameter: AudioFile -->
+        <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="0">
+          <maml:name>AudioFile</maml:name>
+          <maml:description>
+            <maml:para>Specifies the audio file.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">IAudioFile</command:parameterValue>
+          <dev:type>
+            <maml:name>AudioWorks.Common.IAudioFile</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <!-- Parameter: AudioFile -->
+      <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="0">
+        <maml:name>AudioFile</maml:name>
+        <maml:description>
+          <maml:para>Specifies the audio file.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">IAudioFile</command:parameterValue>
+        <dev:type>
+          <maml:name>AudioWorks.Common.IAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>AudioWorks.Common.IAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+        <maml:description>
+          <maml:para>Specifies the audio file.</maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <!-- OutputType: AudioInfo -->
+      <command:returnValue>
+        <dev:type>
+          <maml:name>AudioWorks.Common.AudioInfo</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:returnValue>
+    </command:returnValues>
+  </command:command>
+  <!-- Cmdlet: Clear-AudioMetadata -->
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+    <command:details>
+      <command:name>Clear-AudioMetadata</command:name>
+      <command:verb>Clear</command:verb>
+      <command:noun>AudioMetadata</command:noun>
+      <maml:description>
+        <maml:para>Clears one or more metadata fields on an audio file.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>The Clear-AudioMetadata cmdlet clears one or more metadata fields. Note that these changes are not persisted to disk unless followed by a call to Save-AudioMetadata.</maml:para>
+      <maml:para>If no metadata fields are specified, all fields are cleared.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <!-- Parameter set: __AllParameterSets -->
+      <command:syntaxItem>
+        <maml:name>Clear-AudioMetadata</maml:name>
+        <!-- Parameter: AudioFile -->
+        <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="0">
+          <maml:name>AudioFile</maml:name>
+          <maml:description>
+            <maml:para>Specifies the audio file.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">ITaggedAudioFile</command:parameterValue>
+          <dev:type>
+            <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: Album -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Album</maml:name>
+          <maml:description>
+            <maml:para>Clears the album.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <!-- Parameter: AlbumArtist -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>AlbumArtist</maml:name>
+          <maml:description>
+            <maml:para>Clears the album artist.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <!-- Parameter: Artist -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Artist</maml:name>
+          <maml:description>
+            <maml:para>Clears the artist.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <!-- Parameter: Comment -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Comment</maml:name>
+          <maml:description>
+            <maml:para>Clears the comment.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <!-- Parameter: Composer -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Composer</maml:name>
+          <maml:description>
+            <maml:para>Clears the composer.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <!-- Parameter: Day -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Day</maml:name>
+          <maml:description>
+            <maml:para>Clears the day of the month.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <!-- Parameter: Genre -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Genre</maml:name>
+          <maml:description>
+            <maml:para>Clears the genre.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <!-- Parameter: Loudness -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Loudness</maml:name>
+          <maml:description>
+            <maml:para>Clears the track peak, album peak, track gain and album gain.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <!-- Parameter: Month -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Month</maml:name>
+          <maml:description>
+            <maml:para>Clears the month.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <!-- Parameter: PassThru -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>PassThru</maml:name>
+          <maml:description>
+            <maml:para>Returns an object representing the item with which you are working. By default, this cmdlet does not generate any output.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <!-- Parameter: Title -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Title</maml:name>
+          <maml:description>
+            <maml:para>Clears the title.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <!-- Parameter: TrackCount -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>TrackCount</maml:name>
+          <maml:description>
+            <maml:para>Clears the track count.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <!-- Parameter: TrackNumber -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>TrackNumber</maml:name>
+          <maml:description>
+            <maml:para>Clears the track number.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <!-- Parameter: Year -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Year</maml:name>
+          <maml:description>
+            <maml:para>Clears the year.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <!-- Parameter: AudioFile -->
+      <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="0">
+        <maml:name>AudioFile</maml:name>
+        <maml:description>
+          <maml:para>Specifies the audio file.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">ITaggedAudioFile</command:parameterValue>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: Title -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Title</maml:name>
+        <maml:description>
+          <maml:para>Clears the title.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <!-- Parameter: Artist -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Artist</maml:name>
+        <maml:description>
+          <maml:para>Clears the artist.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <!-- Parameter: Album -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Album</maml:name>
+        <maml:description>
+          <maml:para>Clears the album.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <!-- Parameter: AlbumArtist -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>AlbumArtist</maml:name>
+        <maml:description>
+          <maml:para>Clears the album artist.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <!-- Parameter: Composer -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Composer</maml:name>
+        <maml:description>
+          <maml:para>Clears the composer.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <!-- Parameter: Genre -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Genre</maml:name>
+        <maml:description>
+          <maml:para>Clears the genre.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <!-- Parameter: Comment -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Comment</maml:name>
+        <maml:description>
+          <maml:para>Clears the comment.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <!-- Parameter: Day -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Day</maml:name>
+        <maml:description>
+          <maml:para>Clears the day of the month.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <!-- Parameter: Month -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Month</maml:name>
+        <maml:description>
+          <maml:para>Clears the month.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <!-- Parameter: Year -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Year</maml:name>
+        <maml:description>
+          <maml:para>Clears the year.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <!-- Parameter: TrackNumber -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>TrackNumber</maml:name>
+        <maml:description>
+          <maml:para>Clears the track number.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <!-- Parameter: TrackCount -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>TrackCount</maml:name>
+        <maml:description>
+          <maml:para>Clears the track count.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <!-- Parameter: Loudness -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Loudness</maml:name>
+        <maml:description>
+          <maml:para>Clears the track peak, album peak, track gain and album gain.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <!-- Parameter: PassThru -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>PassThru</maml:name>
+        <maml:description>
+          <maml:para>Returns an object representing the item with which you are working. By default, this cmdlet does not generate any output.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+        <maml:description>
+          <maml:para>Specifies the audio file.</maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <!-- OutputType: ITaggedAudioFile -->
+      <command:returnValue>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:returnValue>
+    </command:returnValues>
+  </command:command>
+  <!-- Cmdlet: Get-AudioMetadata -->
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+    <command:details>
+      <command:name>Get-AudioMetadata</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>AudioMetadata</command:noun>
+      <maml:description>
+        <maml:para>Gets metadata describing an audio file.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>The Get-AudioMetadata cmdlet gets information about audio files. This consists of fields that can be modified and optionally persisted to disk using other cmdlets.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <!-- Parameter set: __AllParameterSets -->
+      <command:syntaxItem>
+        <maml:name>Get-AudioMetadata</maml:name>
+        <!-- Parameter: AudioFile -->
+        <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="0">
+          <maml:name>AudioFile</maml:name>
+          <maml:description>
+            <maml:para>Specifies the audio file.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">ITaggedAudioFile</command:parameterValue>
+          <dev:type>
+            <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <!-- Parameter: AudioFile -->
+      <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="0">
+        <maml:name>AudioFile</maml:name>
+        <maml:description>
+          <maml:para>Specifies the audio file.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">ITaggedAudioFile</command:parameterValue>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+        <maml:description>
+          <maml:para>Specifies the audio file.</maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <!-- OutputType: AudioMetadata -->
+      <command:returnValue>
+        <dev:type>
+          <maml:name>AudioWorks.Common.AudioMetadata</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:returnValue>
+    </command:returnValues>
+  </command:command>
+  <!-- Cmdlet: Save-AudioMetadata -->
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+    <command:details>
+      <command:name>Save-AudioMetadata</command:name>
+      <command:verb>Save</command:verb>
+      <command:noun>AudioMetadata</command:noun>
+      <maml:description>
+        <maml:para>Saves an audio file's metadata to disk.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>The Save-AudioMetadata cmdlet persists changes to an audio file's metadata. Depending on the file extension, various optional parameters may be available.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <!-- Parameter set: __AllParameterSets -->
+      <command:syntaxItem>
+        <maml:name>Save-AudioMetadata</maml:name>
+        <!-- Parameter: AudioFile -->
+        <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="0">
+          <maml:name>AudioFile</maml:name>
+          <maml:description>
+            <maml:para>Specifies the audio file.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">ITaggedAudioFile</command:parameterValue>
+          <dev:type>
+            <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: PassThru -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>PassThru</maml:name>
+          <maml:description>
+            <maml:para>Returns an object representing the item with which you are working. By default, this cmdlet does not generate any output.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <!-- Parameter: AudioFile -->
+      <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="0">
+        <maml:name>AudioFile</maml:name>
+        <maml:description>
+          <maml:para>Specifies the audio file.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">ITaggedAudioFile</command:parameterValue>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: PassThru -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>PassThru</maml:name>
+        <maml:description>
+          <maml:para>Returns an object representing the item with which you are working. By default, this cmdlet does not generate any output.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+        <maml:description>
+          <maml:para>Specifies the audio file.</maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <!-- OutputType: ITaggedAudioFile -->
+      <command:returnValue>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:returnValue>
+    </command:returnValues>
+  </command:command>
+  <!-- Cmdlet: Set-AudioMetadata -->
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+    <command:details>
+      <command:name>Set-AudioMetadata</command:name>
+      <command:verb>Set</command:verb>
+      <command:noun>AudioMetadata</command:noun>
+      <maml:description>
+        <maml:para>Sets one or more metadata fields on an audio file.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>The Set-AudioMetadata cmdlet changes the value of one or more metadata fields. Note that these changes are not persisted to disk unless followed by a call to Save-AudioMetadata.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <!-- Parameter set: __AllParameterSets -->
+      <command:syntaxItem>
+        <maml:name>Set-AudioMetadata</maml:name>
+        <!-- Parameter: AudioFile -->
+        <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="0">
+          <maml:name>AudioFile</maml:name>
+          <maml:description>
+            <maml:para>Specifies the audio file.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">ITaggedAudioFile</command:parameterValue>
+          <dev:type>
+            <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: Album -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Album</maml:name>
+          <maml:description>
+            <maml:para>Sets the album.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: AlbumArtist -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>AlbumArtist</maml:name>
+          <maml:description>
+            <maml:para>Sets the album artist.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: Artist -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Artist</maml:name>
+          <maml:description>
+            <maml:para>Sets the artist.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: Comment -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Comment</maml:name>
+          <maml:description>
+            <maml:para>Sets the comment.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: Composer -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Composer</maml:name>
+          <maml:description>
+            <maml:para>Sets the composer.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: CoverArt -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>CoverArt</maml:name>
+          <maml:description>
+            <maml:para>Sets the cover art.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">ICoverArt</command:parameterValue>
+          <dev:type>
+            <maml:name>AudioWorks.Common.ICoverArt</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: Day -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Day</maml:name>
+          <maml:description>
+            <maml:para>Sets the day of the month.</maml:para>
+            <maml:para>Should be a number between 1 and 31.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: Genre -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Genre</maml:name>
+          <maml:description>
+            <maml:para>Sets the genre.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: Month -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Month</maml:name>
+          <maml:description>
+            <maml:para>Sets the month.</maml:para>
+            <maml:para>Should be a number between 1 and 12.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: PassThru -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>PassThru</maml:name>
+          <maml:description>
+            <maml:para>Returns an object representing the item with which you are working. By default, this cmdlet does not generate any output.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <!-- Parameter: Title -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Title</maml:name>
+          <maml:description>
+            <maml:para>Sets the title.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: TrackCount -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>TrackCount</maml:name>
+          <maml:description>
+            <maml:para>Sets the track number.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: TrackNumber -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>TrackNumber</maml:name>
+          <maml:description>
+            <maml:para>Sets the track number.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+        <!-- Parameter: Year -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Year</maml:name>
+          <maml:description>
+            <maml:para>Sets the year.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <!-- Parameter: AudioFile -->
+      <command:parameter required="true" globbing="false" pipelineInput="true (ByValue)" position="0">
+        <maml:name>AudioFile</maml:name>
+        <maml:description>
+          <maml:para>Specifies the audio file.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">ITaggedAudioFile</command:parameterValue>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: Title -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Title</maml:name>
+        <maml:description>
+          <maml:para>Sets the title.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: Artist -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Artist</maml:name>
+        <maml:description>
+          <maml:para>Sets the artist.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: Album -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Album</maml:name>
+        <maml:description>
+          <maml:para>Sets the album.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: AlbumArtist -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>AlbumArtist</maml:name>
+        <maml:description>
+          <maml:para>Sets the album artist.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: Composer -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Composer</maml:name>
+        <maml:description>
+          <maml:para>Sets the composer.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: Genre -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Genre</maml:name>
+        <maml:description>
+          <maml:para>Sets the genre.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: Comment -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Comment</maml:name>
+        <maml:description>
+          <maml:para>Sets the comment.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: Day -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Day</maml:name>
+        <maml:description>
+          <maml:para>Sets the day of the month.</maml:para>
+          <maml:para>Should be a number between 1 and 31.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: Month -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Month</maml:name>
+        <maml:description>
+          <maml:para>Sets the month.</maml:para>
+          <maml:para>Should be a number between 1 and 12.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: Year -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Year</maml:name>
+        <maml:description>
+          <maml:para>Sets the year.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: TrackNumber -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>TrackNumber</maml:name>
+        <maml:description>
+          <maml:para>Sets the track number.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: TrackCount -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>TrackCount</maml:name>
+        <maml:description>
+          <maml:para>Sets the track number.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: CoverArt -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>CoverArt</maml:name>
+        <maml:description>
+          <maml:para>Sets the cover art.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">ICoverArt</command:parameterValue>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ICoverArt</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: PassThru -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>PassThru</maml:name>
+        <maml:description>
+          <maml:para>Returns an object representing the item with which you are working. By default, this cmdlet does not generate any output.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+        <maml:description>
+          <maml:para>Specifies the audio file.</maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <!-- OutputType: ITaggedAudioFile -->
+      <command:returnValue>
+        <dev:type>
+          <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:returnValue>
+    </command:returnValues>
+  </command:command>
+</helpItems>

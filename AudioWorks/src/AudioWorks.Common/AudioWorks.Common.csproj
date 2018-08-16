@@ -51,7 +51,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="settings.json">
+    <None Include="settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Pack>true</Pack>
     </None>
