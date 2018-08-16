@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using AudioWorks.Common;
@@ -92,21 +93,9 @@ namespace AudioWorks.Extensions
                                 .ConfigureAwait(false);
                         }).Result
 #if NETCOREAPP2_1
-#if OSX
-                        .Where(package => package.Tags.Contains("OSX", StringComparison.OrdinalIgnoreCase))
-#elif LINUX
-                        .Where(package => package.Tags.Contains("Linux", StringComparison.OrdinalIgnoreCase))
+                        .Where(package => package.Tags.Contains(GetOSTag(), StringComparison.OrdinalIgnoreCase))
 #else
-                        .Where(package => package.Tags.Contains("Windows", StringComparison.OrdinalIgnoreCase))
-#endif
-#else
-#if OSX
-                        .Where(package => package.Tags.ToUpperInvariant().Contains("OSX"))
-#elif LINUX
-                        .Where(package => package.Tags.ToUpperInvariant().Contains("LINUX"))
-#else
-                        .Where(package => package.Tags.ToUpperInvariant().Contains("WINDOWS"))
-#endif
+                        .Where(package => package.Tags.Contains(GetOSTag()))
 #endif
                         .ToArray();
 
@@ -220,12 +209,16 @@ namespace AudioWorks.Extensions
         }
 
         [Pure, NotNull]
-        static CancellationTokenSource GetCancellationTokenSource()
-        {
-            return new CancellationTokenSource(
-                ConfigurationManager.Configuration.GetValue("AutomaticExtensionDownloadTimeout", 30) *
-                1000);
-        }
+        static string GetOSTag() => RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+            ? "Windows"
+            : (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                ? "Linux"
+                : "OSX");
+
+        [Pure, NotNull]
+        static CancellationTokenSource GetCancellationTokenSource() => new CancellationTokenSource(
+            ConfigurationManager.Configuration.GetValue("AutomaticExtensionDownloadTimeout", 30) *
+            1000);
 
         [CanBeNull]
         static DirectoryInfo SelectDirectory([CanBeNull, ItemNotNull] IEnumerable<DirectoryInfo> directories)
