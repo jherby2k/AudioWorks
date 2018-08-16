@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.1;netstandard2.0</TargetFrameworks>
     <LangVersion>7.3</LangVersion>
-    <Version>0.1.2-beta</Version>
+    <Version>0.1.3-beta</Version>
     <Authors>Jeremy Herbison</Authors>
     <Company />
     <Product>AudioWorks</Product>
@@ -11,6 +11,7 @@
     <Copyright>Copyright © 2018 Jeremy Herbison</Copyright>
     <PackageLicenseUrl>https://raw.githubusercontent.com/jherby2k/AudioWorks/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/jherby2k/AudioWorks</PackageProjectUrl>
+    <PackageTags>Windows, OSX, Linux</PackageTags>
     <NeutralLanguage>en-US</NeutralLanguage>
     <CodeAnalysisRuleSet>CodeAnalysis.ruleset</CodeAnalysisRuleSet>
     <Configurations>Debug-Windows;Release-Windows;Debug-OSX;Release-OSX;Debug-Linux;Release-Linux</Configurations>
@@ -46,21 +47,6 @@
 
   <PropertyGroup Condition="$(DefineConstants.Contains(RELEASE))">
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="$(DefineConstants.Contains(WINDOWS))">
-    <PackageId>AudioWorks.Extensions.Id3.Windows</PackageId>
-    <PackageTags>Windows</PackageTags>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="$(DefineConstants.Contains(OSX))">
-    <PackageId>AudioWorks.Extensions.Id3.OSX</PackageId>
-    <PackageTags>OSX</PackageTags>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="$(DefineConstants.Contains(LINUX))">
-    <PackageId>AudioWorks.Extensions.Id3.Linux</PackageId>
-    <PackageTags>Linux</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
