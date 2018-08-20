@@ -30,7 +30,7 @@ namespace AudioWorks.Extensions
 
         static ExtensionContainerBase()
         {
-            ExtensionDownloader.Download();
+            ExtensionInstaller.Download();
         }
     }
 }

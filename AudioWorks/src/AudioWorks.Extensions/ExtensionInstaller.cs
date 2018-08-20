@@ -22,7 +22,7 @@ using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace AudioWorks.Extensions
 {
-    static class ExtensionDownloader
+    static class ExtensionInstaller
     {
         [NotNull] static readonly string _projectRoot = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
@@ -41,7 +41,7 @@ namespace AudioWorks.Extensions
         [NotNull] static readonly string _defaultUrl = ConfigurationManager.Configuration.GetValue("DefaultRepository",
             "https://api.nuget.org/v3/index.json");
 
-        [NotNull] static readonly List<string> _compatibleTfms = new List<string>(new[]
+        [NotNull] static readonly List<string> _compatibleTargets = new List<string>(new[]
         {
 #if NETCOREAPP2_1
             "netcoreapp2.1",
@@ -67,7 +67,7 @@ namespace AudioWorks.Extensions
                 ApplyRedirects();
 #endif
 
-            var logger = LoggingManager.CreateLogger(typeof(ExtensionDownloader).FullName);
+            var logger = LoggingManager.CreateLogger(typeof(ExtensionInstaller).FullName);
 
             if (!ConfigurationManager.Configuration.GetValue("AutomaticExtensionDownloads", true))
                 logger.LogInformation("Automatic extension downloads are disabled.");
@@ -246,9 +246,9 @@ namespace AudioWorks.Extensions
         {
             // Select the first directory in the list of compatible TFMs
             return directories?
-                .Where(dir => _compatibleTfms.Contains(dir.Name, StringComparer.OrdinalIgnoreCase))
-                .OrderBy(dir => _compatibleTfms
-                    .FindIndex(tfm => tfm.Equals(dir.Name, StringComparison.OrdinalIgnoreCase)))
+                .Where(dir => _compatibleTargets.Contains(dir.Name, StringComparer.OrdinalIgnoreCase))
+                .OrderBy(dir => _compatibleTargets
+                    .FindIndex(target => target.Equals(dir.Name, StringComparison.OrdinalIgnoreCase)))
                 .FirstOrDefault();
         }
 
@@ -268,8 +268,8 @@ namespace AudioWorks.Extensions
                 file.MoveTo(Path.Combine(destination.FullName, file.Name));
             }
 
-            foreach (var subdir in source.GetDirectories())
-                MoveContents(subdir, destination.CreateSubdirectory(subdir.Name), logger);
+            foreach (var subDir in source.GetDirectories())
+                MoveContents(subDir, destination.CreateSubdirectory(subDir.Name), logger);
         }
     }
 }
