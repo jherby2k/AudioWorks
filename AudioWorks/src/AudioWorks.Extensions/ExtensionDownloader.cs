@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+#if !NETCOREAPP2_1
+using System.Reflection;
+#endif
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -58,6 +61,12 @@ namespace AudioWorks.Extensions
 
         internal static void Download()
         {
+#if !NETCOREAPP2_1
+            if (RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework",
+                StringComparison.Ordinal))
+                ApplyRedirects();
+#endif
+
             var logger = LoggingManager.CreateLogger(typeof(ExtensionDownloader).FullName);
 
             if (!ConfigurationManager.Configuration.GetValue("AutomaticExtensionDownloads", true))
@@ -207,6 +216,18 @@ namespace AudioWorks.Extensions
                 }
             }
         }
+
+#if !NETCOREAPP2_1
+        static void ApplyRedirects()
+        {
+            // Workaround for binding issue under Windows PowerShell
+            AppDomain.CurrentDomain.AssemblyResolve += (context, args) =>
+                args.Name.Equals("Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed",
+                    StringComparison.Ordinal)
+                    ? Assembly.LoadFrom(@"C:\Users\jerem\Desktop\bin\netstandard2.0\Newtonsoft.Json.dll")
+                    : null;
+        }
+#endif
 
         [Pure, NotNull]
         static string GetOSTag() => RuntimeInformation.IsOSPlatform(OSPlatform.Windows)

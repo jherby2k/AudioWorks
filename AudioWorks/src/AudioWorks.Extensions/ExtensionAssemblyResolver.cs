@@ -1,9 +1,13 @@
-﻿using System;
+﻿#if !NETCOREAPP2_1
+using System;
+#endif
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+#if !NETCOREAPP2_1
 using System.Runtime.InteropServices;
+#endif
 using System.Runtime.Loader;
 using AudioWorks.Common;
 using JetBrains.Annotations;
@@ -31,6 +35,10 @@ namespace AudioWorks.Extensions
                     Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "*.dll")
                 .Concat(Directory.GetFiles(extensionDir, "*.dll"));
 
+#if NETCOREAPP2_1
+            ResolveWithLoader(assemblyFiles);
+        }
+#else
             if (RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework",
                 StringComparison.Ordinal))
                 ResolveFullFramework(assemblyFiles);
@@ -59,6 +67,7 @@ namespace AudioWorks.Extensions
                 return result;
             };
         }
+#endif
 
         void ResolveWithLoader([NotNull, ItemNotNull] IEnumerable<string> assemblyFiles)
         {
