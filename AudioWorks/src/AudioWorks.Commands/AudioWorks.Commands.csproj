@@ -47,7 +47,6 @@
 
   <PropertyGroup Condition="$(DefineConstants.Contains(RELEASE))">
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\AudioWorks.Commands.xml</DocumentationFile>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   
   <ItemGroup>
