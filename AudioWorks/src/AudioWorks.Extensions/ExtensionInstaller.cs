@@ -222,10 +222,28 @@ namespace AudioWorks.Extensions
         {
             // Workaround for binding issue under Windows PowerShell
             AppDomain.CurrentDomain.AssemblyResolve += (context, args) =>
-                args.Name.Equals("Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed",
-                    StringComparison.Ordinal)
-                    ? Assembly.LoadFrom(@"C:\Users\jerem\Desktop\bin\netstandard2.0\Newtonsoft.Json.dll")
-                    : null;
+            {
+                // Load the available version of Newtonsoft.Json, regardless of the requested version
+                if (args.Name.StartsWith("Newtonsoft.Json", StringComparison.Ordinal))
+                {
+                    var jsonAssembly = Directory.GetFiles(Path.Combine(
+                            // ReSharper disable once AssignNullToNotNullAttribute
+                            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Newtonsoft.Json.dll"))
+                        .FirstOrDefault();
+
+                    if (jsonAssembly == null) return null;
+
+                    // Make sure the assembly is really Newtonsoft.Json
+                    var assemblyName = AssemblyName.GetAssemblyName(jsonAssembly);
+                    if (assemblyName.Name.StartsWith("Newtonsoft.Json, Version=",
+                            StringComparison.Ordinal) &&
+                        assemblyName.Name.EndsWith(", Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed",
+                            StringComparison.Ordinal))
+                        return Assembly.LoadFrom(jsonAssembly);
+                }
+
+                return null;
+            };
         }
 #endif
 
