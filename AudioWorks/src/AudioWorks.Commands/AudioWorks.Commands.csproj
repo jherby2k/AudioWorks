@@ -80,4 +80,8 @@
     <ProjectReference Include="..\AudioWorks.Api\AudioWorks.Api.csproj" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="pwsh -ExecutionPolicy Unrestricted -File &quot;$(ProjectDir)PublishModule.ps1&quot; -ProjectDir $(ProjectDir) -Configuration $(ConfigurationName)" />
+  </Target>
+
 </Project>
