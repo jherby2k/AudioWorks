@@ -28,10 +28,19 @@ AudioWorks currently needs to be built from source, although installers are comi
 * libebur128-1 (via apt-get on Ubuntu 16.04 and 18.04)
 * libmp3lame0 (via apt-get on Ubuntu 16.04)
 
+### Installation
+
+The AudioWorks PowerShell module can be installed via PowerShellGet:
+1. (Windows PowerShell only) [Update PowerShellGet](https://docs.microsoft.com/en-us/powershell/gallery/installing-psget) to a version that supports prerelease modules.
+1. Register the AudioWorks repository with `Register-PSRepository -Name AudioWorks -SourceLocation 'https://www.myget.org/F/audioworks/api/v2/package'`.
+1. Install the module with `Install-Module -Name AudioWorks -Repository AudioWorks -AllowPrerelease -Scope CurrentUser`.
+
+Keep the module up to date with `Update-Module -Name AudioWorks.Commands -AllowPrerelease`.
+
 ### Additional Requirements for Building / Testing
 
 * [.NET Core SDK 2.1.300+](https://dotnet.github.io/)
 * Windows 7+ or Ubuntu 16.04 (currently does not compile on Ubuntu 18.04)
 * [Visual Studio 2017 15.7+](https://visualstudio.microsoft.com/downloads) (optional - Windows only)
-* [Visual Studio Code](https://code.visualstudio.com/) (optional)
-* [ReSharper 2018.2.EAP1+](https://www.jetbrains.com/resharper/eap) (optional - Windows only)
+* [Visual Studio Code](https://code.visualstudio.com/) (optional - all platforms)
+* [ReSharper 2018.2+](https://www.jetbrains.com/resharper/eap) (optional - Windows only)
