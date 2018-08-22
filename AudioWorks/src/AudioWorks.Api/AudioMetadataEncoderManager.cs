@@ -25,7 +25,7 @@ namespace AudioWorks.Api
             if (extension == null) throw new ArgumentNullException(nameof(extension));
 
             // Try each encoder that supports this file extension:
-            foreach (var factory in ExtensionProvider.GetFactories<IAudioMetadataEncoder>(
+            foreach (var factory in ExtensionProviderWrapper.GetFactories<IAudioMetadataEncoder>(
                 "Extension", extension))
                 using (var export = factory.CreateExport())
                     return export.Value.SettingInfo;

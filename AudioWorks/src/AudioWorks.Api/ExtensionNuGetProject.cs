@@ -8,7 +8,7 @@ using NuGet.Frameworks;
 using NuGet.Packaging;
 using NuGet.ProjectManagement;
 
-namespace AudioWorks.Extensions
+namespace AudioWorks.Api
 {
     sealed class ExtensionNuGetProject : FolderNuGetProject
     {

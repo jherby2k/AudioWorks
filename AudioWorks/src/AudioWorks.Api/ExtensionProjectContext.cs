@@ -8,7 +8,7 @@ using NuGet.Packaging;
 using NuGet.ProjectManagement;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
-namespace AudioWorks.Extensions
+namespace AudioWorks.Api
 {
     sealed class ExtensionProjectContext : INuGetProjectContext
     {

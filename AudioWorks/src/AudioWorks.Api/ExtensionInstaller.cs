@@ -20,7 +20,7 @@ using NuGet.Protocol.Core.Types;
 using NuGet.Resolver;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
-namespace AudioWorks.Extensions
+namespace AudioWorks.Api
 {
     static class ExtensionInstaller
     {

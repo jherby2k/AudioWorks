@@ -53,7 +53,7 @@ namespace AudioWorks.Api
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            _encoderFactory = ExtensionProvider.GetFactories<IAudioEncoder>("Name", name).SingleOrDefault() ??
+            _encoderFactory = ExtensionProviderWrapper.GetFactories<IAudioEncoder>("Name", name).SingleOrDefault() ??
                               throw new ArgumentException($"No '{name}' encoder is available.", nameof(name));
 
             if (encodedDirectoryName != null)

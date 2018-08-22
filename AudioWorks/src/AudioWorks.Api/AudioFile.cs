@@ -62,7 +62,7 @@ namespace AudioWorks.Api
             using (var fileStream = File.OpenRead(Path))
             {
                 // Try each info decoder that supports this file extension
-                foreach (var factory in ExtensionProvider.GetFactories<IAudioInfoDecoder>(
+                foreach (var factory in ExtensionProviderWrapper.GetFactories<IAudioInfoDecoder>(
                     "Extension", IO.Path.GetExtension(Path)))
                     try
                     {

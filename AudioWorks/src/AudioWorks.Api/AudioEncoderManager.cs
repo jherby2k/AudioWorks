@@ -27,7 +27,7 @@ namespace AudioWorks.Api
             if (name == null) throw new ArgumentNullException(nameof(name));
 
             // Try each encoder that supports this file extension:
-            foreach (var factory in ExtensionProvider.GetFactories<IAudioEncoder>(
+            foreach (var factory in ExtensionProviderWrapper.GetFactories<IAudioEncoder>(
                 "Name", name))
                 using (var export = factory.CreateExport())
                     return export.Value.SettingInfo;
@@ -42,7 +42,7 @@ namespace AudioWorks.Api
         [NotNull]
         public static IEnumerable<EncoderInfo> GetEncoderInfo()
         {
-            return ExtensionProvider.GetFactories<IAudioEncoder>()
+            return ExtensionProviderWrapper.GetFactories<IAudioEncoder>()
                 .Select(factory => new EncoderInfo(factory.Metadata));
         }
     }

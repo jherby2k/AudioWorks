@@ -27,10 +27,5 @@ namespace AudioWorks.Extensions
 
         [NotNull]
         protected static CompositionHost CompositionHost => _compositionHost.Value;
-
-        static ExtensionContainerBase()
-        {
-            ExtensionInstaller.Download();
-        }
     }
 }

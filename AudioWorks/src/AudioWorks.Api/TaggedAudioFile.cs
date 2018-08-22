@@ -51,7 +51,7 @@ namespace AudioWorks.Api
             using (var fileStream = File.Open(Path, FileMode.Open))
             {
                 // Try each encoder that supports this file extension
-                foreach (var factory in ExtensionProvider.GetFactories<IAudioMetadataEncoder>(
+                foreach (var factory in ExtensionProviderWrapper.GetFactories<IAudioMetadataEncoder>(
                     "Extension", extension))
                     using (var export = factory.CreateExport())
                     {
@@ -78,7 +78,7 @@ namespace AudioWorks.Api
             using (var fileStream = File.OpenRead(path))
             {
                 // Try each decoder that supports this file extension
-                foreach (var decoderFactory in ExtensionProvider.GetFactories<IAudioMetadataDecoder>(
+                foreach (var decoderFactory in ExtensionProviderWrapper.GetFactories<IAudioMetadataDecoder>(
                     "Extension", IO.Path.GetExtension(path)))
                     try
                     {
