@@ -18,7 +18,7 @@ namespace AudioWorks.Commands
     /// </summary>
     [PublicAPI]
     [Cmdlet(VerbsData.Export, "AudioFile"), OutputType(typeof(ITaggedAudioFile))]
-    public sealed class ExportAudioFileCommand : PSCmdlet, IDynamicParameters, IDisposable
+    public sealed class ExportAudioFileCommand : LoggingPSCmdlet, IDynamicParameters, IDisposable
     {
         [NotNull] readonly CancellationTokenSource _cancellationSource = new CancellationTokenSource();
         [NotNull, ItemNotNull] readonly List<ITaggedAudioFile> _sourceAudioFiles = new List<ITaggedAudioFile>();
@@ -89,7 +89,7 @@ namespace AudioWorks.Commands
             var lastAudioFilesCompleted = 0;
             var lastPercentComplete = 0;
 
-            using (var progressQueue = new BlockingCollection<ProgressRecord>())
+            using (var messageQueue = new BlockingCollection<object>())
             {
                 var progress = new SimpleProgress<ProgressToken>(token =>
                 {
@@ -103,21 +103,24 @@ namespace AudioWorks.Commands
                     lastPercentComplete = percentComplete;
 
                     // ReSharper disable once AccessToDisposedClosure
-                    progressQueue.Add(new ProgressRecord(0, activity,
+                    messageQueue.Add(new ProgressRecord(0, activity,
                         $"{token.AudioFilesCompleted} of {_sourceAudioFiles.Count} audio files encoded")
                     {
                         // If the audio files have estimated frame counts, make sure this doesn't go over 100%
                         PercentComplete = Math.Min(percentComplete, 100)
                     });
+
+                    // Send any new log messages to the output queue
+                    while (CmdletLoggerProvider.Instance.TryDequeueMessage(out var logMessage))
+                        // ReSharper disable once AccessToDisposedClosure
+                        messageQueue.Add(logMessage);
                 });
 
                 var encodeTask = encoder.EncodeAsync(progress, _cancellationSource.Token, _sourceAudioFiles.ToArray());
                 // ReSharper disable once AccessToDisposedClosure
-                encodeTask.ContinueWith(task => progressQueue.CompleteAdding(), TaskScheduler.Current);
+                encodeTask.ContinueWith(task => messageQueue.CompleteAdding(), TaskScheduler.Current);
 
-                // Process progress notifications on the main thread
-                foreach (var progressRecord in progressQueue.GetConsumingEnumerable(_cancellationSource.Token))
-                    WriteProgress(progressRecord);
+                this.OutputMessages(messageQueue, _cancellationSource.Token);
 
                 WriteObject(encodeTask.Result, true);
             }

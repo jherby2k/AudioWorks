@@ -18,9 +18,8 @@ namespace AudioWorks.Commands
     /// </summary>
     [PublicAPI]
     [Cmdlet(VerbsDiagnostic.Measure, "AudioFile"), OutputType(typeof(ITaggedAudioFile))]
-    public sealed class MeasureAudioFileCommand : Cmdlet, IDynamicParameters, IDisposable
+    public sealed class MeasureAudioFileCommand : LoggingCmdlet, IDynamicParameters, IDisposable
     {
-        [NotNull] readonly BlockingCollection<object> _messageQueue = new BlockingCollection<object>();
         [NotNull] readonly CancellationTokenSource _cancellationSource = new CancellationTokenSource();
         [NotNull] readonly List<ITaggedAudioFile> _audioFiles = new List<ITaggedAudioFile>();
         [CanBeNull] RuntimeDefinedParameterDictionary _parameters;
@@ -51,8 +50,6 @@ namespace AudioWorks.Commands
         protected override void BeginProcessing()
         {
             Telemetry.TrackFirstLaunch();
-            CmdletLoggerProvider.Instance.Enable();
-            CmdletLoggerProvider.Instance.SetMessageQueue(_messageQueue);
         }
 
         /// <inheritdoc/>
@@ -72,30 +69,39 @@ namespace AudioWorks.Commands
             var lastAudioFilesCompleted = 0;
             var lastPercentComplete = 0;
 
-            var progress = new SimpleProgress<ProgressToken>(token =>
+            using (var messageQueue = new BlockingCollection<object>())
             {
-                var percentComplete = (int) Math.Round(token.FramesCompleted / totalFrames * 100);
-
-                // Avoid reporting progress when nothing has changed
-                if (percentComplete <= lastPercentComplete && token.AudioFilesCompleted <= lastAudioFilesCompleted)
-                    return;
-
-                lastAudioFilesCompleted = token.AudioFilesCompleted;
-                lastPercentComplete = percentComplete;
-
-                _messageQueue.Add(new ProgressRecord(0, activity,
-                    $"{token.AudioFilesCompleted} of {_audioFiles.Count} audio files analyzed")
+                var progress = new SimpleProgress<ProgressToken>(token =>
                 {
-                    // If the audio files have estimated frame counts, make sure this doesn't go over 100%
-                    PercentComplete = Math.Min(percentComplete, 100)
+                    var percentComplete = (int)Math.Round(token.FramesCompleted / totalFrames * 100);
+
+                    // Avoid reporting progress when nothing has changed
+                    if (percentComplete <= lastPercentComplete && token.AudioFilesCompleted <= lastAudioFilesCompleted)
+                        return;
+
+                    lastAudioFilesCompleted = token.AudioFilesCompleted;
+                    lastPercentComplete = percentComplete;
+
+                    // ReSharper disable once AccessToDisposedClosure
+                    messageQueue.Add(new ProgressRecord(0, activity,
+                        $"{token.AudioFilesCompleted} of {_audioFiles.Count} audio files analyzed")
+                    {
+                        // If the audio files have estimated frame counts, make sure this doesn't go over 100%
+                        PercentComplete = Math.Min(percentComplete, 100)
+                    });
+
+                    // Send any new log messages to the output queue
+                    while (CmdletLoggerProvider.Instance.TryDequeueMessage(out var logMessage))
+                        // ReSharper disable once AccessToDisposedClosure
+                        messageQueue.Add(logMessage);
                 });
-            });
 
-            analyzer.AnalyzeAsync(progress, _cancellationSource.Token, _audioFiles.ToArray())
-                .ContinueWith(task => _messageQueue.CompleteAdding(), TaskScheduler.Current);
+                analyzer.AnalyzeAsync(progress, _cancellationSource.Token, _audioFiles.ToArray())
+                    // ReSharper disable once AccessToDisposedClosure
+                    .ContinueWith(task => messageQueue.CompleteAdding(), TaskScheduler.Current);
 
-            this.ProcessMessages(_messageQueue, _cancellationSource.Token);
-            CmdletLoggerProvider.Instance.SetMessageQueue(null);
+                this.OutputMessages(messageQueue, _cancellationSource.Token);
+            }
 
             if (PassThru)
                 WriteObject(_audioFiles, true);
@@ -121,7 +127,6 @@ namespace AudioWorks.Commands
         /// <inheritdoc/>
         public void Dispose()
         {
-            _messageQueue.Dispose();
             _cancellationSource.Dispose();
         }
     }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
@@ -22,22 +21,16 @@ namespace AudioWorks.Commands
         }
 
         [NotNull]
-        public ILogger CreateLogger([CanBeNull] string categoryName)
-        {
-            // Just use the same logger every time
-            return _lazyLogger.Value;
-        }
+        public ILogger CreateLogger([CanBeNull] string categoryName) => _lazyLogger.Value;
 
         public void Dispose()
         {
         }
 
-        internal void SetMessageQueue([CanBeNull] BlockingCollection<object> messageQueue)
-        {
-            _lazyLogger.Value.MessageQueue = messageQueue;
-        }
+        [ContractAnnotation("=> false, result:null; => true, result:notnull")]
+        internal bool TryDequeueMessage(out object result) => _lazyLogger.Value.MessageQueue.TryDequeue(out result);
 
-        public void Enable()
+        internal void Enable()
         {
             // Ensure this provider is only added once
             if (_enabled) return;

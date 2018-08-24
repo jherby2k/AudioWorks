@@ -13,7 +13,7 @@ namespace AudioWorks.Commands
     /// </summary>
     [PublicAPI]
     [Cmdlet(VerbsCommon.Get, "AudioFile", DefaultParameterSetName = "ByPath"), OutputType(typeof(ITaggedAudioFile))]
-    public sealed class GetAudioFileCommand : PSCmdlet
+    public sealed class GetAudioFileCommand : LoggingPSCmdlet
     {
         /// <summary>
         /// <para type="description">Specifies the path to an item. This cmdlet gets the item at the specified
@@ -55,14 +55,34 @@ namespace AudioWorks.Commands
             try
             {
                 if (FileInfo != null)
-                    WriteObject(new TaggedAudioFile(FileInfo.FullName));
+                    ProcessPath(FileInfo.FullName);
                 else
                     foreach (var path in this.GetFileSystemPaths(Path, LiteralPath))
-                        WriteObject(new TaggedAudioFile(path));
+                        ProcessPath(path);
+
             }
             catch (ItemNotFoundException e)
             {
                 WriteError(new ErrorRecord(e, nameof(ItemNotFoundException), ErrorCategory.ObjectNotFound, Path));
+            }
+        }
+
+        void ProcessPath([NotNull] string path)
+        {
+            try
+            {
+                ITaggedAudioFile result;
+
+                try
+                {
+                    result = new TaggedAudioFile(path);
+                }
+                finally
+                {
+                    ProcessLogMessages();
+                }
+
+                WriteObject(result);
             }
             catch (AudioException e)
             {

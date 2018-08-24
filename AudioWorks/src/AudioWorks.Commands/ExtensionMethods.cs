@@ -34,7 +34,7 @@ namespace AudioWorks.Commands
             return Array.Empty<string>();
         }
 
-        internal static void ProcessMessages(
+        internal static void OutputMessages(
             [NotNull] this Cmdlet cmdlet,
             [NotNull] BlockingCollection<object> messageQueue,
             CancellationToken cancellationToken)

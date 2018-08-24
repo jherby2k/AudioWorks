@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 using System.Management.Automation;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
@@ -7,27 +8,28 @@ using Microsoft.Extensions.Logging.Abstractions.Internal;
 
 namespace AudioWorks.Commands
 {
+    [UsedImplicitly]
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes",
+        Justification = "Instantiated via Lazy<T>")]
     sealed class CmdletLogger : ILogger
     {
-        [CanBeNull]
-        internal BlockingCollection<object> MessageQueue { get; set; }
+        [NotNull]
+        internal ConcurrentQueue<object> MessageQueue { get; } = new ConcurrentQueue<object>();
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, [CanBeNull] TState state, [CanBeNull] Exception exception, [NotNull] Func<TState, Exception, string> formatter)
         {
-            if (MessageQueue == null) return;
-
             var message = formatter(state, exception);
 
             switch (logLevel)
             {
                 case LogLevel.Debug:
-                    MessageQueue.Add(new DebugRecord(message));
+                    MessageQueue.Enqueue(new DebugRecord(message));
                     break;
                 case LogLevel.Information:
-                    MessageQueue.Add(new InformationRecord(message, null));
+                    MessageQueue.Enqueue(new InformationRecord(message, null));
                     break;
                 case LogLevel.Warning:
-                    MessageQueue.Add(new WarningRecord(message));
+                    MessageQueue.Enqueue(new WarningRecord(message));
                     break;
             }
         }
