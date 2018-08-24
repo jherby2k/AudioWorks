@@ -18,14 +18,12 @@ namespace AudioWorks.Api
         {
             switch (level)
             {
+                case MessageLevel.Debug:
                 case MessageLevel.Info:
-                    _logger.LogInformation(message, args);
+                    _logger.LogDebug(message, args);
                     break;
                 case MessageLevel.Warning:
                     _logger.LogWarning(message, args);
-                    break;
-                case MessageLevel.Debug:
-                    _logger.LogDebug(message, args);
                     break;
                 case MessageLevel.Error:
                     _logger.LogError(message, args);

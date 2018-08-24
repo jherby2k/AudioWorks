@@ -24,7 +24,7 @@ namespace AudioWorks.Extensions
 
         internal ExtensionAssemblyResolver([NotNull] string path)
         {
-            _logger.LogInformation("Loading extension '{0}'.", path);
+            _logger.LogDebug("Loading extension '{0}'.", path);
 
             Assembly = Assembly.LoadFrom(path);
             var extensionDir = Path.GetDirectoryName(path);
@@ -52,7 +52,7 @@ namespace AudioWorks.Extensions
             {
                 var assemblyName = new AssemblyName(args.Name);
 
-                _logger.LogInformation("Attempting to resolve a dependency on '{1}'.", assemblyName);
+                _logger.LogDebug("Attempting to resolve a dependency on '{1}'.", assemblyName);
 
                 var result = assemblyFiles
                     .Where(assemblyFile => AssemblyName.ReferenceMatchesDefinition(
@@ -60,9 +60,9 @@ namespace AudioWorks.Extensions
                     .Select(Assembly.LoadFrom).FirstOrDefault();
 
                 if (result != null)
-                    _logger.LogInformation("Located dependency '{0}'.", result.FullName);
+                    _logger.LogDebug("Located dependency '{0}'.", result.FullName);
                 else
-                    _logger.LogCritical("Unable to locate dependency '{0}'.", assemblyName);
+                    _logger.LogDebug("Unable to locate dependency '{0}'.", assemblyName);
 
                 return result;
             };

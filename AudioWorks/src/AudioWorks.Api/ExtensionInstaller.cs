@@ -108,7 +108,7 @@ namespace AudioWorks.Api
 #endif
                         .ToArray();
 
-                    logger.LogInformation("Discovered {0} packages published at '{1}'.",
+                    logger.LogDebug("Discovered {0} packages published at '{1}'.",
                         publishedPackages.Length, _customUrl);
 
                     foreach (var publishedPackage in publishedPackages)
@@ -117,7 +117,7 @@ namespace AudioWorks.Api
                             new DirectoryInfo(Path.Combine(_projectRoot, publishedPackage.Identity.ToString()));
                         if (extensionDir.Exists)
                         {
-                            logger.LogInformation("Package '{0}' is already installed.",
+                            logger.LogDebug("Package '{0}' is already installed.",
                                 publishedPackage.Identity.ToString());
 
                             continue;
@@ -195,7 +195,7 @@ namespace AudioWorks.Api
                     {
                         Directory.Delete(Path.Combine(_projectRoot, obsoleteExtension), true);
 
-                        logger.LogInformation("Deleted unlisted extension in '{0}'.",
+                        logger.LogDebug("Deleted unlisted extension in '{0}'.",
                             obsoleteExtension);
                     }
                 }
@@ -280,7 +280,7 @@ namespace AudioWorks.Api
             foreach (var file in source.GetFiles()
                 .Where(file => file.Extension.Equals(".dll", StringComparison.OrdinalIgnoreCase)))
             {
-                logger.LogInformation("Moving '{0}' to '{1}'.",
+                logger.LogDebug("Moving '{0}' to '{1}'.",
                     file.FullName, destination.FullName);
 
                 file.MoveTo(Path.Combine(destination.FullName, file.Name));
