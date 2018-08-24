@@ -14,7 +14,13 @@ namespace AudioWorks.Common
     /// </summary>
     public static class LoggingManager
     {
-        [NotNull] static readonly ILoggerFactory _loggerFactory = new LoggerFactory().AddNLog();
+        /// <summary>
+        /// Gets the singleton logger factory.
+        /// </summary>
+        /// <value>The logger factory.</value>
+        [NotNull]
+        [CLSCompliant(false)]
+        public static ILoggerFactory LoggerFactory { get; } = new LoggerFactory().AddNLog();
 
         static LoggingManager()
         {
@@ -50,23 +56,5 @@ namespace AudioWorks.Common
                 // Don't log anything at 6+
             }
         }
-
-        /// <summary>
-        /// Creates a new <see cref="ILogger"/> instance using the full name of the given type.
-        /// </summary>
-        /// <typeparam name="T">The type.</typeparam>
-        /// <returns>The logger.</returns>
-        [NotNull]
-        [CLSCompliant(false)]
-        public static ILogger CreateLogger<T>() => _loggerFactory.CreateLogger<T>();
-
-        /// <summary>
-        /// Creates a new <see cref="ILogger" /> instance using the specified category name.
-        /// </summary>
-        /// <param name="categoryName">The category name.</param>
-        /// <returns>The logger.</returns>
-        [NotNull]
-        [CLSCompliant(false)]
-        public static ILogger CreateLogger(string categoryName) => _loggerFactory.CreateLogger(categoryName);
     }
 }
