@@ -12,7 +12,7 @@ namespace AudioWorks.Api
 {
     sealed class ExtensionProjectContext : INuGetProjectContext
     {
-        [NotNull] readonly ILogger _logger = LoggingManager.CreateLogger<ExtensionProjectContext>();
+        [NotNull] readonly ILogger _logger = LoggingManager.LoggerFactory.CreateLogger<ExtensionProjectContext>();
 
         public void Log(MessageLevel level, string message, [NotNull, ItemNotNull] params object[] args)
         {

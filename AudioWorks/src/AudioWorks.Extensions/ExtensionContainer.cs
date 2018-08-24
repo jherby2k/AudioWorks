@@ -24,7 +24,7 @@ namespace AudioWorks.Extensions
         {
             CompositionHost.SatisfyImports(this);
 
-            LoggingManager.CreateLogger<ExtensionContainer<T>>()
+            LoggingManager.LoggerFactory.CreateLogger<ExtensionContainer<T>>()
                 .LogDebug("Composed {0} part(s) of type '{1}'.", Factories.Count(), typeof(T).Name);
         }
     }

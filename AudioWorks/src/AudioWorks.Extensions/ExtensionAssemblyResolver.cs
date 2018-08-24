@@ -17,7 +17,7 @@ namespace AudioWorks.Extensions
 {
     sealed class ExtensionAssemblyResolver
     {
-        readonly ILogger _logger = LoggingManager.CreateLogger<ExtensionAssemblyResolver>();
+        readonly ILogger _logger = LoggingManager.LoggerFactory.CreateLogger<ExtensionAssemblyResolver>();
 
         [NotNull]
         internal Assembly Assembly { get; }
