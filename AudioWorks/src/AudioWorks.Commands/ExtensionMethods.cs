@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Management.Automation;
+using System.Threading;
 using JetBrains.Annotations;
 using Microsoft.PowerShell.Commands;
 
@@ -9,7 +11,8 @@ namespace AudioWorks.Commands
     static class ExtensionMethods
     {
         [Pure, NotNull]
-        internal static IEnumerable<string> GetFileSystemPaths(this PSCmdlet cmdlet,
+        internal static IEnumerable<string> GetFileSystemPaths(
+            [NotNull] this PSCmdlet cmdlet,
             [CanBeNull] string path,
             [CanBeNull] string literalPath)
         {
@@ -29,6 +32,29 @@ namespace AudioWorks.Commands
             }
 
             return Array.Empty<string>();
+        }
+
+        internal static void ProcessMessages(
+            [NotNull] this Cmdlet cmdlet,
+            [NotNull] BlockingCollection<object> messageQueue,
+            CancellationToken cancellationToken)
+        {
+            foreach (var message in messageQueue.GetConsumingEnumerable(cancellationToken))
+                switch (message)
+                {
+                    case ProgressRecord progressRecord:
+                        cmdlet.WriteProgress(progressRecord);
+                        break;
+                    case DebugRecord debugRecord:
+                        cmdlet.WriteDebug(debugRecord.Message);
+                        break;
+                    case InformationRecord informationRecord:
+                        cmdlet.WriteInformation(informationRecord);
+                        break;
+                    case WarningRecord warningRecord:
+                        cmdlet.WriteWarning(warningRecord.Message);
+                        break;
+                }
         }
     }
 }
