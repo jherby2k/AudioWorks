@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using AudioWorks.Common;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Api
 {
@@ -30,8 +31,9 @@ namespace AudioWorks.Api
         }
 
         [NotNull]
-        internal string Replace([NotNull] AudioMetadata metadata) =>
-            _replacer.Replace(_encoded, match =>
+        internal string ReplaceWith([NotNull] AudioMetadata metadata)
+        {
+            var result = _replacer.Replace(_encoded, match =>
             {
                 var propertyName = match.Value.Substring(1, match.Value.Length - 2);
                 // ReSharper disable once PossibleNullReferenceException
@@ -55,5 +57,11 @@ namespace AudioWorks.Api
 
                 return sanitizedPropertyValue;
             });
+
+            LoggingManager.LoggerFactory.CreateLogger<EncodedString>()
+                .LogDebug("Replacing encoded string '{0}' with '{1}'.", _encoded, result);
+
+            return result;
+        }
     }
 }

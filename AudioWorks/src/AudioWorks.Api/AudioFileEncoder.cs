@@ -130,14 +130,14 @@ namespace AudioWorks.Api
                     for (var i = 0; i < audioFiles.Length; i++)
                     {
                         // The output directory defaults to the AudioFile's current directory
-                        var outputDirectory = _encodedDirectoryName?.Replace(audioFiles[i].Metadata) ??
+                        var outputDirectory = _encodedDirectoryName?.ReplaceWith(audioFiles[i].Metadata) ??
                                               Path.GetDirectoryName(audioFiles[i].Path);
 
                         // ReSharper disable once AssignNullToNotNullAttribute
                         Directory.CreateDirectory(outputDirectory);
 
                         // The output file names default to the input file names
-                        var outputFileName = _encodedFileName?.Replace(audioFiles[i].Metadata) ??
+                        var outputFileName = _encodedFileName?.ReplaceWith(audioFiles[i].Metadata) ??
                                              Path.GetFileNameWithoutExtension(audioFiles[i].Path);
 
                         encoderExports[i] = _encoderFactory.CreateExport();

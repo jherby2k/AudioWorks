@@ -49,14 +49,14 @@ namespace AudioWorks.Api
             if (audioFile.Metadata.CoverArt == null) return null;
 
             // The output directory defaults to the AudioFile's current directory
-            var outputDirectory = _encodedDirectoryName?.Replace(audioFile.Metadata) ??
+            var outputDirectory = _encodedDirectoryName?.ReplaceWith(audioFile.Metadata) ??
                                   Path.GetDirectoryName(audioFile.Path);
 
             // ReSharper disable once AssignNullToNotNullAttribute
             Directory.CreateDirectory(outputDirectory);
 
             // The output file names default to the input file names
-            var outputFileName = _encodedFileName?.Replace(audioFile.Metadata) ??
+            var outputFileName = _encodedFileName?.ReplaceWith(audioFile.Metadata) ??
                                  Path.GetFileNameWithoutExtension(audioFile.Path);
 
             var result = new FileInfo(Path.Combine(
