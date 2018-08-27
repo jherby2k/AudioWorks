@@ -13,7 +13,7 @@ namespace AudioWorks.Commands
     /// </summary>
     [PublicAPI]
     [Cmdlet(VerbsData.Save, "AudioMetadata", SupportsShouldProcess = true), OutputType(typeof(ITaggedAudioFile))]
-    public sealed class SaveAudioMetadataCommand : Cmdlet, IDynamicParameters
+    public sealed class SaveAudioMetadataCommand : LoggingCmdlet, IDynamicParameters
     {
         [CanBeNull] RuntimeDefinedParameterDictionary _parameters;
 
@@ -44,7 +44,10 @@ namespace AudioWorks.Commands
             {
                 // ReSharper disable twice PossibleNullReferenceException
                 if (ShouldProcess(AudioFile.Path))
+                {
                     AudioFile.SaveMetadata(SettingAdapter.ParametersToSettings(_parameters));
+                    ProcessLogMessages();
+                }
             }
             catch (AudioUnsupportedException e)
             {

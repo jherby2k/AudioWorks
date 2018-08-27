@@ -13,7 +13,7 @@ namespace AudioWorks.Commands
     /// </summary>
     [PublicAPI]
     [Cmdlet(VerbsCommon.Clear, "AudioMetadata"), OutputType(typeof(ITaggedAudioFile))]
-    public sealed class ClearAudioMetadataCommand : Cmdlet
+    public sealed class ClearAudioMetadataCommand : LoggingCmdlet
     {
         /// <summary>
         /// <para type="description">Specifies the audio file.</para>
@@ -152,6 +152,8 @@ namespace AudioWorks.Commands
             if (!(Title || Artist || Album || AlbumArtist || Composer || Genre || Comment ||
                   Day || Month || Year || TrackNumber || TrackCount || Loudness))
                 AudioFile.Metadata.Clear();
+
+            ProcessLogMessages();
 
             if (PassThru)
                 WriteObject(AudioFile);

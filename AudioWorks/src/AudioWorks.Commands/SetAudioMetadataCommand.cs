@@ -12,7 +12,7 @@ namespace AudioWorks.Commands
     /// </summary>
     [PublicAPI]
     [Cmdlet(VerbsCommon.Set, "AudioMetadata"), OutputType(typeof(ITaggedAudioFile))]
-    public sealed class SetAudioMetadataCommand : Cmdlet
+    public sealed class SetAudioMetadataCommand : LoggingCmdlet
     {
         /// <summary>
         /// <para type="description">Specifies the audio file.</para>
@@ -163,6 +163,8 @@ namespace AudioWorks.Commands
             {
                 WriteError(new ErrorRecord(e, e.GetType().Name, ErrorCategory.InvalidData, AudioFile));
             }
+
+            ProcessLogMessages();
 
             if (PassThru)
                 WriteObject(AudioFile);

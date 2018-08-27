@@ -12,7 +12,7 @@ namespace AudioWorks.Commands
     /// </summary>
     [PublicAPI]
     [Cmdlet(VerbsCommon.Get, "AudioCoverArt", DefaultParameterSetName = "ByPath"), OutputType(typeof(ICoverArt))]
-    public sealed class GetAudioCoverArtCommand : PSCmdlet
+    public sealed class GetAudioCoverArtCommand : LoggingPSCmdlet
     {
         /// <summary>
         /// <para type="description">Specifies the path to an item. This cmdlet gets the item at the specified
@@ -54,14 +54,33 @@ namespace AudioWorks.Commands
             try
             {
                 if (FileInfo != null)
-                    WriteObject(CoverArtFactory.GetOrCreate(FileInfo.FullName));
+                    ProcessPath(FileInfo.FullName);
                 else
                     foreach (var path in this.GetFileSystemPaths(Path, LiteralPath))
-                        WriteObject(CoverArtFactory.GetOrCreate(path));
+                        ProcessPath(path);
             }
             catch (ItemNotFoundException e)
             {
                 WriteError(new ErrorRecord(e, nameof(ItemNotFoundException), ErrorCategory.ObjectNotFound, Path));
+            }
+        }
+
+        void ProcessPath([NotNull] string path)
+        {
+            try
+            {
+                ICoverArt result;
+
+                try
+                {
+                    result = CoverArtFactory.GetOrCreate(path);
+                }
+                finally
+                {
+                    ProcessLogMessages();
+                }
+
+                WriteObject(result);
             }
             catch (AudioException e)
             {

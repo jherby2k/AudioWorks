@@ -14,7 +14,7 @@ namespace AudioWorks.Commands
     /// </summary>
     [PublicAPI]
     [Cmdlet(VerbsData.Export, "AudioCoverArt"), OutputType(typeof(FileInfo))]
-    public sealed class ExportAudioCoverArtCommand : PSCmdlet
+    public sealed class ExportAudioCoverArtCommand : LoggingPSCmdlet
     {
         [CanBeNull] CoverArtExtractor _extractor;
 
@@ -66,7 +66,11 @@ namespace AudioWorks.Commands
         protected override void ProcessRecord()
         {
             // ReSharper disable once PossibleNullReferenceException
-            WriteObject(_extractor.Extract(AudioFile));
+            var result = _extractor.Extract(AudioFile);
+
+            ProcessLogMessages();
+
+            WriteObject(result);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace AudioWorks.Commands
     /// </summary>
     [PublicAPI]
     [Cmdlet(VerbsCommon.Get, "AudioInfo"), OutputType(typeof(AudioInfo))]
-    public sealed class GetAudioInfoCommand : Cmdlet
+    public sealed class GetAudioInfoCommand : LoggingCmdlet
     {
         /// <summary>
         /// <para type="description">Specifies the audio file.</para>
@@ -30,7 +30,11 @@ namespace AudioWorks.Commands
         /// <inheritdoc/>
         protected override void ProcessRecord()
         {
-            WriteObject(AudioFile.Info);
+            var result = AudioFile.Info;
+
+            ProcessLogMessages();
+
+            WriteObject(result);
         }
     }
 }

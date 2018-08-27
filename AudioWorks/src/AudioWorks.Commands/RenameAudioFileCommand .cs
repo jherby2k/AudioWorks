@@ -12,7 +12,7 @@ namespace AudioWorks.Commands
     /// </summary>
     [PublicAPI]
     [Cmdlet(VerbsCommon.Rename, "AudioFile"), OutputType(typeof(ITaggedAudioFile))]
-    public sealed class RenameAudioFileCommand : Cmdlet
+    public sealed class RenameAudioFileCommand : LoggingCmdlet
     {
         /// <summary>
         /// <para type="description">Specifies the new file name.</para>
@@ -53,6 +53,9 @@ namespace AudioWorks.Commands
         protected override void ProcessRecord()
         {
             AudioFile.Rename(Name, Replace);
+
+            ProcessLogMessages();
+
             if (PassThru)
                 WriteObject(AudioFile);
         }
