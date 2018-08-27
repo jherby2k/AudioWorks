@@ -108,12 +108,6 @@ namespace AudioWorks.Commands
         public SwitchParameter PassThru { get; set; }
 
         /// <inheritdoc/>
-        protected override void BeginProcessing()
-        {
-            Telemetry.TrackFirstLaunch();
-        }
-
-        /// <inheritdoc/>
         protected override void ProcessRecord()
         {
             if (Title)

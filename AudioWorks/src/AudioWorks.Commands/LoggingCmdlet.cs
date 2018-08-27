@@ -13,6 +13,12 @@ namespace AudioWorks.Commands
             CmdletLoggerProvider.Instance.Enable();
         }
 
+        /// <inheritdoc/>
+        protected override void BeginProcessing()
+        {
+            Telemetry.TrackFirstLaunch();
+        }
+
         private protected void ProcessLogMessages()
         {
             while (CmdletLoggerProvider.Instance.TryDequeueMessage(out var logMessage))

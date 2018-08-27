@@ -22,12 +22,6 @@ namespace AudioWorks.Commands
         public IAudioFile AudioFile { get; set; }
 
         /// <inheritdoc/>
-        protected override void BeginProcessing()
-        {
-            Telemetry.TrackFirstLaunch();
-        }
-
-        /// <inheritdoc/>
         protected override void ProcessRecord()
         {
             var result = AudioFile.Info;

@@ -62,12 +62,6 @@ namespace AudioWorks.Commands
         public SwitchParameter Replace { get; set; }
 
         /// <inheritdoc/>
-        protected override void BeginProcessing()
-        {
-            Telemetry.TrackFirstLaunch();
-        }
-
-        /// <inheritdoc/>
         protected override void ProcessRecord()
         {
             _sourceAudioFiles.Add(AudioFile);

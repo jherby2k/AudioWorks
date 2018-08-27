@@ -44,12 +44,6 @@ namespace AudioWorks.Commands
         public FileInfo FileInfo { get; set; }
 
         /// <inheritdoc/>
-        protected override void BeginProcessing()
-        {
-            Telemetry.TrackFirstLaunch();
-        }
-
-        /// <inheritdoc/>
         protected override void ProcessRecord()
         {
             try
