@@ -14,45 +14,38 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug-Windows'">
+    <TargetFrameworks>netcoreapp2.1;net471</TargetFrameworks>
     <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release-Windows'">
+    <TargetFrameworks>netcoreapp2.1;net471</TargetFrameworks>
     <DefineConstants>RELEASE;TRACE;WINDOWS</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug-OSX'">
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <DefineConstants>DEBUG;TRACE;OSX</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release-OSX'">
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <DefineConstants>RELEASE;TRACE;OSX</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug-Linux'">
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <DefineConstants>DEBUG;TRACE;LINUX</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release-Linux'">
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <DefineConstants>RELEASE;TRACE;LINUX</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(DefineConstants.Contains(DEBUG))">
     <Optimize>false</Optimize>
   </PropertyGroup>
-
-  <Choose>
-    <When Condition="$(DefineConstants.Contains(WINDOWS))">
-      <PropertyGroup>
-        <TargetFrameworks>netcoreapp2.1;net471</TargetFrameworks>
-      </PropertyGroup>
-    </When>
-    <Otherwise>
-      <PropertyGroup>
-        <TargetFramework>netcoreapp2.1</TargetFramework>
-      </PropertyGroup>
-    </Otherwise>
-  </Choose>
 
   <!-- Disable shadow copies because NuGet.PackageManagement.dll is public key signed -->
   <ItemGroup Condition="'$(TargetFramework)'=='net471'">
