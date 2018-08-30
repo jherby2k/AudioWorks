@@ -47,10 +47,10 @@ namespace AudioWorks.Extensions.Flac
 
         internal unsafe void SetData(ReadOnlySpan<byte> data)
         {
-            fixed (byte* dataPointer = &MemoryMarshal.GetReference(data))
+            fixed (byte* dataAddress = data)
                 SafeNativeMethods.MetadataObjectPictureSetData(
                     Handle,
-                    ref Unsafe.AsRef<byte>(dataPointer),
+                    ref Unsafe.AsRef<byte>(dataAddress),
                     (uint) data.Length,
                     true);
         }

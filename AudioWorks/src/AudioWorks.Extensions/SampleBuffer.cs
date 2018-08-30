@@ -651,7 +651,7 @@ namespace AudioWorks.Extensions
         static unsafe void Interleave(ReadOnlySpan<float> leftSource, ReadOnlySpan<float> rightSource, Span<float> destination)
         {
             // Optimization - Unsafe implementation is faster
-            fixed (float* destinationAddress = &destination.GetPinnableReference())
+            fixed (float* destinationAddress = destination)
             {
                 var destinationPointer = destinationAddress;
 
@@ -667,7 +667,7 @@ namespace AudioWorks.Extensions
         static unsafe void DeInterleave(ReadOnlySpan<float> source, Span<float> leftDestination, Span<float> rightDestination)
         {
             // Optimization - Unsafe implementation is faster
-            fixed (float* sourceAddress = &MemoryMarshal.GetReference(source))
+            fixed (float* sourceAddress = source)
             {
                 var sourcePointer = sourceAddress;
 

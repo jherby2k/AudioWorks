@@ -32,7 +32,7 @@ namespace AudioWorks.Common
         [NotNull]
         public static unsafe ICoverArt GetOrCreate(ReadOnlySpan<byte> data)
         {
-            fixed (byte* dataAddress = &data.GetPinnableReference())
+            fixed (byte* dataAddress = data)
                 using (var memoryStream = new UnmanagedMemoryStream(dataAddress, data.Length))
                     return GetOrCreate(memoryStream);
         }
