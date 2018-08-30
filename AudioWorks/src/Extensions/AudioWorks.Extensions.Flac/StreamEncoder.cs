@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using AudioWorks.Common;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
@@ -68,28 +69,35 @@ namespace AudioWorks.Extensions.Flac
                 IntPtr.Zero);
         }
 
-        internal unsafe bool Process(ReadOnlySpan<int> leftBuffer, ReadOnlySpan<int> rightBuffer)
+        internal unsafe void Process(ReadOnlySpan<int> leftBuffer, ReadOnlySpan<int> rightBuffer)
         {
-            Span<IntPtr> buffers = stackalloc IntPtr[2];
-            buffers[0] = new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(leftBuffer)));
-            buffers[1] = new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(rightBuffer)));
-            return SafeNativeMethods.StreamEncoderProcess(
+            Span<IntPtr> buffers = stackalloc IntPtr[]
+            {
+                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(leftBuffer))),
+                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(rightBuffer)))
+            };
+
+            if (!SafeNativeMethods.StreamEncoderProcess(
                 _handle,
                 buffers.GetPinnableReference(),
-                (uint) leftBuffer.Length);
+                (uint) leftBuffer.Length))
+                throw new AudioEncodingException($"FLAC encountered error {GetState()} while processing samples.");
+
         }
 
-        internal bool ProcessInterleaved(ReadOnlySpan<int> buffer, uint frames)
+        internal void ProcessInterleaved(ReadOnlySpan<int> buffer, uint frames)
         {
-            return SafeNativeMethods.StreamEncoderProcessInterleaved(
+            if (!SafeNativeMethods.StreamEncoderProcessInterleaved(
                 _handle,
                 buffer.GetPinnableReference(),
-                frames);
+                frames))
+                throw new AudioEncodingException($"FLAC encountered error '{GetState()}' while processing samples.");
         }
 
-        internal bool Finish()
+        internal void Finish()
         {
-            return SafeNativeMethods.StreamEncoderFinish(_handle);
+            if (!SafeNativeMethods.StreamEncoderFinish(_handle))
+                throw new AudioEncodingException($"FLAC encountered error '{GetState()}' while finishing encoding.");
         }
 
         [Pure]

@@ -4,6 +4,7 @@ using System.Buffers;
 #endif
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using AudioWorks.Common;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Lame
@@ -75,7 +76,9 @@ namespace AudioWorks.Extensions.Lame
                 ref buffer.GetPinnableReference(),
                 buffer.Length);
 
-            //TODO throw on negative values (errors)
+            if (bytesEncoded < 0)
+                throw new AudioEncodingException($"Lame encountered error '{bytesEncoded}' while encoding.");
+
             _stream.Write(buffer.Slice(0, bytesEncoded));
 #else
             var buffer = ArrayPool<byte>.Shared.Rent((int) Math.Ceiling(1.25 * leftSamples.Length) + 7200);
@@ -89,7 +92,9 @@ namespace AudioWorks.Extensions.Lame
                     buffer,
                     buffer.Length);
 
-                //TODO throw on negative values (errors)
+                if (bytesEncoded < 0)
+                    throw new AudioEncodingException($"Lame encountered error '{bytesEncoded}' while encoding.");
+
                 _stream.Write(buffer, 0, bytesEncoded);
             }
             finally
@@ -111,7 +116,9 @@ namespace AudioWorks.Extensions.Lame
                 ref buffer.GetPinnableReference(),
                 buffer.Length);
 
-            //TODO throw on negative values (errors)
+            if (bytesEncoded < 0)
+                throw new AudioEncodingException($"Lame encountered error '{bytesEncoded}' while encoding.");
+
             _stream.Write(buffer.Slice(0, bytesEncoded));
 #else
             var buffer = ArrayPool<byte>.Shared.Rent((int) Math.Ceiling(1.25 * frameCount) + 7200);
@@ -124,7 +131,9 @@ namespace AudioWorks.Extensions.Lame
                     buffer,
                     buffer.Length);
 
-                //TODO throw on negative values (errors)
+                if (bytesEncoded < 0)
+                    throw new AudioEncodingException($"Lame encountered error '{bytesEncoded}' while encoding.");
+
                 _stream.Write(buffer, 0, bytesEncoded);
             }
             finally

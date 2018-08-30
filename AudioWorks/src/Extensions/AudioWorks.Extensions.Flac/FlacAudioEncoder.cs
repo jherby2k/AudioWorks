@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using AudioWorks.Common;
 using JetBrains.Annotations;
@@ -61,7 +60,6 @@ namespace AudioWorks.Extensions.Flac
             _bitsPerSample = info.BitsPerSample;
         }
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public unsafe void Submit(SampleBuffer samples)
         {
             if (samples.Frames == 0) return;
@@ -70,6 +68,7 @@ namespace AudioWorks.Extensions.Flac
             {
                 Span<int> buffer = stackalloc int[samples.Frames * samples.Channels];
                 samples.CopyToInterleaved(buffer, _bitsPerSample);
+                // ReSharper disable once PossibleNullReferenceException
                 _encoder.ProcessInterleaved(buffer, (uint) samples.Frames);
             }
             else
@@ -78,21 +77,30 @@ namespace AudioWorks.Extensions.Flac
                 Span<int> leftBuffer = stackalloc int[samples.Frames];
                 Span<int> rightBuffer = stackalloc int[samples.Frames];
                 samples.CopyTo(leftBuffer, rightBuffer, _bitsPerSample);
+                // ReSharper disable once PossibleNullReferenceException
                 _encoder.Process(leftBuffer, rightBuffer);
             }
         }
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public void Finish()
         {
-            _encoder.Finish();
-            foreach (var block in _metadataBlocks)
-                block.Dispose();
-            //TODO check the result and throw an exception if necessary.
+            try
+            {
+                // ReSharper disable once PossibleNullReferenceException
+                _encoder.Finish();
+            }
+            finally
+            {
+                foreach (var block in _metadataBlocks)
+                    block.Dispose();
+                _metadataBlocks.Clear();
+            }
         }
 
         public void Dispose()
         {
+            foreach (var block in _metadataBlocks)
+                block.Dispose();
             _encoder?.Dispose();
         }
     }
