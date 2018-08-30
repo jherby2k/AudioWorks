@@ -18,6 +18,7 @@ namespace AudioWorks.Extensions.Wave
                     if (stream.Length != reader.RiffChunkSize + 8)
                         throw new AudioInvalidException("File is unexpectedly truncated.", stream.Name);
 
+                    reader.BaseStream.Position = 8;
                     if (!reader.ReadFourCc().Equals("WAVE", StringComparison.Ordinal))
                         throw new AudioInvalidException("Not a Wave file.", stream.Name);
 

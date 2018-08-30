@@ -74,5 +74,20 @@ namespace AudioWorks.Extensions.Mp3
             return BinaryPrimitives.ReadUInt32BigEndian(_buffer);
 #endif
         }
+
+        [NotNull]
+        internal string ReadHeaderId()
+        {
+#if NETCOREAPP2_1
+            Span<char> buffer = stackalloc char[4];
+            if (Read(buffer) < 4)
+#else
+            var buffer = ReadChars(4);
+            if (buffer.Length < 4)
+#endif
+                throw new AudioInvalidException("File is unexpectedly truncated.", ((FileStream) BaseStream).Name);
+
+            return new string(buffer);
+        }
     }
 }

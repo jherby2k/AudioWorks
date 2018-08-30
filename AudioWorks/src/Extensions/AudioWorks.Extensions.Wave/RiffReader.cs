@@ -18,7 +18,7 @@ namespace AudioWorks.Extensions.Wave
         internal void Initialize()
         {
             BaseStream.Position = 0;
-            if (!new string(ReadChars(4)).Equals("RIFF", StringComparison.OrdinalIgnoreCase))
+            if (!ReadFourCc().Equals("RIFF", StringComparison.OrdinalIgnoreCase))
                 throw new AudioInvalidException("Not a valid RIFF stream.");
 
             RiffChunkSize = ReadUInt32();
@@ -27,15 +27,23 @@ namespace AudioWorks.Extensions.Wave
         [NotNull]
         internal string ReadFourCc()
         {
-            BaseStream.Position = 8;
-            return new string(ReadChars(4));
+#if NETCOREAPP2_1
+            Span<char> buffer = stackalloc char[4];
+            if (Read(buffer) < 4)
+#else
+            var buffer = ReadChars(4);
+            if (buffer.Length < 4)
+#endif
+                throw new AudioInvalidException("File is unexpectedly truncated.", ((FileStream) BaseStream).Name);
+
+            return new string(buffer);
         }
 
         internal uint SeekToChunk([NotNull] string chunkId)
         {
             BaseStream.Position = 12;
 
-            var currentChunkId = new string(ReadChars(4));
+            var currentChunkId = ReadFourCc();
             var currentChunkLength = ReadUInt32();
 
             while (!currentChunkId.Equals(chunkId, StringComparison.Ordinal))
@@ -46,7 +54,7 @@ namespace AudioWorks.Extensions.Wave
                 if (BaseStream.Position >= RiffChunkSize + 8)
                     return 0;
 
-                currentChunkId = new string(ReadChars(4));
+                currentChunkId = ReadFourCc();
                 currentChunkLength = ReadUInt32();
             }
 

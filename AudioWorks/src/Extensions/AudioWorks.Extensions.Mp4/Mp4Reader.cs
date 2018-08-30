@@ -23,12 +23,16 @@ namespace AudioWorks.Extensions.Mp4
         [NotNull]
         internal string ReadFourCc()
         {
-            //TODO avoid allocating an array on netcore2.1
-            var readChars = ReadChars(4);
-            if (readChars.Length < 4)
+#if NETCOREAPP2_1
+            Span<char> buffer = stackalloc char[4];
+            if (Read(buffer) < 4)
+#else
+            var buffer = ReadChars(4);
+            if (buffer.Length < 4)
+#endif
                 throw new AudioInvalidException("File is unexpectedly truncated.", ((FileStream) BaseStream).Name);
 
-            return new string(readChars);
+            return new string(buffer);
         }
 
         internal uint ReadUInt32BigEndian()

@@ -77,7 +77,7 @@ namespace AudioWorks.Extensions.Mp3
 
             var result = new OptionalHeader();
 
-            var headerId = new string(reader.ReadChars(4));
+            var headerId = reader.ReadHeaderId();
             if (!headerId.Equals("Xing", StringComparison.Ordinal) &&
                 !headerId.Equals("Info", StringComparison.Ordinal))
                 return result;
@@ -99,7 +99,7 @@ namespace AudioWorks.Extensions.Mp3
 
             var result = new OptionalHeader();
 
-            if (!new string(reader.ReadChars(4)).Equals("VBRI", StringComparison.Ordinal)) return result;
+            if (!reader.ReadHeaderId().Equals("VBRI", StringComparison.Ordinal)) return result;
 
             reader.BaseStream.Seek(6, SeekOrigin.Current);
             result.ByteCount = reader.ReadUInt32BigEndian();
