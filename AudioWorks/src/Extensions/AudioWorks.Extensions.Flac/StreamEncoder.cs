@@ -100,12 +100,6 @@ namespace AudioWorks.Extensions.Flac
                 throw new AudioEncodingException($"FLAC encountered error '{GetState()}' while finishing encoding.");
         }
 
-        [Pure]
-        internal EncoderState GetState()
-        {
-            return SafeNativeMethods.StreamEncoderGetState(_handle);
-        }
-
         public void Dispose()
         {
             _handle.Dispose();
@@ -127,6 +121,12 @@ namespace AudioWorks.Extensions.Flac
         {
             absoluteOffset = (ulong) _stream.Position;
             return EncoderTellStatus.Ok;
+        }
+
+        [Pure]
+        EncoderState GetState()
+        {
+            return SafeNativeMethods.StreamEncoderGetState(_handle);
         }
     }
 }
