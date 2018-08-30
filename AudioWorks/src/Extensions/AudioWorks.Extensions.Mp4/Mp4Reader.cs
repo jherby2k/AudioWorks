@@ -4,6 +4,7 @@ using System;
 using System.Buffers.Binary;
 using System.IO;
 using System.Text;
+using AudioWorks.Common;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp4
@@ -12,8 +13,8 @@ namespace AudioWorks.Extensions.Mp4
     {
 #if !NETCOREAPP2_1
         [NotNull] readonly byte[] _buffer = new byte[4];
-#endif
 
+#endif
         internal Mp4Reader([NotNull] Stream input)
             : base(input, CodePagesEncodingProvider.Instance.GetEncoding(1252), true)
         {
@@ -22,19 +23,26 @@ namespace AudioWorks.Extensions.Mp4
         [NotNull]
         internal string ReadFourCc()
         {
-            //TODO throw if read length is < 4
-            return new string(ReadChars(4));
+            //TODO avoid allocating an array on netcore2.1
+            var readChars = ReadChars(4);
+            if (readChars.Length < 4)
+                throw new AudioInvalidException("File is unexpectedly truncated.", ((FileStream) BaseStream).Name);
+
+            return new string(readChars);
         }
 
         internal uint ReadUInt32BigEndian()
         {
-            //TODO throw if read length is < 4
 #if NETCOREAPP2_1
             Span<byte> buffer = stackalloc byte[4];
-            Read(buffer);
+            if (Read(buffer) < 4)
+                throw new AudioInvalidException("File is unexpectedly truncated.", ((FileStream) BaseStream).Name);
+
             return BinaryPrimitives.ReadUInt32BigEndian(buffer);
 #else
-            Read(_buffer, 0, 4);
+            if (Read(_buffer, 0, 4) < 4)
+                throw new AudioInvalidException("File is unexpectedly truncated.", ((FileStream) BaseStream).Name);
+
             return BinaryPrimitives.ReadUInt32BigEndian(_buffer);
 #endif
         }

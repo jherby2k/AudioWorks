@@ -41,8 +41,9 @@ namespace AudioWorks.Extensions.Wave
                                                 (int) Math.Min(_framesRemaining, _defaultFrameCount)
                                                 * _bytesPerSample];
             // ReSharper disable once PossibleNullReferenceException
-            _reader.Read(buffer);
-            //TODO Throw if read count is less than buffer size
+            if (_reader.Read(buffer) < buffer.Length)
+                throw new AudioInvalidException("File is unexpectedly truncated.",
+                    ((FileStream) _reader.BaseStream).Name);
 
             var result = new SampleBuffer(buffer, _audioInfo.Channels, _bitsPerSample);
             _framesRemaining -= result.Frames;
@@ -55,8 +56,9 @@ namespace AudioWorks.Extensions.Wave
             try
             {
                 // ReSharper disable once PossibleNullReferenceException
-                _reader.Read(buffer, 0, length);
-                //TODO Throw if read count is less than length
+                if (_reader.Read(buffer, 0, length) < length)
+                    throw new AudioInvalidException("File is unexpectedly truncated.",
+                        ((FileStream) _reader.BaseStream).Name);
 
                 var result = new SampleBuffer(
                     buffer.AsSpan().Slice(0, length),

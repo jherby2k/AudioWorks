@@ -4,17 +4,18 @@ using System;
 using System.Buffers.Binary;
 using System.IO;
 using System.Text;
+using AudioWorks.Common;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp3
 {
     sealed class FrameReader : BinaryReader
     {
-        internal long FrameStart { get; private set; }
-
 #if !NETCOREAPP2_1
         [NotNull] readonly byte[] _buffer = new byte[4];
+
 #endif
+        internal long FrameStart { get; private set; }
 
         internal FrameReader([NotNull] Stream input)
             : base(input, Encoding.ASCII, true)
@@ -23,12 +24,19 @@ namespace AudioWorks.Extensions.Mp3
 
         internal void SeekToNextFrame()
         {
-            // A frame begins with the first 11 bits set:
-            while (true)
+            try
             {
-                if (ReadByte() != 0xFF || ReadByte() < 0xE0) continue;
-                FrameStart = BaseStream.Seek(-2, SeekOrigin.Current);
-                return;
+                // A frame begins with the first 11 bits set:
+                while (true)
+                {
+                    if (ReadByte() != 0xFF || ReadByte() < 0xE0) continue;
+                    FrameStart = BaseStream.Seek(-2, SeekOrigin.Current);
+                    return;
+                }
+            }
+            catch (EndOfStreamException)
+            {
+                throw new AudioInvalidException("File is unexpectedly truncated.", ((FileStream) BaseStream).Name);
             }
         }
 
@@ -50,13 +58,19 @@ namespace AudioWorks.Extensions.Mp3
 
         internal uint ReadUInt32BigEndian()
         {
-            //TODO throw if read length is < 4
 #if NETCOREAPP2_1
             Span<byte> buffer = stackalloc byte[4];
-            Read(buffer);
+
+            if (Read(buffer) < 4)
+                throw new AudioInvalidException("File is unexpectedly truncated.",
+                    ((FileStream) BaseStream).Name);
+
             return BinaryPrimitives.ReadUInt32BigEndian(buffer);
 #else
-            Read(_buffer, 0, 4);
+            if (Read(_buffer, 0, 4) < 4)
+                throw new AudioInvalidException("File is unexpectedly truncated.",
+                    ((FileStream) BaseStream).Name);
+
             return BinaryPrimitives.ReadUInt32BigEndian(_buffer);
 #endif
         }

@@ -49,20 +49,22 @@ namespace AudioWorks.Extensions.Mp3
             FrameHeader result = null;
             do
             {
+                reader.SeekToNextFrame();
+#if NETCOREAPP2_1
+                if (reader.Read(buffer) < 4)
+#else
+                if (reader.Read(buffer, 0, 4) < 4)
+#endif
+                    throw new AudioInvalidException("File is unexpectedly truncated.",
+                        ((FileStream) reader.BaseStream).Name);
+
                 try
                 {
-                    //TODO throw if read < 4 bytes
-                    reader.SeekToNextFrame();
-#if NETCOREAPP2_1
-                    reader.Read(buffer);
-#else
-                    reader.Read(buffer, 0, 4);
-#endif
                     result = new FrameHeader(buffer);
                 }
                 catch (AudioException)
                 {
-                    // If the frame header appears wrong, it is probably a bad sync
+                    // If the frame header appears wrong, it is probably just a bad sync
                 }
             } while (result == null || !reader.VerifyFrameSync(result));
             return result;

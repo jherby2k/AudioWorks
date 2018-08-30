@@ -53,7 +53,7 @@ namespace AudioWorks.Extensions.Mp4
                 foreach (var fourCc in hierarchy)
                     do
                     {
-                        var subAtom = new AtomInfo((uint)_stream.Position, reader.ReadUInt32BigEndian(),
+                        var subAtom = new AtomInfo((uint) _stream.Position, reader.ReadUInt32BigEndian(),
                             reader.ReadFourCc());
 
                         if (subAtom.End > _stream.Length)
