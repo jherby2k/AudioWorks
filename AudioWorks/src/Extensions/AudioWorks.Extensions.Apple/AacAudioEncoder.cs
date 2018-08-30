@@ -124,7 +124,9 @@ namespace AudioWorks.Extensions.Apple
             bufferList.Buffers[0].Data = new IntPtr(Unsafe.AsPointer(ref buffer.GetPinnableReference()));
 
             // ReSharper disable once PossibleNullReferenceException
-            _audioFile.Write(bufferList, (uint) samples.Frames);
+            var status = _audioFile.Write(bufferList, (uint)samples.Frames);
+            if (status != ExtendedAudioFileStatus.Ok)
+                throw new AudioEncodingException($"Apple AAC encoder encountered error '{status}'.");
         }
 
         public void Finish()
