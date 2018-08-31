@@ -1,9 +1,13 @@
 ﻿using System;
+#if WINDOWS
 using System.IO;
 using System.Reflection;
+#endif
 using System.Runtime.InteropServices;
 using System.Security;
+#if WINDOWS
 using System.Text;
+#endif
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Lame

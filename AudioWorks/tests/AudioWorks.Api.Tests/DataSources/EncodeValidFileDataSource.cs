@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if !LINUX
+using System;
+#endif
 using System.Collections.Generic;
 using System.Linq;
 using AudioWorks.Api.Tests.DataTypes;
