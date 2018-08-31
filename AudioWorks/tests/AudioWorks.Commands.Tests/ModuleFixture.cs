@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Management.Automation.Runspaces;
 using JetBrains.Annotations;
+using Microsoft.PowerShell;
 
 namespace AudioWorks.Commands.Tests
 {
@@ -16,9 +17,10 @@ namespace AudioWorks.Commands.Tests
         public ModuleFixture()
         {
             var state = InitialSessionState.CreateDefault();
+            state.ExecutionPolicy = ExecutionPolicy.Bypass;
             state.ImportPSModule(new[]
             {
-                Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).FullName, $"{_moduleProject}.dll")
+                Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).FullName, _moduleProject)
             });
             Runspace = RunspaceFactory.CreateRunspace(state);
             Runspace.Open();
