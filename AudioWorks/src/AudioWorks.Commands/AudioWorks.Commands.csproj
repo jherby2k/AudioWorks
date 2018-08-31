@@ -46,6 +46,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="$(DefineConstants.Contains(RELEASE))">
+    <!-- ReSharper disable once UnknownProperty -->
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\AudioWorks.Commands.xml</DocumentationFile>
   </PropertyGroup>
   
@@ -81,6 +82,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <!-- ReSharper disable once UnknownProperty -->
     <Exec Command="pwsh -ExecutionPolicy Bypass -File &quot;$(ProjectDir)PublishModule.ps1&quot; -ProjectDir $(ProjectDir) -Configuration $(ConfigurationName) -Framework $(TargetFramework)" />
   </Target>
 

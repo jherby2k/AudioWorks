@@ -46,6 +46,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="$(DefineConstants.Contains(RELEASE))">
+    <!-- ReSharper disable once UnknownProperty -->
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\AudioWorks.Api.xml</DocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>

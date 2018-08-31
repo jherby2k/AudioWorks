@@ -44,6 +44,7 @@
   </PropertyGroup>
 
   <!-- Disable shadow copies because NuGet.PackageManagement.dll is public key signed -->
+  <!-- ReSharper disable once UnknownProperty -->
   <ItemGroup Condition="'$(TargetFramework)'=='net471'">
     <None Update="xunit.runner.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
