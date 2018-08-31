@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.1;net471</TargetFrameworks>
+    <TargetFrameworks Condition="'$(OS)'!='Windows_NT'">netcoreapp2.1</TargetFrameworks>
     <LangVersion>7.3</LangVersion>
     <IsPackable>false</IsPackable>
     <Description>Unit testing project for the AudioWorks API. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
@@ -40,19 +42,6 @@
   <PropertyGroup Condition="$(DefineConstants.Contains(DEBUG))">
     <Optimize>false</Optimize>
   </PropertyGroup>
-
-  <Choose>
-    <When Condition="$(DefineConstants.Contains(WINDOWS))">
-      <PropertyGroup>
-        <TargetFrameworks>netcoreapp2.1;net471</TargetFrameworks>
-      </PropertyGroup>
-    </When>
-    <Otherwise>
-      <PropertyGroup>
-        <TargetFramework>netcoreapp2.1</TargetFramework>
-      </PropertyGroup>
-    </Otherwise>
-  </Choose>
 
   <!-- Disable shadow copies because NuGet.PackageManagement.dll is public key signed -->
   <ItemGroup Condition="'$(TargetFramework)'=='net471'">
