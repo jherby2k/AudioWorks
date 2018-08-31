@@ -1,8 +1,8 @@
 using System;
 using System.IO;
+using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using JetBrains.Annotations;
-using Microsoft.PowerShell;
 
 namespace AudioWorks.Commands.Tests
 {
@@ -17,11 +17,15 @@ namespace AudioWorks.Commands.Tests
         public ModuleFixture()
         {
             var state = InitialSessionState.CreateDefault();
-            state.ExecutionPolicy = ExecutionPolicy.Bypass;
+
+            // This bypasses the execution policy (InitialSessionState.ExecutionPolicy isn't available with PowerShell 5)
+            state.AuthorizationManager = new AuthorizationManager("Microsoft.PowerShell");
+
             state.ImportPSModule(new[]
             {
                 Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).FullName, _moduleProject)
             });
+
             Runspace = RunspaceFactory.CreateRunspace(state);
             Runspace.Open();
         }

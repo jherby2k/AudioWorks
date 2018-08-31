@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Management.Automation;
 using AudioWorks.Common.Tests.DataSources;
@@ -8,6 +9,7 @@ using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
+    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class GetAudioCoverArtTests : IClassFixture<ModuleFixture>
     {
         [NotNull] readonly ModuleFixture _moduleFixture;

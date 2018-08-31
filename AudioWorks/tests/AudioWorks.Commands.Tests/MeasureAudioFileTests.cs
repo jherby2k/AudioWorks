@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
@@ -16,6 +17,7 @@ using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
+    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class MeasureAudioFileTests : IClassFixture<ModuleFixture>
     {
         [NotNull] readonly ModuleFixture _moduleFixture;
@@ -365,7 +367,7 @@ namespace AudioWorks.Commands.Tests
 #else
                 Assert.True(comparer.Compare(expectedMetadata[i++], audioFile.Metadata, out var differences),
 #endif
-                    string.Join(' ', differences)));
+                    string.Join(" ", differences)));
         }
     }
 }
