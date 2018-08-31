@@ -81,7 +81,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="pwsh -ExecutionPolicy Unrestricted -File &quot;$(ProjectDir)PublishModule.ps1&quot; -ProjectDir $(ProjectDir) -Configuration $(ConfigurationName) -Framework $(TargetFramework)" />
+    <Exec Command="pwsh -ExecutionPolicy Bypass -File &quot;$(ProjectDir)PublishModule.ps1&quot; -ProjectDir $(ProjectDir) -Configuration $(ConfigurationName) -Framework $(TargetFramework)" />
   </Target>
 
 </Project>
