@@ -67,7 +67,7 @@ namespace AudioWorks.Commands
             {
                 var progress = new SimpleProgress<ProgressToken>(token =>
                 {
-                    var percentComplete = (int)Math.Round(token.FramesCompleted / totalFrames * 100);
+                    var percentComplete = (int) Math.Round(token.FramesCompleted / totalFrames * 100);
 
                     // Avoid reporting progress when nothing has changed
                     if (percentComplete <= lastPercentComplete && token.AudioFilesCompleted <= lastAudioFilesCompleted)
