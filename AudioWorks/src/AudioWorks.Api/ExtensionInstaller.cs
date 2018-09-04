@@ -89,6 +89,7 @@ namespace AudioWorks.Api
                 try
                 {
                     // Search on the thread pool to avoid deadlocks
+                    // ReSharper disable once ImplicitlyCapturedClosure
                     var publishedPackages = Task.Run(async () =>
                         {
                             var cancellationTokenSource = GetCancellationTokenSource();

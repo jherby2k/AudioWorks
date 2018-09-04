@@ -21,6 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+
 // ReSharper disable All
 
 #pragma warning disable 1591
@@ -415,6 +417,7 @@ namespace JetBrains.Annotations
     /// which should not be removed and so is treated as used.
     /// </summary>
     [MeansImplicitUse(ImplicitUseTargetFlags.WithMembers)]
+    [SuppressMessage("Design", "CA1018:Mark attributes with AttributeUsageAttribute")]
     internal sealed class PublicAPIAttribute : Attribute
     {
         public PublicAPIAttribute() { }

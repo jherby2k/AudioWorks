@@ -81,6 +81,7 @@ namespace AudioWorks.Extensions.Apple
             data.Buffers[0].Data = new IntPtr(_bufferHandle.Pointer);
 
             // If this conversion requires packet descriptions, provide them
+            // ReSharper disable once InvertIf
             if (packetDescriptions != IntPtr.Zero)
             {
                 _descriptionsHandle = GCHandle.Alloc(inputDescriptions, GCHandleType.Pinned);

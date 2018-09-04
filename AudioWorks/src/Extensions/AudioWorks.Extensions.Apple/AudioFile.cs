@@ -105,7 +105,7 @@ namespace AudioWorks.Extensions.Apple
         {
             _stream.Position = position;
             actualCount = (uint) _stream.Read(buffer, 0, (int) requestCount);
-            return AudioFileStatus.Ok;
+            return actualCount == 0 ? AudioFileStatus.EndOfFileError : AudioFileStatus.Ok;
         }
 
         [SuppressMessage("Performance", "CA1801:Review unused parameters",

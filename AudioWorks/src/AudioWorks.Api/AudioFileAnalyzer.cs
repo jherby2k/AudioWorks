@@ -113,12 +113,14 @@ namespace AudioWorks.Api
                     var i1 = i;
                     var itemProgress = progress == null
                         ? null
+                        // ReSharper disable once ImplicitlyCapturedClosure
                         : new SimpleProgress<int>(framesCompleted => progress.Report(new ProgressToken
                         {
                             AudioFilesCompleted = audioFilesCompleted,
                             FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
                         }));
 
+                    // ReSharper disable once ImplicitlyCapturedClosure
                     processTasks[i] = Task.Run(() =>
                     {
                         analyzerExports[i1].Value.ProcessSamples(
