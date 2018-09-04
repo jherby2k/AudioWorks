@@ -195,9 +195,11 @@ namespace AudioWorks.Api
                     {
                         Directory.Delete(Path.Combine(_projectRoot, obsoleteExtension), true);
 
-                        logger.LogDebug("Deleted unlisted extension in '{0}'.",
+                        logger.LogDebug("Deleted unlisted or obsolete extension in '{0}'.",
                             obsoleteExtension);
                     }
+
+                    logger.LogInformation("Completed automatic extension updates.");
                 }
                 catch (Exception e)
                 {
