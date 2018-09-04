@@ -27,6 +27,7 @@ namespace AudioWorks.Extensions.Flac
 
         protected override unsafe void MetadataCallback(IntPtr handle, IntPtr metadataBlock, IntPtr userData)
         {
+            // ReSharper disable once SwitchStatementMissingSomeCases
             switch ((MetadataType) Marshal.ReadInt32(metadataBlock))
             {
                 case MetadataType.VorbisComment:

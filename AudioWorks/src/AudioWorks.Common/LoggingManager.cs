@@ -33,6 +33,7 @@ namespace AudioWorks.Common
                 $"{DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss", CultureInfo.InvariantCulture)}.log");
 
             // Log at "Info" level by default
+            // ReSharper disable once SwitchStatementMissingSomeCases
             switch (ConfigurationManager.Configuration.GetValue("LogLevel", 2))
             {
                 case 0:

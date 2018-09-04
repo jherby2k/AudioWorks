@@ -11,6 +11,7 @@ namespace AudioWorks.Extensions.Flac
         {
             try
             {
+                // ReSharper disable once SwitchStatementMissingSomeCases
                 switch (field.ToUpperInvariant())
                 {
                     case "TITLE":

@@ -158,6 +158,7 @@ namespace AudioWorks.Api
                                     project.GetInstalledPath(installedPackage.PackageIdentity));
 
                                 foreach (var subDir in packageDir.GetDirectories())
+                                    // ReSharper disable once SwitchStatementMissingSomeCases
                                     switch (subDir.Name)
                                     {
                                         case "lib":

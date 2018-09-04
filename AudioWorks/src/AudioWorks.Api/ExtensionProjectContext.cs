@@ -16,6 +16,7 @@ namespace AudioWorks.Api
 
         public void Log(MessageLevel level, string message, [NotNull, ItemNotNull] params object[] args)
         {
+            // ReSharper disable once SwitchStatementMissingSomeCases
             switch (level)
             {
                 case MessageLevel.Debug:

@@ -188,6 +188,7 @@ namespace AudioWorks.Extensions
             if (channels > 1)
                 IsInterleaved = true;
 
+            // ReSharper disable once SwitchStatementMissingSomeCases
             switch (bytesPerSample)
             {
                 case 1:
@@ -381,6 +382,7 @@ namespace AudioWorks.Extensions
             if (bitsPerSample < 1 || bitsPerSample > 32)
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample), "bitsPerSample is out of range.");
 
+            // ReSharper disable once SwitchStatementMissingSomeCases
             switch (bytesPerSample)
             {
                 case 1:

@@ -4,9 +4,9 @@ namespace AudioWorks.Extensions.Lame
 {
     enum VbrMode
     {
-        Off,
-        Mt,
-        Rh,
+        [UsedImplicitly] Off,
+        [UsedImplicitly] Mt,
+        [UsedImplicitly] Rh,
         Abr,
         Mtrh
     }

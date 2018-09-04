@@ -77,6 +77,7 @@ namespace AudioWorks.Extensions.Apple
         static AudioStreamBasicDescription GetOutputDescription(AudioStreamBasicDescription inputDescription)
         {
             uint bitsPerSample;
+            // ReSharper disable once SwitchStatementMissingSomeCases
             switch (inputDescription.Flags)
             {
                 case AudioFormatFlags.Alac16BitSourceData:
