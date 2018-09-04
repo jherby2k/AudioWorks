@@ -5,7 +5,7 @@ namespace AudioWorks.Extensions.Vorbis
 {
     static class Crc32
     {
-        // Ogg uses 0x04C11dB7 as the polynomial, so use a precalculated lookup table
+        // Ogg uses 0x04C11dB7 as the polynomial, so use a pre-calculated lookup table
         [NotNull] static readonly uint[] _lookup =
         {
             0x00000000, 0x04C11DB7, 0x09823B6E, 0x0D4326D9,

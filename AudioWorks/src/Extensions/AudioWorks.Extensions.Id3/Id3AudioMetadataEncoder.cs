@@ -88,7 +88,7 @@ namespace AudioWorks.Extensions.Id3
 
         static void Overwrite([NotNull] Stream stream, uint existingTagLength, [NotNull] TagModel tagModel)
         {
-            // Write the new tag overtop of the old one, leaving unused space as padding
+            // Write the new tag over the old one, leaving unused space as padding
             stream.Position = 0;
             tagModel.Header.PaddingSize = existingTagLength - tagModel.Header.TagSizeWithHeaderFooter;
             TagManager.Serialize(tagModel, stream);

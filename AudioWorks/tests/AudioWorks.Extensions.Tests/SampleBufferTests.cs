@@ -68,7 +68,7 @@ namespace AudioWorks.Extensions.Tests
         }
 
         [Fact(DisplayName = "32-bit integers don't overflow")]
-        public void IntegersDontOverflow()
+        public void IntegersDoNotOverflow()
         {
             var inSamples = new[] { int.MaxValue, int.MinValue };
 

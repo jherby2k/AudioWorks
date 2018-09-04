@@ -1,4 +1,6 @@
-﻿namespace AudioWorks.Extensions.Lame
+﻿using JetBrains.Annotations;
+
+namespace AudioWorks.Extensions.Lame
 {
     enum VbrMode
     {
