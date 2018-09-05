@@ -20,9 +20,9 @@ namespace AudioWorks.Api
         public override Task<IEnumerable<PackageReference>> GetInstalledPackagesAsync(CancellationToken token)
         {
             var result = new List<PackageReference>();
-            foreach (var nuspecFile in new DirectoryInfo(Root).GetDirectories()
+            foreach (var specFile in new DirectoryInfo(Root).GetDirectories()
                 .SelectMany(dir => dir.GetFiles("*.nuspec")))
-                using (var stream = nuspecFile.OpenRead())
+                using (var stream = specFile.OpenRead())
                     result.Add(new PackageReference(new NuspecReader(stream).GetIdentity(),
                         NuGetFramework.AnyFramework));
             return Task.FromResult(result.AsEnumerable());

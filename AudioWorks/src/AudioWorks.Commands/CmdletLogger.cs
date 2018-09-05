@@ -20,6 +20,7 @@ namespace AudioWorks.Commands
         {
             var message = formatter(state, exception);
 
+            // ReSharper disable once SwitchStatementMissingSomeCases
             switch (logLevel)
             {
                 case LogLevel.Debug:
@@ -36,6 +37,7 @@ namespace AudioWorks.Commands
 
         public bool IsEnabled(LogLevel logLevel)
         {
+            // ReSharper disable once SwitchStatementMissingSomeCases
             switch (logLevel)
             {
                 case LogLevel.Debug:

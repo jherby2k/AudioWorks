@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 namespace AudioWorks.Commands
 {
     /// <summary>
-    /// An <see cref="IArgumentCompleter"/> for propogating the names of all available analyzers.
+    /// An <see cref="IArgumentCompleter"/> for propagating the names of all available analyzers.
     /// </summary>
     /// <seealso cref="IArgumentCompleter"/>
     public sealed class AnalyzerCompleter : IArgumentCompleter

@@ -72,6 +72,7 @@ namespace AudioWorks.Extensions.Flac
 
             do
             {
+                // ReSharper disable once SwitchStatementMissingSomeCases
                 switch ((MetadataType) Marshal.ReadInt32(iterator.GetBlock()))
                 {
                     // Replace the existing Vorbis comment

@@ -1,19 +1,19 @@
 ﻿using System;
+using JetBrains.Annotations;
+// ReSharper disable CommentTypo
 
 namespace AudioWorks.Extensions.Apple
 {
     enum AudioFileType : uint
     {
-        None,
         M4A = 0x6D346166 // 'm4af'
     }
 
     enum AudioFilePropertyId
     {
-        None,
-        DataFormat = 0x64666D74,           // 'dfmt'
-        MagicCookieData = 0x6D676963,      // 'mgic'
-        PacketSizeUpperBound = 0x706B7562  // 'pkub'
+        DataFormat = 0x64666D74, // 'dfmt'
+        MagicCookieData = 0x6D676963, // 'mgic'
+        PacketSizeUpperBound = 0x706B7562 // 'pkub'
     }
 
     [Flags]
@@ -30,15 +30,13 @@ namespace AudioWorks.Extensions.Apple
 
     enum AudioFormat : uint
     {
-        None,
         AacLowComplexity = 0x61616320, // "aac "
-        AppleLossless = 0x616C6163,    // "alac"
-        LinearPcm = 0x6C70636D         // "lpcm"
+        AppleLossless = 0x616C6163, // "alac"
+        LinearPcm = 0x6C70636D // "lpcm"
     }
 
     enum AudioConverterPropertyId : uint
     {
-        None,
         DecompressionMagicCookie = 0x646D6763, // 'dmgc'
         CodecQuality = 0x63647175, // 'cdqu'
         BitRate = 0x62726174, // 'brat'
@@ -57,22 +55,22 @@ namespace AudioWorks.Extensions.Apple
     enum AudioFileStatus
     {
         Ok = 0,
-        UnspecifiedError = 0x7768743F,               // 'wht?'
-        UnsupportedFileTypeError = 0x7479703F,       // 'typ?'
-        UnsupportedDataFormatError = 0x666D743F,     // 'fmt?'
-        UnsupportedPropertyError = 0x7074793F,       // 'pty?'
-        BadPropertySizeError = 0x2173697A,           // '!siz'
-        PermissionsError = 0x70726D3F,               // 'prm?'
-        NotOptimizedError = 0x6F70746D,              // 'optm'
-        InvalidChunkError = 0x63686B3F,              // 'chk?'
-        DoesNotAllow64BitDataSizeError = 0x6F66663F, // 'off?'
-        InvalidPacketOffsetError = 0x70636B3F,       // 'pck?'
-        InvalidFileError = 0x6474613F,               // 'dta?'
-        OperationNotSupportedError = 0x6F703F3F,     // 'op??'
-        NotOpenError = -38,
+        [UsedImplicitly] UnspecifiedError = 0x7768743F, // 'wht?'
+        [UsedImplicitly] UnsupportedFileTypeError = 0x7479703F, // 'typ?'
+        [UsedImplicitly] UnsupportedDataFormatError = 0x666D743F, // 'fmt?'
+        [UsedImplicitly] UnsupportedPropertyError = 0x7074793F, // 'pty?'
+        [UsedImplicitly] BadPropertySizeError = 0x2173697A, // '!siz'
+        [UsedImplicitly] PermissionsError = 0x70726D3F, // 'prm?'
+        [UsedImplicitly] NotOptimizedError = 0x6F70746D, // 'optm'
+        [UsedImplicitly] InvalidChunkError = 0x63686B3F, // 'chk?'
+        [UsedImplicitly] DoesNotAllow64BitDataSizeError = 0x6F66663F, // 'off?'
+        [UsedImplicitly] InvalidPacketOffsetError = 0x70636B3F, // 'pck?'
+        [UsedImplicitly] InvalidFileError = 0x6474613F, // 'dta?'
+        [UsedImplicitly] OperationNotSupportedError = 0x6F703F3F, // 'op??'
+        [UsedImplicitly] NotOpenError = -38,
         EndOfFileError = -39,
-        PositionError = -40,
-        FileNotFoundError = -43
+        [UsedImplicitly] PositionError = -40,
+        [UsedImplicitly] FileNotFoundError = -43
     }
 
     enum ExtendedAudioFilePropertyId
@@ -84,31 +82,31 @@ namespace AudioWorks.Extensions.Apple
 
     enum ExtendedAudioFileStatus
     {
-        Ok                          = 0,
-        InvalidProperty             = -66561,
-        InvalidPropertySize         = -66562,
-        NonPcmClientFormat          = -66563,
-        InvalidChannelMap           = -66564,
-        InvalidOperationOrder       = -665665,
-        InvalidDataFormat           = -66566,
-        MaxPacketSizeUnknown        = -66567,
-        InvalidSeek                 = -66568,
-        AsyncWriteTooLarge          = -66569,
-        AsyncWriteBufferOverflow    = -66570
+        Ok = 0,
+        [UsedImplicitly] InvalidProperty = -66561,
+        [UsedImplicitly] InvalidPropertySize = -66562,
+        [UsedImplicitly] NonPcmClientFormat = -66563,
+        [UsedImplicitly] InvalidChannelMap = -66564,
+        [UsedImplicitly] InvalidOperationOrder = -665665,
+        [UsedImplicitly] InvalidDataFormat = -66566,
+        [UsedImplicitly] MaxPacketSizeUnknown = -66567,
+        [UsedImplicitly] InvalidSeek = -66568,
+        [UsedImplicitly] AsyncWriteTooLarge = -66569,
+        [UsedImplicitly] AsyncWriteBufferOverflow = -66570
     }
 
     enum AudioConverterStatus
     {
         Ok = 0,
-        FormatNotSupported = 0x666D743F,              // 'fmt?'
-        OperationNotSupported = 0x6F703F3F,           // 'op??'
-        PropertyNotSupported = 0x70726F70,            // 'prop'
-        InvalidInputSize = 0x696E737A,                // 'insz'
-        InvalidOutputSize = 0x6F74737A,               // 'otsz'
-        UnspecifiedError = 0x77686174,                // 'what'
-        BadPropertySizeError = 0x2173697A,            // '!siz'
-        RequiresPacketDescriptionsError = 0x21706B64, // '!pkd'
-        InputSampleRateOutOfRange = 0x21697372,       // '!isr'
-        OutputSampleRateOutOfRange = 0x216F7372       // '!osr'
+        [UsedImplicitly] FormatNotSupported = 0x666D743F, // 'fmt?'
+        [UsedImplicitly] OperationNotSupported = 0x6F703F3F, // 'op??'
+        [UsedImplicitly] PropertyNotSupported = 0x70726F70, // 'prop'
+        [UsedImplicitly] InvalidInputSize = 0x696E737A, // 'insz'
+        [UsedImplicitly] InvalidOutputSize = 0x6F74737A, // 'otsz'
+        [UsedImplicitly] UnspecifiedError = 0x77686174, // 'what'
+        [UsedImplicitly] BadPropertySizeError = 0x2173697A, // '!siz'
+        [UsedImplicitly] RequiresPacketDescriptionsError = 0x21706B64, // '!pkd'
+        [UsedImplicitly] InputSampleRateOutOfRange = 0x21697372, // '!isr'
+        [UsedImplicitly] OutputSampleRateOutOfRange = 0x216F7372 // '!osr'
     }
 }

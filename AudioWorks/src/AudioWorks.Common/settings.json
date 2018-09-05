@@ -1,6 +1,4 @@
 {
-  "FileLogging": true,
-  "LogLevel": 2,
   "EnableTelemetry":  true,
   "AutomaticExtensionDownloads": true,
   "AutomaticExtensionDownloadTimeout": 30,

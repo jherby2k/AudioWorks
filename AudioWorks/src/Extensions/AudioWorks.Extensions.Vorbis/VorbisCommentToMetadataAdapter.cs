@@ -37,6 +37,7 @@ namespace AudioWorks.Extensions.Vorbis
 
                 try
                 {
+                    // ReSharper disable once SwitchStatementMissingSomeCases
                     switch (key.ToUpperInvariant())
                     {
                         case "TITLE":

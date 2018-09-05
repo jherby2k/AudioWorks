@@ -35,6 +35,7 @@ namespace AudioWorks.Extensions.Vorbis
                 // Merge the external ReplayGain filter's SettingInfo
                 var filterFactory =
                     ExtensionProvider.GetFactories<IAudioFilter>("Name", "ReplayGain").FirstOrDefault();
+                // ReSharper disable once InvertIf
                 if (filterFactory != null)
                     using (var export = filterFactory.CreateExport())
                         foreach (var settingInfo in export.Value.SettingInfo)

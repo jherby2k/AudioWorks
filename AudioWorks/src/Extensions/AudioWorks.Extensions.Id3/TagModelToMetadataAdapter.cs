@@ -14,6 +14,7 @@ namespace AudioWorks.Extensions.Id3
                 switch (frame)
                 {
                     case FrameText frameText:
+                        // ReSharper disable once SwitchStatementMissingSomeCases
                         switch (frameText.FrameId)
                         {
                             case "TIT2":
@@ -67,6 +68,7 @@ namespace AudioWorks.Extensions.Id3
                         break;
 
                     case FrameTextUserDef frameTextUserDef:
+                        // ReSharper disable once SwitchStatementMissingSomeCases
                         switch (frameTextUserDef.Description)
                         {
                             case "REPLAYGAIN_TRACK_PEAK":

@@ -16,6 +16,7 @@ namespace AudioWorks.Extensions.Mp4
             {
                 var atomData = mp4.ReadAtom(atom);
 
+                // ReSharper disable once SwitchStatementMissingSomeCases
                 switch (atom.FourCc)
                 {
                     case "©nam":

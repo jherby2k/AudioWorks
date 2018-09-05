@@ -89,6 +89,7 @@ namespace AudioWorks.Api
                 try
                 {
                     // Search on the thread pool to avoid deadlocks
+                    // ReSharper disable once ImplicitlyCapturedClosure
                     var publishedPackages = Task.Run(async () =>
                         {
                             var cancellationTokenSource = GetCancellationTokenSource();
@@ -158,6 +159,7 @@ namespace AudioWorks.Api
                                     project.GetInstalledPath(installedPackage.PackageIdentity));
 
                                 foreach (var subDir in packageDir.GetDirectories())
+                                    // ReSharper disable once SwitchStatementMissingSomeCases
                                     switch (subDir.Name)
                                     {
                                         case "lib":
@@ -195,9 +197,11 @@ namespace AudioWorks.Api
                     {
                         Directory.Delete(Path.Combine(_projectRoot, obsoleteExtension), true);
 
-                        logger.LogDebug("Deleted unlisted extension in '{0}'.",
+                        logger.LogDebug("Deleted unlisted or obsolete extension in '{0}'.",
                             obsoleteExtension);
                     }
+
+                    logger.LogInformation("Completed automatic extension updates.");
                 }
                 catch (Exception e)
                 {

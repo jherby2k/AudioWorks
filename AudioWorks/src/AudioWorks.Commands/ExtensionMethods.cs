@@ -24,6 +24,7 @@ namespace AudioWorks.Commands
                     return providerPaths;
             }
 
+            // ReSharper disable once InvertIf
             if (!string.IsNullOrEmpty(literalPath))
             {
                 var providerPath = cmdlet.SessionState.Path.GetUnresolvedProviderPathFromPSPath(literalPath, out provider, out _);

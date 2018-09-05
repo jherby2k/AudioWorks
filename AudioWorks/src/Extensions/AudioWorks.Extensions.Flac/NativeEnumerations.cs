@@ -16,26 +16,26 @@ namespace AudioWorks.Extensions.Flac
     enum PictureType : uint
     {
         Other,
-        PngIcon,
-        OtherIcon,
+        [UsedImplicitly] PngIcon,
+        [UsedImplicitly] OtherIcon,
         CoverFront,
-        CoverBack,
-        Leaflet,
-        Media,
-        LeadArtist,
-        Artist,
-        Conductor,
-        Band,
-        Composer,
-        Lyricist,
-        Location,
-        DuringRecording,
-        DuringPerformance,
-        ScreenCapture,
-        BrightFish,
-        Illustration,
-        ArtistLogo,
-        PublisherLogo
+        [UsedImplicitly] CoverBack,
+        [UsedImplicitly] Leaflet,
+        [UsedImplicitly] Media,
+        [UsedImplicitly] LeadArtist,
+        [UsedImplicitly] Artist,
+        [UsedImplicitly] Conductor,
+        [UsedImplicitly] Band,
+        [UsedImplicitly] Composer,
+        [UsedImplicitly] Lyricist,
+        [UsedImplicitly] Location,
+        [UsedImplicitly] DuringRecording,
+        [UsedImplicitly] DuringPerformance,
+        [UsedImplicitly] ScreenCapture,
+        [UsedImplicitly] BrightFish,
+        [UsedImplicitly] Illustration,
+        [UsedImplicitly] ArtistLogo,
+        [UsedImplicitly] PublisherLogo
     }
 
     enum DecoderState
@@ -103,14 +103,14 @@ namespace AudioWorks.Extensions.Flac
 
     enum EncoderState
     {
-        Ok,
-        Uninitialized,
-        OggError,
-        DecoderError,
-        AudioDataMismatch,
-        ClientError,
-        IoError,
-        FramingError,
-        MemoryAllocationError
+        [UsedImplicitly] Ok,
+        [UsedImplicitly] Uninitialized,
+        [UsedImplicitly] OggError,
+        [UsedImplicitly] DecoderError,
+        [UsedImplicitly] AudioDataMismatch,
+        [UsedImplicitly] ClientError,
+        [UsedImplicitly] IoError,
+        [UsedImplicitly] FramingError,
+        [UsedImplicitly] MemoryAllocationError
     }
 }
