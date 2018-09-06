@@ -170,12 +170,10 @@ namespace AudioWorks.Extensions.Vorbis
         static unsafe void UpdateSequenceNumber(ref OggPage page, uint sequenceNumber)
         {
 #if WINDOWS
-            var headerSpan = new Span<byte>(page.Header.ToPointer(), page.HeaderLength);
+            var sequenceNumberSpan = new Span<byte>(page.Header.ToPointer(), page.HeaderLength).Slice(18, 4);
 #else
-            var headerSpan = new Span<byte>(page.Header.ToPointer(), (int) page.HeaderLength);
+            var sequenceNumberSpan = new Span<byte>(page.Header.ToPointer(), (int) page.HeaderLength).Slice(18, 4);
 #endif
-            var sequenceNumberSpan = headerSpan.Slice(18, 4);
-
             // Only do the update if the sequence number has changed
             if (BinaryPrimitives.ReadUInt32LittleEndian(sequenceNumberSpan) == sequenceNumber) return;
 
@@ -183,15 +181,7 @@ namespace AudioWorks.Extensions.Vorbis
             BinaryPrimitives.WriteUInt32LittleEndian(sequenceNumberSpan, sequenceNumber);
 
             // Recalculate the CRC
-            var crcSpan = headerSpan.Slice(22, 4);
-            crcSpan.Clear();
-            BinaryPrimitives.WriteUInt32LittleEndian(crcSpan,
-#if WINDOWS
-                Crc32.GetChecksum(new Span<byte>(page.Body.ToPointer(), page.BodyLength),
-#else
-                Crc32.GetChecksum(new Span<byte>(page.Body.ToPointer(), (int) page.BodyLength),
-#endif
-                    Crc32.GetChecksum(headerSpan)));
+            SafeNativeMethods.OggPageChecksumSet(ref page);
         }
     }
 }

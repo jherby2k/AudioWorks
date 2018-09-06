@@ -49,6 +49,11 @@ namespace AudioWorks.Extensions.Vorbis
         internal static extern bool OggPageEos(
             in OggPage page);
 
+        [DllImport(_oggLibrary, EntryPoint = "ogg_page_checksum_set",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void OggPageChecksumSet(
+            ref OggPage page);
+
         [DllImport(_oggLibrary, EntryPoint = "ogg_sync_init",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int OggSyncInit(
