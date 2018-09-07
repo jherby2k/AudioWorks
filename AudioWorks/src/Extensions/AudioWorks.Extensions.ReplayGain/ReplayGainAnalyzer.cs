@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using AudioWorks.Common;
+using AudioWorks.Extensibility;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.ReplayGain

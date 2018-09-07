@@ -14,8 +14,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Api", "src\Audio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Common", "src\AudioWorks.Common\AudioWorks.Common.csproj", "{5D6DB758-33DA-45B5-9C20-5775E526BC2C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions", "src\AudioWorks.Extensions\AudioWorks.Extensions.csproj", "{D237F613-F6AF-4B79-B297-56A5EB75BB97}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestFiles", "TestFiles", "{ED5F2925-FC55-4D6B-8E32-7FD957F04B35}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unsupported", "Unsupported", "{D2650C7C-32ED-48DC-9B13-A1905BE1F9E7}"
@@ -156,7 +154,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Lame"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Common.Tests", "tests\AudioWorks.Common.Tests\AudioWorks.Common.Tests.csproj", "{6EC74F4F-C3AF-40B2-B58A-1F14BC7BDCBD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Tests", "tests\AudioWorks.Extensions.Tests\AudioWorks.Extensions.Tests.csproj", "{687F29C8-E66F-4AB9-BC90-DFB52953E1D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensibility", "src\AudioWorks.Extensibility\AudioWorks.Extensibility.csproj", "{FCF16AFD-25C9-4814-ADF6-210274D2C42A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensibility.Tests", "tests\AudioWorks.Extensibility.Tests\AudioWorks.Extensibility.Tests.csproj", "{D0199708-DDEF-406D-AB31-C4E738735298}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -216,18 +216,6 @@ Global
 		{5D6DB758-33DA-45B5-9C20-5775E526BC2C}.Release-OSX|Any CPU.Build.0 = Release-OSX|Any CPU
 		{5D6DB758-33DA-45B5-9C20-5775E526BC2C}.Release-Windows|Any CPU.ActiveCfg = Release-Windows|Any CPU
 		{5D6DB758-33DA-45B5-9C20-5775E526BC2C}.Release-Windows|Any CPU.Build.0 = Release-Windows|Any CPU
-		{D237F613-F6AF-4B79-B297-56A5EB75BB97}.Debug-Linux|Any CPU.ActiveCfg = Debug-Linux|Any CPU
-		{D237F613-F6AF-4B79-B297-56A5EB75BB97}.Debug-Linux|Any CPU.Build.0 = Debug-Linux|Any CPU
-		{D237F613-F6AF-4B79-B297-56A5EB75BB97}.Debug-OSX|Any CPU.ActiveCfg = Debug-OSX|Any CPU
-		{D237F613-F6AF-4B79-B297-56A5EB75BB97}.Debug-OSX|Any CPU.Build.0 = Debug-OSX|Any CPU
-		{D237F613-F6AF-4B79-B297-56A5EB75BB97}.Debug-Windows|Any CPU.ActiveCfg = Debug-Windows|Any CPU
-		{D237F613-F6AF-4B79-B297-56A5EB75BB97}.Debug-Windows|Any CPU.Build.0 = Debug-Windows|Any CPU
-		{D237F613-F6AF-4B79-B297-56A5EB75BB97}.Release-Linux|Any CPU.ActiveCfg = Release-Linux|Any CPU
-		{D237F613-F6AF-4B79-B297-56A5EB75BB97}.Release-Linux|Any CPU.Build.0 = Release-Linux|Any CPU
-		{D237F613-F6AF-4B79-B297-56A5EB75BB97}.Release-OSX|Any CPU.ActiveCfg = Release-OSX|Any CPU
-		{D237F613-F6AF-4B79-B297-56A5EB75BB97}.Release-OSX|Any CPU.Build.0 = Release-OSX|Any CPU
-		{D237F613-F6AF-4B79-B297-56A5EB75BB97}.Release-Windows|Any CPU.ActiveCfg = Release-Windows|Any CPU
-		{D237F613-F6AF-4B79-B297-56A5EB75BB97}.Release-Windows|Any CPU.Build.0 = Release-Windows|Any CPU
 		{1447D6EA-60F7-44A8-A5DA-69A4287348CF}.Debug-Linux|Any CPU.ActiveCfg = Debug-Linux|Any CPU
 		{1447D6EA-60F7-44A8-A5DA-69A4287348CF}.Debug-Linux|Any CPU.Build.0 = Debug-Linux|Any CPU
 		{1447D6EA-60F7-44A8-A5DA-69A4287348CF}.Debug-OSX|Any CPU.ActiveCfg = Debug-OSX|Any CPU
@@ -358,18 +346,30 @@ Global
 		{6EC74F4F-C3AF-40B2-B58A-1F14BC7BDCBD}.Release-OSX|Any CPU.Build.0 = Release-OSX|Any CPU
 		{6EC74F4F-C3AF-40B2-B58A-1F14BC7BDCBD}.Release-Windows|Any CPU.ActiveCfg = Release-Windows|Any CPU
 		{6EC74F4F-C3AF-40B2-B58A-1F14BC7BDCBD}.Release-Windows|Any CPU.Build.0 = Release-Windows|Any CPU
-		{687F29C8-E66F-4AB9-BC90-DFB52953E1D5}.Debug-Linux|Any CPU.ActiveCfg = Debug-Linux|Any CPU
-		{687F29C8-E66F-4AB9-BC90-DFB52953E1D5}.Debug-Linux|Any CPU.Build.0 = Debug-Linux|Any CPU
-		{687F29C8-E66F-4AB9-BC90-DFB52953E1D5}.Debug-OSX|Any CPU.ActiveCfg = Debug-OSX|Any CPU
-		{687F29C8-E66F-4AB9-BC90-DFB52953E1D5}.Debug-OSX|Any CPU.Build.0 = Debug-OSX|Any CPU
-		{687F29C8-E66F-4AB9-BC90-DFB52953E1D5}.Debug-Windows|Any CPU.ActiveCfg = Debug-Windows|Any CPU
-		{687F29C8-E66F-4AB9-BC90-DFB52953E1D5}.Debug-Windows|Any CPU.Build.0 = Debug-Windows|Any CPU
-		{687F29C8-E66F-4AB9-BC90-DFB52953E1D5}.Release-Linux|Any CPU.ActiveCfg = Release-Linux|Any CPU
-		{687F29C8-E66F-4AB9-BC90-DFB52953E1D5}.Release-Linux|Any CPU.Build.0 = Release-Linux|Any CPU
-		{687F29C8-E66F-4AB9-BC90-DFB52953E1D5}.Release-OSX|Any CPU.ActiveCfg = Release-OSX|Any CPU
-		{687F29C8-E66F-4AB9-BC90-DFB52953E1D5}.Release-OSX|Any CPU.Build.0 = Release-OSX|Any CPU
-		{687F29C8-E66F-4AB9-BC90-DFB52953E1D5}.Release-Windows|Any CPU.ActiveCfg = Release-Windows|Any CPU
-		{687F29C8-E66F-4AB9-BC90-DFB52953E1D5}.Release-Windows|Any CPU.Build.0 = Release-Windows|Any CPU
+		{FCF16AFD-25C9-4814-ADF6-210274D2C42A}.Debug-Linux|Any CPU.ActiveCfg = Debug-Linux|Any CPU
+		{FCF16AFD-25C9-4814-ADF6-210274D2C42A}.Debug-Linux|Any CPU.Build.0 = Debug-Linux|Any CPU
+		{FCF16AFD-25C9-4814-ADF6-210274D2C42A}.Debug-OSX|Any CPU.ActiveCfg = Debug-OSX|Any CPU
+		{FCF16AFD-25C9-4814-ADF6-210274D2C42A}.Debug-OSX|Any CPU.Build.0 = Debug-OSX|Any CPU
+		{FCF16AFD-25C9-4814-ADF6-210274D2C42A}.Debug-Windows|Any CPU.ActiveCfg = Debug-Windows|Any CPU
+		{FCF16AFD-25C9-4814-ADF6-210274D2C42A}.Debug-Windows|Any CPU.Build.0 = Debug-Windows|Any CPU
+		{FCF16AFD-25C9-4814-ADF6-210274D2C42A}.Release-Linux|Any CPU.ActiveCfg = Release-Linux|Any CPU
+		{FCF16AFD-25C9-4814-ADF6-210274D2C42A}.Release-Linux|Any CPU.Build.0 = Release-Linux|Any CPU
+		{FCF16AFD-25C9-4814-ADF6-210274D2C42A}.Release-OSX|Any CPU.ActiveCfg = Release-OSX|Any CPU
+		{FCF16AFD-25C9-4814-ADF6-210274D2C42A}.Release-OSX|Any CPU.Build.0 = Release-OSX|Any CPU
+		{FCF16AFD-25C9-4814-ADF6-210274D2C42A}.Release-Windows|Any CPU.ActiveCfg = Release-Windows|Any CPU
+		{FCF16AFD-25C9-4814-ADF6-210274D2C42A}.Release-Windows|Any CPU.Build.0 = Release-Windows|Any CPU
+		{D0199708-DDEF-406D-AB31-C4E738735298}.Debug-Linux|Any CPU.ActiveCfg = Debug-Linux|Any CPU
+		{D0199708-DDEF-406D-AB31-C4E738735298}.Debug-Linux|Any CPU.Build.0 = Debug-Linux|Any CPU
+		{D0199708-DDEF-406D-AB31-C4E738735298}.Debug-OSX|Any CPU.ActiveCfg = Debug-OSX|Any CPU
+		{D0199708-DDEF-406D-AB31-C4E738735298}.Debug-OSX|Any CPU.Build.0 = Debug-OSX|Any CPU
+		{D0199708-DDEF-406D-AB31-C4E738735298}.Debug-Windows|Any CPU.ActiveCfg = Debug-Windows|Any CPU
+		{D0199708-DDEF-406D-AB31-C4E738735298}.Debug-Windows|Any CPU.Build.0 = Debug-Windows|Any CPU
+		{D0199708-DDEF-406D-AB31-C4E738735298}.Release-Linux|Any CPU.ActiveCfg = Release-Linux|Any CPU
+		{D0199708-DDEF-406D-AB31-C4E738735298}.Release-Linux|Any CPU.Build.0 = Release-Linux|Any CPU
+		{D0199708-DDEF-406D-AB31-C4E738735298}.Release-OSX|Any CPU.ActiveCfg = Release-OSX|Any CPU
+		{D0199708-DDEF-406D-AB31-C4E738735298}.Release-OSX|Any CPU.Build.0 = Release-OSX|Any CPU
+		{D0199708-DDEF-406D-AB31-C4E738735298}.Release-Windows|Any CPU.ActiveCfg = Release-Windows|Any CPU
+		{D0199708-DDEF-406D-AB31-C4E738735298}.Release-Windows|Any CPU.Build.0 = Release-Windows|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

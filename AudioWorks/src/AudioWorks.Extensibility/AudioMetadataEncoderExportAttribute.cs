@@ -4,18 +4,18 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace AudioWorks.Extensions
+namespace AudioWorks.Extensibility
 {
     /// <summary>
     /// Classes marked with this attribute will be loaded by AudioWorks.
     /// </summary>
     /// <remarks>
-    /// Classes marked with this attribute must implement <see cref="IAudioDecoder"/>.
+    /// Classes marked with this attribute must implement <see cref="IAudioMetadataEncoder"/>.
     /// </remarks>
     /// <seealso cref="ExportAttribute"/>
-    [PublicAPI, MeansImplicitUse, BaseTypeRequired(typeof(IAudioDecoder))]
+    [PublicAPI, MeansImplicitUse, BaseTypeRequired(typeof(IAudioMetadataEncoder))]
     [MetadataAttribute, AttributeUsage(AttributeTargets.Class)]
-    public sealed class AudioDecoderExportAttribute : ExportAttribute
+    public sealed class AudioMetadataEncoderExportAttribute : ExportAttribute
     {
         /// <summary>
         /// Gets the file extension.
@@ -25,14 +25,14 @@ namespace AudioWorks.Extensions
         public string Extension { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AudioDecoderExportAttribute"/> class.
+        /// Initializes a new instance of the <see cref="AudioMetadataEncoderExportAttribute"/> class.
         /// </summary>
         /// <param name="extension">The file extension.</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="extension"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if <paramref name="extension"/> is not a valid file extension.
         /// </exception>
-        public AudioDecoderExportAttribute([NotNull] string extension)
-            : base(typeof(IAudioDecoder))
+        public AudioMetadataEncoderExportAttribute([NotNull] string extension)
+            : base(typeof(IAudioMetadataEncoder))
         {
             if (extension == null) throw new ArgumentNullException(nameof(extension));
             if (!extension.StartsWith(".", StringComparison.OrdinalIgnoreCase)

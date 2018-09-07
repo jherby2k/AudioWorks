@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using AudioWorks.Common;
+using AudioWorks.Extensibility;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Vorbis

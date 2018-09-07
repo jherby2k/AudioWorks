@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Runtime.InteropServices;
 using AudioWorks.Common;
+using AudioWorks.Extensibility;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac

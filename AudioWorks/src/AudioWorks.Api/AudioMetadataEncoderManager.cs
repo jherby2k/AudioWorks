@@ -1,6 +1,6 @@
 ﻿using System;
 using AudioWorks.Common;
-using AudioWorks.Extensions;
+using AudioWorks.Extensibility;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Api

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AudioWorks.Common;
-using AudioWorks.Extensions;
+using AudioWorks.Extensibility;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Api

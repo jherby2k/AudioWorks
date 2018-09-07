@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using AudioWorks.Common;
+using AudioWorks.Extensibility;
 using Id3Lib;
 using Id3Lib.Exceptions;
 using JetBrains.Annotations;

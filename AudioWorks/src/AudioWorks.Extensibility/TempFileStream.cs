@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using JetBrains.Annotations;
 
-namespace AudioWorks.Extensions
+namespace AudioWorks.Extensibility
 {
     /// <summary>
     /// Wraps a temporary file. Suitable as a <see cref="MemoryStream"/> replacement for large data sets.

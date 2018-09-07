@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 
-namespace AudioWorks.Extensions
+namespace AudioWorks.Extensibility
 {
     /// <summary>
     /// Accepts samples for processing.

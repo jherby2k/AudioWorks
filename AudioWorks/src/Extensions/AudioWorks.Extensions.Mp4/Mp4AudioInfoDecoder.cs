@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using AudioWorks.Common;
+using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.Mp4
 {

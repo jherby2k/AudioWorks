@@ -6,7 +6,7 @@ using AudioWorks.Common;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 
-namespace AudioWorks.Extensions
+namespace AudioWorks.Extensibility
 {
     sealed class ExtensionContainer<T> : ExtensionContainerBase
     {

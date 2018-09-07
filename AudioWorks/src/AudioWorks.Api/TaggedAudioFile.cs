@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using AudioWorks.Common;
-using AudioWorks.Extensions;
+using AudioWorks.Extensibility;
 using JetBrains.Annotations;
 using IO = System.IO;
 

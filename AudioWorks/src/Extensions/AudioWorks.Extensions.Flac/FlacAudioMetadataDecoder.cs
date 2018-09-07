@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using AudioWorks.Common;
+using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.Flac
 {

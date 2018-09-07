@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace AudioWorks.Extensions.Tests
+namespace AudioWorks.Extensibility.Tests
 {
     public sealed class SampleBufferTests
     {

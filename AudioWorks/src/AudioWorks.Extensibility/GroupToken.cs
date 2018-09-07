@@ -1,7 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace AudioWorks.Extensions
+namespace AudioWorks.Extensibility
 {
     /// <summary>
     /// Identifies an audio file as a member of a group.

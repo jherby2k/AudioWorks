@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 
-namespace AudioWorks.Extensions
+namespace AudioWorks.Extensibility
 {
     /// <summary>
     /// Represents a block of audio samples.

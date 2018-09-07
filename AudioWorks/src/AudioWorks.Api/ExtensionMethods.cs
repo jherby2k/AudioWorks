@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading;
 using AudioWorks.Common;
-using AudioWorks.Extensions;
+using AudioWorks.Extensibility;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Api

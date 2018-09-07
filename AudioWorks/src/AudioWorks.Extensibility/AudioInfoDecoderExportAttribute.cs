@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace AudioWorks.Extensions
+namespace AudioWorks.Extensibility
 {
     /// <summary>
     /// Classes marked with this attribute will be loaded by AudioWorks.

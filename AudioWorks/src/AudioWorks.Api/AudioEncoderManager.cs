@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AudioWorks.Common;
-using AudioWorks.Extensions;
+using AudioWorks.Extensibility;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Api

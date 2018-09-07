@@ -4,7 +4,7 @@ using System.Composition;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace AudioWorks.Extensions
+namespace AudioWorks.Extensibility
 {
     /// <summary>
     /// Provides methods for accessing extensions of various types.

@@ -6,6 +6,7 @@ using System.Buffers.Binary;
 using System.IO;
 using System.Runtime.CompilerServices;
 using AudioWorks.Common;
+using AudioWorks.Extensibility;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Vorbis

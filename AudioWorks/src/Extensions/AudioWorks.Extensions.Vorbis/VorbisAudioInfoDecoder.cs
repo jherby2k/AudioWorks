@@ -4,6 +4,7 @@ using System.Buffers;
 #endif
 using System.IO;
 using AudioWorks.Common;
+using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.Vorbis
 {
