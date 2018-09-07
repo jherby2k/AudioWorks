@@ -5,12 +5,9 @@
     <TargetFrameworks Condition="'$(OS)'!='Windows_NT'">netcoreapp2.1</TargetFrameworks>
     <LangVersion>7.3</LangVersion>
     <IsPackable>false</IsPackable>
-    <Description>Unit testing project for the AudioWorks Common library. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
-    <Authors>Jeremy Herbison</Authors>
-    <Company />
     <Product>AudioWorks</Product>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Copyright>Copyright © 2018 Jeremy Herbison</Copyright>
+    <Copyright>© 2018 Jeremy Herbison</Copyright>
     <CodeAnalysisRuleSet>CodeAnalysis.ruleset</CodeAnalysisRuleSet>
     <Configurations>Debug-Windows;Release-Windows;Debug-OSX;Release-OSX;Debug-Linux;Release-Linux</Configurations>
   </PropertyGroup>
