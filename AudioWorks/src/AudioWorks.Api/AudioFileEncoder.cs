@@ -17,8 +17,8 @@ namespace AudioWorks.Api
     [PublicAPI]
     public sealed class AudioFileEncoder
     {
-        [CanBeNull] readonly EncodedString _encodedFileName;
-        [CanBeNull] readonly EncodedString _encodedDirectoryName;
+        [CanBeNull] readonly EncodedPath _encodedFileName;
+        [CanBeNull] readonly EncodedPath _encodedDirectoryName;
         [NotNull] readonly ExportFactory<IAudioEncoder> _encoderFactory;
 
         /// <summary>
@@ -57,9 +57,9 @@ namespace AudioWorks.Api
                               throw new ArgumentException($"No '{name}' encoder is available.", nameof(name));
 
             if (encodedDirectoryName != null)
-                _encodedDirectoryName = new EncodedDirectoryName(encodedDirectoryName);
+                _encodedDirectoryName = new EncodedPath(encodedDirectoryName);
             if (encodedFileName != null)
-                _encodedFileName = new EncodedFileName(encodedFileName);
+                _encodedFileName = new EncodedPath(encodedFileName);
 
             using (var export = _encoderFactory.CreateExport())
                 Settings = new ValidatingSettingDictionary(export.Value.SettingInfo, settings);
@@ -134,7 +134,7 @@ namespace AudioWorks.Api
                                               Path.GetDirectoryName(audioFiles[i].Path);
 
                         // ReSharper disable once AssignNullToNotNullAttribute
-                        Directory.CreateDirectory(outputDirectory);
+                        var outputDirectoryInfo = Directory.CreateDirectory(outputDirectory);
 
                         // The output file names default to the input file names
                         var outputFileName = _encodedFileName?.ReplaceWith(audioFiles[i].Metadata) ??
@@ -142,7 +142,7 @@ namespace AudioWorks.Api
 
                         encoderExports[i] = _encoderFactory.CreateExport();
 
-                        tempOutputPaths[i] = finalOutputPaths[i] = Path.Combine(outputDirectory,
+                        tempOutputPaths[i] = finalOutputPaths[i] = Path.Combine(outputDirectoryInfo.FullName,
                             outputFileName + encoderExports[i].Value.FileExtension);
 
                         // If the output file already exists, write to a temporary file first
@@ -151,7 +151,7 @@ namespace AudioWorks.Api
                             if (!Overwrite)
                                 throw new IOException($"The file '{finalOutputPaths[i]}' already exists.");
 
-                            tempOutputPaths[i] = Path.Combine(outputDirectory, Path.GetRandomFileName());
+                            tempOutputPaths[i] = Path.Combine(outputDirectoryInfo.FullName, Path.GetRandomFileName());
                         }
 
                         outputStreams[i] = File.Open(tempOutputPaths[i], FileMode.OpenOrCreate);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using AudioWorks.Common;
@@ -7,13 +8,13 @@ using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Api
 {
-    abstract class EncodedString
+    sealed class EncodedPath
     {
         [NotNull] static readonly Regex _replacer = new Regex(@"\{[^{]+\}");
+        [NotNull] static readonly char[] _invalidChars = Path.GetInvalidFileNameChars();
         [NotNull] readonly string _encoded;
-        [NotNull] readonly char[] _invalidChars;
 
-        internal EncodedString([NotNull] string encoded, [NotNull] char[] invalidChars)
+        internal EncodedPath([NotNull] string encoded)
         {
             var validProperties = typeof(AudioMetadata).GetProperties()
                 .Select(propertyInfo => propertyInfo.Name).ToArray();
@@ -27,7 +28,6 @@ namespace AudioWorks.Api
                     nameof(encoded));
 
             _encoded = encoded;
-            _invalidChars = invalidChars;
         }
 
         [NotNull]
@@ -58,7 +58,7 @@ namespace AudioWorks.Api
                 return sanitizedPropertyValue;
             });
 
-            LoggingManager.LoggerFactory.CreateLogger<EncodedString>()
+            LoggingManager.LoggerFactory.CreateLogger<EncodedPath>()
                 .LogDebug("Replacing encoded string '{0}' with '{1}'.", _encoded, result);
 
             return result;

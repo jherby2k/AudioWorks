@@ -10,8 +10,8 @@ namespace AudioWorks.Api
     /// </summary>
     public sealed class CoverArtExtractor
     {
-        [CanBeNull] readonly EncodedString _encodedFileName;
-        [CanBeNull] readonly EncodedString _encodedDirectoryName;
+        [CanBeNull] readonly EncodedPath _encodedFileName;
+        [CanBeNull] readonly EncodedPath _encodedDirectoryName;
         readonly bool _overwrite;
 
         /// <summary>
@@ -26,9 +26,9 @@ namespace AudioWorks.Api
             bool overwrite = false)
         {
             if (encodedDirectoryName != null)
-                _encodedDirectoryName = new EncodedDirectoryName(encodedDirectoryName);
+                _encodedDirectoryName = new EncodedPath(encodedDirectoryName);
             if (encodedFileName != null)
-                _encodedFileName = new EncodedFileName(encodedFileName);
+                _encodedFileName = new EncodedPath(encodedFileName);
             _overwrite = overwrite;
         }
 
@@ -53,14 +53,13 @@ namespace AudioWorks.Api
                                   Path.GetDirectoryName(audioFile.Path);
 
             // ReSharper disable once AssignNullToNotNullAttribute
-            Directory.CreateDirectory(outputDirectory);
+            var outputDirectoryInfo = Directory.CreateDirectory(outputDirectory);
 
             // The output file names default to the input file names
             var outputFileName = _encodedFileName?.ReplaceWith(audioFile.Metadata) ??
                                  Path.GetFileNameWithoutExtension(audioFile.Path);
 
-            var result = new FileInfo(Path.Combine(
-                outputDirectory,
+            var result = new FileInfo(Path.Combine(outputDirectoryInfo.FullName,
                 outputFileName + audioFile.Metadata.CoverArt.FileExtension));
 
             using (var fileStream = result.Open(_overwrite ? FileMode.Create : FileMode.CreateNew, FileAccess.Write))
