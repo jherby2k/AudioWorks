@@ -230,19 +230,16 @@ namespace AudioWorks.Api
                 // Load the available version of Newtonsoft.Json, regardless of the requested version
                 if (args.Name.StartsWith("Newtonsoft.Json", StringComparison.Ordinal))
                 {
-                    var jsonAssembly = Directory.GetFiles(Path.Combine(
-                            // ReSharper disable once AssignNullToNotNullAttribute
-                            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Newtonsoft.Json.dll"))
-                        .FirstOrDefault();
+                    var jsonAssembly = Path.Combine(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Newtonsoft.Json.dll");
 
-                    if (jsonAssembly == null) return null;
+                    if (!File.Exists(jsonAssembly)) return null;
 
                     // Make sure the assembly is really Newtonsoft.Json
                     var assemblyName = AssemblyName.GetAssemblyName(jsonAssembly);
-                    if (assemblyName.Name.StartsWith("Newtonsoft.Json, Version=",
-                            StringComparison.Ordinal) &&
-                        assemblyName.Name.EndsWith(", Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed",
-                            StringComparison.Ordinal))
+                    if (assemblyName.Name.Equals("Newtonsoft.Json", StringComparison.Ordinal) &&
+                        assemblyName.FullName.EndsWith("PublicKeyToken=30ad4fe6b2a6aeed", StringComparison.Ordinal))
                         return Assembly.LoadFrom(jsonAssembly);
                 }
 
