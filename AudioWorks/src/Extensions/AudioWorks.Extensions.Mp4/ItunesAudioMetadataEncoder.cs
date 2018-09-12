@@ -40,9 +40,10 @@ namespace AudioWorks.Extensions.Mp4
 
                 var childInfo = originalMp4.GetChildAtomInfo();
 
-                // Copy any subatoms other than ilst first (probably just hdlr)
+                // Copy any subatoms other than ilst and free (probably just hdlr)
+                var excludedChildAtoms = new[] { "ilst", "free" };
                 foreach (var childAtom in childInfo
-                    .Where(info => !info.FourCc.Equals("ilst", StringComparison.Ordinal)))
+                    .Where(info => !excludedChildAtoms.Contains(info.FourCc, StringComparer.Ordinal)))
                     originalMp4.CopyAtom(childAtom, tempStream);
 
                 // Write the new ilst atom
