@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Threading.Tasks.Dataflow;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
 using JetBrains.Annotations;
@@ -115,36 +116,30 @@ namespace AudioWorks.Api
             });
 
             var audioFilesCompleted = 0;
-            var totalFramesCompleted = 0;
+            var totalFramesCompleted = 0L;
 
-            var processTasks = new Task<TaggedAudioFile>[audioFiles.Length];
-
-            for (var i = 0; i < audioFiles.Length; i++)
-            {
-                // The output directory defaults to the AudioFile's current directory
-                var outputDirectory = _encodedDirectoryName?.ReplaceWith(audioFiles[i].Metadata) ??
-                                      Path.GetDirectoryName(audioFiles[i].Path);
-
-                // ReSharper disable once AssignNullToNotNullAttribute
-                var outputDirectoryInfo = Directory.CreateDirectory(outputDirectory);
-
-                // The output file names default to the input file names
-                var outputFileName = _encodedFileName?.ReplaceWith(audioFiles[i].Metadata) ??
-                                     Path.GetFileNameWithoutExtension(audioFiles[i].Path);
-
-                var i1 = i;
-                var itemProgress = progress == null
-                    ? null
-                    // ReSharper disable once ImplicitlyCapturedClosure
-                    : new SimpleProgress<int>(framesCompleted => progress.Report(new ProgressToken
-                    {
-                        AudioFilesCompleted = audioFilesCompleted,
-                        FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
-                    }));
-
-                // ReSharper disable once ImplicitlyCapturedClosure
-                processTasks[i] = Task.Run(() =>
+            var encodeBlock = new TransformBlock<ITaggedAudioFile, ITaggedAudioFile>(audioFile =>
                 {
+                    // The output directory defaults to the AudioFile's current directory
+                    var outputDirectory = _encodedDirectoryName?.ReplaceWith(audioFile.Metadata) ??
+                                          Path.GetDirectoryName(audioFile.Path);
+
+                    // ReSharper disable once AssignNullToNotNullAttribute
+                    var outputDirectoryInfo = Directory.CreateDirectory(outputDirectory);
+
+                    // The output file names default to the input file names
+                    var outputFileName = _encodedFileName?.ReplaceWith(audioFile.Metadata) ??
+                                         Path.GetFileNameWithoutExtension(audioFile.Path);
+
+                    var itemProgress = progress == null
+                        ? null
+                        : new SimpleProgress<int>(framesCompleted => progress.Report(new ProgressToken
+                        {
+                            // ReSharper disable once AccessToModifiedClosure
+                            AudioFilesCompleted = audioFilesCompleted,
+                            FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
+                        }));
+
                     string tempOutputPath = null;
                     string finalOutputPath;
 
@@ -173,12 +168,12 @@ namespace AudioWorks.Api
                             // Copy the source metadata, so it can't be modified
                             encoderExport.Value.Initialize(
                                 outputStream,
-                                audioFiles[i1].Info,
-                                new AudioMetadata(audioFiles[i1].Metadata),
+                                audioFile.Info,
+                                new AudioMetadata(audioFile.Metadata),
                                 Settings);
 
                             encoderExport.Value.ProcessSamples(
-                                audioFiles[i1].Path,
+                                audioFile.Path,
                                 itemProgress,
                                 cancellationToken);
 
@@ -209,10 +204,21 @@ namespace AudioWorks.Api
                     }
 
                     return new TaggedAudioFile(finalOutputPath);
-                }, cancellationToken);
-            }
+                },
+                new ExecutionDataflowBlockOptions
+                {
+                    MaxDegreeOfParallelism = Environment.ProcessorCount,
+                    SingleProducerConstrained = true,
+                    CancellationToken = cancellationToken
+                });
 
-            var result = await Task.WhenAll(processTasks).ConfigureAwait(false);
+            var batchBlock = new BatchBlock<ITaggedAudioFile>(audioFiles.Length);
+            encodeBlock.LinkTo(batchBlock, new DataflowLinkOptions { PropagateCompletion = true });
+
+            foreach (var audioFile in audioFiles)
+                await encodeBlock.SendAsync(audioFile, cancellationToken).ConfigureAwait(false);
+
+            var result = await batchBlock.ReceiveAsync(cancellationToken).ConfigureAwait(false);
 
             progress?.Report(new ProgressToken
             {

@@ -19,6 +19,6 @@ namespace AudioWorks.Api
         /// Gets the total # of frames completed since the activity started.
         /// </summary>
         /// <value>The # of frames completed.</value>
-        public int FramesCompleted { get; internal set; }
+        public long FramesCompleted { get; internal set; }
     }
 }

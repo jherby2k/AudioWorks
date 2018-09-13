@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Composition;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Threading.Tasks.Dataflow;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
 using JetBrains.Annotations;
@@ -96,55 +98,84 @@ namespace AudioWorks.Api
                 FramesCompleted = 0
             });
 
-            var groupToken = new GroupToken();
-            var analyzerExports = new Export<IAudioAnalyzer>[audioFiles.Length];
             var audioFilesCompleted = 0;
-            var totalFramesCompleted = 0;
+            var totalFramesCompleted = 0L;
 
-            try
+            using (var groupToken = new GroupToken())
             {
-                var processTasks = new Task[audioFiles.Length];
+                var disposableExports = new ConcurrentBag<IDisposable>();
+                var linkOptions = new DataflowLinkOptions { PropagateCompletion = true };
 
-                for (var i = 0; i < audioFiles.Length; i++)
-                {
-                    analyzerExports[i] = _analyzerFactory.CreateExport();
-                    analyzerExports[i].Value.Initialize(audioFiles[i].Info, Settings, groupToken);
-
-                    var i1 = i;
-                    var itemProgress = progress == null
-                        ? null
-                        // ReSharper disable once ImplicitlyCapturedClosure
-                        : new SimpleProgress<int>(framesCompleted => progress.Report(new ProgressToken
-                        {
-                            AudioFilesCompleted = audioFilesCompleted,
-                            FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
-                        }));
-
-                    // ReSharper disable once ImplicitlyCapturedClosure
-                    processTasks[i] = Task.Run(() =>
+                // Initialization should take place in sequence
+                var initializeBlock = new TransformBlock<ITaggedAudioFile, (ITaggedAudioFile, IAudioAnalyzer)>(
+                    audioFile =>
                     {
-                        analyzerExports[i1].Value.ProcessSamples(
-                            audioFiles[i1].Path,
-                            itemProgress,
-                            cancellationToken);
+                        var analyzerExport = _analyzerFactory.CreateExport();
+                        disposableExports.Add(analyzerExport);
+                        // ReSharper disable once AccessToDisposedClosure
+                        analyzerExport.Value.Initialize(audioFile.Info, Settings, groupToken);
+                        return (audioFile, analyzerExport.Value);
+                    },
+                    new ExecutionDataflowBlockOptions
+                    {
+                        SingleProducerConstrained = true,
+                        CancellationToken = cancellationToken
+                    });
 
-                        CopyFields(analyzerExports[i1].Value.GetResult(), audioFiles[i1].Metadata);
+                // Analysis can happen concurrently
+                var analyzeBlock = new TransformBlock<
+                    (ITaggedAudioFile audioFile, IAudioAnalyzer analyzer), (ITaggedAudioFile, IAudioAnalyzer)>(item =>
+                    {
+                        var itemProgress = progress == null
+                            ? null
+                            : new SimpleProgress<int>(framesCompleted => progress.Report(new ProgressToken
+                            {
+                                // ReSharper disable once AccessToModifiedClosure
+                                AudioFilesCompleted = audioFilesCompleted,
+                                FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
+                            }));
+
+                        item.analyzer.ProcessSamples(item.audioFile.Path, itemProgress, cancellationToken);
+                        CopyStringProperties(item.analyzer.GetResult(), item.audioFile.Metadata);
 
                         Interlocked.Increment(ref audioFilesCompleted);
-                    }, cancellationToken);
+
+                        return item;
+                    },
+                    new ExecutionDataflowBlockOptions
+                    {
+                        MaxDegreeOfParallelism = Environment.ProcessorCount,
+                        SingleProducerConstrained = true
+                    });
+                initializeBlock.LinkTo(analyzeBlock, linkOptions);
+
+                var batchBlock = new BatchBlock<(ITaggedAudioFile, IAudioAnalyzer)>(audioFiles.Length);
+                analyzeBlock.LinkTo(batchBlock, linkOptions);
+
+                var groupResultBlock = new ActionBlock<(ITaggedAudioFile, IAudioAnalyzer)[]>(group =>
+                    {
+                        foreach (var (audioFile, analyzer) in group)
+                            CopyStringProperties(analyzer.GetGroupResult(), audioFile.Metadata);
+                    },
+                    new ExecutionDataflowBlockOptions
+                    {
+                        SingleProducerConstrained = true,
+                    });
+                batchBlock.LinkTo(groupResultBlock, linkOptions);
+
+                try
+                {
+                    foreach (var audioFile in audioFiles)
+                        await initializeBlock.SendAsync(audioFile, cancellationToken).ConfigureAwait(false);
+
+                    initializeBlock.Complete();
+                    await groupResultBlock.Completion.ConfigureAwait(false);
                 }
-
-                await Task.WhenAll(processTasks).ConfigureAwait(false);
-
-                // Obtain the group results sequentially
-                for (var i = 0; i < audioFiles.Length; i++)
-                    CopyFields(analyzerExports[i].Value.GetGroupResult(), audioFiles[i].Metadata);
-            }
-            finally
-            {
-                foreach (var analyzerExport in analyzerExports)
-                    analyzerExport?.Dispose();
-                groupToken.Dispose();
+                finally
+                {
+                    foreach (var export in disposableExports)
+                        export.Dispose();
+                }
             }
 
             progress?.Report(new ProgressToken
@@ -154,14 +185,14 @@ namespace AudioWorks.Api
             });
         }
 
-        static void CopyFields([NotNull] AudioMetadata source, [NotNull] AudioMetadata destination)
+        static void CopyStringProperties([NotNull] AudioMetadata source, [NotNull] AudioMetadata destination)
         {
-            // Copy every non-blank field from source to destination
+            // Copy every non-blank string property from source to destination
             foreach (var property in typeof(AudioMetadata).GetProperties())
             {
                 var value = property.GetValue(source);
-                if (!string.IsNullOrEmpty((string) value))
-                    property.SetValue(destination, value);
+                if (value == null || value is string stringValue && string.IsNullOrEmpty(stringValue)) continue;
+                property.SetValue(destination, value);
             }
         }
     }
