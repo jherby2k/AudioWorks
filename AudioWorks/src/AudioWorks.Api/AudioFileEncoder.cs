@@ -114,105 +114,105 @@ namespace AudioWorks.Api
                 FramesCompleted = 0
             });
 
-            var encoderExports = new Export<IAudioEncoder>[audioFiles.Length];
-            var tempOutputPaths = new string[audioFiles.Length];
-            var finalOutputPaths = new string[audioFiles.Length];
-            var outputStreams = new FileStream[audioFiles.Length];
             var audioFilesCompleted = 0;
             var totalFramesCompleted = 0;
 
-            try
+            var processTasks = new Task<TaggedAudioFile>[audioFiles.Length];
+
+            for (var i = 0; i < audioFiles.Length; i++)
             {
-                try
-                {
-                    var processTasks = new Task[audioFiles.Length];
+                // The output directory defaults to the AudioFile's current directory
+                var outputDirectory = _encodedDirectoryName?.ReplaceWith(audioFiles[i].Metadata) ??
+                                      Path.GetDirectoryName(audioFiles[i].Path);
 
-                    for (var i = 0; i < audioFiles.Length; i++)
+                // ReSharper disable once AssignNullToNotNullAttribute
+                var outputDirectoryInfo = Directory.CreateDirectory(outputDirectory);
+
+                // The output file names default to the input file names
+                var outputFileName = _encodedFileName?.ReplaceWith(audioFiles[i].Metadata) ??
+                                     Path.GetFileNameWithoutExtension(audioFiles[i].Path);
+
+                var i1 = i;
+                var itemProgress = progress == null
+                    ? null
+                    // ReSharper disable once ImplicitlyCapturedClosure
+                    : new SimpleProgress<int>(framesCompleted => progress.Report(new ProgressToken
                     {
-                        // The output directory defaults to the AudioFile's current directory
-                        var outputDirectory = _encodedDirectoryName?.ReplaceWith(audioFiles[i].Metadata) ??
-                                              Path.GetDirectoryName(audioFiles[i].Path);
+                        AudioFilesCompleted = audioFilesCompleted,
+                        FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
+                    }));
 
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        var outputDirectoryInfo = Directory.CreateDirectory(outputDirectory);
+                // ReSharper disable once ImplicitlyCapturedClosure
+                processTasks[i] = Task.Run(() =>
+                {
+                    string tempOutputPath = null;
+                    string finalOutputPath;
 
-                        // The output file names default to the input file names
-                        var outputFileName = _encodedFileName?.ReplaceWith(audioFiles[i].Metadata) ??
-                                             Path.GetFileNameWithoutExtension(audioFiles[i].Path);
+                    try
+                    {
+                        var encoderExport = _encoderFactory.CreateExport();
+                        FileStream outputStream = null;
 
-                        encoderExports[i] = _encoderFactory.CreateExport();
-
-                        tempOutputPaths[i] = finalOutputPaths[i] = Path.Combine(outputDirectoryInfo.FullName,
-                            outputFileName + encoderExports[i].Value.FileExtension);
-
-                        // If the output file already exists, write to a temporary file first
-                        if (File.Exists(finalOutputPaths[i]))
+                        try
                         {
-                            if (!Overwrite)
-                                throw new IOException($"The file '{finalOutputPaths[i]}' already exists.");
+                            tempOutputPath = finalOutputPath = Path.Combine(outputDirectoryInfo.FullName,
+                                outputFileName + encoderExport.Value.FileExtension);
 
-                            tempOutputPaths[i] = Path.Combine(outputDirectoryInfo.FullName, Path.GetRandomFileName());
-                        }
-
-                        outputStreams[i] = File.Open(tempOutputPaths[i], FileMode.OpenOrCreate);
-
-                        // Copy the source metadata, so it can't be modified
-                        encoderExports[i].Value.Initialize(
-                            outputStreams[i],
-                            audioFiles[i].Info,
-                            new AudioMetadata(audioFiles[i].Metadata),
-                            Settings);
-
-                        var i1 = i;
-                        var itemProgress = progress == null
-                            ? null
-                            // ReSharper disable once ImplicitlyCapturedClosure
-                            : new SimpleProgress<int>(framesCompleted => progress.Report(new ProgressToken
+                            // If the output file already exists, write to a temporary file first
+                            if (File.Exists(finalOutputPath))
                             {
-                                AudioFilesCompleted = audioFilesCompleted,
-                                FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
-                            }));
+                                if (!Overwrite)
+                                    throw new IOException($"The file '{finalOutputPath}' already exists.");
 
-                        // ReSharper disable once ImplicitlyCapturedClosure
-                        processTasks[i] = Task.Run(() =>
-                        {
-                            encoderExports[i1].Value.ProcessSamples(
+                                tempOutputPath = Path.Combine(outputDirectoryInfo.FullName,
+                                    Path.GetRandomFileName());
+                            }
+
+                            outputStream = File.Open(tempOutputPath, FileMode.OpenOrCreate);
+
+                            // Copy the source metadata, so it can't be modified
+                            encoderExport.Value.Initialize(
+                                outputStream,
+                                audioFiles[i1].Info,
+                                new AudioMetadata(audioFiles[i1].Metadata),
+                                Settings);
+
+                            encoderExport.Value.ProcessSamples(
                                 audioFiles[i1].Path,
                                 itemProgress,
                                 cancellationToken);
 
-                            encoderExports[i1].Value.Finish();
+                            encoderExport.Value.Finish();
+                        }
+                        finally
+                        {
+                            // Dispose the encoder before closing the stream
+                            encoderExport.Dispose();
+                            outputStream?.Dispose();
 
                             Interlocked.Increment(ref audioFilesCompleted);
-                        }, cancellationToken);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        // Clean up output
+                        if (tempOutputPath != null)
+                            File.Delete(tempOutputPath);
+                        throw;
                     }
 
-                    await Task.WhenAll(processTasks).ConfigureAwait(false);
-                }
-                finally
-                {
-                    // Dispose the encoders before closing the streams
-                    foreach (var encoderExport in encoderExports)
-                        encoderExport?.Dispose();
-                    foreach (var outputStream in outputStreams)
-                        outputStream?.Dispose();
-                }
-            }
-            catch (Exception)
-            {
-                // Clean up on error
-                foreach (var tempOutputPath in tempOutputPaths.Where(path => path != null))
-                    File.Delete(tempOutputPath);
-                throw;
+                    // If writing to temporary files, replace the originals now
+                    if (!tempOutputPath.Equals(finalOutputPath, StringComparison.OrdinalIgnoreCase))
+                    {
+                        File.Delete(finalOutputPath);
+                        File.Move(tempOutputPath, finalOutputPath);
+                    }
+
+                    return new TaggedAudioFile(finalOutputPath);
+                }, cancellationToken);
             }
 
-            // If writing to temporary files, replace the originals now
-            for (var i = 0; i < audioFiles.Length; i++)
-                if (!tempOutputPaths[i].Equals(finalOutputPaths[i], StringComparison.OrdinalIgnoreCase))
-                {
-                    File.Delete(finalOutputPaths[i]);
-                    File.Move(tempOutputPaths[i], finalOutputPaths[i]);
-                }
+            var result = await Task.WhenAll(processTasks).ConfigureAwait(false);
 
             progress?.Report(new ProgressToken
             {
@@ -220,7 +220,7 @@ namespace AudioWorks.Api
                 FramesCompleted = totalFramesCompleted
             });
 
-            return finalOutputPaths.Select(path => new TaggedAudioFile(path));
+            return result;
         }
     }
 }
