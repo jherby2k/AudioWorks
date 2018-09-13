@@ -61,11 +61,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     Title = "Test Title <> with |invalid \"characters\""
                 },
                 "{Title}",
-#if LINUX
-                // These characters are all valid on Linux
-                "Test Title <> with |invalid \"characters\".wav"
-#else
+#if WINDOWS
                 "Test Title with invalid characters.wav"
+#else
+                // These characters are all valid on Linux and OSX
+                "Test Title <> with |invalid \"characters\".wav"
 #endif
             },
 
