@@ -1,12 +1,14 @@
 ﻿using System;
-using System.Runtime.InteropServices;
-using System.Security;
-using JetBrains.Annotations;
 #if WINDOWS
 using System.IO;
 using System.Reflection;
+#endif
+using System.Runtime.InteropServices;
+using System.Security;
+#if WINDOWS
 using System.Text;
 #endif
+using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Vorbis
 {
@@ -20,6 +22,9 @@ namespace AudioWorks.Extensions.Vorbis
 #else
         const string _oggLibrary = "libogg";
         const string _vorbisLibrary = "libvorbis";
+#endif
+#if OSX
+        const string _vorbisEncLibrary = "libvorbisenc";
 #endif
 
 #if WINDOWS
@@ -174,10 +179,10 @@ namespace AudioWorks.Extensions.Vorbis
         internal static extern void VorbisInfoClear(
             IntPtr info);
 
-#if LINUX
-        [DllImport(_vorbisEncLibrary, EntryPoint = "vorbis_encode_init",
-#else
+#if WINDOWS
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_encode_init",
+#else
+        [DllImport(_vorbisEncLibrary, EntryPoint = "vorbis_encode_init",
 #endif
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int VorbisEncodeInit(
@@ -196,10 +201,10 @@ namespace AudioWorks.Extensions.Vorbis
             long minimumBitRate);
 #endif
 
-#if LINUX
-        [DllImport(_vorbisEncLibrary, EntryPoint = "vorbis_encode_init_vbr",
-#else
+#if WINDOWS
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_encode_init_vbr",
+#else
+        [DllImport(_vorbisEncLibrary, EntryPoint = "vorbis_encode_init_vbr",
 #endif
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int VorbisEncodeInitVbr(
