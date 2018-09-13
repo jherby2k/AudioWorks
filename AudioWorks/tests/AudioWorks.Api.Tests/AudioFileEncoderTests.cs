@@ -57,6 +57,8 @@ namespace AudioWorks.Api.Tests
 #if LINUX
             [NotNull] string expectedUbuntu1604Hash,
             [NotNull] string expectedUbuntu1804Hash)
+#elif OSX
+            [NotNull] string expectedHash)
 #else
             [NotNull] string expected32BitHash,
             [NotNull] string expected64BitHash)
@@ -83,6 +85,8 @@ namespace AudioWorks.Api.Tests
             Assert.Equal(LinuxUtility.GetRelease().StartsWith("Ubuntu 16.04", StringComparison.Ordinal)
                 ? expectedUbuntu1604Hash
                 : expectedUbuntu1804Hash,
+#elif OSX
+            Assert.Equal(expectedHash,
 #else
             Assert.Equal(Environment.Is64BitProcess ? expected64BitHash : expected32BitHash,
 #endif
