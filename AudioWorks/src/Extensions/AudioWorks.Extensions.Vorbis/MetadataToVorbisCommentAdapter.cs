@@ -98,7 +98,7 @@ namespace AudioWorks.Extensions.Vorbis
 #endif
 
             var valueSize = Encoding.UTF8.GetMaxByteCount(value.Length) + 1;
-            if (valueSize < 0x2000_0000)
+            if (valueSize < 0x40000)
             {
                 Span<byte> valueSpan = stackalloc byte[valueSize];
 #if NETCOREAPP2_1
@@ -115,7 +115,7 @@ namespace AudioWorks.Extensions.Vorbis
             }
             else
             {
-                // Use heap allocations for comments > 512kB (usually pictures)
+                // Use heap allocations for comments > 256kB (usually pictures)
                 SafeNativeMethods.VorbisCommentAddTag(_comment,
                     new IntPtr(Unsafe.AsPointer(ref keySpan.GetPinnableReference())),
                     Encoding.UTF8.GetBytes(value));
