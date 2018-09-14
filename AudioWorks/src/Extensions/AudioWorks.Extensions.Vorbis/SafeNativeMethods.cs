@@ -39,8 +39,8 @@ namespace AudioWorks.Extensions.Vorbis
 
             Environment.SetEnvironmentVariable("PATH", newPath.ToString());
         }
-#endif
 
+#endif
         [Pure]
         [DllImport(_oggLibrary, EntryPoint = "ogg_page_serialno",
             CallingConvention = CallingConvention.Cdecl)]
@@ -146,18 +146,10 @@ namespace AudioWorks.Extensions.Vorbis
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_comment_add_tag",
             CallingConvention = CallingConvention.Cdecl)]
-#if NETCOREAPP2_1
-        internal static extern void VorbisCommentAddTag(
-#else
         internal static extern unsafe void VorbisCommentAddTag(
-#endif
             in VorbisComment comment,
             ref byte tag,
-#if NETCOREAPP2_1
-            ref byte contents);
-#else
             byte* contents);
-#endif
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_comment_clear",
             CallingConvention = CallingConvention.Cdecl)]

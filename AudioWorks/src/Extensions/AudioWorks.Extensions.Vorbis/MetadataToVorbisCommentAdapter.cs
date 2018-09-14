@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
 #if !NETCOREAPP2_1
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 #endif
 using System.Text;
@@ -102,18 +102,14 @@ namespace AudioWorks.Extensions.Vorbis
             var valueSpan = valueSize < 0x40000 ? stackalloc byte[valueSize] : new byte[valueSize];
 #if NETCOREAPP2_1
             Encoding.ASCII.GetBytes(value, valueSpan);
-
-            SafeNativeMethods.VorbisCommentAddTag(_comment,
-                ref keySpan.GetPinnableReference(),
-                ref valueSpan.GetPinnableReference());
 #else
             Encoding.UTF8.GetBytes(
                 (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(value.AsSpan())), value.Length,
                 (byte*) Unsafe.AsPointer(ref valueSpan.GetPinnableReference()), valueSpan.Length);
+#endif
 
             fixed (byte* valueAddress = valueSpan)
                 SafeNativeMethods.VorbisCommentAddTag(_comment, ref keySpan.GetPinnableReference(), valueAddress);
-#endif
 
             _unmanagedMemoryAllocated = true;
         }
