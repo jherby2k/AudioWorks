@@ -97,29 +97,24 @@ namespace AudioWorks.Extensions.Vorbis
                 (byte*) Unsafe.AsPointer(ref keySpan.GetPinnableReference()), keySpan.Length);
 #endif
 
+            // Use heap allocations for comments > 256kB (usually pictures)
             var valueSize = Encoding.UTF8.GetMaxByteCount(value.Length) + 1;
-            if (valueSize < 0x40000)
-            {
-                Span<byte> valueSpan = stackalloc byte[valueSize];
+            var valueSpan = valueSize < 0x40000 ? stackalloc byte[valueSize] : new byte[valueSize];
 #if NETCOREAPP2_1
-                Encoding.ASCII.GetBytes(value, valueSpan);
+            Encoding.ASCII.GetBytes(value, valueSpan);
+
+            SafeNativeMethods.VorbisCommentAddTag(_comment,
+                ref keySpan.GetPinnableReference(),
+                ref valueSpan.GetPinnableReference());
 #else
-                Encoding.UTF8.GetBytes(
-                    (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(value.AsSpan())), value.Length,
-                    (byte*) Unsafe.AsPointer(ref valueSpan.GetPinnableReference()), valueSpan.Length);
+            Encoding.UTF8.GetBytes(
+                (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(value.AsSpan())), value.Length,
+                (byte*) Unsafe.AsPointer(ref valueSpan.GetPinnableReference()), valueSpan.Length);
+
+            fixed (byte* valueAddress = valueSpan)
+                SafeNativeMethods.VorbisCommentAddTag(_comment, ref keySpan.GetPinnableReference(), valueAddress);
 #endif
 
-                SafeNativeMethods.VorbisCommentAddTag(_comment,
-                    new IntPtr(Unsafe.AsPointer(ref keySpan.GetPinnableReference())),
-                    new IntPtr(Unsafe.AsPointer(ref valueSpan.GetPinnableReference())));
-            }
-            else
-            {
-                // Use heap allocations for comments > 256kB (usually pictures)
-                SafeNativeMethods.VorbisCommentAddTag(_comment,
-                    new IntPtr(Unsafe.AsPointer(ref keySpan.GetPinnableReference())),
-                    Encoding.UTF8.GetBytes(value));
-            }
             _unmanagedMemoryAllocated = true;
         }
 

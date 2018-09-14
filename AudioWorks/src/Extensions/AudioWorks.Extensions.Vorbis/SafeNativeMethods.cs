@@ -146,17 +146,18 @@ namespace AudioWorks.Extensions.Vorbis
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_comment_add_tag",
             CallingConvention = CallingConvention.Cdecl)]
+#if NETCOREAPP2_1
         internal static extern void VorbisCommentAddTag(
+#else
+        internal static extern unsafe void VorbisCommentAddTag(
+#endif
             in VorbisComment comment,
-            IntPtr tag,
-            IntPtr contents);
-
-        [DllImport(_vorbisLibrary, EntryPoint = "vorbis_comment_add_tag",
-            CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void VorbisCommentAddTag(
-            in VorbisComment comment,
-            IntPtr tag,
-            [NotNull] byte[] contents);
+            ref byte tag,
+#if NETCOREAPP2_1
+            ref byte contents);
+#else
+            byte* contents);
+#endif
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_comment_clear",
             CallingConvention = CallingConvention.Cdecl)]
