@@ -21,7 +21,7 @@ MacOS    | Coming soon!
 
 AudioWorks currently needs to be built from source, although installers are coming soon!
 
-* [PowerShell Core 6.1+](https://github.com/PowerShell/PowerShell/releases) (currently in preview) or Windows PowerShell 5.1+
+* [PowerShell Core 6.1+](https://github.com/PowerShell/PowerShell/releases) or Windows PowerShell 5.1+
 * [.NET Framework 4.7.1+](https://support.microsoft.com/en-us/help/4054530/microsoft-net-framework-4-7-2-offline-installer-for-windows) (Windows only, if using Windows PowerShell)
 * Windows 7+, Ubuntu 16.04 or 18.04 (other Linux distros may work, but are currently untested).
 * [iTunes](https://www.apple.com/itunes) (optional, for AAC and ALAC support on Windows only. Requires the classic installer, not the Windows Store version. Technically only the Apple Application support packages are required).
