@@ -1182,6 +1182,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #if LINUX
                 "920ABDF9377A176F1E3BC23A3854B436",
                 "920ABDF9377A176F1E3BC23A3854B436"
+#elif OSX
+                "11F166F272E635021ABD6BAF37A3BFA5"
 #else
                 "4087AB586A43226EB7F59E44DE576186"
 #endif
@@ -1214,6 +1216,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #if LINUX
                 "AE84B97E3D1DC72C8F037F1FB391F176",
                 "AE84B97E3D1DC72C8F037F1FB391F176"
+#elif OSX
+                "63BB3732D651F6D3A8496091FCF14725"
 #else
                 "32F0045D8D0BB7ECC261552CBFE0A3C6"
 #endif
@@ -1246,6 +1250,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #if LINUX
                 "AE84B97E3D1DC72C8F037F1FB391F176",
                 "AE84B97E3D1DC72C8F037F1FB391F176"
+#elif OSX
+                "63BB3732D651F6D3A8496091FCF14725"
 #else
                 "32F0045D8D0BB7ECC261552CBFE0A3C6"
 #endif
@@ -1278,6 +1284,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #if LINUX
                 "65D70AA25438FADE7F5BD8F3EA50AF14",
                 "65D70AA25438FADE7F5BD8F3EA50AF14"
+#elif OSX
+                "ED7210753CB1A870F74DB01E959D2FFE"
 #else
                 "A56486BA4A903B4664CAF17835AE053C"
 #endif
@@ -1310,6 +1318,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #if LINUX
                 "E27562A26A75428980854641331A0EDA",
                 "E27562A26A75428980854641331A0EDA"
+#elif OSX
+                "17F5C68F72027655E21870F0E7F06CB8"
 #else
                 "2D5659E77B842E3A3B460C5A7EB78E11"
 #endif
@@ -1343,6 +1353,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #if LINUX
                 "920ABDF9377A176F1E3BC23A3854B436",
                 "920ABDF9377A176F1E3BC23A3854B436"
+#elif OSX
+                "11F166F272E635021ABD6BAF37A3BFA5"
 #else
                 "4087AB586A43226EB7F59E44DE576186"
 #endif
@@ -1358,6 +1370,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #if LINUX
                 "BF300A616B52AB534976E2578ACF1C56",
                 "BF300A616B52AB534976E2578ACF1C56"
+#elif OSX
+                "873E47897BB3645B63B5B8D8B932198E"
 #else
                 "31429CC7725403FABC43DDCAAE4F9FA8"
 #endif
@@ -1373,6 +1387,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #if LINUX
                 "BF300A616B52AB534976E2578ACF1C56",
                 "BF300A616B52AB534976E2578ACF1C56"
+#elif OSX
+                "873E47897BB3645B63B5B8D8B932198E"
 #else
                 "31429CC7725403FABC43DDCAAE4F9FA8"
 #endif
@@ -1388,6 +1404,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #if LINUX
                 "5C771ACA31F957E028BE07E3489DCBC3",
                 "5C771ACA31F957E028BE07E3489DCBC3"
+#elif OSX
+                "11F7914067B4DAB1D219EA7ACF88ED81"
 #else
                 "11F7914067B4DAB1D219EA7ACF88ED81"
 #endif
@@ -1403,6 +1421,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #if LINUX
                 "5C771ACA31F957E028BE07E3489DCBC3",
                 "5C771ACA31F957E028BE07E3489DCBC3"
+#elif OSX
+                "11F7914067B4DAB1D219EA7ACF88ED81"
 #else
                 "11F7914067B4DAB1D219EA7ACF88ED81"
 #endif
