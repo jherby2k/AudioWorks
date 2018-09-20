@@ -15,7 +15,7 @@ Platform | Status
 -------- | ------
 Windows  | [![Build status](https://ci.appveyor.com/api/projects/status/k7yiy48qkoa5701t/branch/master?svg=true)](https://ci.appveyor.com/project/jherby2k/audioworks-n8ay6/branch/master)
 Linux    | [![Build status](https://ci.appveyor.com/api/projects/status/8kh6urve97ibwubv/branch/master?svg=true)](https://ci.appveyor.com/project/jherby2k/audioworks-n6p0s/branch/master)
-MacOS    | Coming soon!
+MacOS    | Passing
 
 ### System Requirements
 
@@ -23,10 +23,11 @@ AudioWorks currently needs to be built from source, although installers are comi
 
 * [PowerShell Core 6.1+](https://github.com/PowerShell/PowerShell/releases) or Windows PowerShell 5.1+
 * [.NET Framework 4.7.1+](https://support.microsoft.com/en-us/help/4054530/microsoft-net-framework-4-7-2-offline-installer-for-windows) (Windows only, if using Windows PowerShell)
-* Windows 7+, Ubuntu 16.04 or 18.04 (other Linux distros may work, but are currently untested).
+* Windows 7+, OSX 10.13, Ubuntu (18.04 or 16.04), Fedora 28 (other OS versions and distributions may work, but are currently untested).
 * [iTunes](https://www.apple.com/itunes) (optional, for AAC and ALAC support on Windows only. Requires the classic installer, not the Windows Store version. Technically only the Apple Application support packages are required).
 * libebur128-1 (via apt-get on Ubuntu 16.04 and 18.04)
 * libmp3lame0 (via apt-get on Ubuntu 16.04)
+* libebur128 (via dnf on Fedora 28)
 
 ### Installation
 
