@@ -34,11 +34,11 @@ namespace AudioWorks.Extensibility
 
             using (var unvalidatedContainer = new ContainerConfiguration().WithAssemblies(assemblies).CreateContainer())
             {
-                // Remove any extension assemblies that fail validation
-                foreach (var validator in unvalidatedContainer.GetExports<IPrerequisiteValidator>())
-                    if (!validator.HasPrerequisites())
+                // Remove any extension assemblies that can't have prerequisites handled automatically
+                foreach (var handler in unvalidatedContainer.GetExports<IPrerequisiteHandler>())
+                    if (!handler.Handle())
                     {
-                        var validatorAssembly = validator.GetType().Assembly;
+                        var validatorAssembly = handler.GetType().Assembly;
                         logger.LogDebug("Extension assembly {0} failed prerequisite check. Removing.",
                             validatorAssembly.FullName);
 

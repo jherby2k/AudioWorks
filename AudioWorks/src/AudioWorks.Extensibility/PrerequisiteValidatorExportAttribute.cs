@@ -8,18 +8,18 @@ namespace AudioWorks.Extensibility
     /// Classes marked with this attribute will be loaded by AudioWorks.
     /// </summary>
     /// <remarks>
-    /// Classes marked with this attribute must implement <see cref="IPrerequisiteValidator"/>.
+    /// Classes marked with this attribute must implement <see cref="IPrerequisiteHandler"/>.
     /// </remarks>
     /// <seealso cref="ExportAttribute"/>
-    [PublicAPI, MeansImplicitUse, BaseTypeRequired(typeof(IPrerequisiteValidator))]
+    [PublicAPI, MeansImplicitUse, BaseTypeRequired(typeof(IPrerequisiteHandler))]
     [MetadataAttribute, AttributeUsage(AttributeTargets.Class)]
-    public sealed class PrerequisiteValidatorExportAttribute : ExportAttribute
+    public sealed class PrerequisiteHandlerExportAttribute : ExportAttribute
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PrerequisiteValidatorExportAttribute"/> class.
+        /// Initializes a new instance of the <see cref="PrerequisiteHandlerExportAttribute"/> class.
         /// </summary>
-        public PrerequisiteValidatorExportAttribute()
-            : base(typeof(IPrerequisiteValidator))
+        public PrerequisiteHandlerExportAttribute()
+            : base(typeof(IPrerequisiteHandler))
         {
         }
     }

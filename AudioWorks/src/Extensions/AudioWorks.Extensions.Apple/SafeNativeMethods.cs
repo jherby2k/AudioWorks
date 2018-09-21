@@ -3,10 +3,6 @@ using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
 using JetBrains.Annotations;
-#if WINDOWS
-using System.IO;
-using System.Text;
-#endif
 
 namespace AudioWorks.Extensions.Apple
 {
@@ -17,20 +13,6 @@ namespace AudioWorks.Extensions.Apple
         const string _coreAudioLibrary = "/System/Library/Frameworks/CoreAudio.framework/Versions/A/Resources/BridgeSupport/CoreAudio.dylib";
 #else
         const string _coreAudioLibrary = "CoreAudioToolbox";
-
-        static SafeNativeMethods()
-        {
-            // Prefix the PATH variable with the default Apple Application Support installation directory
-            var newPath = new StringBuilder(Path.Combine(
-                // ReSharper disable once AssignNullToNotNullAttribute
-                Environment.GetEnvironmentVariable("CommonProgramFiles"),
-                "Apple",
-                "Apple Application Support"));
-            newPath.Append(Path.PathSeparator);
-            newPath.Append(Environment.GetEnvironmentVariable("PATH"));
-
-            Environment.SetEnvironmentVariable("PATH", newPath.ToString());
-        }
 #endif
 
         [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
