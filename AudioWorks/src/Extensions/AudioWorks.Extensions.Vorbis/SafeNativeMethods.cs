@@ -1,13 +1,6 @@
 ﻿using System;
-#if WINDOWS
-using System.IO;
-using System.Reflection;
-#endif
 using System.Runtime.InteropServices;
 using System.Security;
-#if WINDOWS
-using System.Text;
-#endif
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Vorbis
@@ -27,20 +20,6 @@ namespace AudioWorks.Extensions.Vorbis
         const string _vorbisEncLibrary = "libvorbisenc";
 #endif
 
-#if WINDOWS
-        static SafeNativeMethods()
-        {
-            // Select an architecture-appropriate directory by prefixing the PATH variable
-            var newPath = new StringBuilder(Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath));
-            newPath.Append(Path.DirectorySeparatorChar);
-            newPath.Append(Environment.Is64BitProcess ? "x64" : "x86");
-            newPath.Append(Path.PathSeparator);
-            newPath.Append(Environment.GetEnvironmentVariable("PATH"));
-
-            Environment.SetEnvironmentVariable("PATH", newPath.ToString());
-        }
-
-#endif
         [Pure]
         [DllImport(_oggLibrary, EntryPoint = "ogg_page_serialno",
             CallingConvention = CallingConvention.Cdecl)]
