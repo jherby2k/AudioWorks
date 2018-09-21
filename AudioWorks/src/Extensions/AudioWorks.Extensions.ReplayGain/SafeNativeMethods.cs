@@ -3,11 +3,6 @@ using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
 using JetBrains.Annotations;
-#if WINDOWS
-using System.IO;
-using System.Reflection;
-using System.Text;
-#endif
 
 namespace AudioWorks.Extensions.ReplayGain
 {
@@ -18,21 +13,6 @@ namespace AudioWorks.Extensions.ReplayGain
         const string _ebur128Library = "libebur128.so.1";
 #else
         const string _ebur128Library = "libebur128";
-#endif
-
-#if WINDOWS
-        static SafeNativeMethods()
-        {
-            // Select an architecture-appropriate directory by prefixing the PATH variable
-            var newPath = new StringBuilder(
-                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath));
-            newPath.Append(Path.DirectorySeparatorChar);
-            newPath.Append(Environment.Is64BitProcess ? "x64" : "x86");
-            newPath.Append(Path.PathSeparator);
-            newPath.Append(Environment.GetEnvironmentVariable("PATH"));
-
-            Environment.SetEnvironmentVariable("PATH", newPath.ToString());
-        }
 #endif
 
         [DllImport(_ebur128Library, EntryPoint = "ebur128_init",
