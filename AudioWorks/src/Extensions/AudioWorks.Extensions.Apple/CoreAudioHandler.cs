@@ -31,12 +31,12 @@ namespace AudioWorks.Extensions.Apple
             if (!File.Exists(coreAudioLibrary))
             {
                 logger.LogWarning(
-                    "Core Audio Toolbox could not be found. Install Apple Application Support (part of iTunes) for AAC and Apple Lossless codecs.");
+                    "CoreAudio could not be found. Install Apple Application Support (part of iTunes) for AAC and Apple Lossless codecs.");
                 return false;
             }
 
-            logger.LogInformation("Using Core Audio Toolbox version {0}.",
-                FileVersionInfo.GetVersionInfo(coreAudioLibrary).FileVersion);
+            logger.LogInformation("Using CoreAudio version {0}.",
+                FileVersionInfo.GetVersionInfo(coreAudioLibrary).ProductVersion);
 
             // Prefix the PATH variable with the default Apple Application Support installation directory
             Environment.SetEnvironmentVariable("PATH", new StringBuilder(nativeLibraryPath)

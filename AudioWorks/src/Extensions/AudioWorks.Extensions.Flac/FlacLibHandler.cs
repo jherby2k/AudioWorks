@@ -35,7 +35,7 @@ namespace AudioWorks.Extensions.Flac
             }
 
             logger.LogInformation("Using libFLAC version {0}.",
-                FileVersionInfo.GetVersionInfo(flacLibrary).FileVersion);
+                FileVersionInfo.GetVersionInfo(flacLibrary).ProductVersion);
 
             // Prefix the PATH variable with the correct architecture-specific directory
             Environment.SetEnvironmentVariable("PATH", new StringBuilder(nativeLibraryPath)
