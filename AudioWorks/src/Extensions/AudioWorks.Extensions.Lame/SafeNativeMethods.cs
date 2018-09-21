@@ -1,13 +1,6 @@
 ﻿using System;
-#if WINDOWS
-using System.IO;
-using System.Reflection;
-#endif
 using System.Runtime.InteropServices;
 using System.Security;
-#if WINDOWS
-using System.Text;
-#endif
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Lame
@@ -19,21 +12,6 @@ namespace AudioWorks.Extensions.Lame
         const string _lameLibrary = "libmp3lame.so.0";
 #else
         const string _lameLibrary = "libmp3lame";
-#endif
-
-#if WINDOWS
-        static SafeNativeMethods()
-        {
-            // Select an architecture-appropriate directory by prefixing the PATH variable
-            var newPath = new StringBuilder(
-                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath));
-            newPath.Append(Path.DirectorySeparatorChar);
-            newPath.Append(Environment.Is64BitProcess ? "x64" : "x86");
-            newPath.Append(Path.PathSeparator);
-            newPath.Append(Environment.GetEnvironmentVariable("PATH"));
-
-            Environment.SetEnvironmentVariable("PATH", newPath.ToString());
-        }
 #endif
 
         [NotNull]
