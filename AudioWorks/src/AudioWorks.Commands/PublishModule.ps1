@@ -28,5 +28,5 @@ if (Test-Path $outputDir) { Remove-Item -Path $outputDir -Recurse -ErrorAction S
 "Publishing $Framework PowerShell module to $outputDir."
 
 dotnet publish "$ProjectDir" --no-build -c $Configuration -o "$outputDir" -f $Framework
-Copy-Item -Path "$outputDir\*" -Destination $outputRoot -Include "*.psd1", "*.ps1xml", "*.dll-Help.xml"
-Remove-Item -Path "$outputDir\*" -Recurse -Include "*.psd1", "*.ps1xml", "*.xml", "*.pdb", "*.deps.json"
+Copy-Item -Path "$outputDir\*" -Destination $outputRoot -Include "*.psd1", "*.ps1xml", "*.dll-Help.xml", "COPYING", "COPYING.LESSER"
+Remove-Item -Path "$outputDir\*" -Recurse -Include "*.psd1", "*.ps1xml", "*.xml", "*.pdb", "*.deps.json", "COPYING", "COPYING.LESSER"
