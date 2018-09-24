@@ -133,6 +133,10 @@ namespace AudioWorks.Extensions.Vorbis
         internal static extern void OggStreamClear(
             IntPtr streamState);
 
+        [DllImport(_vorbisLibrary, EntryPoint = "vorbis_version_string",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr VorbisVersion();
+
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_comment_init",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern void VorbisCommentInit(

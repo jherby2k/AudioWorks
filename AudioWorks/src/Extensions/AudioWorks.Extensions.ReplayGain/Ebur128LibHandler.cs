@@ -13,18 +13,21 @@ details.
 You should have received a copy of the GNU Lesser General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-#if WINDOWS
 using System;
+#if LINUX
 using System.Diagnostics;
+#endif
 using System.IO;
+#if WINDOWS
 using System.Reflection;
 using System.Text;
+#endif
 using AudioWorks.Common;
-#endif
 using AudioWorks.Extensibility;
-#if WINDOWS
-using Microsoft.Extensions.Logging;
+#if LINUX
+using JetBrains.Annotations;
 #endif
+using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensions.ReplayGain
 {
@@ -33,6 +36,8 @@ namespace AudioWorks.Extensions.ReplayGain
     {
         public bool Handle()
         {
+            var logger = LoggingManager.LoggerFactory.CreateLogger<Ebur128LibHandler>();
+
 #if WINDOWS
             var nativeLibraryPath = Path.Combine(
                 // ReSharper disable once AssignNullToNotNullAttribute
@@ -41,23 +46,77 @@ namespace AudioWorks.Extensions.ReplayGain
 
             var ebur128Library = Path.Combine(nativeLibraryPath, "libebur128.dll");
 
-            var logger = LoggingManager.LoggerFactory.CreateLogger<Ebur128LibHandler>();
-
             if (!File.Exists(ebur128Library))
             {
-                logger.LogWarning("libebur128 could not be found.");
+                logger.LogWarning("Missing libebur128.dll.");
                 return false;
             }
-
-            logger.LogInformation("Using libebur128 version {0}.",
-                FileVersionInfo.GetVersionInfo(ebur128Library).ProductVersion);
 
             // Prefix the PATH variable with the correct architecture-specific directory
             Environment.SetEnvironmentVariable("PATH", new StringBuilder(nativeLibraryPath)
                 .Append(Path.PathSeparator).Append(Environment.GetEnvironmentVariable("PATH"))
                 .ToString());
+#elif LINUX
+            if (!VerifyLibrary("libebur128.so.1"))
+            {
+                logger.LogWarning(
+                    GetDistribution().Equals("Ubuntu", StringComparison.OrdinalIgnoreCase)
+                        ? "Missing libebur128.so.1. Run 'sudo apt-get install -y libebur128-1 && sudo updatedb' then restart AudioWorks."
+                        : "Missing libebur128.so.1.");
+                return false;
+            }
 #endif
+
+            SafeNativeMethods.GetVersion(out var major, out var minor, out var patch);
+            logger.LogInformation("Using libebur128 version {0}.{1}.{2}.", major, minor, patch);
+
             return true;
         }
+#if LINUX
+
+        [Pure]
+        static bool VerifyLibrary([NotNull] string libraryName)
+        {
+            var process = new Process
+            {
+                StartInfo = new ProcessStartInfo("locate", $"-r {libraryName}$")
+                {
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                }
+            };
+            process.Start();
+            process.StandardOutput.ReadToEnd();
+            process.WaitForExit();
+            return process.ExitCode == 0;
+        }
+
+        [NotNull]
+        public static string GetDistribution()
+        {
+            try
+            {
+                var process = new Process
+                {
+                    StartInfo = new ProcessStartInfo("lsb_release", "-i -s")
+                    {
+                        RedirectStandardOutput = true,
+                        UseShellExecute = false,
+                        CreateNoWindow = true
+                    }
+                };
+                process.Start();
+                var result = process.StandardOutput.ReadToEnd();
+                process.WaitForExit();
+                return result.Trim();
+            }
+            catch (FileNotFoundException)
+            {
+                // If lsb_release isn't available, the distribution is unknown
+                return string.Empty;
+            }
+        }
+#endif
     }
 }

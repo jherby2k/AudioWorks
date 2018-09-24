@@ -29,6 +29,30 @@ namespace AudioWorks.Extensions.Flac
 #else
         const string _flacLibrary = "libFLAC";
 #endif
+#if WINDOWS
+        const string _kernelLibrary = "kernel32";
+
+        [DllImport(_kernelLibrary, CharSet = CharSet.Unicode)]
+        internal static extern IntPtr LoadLibrary(string dllToLoad);
+
+        [DllImport(_kernelLibrary)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool FreeLibrary(IntPtr module);
+
+        [DllImport(_kernelLibrary, ExactSpelling = true, CharSet = CharSet.Ansi, BestFitMapping = false)]
+        internal static extern IntPtr GetProcAddress(IntPtr module, string name);
+#else
+        const string _dlLibrary = "libdl";
+
+        [DllImport(_dlLibrary, EntryPoint = "dlopen", CharSet = CharSet.Ansi, BestFitMapping = false)]
+        internal static extern IntPtr DlOpen(string filename, int flags);
+
+        [DllImport(_dlLibrary, EntryPoint = "dlcose")]
+        internal static extern int DlClose(IntPtr handle);
+
+        [DllImport(_dlLibrary, EntryPoint = "dlsym", CharSet = CharSet.Ansi, BestFitMapping = false)]
+        internal static extern IntPtr DlSym(IntPtr handle, string symbol);
+#endif
 
         [NotNull]
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_new",

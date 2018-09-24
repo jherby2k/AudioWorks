@@ -38,6 +38,14 @@ namespace AudioWorks.Extensions.ReplayGain
         internal static extern StateHandle Init(uint channels, ulong samplerate, Modes modes);
 #endif
 
+
+        [DllImport(_ebur128Library, EntryPoint = "ebur128_get_version",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void GetVersion(
+            out int major,
+            out int minor,
+            out int patch);
+
         [DllImport(_ebur128Library, EntryPoint = "ebur128_add_frames_float",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern Ebur128Error AddFramesFloat(

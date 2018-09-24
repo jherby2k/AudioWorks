@@ -29,6 +29,10 @@ namespace AudioWorks.Extensions.Lame
         const string _lameLibrary = "libmp3lame";
 #endif
 
+        [DllImport(_lameLibrary, EntryPoint = "get_lame_version",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr GetVersion();
+
         [NotNull]
         [DllImport(_lameLibrary, EntryPoint = "lame_init",
             CallingConvention = CallingConvention.Cdecl)]
