@@ -51,7 +51,7 @@ namespace AudioWorks.Extensibility
             {
                 // Remove any extension assemblies that can't have prerequisites handled automatically
                 foreach (var handler in unvalidatedContainer.GetExports<IPrerequisiteHandler>())
-                    if (!handler.Handle())
+                    if (!TryHandle(handler, logger))
                     {
                         var validatorAssembly = handler.GetType().Assembly;
                         logger.LogDebug("Extension assembly {0} failed prerequisite check. Removing.",
@@ -64,6 +64,19 @@ namespace AudioWorks.Extensibility
 
             CompositionHost = new ContainerConfiguration()
                 .WithAssemblies(assemblies).CreateContainer();
+        }
+
+        static bool TryHandle([NotNull] IPrerequisiteHandler handler, [NotNull] ILogger<ExtensionContainerBase> logger)
+        {
+            try
+            {
+                return handler.Handle();
+            }
+            catch (Exception e)
+            {
+                logger.LogWarning(e, "The Prerequisite handler threw an unexpected exception.");
+                return false;
+            }
         }
     }
 }
