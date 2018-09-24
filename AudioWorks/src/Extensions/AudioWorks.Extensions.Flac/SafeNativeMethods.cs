@@ -47,7 +47,7 @@ namespace AudioWorks.Extensions.Flac
         [DllImport(_dlLibrary, EntryPoint = "dlopen", CharSet = CharSet.Ansi, BestFitMapping = false)]
         internal static extern IntPtr DlOpen(string filename, int flags);
 
-        [DllImport(_dlLibrary, EntryPoint = "dlcose")]
+        [DllImport(_dlLibrary, EntryPoint = "dlclose")]
         internal static extern int DlClose(IntPtr handle);
 
         [DllImport(_dlLibrary, EntryPoint = "dlsym", CharSet = CharSet.Ansi, BestFitMapping = false)]
