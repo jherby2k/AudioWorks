@@ -16,9 +16,13 @@ You should have received a copy of the GNU Lesser General Public License along w
 using System;
 #if LINUX
 using System.Diagnostics;
+#endif
+#if !WINDOWS
 using System.Diagnostics.CodeAnalysis;
 #endif
+#if !OSX
 using System.IO;
+#endif
 #if WINDOWS
 using System.Reflection;
 #endif
@@ -77,6 +81,8 @@ namespace AudioWorks.Extensions.Flac
             }
 
             var module = SafeNativeMethods.DlOpen("libFLAC.so.8", 2);
+#else
+            var module = SafeNativeMethods.DlOpen("libFLAC", 2);
 #endif
             try
             {

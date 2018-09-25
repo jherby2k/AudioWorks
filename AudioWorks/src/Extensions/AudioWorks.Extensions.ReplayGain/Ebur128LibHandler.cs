@@ -13,11 +13,15 @@ details.
 You should have received a copy of the GNU Lesser General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+#if !OSX
 using System;
+#endif
 #if LINUX
 using System.Diagnostics;
 #endif
+#if !OSX
 using System.IO;
+#endif
 #if WINDOWS
 using System.Reflection;
 using System.Text;
