@@ -1,4 +1,19 @@
-﻿using System;
+﻿/* Copyright © 2018 Jeremy Herbison
+
+This file is part of AudioWorks.
+
+AudioWorks is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+AudioWorks is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+details.
+
+You should have received a copy of the GNU Lesser General Public License along with AudioWorks. If not, see
+<https://www.gnu.org/licenses/>. */
+
+using System;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -22,6 +37,14 @@ namespace AudioWorks.Extensions.ReplayGain
 #else
         internal static extern StateHandle Init(uint channels, ulong samplerate, Modes modes);
 #endif
+
+
+        [DllImport(_ebur128Library, EntryPoint = "ebur128_get_version",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void GetVersion(
+            out int major,
+            out int minor,
+            out int patch);
 
         [DllImport(_ebur128Library, EntryPoint = "ebur128_add_frames_float",
             CallingConvention = CallingConvention.Cdecl)]
