@@ -1,14 +1,21 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using AudioWorks.Common.Tests.DataSources;
+using AudioWorks.TestUtilities;
 using JetBrains.Annotations;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace AudioWorks.Common.Tests
 {
     [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class CoverArtTests
     {
+        public CoverArtTests([NotNull] ITestOutputHelper outputHelper)
+        {
+            LoggingManager.LoggerFactory.AddProvider(new XUnitLoggerProvider(outputHelper));
+        }
+
         [Theory(DisplayName = "CoverArt has the expected Width property value")]
         [MemberData(nameof(ValidImageFileDataSource.FileNamesAndWidth),
             MemberType = typeof(ValidImageFileDataSource))]

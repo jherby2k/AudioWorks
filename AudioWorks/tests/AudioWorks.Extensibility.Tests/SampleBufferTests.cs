@@ -1,10 +1,19 @@
 using System;
+using AudioWorks.Common;
+using AudioWorks.TestUtilities;
+using JetBrains.Annotations;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace AudioWorks.Extensibility.Tests
 {
     public sealed class SampleBufferTests
     {
+        public SampleBufferTests([NotNull] ITestOutputHelper outputHelper)
+        {
+            LoggingManager.LoggerFactory.AddProvider(new XUnitLoggerProvider(outputHelper));
+        }
+
         [Fact(DisplayName = "SampleBuffer.Empty returns an empty SampleBuffer")]
         public void SampleBufferEmptyReturnsEmpty()
         {

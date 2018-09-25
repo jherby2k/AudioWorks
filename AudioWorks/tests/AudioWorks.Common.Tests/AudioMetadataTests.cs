@@ -2,13 +2,21 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using AudioWorks.TestUtilities;
+using JetBrains.Annotations;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace AudioWorks.Common.Tests
 {
     [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class AudioMetadataTests
     {
+        public AudioMetadataTests([NotNull] ITestOutputHelper outputHelper)
+        {
+            LoggingManager.LoggerFactory.AddProvider(new XUnitLoggerProvider(outputHelper));
+        }
+
         [Fact(DisplayName = "AudioMetadata throws an exception if Title is null")]
         public void TitleNullThrowsException()
         {

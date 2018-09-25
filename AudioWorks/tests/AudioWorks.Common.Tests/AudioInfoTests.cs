@@ -2,13 +2,21 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using AudioWorks.TestUtilities;
+using JetBrains.Annotations;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace AudioWorks.Common.Tests
 {
     [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class AudioInfoTests
     {
+        public AudioInfoTests([NotNull] ITestOutputHelper outputHelper)
+        {
+            LoggingManager.LoggerFactory.AddProvider(new XUnitLoggerProvider(outputHelper));
+        }
+
         [Fact(DisplayName = "AudioInfo throws an exception if the Format is null")]
         public void FormatNullThrowsException()
         {

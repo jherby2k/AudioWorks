@@ -5,10 +5,12 @@ using System.Runtime.Serialization.Formatters.Binary;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
+using AudioWorks.TestUtilities;
 using AutoMapper;
 using JetBrains.Annotations;
 using ObjectsComparer;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace AudioWorks.Api.Tests
 {
@@ -18,6 +20,11 @@ namespace AudioWorks.Api.Tests
         static TaggedAudioFileTests()
         {
             Mapper.Initialize(config => config.CreateMap<AudioMetadata, AudioMetadata>());
+        }
+
+        public TaggedAudioFileTests([NotNull] ITestOutputHelper outputHelper)
+        {
+            LoggingManager.LoggerFactory.AddProvider(new XUnitLoggerProvider(outputHelper));
         }
 
         [Fact(DisplayName = "TaggedAudioFile's constructor throws an exception if the path is null")]

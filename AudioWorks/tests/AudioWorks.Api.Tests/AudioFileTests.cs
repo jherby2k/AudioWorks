@@ -5,15 +5,22 @@ using System.Runtime.Serialization.Formatters.Binary;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
+using AudioWorks.TestUtilities;
 using JetBrains.Annotations;
 using ObjectsComparer;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace AudioWorks.Api.Tests
 {
     [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class AudioFileTests
     {
+        public AudioFileTests([NotNull] ITestOutputHelper outputHelper)
+        {
+            LoggingManager.LoggerFactory.AddProvider(new XUnitLoggerProvider(outputHelper));
+        }
+
         [Fact(DisplayName = "AudioFile's constructor throws an exception if the path is null")]
         public void ConstructorPathNullThrowsException()
         {

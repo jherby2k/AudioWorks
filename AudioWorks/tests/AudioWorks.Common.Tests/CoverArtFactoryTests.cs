@@ -2,14 +2,21 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using AudioWorks.Common.Tests.DataSources;
+using AudioWorks.TestUtilities;
 using JetBrains.Annotations;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace AudioWorks.Common.Tests
 {
     [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class CoverArtFactoryTests
     {
+        public CoverArtFactoryTests([NotNull] ITestOutputHelper outputHelper)
+        {
+            LoggingManager.LoggerFactory.AddProvider(new XUnitLoggerProvider(outputHelper));
+        }
+
         [Fact(DisplayName = "CoverArtFactory's Create method throws an exception if the path is null")]
         public void CreateDataNullThrowsException()
         {

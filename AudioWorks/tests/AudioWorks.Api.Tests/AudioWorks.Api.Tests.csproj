@@ -61,6 +61,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\AudioWorks.Api\AudioWorks.Api.csproj" />
+    <ProjectReference Include="..\AudioWorks.TestUtilities\AudioWorks.TestUtilities.csproj" />
   </ItemGroup>
 
 </Project>

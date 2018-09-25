@@ -1,11 +1,19 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using AudioWorks.TestUtilities;
+using JetBrains.Annotations;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace AudioWorks.Common.Tests
 {
     public sealed class AudioUnsupportedExceptionTests
     {
+        public AudioUnsupportedExceptionTests([NotNull] ITestOutputHelper outputHelper)
+        {
+            LoggingManager.LoggerFactory.AddProvider(new XUnitLoggerProvider(outputHelper));
+        }
+
         [Fact(DisplayName = "AudioUnsupportedException is an AudioException")]
         public void IsAudioException()
         {

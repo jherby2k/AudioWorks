@@ -158,6 +158,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensibility", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensibility.Tests", "tests\AudioWorks.Extensibility.Tests\AudioWorks.Extensibility.Tests.csproj", "{D0199708-DDEF-406D-AB31-C4E738735298}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioWorks.TestUtilities", "tests\AudioWorks.TestUtilities\AudioWorks.TestUtilities.csproj", "{D0D6093D-21F6-410E-AF81-E14CC10CCADB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug-Linux|Any CPU = Debug-Linux|Any CPU
@@ -370,6 +372,18 @@ Global
 		{D0199708-DDEF-406D-AB31-C4E738735298}.Release-OSX|Any CPU.Build.0 = Release-OSX|Any CPU
 		{D0199708-DDEF-406D-AB31-C4E738735298}.Release-Windows|Any CPU.ActiveCfg = Release-Windows|Any CPU
 		{D0199708-DDEF-406D-AB31-C4E738735298}.Release-Windows|Any CPU.Build.0 = Release-Windows|Any CPU
+		{D0D6093D-21F6-410E-AF81-E14CC10CCADB}.Debug-Linux|Any CPU.ActiveCfg = Debug-Linux|Any CPU
+		{D0D6093D-21F6-410E-AF81-E14CC10CCADB}.Debug-Linux|Any CPU.Build.0 = Debug-Linux|Any CPU
+		{D0D6093D-21F6-410E-AF81-E14CC10CCADB}.Debug-OSX|Any CPU.ActiveCfg = Debug-OSX|Any CPU
+		{D0D6093D-21F6-410E-AF81-E14CC10CCADB}.Debug-OSX|Any CPU.Build.0 = Debug-OSX|Any CPU
+		{D0D6093D-21F6-410E-AF81-E14CC10CCADB}.Debug-Windows|Any CPU.ActiveCfg = Debug-Windows|Any CPU
+		{D0D6093D-21F6-410E-AF81-E14CC10CCADB}.Debug-Windows|Any CPU.Build.0 = Debug-Windows|Any CPU
+		{D0D6093D-21F6-410E-AF81-E14CC10CCADB}.Release-Linux|Any CPU.ActiveCfg = Release-Linux|Any CPU
+		{D0D6093D-21F6-410E-AF81-E14CC10CCADB}.Release-Linux|Any CPU.Build.0 = Release-Linux|Any CPU
+		{D0D6093D-21F6-410E-AF81-E14CC10CCADB}.Release-OSX|Any CPU.ActiveCfg = Release-OSX|Any CPU
+		{D0D6093D-21F6-410E-AF81-E14CC10CCADB}.Release-OSX|Any CPU.Build.0 = Release-OSX|Any CPU
+		{D0D6093D-21F6-410E-AF81-E14CC10CCADB}.Release-Windows|Any CPU.ActiveCfg = Release-Windows|Any CPU
+		{D0D6093D-21F6-410E-AF81-E14CC10CCADB}.Release-Windows|Any CPU.Build.0 = Release-Windows|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

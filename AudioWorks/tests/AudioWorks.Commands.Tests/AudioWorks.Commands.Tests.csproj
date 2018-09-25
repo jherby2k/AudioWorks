@@ -64,6 +64,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj" />
     <ProjectReference Include="..\AudioWorks.Common.Tests\AudioWorks.Common.Tests.csproj" />
+    <ProjectReference Include="..\AudioWorks.TestUtilities\AudioWorks.TestUtilities.csproj" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

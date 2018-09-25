@@ -5,14 +5,21 @@ using System.Linq;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
+using AudioWorks.TestUtilities;
 using JetBrains.Annotations;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace AudioWorks.Api.Tests
 {
     [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class AudioFileEncoderTests
     {
+        public AudioFileEncoderTests([NotNull] ITestOutputHelper outputHelper)
+        {
+            LoggingManager.LoggerFactory.AddProvider(new XUnitLoggerProvider(outputHelper));
+        }
+
         [Fact(DisplayName = "AudioFileEncoder's constructor throws an exception if the name is null")]
         public void ConstructorNameNullThrowsException()
         {
