@@ -13,6 +13,8 @@ details.
 You should have received a copy of the GNU Lesser General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using AudioWorks.TestUtilities;
+using JetBrains.Annotations;
 using Xunit;
 using Xunit.Abstractions;
 
