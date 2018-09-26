@@ -29,12 +29,12 @@ namespace AudioWorks.Common.Tests
     {
         static AudioMetadataTests()
         {
-            XUnitLoggerProvider.Instance.Enable(LoggingManager.LoggerFactory);
+            XunitLoggerProvider.Instance.Enable(LoggingManager.LoggerFactory);
         }
 
         public AudioMetadataTests([NotNull] ITestOutputHelper outputHelper)
         {
-            XUnitLoggerProvider.Instance.OutputHelper = outputHelper;
+            XunitLoggerProvider.Instance.OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Title is null")]

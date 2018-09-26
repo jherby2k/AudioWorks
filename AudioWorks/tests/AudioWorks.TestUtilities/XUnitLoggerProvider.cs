@@ -20,13 +20,13 @@ using Xunit.Abstractions;
 
 namespace AudioWorks.TestUtilities
 {
-    public sealed class XUnitLoggerProvider : ILoggerProvider
+    public sealed class XunitLoggerProvider : ILoggerProvider
     {
-        [NotNull] static readonly Lazy<XUnitLoggerProvider> _lazyInstance =
-            new Lazy<XUnitLoggerProvider>(() => new XUnitLoggerProvider());
+        [NotNull] static readonly Lazy<XunitLoggerProvider> _lazyInstance =
+            new Lazy<XunitLoggerProvider>(() => new XunitLoggerProvider());
 
         [NotNull]
-        public static XUnitLoggerProvider Instance => _lazyInstance.Value;
+        public static XunitLoggerProvider Instance => _lazyInstance.Value;
 
         bool _enabled;
 
@@ -35,14 +35,14 @@ namespace AudioWorks.TestUtilities
 
         public LogLevel LogLevel { get; set; } = LogLevel.Debug;
 
-        XUnitLoggerProvider()
+        XunitLoggerProvider()
         {
         }
 
         [NotNull]
         public ILogger CreateLogger([CanBeNull] string categoryName)
         {
-            return new XUnitLogger(this, categoryName);
+            return new XunitLogger(this, categoryName);
         }
 
         public void Dispose()

@@ -34,13 +34,13 @@ namespace AudioWorks.Api.Tests
     {
         static TaggedAudioFileTests()
         {
-            XUnitLoggerProvider.Instance.Enable(LoggingManager.LoggerFactory);
+            XunitLoggerProvider.Instance.Enable(LoggingManager.LoggerFactory);
             Mapper.Initialize(config => config.CreateMap<AudioMetadata, AudioMetadata>());
         }
 
         public TaggedAudioFileTests([NotNull] ITestOutputHelper outputHelper)
         {
-            XUnitLoggerProvider.Instance.OutputHelper = outputHelper;
+            XunitLoggerProvider.Instance.OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "TaggedAudioFile's constructor throws an exception if the path is null")]

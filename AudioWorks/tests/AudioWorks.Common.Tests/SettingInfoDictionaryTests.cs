@@ -27,12 +27,12 @@ namespace AudioWorks.Common.Tests
     {
         static SettingInfoDictionaryTests()
         {
-            XUnitLoggerProvider.Instance.Enable(LoggingManager.LoggerFactory);
+            XunitLoggerProvider.Instance.Enable(LoggingManager.LoggerFactory);
         }
 
         public SettingInfoDictionaryTests([NotNull] ITestOutputHelper outputHelper)
         {
-            XUnitLoggerProvider.Instance.OutputHelper = outputHelper;
+            XunitLoggerProvider.Instance.OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "ValidateSettings throws an exception if settings is null")]

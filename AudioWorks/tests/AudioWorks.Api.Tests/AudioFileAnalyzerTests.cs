@@ -33,12 +33,12 @@ namespace AudioWorks.Api.Tests
     {
         static AudioFileAnalyzerTests()
         {
-            XUnitLoggerProvider.Instance.Enable(LoggingManager.LoggerFactory);
+            XunitLoggerProvider.Instance.Enable(LoggingManager.LoggerFactory);
         }
 
         public AudioFileAnalyzerTests([NotNull] ITestOutputHelper outputHelper)
         {
-            XUnitLoggerProvider.Instance.OutputHelper = outputHelper;
+            XunitLoggerProvider.Instance.OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "AudioFileAnalyzer's constructor throws an exception if the name is null")]

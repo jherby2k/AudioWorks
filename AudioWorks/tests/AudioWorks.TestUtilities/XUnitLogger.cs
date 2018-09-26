@@ -20,12 +20,12 @@ using Microsoft.Extensions.Logging.Abstractions.Internal;
 
 namespace AudioWorks.TestUtilities
 {
-    public sealed class XUnitLogger : ILogger
+    public sealed class XunitLogger : ILogger
     {
-        [NotNull] readonly XUnitLoggerProvider _provider;
+        [NotNull] readonly XunitLoggerProvider _provider;
         [CanBeNull] readonly string _categoryName;
 
-        public XUnitLogger([NotNull] XUnitLoggerProvider provider, [CanBeNull] string categoryName)
+        public XunitLogger([NotNull] XunitLoggerProvider provider, [CanBeNull] string categoryName)
         {
             _provider = provider;
             _categoryName = categoryName;
