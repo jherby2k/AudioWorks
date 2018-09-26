@@ -24,9 +24,14 @@ namespace AudioWorks.Api.Tests
 {
     public sealed class CoverArtExtractorTests
     {
+        static CoverArtExtractorTests()
+        {
+            XUnitLoggerProvider.Instance.Enable(LoggingManager.LoggerFactory);
+        }
+
         public CoverArtExtractorTests([NotNull] ITestOutputHelper outputHelper)
         {
-            LoggingManager.LoggerFactory.AddProvider(new XUnitLoggerProvider(outputHelper));
+            XUnitLoggerProvider.Instance.OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "CoverArtExtractor's constructor throws an exception if encodedDirectoryName references an invalid metadata field")]

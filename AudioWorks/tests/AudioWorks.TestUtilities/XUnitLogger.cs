@@ -17,21 +17,18 @@ using System;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions.Internal;
-using Xunit.Abstractions;
 
 namespace AudioWorks.TestUtilities
 {
     public sealed class XUnitLogger : ILogger
     {
-        [NotNull] readonly ITestOutputHelper _outputHelper;
+        [NotNull] readonly XUnitLoggerProvider _provider;
         [CanBeNull] readonly string _categoryName;
-        readonly LogLevel _logLevel;
 
-        public XUnitLogger([NotNull] ITestOutputHelper outputHelper, [CanBeNull] string categoryName, LogLevel logLevel)
+        public XUnitLogger([NotNull] XUnitLoggerProvider provider, [CanBeNull] string categoryName)
         {
-            _outputHelper = outputHelper;
+            _provider = provider;
             _categoryName = categoryName;
-            _logLevel = logLevel;
         }
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, [CanBeNull] TState state,
@@ -42,12 +39,12 @@ namespace AudioWorks.TestUtilities
             try
             {
                 if (_categoryName != null)
-                    _outputHelper.WriteLine("{0}: {1}: {2}",
+                    _provider.OutputHelper?.WriteLine("{0}: {1}: {2}",
                         Enum.GetName(typeof(LogLevel), logLevel),
                         _categoryName,
                         formatter(state, exception));
                 else
-                    _outputHelper.WriteLine("{0}: {2}",
+                    _provider.OutputHelper?.WriteLine("{0}: {2}",
                         Enum.GetName(typeof(LogLevel), logLevel),
                         formatter(state, exception));
             }
@@ -57,7 +54,7 @@ namespace AudioWorks.TestUtilities
             }
         }
 
-        public bool IsEnabled(LogLevel logLevel) => logLevel >= _logLevel;
+        public bool IsEnabled(LogLevel logLevel) => logLevel >= _provider.LogLevel;
 
         [NotNull]
         public IDisposable BeginScope<TState>([CanBeNull] TState state) => NullScope.Instance;

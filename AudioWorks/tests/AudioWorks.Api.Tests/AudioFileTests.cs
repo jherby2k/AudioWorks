@@ -31,9 +31,14 @@ namespace AudioWorks.Api.Tests
     [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class AudioFileTests
     {
+        static AudioFileTests()
+        {
+            XUnitLoggerProvider.Instance.Enable(LoggingManager.LoggerFactory);
+        }
+
         public AudioFileTests([NotNull] ITestOutputHelper outputHelper)
         {
-            LoggingManager.LoggerFactory.AddProvider(new XUnitLoggerProvider(outputHelper));
+            XUnitLoggerProvider.Instance.OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "AudioFile's constructor throws an exception if the path is null")]

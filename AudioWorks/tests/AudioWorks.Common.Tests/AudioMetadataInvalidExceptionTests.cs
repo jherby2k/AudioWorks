@@ -22,9 +22,14 @@ namespace AudioWorks.Common.Tests
 {
     public sealed class AudioMetadataInvalidExceptionTests
     {
+        static AudioMetadataInvalidExceptionTests()
+        {
+            XUnitLoggerProvider.Instance.Enable(LoggingManager.LoggerFactory);
+        }
+
         public AudioMetadataInvalidExceptionTests([NotNull] ITestOutputHelper outputHelper)
         {
-            LoggingManager.LoggerFactory.AddProvider(new XUnitLoggerProvider(outputHelper));
+            XUnitLoggerProvider.Instance.OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "AudioMetadataInvalidException is an AudioException")]

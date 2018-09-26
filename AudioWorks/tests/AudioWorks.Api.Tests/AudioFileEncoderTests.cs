@@ -30,9 +30,14 @@ namespace AudioWorks.Api.Tests
     [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class AudioFileEncoderTests
     {
+        static AudioFileEncoderTests()
+        {
+            XUnitLoggerProvider.Instance.Enable(LoggingManager.LoggerFactory);
+        }
+
         public AudioFileEncoderTests([NotNull] ITestOutputHelper outputHelper)
         {
-            LoggingManager.LoggerFactory.AddProvider(new XUnitLoggerProvider(outputHelper));
+            XUnitLoggerProvider.Instance.OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "AudioFileEncoder's constructor throws an exception if the name is null")]

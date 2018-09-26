@@ -13,6 +13,7 @@ details.
 You should have received a copy of the GNU Lesser General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 using Xunit.Abstractions;
@@ -21,23 +22,39 @@ namespace AudioWorks.TestUtilities
 {
     public sealed class XUnitLoggerProvider : ILoggerProvider
     {
-        [NotNull] readonly ITestOutputHelper _outputHelper;
-        readonly LogLevel _logLevel;
+        [NotNull] static readonly Lazy<XUnitLoggerProvider> _lazyInstance =
+            new Lazy<XUnitLoggerProvider>(() => new XUnitLoggerProvider());
 
-        public XUnitLoggerProvider([NotNull] ITestOutputHelper outputHelper, LogLevel logLevel = LogLevel.Information)
+        [NotNull]
+        public static XUnitLoggerProvider Instance => _lazyInstance.Value;
+
+        bool _enabled;
+
+        [CanBeNull]
+        public ITestOutputHelper OutputHelper { get; set; }
+
+        public LogLevel LogLevel { get; set; } = LogLevel.Debug;
+
+        XUnitLoggerProvider()
         {
-            _outputHelper = outputHelper;
-            _logLevel = logLevel;
         }
 
         [NotNull]
         public ILogger CreateLogger([CanBeNull] string categoryName)
         {
-            return new XUnitLogger(_outputHelper, categoryName, _logLevel);
+            return new XUnitLogger(this, categoryName);
         }
 
         public void Dispose()
         {
+        }
+
+        public void Enable(ILoggerFactory factory)
+        {
+            // Ensure this provider is only added once
+            if (_enabled) return;
+            factory.AddProvider(this);
+            _enabled = true;
         }
     }
 }

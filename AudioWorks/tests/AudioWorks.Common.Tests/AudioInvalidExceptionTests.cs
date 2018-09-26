@@ -24,9 +24,14 @@ namespace AudioWorks.Common.Tests
 {
     public sealed class AudioInvalidExceptionTests
     {
+        static AudioInvalidExceptionTests()
+        {
+            XUnitLoggerProvider.Instance.Enable(LoggingManager.LoggerFactory);
+        }
+
         public AudioInvalidExceptionTests([NotNull] ITestOutputHelper outputHelper)
         {
-            LoggingManager.LoggerFactory.AddProvider(new XUnitLoggerProvider(outputHelper));
+            XUnitLoggerProvider.Instance.OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "AudioInvalidException is an AudioException")]

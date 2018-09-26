@@ -24,9 +24,14 @@ namespace AudioWorks.Extensibility.Tests
 {
     public sealed class SampleBufferTests
     {
+        static SampleBufferTests()
+        {
+            XUnitLoggerProvider.Instance.Enable(LoggingManager.LoggerFactory);
+        }
+
         public SampleBufferTests([NotNull] ITestOutputHelper outputHelper)
         {
-            LoggingManager.LoggerFactory.AddProvider(new XUnitLoggerProvider(outputHelper));
+            XUnitLoggerProvider.Instance.OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "SampleBuffer.Empty returns an empty SampleBuffer")]
