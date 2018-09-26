@@ -29,12 +29,16 @@ namespace AudioWorks.Api
     {
         [NotNull] readonly ILogger _logger = LoggingManager.LoggerFactory.CreateLogger<ExtensionProjectContext>();
 
-        public void Log(MessageLevel level, string message, [NotNull, ItemNotNull] params object[] args)
+        public void Log(MessageLevel level, [CanBeNull] string message, [NotNull, ItemNotNull] params object[] args)
         {
+            if (string.IsNullOrWhiteSpace(message)) return;
+
             // ReSharper disable once SwitchStatementMissingSomeCases
             switch (level)
             {
                 case MessageLevel.Debug:
+                    _logger.LogTrace(message, args);
+                    break;
                 case MessageLevel.Info:
                     _logger.LogDebug(message, args);
                     break;

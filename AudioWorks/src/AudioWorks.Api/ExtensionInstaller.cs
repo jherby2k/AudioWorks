@@ -115,8 +115,10 @@ namespace AudioWorks.Api
 #endif
                         .ToArray();
 
-                    logger.LogDebug("Discovered {0} packages published at '{1}'.",
+                    logger.LogDebug("Discovered {0} extension packages published at '{1}'.",
                         publishedPackages.Length, _customUrl);
+
+                    var packagesInstalled = false;
 
                     foreach (var publishedPackage in publishedPackages)
                     {
@@ -124,14 +126,14 @@ namespace AudioWorks.Api
                             new DirectoryInfo(Path.Combine(_projectRoot, publishedPackage.Identity.ToString()));
                         if (extensionDir.Exists)
                         {
-                            logger.LogDebug("Package '{0}' is already installed.",
-                                publishedPackage.Identity.ToString());
+                            logger.LogDebug("'{0}' version {1} is already installed. Skipping.",
+                                publishedPackage.Identity.Id, publishedPackage.Identity.Version.ToString());
 
                             continue;
                         }
 
-                        logger.LogInformation("Installing package '{0}'.",
-                            publishedPackage.Identity.ToString());
+                        logger.LogInformation("Installing '{0}' version {1}.",
+                            publishedPackage.Identity.Id, publishedPackage.Identity.Version.ToString());
 
                         extensionDir.Create();
                         var stagingDir = extensionDir.CreateSubdirectory("Staging");
@@ -184,6 +186,8 @@ namespace AudioWorks.Api
                                             break;
                                     }
                             }
+
+                            packagesInstalled = true;
                         }
                         finally
                         {
@@ -207,7 +211,9 @@ namespace AudioWorks.Api
                             obsoleteExtension);
                     }
 
-                    logger.LogInformation("Completed automatic extension updates.");
+                    logger.LogInformation(!packagesInstalled
+                        ? "Extensions are already up to date."
+                        : "Extensions successfully updated.");
                 }
                 catch (Exception e)
                 {
@@ -230,9 +236,9 @@ namespace AudioWorks.Api
         [Pure, NotNull]
         static string GetOSTag() => RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
             ? "Windows"
-            : (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+            : RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
                 ? "Linux"
-                : "OSX");
+                : "OSX";
 
         [Pure, NotNull]
         static CancellationTokenSource GetCancellationTokenSource() => new CancellationTokenSource(

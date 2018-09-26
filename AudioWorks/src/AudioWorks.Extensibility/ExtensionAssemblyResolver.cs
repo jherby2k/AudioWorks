@@ -67,7 +67,7 @@ namespace AudioWorks.Extensibility
             {
                 var assemblyName = new AssemblyName(args.Name);
 
-                _logger.LogDebug("Attempting to resolve a dependency on '{1}'.", assemblyName);
+                _logger.LogTrace("Attempting to resolve a dependency on '{1}'.", assemblyName);
 
                 var result = assemblyFiles
                     .Where(assemblyFile => AssemblyName.ReferenceMatchesDefinition(
@@ -75,9 +75,9 @@ namespace AudioWorks.Extensibility
                     .Select(Assembly.LoadFrom).FirstOrDefault();
 
                 if (result != null)
-                    _logger.LogDebug("Located dependency '{0}'.", result.FullName);
+                    _logger.LogTrace("Located dependency '{0}'.", result.FullName);
                 else
-                    _logger.LogDebug("Unable to locate dependency '{0}'.", assemblyName);
+                    _logger.LogTrace("Did not locate dependency '{0}'.", assemblyName);
 
                 return result;
             };
@@ -88,7 +88,7 @@ namespace AudioWorks.Extensibility
         {
             AssemblyLoadContext.Default.Resolving += (context, name) =>
             {
-                _logger.LogDebug("Attempting to resolve a dependency on '{1}'.", name.FullName);
+                _logger.LogTrace("Attempting to resolve a dependency on '{1}'.", name.FullName);
 
                 var result = assemblyFiles
                     .Where(assemblyFile => AssemblyName.ReferenceMatchesDefinition(
@@ -97,9 +97,9 @@ namespace AudioWorks.Extensibility
                     .Select(AssemblyLoadContext.Default.LoadFromAssemblyPath).FirstOrDefault();
 
                 if (result != null)
-                    _logger.LogDebug("Located dependency '{0}'.", result.FullName);
+                    _logger.LogTrace("Located dependency '{0}'.", result.FullName);
                 else
-                    _logger.LogDebug("Unable to locate dependency '{0}'.", name.FullName);
+                    _logger.LogTrace("Did not locate dependency '{0}'.", name.FullName);
 
                 return result;
             };
