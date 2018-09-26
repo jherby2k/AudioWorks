@@ -112,7 +112,7 @@ namespace AudioWorks.Api.Tests
 #else
             Assert.Equal(Environment.Is64BitProcess ? expected64BitHash : expected32BitHash,
 #endif
-                HashUtility.CalculateHash(results[0]));
+                HashUtility.CalculateHash(results[0].Path));
         }
     }
 }

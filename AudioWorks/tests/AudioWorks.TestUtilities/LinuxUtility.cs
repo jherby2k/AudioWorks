@@ -17,7 +17,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 using System.Diagnostics;
 using JetBrains.Annotations;
 
-namespace AudioWorks.Api.Tests
+namespace AudioWorks.TestUtilities
 {
     public static class LinuxUtility
     {

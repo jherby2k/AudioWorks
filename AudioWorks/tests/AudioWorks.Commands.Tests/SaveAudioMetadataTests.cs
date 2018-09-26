@@ -18,9 +18,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Management.Automation;
 using AudioWorks.Api;
-using AudioWorks.Api.Tests;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Common;
+using AudioWorks.TestUtilities;
 using JetBrains.Annotations;
 using Moq;
 using Xunit;
@@ -234,9 +234,9 @@ namespace AudioWorks.Commands.Tests
             Assert.Equal(LinuxUtility.GetRelease().StartsWith("Ubuntu 16.04", StringComparison.Ordinal)
                 ? expectedUbuntu1604Hash
                 : expectedUbuntu1804Hash,
-                HashUtility.CalculateHash(audioFile));
+                HashUtility.CalculateHash(audioFile.Path));
 #else
-            Assert.Equal(expectedHash, HashUtility.CalculateHash(audioFile));
+            Assert.Equal(expectedHash, HashUtility.CalculateHash(audioFile.Path));
 #endif
         }
 

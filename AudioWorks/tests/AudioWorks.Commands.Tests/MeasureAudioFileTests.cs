@@ -20,7 +20,7 @@ using System.Linq;
 using System.Management.Automation;
 using AudioWorks.Api;
 #if LINUX
-using AudioWorks.Api.Tests;
+using AudioWorks.TestUtilities;
 #endif
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;

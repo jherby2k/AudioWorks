@@ -18,10 +18,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Management.Automation;
 using AudioWorks.Api;
-using AudioWorks.Api.Tests;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
+using AudioWorks.TestUtilities;
 using JetBrains.Annotations;
 using Moq;
 using Xunit;
@@ -192,7 +192,7 @@ namespace AudioWorks.Commands.Tests
 #else
                 Assert.Equal(Environment.Is64BitProcess ? expected64BitHash : expected32BitHash,
 #endif
-                    HashUtility.CalculateHash((ITaggedAudioFile) results[0].BaseObject));
+                    HashUtility.CalculateHash(((ITaggedAudioFile) results[0].BaseObject).Path));
             }
         }
     }
