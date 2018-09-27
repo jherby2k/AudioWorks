@@ -120,7 +120,7 @@ namespace AudioWorks.Commands
                     });
 
                     // Send any new log messages to the output queue
-                    while (CmdletLoggerProvider.Instance.TryDequeueMessage(out var logMessage))
+                    while (LoggerProvider.TryDequeueMessage(out var logMessage))
                         // ReSharper disable once AccessToDisposedClosure
                         messageQueue.Add(logMessage);
                 });

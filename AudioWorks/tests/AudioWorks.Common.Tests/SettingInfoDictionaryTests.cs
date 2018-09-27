@@ -25,14 +25,9 @@ namespace AudioWorks.Common.Tests
     [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class SettingInfoDictionaryTests
     {
-        static SettingInfoDictionaryTests()
-        {
-            XunitLoggerProvider.Instance.Enable(LoggingManager.LoggerFactory);
-        }
-
         public SettingInfoDictionaryTests([NotNull] ITestOutputHelper outputHelper)
         {
-            XunitLoggerProvider.Instance.OutputHelper = outputHelper;
+            LoggingManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "ValidateSettings throws an exception if settings is null")]

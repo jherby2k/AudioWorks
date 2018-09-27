@@ -24,14 +24,9 @@ namespace AudioWorks.Common.Tests
 {
     public sealed class AudioUnsupportedExceptionTests
     {
-        static AudioUnsupportedExceptionTests()
-        {
-            XunitLoggerProvider.Instance.Enable(LoggingManager.LoggerFactory);
-        }
-
         public AudioUnsupportedExceptionTests([NotNull] ITestOutputHelper outputHelper)
         {
-            XunitLoggerProvider.Instance.OutputHelper = outputHelper;
+            LoggingManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "AudioUnsupportedException is an AudioException")]

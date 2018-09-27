@@ -14,6 +14,8 @@ You should have received a copy of the GNU Lesser General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 
@@ -24,6 +26,8 @@ namespace AudioWorks.Common
     /// </summary>
     public static class LoggingManager
     {
+        [NotNull] static readonly List<ILoggerProvider> _providersAdded = new List<ILoggerProvider>();
+
         /// <summary>
         /// Gets the singleton logger factory.
         /// </summary>
@@ -31,5 +35,34 @@ namespace AudioWorks.Common
         [NotNull]
         [CLSCompliant(false)]
         public static ILoggerFactory LoggerFactory { get; } = new LoggerFactory();
+
+        /// <summary>
+        /// Adds an instance of type {T} to the <see cref="LoggerFactory"/>, if one of the same type hasn't already
+        /// been added.
+        /// </summary>
+        /// <typeparam name="T">The type of <see cref="ILoggerProvider"/> requested.</typeparam>
+        /// <param name="createProviderFunc">A function called if a new provider is required.</param>
+        /// <returns>The new provider, or an existing one if there is already one of type <typeparamref name="T"/>.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="createProviderFunc"/> is null.</exception>
+        [NotNull]
+        [CLSCompliant(false)]
+        public static T AddSingletonProvider<T>([NotNull] Func<T> createProviderFunc) where T : ILoggerProvider
+        {
+            if (createProviderFunc == null) throw new ArgumentNullException(nameof(createProviderFunc));
+
+            lock (_providersAdded)
+            {
+                var existingProvider = _providersAdded.OfType<T>().FirstOrDefault();
+                if (existingProvider != null)
+                    return existingProvider;
+                {
+                    var newProvider = createProviderFunc();
+                    LoggerFactory.AddProvider(newProvider);
+                    _providersAdded.Add(newProvider);
+                    return newProvider;
+                }
+            }
+        }
     }
 }

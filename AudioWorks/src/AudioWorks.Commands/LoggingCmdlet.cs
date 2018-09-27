@@ -21,8 +21,9 @@ using System.Management.Automation;
 #if !NETCOREAPP2_1
 using System.Reflection;
 using System.Runtime.InteropServices;
-using JetBrains.Annotations;
 #endif
+using AudioWorks.Common;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Commands
 {
@@ -32,18 +33,20 @@ namespace AudioWorks.Commands
     /// <seealso cref="Cmdlet"/>
     public abstract class LoggingCmdlet : Cmdlet
     {
+        [NotNull]
+        private protected static CmdletLoggerProvider LoggerProvider { get; } =
+            LoggingManager.AddSingletonProvider(() => new CmdletLoggerProvider());
+
+#if !NETCOREAPP2_1
         static LoggingCmdlet()
         {
-#if !NETCOREAPP2_1
             // Workaround for binding issue under Windows PowerShell
             if (RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework",
                 StringComparison.Ordinal))
                 AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
-
-#endif
-            CmdletLoggerProvider.Instance.Enable();
         }
 
+#endif
         /// <inheritdoc/>
         protected override void BeginProcessing()
         {
@@ -52,7 +55,7 @@ namespace AudioWorks.Commands
 
         private protected void ProcessLogMessages()
         {
-            while (CmdletLoggerProvider.Instance.TryDequeueMessage(out var logMessage))
+            while (LoggerProvider.TryDequeueMessage(out var logMessage))
                 switch (logMessage)
                 {
                     case DebugRecord debugRecord:

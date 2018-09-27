@@ -26,14 +26,9 @@ namespace AudioWorks.Common.Tests
     [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class CoverArtTests
     {
-        static CoverArtTests()
-        {
-            XunitLoggerProvider.Instance.Enable(LoggingManager.LoggerFactory);
-        }
-
         public CoverArtTests([NotNull] ITestOutputHelper outputHelper)
         {
-            XunitLoggerProvider.Instance.OutputHelper = outputHelper;
+            LoggingManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
         }
 
         [Theory(DisplayName = "CoverArt has the expected Width property value")]

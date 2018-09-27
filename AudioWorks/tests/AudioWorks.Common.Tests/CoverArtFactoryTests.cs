@@ -27,14 +27,9 @@ namespace AudioWorks.Common.Tests
     [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class CoverArtFactoryTests
     {
-        static CoverArtFactoryTests()
-        {
-            XunitLoggerProvider.Instance.Enable(LoggingManager.LoggerFactory);
-        }
-
         public CoverArtFactoryTests([NotNull] ITestOutputHelper outputHelper)
         {
-            XunitLoggerProvider.Instance.OutputHelper = outputHelper;
+            LoggingManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "CoverArtFactory's Create method throws an exception if the path is null")]

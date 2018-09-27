@@ -27,14 +27,9 @@ namespace AudioWorks.Common.Tests
     [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class AudioMetadataTests
     {
-        static AudioMetadataTests()
-        {
-            XunitLoggerProvider.Instance.Enable(LoggingManager.LoggerFactory);
-        }
-
         public AudioMetadataTests([NotNull] ITestOutputHelper outputHelper)
         {
-            XunitLoggerProvider.Instance.OutputHelper = outputHelper;
+            LoggingManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Title is null")]
