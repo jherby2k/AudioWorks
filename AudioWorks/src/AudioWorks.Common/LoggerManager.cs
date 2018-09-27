@@ -24,9 +24,9 @@ namespace AudioWorks.Common
     /// <summary>
     /// Manages logging to various destinations.
     /// </summary>
-    public static class LoggingManager
+    public static class LoggerManager
     {
-        [NotNull] static readonly List<ILoggerProvider> _providersAdded = new List<ILoggerProvider>();
+        [NotNull] static readonly List<ILoggerProvider> _providerSingletons = new List<ILoggerProvider>();
 
         /// <summary>
         /// Gets the singleton logger factory.
@@ -51,15 +51,15 @@ namespace AudioWorks.Common
         {
             if (createProviderFunc == null) throw new ArgumentNullException(nameof(createProviderFunc));
 
-            lock (_providersAdded)
+            lock (_providerSingletons)
             {
-                var existingProvider = _providersAdded.OfType<T>().FirstOrDefault();
+                var existingProvider = _providerSingletons.OfType<T>().FirstOrDefault();
                 if (existingProvider != null)
                     return existingProvider;
                 {
                     var newProvider = createProviderFunc();
                     LoggerFactory.AddProvider(newProvider);
-                    _providersAdded.Add(newProvider);
+                    _providerSingletons.Add(newProvider);
                     return newProvider;
                 }
             }

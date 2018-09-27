@@ -48,7 +48,7 @@ namespace AudioWorks.Extensions.Flac
 #endif
         public bool Handle()
         {
-            var logger = LoggingManager.LoggerFactory.CreateLogger<FlacLibHandler>();
+            var logger = LoggerManager.LoggerFactory.CreateLogger<FlacLibHandler>();
 
 #if WINDOWS
             var nativeLibraryPath = Path.Combine(

@@ -43,7 +43,7 @@ namespace AudioWorks.Extensions.Vorbis
     {
         public bool Handle()
         {
-            var logger = LoggingManager.LoggerFactory.CreateLogger<VorbisLibHandler>();
+            var logger = LoggerManager.LoggerFactory.CreateLogger<VorbisLibHandler>();
 
 #if WINDOWS
             var nativeLibraryPath = Path.Combine(

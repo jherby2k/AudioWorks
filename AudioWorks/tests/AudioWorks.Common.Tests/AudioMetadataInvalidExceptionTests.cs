@@ -24,7 +24,7 @@ namespace AudioWorks.Common.Tests
     {
         public AudioMetadataInvalidExceptionTests([NotNull] ITestOutputHelper outputHelper)
         {
-            LoggingManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
+            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "AudioMetadataInvalidException is an AudioException")]

@@ -27,7 +27,7 @@ namespace AudioWorks.Common.Tests
     {
         public SettingInfoDictionaryTests([NotNull] ITestOutputHelper outputHelper)
         {
-            LoggingManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
+            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "ValidateSettings throws an exception if settings is null")]

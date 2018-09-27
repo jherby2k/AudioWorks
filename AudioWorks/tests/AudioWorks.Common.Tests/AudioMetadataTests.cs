@@ -29,7 +29,7 @@ namespace AudioWorks.Common.Tests
     {
         public AudioMetadataTests([NotNull] ITestOutputHelper outputHelper)
         {
-            LoggingManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
+            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Title is null")]

@@ -26,7 +26,7 @@ namespace AudioWorks.Api.Tests
     {
         public CoverArtExtractorTests([NotNull] ITestOutputHelper outputHelper)
         {
-            LoggingManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
+            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "CoverArtExtractor's constructor throws an exception if encodedDirectoryName references an invalid metadata field")]

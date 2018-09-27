@@ -43,7 +43,7 @@ namespace AudioWorks.Extensions.Lame
     {
         public bool Handle()
         {
-            var logger = LoggingManager.LoggerFactory.CreateLogger<LameLibHandler>();
+            var logger = LoggerManager.LoggerFactory.CreateLogger<LameLibHandler>();
 
 #if WINDOWS
             var nativeLibraryPath = Path.Combine(

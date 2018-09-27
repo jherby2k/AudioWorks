@@ -33,7 +33,7 @@ namespace AudioWorks.Api.Tests
     {
         public AudioFileTests([NotNull] ITestOutputHelper outputHelper)
         {
-            LoggingManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
+            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "AudioFile's constructor throws an exception if the path is null")]

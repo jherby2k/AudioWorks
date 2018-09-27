@@ -44,7 +44,7 @@ namespace AudioWorks.Extensibility
                 .Select(fileInfo => new ExtensionAssemblyResolver(fileInfo.FullName).Assembly)
                 .ToList();
 
-            var logger = LoggingManager.LoggerFactory.CreateLogger<ExtensionContainerBase>();
+            var logger = LoggerManager.LoggerFactory.CreateLogger<ExtensionContainerBase>();
             logger.LogDebug("Discovered {0} extension assemblies.", assemblies.Count);
 
             using (var unvalidatedContainer = new ContainerConfiguration().WithAssemblies(assemblies).CreateContainer())

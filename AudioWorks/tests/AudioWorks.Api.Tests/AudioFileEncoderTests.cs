@@ -32,7 +32,7 @@ namespace AudioWorks.Api.Tests
     {
         public AudioFileEncoderTests([NotNull] ITestOutputHelper outputHelper)
         {
-            LoggingManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
+            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "AudioFileEncoder's constructor throws an exception if the name is null")]

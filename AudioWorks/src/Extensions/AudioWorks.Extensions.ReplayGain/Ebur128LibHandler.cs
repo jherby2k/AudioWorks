@@ -40,7 +40,7 @@ namespace AudioWorks.Extensions.ReplayGain
     {
         public bool Handle()
         {
-            var logger = LoggingManager.LoggerFactory.CreateLogger<Ebur128LibHandler>();
+            var logger = LoggerManager.LoggerFactory.CreateLogger<Ebur128LibHandler>();
 
 #if WINDOWS
             var nativeLibraryPath = Path.Combine(

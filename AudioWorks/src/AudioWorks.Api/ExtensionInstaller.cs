@@ -73,7 +73,7 @@ namespace AudioWorks.Api
 
         internal static void Download()
         {
-            var logger = LoggingManager.LoggerFactory.CreateLogger(typeof(ExtensionInstaller).FullName);
+            var logger = LoggerManager.LoggerFactory.CreateLogger(typeof(ExtensionInstaller).FullName);
 
             if (!ConfigurationManager.Configuration.GetValue("AutomaticExtensionDownloads", true))
                 logger.LogInformation("Automatic extension downloads are disabled.");

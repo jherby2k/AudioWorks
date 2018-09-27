@@ -26,7 +26,7 @@ namespace AudioWorks.Common.Tests
     {
         public AudioUnsupportedExceptionTests([NotNull] ITestOutputHelper outputHelper)
         {
-            LoggingManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
+            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "AudioUnsupportedException is an AudioException")]

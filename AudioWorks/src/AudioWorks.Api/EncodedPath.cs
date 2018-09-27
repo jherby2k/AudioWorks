@@ -73,7 +73,7 @@ namespace AudioWorks.Api
                 return sanitizedPropertyValue;
             });
 
-            LoggingManager.LoggerFactory.CreateLogger<EncodedPath>()
+            LoggerManager.LoggerFactory.CreateLogger<EncodedPath>()
                 .LogDebug("Replacing encoded string '{0}' with '{1}'.", _encoded, result);
 
             return result;

@@ -35,7 +35,7 @@ namespace AudioWorks.Commands
     {
         [NotNull]
         private protected static CmdletLoggerProvider LoggerProvider { get; } =
-            LoggingManager.AddSingletonProvider(() => new CmdletLoggerProvider());
+            LoggerManager.AddSingletonProvider(() => new CmdletLoggerProvider());
 
 #if !NETCOREAPP2_1
         static LoggingCmdlet()

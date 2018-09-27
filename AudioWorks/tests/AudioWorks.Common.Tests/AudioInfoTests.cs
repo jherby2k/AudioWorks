@@ -29,7 +29,7 @@ namespace AudioWorks.Common.Tests
     {
         public AudioInfoTests([NotNull] ITestOutputHelper outputHelper)
         {
-            LoggingManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
+            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "AudioInfo throws an exception if the Format is null")]

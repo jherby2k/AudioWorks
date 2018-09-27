@@ -33,7 +33,7 @@ namespace AudioWorks.Extensions.Apple
         public bool Handle()
         {
 #if WINDOWS
-            var logger = LoggingManager.LoggerFactory.CreateLogger<CoreAudioHandler>();
+            var logger = LoggerManager.LoggerFactory.CreateLogger<CoreAudioHandler>();
 
             var nativeLibraryPath = Path.Combine(
                 // ReSharper disable once AssignNullToNotNullAttribute

@@ -29,7 +29,7 @@ namespace AudioWorks.Common.Tests
     {
         public CoverArtFactoryTests([NotNull] ITestOutputHelper outputHelper)
         {
-            LoggingManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
+            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
         }
 
         [Fact(DisplayName = "CoverArtFactory's Create method throws an exception if the path is null")]
