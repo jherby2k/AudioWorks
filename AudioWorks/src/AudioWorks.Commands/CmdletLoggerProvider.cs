@@ -13,6 +13,7 @@ details.
 You should have received a copy of the GNU Lesser General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System.Collections.Concurrent;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 
@@ -20,16 +21,19 @@ namespace AudioWorks.Commands
 {
     sealed class CmdletLoggerProvider : ILoggerProvider
     {
-        [NotNull] readonly CmdletLogger _logger = new CmdletLogger();
+        [NotNull] readonly ConcurrentQueue<object> _messageQueue = new ConcurrentQueue<object>();
 
         [NotNull]
-        public ILogger CreateLogger([CanBeNull] string categoryName) => _logger;
+        public ILogger CreateLogger([CanBeNull] string categoryName)
+        {
+            return new CmdletLogger(_messageQueue);
+        }
 
         public void Dispose()
         {
         }
 
         [ContractAnnotation("=> false, result:null; => true, result:notnull")]
-        internal bool TryDequeueMessage(out object result) => _logger.MessageQueue.TryDequeue(out result);
+        internal bool TryDequeueMessage(out object result) => _messageQueue.TryDequeue(out result);
     }
 }
