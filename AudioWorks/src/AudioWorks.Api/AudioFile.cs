@@ -18,6 +18,7 @@ using System.IO;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Logging;
 using IO = System.IO;
 
 namespace AudioWorks.Api
@@ -74,24 +75,35 @@ namespace AudioWorks.Api
         [NotNull]
         AudioInfo LoadInfo()
         {
+            var logger = LoggerManager.LoggerFactory.CreateLogger<AudioFile>();
+
             using (var fileStream = File.OpenRead(Path))
             {
                 // Try each info decoder that supports this file extension
                 foreach (var factory in ExtensionProviderWrapper.GetFactories<IAudioInfoDecoder>(
                     "Extension", IO.Path.GetExtension(Path)))
+                {
+                    var format = string.Empty;
                     try
                     {
                         using (var export = factory.CreateExport())
+                        {
+                            format = export.Value.Format;
+                            logger.LogDebug("Attempting to decode '{0}' as '{1}'.", Path, format);
                             return export.Value.ReadAudioInfo(fileStream);
+                        }
                     }
-                    catch (AudioUnsupportedException)
+                    catch (AudioUnsupportedException e)
                     {
+                        logger.LogDebug(e, "Unable to decode '{0}' as '{1}'.", Path, format);
+
                         // If a decoder wasn't supported, rewind the stream and try another
                         fileStream.Position = 0;
                     }
+                }
             }
 
-            throw new AudioUnsupportedException("No supporting extensions are available.");
+            throw new AudioUnsupportedException($"Unable to decode '{Path}' with any loaded extension.");
         }
     }
 }

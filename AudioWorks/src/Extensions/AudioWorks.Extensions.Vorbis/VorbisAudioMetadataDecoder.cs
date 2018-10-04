@@ -26,6 +26,10 @@ namespace AudioWorks.Extensions.Vorbis
     [AudioMetadataDecoderExport(".ogg")]
     public sealed unsafe class VorbisAudioMetadataDecoder : IAudioMetadataDecoder
     {
+        const string _format = "Vorbis Comment";
+
+        public string Format => _format;
+
         public AudioMetadata ReadMetadata(FileStream stream)
         {
             OggStream oggStream = null;

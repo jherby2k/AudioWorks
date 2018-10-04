@@ -26,6 +26,13 @@ namespace AudioWorks.Extensibility
     public interface IAudioInfoDecoder
     {
         /// <summary>
+        /// Gets the name of the audio format decoded by this extension.
+        /// </summary>
+        /// <value>The audio format.</value>
+        [NotNull]
+        string Format { get; }
+
+        /// <summary>
         /// Reads the audio information from a file stream.
         /// </summary>
         /// <param name="stream">The file stream.</param>

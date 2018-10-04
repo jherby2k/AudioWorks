@@ -22,6 +22,10 @@ namespace AudioWorks.Extensions.Flac
     [AudioMetadataDecoderExport(".flac")]
     public sealed class FlacAudioMetadataDecoder : IAudioMetadataDecoder
     {
+        const string _format = "FLAC";
+
+        public string Format => _format;
+
         public AudioMetadata ReadMetadata(FileStream stream)
         {
             using (var decoder = new MetadataDecoder(stream))

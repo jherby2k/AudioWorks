@@ -22,6 +22,10 @@ namespace AudioWorks.Extensions.Mp4
     [AudioMetadataDecoderExport(".m4a")]
     public sealed class ItunesAudioMetadataDecoder : IAudioMetadataDecoder
     {
+        const string _format = "iTunes";
+
+        public string Format => _format;
+
         public AudioMetadata ReadMetadata(FileStream stream)
         {
             var mp4 = new Mp4Model(stream);

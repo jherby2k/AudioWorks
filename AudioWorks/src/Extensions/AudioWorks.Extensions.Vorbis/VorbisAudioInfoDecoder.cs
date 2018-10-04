@@ -26,6 +26,10 @@ namespace AudioWorks.Extensions.Vorbis
     [AudioInfoDecoderExport(".ogg")]
     public sealed class VorbisAudioInfoDecoder : IAudioInfoDecoder
     {
+        const string _format = "Ogg Vorbis";
+
+        public string Format => _format;
+
         public unsafe AudioInfo ReadAudioInfo(FileStream stream)
         {
             OggStream oggStream = null;

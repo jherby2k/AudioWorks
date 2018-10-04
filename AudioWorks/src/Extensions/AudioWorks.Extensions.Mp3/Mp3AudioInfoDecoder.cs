@@ -24,6 +24,10 @@ namespace AudioWorks.Extensions.Mp3
     [AudioInfoDecoderExport(".mp3")]
     public sealed class Mp3AudioInfoDecoder : IAudioInfoDecoder
     {
+        const string _format = "MPEG Audio Layer 3 (MP3)";
+
+        public string Format => _format;
+
         public AudioInfo ReadAudioInfo(FileStream stream)
         {
             using (var reader = new FrameReader(stream))

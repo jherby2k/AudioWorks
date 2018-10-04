@@ -23,6 +23,10 @@ namespace AudioWorks.Extensions.Wave
     [AudioInfoDecoderExport(".wav")]
     public sealed class WaveAudioInfoDecoder : IAudioInfoDecoder
     {
+        const string _format = "Waveform Audio File Format (WAVE)";
+
+        public string Format => _format;
+
         public AudioInfo ReadAudioInfo(FileStream stream)
         {
             using (var reader = new RiffReader(stream))

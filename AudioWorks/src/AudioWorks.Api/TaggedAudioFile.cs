@@ -18,6 +18,7 @@ using System.IO;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Logging;
 using IO = System.IO;
 
 namespace AudioWorks.Api
@@ -90,23 +91,35 @@ namespace AudioWorks.Api
         [NotNull]
         static AudioMetadata LoadMetadata([NotNull] string path)
         {
+            var logger = LoggerManager.LoggerFactory.CreateLogger<TaggedAudioFile>();
+
             using (var fileStream = File.OpenRead(path))
             {
                 // Try each decoder that supports this file extension
                 foreach (var decoderFactory in ExtensionProviderWrapper.GetFactories<IAudioMetadataDecoder>(
                     "Extension", IO.Path.GetExtension(path)))
+                {
+                    var format = string.Empty;
                     try
                     {
-                        using (var lifetimeContext = decoderFactory.CreateExport())
-                            return lifetimeContext.Value.ReadMetadata(fileStream);
+                        using (var export = decoderFactory.CreateExport())
+                        {
+                            format = export.Value.Format;
+                            logger.LogDebug("Attempting to read '{0}' metadata from '{1}'.", format, path);
+                            return export.Value.ReadMetadata(fileStream);
+                        }
                     }
-                    catch (AudioUnsupportedException)
+                    catch (AudioUnsupportedException e)
                     {
+                        logger.LogDebug(e, "Unable to read '{0}' metadata from '{1}'.", format, path);
+
                         // If a decoder wasn't supported, rewind the stream and try another
                         fileStream.Position = 0;
                     }
+                }
             }
 
+            logger.LogDebug("Unable to read any metadata from '{0}'.", path);
             return new AudioMetadata();
         }
     }

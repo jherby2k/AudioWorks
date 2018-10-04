@@ -22,6 +22,10 @@ namespace AudioWorks.Extensions.Flac
     [AudioInfoDecoderExport(".flac")]
     public sealed class FlacAudioInfoDecoder : IAudioInfoDecoder
     {
+        const string _format = "Free Lossless Audio Codec (FLAC)";
+
+        public string Format => _format;
+
         public AudioInfo ReadAudioInfo(FileStream stream)
         {
             using (var decoder = new AudioInfoStreamDecoder(stream))

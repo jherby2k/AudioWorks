@@ -24,6 +24,10 @@ namespace AudioWorks.Extensions.Id3
     [AudioMetadataDecoderExport(".mp3")]
     public sealed class Id3AudioMetadataDecoder : IAudioMetadataDecoder
     {
+        const string _format = "ID3";
+
+        public string Format => _format;
+
         public AudioMetadata ReadMetadata(FileStream stream)
         {
             TagModel tagModel;

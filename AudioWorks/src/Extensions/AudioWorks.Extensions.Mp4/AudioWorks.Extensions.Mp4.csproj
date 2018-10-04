@@ -3,11 +3,11 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.1;netstandard2.0</TargetFrameworks>
     <LangVersion>7.3</LangVersion>
-    <Version>0.1.6-beta</Version>
+    <Version>0.1.7-beta</Version>
     <Authors>Jeremy Herbison</Authors>
     <Company />
     <Product>AudioWorks</Product>
-    <Description>The MPEG-4 format extension for AudioWorks. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
+    <Description>The MPEG-4 Audio extension for AudioWorks. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
     <Copyright>© 2018 Jeremy Herbison</Copyright>
     <PackageLicenseUrl>https://raw.githubusercontent.com/jherby2k/AudioWorks/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/jherby2k/AudioWorks</PackageProjectUrl>

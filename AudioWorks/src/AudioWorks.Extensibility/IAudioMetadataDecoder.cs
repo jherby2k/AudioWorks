@@ -26,6 +26,13 @@ namespace AudioWorks.Extensibility
     public interface IAudioMetadataDecoder
     {
         /// <summary>
+        /// Gets the name of the metadata format decoded by this extension.
+        /// </summary>
+        /// <value>The metadata format.</value>
+        [NotNull]
+        string Format { get; }
+
+        /// <summary>
         /// Reads the metadata.
         /// </summary>
         /// <param name="stream">The file stream.</param>
