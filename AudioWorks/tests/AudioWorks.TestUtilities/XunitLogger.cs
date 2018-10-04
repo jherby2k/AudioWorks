@@ -54,7 +54,7 @@ namespace AudioWorks.TestUtilities
             }
         }
 
-        public bool IsEnabled(LogLevel logLevel) => logLevel >= _provider.LogLevel;
+        public bool IsEnabled(LogLevel logLevel) => logLevel >= _provider.MinLogLevel;
 
         [NotNull]
         public IDisposable BeginScope<TState>([CanBeNull] TState state) => NullScope.Instance;
