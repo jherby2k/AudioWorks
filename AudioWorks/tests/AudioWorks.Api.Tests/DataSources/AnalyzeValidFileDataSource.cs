@@ -405,13 +405,13 @@ namespace AudioWorks.Api.Tests.DataSources
         public static IEnumerable<object[]> Analyzers
         {
             [UsedImplicitly]
-            get => _data.Select(item => new[] { item[1] });
+            get => _data.Select(item => new[] { item[1] }).Distinct(new ArrayComparer());
         }
 
         [NotNull, ItemNotNull]
         public static IEnumerable<object[]> FileNamesAndAnalyzers
         {
-            [UsedImplicitly] get => _data.Select(item => new[] { item[0], item[1] });
+            [UsedImplicitly] get => _data.Select(item => new[] { item[0], item[1] }).Distinct(new ArrayComparer());
         }
     }
 }
