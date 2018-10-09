@@ -13,9 +13,9 @@ Currently working and relatively stable on Windows and Ubuntu.
 
 Platform | Status
 -------- | ------
-Windows  | [![Build status](https://ci.appveyor.com/api/projects/status/k7yiy48qkoa5701t/branch/master?svg=true)](https://ci.appveyor.com/project/jherby2k/audioworks-n8ay6/branch/master)
-Linux    | [![Build status](https://ci.appveyor.com/api/projects/status/8kh6urve97ibwubv/branch/master?svg=true)](https://ci.appveyor.com/project/jherby2k/audioworks-n6p0s/branch/master)
-MacOS    | Passing
+Windows  | [![Build status](https://ci.appveyor.com/api/projects/status/k7yiy48qkoa5701t/branch/master?svg=true)](https://ci.appveyor.com/project/jherby2k/audioworks-n8ay6/branch/master) [![codecov](https://codecov.io/gh/jherby2k/audioworks/branch/master/graph/badge.svg)](https://codecov.io/gh/jherby2k/audioworks)
+Linux    | [![Build status](https://ci.appveyor.com/api/projects/status/8kh6urve97ibwubv/branch/master?svg=true)](https://ci.appveyor.com/project/jherby2k/audioworks-n6p0s/branch/master) [![codecov](https://codecov.io/gh/jherby2k/audioworks/branch/master/graph/badge.svg)](https://codecov.io/gh/jherby2k/audioworks)
+MacOS    | Not available
 
 ### System Requirements
 
