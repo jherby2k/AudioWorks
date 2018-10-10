@@ -13,6 +13,8 @@ details.
 You should have received a copy of the GNU Lesser General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using AudioWorks.TestUtilities;
 using JetBrains.Annotations;
 using Xunit;
@@ -20,17 +22,29 @@ using Xunit.Abstractions;
 
 namespace AudioWorks.Common.Tests
 {
-    public sealed class AudioMetadataInvalidExceptionTests
+    public sealed class ImageInvalidExceptionTests
     {
-        public AudioMetadataInvalidExceptionTests([NotNull] ITestOutputHelper outputHelper)
+        public ImageInvalidExceptionTests([NotNull] ITestOutputHelper outputHelper)
         {
             LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
         }
 
-        [Fact(DisplayName = "AudioMetadataInvalidException is an AudioException")]
-        public void IsException()
+        [Fact(DisplayName = "ImageInvalidException is an AudioException")]
+        public void IsAudioException()
         {
-            Assert.IsAssignableFrom<AudioException>(new AudioMetadataInvalidException());
+            Assert.IsAssignableFrom<AudioException>(new ImageInvalidException());
+        }
+
+        [Fact(DisplayName = "ImageInvalidException's Path property is properly serialized")]
+        public void PathIsSerialized()
+        {
+            using (var stream = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, new ImageInvalidException(null, "Foo"));
+                stream.Position = 0;
+                Assert.Equal("Foo", ((ImageInvalidException) formatter.Deserialize(stream)).Path);
+            }
         }
     }
 }

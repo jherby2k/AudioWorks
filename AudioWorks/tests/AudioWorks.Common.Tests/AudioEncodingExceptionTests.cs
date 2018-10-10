@@ -20,17 +20,17 @@ using Xunit.Abstractions;
 
 namespace AudioWorks.Common.Tests
 {
-    public sealed class AudioMetadataInvalidExceptionTests
+    public sealed class AudioEncodingExceptionTests
     {
-        public AudioMetadataInvalidExceptionTests([NotNull] ITestOutputHelper outputHelper)
+        public AudioEncodingExceptionTests([NotNull] ITestOutputHelper outputHelper)
         {
             LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
         }
 
-        [Fact(DisplayName = "AudioMetadataInvalidException is an AudioException")]
-        public void IsException()
+        [Fact(DisplayName = "AudioEncodingException is an AudioException")]
+        public void IsAudioException()
         {
-            Assert.IsAssignableFrom<AudioException>(new AudioMetadataInvalidException());
+            Assert.IsAssignableFrom<AudioException>(new AudioEncodingException());
         }
     }
 }
