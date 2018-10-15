@@ -18,10 +18,15 @@ param(
     [string] $ModuleProjectRoot,
     [string] $OutputRoot)
 
-"Copying module under $ModuleProjectRoot to $OutputRoot built using the $Configuration configuration."
+$moduleName = "AudioWorks.Commands"
 
-$outputDir = "$OutputRoot\AudioWorks.Commands"
+"Copying module from $ModuleProjectRoot to $OutputRoot."
+
+$outputDir = Join-Path $OutputRoot -ChildPath $moduleName
 if (Test-Path $outputDir) { Remove-Item -Path $outputDir -Recurse -ErrorAction Stop }
 
-$projectOutputDir = $ModuleProjectRoot | Get-ChildItem -Filter bin | Get-ChildItem -Filter $Configuration | Get-ChildItem -Filter "AudioWorks.Commands"
+$projectOutputDir = $ModuleProjectRoot | Get-ChildItem -Filter bin | Get-ChildItem -Filter $Configuration | Get-ChildItem -Filter $moduleName
 Copy-Item -Path $projectOutputDir.FullName -Destination $OutputRoot -Recurse
+
+"Copying debugging symbols from $ModuleProjectRoot to $OutputRoot."
+$ModuleProjectRoot | Get-ChildItem -Filter bin | Get-ChildItem -Filter $Configuration | Get-ChildItem -Filter *.pdb -Recurse | % { Copy-Item $_ -Destination $(Join-Path $outputDir -ChildPath $_.Directory.Name) }
