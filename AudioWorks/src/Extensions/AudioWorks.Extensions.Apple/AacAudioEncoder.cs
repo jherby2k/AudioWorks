@@ -25,7 +25,7 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Apple
 {
-    [AudioEncoderExport("AppleAAC", "MP4 Advanced Audio Codec via Apple")]
+    [AudioEncoderExport("AppleAAC", "Apple MPEG-4 Advanced Audio Codec")]
     public sealed class AacAudioEncoder : IAudioEncoder, IDisposable
     {
         static readonly uint[] _vbrQualities = { 0, 9, 18, 27, 36, 45, 54, 63, 73, 82, 91, 100, 109, 118, 127 };

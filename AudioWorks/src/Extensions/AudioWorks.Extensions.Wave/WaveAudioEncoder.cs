@@ -24,7 +24,7 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Wave
 {
-    [AudioEncoderExport("Wave", "Linear PCM Wave")]
+    [AudioEncoderExport("Wave", "Waveform Audio File Format")]
     public sealed class WaveAudioEncoder : IAudioEncoder, IDisposable
     {
         int _bitsPerSample;
