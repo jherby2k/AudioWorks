@@ -19,25 +19,25 @@ using JetBrains.Annotations;
 namespace AudioWorks.Api
 {
     /// <summary>
-    /// Provides information about an encoder.
+    /// Provides information about an audio analyzer.
     /// </summary>
-    public sealed class EncoderInfo
+    public sealed class AudioAnalyzerInfo
     {
         /// <summary>
-        /// Gets the name of the encoder.
+        /// Gets the name of the analyzer.
         /// </summary>
         /// <value>The name.</value>
         [NotNull]
         public string Name { get; }
 
         /// <summary>
-        /// Gets a description of the encoder.
+        /// Gets a description of the analyzer.
         /// </summary>
         /// <value>The description.</value>
         [NotNull]
         public string Description { get; }
 
-        internal EncoderInfo([NotNull] IDictionary<string, object> metadata)
+        internal AudioAnalyzerInfo([NotNull] IDictionary<string, object> metadata)
         {
             Name = (string) metadata["Name"];
             Description = (string) metadata["Description"];

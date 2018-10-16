@@ -55,10 +55,10 @@ namespace AudioWorks.Api
         /// </summary>
         /// <returns>The analyzer info.</returns>
         [NotNull]
-        public static IEnumerable<AnalyzerInfo> GetAnalyzerInfo()
+        public static IEnumerable<AudioAnalyzerInfo> GetAnalyzerInfo()
         {
             return ExtensionProviderWrapper.GetFactories<IAudioAnalyzer>()
-                .Select(factory => new AnalyzerInfo(factory.Metadata));
+                .Select(factory => new AudioAnalyzerInfo(factory.Metadata));
         }
     }
 }
