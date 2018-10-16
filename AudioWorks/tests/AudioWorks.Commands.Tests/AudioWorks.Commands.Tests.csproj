@@ -69,7 +69,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="pwsh -ExecutionPolicy Bypass -File &quot;$(ProjectDir)CopyModule.ps1&quot; -Configuration $(ConfigurationName) -ModuleProjectRoot &quot;$(ProjectDir)..\..\src\AudioWorks.Commands&quot; -OutputRoot $(OutDir)" />
+    <Exec Command="pwsh -ExecutionPolicy Bypass -File &quot;$(ProjectDir)CopyModule.ps1&quot; -Configuration $(Configuration) -ModuleProjectRoot &quot;$(ProjectDir)..\..\src\AudioWorks.Commands&quot; -OutputRoot $(OutDir)" />
   </Target>
 
 </Project>
