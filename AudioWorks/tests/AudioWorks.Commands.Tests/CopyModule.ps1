@@ -20,7 +20,7 @@ param(
 
 $moduleName = "AudioWorks.Commands"
 
-"Copying module from $ModuleProjectRoot to $OutputRoot."
+Write-Host "Copying module from $ModuleProjectRoot to $OutputRoot."
 
 $outputDir = Join-Path $OutputRoot -ChildPath $moduleName
 if (Test-Path $outputDir) { Remove-Item -Path $outputDir -Recurse -ErrorAction Stop }
@@ -28,5 +28,5 @@ if (Test-Path $outputDir) { Remove-Item -Path $outputDir -Recurse -ErrorAction S
 $projectOutputDir = $ModuleProjectRoot | Get-ChildItem -Filter bin | Get-ChildItem -Filter $Configuration | Get-ChildItem -Filter $moduleName
 Copy-Item -Path $projectOutputDir.FullName -Destination $OutputRoot -Recurse
 
-"Copying debugging symbols from $ModuleProjectRoot to $OutputRoot."
+Write-Host "Copying debugging symbols from $ModuleProjectRoot to $OutputRoot."
 $ModuleProjectRoot | Get-ChildItem -Filter bin | Get-ChildItem -Filter $Configuration | Get-ChildItem -Filter *.pdb -Recurse | % { Copy-Item $_ -Destination $(Join-Path $outputDir -ChildPath $_.Directory.Name) }
