@@ -1,5 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <helpItems schema="maml" xmlns="http://msh">
+  <!-- Cmdlet: Get-AudioAnalyzerInfo -->
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+    <command:details>
+      <command:name>Get-AudioAnalyzerInfo</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>AudioAnalyzerInfo</command:noun>
+      <maml:description>
+        <maml:para>Gets information about the available audio analyzers.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>The Get-AudioAnalyzerInfo cmdlet gets objects that describe the audio analyzers currently loaded and available for use with the Measure-AudioFile cmdlet.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <!-- Parameter set: __AllParameterSets -->
+      <command:syntaxItem>
+        <maml:name>Get-AudioAnalyzerInfo</maml:name>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters />
+    <command:inputTypes />
+    <command:returnValues>
+      <!-- OutputType: AudioAnalyzerInfo -->
+      <command:returnValue>
+        <dev:type>
+          <maml:name>AudioWorks.Api.AudioAnalyzerInfo</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:returnValue>
+    </command:returnValues>
+  </command:command>
   <!-- Cmdlet: Export-AudioCoverArt -->
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
     <command:details>
@@ -283,6 +314,37 @@
       <command:returnValue>
         <dev:type>
           <maml:name>AudioWorks.Common.ICoverArt</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:returnValue>
+    </command:returnValues>
+  </command:command>
+  <!-- Cmdlet: Get-AudioEncoderInfo -->
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+    <command:details>
+      <command:name>Get-AudioEncoderInfo</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>AudioEncoderInfo</command:noun>
+      <maml:description>
+        <maml:para>Gets information about the available audio encoders.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>The Get-AudioEncoderInfo cmdlet gets objects that describe the audio encoders currently loaded and available for use with the Export-AudioFile cmdlet.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <!-- Parameter set: __AllParameterSets -->
+      <command:syntaxItem>
+        <maml:name>Get-AudioEncoderInfo</maml:name>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters />
+    <command:inputTypes />
+    <command:returnValues>
+      <!-- OutputType: AudioEncoderInfo -->
+      <command:returnValue>
+        <dev:type>
+          <maml:name>AudioWorks.Api.AudioEncoderInfo</maml:name>
           <maml:uri />
         </dev:type>
       </command:returnValue>
