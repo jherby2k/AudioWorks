@@ -103,28 +103,32 @@ namespace AudioWorks.Extensions.Vorbis
         unsafe void AddTag([NotNull] string key, [NotNull] string value)
         {
             // Optimization - avoid allocating on the heap
-            Span<byte> keySpan = stackalloc byte[Encoding.ASCII.GetMaxByteCount(key.Length) + 1];
+            Span<byte> keyBytes = stackalloc byte[Encoding.ASCII.GetMaxByteCount(key.Length) + 1];
 #if NETCOREAPP2_1
-            Encoding.ASCII.GetBytes(key, keySpan);
+            Encoding.ASCII.GetBytes(key, keyBytes);
 #else
-            Encoding.ASCII.GetBytes(
-                (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(key.AsSpan())), key.Length,
-                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keySpan)), keySpan.Length);
+            fixed (char* keyAddress = key)
+                Encoding.ASCII.GetBytes(
+                    keyAddress, key.Length,
+                    (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)), keyBytes.Length);
 #endif
 
             // Use heap allocations for comments > 256kB (usually pictures)
-            var valueSize = Encoding.UTF8.GetMaxByteCount(value.Length) + 1;
-            var valueSpan = valueSize < 0x40000 ? stackalloc byte[valueSize] : new byte[valueSize];
+            var valueMaxByteCount = Encoding.UTF8.GetMaxByteCount(value.Length) + 1;
+            var valueBytes = valueMaxByteCount < 0x40000
+                ? stackalloc byte[valueMaxByteCount]
+                : new byte[valueMaxByteCount];
 #if NETCOREAPP2_1
-            Encoding.ASCII.GetBytes(value, valueSpan);
+            Encoding.ASCII.GetBytes(value, valueBytes);
 #else
-            Encoding.UTF8.GetBytes(
-                (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(value.AsSpan())), value.Length,
-                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueSpan)), valueSpan.Length);
+            fixed (char* valueAddress = value)
+            fixed (byte* valueBytesAddress = valueBytes)
+                Encoding.UTF8.GetBytes(valueAddress, value.Length, valueBytesAddress, valueMaxByteCount);
 #endif
 
-            fixed (byte* valueAddress = valueSpan)
-                SafeNativeMethods.VorbisCommentAddTag(_comment, ref MemoryMarshal.GetReference(keySpan), valueAddress);
+            fixed (byte* valueBytesAddress = valueBytes)
+                SafeNativeMethods.VorbisCommentAddTag(_comment, ref MemoryMarshal.GetReference(keyBytes),
+                    valueBytesAddress);
 
             _unmanagedMemoryAllocated = true;
         }
