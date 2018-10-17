@@ -19,6 +19,7 @@ using System.Buffers;
 #endif
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Runtime.InteropServices;
 using AudioWorks.Common;
 using JetBrains.Annotations;
 
@@ -85,10 +86,10 @@ namespace AudioWorks.Extensions.Lame
 
             var bytesEncoded = SafeNativeMethods.EncodeBufferIeeeFloat(
                 _handle,
-                leftSamples.GetPinnableReference(),
-                rightSamples.GetPinnableReference(),
+                MemoryMarshal.GetReference(leftSamples),
+                MemoryMarshal.GetReference(rightSamples),
                 leftSamples.Length,
-                ref buffer.GetPinnableReference(),
+                ref MemoryMarshal.GetReference(buffer),
                 buffer.Length);
 
             if (bytesEncoded < 0)
@@ -101,8 +102,8 @@ namespace AudioWorks.Extensions.Lame
             {
                 var bytesEncoded = SafeNativeMethods.EncodeBufferIeeeFloat(
                     _handle,
-                    leftSamples.GetPinnableReference(),
-                    rightSamples.GetPinnableReference(),
+                    MemoryMarshal.GetReference(leftSamples),
+                    MemoryMarshal.GetReference(rightSamples),
                     leftSamples.Length,
                     buffer,
                     buffer.Length);
@@ -126,9 +127,9 @@ namespace AudioWorks.Extensions.Lame
 
             var bytesEncoded = SafeNativeMethods.EncodeBufferInterleavedIeeeFloat(
                 _handle,
-                samples.GetPinnableReference(),
+                MemoryMarshal.GetReference(samples),
                 frameCount,
-                ref buffer.GetPinnableReference(),
+                ref MemoryMarshal.GetReference(buffer),
                 buffer.Length);
 
             if (bytesEncoded < 0)
@@ -141,7 +142,7 @@ namespace AudioWorks.Extensions.Lame
             {
                 var bytesEncoded = SafeNativeMethods.EncodeBufferInterleavedIeeeFloat(
                     _handle,
-                    samples.GetPinnableReference(),
+                    MemoryMarshal.GetReference(samples),
                     frameCount,
                     buffer,
                     buffer.Length);
@@ -158,19 +159,16 @@ namespace AudioWorks.Extensions.Lame
 #endif
         }
 
-#if NETCOREAPP2_1
         internal void Flush()
         {
+#if NETCOREAPP2_1
             Span<byte> buffer = stackalloc byte[7200];
             var bytesFlushed = SafeNativeMethods.EncodeFlush(
                 _handle,
-                ref buffer.GetPinnableReference(),
+                ref MemoryMarshal.GetReference(buffer),
                 buffer.Length);
             _stream.Write(buffer.Slice(0, bytesFlushed));
-        }
 #else
-        internal void Flush()
-        {
             var buffer = ArrayPool<byte>.Shared.Rent(7200);
             try
             {
@@ -181,27 +179,22 @@ namespace AudioWorks.Extensions.Lame
             {
                 ArrayPool<byte>.Shared.Return(buffer);
             }
-        }
 #endif
+        }
 
-#if NETCOREAPP2_1
         internal void UpdateLameTag()
         {
             _stream.Position = _startPosition;
 
+#if NETCOREAPP2_1
             byte empty = 0;
             var bufferSize = SafeNativeMethods.GetLameTagFrame(_handle, ref empty, UIntPtr.Zero);
             Span<byte> buffer = stackalloc byte[(int) bufferSize.ToUInt32()];
             _stream.Write(buffer.Slice(0, (int) SafeNativeMethods.GetLameTagFrame(
                 _handle,
-                ref buffer.GetPinnableReference(),
+                ref MemoryMarshal.GetReference(buffer),
                 bufferSize).ToUInt32()));
-        }
 #else
-        internal void UpdateLameTag()
-        {
-            _stream.Position = _startPosition;
-
             var bufferSize = SafeNativeMethods.GetLameTagFrame(_handle, Array.Empty<byte>(), UIntPtr.Zero);
             var buffer = ArrayPool<byte>.Shared.Rent((int) bufferSize.ToUInt32());
             try
@@ -212,8 +205,8 @@ namespace AudioWorks.Extensions.Lame
             {
                 ArrayPool<byte>.Shared.Return(buffer);
             }
-        }
 #endif
+        }
 
         public void Dispose()
         {

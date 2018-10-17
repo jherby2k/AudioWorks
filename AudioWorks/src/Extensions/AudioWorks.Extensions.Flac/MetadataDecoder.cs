@@ -63,10 +63,10 @@ namespace AudioWorks.Extensions.Flac
                         var valueBytes = commentBytes.Slice(delimiter + 1);
                         AudioMetadata.Set(
                             Encoding.ASCII.GetString(
-                                (byte*) Unsafe.AsPointer(ref keyBytes.GetPinnableReference()),
+                                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)),
                                 keyBytes.Length),
                             Encoding.UTF8.GetString(
-                                (byte*) Unsafe.AsPointer(ref valueBytes.GetPinnableReference()),
+                                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes)),
                                 valueBytes.Length));
 #endif
                     }

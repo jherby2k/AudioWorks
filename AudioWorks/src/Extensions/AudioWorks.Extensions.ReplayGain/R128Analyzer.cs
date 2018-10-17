@@ -15,6 +15,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 
 using System;
 using System.Linq;
+using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.ReplayGain
@@ -37,7 +38,7 @@ namespace AudioWorks.Extensions.ReplayGain
 
         internal void AddFrames(Span<float> samples, uint frames)
         {
-            SafeNativeMethods.AddFramesFloat(Handle, samples.GetPinnableReference(), new UIntPtr(frames));
+            SafeNativeMethods.AddFramesFloat(Handle, MemoryMarshal.GetReference(samples), new UIntPtr(frames));
         }
 
         internal double GetPeak()

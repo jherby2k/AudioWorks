@@ -15,9 +15,9 @@ You should have received a copy of the GNU Lesser General Public License along w
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 #if !NETCOREAPP2_1
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 #endif
 using System.Text;
 using AudioWorks.Common;
@@ -109,7 +109,7 @@ namespace AudioWorks.Extensions.Vorbis
 #else
             Encoding.ASCII.GetBytes(
                 (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(key.AsSpan())), key.Length,
-                (byte*) Unsafe.AsPointer(ref keySpan.GetPinnableReference()), keySpan.Length);
+                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keySpan)), keySpan.Length);
 #endif
 
             // Use heap allocations for comments > 256kB (usually pictures)
@@ -120,11 +120,11 @@ namespace AudioWorks.Extensions.Vorbis
 #else
             Encoding.UTF8.GetBytes(
                 (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(value.AsSpan())), value.Length,
-                (byte*) Unsafe.AsPointer(ref valueSpan.GetPinnableReference()), valueSpan.Length);
+                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueSpan)), valueSpan.Length);
 #endif
 
             fixed (byte* valueAddress = valueSpan)
-                SafeNativeMethods.VorbisCommentAddTag(_comment, ref keySpan.GetPinnableReference(), valueAddress);
+                SafeNativeMethods.VorbisCommentAddTag(_comment, ref MemoryMarshal.GetReference(keySpan), valueAddress);
 
             _unmanagedMemoryAllocated = true;
         }

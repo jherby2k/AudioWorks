@@ -17,6 +17,7 @@ using System;
 using System.Globalization;
 #if !NETCOREAPP2_1
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 #endif
 using System.Text;
 using AudioWorks.Common;
@@ -43,10 +44,10 @@ namespace AudioWorks.Extensions.Vorbis
                 var valueBytes = commentBytes.Slice(delimiter + 1);
 
                 var key = Encoding.ASCII.GetString(
-                    (byte*) Unsafe.AsPointer(ref keyBytes.GetPinnableReference()),
+                    (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)),
                     keyBytes.Length);
                 var value = Encoding.UTF8.GetString(
-                    (byte*) Unsafe.AsPointer(ref valueBytes.GetPinnableReference()),
+                    (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes)),
                     valueBytes.Length);
 #endif
 

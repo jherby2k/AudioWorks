@@ -15,9 +15,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 
 using System;
 using System.Runtime.CompilerServices;
-#if !NETCOREAPP2_1
 using System.Runtime.InteropServices;
-#endif
 using System.Text;
 using JetBrains.Annotations;
 
@@ -42,22 +40,22 @@ namespace AudioWorks.Extensions.Flac
             var keyLength = Encoding.ASCII.GetBytes(
                                 (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(key.AsSpan())),
                                 key.Length,
-                                (byte*) Unsafe.AsPointer(ref keySpan.GetPinnableReference()),
+                                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keySpan)),
                                 keySpan.Length)
                             + 1;
 
             var valueLength = Encoding.UTF8.GetBytes(
                                   (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(value.AsSpan())),
                                   value.Length,
-                                  (byte*) Unsafe.AsPointer(ref valueSpan.GetPinnableReference()),
+                                  (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueSpan)),
                                   valueSpan.Length)
                               + 1;
 #endif
 
             SafeNativeMethods.MetadataObjectVorbisCommentEntryFromNameValuePair(
                 out var entry,
-                new IntPtr(Unsafe.AsPointer(ref keySpan.Slice(0, keyLength).GetPinnableReference())),
-                new IntPtr(Unsafe.AsPointer(ref valueSpan.Slice(0, valueLength).GetPinnableReference())));
+                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(keySpan.Slice(0, keyLength)))),
+                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueSpan.Slice(0, valueLength)))));
 
             // The comment takes ownership of the new entry if 'copy' is false
             SafeNativeMethods.MetadataObjectVorbisCommentAppendComment(Handle, entry, false);

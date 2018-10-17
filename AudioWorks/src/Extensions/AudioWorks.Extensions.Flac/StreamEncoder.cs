@@ -94,7 +94,7 @@ namespace AudioWorks.Extensions.Flac
 
             if (!SafeNativeMethods.StreamEncoderProcess(
                 _handle,
-                buffers.GetPinnableReference(),
+                MemoryMarshal.GetReference(buffers),
                 (uint) leftBuffer.Length))
                 throw new AudioEncodingException($"FLAC encountered error {GetState()} while processing samples.");
 
@@ -104,7 +104,7 @@ namespace AudioWorks.Extensions.Flac
         {
             if (!SafeNativeMethods.StreamEncoderProcessInterleaved(
                 _handle,
-                buffer.GetPinnableReference(),
+                MemoryMarshal.GetReference(buffer),
                 frames))
                 throw new AudioEncodingException($"FLAC encountered error '{GetState()}' while processing samples.");
         }

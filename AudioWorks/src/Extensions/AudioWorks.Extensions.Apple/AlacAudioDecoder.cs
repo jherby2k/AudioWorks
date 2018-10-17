@@ -62,7 +62,7 @@ namespace AudioWorks.Extensions.Apple
             };
             bufferList.Buffers[0].NumberChannels = _outputDescription.ChannelsPerFrame;
             bufferList.Buffers[0].DataByteSize = (uint) (buffer.Length * Marshal.SizeOf<int>());
-            bufferList.Buffers[0].Data = new IntPtr(Unsafe.AsPointer(ref buffer.GetPinnableReference()));
+            bufferList.Buffers[0].Data = new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)));
 
             var frameCount = _defaultFrameCount;
             _converter.FillBuffer(ref frameCount, ref bufferList, null);

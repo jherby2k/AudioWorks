@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.1;netstandard2.0</TargetFrameworks>
     <LangVersion>7.3</LangVersion>
-    <Version>0.1.8-beta</Version>
+    <Version>0.1.9-beta</Version>
     <Authors>Jeremy Herbison</Authors>
     <Company />
     <Product>AudioWorks</Product>
