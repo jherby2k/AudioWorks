@@ -33,29 +33,53 @@ namespace AudioWorks.Extensibility
     public sealed class AudioMetadataEncoderExportAttribute : ExportAttribute
     {
         /// <summary>
-        /// Gets the file extension.
+        /// Gets the file extension that this metadata encoder supports.
         /// </summary>
         /// <value>The file extension.</value>
         [NotNull]
         public string Extension { get; }
 
         /// <summary>
+        /// Gets the name of the format written by this metadata encoder.
+        /// </summary>
+        /// <value>The format.</value>
+        [NotNull]
+        public string Format { get; }
+
+        /// <summary>
+        /// Gets a description of the format written by this metadata encoder.
+        /// </summary>
+        /// <value>The description.</value>
+        [NotNull]
+        public string Description { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AudioMetadataEncoderExportAttribute"/> class.
         /// </summary>
-        /// <param name="extension">The file extension.</param>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="extension"/> is null.</exception>
+        /// <param name="extension">The file extension that this metadata encoder supports.</param>
+        /// <param name="format">The name of the format written by this metadata encoder.</param>
+        /// <param name="description">A description of the format written by this metadata encoder.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="extension"/>, <paramref name="format"/> or
+        /// <paramref name="description"/> is null or empty.</exception>
         /// <exception cref="ArgumentException">Thrown if <paramref name="extension"/> is not a valid file extension.
         /// </exception>
-        public AudioMetadataEncoderExportAttribute([NotNull] string extension)
+        public AudioMetadataEncoderExportAttribute([NotNull] string extension, [NotNull] string format, [NotNull] string description)
             : base(typeof(IAudioMetadataEncoder))
         {
-            if (extension == null) throw new ArgumentNullException(nameof(extension));
+            if (string.IsNullOrEmpty(extension))
+                throw new ArgumentException("Value cannot be null or empty.", nameof(extension));
             if (!extension.StartsWith(".", StringComparison.OrdinalIgnoreCase)
                 || extension.Any(char.IsWhiteSpace)
                 || extension.Any(character => Path.GetInvalidFileNameChars().Contains(character)))
                 throw new ArgumentException($"'{extension}' is not a valid file extension.", nameof(extension));
+            if (string.IsNullOrEmpty(format))
+                throw new ArgumentException("Value cannot be null or empty.", nameof(format));
+            if (string.IsNullOrEmpty(description))
+                throw new ArgumentException("Value cannot be null or empty.", nameof(description));
 
             Extension = extension;
+            Format = format;
+            Description = description;
         }
     }
 }

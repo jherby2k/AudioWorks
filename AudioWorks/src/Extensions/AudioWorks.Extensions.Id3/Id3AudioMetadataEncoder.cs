@@ -24,7 +24,7 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Id3
 {
-    [AudioMetadataEncoderExport(".mp3")]
+    [AudioMetadataEncoderExport(".mp3", "ID3", "ID3 version 2.x")]
     public sealed class Id3AudioMetadataEncoder : IAudioMetadataEncoder
     {
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary

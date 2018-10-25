@@ -22,7 +22,7 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp4
 {
-    [AudioMetadataEncoderExport(".m4a")]
+    [AudioMetadataEncoderExport(".m4a", "iTunes", "iTunes-compatible MPEG-4")]
     public sealed class ItunesAudioMetadataEncoder : IAudioMetadataEncoder
     {
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary

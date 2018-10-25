@@ -14,6 +14,8 @@ You should have received a copy of the GNU Lesser General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
 using JetBrains.Annotations;
@@ -35,7 +37,7 @@ namespace AudioWorks.Api
         /// <returns>Information about the available settings.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="extension"/> is null.</exception>
         [NotNull]
-        public static SettingInfoDictionary GetSettingInfo([NotNull] string extension)
+        public static SettingInfoDictionary GetSettingInfoByExtension([NotNull] string extension)
         {
             if (extension == null) throw new ArgumentNullException(nameof(extension));
 
@@ -46,6 +48,38 @@ namespace AudioWorks.Api
                     return export.Value.SettingInfo;
 
             return new SettingInfoDictionary();
+        }
+
+        /// <summary>
+        /// Gets information about the available settings that can be passed to an <see cref="ITaggedAudioFile"/>'s
+        /// SaveMetadata method, for a given metadata format.
+        /// </summary>
+        /// <param name="format">The format.</param>
+        /// <returns>Information about the available settings.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="format"/> is null.</exception>
+        [NotNull]
+        public static SettingInfoDictionary GetSettingInfoByFormat([NotNull] string format)
+        {
+            if (format == null) throw new ArgumentNullException(nameof(format));
+
+            // Try each encoder that supports this format:
+            foreach (var factory in ExtensionProviderWrapper.GetFactories<IAudioMetadataEncoder>(
+                "Format", format))
+                using (var export = factory.CreateExport())
+                    return export.Value.SettingInfo;
+
+            return new SettingInfoDictionary();
+        }
+
+        /// <summary>
+        /// Gets information about the available metadata encoders.
+        /// </summary>
+        /// <returns>The encoder info.</returns>
+        [NotNull]
+        public static IEnumerable<AudioMetadataEncoderInfo> GetEncoderInfo()
+        {
+            return ExtensionProviderWrapper.GetFactories<IAudioMetadataEncoder>()
+                .Select(factory => new AudioMetadataEncoderInfo(factory.Metadata));
         }
     }
 }

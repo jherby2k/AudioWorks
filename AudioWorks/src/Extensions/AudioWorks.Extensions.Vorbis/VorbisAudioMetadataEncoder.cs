@@ -26,7 +26,7 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Vorbis
 {
-    [AudioMetadataEncoderExport(".ogg")]
+    [AudioMetadataEncoderExport(".ogg", "Vorbis", "Vorbis Comments")]
     public sealed class VorbisAudioMetadataEncoder : IAudioMetadataEncoder
     {
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary();

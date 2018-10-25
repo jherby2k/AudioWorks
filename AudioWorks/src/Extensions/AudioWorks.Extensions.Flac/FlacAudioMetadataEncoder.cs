@@ -21,7 +21,7 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
 {
-    [AudioMetadataEncoderExport(".flac")]
+    [AudioMetadataEncoderExport(".flac", "FLAC", "FLAC")]
     public sealed class FlacAudioMetadataEncoder : IAudioMetadataEncoder
     {
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary

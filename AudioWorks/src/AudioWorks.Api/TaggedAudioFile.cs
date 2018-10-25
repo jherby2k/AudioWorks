@@ -62,7 +62,7 @@ namespace AudioWorks.Api
             var extension = IO.Path.GetExtension(Path);
 
             // Make sure the provided settings are clean
-            AudioMetadataEncoderManager.GetSettingInfo(extension).ValidateSettings(settings);
+            AudioMetadataEncoderManager.GetSettingInfoByExtension(extension).ValidateSettings(settings);
 
             using (var fileStream = File.Open(Path, FileMode.Open))
             {
