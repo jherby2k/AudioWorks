@@ -1514,6 +1514,19 @@
             <maml:uri />
           </dev:type>
         </command:parameter>
+        <!-- Parameter: Format -->
+        <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+          <maml:name>Format</maml:name>
+          <maml:description>
+            <maml:para>Specifies the metadata format to use.</maml:para>
+            <maml:para>This is normally selected automatically based on the file extension. Explicitly specifying the format enables any dynamic parameters that are format-specific.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true">string</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+        </command:parameter>
         <!-- Parameter: PassThru -->
         <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
           <maml:name>PassThru</maml:name>
@@ -1539,6 +1552,19 @@
         <command:parameterValue required="true">ITaggedAudioFile</command:parameterValue>
         <dev:type>
           <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:parameter>
+      <!-- Parameter: Format -->
+      <command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+        <maml:name>Format</maml:name>
+        <maml:description>
+          <maml:para>Specifies the metadata format to use.</maml:para>
+          <maml:para>This is normally selected automatically based on the file extension. Explicitly specifying the format enables any dynamic parameters that are format-specific.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true">string</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
           <maml:uri />
         </dev:type>
       </command:parameter>
@@ -1980,6 +2006,37 @@
       <command:returnValue>
         <dev:type>
           <maml:name>AudioWorks.Common.ITaggedAudioFile</maml:name>
+          <maml:uri />
+        </dev:type>
+      </command:returnValue>
+    </command:returnValues>
+  </command:command>
+  <!-- Cmdlet: Get-AudioMetadataEncoderInfo -->
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+    <command:details>
+      <command:name>Get-AudioMetadataEncoderInfo</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>AudioMetadataEncoderInfo</command:noun>
+      <maml:description>
+        <maml:para>Gets information about the available metadata encoders.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>The Get-AudioMetadataEncoderInfo cmdlet gets objects that describe the metadata encoders currently loaded and available for use with the Save-AudioMetadata cmdlet.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <!-- Parameter set: __AllParameterSets -->
+      <command:syntaxItem>
+        <maml:name>Get-AudioMetadataEncoderInfo</maml:name>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters />
+    <command:inputTypes />
+    <command:returnValues>
+      <!-- OutputType: AudioMetadataEncoderInfo -->
+      <command:returnValue>
+        <dev:type>
+          <maml:name>AudioWorks.Api.AudioMetadataEncoderInfo</maml:name>
           <maml:uri />
         </dev:type>
       </command:returnValue>
