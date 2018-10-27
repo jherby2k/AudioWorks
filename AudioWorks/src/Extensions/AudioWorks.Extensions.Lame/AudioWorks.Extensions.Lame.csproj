@@ -70,11 +70,7 @@
   </PropertyGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains(WINDOWS))">
-    <None Include="x64\libmp3lame.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Pack>true</Pack>
-    </None>
-    <None Include="x86\libmp3lame.dll">
+    <None Include="win-*\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Pack>true</Pack>
     </None>

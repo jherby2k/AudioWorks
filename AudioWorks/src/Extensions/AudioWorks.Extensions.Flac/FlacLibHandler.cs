@@ -54,7 +54,7 @@ namespace AudioWorks.Extensions.Flac
             var nativeLibraryPath = Path.Combine(
                 // ReSharper disable once AssignNullToNotNullAttribute
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
-                Environment.Is64BitProcess ? "x64" : "x86");
+                Environment.Is64BitProcess ? "win-x64" : "win-x86");
 
             var flacLibrary = Path.Combine(nativeLibraryPath, "libFLAC.dll");
 

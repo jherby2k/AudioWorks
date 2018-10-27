@@ -71,11 +71,7 @@
   </PropertyGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains(WINDOWS))">
-    <None Include="x64\libFLAC.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Pack>true</Pack>
-    </None>
-    <None Include="x86\libFLAC.dll">
+    <None Include="win-*\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Pack>true</Pack>
     </None>

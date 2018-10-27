@@ -70,11 +70,7 @@
   </PropertyGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains(WINDOWS))">
-    <None Include="x64\libebur128.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Pack>true</Pack>
-    </None>
-    <None Include="x86\libebur128.dll">
+    <None Include="win-*\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Pack>true</Pack>
     </None>

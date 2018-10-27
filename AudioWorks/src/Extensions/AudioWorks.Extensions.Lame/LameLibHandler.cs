@@ -49,7 +49,7 @@ namespace AudioWorks.Extensions.Lame
             var nativeLibraryPath = Path.Combine(
                 // ReSharper disable once AssignNullToNotNullAttribute
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
-                Environment.Is64BitProcess ? "x64" : "x86");
+                Environment.Is64BitProcess ? "win-x64" : "win-x86");
 
             var lameLibrary = Path.Combine(nativeLibraryPath, "libmp3lame.dll");
 

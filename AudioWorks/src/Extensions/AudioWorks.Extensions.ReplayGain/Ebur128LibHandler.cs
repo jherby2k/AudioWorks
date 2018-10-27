@@ -46,7 +46,7 @@ namespace AudioWorks.Extensions.ReplayGain
             var nativeLibraryPath = Path.Combine(
                 // ReSharper disable once AssignNullToNotNullAttribute
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
-                Environment.Is64BitProcess ? "x64" : "x86");
+                Environment.Is64BitProcess ? "win-x64" : "win-x86");
 
             var ebur128Library = Path.Combine(nativeLibraryPath, "libebur128.dll");
 
