@@ -71,7 +71,10 @@ namespace AudioWorks.Api
                     "Extension", extension))
                     using (var export = factory.CreateExport())
                     {
-                        export.Value.WriteMetadata(fileStream, Metadata, settings);
+                        if (_metadata == null)
+                            _metadata = LoadMetadata(fileStream);
+
+                        export.Value.WriteMetadata(fileStream, _metadata, settings);
                         return;
                     }
             }
@@ -91,13 +94,21 @@ namespace AudioWorks.Api
         [NotNull]
         static AudioMetadata LoadMetadata([NotNull] string path)
         {
+            using (var fileStream = File.OpenRead(path))
+                return LoadMetadata(fileStream);
+        }
+
+        [NotNull]
+        static AudioMetadata LoadMetadata([NotNull] FileStream stream)
+        {
+            var initialPosition = stream.Position;
             var logger = LoggerManager.LoggerFactory.CreateLogger<TaggedAudioFile>();
 
-            using (var fileStream = File.OpenRead(path))
+            try
             {
                 // Try each decoder that supports this file extension
                 foreach (var decoderFactory in ExtensionProviderWrapper.GetFactories<IAudioMetadataDecoder>(
-                    "Extension", IO.Path.GetExtension(path)))
+                    "Extension", IO.Path.GetExtension(stream.Name)))
                 {
                     var format = string.Empty;
                     try
@@ -105,22 +116,26 @@ namespace AudioWorks.Api
                         using (var export = decoderFactory.CreateExport())
                         {
                             format = export.Value.Format;
-                            logger.LogDebug("Attempting to read '{0}' metadata from '{1}'.", format, path);
-                            return export.Value.ReadMetadata(fileStream);
+                            logger.LogDebug("Attempting to read '{0}' metadata from '{1}'.", format, stream.Name);
+                            return export.Value.ReadMetadata(stream);
                         }
                     }
                     catch (AudioUnsupportedException e)
                     {
-                        logger.LogDebug(e, "Unable to read '{0}' metadata from '{1}'.", format, path);
+                        logger.LogDebug(e, "Unable to read '{0}' metadata from '{1}'.", format, stream.Name);
 
                         // If a decoder wasn't supported, rewind the stream and try another
-                        fileStream.Position = 0;
+                        stream.Position = 0;
                     }
                 }
-            }
 
-            logger.LogDebug("Unable to read any metadata from '{0}'.", path);
-            return new AudioMetadata();
+                logger.LogDebug("Unable to read any metadata from '{0}'.", stream.Name);
+                return new AudioMetadata();
+            }
+            finally
+            {
+                stream.Position = initialPosition;
+            }
         }
     }
 }
