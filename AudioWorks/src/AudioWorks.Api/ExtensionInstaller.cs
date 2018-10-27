@@ -263,8 +263,7 @@ namespace AudioWorks.Api
         {
             if (source == null || !source.Exists) return;
 
-            foreach (var file in source.GetFiles()
-                .Where(file => file.Extension.Equals(".dll", StringComparison.OrdinalIgnoreCase)))
+            foreach (var file in source.GetFiles())
             {
                 logger.LogDebug("Moving '{0}' to '{1}'.",
                     file.FullName, destination.FullName);
