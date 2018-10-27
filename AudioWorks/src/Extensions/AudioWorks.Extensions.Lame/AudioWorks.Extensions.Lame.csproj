@@ -3,10 +3,10 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.1;netstandard2.0</TargetFrameworks>
     <LangVersion>7.3</LangVersion>
-    <Version>0.1.10-beta</Version>
+    <Version>0.1.11-beta</Version>
     <Revision>$(APPVEYOR_BUILD_NUMBER)</Revision>
     <Revision Condition="'$(Revision)'==''">0</Revision>
-    <FileVersion>0.1.10.$(Revision)</FileVersion>
+    <FileVersion>0.1.11.$(Revision)</FileVersion>
     <Authors>Jeremy Herbison</Authors>
     <Company />
     <Product>AudioWorks</Product>
@@ -75,6 +75,13 @@
       <Pack>true</Pack>
     </None>
     <None Include="x86\libmp3lame.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup Condition="$(DefineConstants.Contains(OSX))">
+    <None Include="osx.*\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Pack>true</Pack>
     </None>

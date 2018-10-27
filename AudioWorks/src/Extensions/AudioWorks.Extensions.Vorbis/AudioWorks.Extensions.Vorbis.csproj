@@ -3,10 +3,10 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.1;netstandard2.0</TargetFrameworks>
     <LangVersion>7.3</LangVersion>
-    <Version>0.1.20-beta</Version>
+    <Version>0.1.21-beta</Version>
     <Revision>$(APPVEYOR_BUILD_NUMBER)</Revision>
     <Revision Condition="'$(Revision)'==''">0</Revision>
-    <FileVersion>0.1.20.$(Revision)</FileVersion>
+    <FileVersion>0.1.21.$(Revision)</FileVersion>
     <Authors>Jeremy Herbison</Authors>
     <Company />
     <Product>AudioWorks</Product>
@@ -84,6 +84,13 @@
       <Pack>true</Pack>
     </None>
     <None Include="x64\libvorbis.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup Condition="$(DefineConstants.Contains(OSX))">
+    <None Include="osx.*\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Pack>true</Pack>
     </None>
