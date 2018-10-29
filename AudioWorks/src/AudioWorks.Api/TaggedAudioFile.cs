@@ -108,6 +108,7 @@ namespace AudioWorks.Api
             {
                 // Try each decoder that supports this file extension
                 foreach (var decoderFactory in ExtensionProviderWrapper.GetFactories<IAudioMetadataDecoder>(
+                    // ReSharper disable once AssignNullToNotNullAttribute
                     "Extension", IO.Path.GetExtension(stream.Name)))
                 {
                     var format = string.Empty;
