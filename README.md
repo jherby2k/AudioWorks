@@ -46,3 +46,13 @@ Keep the module up to date with `Update-Module -Name AudioWorks.Commands -AllowP
 * [Visual Studio 2017 15.7+](https://visualstudio.microsoft.com/downloads) (optional - Windows only)
 * [Visual Studio Code](https://code.visualstudio.com/) (optional - all platforms)
 * [ReSharper 2018.2+](https://www.jetbrains.com/resharper/eap) (optional - Windows only)
+
+### Special Thanks
+
+This project wouldn't be possible without the work of these other fine projects and organizations:
+
+* [Hydrogen Audio Forums](https://hydrogenaud.io/), a wonderful, scientifically-minded community of digital audio enthusiasts.
+* [The LAME Project](http://lame.sourceforge.net/), maintainers of the high-quality MP3 encoder.
+* [The Xiph.Org Foundation](https://xiph.org/), maintainers of Ogg Vorbis and FLAC (the Free Lossless Audio Codec).
+* [libebur128](https://github.com/jiixyj/libebur128), a library implementing the EBU R128 loudness standard.
+* [QAAC](https://sites.google.com/site/qaacpage/), a command-line front-end for Apple's AAC and Apple Lossless encoders.
