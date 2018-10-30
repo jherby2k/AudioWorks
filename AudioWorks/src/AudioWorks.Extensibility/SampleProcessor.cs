@@ -145,7 +145,7 @@ namespace AudioWorks.Extensibility
                     }
                     catch (OverflowException)
                     {
-                        // Can occur at 32 bitsPerSample and +1.0
+                        // Clamp at 32 bitsPerSample and +1.0
                         destination[sampleIndex] = max;
                     }
             }
