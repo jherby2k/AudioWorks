@@ -15,8 +15,6 @@ You should have received a copy of the GNU Lesser General Public License along w
 
 using System;
 using System.Buffers;
-using System.Numerics;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 
@@ -109,7 +107,7 @@ namespace AudioWorks.Extensibility
             _buffer = MemoryPool<float>.Shared.Rent(Frames);
 
             // ReSharper disable once PossibleNullReferenceException
-            Convert(monoSamples, _buffer.Memory.Span, bitsPerSample);
+            SampleProcessor.Convert(monoSamples, _buffer.Memory.Span, bitsPerSample);
         }
 
         /// <summary>
@@ -136,8 +134,8 @@ namespace AudioWorks.Extensibility
             _buffer = MemoryPool<float>.Shared.Rent(Frames * 2);
 
             // ReSharper disable once PossibleNullReferenceException
-            Convert(leftSamples, _buffer.Memory.Span.Slice(0, Frames), bitsPerSample);
-            Convert(rightSamples, _buffer.Memory.Span.Slice(Frames), bitsPerSample);
+            SampleProcessor.Convert(leftSamples, _buffer.Memory.Span.Slice(0, Frames), bitsPerSample);
+            SampleProcessor.Convert(rightSamples, _buffer.Memory.Span.Slice(Frames), bitsPerSample);
         }
 
         /// <summary>
@@ -169,7 +167,7 @@ namespace AudioWorks.Extensibility
                 IsInterleaved = true;
 
             // ReSharper disable once PossibleNullReferenceException
-            Convert(interleavedSamples, _buffer.Memory.Span, bitsPerSample);
+            SampleProcessor.Convert(interleavedSamples, _buffer.Memory.Span, bitsPerSample);
         }
 
         /// <summary>
@@ -208,22 +206,22 @@ namespace AudioWorks.Extensibility
             {
                 case 1:
                     // ReSharper disable once PossibleNullReferenceException
-                    Convert(interleavedSamples, _buffer.Memory.Span, bitsPerSample);
+                    SampleProcessor.Convert(interleavedSamples, _buffer.Memory.Span, bitsPerSample);
                     break;
                 case 2:
                     var interleavedInt16Samples = MemoryMarshal.Cast<byte, short>(interleavedSamples);
                     // ReSharper disable once PossibleNullReferenceException
-                    Convert(interleavedInt16Samples, _buffer.Memory.Span, bitsPerSample);
+                    SampleProcessor.Convert(interleavedInt16Samples, _buffer.Memory.Span, bitsPerSample);
                     break;
                 case 3:
                     var interleavedInt24Samples = MemoryMarshal.Cast<byte, Int24>(interleavedSamples);
                     // ReSharper disable once PossibleNullReferenceException
-                    Convert(interleavedInt24Samples, _buffer.Memory.Span, bitsPerSample);
+                    SampleProcessor.Convert(interleavedInt24Samples, _buffer.Memory.Span, bitsPerSample);
                     break;
                 case 4:
                     var interleavedInt32Samples = MemoryMarshal.Cast<byte, int>(interleavedSamples);
                     // ReSharper disable once PossibleNullReferenceException
-                    Convert(interleavedInt32Samples, _buffer.Memory.Span, bitsPerSample);
+                    SampleProcessor.Convert(interleavedInt32Samples, _buffer.Memory.Span, bitsPerSample);
                     break;
             }
         }
@@ -267,7 +265,10 @@ namespace AudioWorks.Extensibility
                 throw new InvalidOperationException("Not a 2-channel SampleBuffer.");
 
             if (IsInterleaved)
-                DeInterleave(_buffer.Memory.Span.Slice(0, Frames * 2), leftDestination, rightDestination);
+                SampleProcessor.DeInterleave(
+                    _buffer.Memory.Span.Slice(0, Frames * 2),
+                    leftDestination,
+                    rightDestination);
             else
             {
                 _buffer.Memory.Span.Slice(0, Frames).CopyTo(leftDestination);
@@ -299,14 +300,14 @@ namespace AudioWorks.Extensibility
             {
                 Span<float> leftBuffer = stackalloc float[Frames];
                 Span<float> rightBuffer = stackalloc float[Frames];
-                DeInterleave(_buffer.Memory.Span.Slice(0, Frames * 2), leftBuffer, rightBuffer);
-                Convert(leftBuffer, leftDestination, bitsPerSample);
-                Convert(rightBuffer, rightDestination, bitsPerSample);
+                SampleProcessor.DeInterleave(_buffer.Memory.Span.Slice(0, Frames * 2), leftBuffer, rightBuffer);
+                SampleProcessor.Convert(leftBuffer, leftDestination, bitsPerSample);
+                SampleProcessor.Convert(rightBuffer, rightDestination, bitsPerSample);
             }
             else
             {
-                Convert(_buffer.Memory.Span.Slice(0, Frames), leftDestination, bitsPerSample);
-                Convert(_buffer.Memory.Span.Slice(Frames, Frames), rightDestination, bitsPerSample);
+                SampleProcessor.Convert(_buffer.Memory.Span.Slice(0, Frames), leftDestination, bitsPerSample);
+                SampleProcessor.Convert(_buffer.Memory.Span.Slice(Frames, Frames), rightDestination, bitsPerSample);
             }
         }
 
@@ -333,7 +334,10 @@ namespace AudioWorks.Extensibility
             if (Channels == 1 || IsInterleaved)
                 _buffer.Memory.Span.Slice(0, Frames * Channels).CopyTo(destination);
             else
-                Interleave(_buffer.Memory.Span.Slice(0, Frames), _buffer.Memory.Span.Slice(Frames, Frames), destination);
+                SampleProcessor.Interleave(
+                    _buffer.Memory.Span.Slice(0, Frames),
+                    _buffer.Memory.Span.Slice(Frames, Frames),
+                    destination);
         }
 
         /// <summary>
@@ -361,12 +365,15 @@ namespace AudioWorks.Extensibility
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample), "bitsPerSample is out of range.");
 
             if (Channels == 1 || IsInterleaved)
-                Convert(_buffer.Memory.Span.Slice(0, Frames * Channels), destination, bitsPerSample);
+                SampleProcessor.Convert(_buffer.Memory.Span.Slice(0, Frames * Channels), destination, bitsPerSample);
             else
             {
                 Span<float> interleavedBuffer = stackalloc float[Frames * 2];
-                Interleave(_buffer.Memory.Span.Slice(0, Frames), _buffer.Memory.Span.Slice(Frames, Frames), interleavedBuffer);
-                Convert(interleavedBuffer, destination, bitsPerSample);
+                SampleProcessor.Interleave(
+                    _buffer.Memory.Span.Slice(0, Frames),
+                    _buffer.Memory.Span.Slice(Frames, Frames),
+                    interleavedBuffer);
+                SampleProcessor.Convert(interleavedBuffer, destination, bitsPerSample);
             }
         }
 
@@ -402,45 +409,69 @@ namespace AudioWorks.Extensibility
             {
                 case 1:
                     if (Channels == 1 || IsInterleaved)
-                        Convert(_buffer.Memory.Span.Slice(0, Frames * Channels), destination, bitsPerSample);
+                        SampleProcessor.Convert(
+                            _buffer.Memory.Span.Slice(0, Frames * Channels),
+                            destination,
+                            bitsPerSample);
                     else
                     {
                         Span<float> interleavedBuffer = stackalloc float[Frames * 2];
-                        Interleave(_buffer.Memory.Span.Slice(0, Frames), _buffer.Memory.Span.Slice(Frames, Frames), interleavedBuffer);
-                        Convert(interleavedBuffer, destination, bitsPerSample);
+                        SampleProcessor.Interleave(
+                            _buffer.Memory.Span.Slice(0, Frames),
+                            _buffer.Memory.Span.Slice(Frames, Frames),
+                            interleavedBuffer);
+                        SampleProcessor.Convert(interleavedBuffer, destination, bitsPerSample);
                     }
                     break;
                 case 2:
                     var int16Destination = MemoryMarshal.Cast<byte, short>(destination);
                     if (Channels == 1 || IsInterleaved)
-                        Convert(_buffer.Memory.Span.Slice(0, Frames * Channels), int16Destination, bitsPerSample);
+                        SampleProcessor.Convert(
+                            _buffer.Memory.Span.Slice(0, Frames * Channels),
+                            int16Destination,
+                            bitsPerSample);
                     else
                     {
                         Span<float> interleavedBuffer = stackalloc float[Frames * 2];
-                        Interleave(_buffer.Memory.Span.Slice(0, Frames), _buffer.Memory.Span.Slice(Frames, Frames), interleavedBuffer);
-                        Convert(interleavedBuffer, int16Destination, bitsPerSample);
+                        SampleProcessor.Interleave(
+                            _buffer.Memory.Span.Slice(0, Frames),
+                            _buffer.Memory.Span.Slice(Frames, Frames),
+                            interleavedBuffer);
+                        SampleProcessor.Convert(interleavedBuffer, int16Destination, bitsPerSample);
                     }
                     break;
                 case 3:
                     var int24Destination = MemoryMarshal.Cast<byte, Int24>(destination);
                     if (Channels == 1 || IsInterleaved)
-                        Convert(_buffer.Memory.Span.Slice(0, Frames * Channels), int24Destination, bitsPerSample);
+                        SampleProcessor.Convert(
+                            _buffer.Memory.Span.Slice(0, Frames * Channels),
+                            int24Destination,
+                            bitsPerSample);
                     else
                     {
                         Span<float> interleavedBuffer = stackalloc float[Frames * 2];
-                        Interleave(_buffer.Memory.Span.Slice(0, Frames), _buffer.Memory.Span.Slice(Frames, Frames), interleavedBuffer);
-                        Convert(interleavedBuffer, int24Destination, bitsPerSample);
+                        SampleProcessor.Interleave(
+                            _buffer.Memory.Span.Slice(0, Frames),
+                            _buffer.Memory.Span.Slice(Frames, Frames),
+                            interleavedBuffer);
+                        SampleProcessor.Convert(interleavedBuffer, int24Destination, bitsPerSample);
                     }
                     break;
                 case 4:
                     var int32Destination = MemoryMarshal.Cast<byte, int>(destination);
                     if (Channels == 1 || IsInterleaved)
-                        Convert(_buffer.Memory.Span.Slice(0, Frames * Channels), int32Destination, bitsPerSample);
+                        SampleProcessor.Convert(
+                            _buffer.Memory.Span.Slice(0, Frames * Channels),
+                            int32Destination,
+                            bitsPerSample);
                     else
                     {
                         Span<float> interleavedBuffer = stackalloc float[Frames * 2];
-                        Interleave(_buffer.Memory.Span.Slice(0, Frames), _buffer.Memory.Span.Slice(Frames, Frames), interleavedBuffer);
-                        Convert(interleavedBuffer, int32Destination, bitsPerSample);
+                        SampleProcessor.Interleave(
+                            _buffer.Memory.Span.Slice(0, Frames),
+                            _buffer.Memory.Span.Slice(Frames, Frames),
+                            interleavedBuffer);
+                        SampleProcessor.Convert(interleavedBuffer, int32Destination, bitsPerSample);
                     }
                     break;
             }
@@ -453,265 +484,6 @@ namespace AudioWorks.Extensibility
 
             _buffer?.Dispose();
             _isDisposed = true;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static void Convert(ReadOnlySpan<float> source, Span<byte> destination, int bitsPerSample)
-        {
-            var multiplier = (int) Math.Pow(2, bitsPerSample - 1);
-            var max = multiplier - 1;
-
-            // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
-            if (Vector.IsHardwareAccelerated)
-            {
-                var maxVector = new Vector<int>(max);
-                var adjustmentVector = new Vector<int>(multiplier);
-                var sourceVectors = MemoryMarshal.Cast<float, Vector<float>>(source);
-                sourceVectors = sourceVectors.Slice(0, sourceVectors.Length - sourceVectors.Length % 4);
-                var destinationVectors = MemoryMarshal.Cast<byte, Vector<byte>>(destination);
-
-                for (int sourceIndex = 0, destinationIndex = 0; sourceIndex < sourceVectors.Length; destinationIndex++)
-                {
-                    var intVector1 = (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier), maxVector) - adjustmentVector);
-                    var intVector2 = (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier), maxVector) - adjustmentVector);
-                    var intVector3 = (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier), maxVector) - adjustmentVector);
-                    var intVector4 = (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier), maxVector) - adjustmentVector);
-                    var shortVector1 = Vector.Narrow(intVector1, intVector2);
-                    var shortVector2 = Vector.Narrow(intVector3, intVector4);
-                    destinationVectors[destinationIndex] = Vector.Narrow(shortVector1, shortVector2);
-                }
-
-                for (var sampleIndex = sourceVectors.Length * Vector<float>.Count; sampleIndex < source.Length; sampleIndex++)
-                    destination[sampleIndex] = (byte) Math.Min(source[sampleIndex] * multiplier - multiplier, max);
-            }
-            else
-                for (var sampleIndex = 0; sampleIndex < source.Length; sampleIndex++)
-                    destination[sampleIndex] = (byte) Math.Min(source[sampleIndex] * multiplier - multiplier, max);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static void Convert(ReadOnlySpan<float> source, Span<short> destination, int bitsPerSample)
-        {
-            var multiplier = (int) Math.Pow(2, bitsPerSample - 1);
-            var max = multiplier - 1;
-
-            // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
-            if (Vector.IsHardwareAccelerated)
-            {
-                var maxVector = new Vector<int>(max);
-                var sourceVectors = MemoryMarshal.Cast<float, Vector<float>>(source);
-                sourceVectors = sourceVectors.Slice(0, sourceVectors.Length - sourceVectors.Length % 2);
-                var destinationVectors = MemoryMarshal.Cast<short, Vector<short>>(destination);
-
-                for (int sourceIndex = 0, destinationIndex = 0; sourceIndex < sourceVectors.Length; destinationIndex++)
-                {
-                    var intVector1 = Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier), maxVector);
-                    var intVector2 = Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier), maxVector);
-                    destinationVectors[destinationIndex] = Vector.Narrow(intVector1, intVector2);
-                }
-
-                for (var sampleIndex = sourceVectors.Length * Vector<float>.Count; sampleIndex < source.Length; sampleIndex++)
-                    destination[sampleIndex] = (short) Math.Min(source[sampleIndex] * multiplier, max);
-            }
-            else
-                for (var sampleIndex = 0; sampleIndex < source.Length; sampleIndex++)
-                    destination[sampleIndex] = (short) Math.Min(source[sampleIndex] * multiplier, max);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static void Convert(ReadOnlySpan<float> source, Span<Int24> destination, int bitsPerSample)
-        {
-            var multiplier = (int) Math.Pow(2, bitsPerSample - 1);
-            var max = multiplier - 1;
-
-            for (var sampleIndex = 0; sampleIndex < source.Length; sampleIndex++)
-                destination[sampleIndex] = new Int24(Math.Min(source[sampleIndex] * multiplier, max));
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static void Convert(ReadOnlySpan<float> source, Span<int> destination, int bitsPerSample)
-        {
-            // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
-            if (Vector.IsHardwareAccelerated && bitsPerSample < 32)
-            {
-                var multiplier = (int) Math.Pow(2, bitsPerSample - 1);
-                var max = multiplier - 1;
-                var maxVector = new Vector<int>(max);
-                var sourceVectors = MemoryMarshal.Cast<float, Vector<float>>(source);
-                var destinationVectors = MemoryMarshal.Cast<int, Vector<int>>(destination);
-
-                for (var vectorIndex = 0; vectorIndex < sourceVectors.Length; vectorIndex++)
-                    destinationVectors[vectorIndex] = Vector.Min(Vector.ConvertToInt32(sourceVectors[vectorIndex] * multiplier), maxVector);
-
-                for (var sampleIndex = sourceVectors.Length * Vector<float>.Count; sampleIndex < source.Length; sampleIndex++)
-                    destination[sampleIndex] = (short) Math.Min(source[sampleIndex] * multiplier, max);
-            }
-            else
-            {
-                // At 32 bits per sample, multiplier > int.MaxValue
-                var multiplier = (uint) Math.Pow(2, bitsPerSample - 1);
-                var max = (int) multiplier - 1;
-
-                for (var sampleIndex = 0; sampleIndex < source.Length; sampleIndex++)
-                    try
-                    {
-                        destination[sampleIndex] = Math.Min(checked((int) (source[sampleIndex] * multiplier)), max);
-                    }
-                    catch (OverflowException)
-                    {
-                        // Can occur at 32 bitsPerSample and +1.0
-                        destination[sampleIndex] = max;
-                    }
-            }
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static void Convert(ReadOnlySpan<byte> source, Span<float> destination, int bitsPerSample)
-        {
-            var adjustment = (float) Math.Pow(2, bitsPerSample - 1);
-            var multiplier = 1 / (float) Math.Pow(2, bitsPerSample - 1);
-
-            // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
-            if (Vector.IsHardwareAccelerated)
-            {
-                var adjustmentVector = new Vector<float>(adjustment);
-                var sourceVectors = MemoryMarshal.Cast<byte, Vector<byte>>(source);
-                var destinationVectors = MemoryMarshal.Cast<float, Vector<float>>(destination);
-
-                for (int sourceIndex = 0, destinationIndex = 0; sourceIndex < sourceVectors.Length; sourceIndex++)
-                {
-                    Vector.Widen(sourceVectors[sourceIndex], out var shortVector1, out var shortVector2);
-                    Vector.Widen(shortVector1, out var intVector1, out var intVector2);
-                    Vector.Widen(shortVector2, out var intVector3, out var intVector4);
-                    destinationVectors[destinationIndex++] =
-                        (Vector.ConvertToSingle(intVector1) - adjustmentVector) * multiplier;
-                    destinationVectors[destinationIndex++] =
-                        (Vector.ConvertToSingle(intVector2) - adjustmentVector) * multiplier;
-                    destinationVectors[destinationIndex++] =
-                        (Vector.ConvertToSingle(intVector3) - adjustmentVector) * multiplier;
-                    destinationVectors[destinationIndex++] =
-                        (Vector.ConvertToSingle(intVector4) - adjustmentVector) * multiplier;
-                }
-
-                for (var sampleIndex = sourceVectors.Length * Vector<byte>.Count;
-                    sampleIndex < source.Length;
-                    sampleIndex++)
-                    destination[sampleIndex] = (source[sampleIndex] - adjustment) * multiplier;
-            }
-            else
-                for (var sampleIndex = 0; sampleIndex < source.Length; sampleIndex++)
-                    destination[sampleIndex] = (source[sampleIndex] - adjustment) * multiplier;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static void Convert(ReadOnlySpan<short> source, Span<float> destination, int bitsPerSample)
-        {
-            var multiplier = 1 / (float) Math.Pow(2, bitsPerSample - 1);
-
-            // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
-            if (Vector.IsHardwareAccelerated)
-            {
-                var sourceVectors = MemoryMarshal.Cast<short, Vector<short>>(source);
-                var destinationVectors = MemoryMarshal.Cast<float, Vector<float>>(destination);
-
-                for (int sourceIndex = 0, destinationIndex = 0; sourceIndex < sourceVectors.Length; sourceIndex++)
-                {
-                    Vector.Widen(sourceVectors[sourceIndex], out var destinationVector1, out var destinationVector2);
-                    destinationVectors[destinationIndex++] = Vector.ConvertToSingle(destinationVector1) * multiplier;
-                    destinationVectors[destinationIndex++] = Vector.ConvertToSingle(destinationVector2) * multiplier;
-                }
-
-                for (var sampleIndex = sourceVectors.Length * Vector<short>.Count;
-                    sampleIndex < source.Length;
-                    sampleIndex++)
-                    destination[sampleIndex] = source[sampleIndex] * multiplier;
-            }
-            else
-                for (var sampleIndex = 0; sampleIndex < source.Length; sampleIndex++)
-                    destination[sampleIndex] = source[sampleIndex] * multiplier;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static void Convert(ReadOnlySpan<Int24> source, Span<float> destination, int bitsPerSample)
-        {
-            var multiplier = 1 / (float) Math.Pow(2, bitsPerSample - 1);
-
-            for (var sampleIndex = 0; sampleIndex < source.Length; sampleIndex++)
-                    destination[sampleIndex] = source[sampleIndex] * multiplier;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static void Convert(ReadOnlySpan<int> source, Span<float> destination, int bitsPerSample)
-        {
-            var multiplier = 1 / (float) Math.Pow(2, bitsPerSample - 1);
-
-            // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
-            if (Vector.IsHardwareAccelerated)
-            {
-                var sourceVectors = MemoryMarshal.Cast<int, Vector<int>>(source);
-                var destinationVectors = MemoryMarshal.Cast<float, Vector<float>>(destination);
-
-                for (var vectorIndex = 0; vectorIndex < sourceVectors.Length; vectorIndex++)
-                    destinationVectors[vectorIndex] = Vector.ConvertToSingle(sourceVectors[vectorIndex]) * multiplier;
-
-                for (var sampleIndex = sourceVectors.Length * Vector<int>.Count;
-                    sampleIndex < source.Length;
-                    sampleIndex++)
-                    destination[sampleIndex] = source[sampleIndex] * multiplier;
-            }
-            else
-                for (var sampleIndex = 0; sampleIndex < source.Length; sampleIndex++)
-                    destination[sampleIndex] = source[sampleIndex] * multiplier;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static unsafe void Interleave(ReadOnlySpan<float> leftSource, ReadOnlySpan<float> rightSource, Span<float> destination)
-        {
-            // Optimization - Unsafe implementation is faster
-            fixed (float* destinationAddress = destination)
-            {
-                var destinationPointer = destinationAddress;
-
-                for (var frameIndex = 0; frameIndex < leftSource.Length; frameIndex++)
-                {
-                    *destinationPointer++ = leftSource[frameIndex];
-                    *destinationPointer++ = rightSource[frameIndex];
-                }
-            }
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static unsafe void DeInterleave(ReadOnlySpan<float> source, Span<float> leftDestination, Span<float> rightDestination)
-        {
-            // Optimization - Unsafe implementation is faster
-            fixed (float* sourceAddress = source)
-            {
-                var sourcePointer = sourceAddress;
-
-                for (var frameIndex = 0; frameIndex < source.Length / 2; frameIndex++)
-                {
-                    leftDestination[frameIndex] = *sourcePointer++;
-                    rightDestination[frameIndex] = *sourcePointer++;
-                }
-            }
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        struct Int24
-        {
-            readonly byte _byte1;
-            readonly byte _byte2;
-            readonly byte _byte3;
-
-            public Int24(float value)
-            {
-                _byte1 = (byte) value;
-                _byte2 = (byte) (((uint) value >> 8) & 0xFF);
-                _byte3 = (byte) (((uint) value >> 16) & 0xFF);
-            }
-
-            public static implicit operator int(Int24 value) =>
-                value._byte1 | value._byte2 << 8 | ((sbyte) value._byte3 << 16);
         }
     }
 }
