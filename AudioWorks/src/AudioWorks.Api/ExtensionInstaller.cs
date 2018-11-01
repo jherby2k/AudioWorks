@@ -71,6 +71,12 @@ namespace AudioWorks.Api
             "netstandard1.0"
         });
 
+        [NotNull] static readonly List<string> _extensionsToInstall = new List<string>(new[]
+        {
+            ".dll",
+            ".dylib"
+        });
+
         internal static void Download()
         {
             var logger = LoggerManager.LoggerFactory.CreateLogger(typeof(ExtensionInstaller).FullName);
@@ -263,7 +269,8 @@ namespace AudioWorks.Api
         {
             if (source == null || !source.Exists) return;
 
-            foreach (var file in source.GetFiles())
+            foreach (var file in source.GetFiles()
+                .Where(file => _extensionsToInstall.Contains(file.Extension, StringComparer.OrdinalIgnoreCase)))
             {
                 logger.LogDebug("Moving '{0}' to '{1}'.",
                     file.FullName, destination.FullName);
