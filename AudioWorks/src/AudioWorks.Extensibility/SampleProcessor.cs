@@ -38,24 +38,17 @@ namespace AudioWorks.Extensibility
                 var destinationVectors = MemoryMarshal.Cast<byte, Vector<byte>>(destination);
 
                 for (int sourceIndex = 0, destinationIndex = 0; sourceIndex < sourceVectors.Length; destinationIndex++)
-                {
-                    var intVector1 =
-                        (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier),
-                                            maxVector) - adjustmentVector);
-                    var intVector2 =
-                        (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier),
-                                            maxVector) - adjustmentVector);
-                    var intVector3 =
-                        (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier),
-                                            maxVector) - adjustmentVector);
-                    var intVector4 =
-                        (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier),
-                                            maxVector) - adjustmentVector);
-
-                    var shortVector1 = Vector.Narrow(intVector1, intVector2);
-                    var shortVector2 = Vector.Narrow(intVector3, intVector4);
-                    destinationVectors[destinationIndex] = Vector.Narrow(shortVector1, shortVector2);
-                }
+                    destinationVectors[destinationIndex] = Vector.Narrow(
+                        Vector.Narrow(
+                            (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier),
+                                                maxVector) - adjustmentVector),
+                            (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier),
+                                                maxVector) - adjustmentVector)),
+                        Vector.Narrow(
+                            (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier),
+                                                maxVector) - adjustmentVector),
+                            (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier),
+                                                maxVector) - adjustmentVector)));
 
                 for (var sampleIndex = sourceVectors.Length * Vector<float>.Count;
                     sampleIndex < source.Length;
@@ -82,14 +75,11 @@ namespace AudioWorks.Extensibility
                 var destinationVectors = MemoryMarshal.Cast<short, Vector<short>>(destination);
 
                 for (int sourceIndex = 0, destinationIndex = 0; sourceIndex < sourceVectors.Length; destinationIndex++)
-                {
-                    var intVector1 = Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier),
-                        maxVector);
-                    var intVector2 = Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier),
-                        maxVector);
-
-                    destinationVectors[destinationIndex] = Vector.Narrow(intVector1, intVector2);
-                }
+                    destinationVectors[destinationIndex] = Vector.Narrow(
+                        Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier),
+                            maxVector),
+                        Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier),
+                            maxVector));
 
                 for (var sampleIndex = sourceVectors.Length * Vector<float>.Count;
                     sampleIndex < source.Length;
