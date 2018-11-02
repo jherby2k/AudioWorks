@@ -19,16 +19,10 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Commands
 {
-    /// <summary>
-    /// <para type="synopsis">Gets information about the available audio analyzers.</para>
-    /// <para type="description">The Get-AudioAnalyzerInfo cmdlet gets objects that describe the audio analyzers
-    /// currently loaded and available for use with the Measure-AudioFile cmdlet.</para>
-    /// </summary>
     [PublicAPI]
     [Cmdlet(VerbsCommon.Get, "AudioAnalyzerInfo"), OutputType(typeof(AudioAnalyzerInfo))]
     public sealed class GetAudioAnalyzerInfoCommand : LoggingCmdlet
     {
-        /// <inheritdoc/>
         protected override void ProcessRecord()
         {
             var result = AudioAnalyzerManager.GetAnalyzerInfo();

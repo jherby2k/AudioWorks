@@ -19,16 +19,10 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Commands
 {
-    /// <summary>
-    /// <para type="synopsis">Gets information about the available metadata encoders.</para>
-    /// <para type="description">The Get-AudioMetadataEncoderInfo cmdlet gets objects that describe the metadata
-    /// encoders currently loaded and available for use with the Save-AudioMetadata cmdlet.</para>
-    /// </summary>
     [PublicAPI]
     [Cmdlet(VerbsCommon.Get, "AudioMetadataEncoderInfo"), OutputType(typeof(AudioMetadataEncoderInfo))]
     public sealed class GetAudioMetadataEncoderInfoCommand : LoggingCmdlet
     {
-        /// <inheritdoc/>
         protected override void ProcessRecord()
         {
             var result = AudioMetadataEncoderManager.GetEncoderInfo();

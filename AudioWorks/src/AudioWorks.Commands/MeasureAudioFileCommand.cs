@@ -26,11 +26,6 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Commands
 {
-    /// <summary>
-    /// <para type="synopsis">Analyzes an audio file.</para>
-    /// <para type="description">The Measure-AudioFile cmdlet performs analysis on an audio file, then stores these
-    /// measurements as metadata.</para>
-    /// </summary>
     [PublicAPI]
     [Cmdlet(VerbsDiagnostic.Measure, "AudioFile"), OutputType(typeof(ITaggedAudioFile))]
     public sealed class MeasureAudioFileCommand : LoggingCmdlet, IDynamicParameters, IDisposable
@@ -39,35 +34,23 @@ namespace AudioWorks.Commands
         [NotNull] readonly List<ITaggedAudioFile> _audioFiles = new List<ITaggedAudioFile>();
         [CanBeNull] RuntimeDefinedParameterDictionary _parameters;
 
-        /// <summary>
-        /// <para type="description">Specifies the type of analysis to perform.</para>
-        /// </summary>
         [CanBeNull]
         [Parameter(Mandatory = true, Position = 0)]
         [ArgumentCompleter(typeof(AnalyzerCompleter))]
         public string Analyzer { get; set; }
 
-        /// <summary>
-        /// <para type="description">Specifies the audio file.</para>
-        /// </summary>
         [CanBeNull]
         [Parameter(Mandatory = true, Position = 1, ValueFromPipeline = true)]
         public ITaggedAudioFile AudioFile { get; set; }
 
-        /// <summary>
-        /// <para type="description">Returns an object representing the item with which you are working. By default,
-        /// this cmdlet does not generate any output.</para>
-        /// </summary>
         [Parameter]
         public SwitchParameter PassThru { get; set; }
 
-        /// <inheritdoc/>
         protected override void ProcessRecord()
         {
             _audioFiles.Add(AudioFile);
         }
 
-        /// <inheritdoc/>
         protected override void EndProcessing()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
@@ -114,15 +97,13 @@ namespace AudioWorks.Commands
 
             if (PassThru)
                 WriteObject(_audioFiles, true);
-    }
+        }
 
-        /// <inheritdoc/>
         protected override void StopProcessing()
         {
             _cancellationSource.Cancel();
         }
 
-        /// <inheritdoc/>
         [CanBeNull]
         public object GetDynamicParameters()
         {
@@ -133,7 +114,6 @@ namespace AudioWorks.Commands
                 AudioAnalyzerManager.GetSettingInfo(Analyzer));
         }
 
-        /// <inheritdoc/>
         public void Dispose()
         {
             _cancellationSource.Dispose();

@@ -23,21 +23,8 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Commands
 {
-    /// <summary>
-    /// An <see cref="IArgumentCompleter"/> for propagating the names of all available analyzers.
-    /// </summary>
-    /// <seealso cref="IArgumentCompleter"/>
     public sealed class AnalyzerCompleter : IArgumentCompleter
     {
-        /// <summary>
-        /// Completes the argument with the available analyzer names.
-        /// </summary>
-        /// <param name="commandName">Name of the command.</param>
-        /// <param name="parameterName">Name of the parameter.</param>
-        /// <param name="wordToComplete">The word to complete.</param>
-        /// <param name="commandAst">The command ast.</param>
-        /// <param name="fakeBoundParameters">The fake bound parameters.</param>
-        /// <returns>The available encoder names.</returns>
         [NotNull]
         public IEnumerable<CompletionResult> CompleteArgument(
             string commandName,

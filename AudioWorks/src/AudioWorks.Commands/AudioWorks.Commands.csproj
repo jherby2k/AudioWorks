@@ -43,19 +43,11 @@
     <Optimize>false</Optimize>
   </PropertyGroup>
 
-  <PropertyGroup Condition="$(DefineConstants.Contains(RELEASE))">
-    <!-- ReSharper disable once UnknownProperty -->
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\AudioWorks.Commands.xml</DocumentationFile>
-  </PropertyGroup>
-  
   <ItemGroup>
-    <None Update="AudioWorks.Commands.dll-Help.xml">
+    <None Update="AudioWorks.Commands.psd1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="AudioWorks.Commands.format.ps1xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="AudioWorks.Commands.psd1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="COPYING">
@@ -71,10 +63,6 @@
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="all" />
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.0-RC1" />
-  </ItemGroup>
-
-  <ItemGroup Condition="$(DefineConstants.Contains(RELEASE)) AND $(DefineConstants.Contains(WINDOWS)) AND $(DefineConstants.Contains(NETSTANDARD2_0))">
-    <PackageReference Include="XmlDoc2CmdletDoc" Version="0.2.10" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>

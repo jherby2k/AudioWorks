@@ -27,10 +27,6 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Commands
 {
-    /// <summary>
-    /// A <see cref="PSCmdlet"/> that can process log messages.
-    /// </summary>
-    /// <seealso cref="PSCmdlet"/>
     public abstract class LoggingPSCmdlet : PSCmdlet
     {
         [NotNull]
@@ -47,7 +43,6 @@ namespace AudioWorks.Commands
         }
 
 #endif
-        /// <inheritdoc/>
         protected override void BeginProcessing()
         {
             Telemetry.TrackFirstLaunch();

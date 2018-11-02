@@ -26,11 +26,6 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Commands
 {
-    /// <summary>
-    /// <para type="synopsis">Exports an audio file.</para>
-    /// <para type="description">The Export-AudioFile cmdlet creates a new audio file using the specified encoder.
-    /// </para>
-    /// </summary>
     [PublicAPI]
     [Cmdlet(VerbsData.Export, "AudioFile"), OutputType(typeof(ITaggedAudioFile))]
     public sealed class ExportAudioFileCommand : LoggingPSCmdlet, IDynamicParameters, IDisposable
@@ -39,50 +34,31 @@ namespace AudioWorks.Commands
         [NotNull, ItemNotNull] readonly List<ITaggedAudioFile> _sourceAudioFiles = new List<ITaggedAudioFile>();
         [CanBeNull] RuntimeDefinedParameterDictionary _parameters;
 
-        /// <summary>
-        /// <para type="description">Specifies the encoder to use.</para>
-        /// </summary>
         [CanBeNull]
         [Parameter(Mandatory = true, Position = 0)]
         [ArgumentCompleter(typeof(EncoderCompleter))]
         public string Encoder { get; set; }
 
-        /// <summary>
-        /// <para type="description">Specifies the output directory path.</para>
-        /// </summary>
         [CanBeNull]
         [Parameter(Mandatory = true, Position = 1)]
         public string Path { get; set; }
 
-        /// <summary>
-        /// <para type="description">Specifies the source audio file.</para>
-        /// </summary>
         [CanBeNull]
         [Parameter(Mandatory = true, Position = 2, ValueFromPipeline = true)]
         public ITaggedAudioFile AudioFile { get; set; }
 
-        /// <summary>
-        /// <para type="description">Specifies the output file name.</para>
-        /// <para type="description">The file extension will be selected automatically and should not be included. If
-        /// this parameter is omitted, the name will be the same as the source audio file.</para>
-        /// </summary>
         [CanBeNull]
         [Parameter]
         public string Name { get; set; }
 
-        /// <summary>
-        /// <para type="description">Indicates that existing files should be replaced.</para>
-        /// </summary>
         [Parameter]
         public SwitchParameter Replace { get; set; }
 
-        /// <inheritdoc/>
         protected override void ProcessRecord()
         {
             _sourceAudioFiles.Add(AudioFile);
         }
 
-        /// <inheritdoc/>
         protected override void EndProcessing()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
@@ -135,13 +111,11 @@ namespace AudioWorks.Commands
             }
         }
 
-        /// <inheritdoc/>
         protected override void StopProcessing()
         {
             _cancellationSource.Cancel();
         }
 
-        /// <inheritdoc/>
         [CanBeNull]
         public object GetDynamicParameters()
         {
@@ -152,7 +126,6 @@ namespace AudioWorks.Commands
                 AudioEncoderManager.GetSettingInfo(Encoder));
         }
 
-        /// <inheritdoc/>
         public void Dispose()
         {
             _cancellationSource.Dispose();

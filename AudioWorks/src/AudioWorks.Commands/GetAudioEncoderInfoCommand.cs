@@ -19,16 +19,10 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Commands
 {
-    /// <summary>
-    /// <para type="synopsis">Gets information about the available audio encoders.</para>
-    /// <para type="description">The Get-AudioEncoderInfo cmdlet gets objects that describe the audio encoders currently
-    /// loaded and available for use with the Export-AudioFile cmdlet.</para>
-    /// </summary>
     [PublicAPI]
     [Cmdlet(VerbsCommon.Get, "AudioEncoderInfo"), OutputType(typeof(AudioEncoderInfo))]
     public sealed class GetAudioEncoderInfoCommand : LoggingCmdlet
     {
-        /// <inheritdoc/>
         protected override void ProcessRecord()
         {
             var result = AudioEncoderManager.GetEncoderInfo();
