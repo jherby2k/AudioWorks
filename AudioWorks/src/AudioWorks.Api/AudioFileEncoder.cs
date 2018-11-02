@@ -157,6 +157,7 @@ namespace AudioWorks.Api
 
                     string tempOutputPath = null;
                     string finalOutputPath;
+                    var encodingStarted = false;
 
                     try
                     {
@@ -179,6 +180,7 @@ namespace AudioWorks.Api
                             }
 
                             outputStream = File.Open(tempOutputPath, FileMode.OpenOrCreate);
+                            encodingStarted = true;
 
                             // Copy the source metadata, so it can't be modified
                             encoderExport.Value.Initialize(
@@ -206,7 +208,7 @@ namespace AudioWorks.Api
                     catch (Exception)
                     {
                         // Clean up output
-                        if (tempOutputPath != null)
+                        if (encodingStarted && tempOutputPath != null)
                             File.Delete(tempOutputPath);
                         throw;
                     }
