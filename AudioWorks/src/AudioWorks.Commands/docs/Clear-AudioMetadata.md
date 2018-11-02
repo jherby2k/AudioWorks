@@ -19,7 +19,7 @@ Clear-AudioMetadata [-AudioFile] <ITaggedAudioFile> [-Title] [-Artist] [-Album] 
 ```
 
 ## DESCRIPTION
-The Clear-AudioMetadata cmdlet clears one or more metadata fields. Note that these changes are not persisted to disk unless followed by a call to Save-AudioMetadata. If no metadata fields are specified, all fields are cleared.
+The Clear-AudioMetadata cmdlet clears one or more metadata fields. These changes are not persisted to disk unless followed by a call to Save-AudioMetadata. If no metadata fields are specified, all fields are cleared.
 
 ## EXAMPLES
 
