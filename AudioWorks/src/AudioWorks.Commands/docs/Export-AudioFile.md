@@ -63,6 +63,8 @@ Accept wildcard characters: False
 ### -Path
 Specifies the output directory path.
 
+This parameter can reference metadata fields using {} braces. For example, to specify an Artist then Album heirarchy relative to the current directory, you would use ".\\{Artist}\\{Album}".
+
 ```yaml
 Type: String
 Parameter Sets: (All)
@@ -93,8 +95,9 @@ Accept wildcard characters: False
 ### -Name
 Specifies the output file name.
 
-The file extension will be selected automatically and should not be included.
-If this parameter is omitted, the name will be the same as the source audio file.
+The file extension will be selected automatically and should not be included. If this parameter is omitted, the name will be the same as the source audio file.
+
+This parameter can reference metadata fields using {} braces. For example, to specify a name consisting of the track number, a hyphen, then the title, you would use "{TrackNumber} - {Title}".
 
 ```yaml
 Type: String

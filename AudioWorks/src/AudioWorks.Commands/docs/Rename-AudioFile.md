@@ -35,6 +35,8 @@ Specifies the new file name.
 
 The file extension will be selected automatically and should not be included.
 
+This parameter can reference metadata fields using {} braces. For example, to specify a name consisting of the track number, a hyphen, then the title, you would use "{TrackNumber} - {Title}".
+
 ```yaml
 Type: String
 Parameter Sets: (All)
