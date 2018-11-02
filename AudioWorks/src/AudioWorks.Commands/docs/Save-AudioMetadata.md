@@ -19,16 +19,15 @@ Save-AudioMetadata [-AudioFile] <ITaggedAudioFile> [-Format <String>] [-PassThru
 
 ## DESCRIPTION
 The Save-AudioMetadata cmdlet persists changes to an audio file's metadata.
-Depending on the file extension, various optional parameters may be available.
 
 ## EXAMPLES
 
-### Example 1
+### Example 1: Clear an audio file's metadata, then save the changes
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> Get-AudioFile test.flac | Clear-AudioMetadata -PassThru | Save-AudioMetadata
 ```
 
-{{ Add example description here }}
+Clears all metadata fields from test.flac, then saves the changes to disk using default settings.
 
 ## PARAMETERS
 

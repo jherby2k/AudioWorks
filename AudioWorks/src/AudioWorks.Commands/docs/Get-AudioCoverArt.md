@@ -28,17 +28,23 @@ Get-AudioCoverArt [-FileInfo] <FileInfo> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-The Get-AudioCoverArt cmdlet gets objects that represent cover art.
-Cover art can be applied to and extracted from audio files when supported by the audio format.
+The Get-AudioCoverArt cmdlet gets objects that represent cover art. Cover art can be applied to and extracted from audio files when supported by the audio format.
 
 ## EXAMPLES
 
-### Example 1
+### Example 1: Retrieve cover art from an image file
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> $cover = Get-AudioCoverArt Folder.png
 ```
 
-{{ Add example description here }}
+Gets a cover art object from a file named Folder.png, located in the current directory.
+
+### Example 2: Retrieve cover art from an image file, then apply it to an audio file as metadata
+```powershell
+PS C:\> Get-AudioFile test.flac | Set-AudioMetadata -CoverArt (Get-AudioCoverArt Folder.png) -PassThru | Save-AudioMetadata
+```
+
+Sets the cover art in test.flac to the image retrieved from Folder.png, then saves the changes to disk.
 
 ## PARAMETERS
 

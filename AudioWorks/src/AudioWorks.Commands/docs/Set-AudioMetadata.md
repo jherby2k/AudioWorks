@@ -20,17 +20,23 @@ Set-AudioMetadata [-AudioFile] <ITaggedAudioFile> [-Title <String>] [-Artist <St
 ```
 
 ## DESCRIPTION
-The Set-AudioMetadata cmdlet changes the value of one or more metadata fields.
-Note that these changes are not persisted to disk unless followed by a call to Save-AudioMetadata.
+The Set-AudioMetadata cmdlet changes the value of one or more metadata fields. These changes are not persisted to disk unless followed by a call to Save-AudioMetadata.
 
 ## EXAMPLES
 
-### Example 1
+### Example 1: Update an audio file's metadata
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> Get-AudioFile test.flac | Set-AudioMetadata -Title "Testing 1-2-3" -PassThru | Save-AudioMetadata
 ```
 
-{{ Add example description here }}
+Sets the test.flac file's Title to "Testing 1-2-3", then saves the changes to disk.
+
+### Example 2: Update an audio file's cover art
+```powershell
+PS C:\> Get-AudioFile test.flac | Set-AudioMetadata -CoverArt (Get-AudioCoverArt Folder.png) -PassThru | Save-AudioMetadata
+```
+
+Sets the cover art in test.flac to the image retrieved from Folder.png, then saves the changes to disk.
 
 ## PARAMETERS
 

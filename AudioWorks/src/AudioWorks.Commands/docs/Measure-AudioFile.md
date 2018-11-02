@@ -21,12 +21,19 @@ The Measure-AudioFile cmdlet performs analysis on an audio file, then stores the
 
 ## EXAMPLES
 
-### Example 1
+### Example 1: Analyze a single audio file
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> Get-AudioFile test.flac | Measure-AudioFile ReplayGain -PassTrue | Save-AudioMetadata
 ```
 
-{{ Add example description here }}
+Performs ReplayGain analysis on test.flac, then saves the updated metadata to disk. Track and Album values will be the same.
+
+### Example 2: Analyze a group of audio files together
+```powershell
+PS C:\> Get-AudioFile *.flac | Measure-AudioFile ReplayGain -PassThru | Save-AudioMetadata
+```
+
+Performs ReplayGain analysis on all the flac files in the current directory, then saves the updated metadata to disk. For calculating album values, the files are treated as a one album.
 
 ## PARAMETERS
 

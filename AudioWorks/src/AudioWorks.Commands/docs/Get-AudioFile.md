@@ -28,17 +28,23 @@ Get-AudioFile [-FileInfo] <FileInfo> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-The Get-AudioFile cmdlet gets objects that represent audio files.
-Audio files expose metadata, and can be manipulated in various ways by the other AudioWorks cmdlets.
+The Get-AudioFile cmdlet gets objects that represent audio files. Audio files expose metadata, and can be manipulated in various ways by the other AudioWorks cmdlets.
 
 ## EXAMPLES
 
-### Example 1
+### Example 1: Get all audio files in the current directory with a specific extension
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> $audioFiles = Get-AudioFile *.flac
 ```
 
-{{ Add example description here }}
+Gets all the flac files in the current directory.
+
+### Example 2: Get all audio files in a directory tree, recursively
+```powershell
+PS C:\> Get-ChildItem Music -Recurse -Filter *.flac | Get-AudioFile
+```
+
+Gets all the flac files in the 'Music' directory recursively.
 
 ## PARAMETERS
 

@@ -23,10 +23,19 @@ The Get-AudioEncoderInfo cmdlet gets objects that describe the audio encoders cu
 
 ### Example 1
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> Get-AudioEncoderInfo
+
+Name     Description
+----     -----------
+AppleAAC Apple MPEG-4 Advanced Audio Codec
+ALAC     Apple Lossless Audio Codec
+FLAC     Free Lossless Audio Codec
+LameMP3  Lame MPEG Audio Layer 3
+Vorbis   Ogg Vorbis
+Wave     Waveform Audio File Format
 ```
 
-{{ Add example description here }}
+Gets the available audio encoders.
 
 ## PARAMETERS
 

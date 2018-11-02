@@ -23,10 +23,8 @@ The Get-AudioAnalyzerInfo cmdlet gets objects that describe the audio analyzers 
 
 ### Example 1
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> Get-AudioAnalyzerInfo
 ```
-
-{{ Add example description here }}
 
 ## PARAMETERS
 

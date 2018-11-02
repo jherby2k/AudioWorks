@@ -22,12 +22,26 @@ The Export-AudioFile cmdlet creates a new audio file using the specified encoder
 
 ## EXAMPLES
 
-### Example 1
+### Example 1: Export an audio file to a new audio format in the same directory
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> Get-AudioFile test.flac | Export-AudioFile LameMP3 .
 ```
 
-{{ Add example description here }}
+Exports test.flac as test.mp3 using default settings, in the current directory.
+
+### Example 2: Re-encode an audio file in-place
+```powershell
+PS C:\> Get-AudioFile test.flac | Export-AudioFile FLAC . -Replace
+```
+
+Re-encodes test.flac in-place, using default settings.
+
+### Example 3: Export all audio files in the current directory, laid out according to each audio file's metadata
+```powershell
+PS C:\> Get-AudioFile *.flac | Export-AudioFile LameMP3 "{Artist}\\{Album}" -Name "{TrackNumber} - {Title}"
+```
+
+Exports all .flac files in the current directory, under an artist then album directory structure, with a file name composed of the track number and title.
 
 ## PARAMETERS
 

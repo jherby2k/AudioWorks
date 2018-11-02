@@ -17,17 +17,33 @@ Get-AudioMetadata [-AudioFile] <ITaggedAudioFile> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-The Get-AudioMetadata cmdlet gets information about audio files.
-This consists of fields that can be modified and optionally persisted to disk using other cmdlets.
+The Get-AudioMetadata cmdlet gets information about audio files. This consists of fields that can be modified and optionally persisted to disk using other cmdlets.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> Get-AudioFile test.flac | Get-AudioMetadata
+
+Title       : Test Track
+Artist      : Some Artist
+Album       : Greatest Hits
+AlbumArtist :
+Composer    :
+Genre       : Rock
+Comment     :
+Day         :
+Month       :
+Year        : 2018
+TrackNumber : 01
+TrackCount  : 10
+TrackPeak   : 0.956024
+AlbumPeak   : 1.000000
+TrackGain   : -2.94 dB
+AlbumGain   : -7.65 dB
 ```
 
-{{ Add example description here }}
+Gets The metadata stored in test.flac.
 
 ## PARAMETERS
 

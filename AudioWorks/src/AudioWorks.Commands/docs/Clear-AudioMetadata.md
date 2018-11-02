@@ -19,19 +19,30 @@ Clear-AudioMetadata [-AudioFile] <ITaggedAudioFile> [-Title] [-Artist] [-Album] 
 ```
 
 ## DESCRIPTION
-The Clear-AudioMetadata cmdlet clears one or more metadata fields.
-Note that these changes are not persisted to disk unless followed by a call to Save-AudioMetadata.
-
-If no metadata fields are specified, all fields are cleared.
+The Clear-AudioMetadata cmdlet clears one or more metadata fields. Note that these changes are not persisted to disk unless followed by a call to Save-AudioMetadata. If no metadata fields are specified, all fields are cleared.
 
 ## EXAMPLES
 
-### Example 1
+### Example 1: Remove all metadata from an existing file
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> Get-AudioFile test.flac | Clear-AudioMetadata -PassThru | Save-AudioMetadata
 ```
 
-{{ Add example description here }}
+Clears all metadata fields from test.flac, then saves the changes to disk.
+
+### Example 2: Remove a metadata field from an existing file
+```powershell
+PS C:\> Get-AudioFile test.flac | Clear-AudioMetadata -Loudness -PassThru | Save-AudioMetadata
+```
+
+Clears loudness (REPLAYGAIN_*) fields from test.flac, then saves the changes to disk.
+
+### Example 3: Export to a new file, with no metadata preserved
+```powershell
+PS C:\> Get-AudioFile test.flac | Clear-AudioMetadata -PassThru | Export-AudioFile LameMP3 .
+```
+
+Exports test.flac as test.mp3 (in the current directory), without any metadata (no ID3 tag will be written).
 
 ## PARAMETERS
 

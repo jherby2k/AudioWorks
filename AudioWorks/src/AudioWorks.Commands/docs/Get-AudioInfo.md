@@ -17,17 +17,24 @@ Get-AudioInfo [-AudioFile] <IAudioFile> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-The Get-AudioInfo cmdlet gets information about audio files.
-This consists of immutable information that can't be changed without re-encoding the file.
+The Get-AudioInfo cmdlet gets information about audio files. This consists of immutable information that can't be changed without re-encoding the file.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> Get-AudioFile test.flac | Get-AudioInfo
+
+Format        : FLAC
+Channels      : 2
+BitsPerSample : 24
+SampleRate    : 96 kHz
+BitRate       : 4608 kbps
+FrameCount    : 16142465
+PlayLength    : 00:02:48
 ```
 
-{{ Add example description here }}
+Gets information about the audio stored in test.flac.
 
 ## PARAMETERS
 

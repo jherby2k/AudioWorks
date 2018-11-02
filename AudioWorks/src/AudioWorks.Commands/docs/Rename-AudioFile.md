@@ -21,12 +21,12 @@ The Rename-AudioFile cmdlet renames audio files.
 
 ## EXAMPLES
 
-### Example 1
+### Example 1: Rename an audio file based on metadata
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> Get-AudioFile test.flac | Rename-AudioFile "{TrackNumber} - {Title}"
 ```
 
-{{ Add example description here }}
+Renames test.flac with a file name composed of the track number and title.
 
 ## PARAMETERS
 

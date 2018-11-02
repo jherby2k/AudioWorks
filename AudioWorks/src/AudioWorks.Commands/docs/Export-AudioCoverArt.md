@@ -8,7 +8,7 @@ schema: 2.0.0
 # Export-AudioCoverArt
 
 ## SYNOPSIS
-Exports an audio file.
+Exports cover art from an audio file.
 
 ## SYNTAX
 
@@ -18,16 +18,23 @@ Export-AudioCoverArt [-Path] <String> [-AudioFile] <ITaggedAudioFile> [-Name <St
 ```
 
 ## DESCRIPTION
-The Export-AudioFile cmdlet creates a new audio file using the specified encoder.
+The Export-AudioCoverArt cmdlet extracts the cover art from an audio file, and saves it to disk.
 
 ## EXAMPLES
 
-### Example 1
+### Example 1: Extract cover art from an audio file to an image file
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> Get-AudioFile test.flac | Export-AudioCoverArt .
 ```
 
-{{ Add example description here }}
+Extracts the cover art stored in test.flac as test.png or test.jpg, in the current directory.
+
+### Example 2: Extract cover art from all audio files in the current directory, laid out according to each audio file's metadata
+```powershell
+PS C:\> Get-AudioFile *.flac | Export-AudioCoverArt "{Artist}\\{Album}" -Name "{Artist} - {Album}"
+```
+
+Extracts the cover art stored in each .flac file, saving the result under an artist then album directory structure, with a file name composed of the artist and album title.
 
 ## PARAMETERS
 

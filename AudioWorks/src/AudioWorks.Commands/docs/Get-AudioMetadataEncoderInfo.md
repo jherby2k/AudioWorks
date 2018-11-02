@@ -23,10 +23,17 @@ The Get-AudioMetadataEncoderInfo cmdlet gets objects that describe the metadata 
 
 ### Example 1
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> Get-AudioMetadataEncoderInfo
+
+Extension Format Description
+--------- ------ -----------
+.flac     FLAC   FLAC
+.mp3      ID3    ID3 version 2.x
+.m4a      iTunes iTunes-compatible MPEG-4
+.ogg      Vorbis Vorbis Comments
 ```
 
-{{ Add example description here }}
+Gets the available audio metadata encoders.
 
 ## PARAMETERS
 
