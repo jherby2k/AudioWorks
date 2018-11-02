@@ -33,6 +33,6 @@ Remove-Item -Path "$outputDir\*" -Recurse -Include "*.psd1", "*.ps1xml", "*.xml"
 
 Write-Host "Generating help file..."
 
-Install-Module -Name platyPS -Scope CurrentUser -ErrorAction Stop
+Install-Module -Name platyPS -Scope CurrentUser -Force -ErrorAction Stop
 Import-Module platyPS -ErrorAction Stop
 New-ExternalHelp -Path "$ProjectDir\docs" -OutputPath $outputRoot -Force -ErrorAction Stop
