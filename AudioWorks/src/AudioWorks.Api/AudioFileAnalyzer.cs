@@ -182,9 +182,13 @@ namespace AudioWorks.Api
                 {
                     foreach (var audioFile in audioFiles)
                         await initializeBlock.SendAsync(audioFile, cancellationToken).ConfigureAwait(false);
-
                     initializeBlock.Complete();
+
                     await groupResultBlock.Completion.ConfigureAwait(false);
+                }
+                catch (AggregateException e)
+                {
+                    throw e.GetBaseException();
                 }
                 finally
                 {

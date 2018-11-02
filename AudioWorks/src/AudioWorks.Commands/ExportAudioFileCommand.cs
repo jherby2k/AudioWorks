@@ -107,7 +107,14 @@ namespace AudioWorks.Commands
 
                 this.OutputMessages(messageQueue, _cancellationSource.Token);
 
-                WriteObject(encodeTask.Result, true);
+                try
+                {
+                    WriteObject(encodeTask.Result, true);
+                }
+                catch (AggregateException e)
+                {
+                    throw e.GetBaseException();
+                }
             }
         }
 

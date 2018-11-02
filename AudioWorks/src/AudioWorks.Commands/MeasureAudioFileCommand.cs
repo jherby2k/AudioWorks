@@ -88,11 +88,14 @@ namespace AudioWorks.Commands
                         messageQueue.Add(logMessage);
                 });
 
-                analyzer.AnalyzeAsync(progress, _cancellationSource.Token, _audioFiles.ToArray())
-                    // ReSharper disable once AccessToDisposedClosure
-                    .ContinueWith(task => messageQueue.CompleteAdding(), TaskScheduler.Current);
+                var analyzeTask = analyzer.AnalyzeAsync(progress, _cancellationSource.Token, _audioFiles.ToArray());
+                // ReSharper disable once AccessToDisposedClosure
+                analyzeTask.ContinueWith(task => messageQueue.CompleteAdding(), TaskScheduler.Current);
 
                 this.OutputMessages(messageQueue, _cancellationSource.Token);
+
+                if (analyzeTask.Exception != null)
+                    throw analyzeTask.Exception.GetBaseException();
             }
 
             if (PassThru)

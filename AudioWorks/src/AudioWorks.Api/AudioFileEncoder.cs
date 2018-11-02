@@ -208,7 +208,7 @@ namespace AudioWorks.Api
                     catch (Exception)
                     {
                         // Clean up output
-                        if (encodingStarted && tempOutputPath != null)
+                        if (encodingStarted)
                             File.Delete(tempOutputPath);
                         throw;
                     }
@@ -235,15 +235,25 @@ namespace AudioWorks.Api
             foreach (var audioFile in audioFiles)
                 await encodeBlock.SendAsync(audioFile, cancellationToken).ConfigureAwait(false);
 
-            var result = await batchBlock.ReceiveAsync(cancellationToken).ConfigureAwait(false);
-
-            progress?.Report(new ProgressToken
+            try
             {
-                AudioFilesCompleted = audioFilesCompleted,
-                FramesCompleted = totalFramesCompleted
-            });
+                var result = await batchBlock.ReceiveAsync(cancellationToken).ConfigureAwait(false);
 
-            return result;
+                progress?.Report(new ProgressToken
+                {
+                    AudioFilesCompleted = audioFilesCompleted,
+                    FramesCompleted = totalFramesCompleted
+                });
+
+                return result;
+            }
+            catch (InvalidOperationException)
+            {
+                // Throw the real exception that caused the pipeline to cancel
+                if (batchBlock.Completion.Exception != null)
+                    throw batchBlock.Completion.Exception.GetBaseException();
+                throw;
+            }
         }
     }
 }
