@@ -31,7 +31,7 @@ Extracts the cover art stored in test.flac as test.png or test.jpg, in the curre
 
 ### Example 2: Extract cover art from all audio files in the current directory, laid out according to each audio file's metadata
 ```powershell
-PS C:\> Get-AudioFile *.flac | Export-AudioCoverArt "{Artist}\\{Album}" -Name "{Artist} - {Album}"
+PS C:\> Get-AudioFile *.flac | Export-AudioCoverArt "{Artist}\{Album}" -Name "{Artist} - {Album}"
 ```
 
 Extracts the cover art stored in each .flac file, saving the result under an artist then album directory structure, with a file name composed of the artist and album title.
@@ -41,7 +41,7 @@ Extracts the cover art stored in each .flac file, saving the result under an art
 ### -Path
 Specifies the output directory path.
 
-This parameter can reference metadata fields using {} braces. For example, to specify an Artist then Album heirarchy relative to the current directory, you would use ".\\{Artist}\\{Album}".
+This parameter can reference metadata fields using {} braces. For example, to specify an Artist then Album heirarchy relative to the current directory, you would use "{Artist}\{Album}".
 
 ```yaml
 Type: String

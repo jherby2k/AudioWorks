@@ -38,7 +38,7 @@ Re-encodes test.flac in-place, using default settings.
 
 ### Example 3: Export all audio files in the current directory, laid out according to each audio file's metadata
 ```powershell
-PS C:\> Get-AudioFile *.flac | Export-AudioFile LameMP3 "{Artist}\\{Album}" -Name "{TrackNumber} - {Title}"
+PS C:\> Get-AudioFile *.flac | Export-AudioFile LameMP3 "{Artist}\{Album}" -Name "{TrackNumber} - {Title}"
 ```
 
 Exports all .flac files in the current directory, under an artist then album directory structure, with a file name composed of the track number and title.
@@ -63,7 +63,7 @@ Accept wildcard characters: False
 ### -Path
 Specifies the output directory path.
 
-This parameter can reference metadata fields using {} braces. For example, to specify an Artist then Album heirarchy relative to the current directory, you would use ".\\{Artist}\\{Album}".
+This parameter can reference metadata fields using {} braces. For example, to specify an Artist then Album heirarchy relative to the current directory, you would use "{Artist}\{Album}".
 
 ```yaml
 Type: String
