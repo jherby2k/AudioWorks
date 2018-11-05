@@ -1,7 +1,7 @@
 ---
 external help file: AudioWorks.Commands.dll-Help.xml
 Module Name: AudioWorks.Commands
-online version:
+online version: https://github.com/jherby2k/AudioWorks/blob/master/AudioWorks/src/AudioWorks.Commands/docs/Get-AudioMetadata.md
 schema: 2.0.0
 ---
 
