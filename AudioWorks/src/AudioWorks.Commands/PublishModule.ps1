@@ -35,4 +35,4 @@ Write-Host "Generating help file..."
 
 Install-Module -Name platyPS -Scope CurrentUser -Force -ErrorAction Stop
 Import-Module platyPS -ErrorAction Stop
-New-ExternalHelp -Path "$ProjectDir\docs" -OutputPath $outputRoot -Force -ErrorAction Stop
+New-ExternalHelp -Path "$ProjectDir\docs" -OutputPath "$outputRoot\en-US" -Force -ErrorAction Stop
