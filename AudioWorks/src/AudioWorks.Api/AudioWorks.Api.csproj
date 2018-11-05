@@ -3,10 +3,10 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.1;netstandard2.0</TargetFrameworks>
     <LangVersion>7.3</LangVersion>
-    <Version>0.1.14-beta</Version>
+    <Version>0.1.15-beta</Version>
     <Revision>$(APPVEYOR_BUILD_NUMBER)</Revision>
     <Revision Condition="'$(Revision)'==''">0</Revision>
-    <FileVersion>0.1.14.$(Revision)</FileVersion>
+    <FileVersion>0.1.15.$(Revision)</FileVersion>
     <AssemblyVersion>0.1.0.0</AssemblyVersion>
     <Authors>Jeremy Herbison</Authors>
     <Company />
@@ -15,7 +15,7 @@
     <Copyright>© 2018 Jeremy Herbison</Copyright>
     <PackageLicenseUrl>https://raw.githubusercontent.com/jherby2k/AudioWorks/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/jherby2k/AudioWorks</PackageProjectUrl>
-    <PackageIconUrl>https://github.com/jherby2k/AudioWorks/blob/master/AudioWorks/src/AudioWorks.Api/Icon.png</PackageIconUrl>
+    <PackageIconUrl>https://github.com/jherby2k/AudioWorks/raw/master/AudioWorks/src/AudioWorks.Api/Icon.png</PackageIconUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageTags>music encode decode convert export tag cover art FLAC MP3 ID3 Lame MP4 AAC Apple ALAC Ogg Vorbis ReplayGain EBUR128</PackageTags>
     <NeutralLanguage>en-US</NeutralLanguage>
