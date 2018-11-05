@@ -1,5 +1,4 @@
-AudioWorks
-==========
+![AudioWorks](https://github.com/jherby2k/AudioWorks/blob/master/Logo.png)
 
 A cross-platform, multi-format audio conversion and tagging suite written in C# and featuring a PowerShell front-end. Codecs currently supported are MP3, MP4 AAC, FLAC, Apple Lossless (ALAC) and Ogg Vorbis.
 
