@@ -4,7 +4,7 @@ A cross-platform, multi-format audio conversion and tagging suite written in C# 
 
 This project is intended to supplant [PowerShell Audio](https://github.com/jherby2k/PowerShellAudio) by targetting both Windows PowerShell and PowerShell Core (Windows, Linux and Mac OSX).
 
-Release is tentatively planned for the third quarter of 2018.
+Beta release (via NuGet.org and the PowerShell Gallery) is coming soon.
 
 ### Build Status (Master Branch)
 
@@ -53,5 +53,5 @@ This project wouldn't be possible without the work of these other fine projects 
 * [Hydrogen Audio Forums](https://hydrogenaud.io/), a wonderful, scientifically-minded community of digital audio enthusiasts.
 * [The LAME Project](http://lame.sourceforge.net/), maintainers of the high-quality MP3 encoder.
 * [The Xiph.Org Foundation](https://xiph.org/), maintainers of Ogg Vorbis and FLAC (the Free Lossless Audio Codec).
-* [libebur128](https://github.com/jiixyj/libebur128), a library implementing the EBU R128 loudness standard.
+* [libebur128](https://github.com/jiixyj/libebur128), a library implementing the EBU R.128 loudness standard.
 * [QAAC](https://sites.google.com/site/qaacpage/), a command-line front-end for Apple's AAC and Apple Lossless encoders.
