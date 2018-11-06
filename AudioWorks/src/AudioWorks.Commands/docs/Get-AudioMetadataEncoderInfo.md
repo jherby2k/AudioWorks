@@ -49,3 +49,4 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## NOTES
 
 ## RELATED LINKS
+[AudioWorks Wiki](https://github.com/jherby2k/AudioWorks/wiki)
