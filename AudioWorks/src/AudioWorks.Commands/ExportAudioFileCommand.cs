@@ -101,7 +101,7 @@ namespace AudioWorks.Commands
                         messageQueue.Add(logMessage);
                 });
 
-                var encodeTask = encoder.EncodeAsync(progress, _cancellationSource.Token, _sourceAudioFiles.ToArray());
+                var encodeTask = encoder.EncodeAsync(_sourceAudioFiles, _cancellationSource.Token, progress);
                 // ReSharper disable once AccessToDisposedClosure
                 encodeTask.ContinueWith(task => messageQueue.CompleteAdding(), TaskScheduler.Current);
 

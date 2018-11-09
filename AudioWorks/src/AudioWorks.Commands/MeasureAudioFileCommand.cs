@@ -88,7 +88,7 @@ namespace AudioWorks.Commands
                         messageQueue.Add(logMessage);
                 });
 
-                var analyzeTask = analyzer.AnalyzeAsync(progress, _cancellationSource.Token, _audioFiles.ToArray());
+                var analyzeTask = analyzer.AnalyzeAsync(_audioFiles, _cancellationSource.Token, progress);
                 // ReSharper disable once AccessToDisposedClosure
                 analyzeTask.ContinueWith(task => messageQueue.CompleteAdding(), TaskScheduler.Current);
 

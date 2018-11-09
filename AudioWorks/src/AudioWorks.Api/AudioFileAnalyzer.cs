@@ -15,6 +15,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
 using System.Threading;
@@ -62,6 +63,38 @@ namespace AudioWorks.Api
                 Settings = new ValidatingSettingDictionary(export.Value.SettingInfo, settings);
 
             _progressDescription = $"Performing {name} analysis";
+        }
+
+        /// <summary>
+        /// Analyzes the specified audio files.
+        /// </summary>
+        /// <param name="audioFiles">The audio files.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
+        public async Task AnalyzeAsync(
+            [NotNull, ItemNotNull] IEnumerable<ITaggedAudioFile> audioFiles)
+        {
+            if (audioFiles == null) throw new ArgumentNullException(nameof(audioFiles));
+
+            await AnalyzeAsync(audioFiles.ToArray()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Analyzes the specified audio files.
+        /// </summary>
+        /// <param name="audioFiles">The audio files.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <param name="progress">The progress queue, or <c>null</c>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
+        public async Task AnalyzeAsync(
+            [NotNull, ItemNotNull] IEnumerable<ITaggedAudioFile> audioFiles,
+            CancellationToken cancellationToken,
+            [CanBeNull] IProgress<ProgressToken> progress = null)
+        {
+            if (audioFiles == null) throw new ArgumentNullException(nameof(audioFiles));
+
+            await AnalyzeAsync(progress, cancellationToken, audioFiles.ToArray()).ConfigureAwait(false);
         }
 
         /// <summary>

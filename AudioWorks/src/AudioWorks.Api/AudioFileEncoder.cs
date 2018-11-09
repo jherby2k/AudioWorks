@@ -86,11 +86,49 @@ namespace AudioWorks.Api
         /// </summary>
         /// <param name="audioFiles">The audio files.</param>
         /// <returns>A new audio file.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
+        [NotNull, ItemNotNull]
+        public async Task<IEnumerable<ITaggedAudioFile>> EncodeAsync(
+            [NotNull, ItemNotNull] IEnumerable<ITaggedAudioFile> audioFiles)
+        {
+            if (audioFiles == null) throw new ArgumentNullException(nameof(audioFiles));
+
+            return await EncodeAsync(audioFiles.ToArray()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Encodes the specified audio files.
+        /// </summary>
+        /// <param name="audioFiles">The audio files.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <param name="progress">The progress queue, or <c>null</c>.</param>
+        /// <returns>A new audio file.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
+        [NotNull, ItemNotNull]
+        public async Task<IEnumerable<ITaggedAudioFile>> EncodeAsync(
+            [NotNull, ItemNotNull] IEnumerable<ITaggedAudioFile> audioFiles,
+            CancellationToken cancellationToken,
+            [CanBeNull] IProgress<ProgressToken> progress = null)
+        {
+            if (audioFiles == null) throw new ArgumentNullException(nameof(audioFiles));
+
+            return await EncodeAsync(progress, cancellationToken, audioFiles.ToArray()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Encodes the specified audio files.
+        /// </summary>
+        /// <param name="audioFiles">The audio files.</param>
+        /// <returns>A new audio file.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
         [NotNull, ItemNotNull]
         public async Task<IEnumerable<ITaggedAudioFile>> EncodeAsync(
             [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
         {
-            return await EncodeAsync(CancellationToken.None, audioFiles).ConfigureAwait(false);
+            return await EncodeAsync(null, CancellationToken.None, audioFiles).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -99,6 +137,8 @@ namespace AudioWorks.Api
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <param name="audioFiles">The audio files.</param>
         /// <returns>A new audio file.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
         [NotNull, ItemNotNull]
         public async Task<IEnumerable<ITaggedAudioFile>> EncodeAsync(
             CancellationToken cancellationToken,
@@ -114,6 +154,8 @@ namespace AudioWorks.Api
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <param name="audioFiles">The audio files.</param>
         /// <returns>A new audio file.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
         [NotNull, ItemNotNull]
         public async Task<IEnumerable<ITaggedAudioFile>> EncodeAsync(
             [CanBeNull] IProgress<ProgressToken> progress,
@@ -134,94 +176,94 @@ namespace AudioWorks.Api
             var totalFramesCompleted = 0L;
 
             var encodeBlock = new TransformBlock<ITaggedAudioFile, ITaggedAudioFile>(audioFile =>
-                {
-                    // The output directory defaults to the AudioFile's current directory
-                    var outputDirectory = _encodedDirectoryName?.ReplaceWith(audioFile.Metadata) ??
-                                          Path.GetDirectoryName(audioFile.Path);
+            {
+                // The output directory defaults to the AudioFile's current directory
+                var outputDirectory = _encodedDirectoryName?.ReplaceWith(audioFile.Metadata) ??
+                                      Path.GetDirectoryName(audioFile.Path);
 
-                    // ReSharper disable once AssignNullToNotNullAttribute
-                    var outputDirectoryInfo = Directory.CreateDirectory(outputDirectory);
+                // ReSharper disable once AssignNullToNotNullAttribute
+                var outputDirectoryInfo = Directory.CreateDirectory(outputDirectory);
 
-                    // The output file names default to the input file names
-                    var outputFileName = _encodedFileName?.ReplaceWith(audioFile.Metadata) ??
-                                         Path.GetFileNameWithoutExtension(audioFile.Path);
+                // The output file names default to the input file names
+                var outputFileName = _encodedFileName?.ReplaceWith(audioFile.Metadata) ??
+                                     Path.GetFileNameWithoutExtension(audioFile.Path);
 
-                    var itemProgress = progress == null
-                        ? null
-                        : new SimpleProgress<int>(framesCompleted => progress.Report(new ProgressToken
-                        {
+                var itemProgress = progress == null
+                    ? null
+                    : new SimpleProgress<int>(framesCompleted => progress.Report(new ProgressToken
+                    {
                             // ReSharper disable once AccessToModifiedClosure
                             AudioFilesCompleted = audioFilesCompleted,
-                            FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
-                        }));
+                        FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
+                    }));
 
-                    string tempOutputPath = null;
-                    string finalOutputPath;
-                    var encodingStarted = false;
+                string tempOutputPath = null;
+                string finalOutputPath;
+                var encodingStarted = false;
+
+                try
+                {
+                    var encoderExport = _encoderFactory.CreateExport();
+                    FileStream outputStream = null;
 
                     try
                     {
-                        var encoderExport = _encoderFactory.CreateExport();
-                        FileStream outputStream = null;
+                        tempOutputPath = finalOutputPath = Path.Combine(outputDirectoryInfo.FullName,
+                            outputFileName + encoderExport.Value.FileExtension);
 
-                        try
+                        // If the output file already exists, write to a temporary file first
+                        if (File.Exists(finalOutputPath))
                         {
-                            tempOutputPath = finalOutputPath = Path.Combine(outputDirectoryInfo.FullName,
-                                outputFileName + encoderExport.Value.FileExtension);
+                            if (!Overwrite)
+                                throw new IOException($"The file '{finalOutputPath}' already exists.");
 
-                            // If the output file already exists, write to a temporary file first
-                            if (File.Exists(finalOutputPath))
-                            {
-                                if (!Overwrite)
-                                    throw new IOException($"The file '{finalOutputPath}' already exists.");
-
-                                tempOutputPath = Path.Combine(outputDirectoryInfo.FullName,
-                                    Path.GetRandomFileName());
-                            }
-
-                            outputStream = File.Open(tempOutputPath, FileMode.OpenOrCreate);
-                            encodingStarted = true;
-
-                            // Copy the source metadata, so it can't be modified
-                            encoderExport.Value.Initialize(
-                                outputStream,
-                                audioFile.Info,
-                                new AudioMetadata(audioFile.Metadata),
-                                Settings);
-
-                            encoderExport.Value.ProcessSamples(
-                                audioFile.Path,
-                                itemProgress,
-                                cancellationToken);
-
-                            encoderExport.Value.Finish();
+                            tempOutputPath = Path.Combine(outputDirectoryInfo.FullName,
+                                Path.GetRandomFileName());
                         }
-                        finally
-                        {
-                            // Dispose the encoder before closing the stream
-                            encoderExport.Dispose();
-                            outputStream?.Dispose();
 
-                            Interlocked.Increment(ref audioFilesCompleted);
-                        }
+                        outputStream = File.Open(tempOutputPath, FileMode.OpenOrCreate);
+                        encodingStarted = true;
+
+                        // Copy the source metadata, so it can't be modified
+                        encoderExport.Value.Initialize(
+                            outputStream,
+                            audioFile.Info,
+                            new AudioMetadata(audioFile.Metadata),
+                            Settings);
+
+                        encoderExport.Value.ProcessSamples(
+                            audioFile.Path,
+                            itemProgress,
+                            cancellationToken);
+
+                        encoderExport.Value.Finish();
                     }
-                    catch (Exception)
+                    finally
                     {
-                        // Clean up output
-                        if (encodingStarted)
-                            File.Delete(tempOutputPath);
-                        throw;
-                    }
+                        // Dispose the encoder before closing the stream
+                        encoderExport.Dispose();
+                        outputStream?.Dispose();
 
-                    // If writing to temporary files, replace the originals now
-                    if (!tempOutputPath.Equals(finalOutputPath, StringComparison.OrdinalIgnoreCase))
-                    {
-                        File.Delete(finalOutputPath);
-                        File.Move(tempOutputPath, finalOutputPath);
+                        Interlocked.Increment(ref audioFilesCompleted);
                     }
+                }
+                catch (Exception)
+                {
+                    // Clean up output
+                    if (encodingStarted)
+                        File.Delete(tempOutputPath);
+                    throw;
+                }
 
-                    return new TaggedAudioFile(finalOutputPath);
-                },
+                // If writing to temporary files, replace the originals now
+                if (!tempOutputPath.Equals(finalOutputPath, StringComparison.OrdinalIgnoreCase))
+                {
+                    File.Delete(finalOutputPath);
+                    File.Move(tempOutputPath, finalOutputPath);
+                }
+
+                return new TaggedAudioFile(finalOutputPath);
+            },
                 new ExecutionDataflowBlockOptions
                 {
                     MaxDegreeOfParallelism = Environment.ProcessorCount,
