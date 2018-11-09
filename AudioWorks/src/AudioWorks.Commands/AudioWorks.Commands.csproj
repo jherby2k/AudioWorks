@@ -3,10 +3,10 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.1;netstandard2.0</TargetFrameworks>
     <LangVersion>7.3</LangVersion>
-    <Version>0.1.14-beta</Version>
+    <Version>0.1.15-beta</Version>
     <Revision>$(APPVEYOR_BUILD_NUMBER)</Revision>
     <Revision Condition="'$(Revision)'==''">0</Revision>
-    <FileVersion>0.1.14.$(Revision)</FileVersion>
+    <FileVersion>0.1.15.$(Revision)</FileVersion>
     <Product>AudioWorks</Product>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
