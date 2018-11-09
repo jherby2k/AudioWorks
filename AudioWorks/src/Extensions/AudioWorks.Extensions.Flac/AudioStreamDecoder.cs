@@ -50,7 +50,7 @@ namespace AudioWorks.Extensions.Flac
                         Marshal.ReadIntPtr(buffer).ToPointer(),
                         (int) frame.Header.BlockSize),
                     new Span<int>(
-                        Marshal.ReadIntPtr(buffer, Marshal.SizeOf<IntPtr>()).ToPointer(),
+                        Marshal.ReadIntPtr(buffer, IntPtr.Size).ToPointer(),
                         (int) frame.Header.BlockSize),
                     (int) frame.Header.BitsPerSample);
 

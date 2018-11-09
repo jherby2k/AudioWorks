@@ -113,24 +113,24 @@ namespace AudioWorks.Extensions.Lame
             if (_replayGainExport != null)
                 samples = _replayGainExport.Value.Process(samples);
 
-            if (samples.Channels == 1)
+            if (samples.IsInterleaved)
+            {
+                Span<float> interleavedSamples = stackalloc float[samples.Frames * samples.Channels];
+                samples.CopyToInterleaved(interleavedSamples);
+                _encoder.EncodeInterleaved(interleavedSamples, samples.Frames);
+            }
+            else if (samples.Channels == 1)
             {
                 Span<float> monoSamples = stackalloc float[samples.Frames];
                 samples.CopyTo(monoSamples);
                 _encoder.Encode(monoSamples, null);
             }
-            else if (!samples.IsInterleaved)
+            else
             {
                 Span<float> leftSamples = stackalloc float[samples.Frames];
                 Span<float> rightSamples = stackalloc float[samples.Frames];
                 samples.CopyTo(leftSamples, rightSamples);
                 _encoder.Encode(leftSamples, rightSamples);
-            }
-            else
-            {
-                Span<float> interleavedSamples = stackalloc float[samples.Frames * samples.Channels];
-                samples.CopyToInterleaved(interleavedSamples);
-                _encoder.EncodeInterleaved(interleavedSamples, samples.Frames);
             }
         }
 

@@ -80,7 +80,7 @@ namespace AudioWorks.Extensions.Flac
         {
             if (samples.Frames == 0) return;
 
-            if (samples.Channels == 1 || samples.IsInterleaved)
+            if (samples.IsInterleaved || samples.Channels == 1)
             {
                 Span<int> buffer = stackalloc int[samples.Frames * samples.Channels];
                 samples.CopyToInterleaved(buffer, _bitsPerSample);

@@ -31,6 +31,7 @@ namespace AudioWorks.Extensions.Flac
         [NotNull] readonly NativeCallbacks.StreamDecoderMetadataCallback _metadataCallback;
         [NotNull] readonly NativeCallbacks.StreamDecoderErrorCallback _errorCallback;
         [NotNull] readonly Stream _stream;
+        readonly long _streamLength;
 
         [NotNull]
         protected StreamDecoderHandle Handle { get; } = SafeNativeMethods.StreamDecoderNew();
@@ -48,6 +49,7 @@ namespace AudioWorks.Extensions.Flac
             _errorCallback = ErrorCallback;
 
             _stream = stream;
+            _streamLength = stream.Length;
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
@@ -115,7 +117,7 @@ namespace AudioWorks.Extensions.Flac
             Justification = "Part of FLAC API")]
         DecoderLengthStatus LengthCallback(IntPtr handle, out ulong streamLength, IntPtr userData)
         {
-            streamLength = (ulong) _stream.Length;
+            streamLength = (ulong) _streamLength;
             return DecoderLengthStatus.Ok;
         }
 
@@ -123,12 +125,14 @@ namespace AudioWorks.Extensions.Flac
             Justification = "Part of FLAC API")]
         bool EofCallback(IntPtr handle, IntPtr userData)
         {
-            return _stream.Position >= _stream.Length;
+            // Optimization - this is accessed frequently
+            return _stream.Position >= _streamLength;
         }
 
         [SuppressMessage("Performance", "CA1801:Review unused parameters",
             Justification = "Part of FLAC API")]
-        protected virtual DecoderWriteStatus WriteCallback(IntPtr handle, ref Frame frame, IntPtr buffer, IntPtr userData)
+        protected virtual DecoderWriteStatus WriteCallback(IntPtr handle, ref Frame frame, IntPtr buffer,
+            IntPtr userData)
         {
             return DecoderWriteStatus.Continue;
         }
