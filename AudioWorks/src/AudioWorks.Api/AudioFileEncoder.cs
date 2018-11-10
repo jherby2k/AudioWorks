@@ -36,12 +36,31 @@ namespace AudioWorks.Api
         [CanBeNull] readonly EncodedPath _encodedFileName;
         [CanBeNull] readonly EncodedPath _encodedDirectoryName;
         [NotNull] readonly ExportFactory<IAudioEncoder> _encoderFactory;
+        int _maxDegreeOfParallelism = Environment.ProcessorCount;
 
         /// <summary>
         /// Gets or sets a value indicating whether existing files should be overwritten.
         /// </summary>
         /// <value><c>true</c> if files should be overwritten; otherwise, <c>false</c>.</value>
         public bool Overwrite { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum degree of parallelism. The default value is equal to
+        /// <see cref="Environment.ProcessorCount"/>.
+        /// </summary>
+        /// <value>The maximum degree of parallelism.</value>
+        /// <exception cref="ArgumentOutOfRangeException">Throw in <paramref name="value"/> is less than 1.</exception>
+        public int MaxDegreeOfParallelism
+        {
+            get => _maxDegreeOfParallelism;
+            set
+            {
+                if (value < 1)
+                    throw new ArgumentOutOfRangeException(nameof(value), value, "Minimum value is 1.");
+
+                _maxDegreeOfParallelism = value;
+            }
+        }
 
         /// <summary>
         /// Gets the settings.
@@ -266,7 +285,7 @@ namespace AudioWorks.Api
                 },
                 new ExecutionDataflowBlockOptions
                 {
-                    MaxDegreeOfParallelism = Environment.ProcessorCount,
+                    MaxDegreeOfParallelism = MaxDegreeOfParallelism,
                     SingleProducerConstrained = true,
                     CancellationToken = cancellationToken
                 });

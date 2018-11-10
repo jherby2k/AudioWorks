@@ -13,7 +13,8 @@ Analyzes an audio file.
 ## SYNTAX
 
 ```
-Measure-AudioFile [-Analyzer] <String> [-AudioFile] <ITaggedAudioFile> [-PassThru] [<CommonParameters>]
+Measure-AudioFile [-Analyzer] <String> [-AudioFile] <ITaggedAudioFile> [-MaxDegreeOfParallelism <Int32>]
+ [-PassThru] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -83,9 +84,25 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -MaxDegreeOfParallelism
+Sets the maximum degree of parallelism.
+
+Defaults to the logical processor count.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
-For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -98,4 +115,5 @@ Specifies the audio file.
 ## NOTES
 
 ## RELATED LINKS
+
 [AudioWorks Wiki](https://github.com/jherby2k/AudioWorks/wiki)

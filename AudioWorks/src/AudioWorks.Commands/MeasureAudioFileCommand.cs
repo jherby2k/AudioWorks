@@ -43,6 +43,9 @@ namespace AudioWorks.Commands
         [Parameter(Mandatory = true, Position = 1, ValueFromPipeline = true)]
         public ITaggedAudioFile AudioFile { get; set; }
 
+        [Parameter, ValidateRange(1, int.MaxValue)]
+        public int MaxDegreeOfParallelism { get; set; } = Environment.ProcessorCount;
+
         [Parameter]
         public SwitchParameter PassThru { get; set; }
 
@@ -54,7 +57,8 @@ namespace AudioWorks.Commands
         protected override void EndProcessing()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
-            var analyzer = new AudioFileAnalyzer(Analyzer, SettingAdapter.ParametersToSettings(_parameters));
+            var analyzer = new AudioFileAnalyzer(Analyzer, SettingAdapter.ParametersToSettings(_parameters))
+                { MaxDegreeOfParallelism = MaxDegreeOfParallelism };
 
             var activity = $"Performing {Analyzer} analysis on {_audioFiles.Count} audio files";
             var totalFrames = (double) _audioFiles.Sum(audioFile => audioFile.Info.FrameCount);

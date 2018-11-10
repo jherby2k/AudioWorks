@@ -35,6 +35,25 @@ namespace AudioWorks.Api
     {
         [NotNull] readonly ExportFactory<IAudioAnalyzer> _analyzerFactory;
         [NotNull] readonly string _progressDescription;
+        int _maxDegreeOfParallelism = Environment.ProcessorCount;
+
+        /// <summary>
+        /// Gets or sets the maximum degree of parallelism. The default value is equal to
+        /// <see cref="Environment.ProcessorCount"/>.
+        /// </summary>
+        /// <value>The maximum degree of parallelism.</value>
+        /// <exception cref="ArgumentOutOfRangeException">Throw in <paramref name="value"/> is less than 1.</exception>
+        public int MaxDegreeOfParallelism
+        {
+            get => _maxDegreeOfParallelism;
+            set
+            {
+                if (value < 1)
+                    throw new ArgumentOutOfRangeException(nameof(value), value, "Minimum value is 1.");
+
+                _maxDegreeOfParallelism = value;
+            }
+        }
 
         /// <summary>
         /// Gets the settings.
@@ -192,7 +211,7 @@ namespace AudioWorks.Api
                     },
                     new ExecutionDataflowBlockOptions
                     {
-                        MaxDegreeOfParallelism = Environment.ProcessorCount,
+                        MaxDegreeOfParallelism = MaxDegreeOfParallelism,
                         SingleProducerConstrained = true
                     });
                 initializeBlock.LinkTo(analyzeBlock, linkOptions);

@@ -54,6 +54,9 @@ namespace AudioWorks.Commands
         [Parameter]
         public SwitchParameter Replace { get; set; }
 
+        [Parameter, ValidateRange(1, int.MaxValue)]
+        public int MaxDegreeOfParallelism { get; set; } = Environment.ProcessorCount;
+
         protected override void ProcessRecord()
         {
             _sourceAudioFiles.Add(AudioFile);
@@ -63,11 +66,14 @@ namespace AudioWorks.Commands
         {
             // ReSharper disable once AssignNullToNotNullAttribute
             var encoder = new AudioFileEncoder(
-                    Encoder,
-                    SessionState.Path.GetUnresolvedProviderPathFromPSPath(Path),
-                    Name,
-                    SettingAdapter.ParametersToSettings(_parameters))
-                { Overwrite = Replace };
+                Encoder,
+                SessionState.Path.GetUnresolvedProviderPathFromPSPath(Path),
+                Name,
+                SettingAdapter.ParametersToSettings(_parameters))
+            {
+                Overwrite = Replace,
+                MaxDegreeOfParallelism = MaxDegreeOfParallelism
+            };
 
             var activity = $"Encoding {_sourceAudioFiles.Count} audio files in {Encoder} format";
             var totalFrames = (double) _sourceAudioFiles.Sum(audioFile => audioFile.Info.FrameCount);
