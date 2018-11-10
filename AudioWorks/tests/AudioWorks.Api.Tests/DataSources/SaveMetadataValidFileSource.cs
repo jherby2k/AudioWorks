@@ -55,7 +55,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "4707C81E467497975458C152234AD13F",
                 "79528DB2721970437C6D8877F655E273"
 #else
-                "79528DB2721970437C6D8877F655E273"
+                "949F0B102A34CE82A14611F2966331E9"
 #endif
             },
 
@@ -87,7 +87,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "8233F3397D5097D50A061504D10AA644",
                 "B903A8E9B17014CDDB563A3CC73AB7F5"
 #else
-                "B903A8E9B17014CDDB563A3CC73AB7F5"
+                "39C3FA3E1632321B5B9E1073C3916193"
 #endif
             },
 
@@ -119,7 +119,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "8233F3397D5097D50A061504D10AA644",
                 "B903A8E9B17014CDDB563A3CC73AB7F5"
 #else
-                "B903A8E9B17014CDDB563A3CC73AB7F5"
+                "39C3FA3E1632321B5B9E1073C3916193"
 #endif
             },
 
@@ -151,7 +151,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "5449B08E4A9CEB9D86B3BEA443F02662",
                 "C830D5913F20AEF93853E1A01462708D"
 #else
-                "C830D5913F20AEF93853E1A01462708D"
+                "C31BC4B2225C20A40A07077367578065"
 #endif
             },
 
@@ -183,7 +183,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "34B8ED1508B895CE54E48035C2F8F459",
                 "27C19A7309E49A5B07C0AD932A7B2875"
 #else
-                "27C19A7309E49A5B07C0AD932A7B2875"
+                "F08A1DF76544A92E10DE9C1CBCC9346B"
 #endif
             },
 
@@ -216,7 +216,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "4707C81E467497975458C152234AD13F",
                 "79528DB2721970437C6D8877F655E273"
 #else
-                "79528DB2721970437C6D8877F655E273"
+                "949F0B102A34CE82A14611F2966331E9"
 #endif
             },
 
@@ -252,7 +252,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "446F286CFEC2285F3C5F8996A7489617",
                 "2F893F4E2A6FCF6507763801A1CD908C"
 #else
-                "2F893F4E2A6FCF6507763801A1CD908C"
+                "4EE86066868F97A45F5901CAC7205D0A"
 #endif
             },
 
@@ -288,7 +288,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "C8D99C071580D2C34E42B815B680A1CA",
                 "D10242261CDBC3FF2D9BEB2C232DC1F7"
 #else
-                "D10242261CDBC3FF2D9BEB2C232DC1F7"
+                "1E4BD1432902997151CDE0EDB2CB1A76"
 #endif
             },
 
@@ -303,7 +303,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "D858D62481CDF540B881F2151C0ABB80",
                 "3983A342A074A7E8871FEF4FBE0AC73F"
 #else
-                "3983A342A074A7E8871FEF4FBE0AC73F"
+                "4C8DC1C6AFBF380117E3E82B1E815AD6"
 #endif
             },
 
@@ -318,7 +318,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "D858D62481CDF540B881F2151C0ABB80",
                 "3983A342A074A7E8871FEF4FBE0AC73F"
 #else
-                "3983A342A074A7E8871FEF4FBE0AC73F"
+                "4C8DC1C6AFBF380117E3E82B1E815AD6"
 #endif
             },
 
@@ -333,7 +333,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "86C7A296259858EC6063A3B0740D18CB",
                 "8E3D1A13C4F9BE314C0AD61892472AC6"
 #else
-                "8E3D1A13C4F9BE314C0AD61892472AC6"
+                "0D76165A690F3A42E06972C1FC5573FE"
 #endif
             },
 
@@ -348,7 +348,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "CB279829CACD8B102E3288CA3360BC52",
                 "F489D849B9ACD653B8986D45C487742E"
 #else
-                "F489D849B9ACD653B8986D45C487742E"
+                "E9712B1E4BFB2931BA62ACC8A60D7289"
 #endif
             },
 
