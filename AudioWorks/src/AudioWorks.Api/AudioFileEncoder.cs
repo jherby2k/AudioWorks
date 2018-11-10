@@ -176,94 +176,94 @@ namespace AudioWorks.Api
             var totalFramesCompleted = 0L;
 
             var encodeBlock = new TransformBlock<ITaggedAudioFile, ITaggedAudioFile>(audioFile =>
-            {
-                // The output directory defaults to the AudioFile's current directory
-                var outputDirectory = _encodedDirectoryName?.ReplaceWith(audioFile.Metadata) ??
-                                      Path.GetDirectoryName(audioFile.Path);
+                {
+                    // The output directory defaults to the AudioFile's current directory
+                    var outputDirectory = _encodedDirectoryName?.ReplaceWith(audioFile.Metadata) ??
+                                          Path.GetDirectoryName(audioFile.Path);
 
-                // ReSharper disable once AssignNullToNotNullAttribute
-                var outputDirectoryInfo = Directory.CreateDirectory(outputDirectory);
+                    // ReSharper disable once AssignNullToNotNullAttribute
+                    var outputDirectoryInfo = Directory.CreateDirectory(outputDirectory);
 
-                // The output file names default to the input file names
-                var outputFileName = _encodedFileName?.ReplaceWith(audioFile.Metadata) ??
-                                     Path.GetFileNameWithoutExtension(audioFile.Path);
+                    // The output file names default to the input file names
+                    var outputFileName = _encodedFileName?.ReplaceWith(audioFile.Metadata) ??
+                                         Path.GetFileNameWithoutExtension(audioFile.Path);
 
-                var itemProgress = progress == null
-                    ? null
-                    : new SimpleProgress<int>(framesCompleted => progress.Report(new ProgressToken
-                    {
+                    var itemProgress = progress == null
+                        ? null
+                        : new SimpleProgress<int>(framesCompleted => progress.Report(new ProgressToken
+                        {
                             // ReSharper disable once AccessToModifiedClosure
                             AudioFilesCompleted = audioFilesCompleted,
-                        FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
-                    }));
+                            FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
+                        }));
 
-                string tempOutputPath = null;
-                string finalOutputPath;
-                var encodingStarted = false;
-
-                try
-                {
-                    var encoderExport = _encoderFactory.CreateExport();
-                    FileStream outputStream = null;
+                    string tempOutputPath = null;
+                    string finalOutputPath;
+                    var encodingStarted = false;
 
                     try
                     {
-                        tempOutputPath = finalOutputPath = Path.Combine(outputDirectoryInfo.FullName,
-                            outputFileName + encoderExport.Value.FileExtension);
+                        var encoderExport = _encoderFactory.CreateExport();
+                        FileStream outputStream = null;
 
-                        // If the output file already exists, write to a temporary file first
-                        if (File.Exists(finalOutputPath))
+                        try
                         {
-                            if (!Overwrite)
-                                throw new IOException($"The file '{finalOutputPath}' already exists.");
+                            tempOutputPath = finalOutputPath = Path.Combine(outputDirectoryInfo.FullName,
+                                outputFileName + encoderExport.Value.FileExtension);
 
-                            tempOutputPath = Path.Combine(outputDirectoryInfo.FullName,
-                                Path.GetRandomFileName());
+                            // If the output file already exists, write to a temporary file first
+                            if (File.Exists(finalOutputPath))
+                            {
+                                if (!Overwrite)
+                                    throw new IOException($"The file '{finalOutputPath}' already exists.");
+
+                                tempOutputPath = Path.Combine(outputDirectoryInfo.FullName,
+                                    Path.GetRandomFileName());
+                            }
+
+                            outputStream = File.Open(tempOutputPath, FileMode.OpenOrCreate);
+                            encodingStarted = true;
+
+                            // Copy the source metadata, so it can't be modified
+                            encoderExport.Value.Initialize(
+                                outputStream,
+                                audioFile.Info,
+                                new AudioMetadata(audioFile.Metadata),
+                                Settings);
+
+                            encoderExport.Value.ProcessSamples(
+                                audioFile.Path,
+                                itemProgress,
+                                cancellationToken);
+
+                            encoderExport.Value.Finish();
                         }
+                        finally
+                        {
+                            // Dispose the encoder before closing the stream
+                            encoderExport.Dispose();
+                            outputStream?.Dispose();
 
-                        outputStream = File.Open(tempOutputPath, FileMode.OpenOrCreate);
-                        encodingStarted = true;
-
-                        // Copy the source metadata, so it can't be modified
-                        encoderExport.Value.Initialize(
-                            outputStream,
-                            audioFile.Info,
-                            new AudioMetadata(audioFile.Metadata),
-                            Settings);
-
-                        encoderExport.Value.ProcessSamples(
-                            audioFile.Path,
-                            itemProgress,
-                            cancellationToken);
-
-                        encoderExport.Value.Finish();
+                            Interlocked.Increment(ref audioFilesCompleted);
+                        }
                     }
-                    finally
+                    catch (Exception)
                     {
-                        // Dispose the encoder before closing the stream
-                        encoderExport.Dispose();
-                        outputStream?.Dispose();
-
-                        Interlocked.Increment(ref audioFilesCompleted);
+                        // Clean up output
+                        if (encodingStarted)
+                            File.Delete(tempOutputPath);
+                        throw;
                     }
-                }
-                catch (Exception)
-                {
-                    // Clean up output
-                    if (encodingStarted)
-                        File.Delete(tempOutputPath);
-                    throw;
-                }
 
-                // If writing to temporary files, replace the originals now
-                if (!tempOutputPath.Equals(finalOutputPath, StringComparison.OrdinalIgnoreCase))
-                {
-                    File.Delete(finalOutputPath);
-                    File.Move(tempOutputPath, finalOutputPath);
-                }
+                    // If writing to temporary files, replace the originals now
+                    if (!tempOutputPath.Equals(finalOutputPath, StringComparison.OrdinalIgnoreCase))
+                    {
+                        File.Delete(finalOutputPath);
+                        File.Move(tempOutputPath, finalOutputPath);
+                    }
 
-                return new TaggedAudioFile(finalOutputPath);
-            },
+                    return new TaggedAudioFile(finalOutputPath);
+                },
                 new ExecutionDataflowBlockOptions
                 {
                     MaxDegreeOfParallelism = Environment.ProcessorCount,
