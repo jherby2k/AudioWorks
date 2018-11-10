@@ -24,13 +24,13 @@ using AudioWorks.Extensibility;
 namespace AudioWorks.Extensions.Vorbis
 {
     [AudioMetadataDecoderExport(".ogg")]
-    public sealed unsafe class VorbisAudioMetadataDecoder : IAudioMetadataDecoder
+    public sealed class VorbisAudioMetadataDecoder : IAudioMetadataDecoder
     {
         const string _format = "Vorbis Comment";
 
         public string Format => _format;
 
-        public AudioMetadata ReadMetadata(FileStream stream)
+        public unsafe AudioMetadata ReadMetadata(FileStream stream)
         {
             OggStream oggStream = null;
             SafeNativeMethods.VorbisCommentInit(out var vorbisComment);

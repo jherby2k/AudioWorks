@@ -240,9 +240,9 @@ namespace AudioWorks.Extensions.Flac
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_object_picture_set_data",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool MetadataObjectPictureSetData(
+        internal static extern unsafe bool MetadataObjectPictureSetData(
             [NotNull] MetadataBlockHandle handle,
-            ref byte data,
+            byte* data,
             uint length,
             [MarshalAs(UnmanagedType.Bool)] bool copy);
 

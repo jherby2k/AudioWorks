@@ -14,7 +14,6 @@ You should have received a copy of the GNU Lesser General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 
@@ -65,7 +64,7 @@ namespace AudioWorks.Extensions.Flac
             fixed (byte* dataAddress = data)
                 SafeNativeMethods.MetadataObjectPictureSetData(
                     Handle,
-                    ref Unsafe.AsRef<byte>(dataAddress),
+                    dataAddress,
                     (uint) data.Length,
                     true);
         }

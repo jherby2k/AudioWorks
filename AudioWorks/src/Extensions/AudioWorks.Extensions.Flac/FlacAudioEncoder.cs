@@ -76,7 +76,7 @@ namespace AudioWorks.Extensions.Flac
             _bitsPerSample = info.BitsPerSample;
         }
 
-        public unsafe void Submit(SampleBuffer samples)
+        public void Submit(SampleBuffer samples)
         {
             if (samples.Frames == 0) return;
 
