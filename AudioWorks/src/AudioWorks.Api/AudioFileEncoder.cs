@@ -218,7 +218,6 @@ namespace AudioWorks.Api
 
                     string tempOutputPath = null;
                     string finalOutputPath;
-                    var encodingStarted = false;
 
                     try
                     {
@@ -227,21 +226,15 @@ namespace AudioWorks.Api
 
                         try
                         {
-                            tempOutputPath = finalOutputPath = Path.Combine(outputDirectoryInfo.FullName,
+                            finalOutputPath = Path.Combine(outputDirectoryInfo.FullName,
                                 outputFileName + encoderExport.Value.FileExtension);
+                            if (File.Exists(finalOutputPath) && !Overwrite)
+                                throw new IOException($"The file '{finalOutputPath}' already exists.");
 
-                            // If the output file already exists, write to a temporary file first
-                            if (File.Exists(finalOutputPath))
-                            {
-                                if (!Overwrite)
-                                    throw new IOException($"The file '{finalOutputPath}' already exists.");
-
-                                tempOutputPath = Path.Combine(outputDirectoryInfo.FullName,
-                                    Path.GetRandomFileName());
-                            }
+                            tempOutputPath = Path.Combine(outputDirectoryInfo.FullName,
+                                Path.GetRandomFileName());
 
                             outputStream = File.Open(tempOutputPath, FileMode.OpenOrCreate);
-                            encodingStarted = true;
 
                             // Copy the source metadata, so it can't be modified
                             encoderExport.Value.Initialize(
@@ -269,17 +262,15 @@ namespace AudioWorks.Api
                     catch (Exception)
                     {
                         // Clean up output
-                        if (encodingStarted)
+                        if (File.Exists(tempOutputPath))
+                            // ReSharper disable once AssignNullToNotNullAttribute
                             File.Delete(tempOutputPath);
                         throw;
                     }
 
-                    // If writing to temporary files, replace the originals now
-                    if (!tempOutputPath.Equals(finalOutputPath, StringComparison.OrdinalIgnoreCase))
-                    {
-                        File.Delete(finalOutputPath);
-                        File.Move(tempOutputPath, finalOutputPath);
-                    }
+                    // Rename the temporary file to the final name
+                    File.Delete(finalOutputPath);
+                    File.Move(tempOutputPath, finalOutputPath);
 
                     return new TaggedAudioFile(finalOutputPath);
                 },
