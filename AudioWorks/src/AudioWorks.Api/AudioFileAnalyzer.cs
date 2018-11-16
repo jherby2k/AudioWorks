@@ -173,7 +173,7 @@ namespace AudioWorks.Api
                 var disposableExports = new ConcurrentBag<IDisposable>();
                 var linkOptions = new DataflowLinkOptions { PropagateCompletion = true };
 
-                // Initialization should take place in sequence
+                // Initialization should be sequential
                 var initializeBlock = new TransformBlock<ITaggedAudioFile, (ITaggedAudioFile, IAudioAnalyzer)>(
                     audioFile =>
                     {
@@ -189,12 +189,13 @@ namespace AudioWorks.Api
                         CancellationToken = cancellationToken
                     });
 
-                // Analysis can happen concurrently
+                // Analysis can happen in parallel
                 var analyzeBlock = new TransformBlock<
-                    (ITaggedAudioFile audioFile, IAudioAnalyzer analyzer), (ITaggedAudioFile, IAudioAnalyzer)>(item =>
+                    (ITaggedAudioFile audioFile, IAudioAnalyzer analyzer), (ITaggedAudioFile, IAudioAnalyzer)>(
+                    message =>
                     {
-                        item.analyzer.ProcessSamples(
-                            item.audioFile.Path,
+                        message.analyzer.ProcessSamples(
+                            message.audioFile.Path,
                             progress == null
                                 ? null
                                 : new SimpleProgress<int>(framesCompleted => progress.Report(new ProgressToken
@@ -205,11 +206,11 @@ namespace AudioWorks.Api
                                 })),
                             cancellationToken);
 
-                        CopyStringProperties(item.analyzer.GetResult(), item.audioFile.Metadata);
+                        CopyStringProperties(message.analyzer.GetResult(), message.audioFile.Metadata);
 
                         Interlocked.Increment(ref audioFilesCompleted);
 
-                        return item;
+                        return message;
                     },
                     new ExecutionDataflowBlockOptions
                     {
