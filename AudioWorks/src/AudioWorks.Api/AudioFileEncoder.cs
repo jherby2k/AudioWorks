@@ -194,27 +194,13 @@ namespace AudioWorks.Api
             var audioFilesCompleted = 0;
             var totalFramesCompleted = 0L;
 
-            string outputExtension;
-            using (var export = _encoderFactory.CreateExport())
-                outputExtension = export.Value.FileExtension;
-
-            var encodeBlock = new TransformBlock<ITaggedAudioFile, ITaggedAudioFile>(audioFile =>
+            // Encoding can happen in parallel
+            var encodeBlock = new TransformBlock<(ITaggedAudioFile audioFile, string outputPath), ITaggedAudioFile>(
+                message =>
                 {
-                    // The output directory defaults to the AudioFile's current directory
-                    var outputDirectory = _encodedDirectoryName?.ReplaceWith(audioFile.Metadata) ??
-                                          Path.GetDirectoryName(audioFile.Path);
-
-                    // ReSharper disable once AssignNullToNotNullAttribute
-                    var outputDirectoryInfo = Directory.CreateDirectory(outputDirectory);
-
-                    var finalOutputPath = Path.Combine(
-                        outputDirectoryInfo.FullName,
-                        (_encodedFileName?.ReplaceWith(audioFile.Metadata) ??
-                         Path.GetFileNameWithoutExtension(audioFile.Path)) + outputExtension);
-                    if (File.Exists(finalOutputPath) && !Overwrite)
-                        throw new IOException($"The file '{finalOutputPath}' already exists.");
-
-                    var tempOutputPath = Path.Combine(outputDirectoryInfo.FullName,
+                    var tempOutputPath = Path.Combine(
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        Path.GetDirectoryName(message.outputPath),
                         Path.GetRandomFileName());
 
                     try
@@ -229,12 +215,12 @@ namespace AudioWorks.Api
                             // Copy the source metadata, so it can't be modified
                             encoderExport.Value.Initialize(
                                 outputStream,
-                                audioFile.Info,
-                                new AudioMetadata(audioFile.Metadata),
+                                message.audioFile.Info,
+                                new AudioMetadata(message.audioFile.Metadata),
                                 Settings);
 
                             encoderExport.Value.ProcessSamples(
-                                audioFile.Path,
+                                message.audioFile.Path,
                                 progress == null
                                     ? null
                                     : new SimpleProgress<int>(framesCompleted => progress.Report(new ProgressToken
@@ -266,10 +252,10 @@ namespace AudioWorks.Api
                     }
 
                     // Rename the temporary file to the final name
-                    File.Delete(finalOutputPath);
-                    File.Move(tempOutputPath, finalOutputPath);
+                    File.Delete(message.outputPath);
+                    File.Move(tempOutputPath, message.outputPath);
 
-                    return new TaggedAudioFile(finalOutputPath);
+                    return new TaggedAudioFile(message.outputPath);
                 },
                 new ExecutionDataflowBlockOptions
                 {
@@ -281,8 +267,25 @@ namespace AudioWorks.Api
             var batchBlock = new BatchBlock<ITaggedAudioFile>(audioFiles.Length);
             encodeBlock.LinkTo(batchBlock, new DataflowLinkOptions { PropagateCompletion = true });
 
+            string outputExtension;
+            using (var export = _encoderFactory.CreateExport())
+                outputExtension = export.Value.FileExtension;
+
+            // File names need to be worked out sequentially, in case of conflicts
             foreach (var audioFile in audioFiles)
-                await encodeBlock.SendAsync(audioFile, cancellationToken).ConfigureAwait(false);
+            {
+                var outputPath = Path.Combine(
+                    // ReSharper disable once AssignNullToNotNullAttribute
+                    Directory.CreateDirectory(_encodedDirectoryName?.ReplaceWith(audioFile.Metadata) ??
+                                              Path.GetDirectoryName(audioFile.Path)).FullName,
+                    (_encodedFileName?.ReplaceWith(audioFile.Metadata) ??
+                     Path.GetFileNameWithoutExtension(audioFile.Path)) + outputExtension);
+
+                if (File.Exists(outputPath) && !Overwrite)
+                    throw new IOException($"The file '{outputPath}' already exists.");
+
+                await encodeBlock.SendAsync((audioFile, outputPath), cancellationToken).ConfigureAwait(false);
+            }
 
             try
             {
