@@ -193,16 +193,18 @@ namespace AudioWorks.Api
                 var analyzeBlock = new TransformBlock<
                     (ITaggedAudioFile audioFile, IAudioAnalyzer analyzer), (ITaggedAudioFile, IAudioAnalyzer)>(item =>
                     {
-                        var itemProgress = progress == null
-                            ? null
-                            : new SimpleProgress<int>(framesCompleted => progress.Report(new ProgressToken
-                            {
-                                // ReSharper disable once AccessToModifiedClosure
-                                AudioFilesCompleted = audioFilesCompleted,
-                                FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
-                            }));
+                        item.analyzer.ProcessSamples(
+                            item.audioFile.Path,
+                            progress == null
+                                ? null
+                                : new SimpleProgress<int>(framesCompleted => progress.Report(new ProgressToken
+                                {
+                                    // ReSharper disable once AccessToModifiedClosure
+                                    AudioFilesCompleted = audioFilesCompleted,
+                                    FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
+                                })),
+                            cancellationToken);
 
-                        item.analyzer.ProcessSamples(item.audioFile.Path, itemProgress, cancellationToken);
                         CopyStringProperties(item.analyzer.GetResult(), item.audioFile.Metadata);
 
                         Interlocked.Increment(ref audioFilesCompleted);
@@ -224,10 +226,7 @@ namespace AudioWorks.Api
                         foreach (var (audioFile, analyzer) in group)
                             CopyStringProperties(analyzer.GetGroupResult(), audioFile.Metadata);
                     },
-                    new ExecutionDataflowBlockOptions
-                    {
-                        SingleProducerConstrained = true,
-                    });
+                    new ExecutionDataflowBlockOptions { SingleProducerConstrained = true, });
                 batchBlock.LinkTo(groupResultBlock, linkOptions);
 
                 try

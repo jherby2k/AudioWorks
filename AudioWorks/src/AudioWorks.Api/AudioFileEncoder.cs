@@ -194,6 +194,10 @@ namespace AudioWorks.Api
             var audioFilesCompleted = 0;
             var totalFramesCompleted = 0L;
 
+            string outputExtension;
+            using (var export = _encoderFactory.CreateExport())
+                outputExtension = export.Value.FileExtension;
+
             var encodeBlock = new TransformBlock<ITaggedAudioFile, ITaggedAudioFile>(audioFile =>
                 {
                     // The output directory defaults to the AudioFile's current directory
@@ -203,37 +207,23 @@ namespace AudioWorks.Api
                     // ReSharper disable once AssignNullToNotNullAttribute
                     var outputDirectoryInfo = Directory.CreateDirectory(outputDirectory);
 
-                    // The output file names default to the input file names
-                    var outputFileName = _encodedFileName?.ReplaceWith(audioFile.Metadata) ??
-                                         Path.GetFileNameWithoutExtension(audioFile.Path);
+                    var finalOutputPath = Path.Combine(
+                        outputDirectoryInfo.FullName,
+                        (_encodedFileName?.ReplaceWith(audioFile.Metadata) ??
+                         Path.GetFileNameWithoutExtension(audioFile.Path)) + outputExtension);
+                    if (File.Exists(finalOutputPath) && !Overwrite)
+                        throw new IOException($"The file '{finalOutputPath}' already exists.");
 
-                    var itemProgress = progress == null
-                        ? null
-                        : new SimpleProgress<int>(framesCompleted => progress.Report(new ProgressToken
-                        {
-                            // ReSharper disable once AccessToModifiedClosure
-                            AudioFilesCompleted = audioFilesCompleted,
-                            FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
-                        }));
-
-                    string tempOutputPath = null;
-                    string finalOutputPath;
+                    var tempOutputPath = Path.Combine(outputDirectoryInfo.FullName,
+                        Path.GetRandomFileName());
 
                     try
                     {
-                        var encoderExport = _encoderFactory.CreateExport();
                         FileStream outputStream = null;
+                        var encoderExport = _encoderFactory.CreateExport();
 
                         try
                         {
-                            finalOutputPath = Path.Combine(outputDirectoryInfo.FullName,
-                                outputFileName + encoderExport.Value.FileExtension);
-                            if (File.Exists(finalOutputPath) && !Overwrite)
-                                throw new IOException($"The file '{finalOutputPath}' already exists.");
-
-                            tempOutputPath = Path.Combine(outputDirectoryInfo.FullName,
-                                Path.GetRandomFileName());
-
                             outputStream = File.Open(tempOutputPath, FileMode.OpenOrCreate);
 
                             // Copy the source metadata, so it can't be modified
@@ -245,18 +235,25 @@ namespace AudioWorks.Api
 
                             encoderExport.Value.ProcessSamples(
                                 audioFile.Path,
-                                itemProgress,
+                                progress == null
+                                    ? null
+                                    : new SimpleProgress<int>(framesCompleted => progress.Report(new ProgressToken
+                                    {
+                                        // ReSharper disable once AccessToModifiedClosure
+                                        AudioFilesCompleted = audioFilesCompleted,
+                                        FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
+                                    })),
                                 cancellationToken);
 
                             encoderExport.Value.Finish();
+
+                            Interlocked.Increment(ref audioFilesCompleted);
                         }
                         finally
                         {
                             // Dispose the encoder before closing the stream
                             encoderExport.Dispose();
                             outputStream?.Dispose();
-
-                            Interlocked.Increment(ref audioFilesCompleted);
                         }
                     }
                     catch (Exception)
