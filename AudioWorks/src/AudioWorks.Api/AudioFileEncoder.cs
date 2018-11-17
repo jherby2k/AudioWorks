@@ -270,16 +270,17 @@ namespace AudioWorks.Api
             string outputExtension;
             using (var export = _encoderFactory.CreateExport())
                 outputExtension = export.Value.FileExtension;
+            var uniqueOutputPaths = new List<string>(audioFiles.Length);
 
             // File names need to be worked out sequentially, in case of conflicts
             foreach (var audioFile in audioFiles)
             {
-                var outputPath = Path.Combine(
+                var outputPath = GetUniquePath(Path.Combine(
                     // ReSharper disable once AssignNullToNotNullAttribute
                     Directory.CreateDirectory(_encodedDirectoryName?.ReplaceWith(audioFile.Metadata) ??
                                               Path.GetDirectoryName(audioFile.Path)).FullName,
                     (_encodedFileName?.ReplaceWith(audioFile.Metadata) ??
-                     Path.GetFileNameWithoutExtension(audioFile.Path)) + outputExtension);
+                     Path.GetFileNameWithoutExtension(audioFile.Path)) + outputExtension), uniqueOutputPaths);
 
                 if (File.Exists(outputPath) && !Overwrite)
                     throw new IOException($"The file '{outputPath}' already exists.");
@@ -306,6 +307,16 @@ namespace AudioWorks.Api
                     throw batchBlock.Completion.Exception.GetBaseException();
                 throw;
             }
+        }
+
+        [NotNull]
+        static string GetUniquePath([NotNull] string path, [NotNull, ItemNotNull] List<string> uniquePaths)
+        {
+            if (uniquePaths.Contains(path, StringComparer.OrdinalIgnoreCase))
+                path = $"{Path.ChangeExtension(path, null)}~{uniquePaths.Count}{Path.GetExtension(path)}";
+
+            uniquePaths.Add(path);
+            return path;
         }
     }
 }
