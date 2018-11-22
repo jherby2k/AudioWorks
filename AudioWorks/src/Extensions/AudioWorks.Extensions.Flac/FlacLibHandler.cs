@@ -14,27 +14,21 @@ You should have received a copy of the GNU Lesser General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-#if LINUX
+#if !WINDOWS
 using System.Diagnostics;
 #endif
 #if !WINDOWS
 using System.Diagnostics.CodeAnalysis;
 #endif
-#if !OSX
 using System.IO;
-#endif
-#if WINDOWS
+#if !LINUX
 using System.Reflection;
 #endif
 using System.Runtime.InteropServices;
-#if WINDOWS
-using System.Text;
-#endif
+using System.Runtime.Loader;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-#if LINUX
 using JetBrains.Annotations;
-#endif
 using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensions.Flac
@@ -50,27 +44,41 @@ namespace AudioWorks.Extensions.Flac
         {
             var logger = LoggerManager.LoggerFactory.CreateLogger<FlacLibHandler>();
 
+#if !LINUX
+
+#endif
 #if WINDOWS
-            var nativeLibraryPath = Path.Combine(
+            var libPath = Path.Combine(
                 // ReSharper disable once AssignNullToNotNullAttribute
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
                 Environment.Is64BitProcess ? "win-x64" : "win-x86");
 
-            var flacLibrary = Path.Combine(nativeLibraryPath, "libFLAC.dll");
+#if NETCOREAPP2_1
+            AddUnmanagedLibraryPath(libPath);
+#else
+            // On Full Framework, AssemblyLoadContext isn't available, so we add the directory to PATH
+            if (RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework", StringComparison.Ordinal))
+                Environment.SetEnvironmentVariable("PATH",
+                    $"{libPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}");
+            else
+                AddUnmanagedLibraryPath(libPath);
+#endif
 
-            if (!File.Exists(flacLibrary))
-            {
-                logger.LogWarning("Missing libFLAC.dll.");
-                return false;
-            }
+            var module = SafeNativeMethods.LoadLibrary(Path.Combine(libPath, "libFLAC.dll"));
+#elif OSX
+            var osVersion = GetOSVersion();
 
-            // Prefix the PATH variable with the correct architecture-specific directory
-            Environment.SetEnvironmentVariable("PATH", new StringBuilder(nativeLibraryPath)
-                .Append(Path.PathSeparator).Append(Environment.GetEnvironmentVariable("PATH"))
-                .ToString());
+            var libPath = Path.Combine(
+                // ReSharper disable once AssignNullToNotNullAttribute
+                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
+                osVersion.StartsWith("10.12", StringComparison.Ordinal) ? "osx.10.12" :
+                osVersion.StartsWith("10.13", StringComparison.Ordinal) ? "osx.10.13" :
+                "osx.10.14");
 
-            var module = SafeNativeMethods.LoadLibrary("libFLAC.dll");
-#elif LINUX
+            AddUnmanagedLibraryPath(libPath);
+
+            var module = SafeNativeMethods.DlOpen(Path.Combine(libPath, "libFLAC.dylib"), 2);
+#else // LINUX
             if (!VerifyLibrary("libFLAC.so.8"))
             {
                 logger.LogWarning(
@@ -81,9 +89,8 @@ namespace AudioWorks.Extensions.Flac
             }
 
             var module = SafeNativeMethods.DlOpen("libFLAC.so.8", 2);
-#else
-            var module = SafeNativeMethods.DlOpen("libFLAC", 2);
 #endif
+
             try
             {
                 logger.LogInformation("Using libFLAC version {0}.",
@@ -106,8 +113,8 @@ namespace AudioWorks.Extensions.Flac
 
             return true;
         }
-#if LINUX
 
+#if LINUX
         [Pure]
         static bool VerifyLibrary([NotNull] string libraryName)
         {
@@ -150,6 +157,32 @@ namespace AudioWorks.Extensions.Flac
                 // If lsb_release isn't available, the distribution is unknown
                 return string.Empty;
             }
+        }
+#else
+        static void AddUnmanagedLibraryPath([NotNull] string libPath)
+        {
+            ((ExtensionLoadContext) AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()))
+                .AddUnmanagedLibraryPath(libPath);
+        }
+#endif
+#if OSX
+
+        [NotNull]
+        public static string GetOSVersion()
+        {
+            var process = new Process
+            {
+                StartInfo = new ProcessStartInfo("sw_vers", "-productVersion")
+                {
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                }
+            };
+            process.Start();
+            var result = process.StandardOutput.ReadToEnd();
+            process.WaitForExit();
+            return result.Trim();
         }
 #endif
     }
