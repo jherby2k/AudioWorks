@@ -13,27 +13,21 @@ details.
 You should have received a copy of the GNU Lesser General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-#if !OSX
 using System;
-#endif
-#if LINUX
+#if !WINDOWS
 using System.Diagnostics;
 #endif
-#if !OSX
 using System.IO;
-#endif
-#if WINDOWS
+#if !LINUX
 using System.Reflection;
 #endif
 using System.Runtime.InteropServices;
-#if WINDOWS
-using System.Text;
+#if !LINUX
+using System.Runtime.Loader;
 #endif
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-#if LINUX
 using JetBrains.Annotations;
-#endif
 using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensions.Vorbis
@@ -46,31 +40,33 @@ namespace AudioWorks.Extensions.Vorbis
             var logger = LoggerManager.LoggerFactory.CreateLogger<VorbisLibHandler>();
 
 #if WINDOWS
-            var nativeLibraryPath = Path.Combine(
+            var libPath = Path.Combine(
                 // ReSharper disable once AssignNullToNotNullAttribute
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
                 Environment.Is64BitProcess ? "win-x64" : "win-x86");
 
-            var oggLibrary = Path.Combine(nativeLibraryPath, "libogg.dll");
-            var vorbisLibrary = Path.Combine(nativeLibraryPath, "libvorbis.dll");
+#if NETCOREAPP2_1
+            AddUnmanagedLibraryPath(libPath);
+#else
+            // On Full Framework, AssemblyLoadContext isn't available, so we add the directory to PATH
+            if (RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework", StringComparison.Ordinal))
+                Environment.SetEnvironmentVariable("PATH",
+                    $"{libPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}");
+            else
+                AddUnmanagedLibraryPath(libPath);
+#endif
+#elif OSX
+            var osVersion = GetOSVersion();
 
-            if (!File.Exists(oggLibrary))
-            {
-                logger.LogWarning("Missing libogg.dll.");
-                return false;
-            }
+            var libPath = Path.Combine(
+                // ReSharper disable once AssignNullToNotNullAttribute
+                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
+                osVersion.StartsWith("10.12", StringComparison.Ordinal) ? "osx.10.12" :
+                osVersion.StartsWith("10.13", StringComparison.Ordinal) ? "osx.10.13" :
+                "osx.10.14");
 
-            if (!File.Exists(vorbisLibrary))
-            {
-                logger.LogWarning("Missing libvorbis.dll.");
-                return false;
-            }
-
-            // Prefix the PATH variable with the correct architecture-specific directory
-            Environment.SetEnvironmentVariable("PATH", new StringBuilder(nativeLibraryPath)
-                .Append(Path.PathSeparator).Append(Environment.GetEnvironmentVariable("PATH"))
-                .ToString());
-#elif LINUX
+            AddUnmanagedLibraryPath(libPath);
+#else // LINUX
             if (!VerifyLibrary("libvorbis.so.0"))
             {
                 logger.LogWarning(
@@ -104,8 +100,8 @@ namespace AudioWorks.Extensions.Vorbis
 
             return true;
         }
-#if LINUX
 
+#if LINUX
         [Pure]
         static bool VerifyLibrary([NotNull] string libraryName)
         {
@@ -148,6 +144,32 @@ namespace AudioWorks.Extensions.Vorbis
                 // If lsb_release isn't available, the distribution is unknown
                 return string.Empty;
             }
+        }
+#else
+        static void AddUnmanagedLibraryPath([NotNull] string libPath)
+        {
+            ((ExtensionLoadContext) AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()))
+                .AddUnmanagedLibraryPath(libPath);
+        }
+#endif
+#if OSX
+
+        [NotNull]
+        public static string GetOSVersion()
+        {
+            var process = new Process
+            {
+                StartInfo = new ProcessStartInfo("sw_vers", "-productVersion")
+                {
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                }
+            };
+            process.Start();
+            var result = process.StandardOutput.ReadToEnd();
+            process.WaitForExit();
+            return result.Trim();
         }
 #endif
     }

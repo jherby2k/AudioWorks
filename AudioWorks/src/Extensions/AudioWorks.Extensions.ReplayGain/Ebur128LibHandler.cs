@@ -13,24 +13,23 @@ details.
 You should have received a copy of the GNU Lesser General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-#if !OSX
 using System;
-#endif
-#if LINUX
+#if !WINDOWS
 using System.Diagnostics;
 #endif
-#if !OSX
 using System.IO;
-#endif
-#if WINDOWS
+#if !LINUX
 using System.Reflection;
-using System.Text;
+#if !NETCOREAPP2_1
+using System.Runtime.InteropServices;
+#endif
+#endif
+#if !LINUX
+using System.Runtime.Loader;
 #endif
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-#if LINUX
 using JetBrains.Annotations;
-#endif
 using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensions.ReplayGain
@@ -43,24 +42,33 @@ namespace AudioWorks.Extensions.ReplayGain
             var logger = LoggerManager.LoggerFactory.CreateLogger<Ebur128LibHandler>();
 
 #if WINDOWS
-            var nativeLibraryPath = Path.Combine(
+            var libPath = Path.Combine(
                 // ReSharper disable once AssignNullToNotNullAttribute
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
                 Environment.Is64BitProcess ? "win-x64" : "win-x86");
 
-            var ebur128Library = Path.Combine(nativeLibraryPath, "libebur128.dll");
+#if NETCOREAPP2_1
+            AddUnmanagedLibraryPath(libPath);
+#else
+            // On Full Framework, AssemblyLoadContext isn't available, so we add the directory to PATH
+            if (RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework", StringComparison.Ordinal))
+                Environment.SetEnvironmentVariable("PATH",
+                    $"{libPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}");
+            else
+                AddUnmanagedLibraryPath(libPath);
+#endif
+#elif OSX
+            var osVersion = GetOSVersion();
 
-            if (!File.Exists(ebur128Library))
-            {
-                logger.LogWarning("Missing libebur128.dll.");
-                return false;
-            }
+            var libPath = Path.Combine(
+                // ReSharper disable once AssignNullToNotNullAttribute
+                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
+                osVersion.StartsWith("10.12", StringComparison.Ordinal) ? "osx.10.12" :
+                osVersion.StartsWith("10.13", StringComparison.Ordinal) ? "osx.10.13" :
+                "osx.10.14");
 
-            // Prefix the PATH variable with the correct architecture-specific directory
-            Environment.SetEnvironmentVariable("PATH", new StringBuilder(nativeLibraryPath)
-                .Append(Path.PathSeparator).Append(Environment.GetEnvironmentVariable("PATH"))
-                .ToString());
-#elif LINUX
+            AddUnmanagedLibraryPath(libPath);
+#else // LINUX
             if (!VerifyLibrary("libebur128.so.1"))
             {
                 logger.LogWarning(
@@ -72,12 +80,13 @@ namespace AudioWorks.Extensions.ReplayGain
 #endif
 
             SafeNativeMethods.GetVersion(out var major, out var minor, out var patch);
+            // ReSharper disable once StringLiteralTypo
             logger.LogInformation("Using libebur128 version {0}.{1}.{2}.", major, minor, patch);
 
             return true;
         }
-#if LINUX
 
+#if LINUX
         [Pure]
         static bool VerifyLibrary([NotNull] string libraryName)
         {
@@ -120,6 +129,32 @@ namespace AudioWorks.Extensions.ReplayGain
                 // If lsb_release isn't available, the distribution is unknown
                 return string.Empty;
             }
+        }
+#else
+        static void AddUnmanagedLibraryPath([NotNull] string libPath)
+        {
+            ((ExtensionLoadContext) AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()))
+                .AddUnmanagedLibraryPath(libPath);
+        }
+#endif
+#if OSX
+
+        [NotNull]
+        public static string GetOSVersion()
+        {
+            var process = new Process
+            {
+                StartInfo = new ProcessStartInfo("sw_vers", "-productVersion")
+                {
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                }
+            };
+            process.Start();
+            var result = process.StandardOutput.ReadToEnd();
+            process.WaitForExit();
+            return result.Trim();
         }
 #endif
     }

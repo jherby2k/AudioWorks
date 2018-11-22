@@ -25,7 +25,9 @@ using System.IO;
 using System.Reflection;
 #endif
 using System.Runtime.InteropServices;
+#if !LINUX
 using System.Runtime.Loader;
+#endif
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
 using JetBrains.Annotations;

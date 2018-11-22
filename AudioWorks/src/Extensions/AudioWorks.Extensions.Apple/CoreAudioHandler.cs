@@ -17,11 +17,16 @@ You should have received a copy of the GNU Lesser General Public License along w
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
+using System.Reflection;
+#if !NETCOREAPP2_1
+using System.Runtime.InteropServices;
+#endif
+using System.Runtime.Loader;
 using AudioWorks.Common;
 #endif
 using AudioWorks.Extensibility;
 #if WINDOWS
+using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 #endif
 
@@ -35,13 +40,24 @@ namespace AudioWorks.Extensions.Apple
 #if WINDOWS
             var logger = LoggerManager.LoggerFactory.CreateLogger<CoreAudioHandler>();
 
-            var nativeLibraryPath = Path.Combine(
+            var libPath = Path.Combine(
                 // ReSharper disable once AssignNullToNotNullAttribute
                 Environment.GetEnvironmentVariable("CommonProgramFiles"),
                 "Apple",
                 "Apple Application Support");
 
-            var coreAudioLibrary = Path.Combine(nativeLibraryPath, "CoreAudioToolbox.dll");
+#if NETCOREAPP2_1
+            AddUnmanagedLibraryPath(libPath);
+#else
+            // On Full Framework, AssemblyLoadContext isn't available, so we add the directory to PATH
+            if (RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework", StringComparison.Ordinal))
+                Environment.SetEnvironmentVariable("PATH",
+                    $"{libPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}");
+            else
+                AddUnmanagedLibraryPath(libPath);
+#endif
+
+            var coreAudioLibrary = Path.Combine(libPath, "CoreAudioToolbox.dll");
 
             if (!File.Exists(coreAudioLibrary))
             {
@@ -49,15 +65,19 @@ namespace AudioWorks.Extensions.Apple
                 return false;
             }
 
-            // Prefix the PATH variable with the default Apple Application Support installation directory
-            Environment.SetEnvironmentVariable("PATH", new StringBuilder(nativeLibraryPath)
-                .Append(Path.PathSeparator).Append(Environment.GetEnvironmentVariable("PATH"))
-                .ToString());
-
             logger.LogInformation("Using CoreAudio version {0}.",
                 FileVersionInfo.GetVersionInfo(coreAudioLibrary).ProductVersion);
 #endif
+
             return true;
         }
+#if WINDOWS
+
+        static void AddUnmanagedLibraryPath([NotNull] string libPath)
+        {
+            ((ExtensionLoadContext) AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()))
+                .AddUnmanagedLibraryPath(libPath);
+        }
+#endif
     }
 }
