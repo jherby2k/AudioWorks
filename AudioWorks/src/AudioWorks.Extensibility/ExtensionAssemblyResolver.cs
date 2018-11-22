@@ -41,7 +41,15 @@ namespace AudioWorks.Extensibility
         {
             _logger.LogDebug("Loading extension '{0}'.", path);
 
-            Assembly = Assembly.LoadFrom(path);
+#if NETCOREAPP2_1
+            Assembly = LoadWithLoader(path);
+#else
+            Assembly = RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework",
+                StringComparison.Ordinal)
+                ? Assembly.LoadFrom(path)
+                : LoadWithLoader(path);
+#endif
+
             var extensionDir = Path.GetDirectoryName(path);
 
             // Resolve dependencies from both the main and extension directories
@@ -83,6 +91,12 @@ namespace AudioWorks.Extensibility
             };
         }
 #endif
+
+        [NotNull]
+        static Assembly LoadWithLoader([CanBeNull] string path)
+        {
+            return new ExtensionLoadContext().LoadFromAssemblyPath(path);
+        }
 
         void ResolveWithLoader([NotNull, ItemNotNull] IEnumerable<string> assemblyFiles)
         {
