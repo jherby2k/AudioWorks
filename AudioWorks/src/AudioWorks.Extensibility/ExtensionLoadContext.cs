@@ -16,10 +16,13 @@ You should have received a copy of the GNU Lesser General Public License along w
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
+using AudioWorks.Common;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensibility
 {
@@ -56,11 +59,14 @@ namespace AudioWorks.Extensibility
         /// <inheritdoc/>
         protected override IntPtr LoadUnmanagedDll([NotNull] string unmanagedDllName)
         {
-            foreach (var path in _unmanagedLibraryPaths)
-                if (new DirectoryInfo(path).GetFiles($"{unmanagedDllName}*").Length > 0)
-                    return LoadUnmanagedDllFromPath(Path.Combine(path, unmanagedDllName));
+            var fullPath = _unmanagedLibraryPaths
+                .SelectMany(path => new DirectoryInfo(path).GetFiles($"{unmanagedDllName}*")).SingleOrDefault()?
+                .FullName;
+            if (fullPath == null) return base.LoadUnmanagedDll(unmanagedDllName);
 
-            return base.LoadUnmanagedDll(unmanagedDllName);
+            LoggerManager.LoggerFactory.CreateLogger<ExtensionLoadContext>()
+                .LogDebug("Loading unmanaged assembly '{0}'.", fullPath);
+            return LoadUnmanagedDllFromPath(fullPath);
         }
     }
 }
