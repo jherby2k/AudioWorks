@@ -60,7 +60,13 @@ namespace AudioWorks.Extensibility
         protected override IntPtr LoadUnmanagedDll([NotNull] string unmanagedDllName)
         {
             var fullPath = _unmanagedLibraryPaths
-                .SelectMany(path => new DirectoryInfo(path).GetFiles($"{unmanagedDllName}*")).SingleOrDefault()?
+                .SelectMany(path =>
+                {
+                    // Look for a matching assembly with or without an extension
+                    var directoryInfo = new DirectoryInfo(path);
+                    return directoryInfo.GetFiles(unmanagedDllName)
+                        .Concat(directoryInfo.GetFiles($"{unmanagedDllName}.*"));
+                }).SingleOrDefault()?
                 .FullName;
             if (fullPath == null) return base.LoadUnmanagedDll(unmanagedDllName);
 
