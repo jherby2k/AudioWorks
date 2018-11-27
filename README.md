@@ -33,7 +33,7 @@ AudioWorks currently needs to be built from source, although installers are comi
 The AudioWorks PowerShell module can be installed via PowerShellGet:
 1. (Windows PowerShell only) [Update PowerShellGet](https://docs.microsoft.com/en-us/powershell/gallery/installing-psget) to a version that supports prerelease modules.
 1. Check your PowerShell execution policy using `Get-ExecutionPolicy`. If it is Restricted, you will need to set your PowerShell execution policy to allow signed scripts using something like `Set-ExecutionPolicy -ExecutionPolicy AllSigned` from an administrator command prompt. RemoteSigned and Unrestricted will also work, but are less secure.
-1. Register the AudioWorks repository with `Register-PSRepository -Name AudioWorks -SourceLocation 'https://www.myget.org/F/audioworks/api/v2'`.
+1. Register the AudioWorks Pre-Release repository with `Register-PSRepository -Name AudioWorks -SourceLocation 'https://www.myget.org/F/audioworks-prerelease/api/v2'`.
 1. Install the module with `Install-Module -Name AudioWorks.Commands -Repository AudioWorks -AllowPrerelease -Scope CurrentUser`.
 
 Keep the module up to date with `Update-Module -Name AudioWorks.Commands -AllowPrerelease`.
