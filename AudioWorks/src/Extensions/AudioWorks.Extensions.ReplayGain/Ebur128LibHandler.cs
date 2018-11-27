@@ -20,6 +20,11 @@ using System.Diagnostics;
 using System.IO;
 #if !LINUX
 using System.Reflection;
+#if !NETCOREAPP2_1
+using System.Runtime.InteropServices;
+#endif
+#endif
+#if !LINUX
 using System.Runtime.Loader;
 #endif
 using AudioWorks.Common;
