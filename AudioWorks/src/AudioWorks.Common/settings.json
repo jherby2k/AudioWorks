@@ -2,7 +2,8 @@
   "EnableTelemetry":  true,
   "AutomaticExtensionDownloads": true,
   "AutomaticExtensionDownloadTimeout": 30,
-  "IncludePreReleaseExtensions": true,
+  "UsePreReleaseExtensions": false,
   "ExtensionRepository": "https://www.myget.org/F/audioworks-extensions/api/v3/index.json",
+  "PreReleaseExtensionRepository": "https://www.myget.org/F/audioworks-extensions-prerelease/api/v3/index.json",
   "DefaultRepository":  "https://api.nuget.org/v3/index.json"
 }

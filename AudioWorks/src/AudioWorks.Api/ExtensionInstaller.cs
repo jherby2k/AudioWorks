@@ -47,8 +47,14 @@ namespace AudioWorks.Api
 #endif
             );
 
-        [NotNull] static readonly string _customUrl = ConfigurationManager.Configuration.GetValue("ExtensionRepository",
-            "https://www.myget.org/F/audioworks-extensions/api/v3/index.json");
+        [NotNull] static readonly string _extensionUrl =
+            ConfigurationManager.Configuration.GetValue("UsePreReleaseExtensions", false)
+                ? ConfigurationManager.Configuration.GetValue(
+                    "PreReleaseExtensionRepository",
+                    "https://www.myget.org/F/audioworks-extensions-prerelease/api/v3/index.json")
+                : ConfigurationManager.Configuration.GetValue(
+                    "ExtensionRepository",
+                    "https://www.myget.org/F/audioworks-extensions/api/v3/index.json");
 
         [NotNull] static readonly string _defaultUrl = ConfigurationManager.Configuration.GetValue("DefaultRepository",
             "https://api.nuget.org/v3/index.json");
@@ -90,7 +96,7 @@ namespace AudioWorks.Api
                 Directory.CreateDirectory(_projectRoot);
 
                 var customRepository =
-                    new SourceRepository(new PackageSource(_customUrl), Repository.Provider.GetCoreV3());
+                    new SourceRepository(new PackageSource(_extensionUrl), Repository.Provider.GetCoreV3());
                 var defaultRepository =
                     new SourceRepository(new PackageSource(_defaultUrl), Repository.Provider.GetCoreV3());
 
@@ -108,9 +114,8 @@ namespace AudioWorks.Api
                             return await (await customRepository
                                     .GetResourceAsync<PackageSearchResource>(cancellationTokenSource.Token)
                                     .ConfigureAwait(false))
-                                .SearchAsync("AudioWorks.Extensions", new SearchFilter(
-                                        ConfigurationManager.Configuration.GetValue("IncludePreReleaseExtensions",
-                                            false)), 0, 100, NullLogger.Instance,
+                                .SearchAsync("AudioWorks.Extensions", new SearchFilter(false), 0, 100,
+                                    NullLogger.Instance,
                                     cancellationTokenSource.Token)
                                 .ConfigureAwait(false);
                         }).Result
@@ -122,7 +127,7 @@ namespace AudioWorks.Api
                         .ToArray();
 
                     logger.LogDebug("Discovered {0} extension packages published at '{1}'.",
-                        publishedPackages.Length, _customUrl);
+                        publishedPackages.Length, _extensionUrl);
 
                     var packagesInstalled = false;
 
