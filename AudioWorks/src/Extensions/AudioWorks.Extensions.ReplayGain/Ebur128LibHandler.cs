@@ -20,9 +20,9 @@ using System.Diagnostics;
 using System.IO;
 #if !LINUX
 using System.Reflection;
-#if !NETCOREAPP2_1
-using System.Runtime.InteropServices;
 #endif
+#if WINDOWS && !NETCOREAPP2_1
+using System.Runtime.InteropServices;
 #endif
 #if !LINUX
 using System.Runtime.Loader;
