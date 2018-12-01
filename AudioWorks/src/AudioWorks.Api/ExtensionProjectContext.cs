@@ -62,9 +62,8 @@ namespace AudioWorks.Api
         public PackageExtractionContext PackageExtractionContext { get; set; } = new PackageExtractionContext(
             PackageSaveMode.Defaultv3,
             XmlDocFileSaveMode.Skip,
-            NullLogger.Instance,
             null,
-            null);
+            NullLogger.Instance);
 
         [CanBeNull]
         public ISourceControlManagerProvider SourceControlManagerProvider => null;
