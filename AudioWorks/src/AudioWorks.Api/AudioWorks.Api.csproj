@@ -3,10 +3,10 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.1;netstandard2.0</TargetFrameworks>
     <LangVersion>7.3</LangVersion>
-    <Version>0.1.22-beta</Version>
+    <Version>0.1.23-beta</Version>
     <Revision>$(APPVEYOR_BUILD_NUMBER)</Revision>
     <Revision Condition="'$(Revision)'==''">0</Revision>
-    <FileVersion>0.1.22.$(Revision)</FileVersion>
+    <FileVersion>0.1.23.$(Revision)</FileVersion>
     <AssemblyVersion>0.1.0.0</AssemblyVersion>
     <Authors>Jeremy Herbison</Authors>
     <Company />
@@ -58,7 +58,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AudioWorks.Extensibility" Version="0.1.9-beta" />
+    <PackageReference Include="AudioWorks.Extensibility" Version="0.1.10-beta" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="all" />
     <PackageReference Include="NuGet.Client" Version="4.2.0" />
