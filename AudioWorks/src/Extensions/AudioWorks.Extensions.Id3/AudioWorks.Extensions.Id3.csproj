@@ -51,6 +51,7 @@
 
   <PropertyGroup Condition="$(DefineConstants.Contains(RELEASE))">
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <NoWarn>NU5104</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
