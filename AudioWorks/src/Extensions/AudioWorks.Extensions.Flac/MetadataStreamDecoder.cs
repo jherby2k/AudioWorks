@@ -25,12 +25,12 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
 {
-    sealed class MetadataDecoder : StreamDecoder
+    sealed class MetadataStreamDecoder : StreamDecoder
     {
         [NotNull]
         internal VorbisCommentToMetadataAdapter AudioMetadata { get; } = new VorbisCommentToMetadataAdapter();
 
-        internal MetadataDecoder([NotNull] Stream stream)
+        internal MetadataStreamDecoder([NotNull] Stream stream)
             : base(stream)
         {
         }
