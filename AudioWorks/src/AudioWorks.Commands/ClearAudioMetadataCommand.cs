@@ -68,34 +68,25 @@ namespace AudioWorks.Commands
         public SwitchParameter Loudness { get; set; }
 
         [Parameter]
+        public SwitchParameter CoverArt { get; set; }
+
+        [Parameter]
         public SwitchParameter PassThru { get; set; }
 
         protected override void ProcessRecord()
         {
-            if (Title)
-                AudioFile.Metadata.Title = string.Empty;
-            if (Artist)
-                AudioFile.Metadata.Artist = string.Empty;
-            if (Album)
-                AudioFile.Metadata.Album = string.Empty;
-            if (AlbumArtist)
-                AudioFile.Metadata.AlbumArtist = string.Empty;
-            if (Composer)
-                AudioFile.Metadata.Composer = string.Empty;
-            if (Genre)
-                AudioFile.Metadata.Genre = string.Empty;
-            if (Comment)
-                AudioFile.Metadata.Comment = string.Empty;
-            if (Day)
-                AudioFile.Metadata.Day = string.Empty;
-            if (Month)
-                AudioFile.Metadata.Month = string.Empty;
-            if (Year)
-                AudioFile.Metadata.Year = string.Empty;
-            if (TrackNumber)
-                AudioFile.Metadata.TrackNumber = string.Empty;
-            if (TrackCount)
-                AudioFile.Metadata.TrackCount = string.Empty;
+            if (Title) AudioFile.Metadata.Title = string.Empty;
+            if (Artist) AudioFile.Metadata.Artist = string.Empty;
+            if (Album) AudioFile.Metadata.Album = string.Empty;
+            if (AlbumArtist) AudioFile.Metadata.AlbumArtist = string.Empty;
+            if (Composer) AudioFile.Metadata.Composer = string.Empty;
+            if (Genre) AudioFile.Metadata.Genre = string.Empty;
+            if (Comment) AudioFile.Metadata.Comment = string.Empty;
+            if (Day) AudioFile.Metadata.Day = string.Empty;
+            if (Month) AudioFile.Metadata.Month = string.Empty;
+            if (Year) AudioFile.Metadata.Year = string.Empty;
+            if (TrackNumber) AudioFile.Metadata.TrackNumber = string.Empty;
+            if (TrackCount) AudioFile.Metadata.TrackCount = string.Empty;
             if (Loudness)
             {
                 AudioFile.Metadata.TrackPeak = string.Empty;
@@ -103,10 +94,11 @@ namespace AudioWorks.Commands
                 AudioFile.Metadata.TrackGain = string.Empty;
                 AudioFile.Metadata.AlbumGain = string.Empty;
             }
+            if (CoverArt) AudioFile.Metadata.CoverArt = null;
 
             // If no switches were specified, clear everything
             if (!(Title || Artist || Album || AlbumArtist || Composer || Genre || Comment ||
-                  Day || Month || Year || TrackNumber || TrackCount || Loudness))
+                  Day || Month || Year || TrackNumber || TrackCount || Loudness || CoverArt))
                 AudioFile.Metadata.Clear();
 
             ProcessLogMessages();

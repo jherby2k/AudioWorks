@@ -77,7 +77,7 @@ namespace AudioWorks.Commands
         public string TrackCount { get; set; }
 
         [CanBeNull]
-        [Parameter]
+        [Parameter, ValidateNotNull]
         public ICoverArt CoverArt { get; set; }
 
         [Parameter]

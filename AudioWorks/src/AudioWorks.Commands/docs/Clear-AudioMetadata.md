@@ -14,7 +14,7 @@ Clears one or more metadata fields on an audio file.
 
 ```
 Clear-AudioMetadata [-AudioFile] <ITaggedAudioFile> [-Title] [-Artist] [-Album] [-AlbumArtist] [-Composer]
- [-Genre] [-Comment] [-Day] [-Month] [-Year] [-TrackNumber] [-TrackCount] [-Loudness] [-PassThru]
+ [-Genre] [-Comment] [-Day] [-Month] [-Year] [-TrackNumber] [-TrackCount] [-Loudness] [-CoverArt] [-PassThru]
  [<CommonParameters>]
 ```
 
@@ -252,6 +252,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CoverArt
+Clears the cover art.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
