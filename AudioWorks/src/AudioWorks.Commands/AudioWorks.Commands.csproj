@@ -70,8 +70,9 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <!-- ReSharper disable once UnknownProperty -->
-    <Exec Command="pwsh -ExecutionPolicy Bypass -File &quot;$(ProjectDir)PublishModule.ps1&quot; -ProjectDir $(ProjectDir) -Configuration $(Configuration) -Framework $(TargetFramework)" />
+    <!-- ReSharper disable twice UnknownProperty -->
+    <Exec Condition="'$(OS)'=='Windows_NT'" Command="powershell -ExecutionPolicy Bypass -File &quot;$(ProjectDir)PublishModule.ps1&quot; -ProjectDir $(ProjectDir) -Configuration $(Configuration) -Framework $(TargetFramework)" />
+    <Exec Condition="'$(OS)'!='Windows_NT'" Command="pwsh -File &quot;$(ProjectDir)PublishModule.ps1&quot; -ProjectDir $(ProjectDir) -Configuration $(Configuration) -Framework $(TargetFramework)" />
   </Target>
 
 </Project>
