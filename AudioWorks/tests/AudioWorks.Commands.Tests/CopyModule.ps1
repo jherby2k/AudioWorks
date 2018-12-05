@@ -6,7 +6,8 @@ AudioWorks is free software: you can redistribute it and/or modify it under the 
 License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
 version.
 
-AudioWorks is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+AudioWorks is distributed in the hope that it will be useful, but WITHOUT AN
+WARRANTY; without even the implied
 warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
 details.
 
@@ -29,4 +30,4 @@ $projectOutputDir = $ModuleProjectRoot | Get-ChildItem -Filter bin | Get-ChildIt
 Copy-Item -Path $projectOutputDir.FullName -Destination $OutputRoot -Recurse
 
 Write-Host "Copying debugging symbols from $ModuleProjectRoot to $OutputRoot."
-"$ModuleProjectRoot" | Get-ChildItem -Filter bin | Get-ChildItem -Filter $Configuration | Get-ChildItem -Filter *.pdb -Recurse | % { Copy-Item $_ -Destination $(Join-Path $outputDir -ChildPath $_.Directory.Name) }
+Get-ChildItem -Path $ModuleProjectRoot | Get-ChildItem -Filter bin | Get-ChildItem -Filter $Configuration | Get-ChildItem -Filter *.pdb -Recurse | % { Copy-Item $_ -Destination $(Join-Path $outputDir -ChildPath $_.Directory.Name) }
