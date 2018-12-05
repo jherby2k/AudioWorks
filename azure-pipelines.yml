@@ -7,7 +7,7 @@ pool:
   vmImage: 'vs2017-win2016'
 
 variables:
-  buildConfiguration: 'Release'
+  buildConfiguration: 'Release-Windows'
 
 steps:
 - script: dotnet build AudioWorks\AudioWorks.sln --configuration $(buildConfiguration)
