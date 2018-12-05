@@ -29,4 +29,4 @@ $projectOutputDir = $ModuleProjectRoot | Get-ChildItem -Filter bin | Get-ChildIt
 Copy-Item -Path $projectOutputDir.FullName -Destination $OutputRoot -Recurse
 
 Write-Host "Copying debugging symbols from $ModuleProjectRoot to $OutputRoot."
-$ModuleProjectRoot | Get-ChildItem -Filter bin | Get-ChildItem -Filter $Configuration | Get-ChildItem -Filter *.pdb -Recurse | % { Copy-Item $_ -Destination $(Join-Path $outputDir -ChildPath $_.Directory.Name) }
+"$ModuleProjectRoot" | Get-ChildItem -Filter bin | Get-ChildItem -Filter $Configuration | Get-ChildItem -Filter *.pdb -Recurse | % { Copy-Item $_ -Destination $(Join-Path $outputDir -ChildPath $_.Directory.Name) }
