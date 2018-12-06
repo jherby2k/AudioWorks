@@ -19,6 +19,16 @@ steps:
     msiexec /i AppleApplicationSupport64.msi /qb-
   displayName: 'Install prerequisites'
 
+- powershell: |
+    $settingsDir = "$([System.Environment]::GetFolderPath(28))\AudioWorks"
+    $localFeedDir = (New-Item "$settingsDir\LocalFeed" -ItemType Directory).FullName
+    Get-ChildItem -Path AudioWorks\src\Extensions -Filter *.nupkg -Recurse | Select-Object -ExpandProperty FullName | % { nuget add $_ -Source $localFeedDir -NonInteractive }
+    $content = Get-Content AudioWorks\src\AudioWorks.Common\settings.json | ConvertFrom-Json
+    $content.EnableTelemetry = $false
+    $content.ExtensionRepository = $localFeedDir
+    $content | ConvertTo-Json | Set-Content "$settingsDir\settings.json"
+  displayName: 'Configuring AudioWorks for testing'
+
 - task: DotNetCoreCLI@2
   inputs:
     command: test
