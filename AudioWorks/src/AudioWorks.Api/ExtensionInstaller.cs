@@ -80,7 +80,8 @@ namespace AudioWorks.Api
         [NotNull] static readonly List<string> _fileTypesToInstall = new List<string>(new[]
         {
             ".dll",
-            ".dylib"
+            ".dylib",
+            ".pdb"
         });
 
         internal static void Download()

@@ -15,6 +15,7 @@
     <PackageLicenseUrl>https://raw.githubusercontent.com/jherby2k/AudioWorks/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/jherby2k/AudioWorks</PackageProjectUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     <PackageTags>Windows, OSX, Linux</PackageTags>
     <NeutralLanguage>en-US</NeutralLanguage>
     <CodeAnalysisRuleSet>CodeAnalysis.ruleset</CodeAnalysisRuleSet>
