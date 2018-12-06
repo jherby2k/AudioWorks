@@ -278,6 +278,11 @@ namespace AudioWorks.Api
             foreach (var file in source.GetFiles()
                 .Where(file => _fileTypesToInstall.Contains(file.Extension, StringComparer.OrdinalIgnoreCase)))
             {
+                // Skip any 3rd party symbols
+                if (file.Extension.Equals(".pdb", StringComparison.OrdinalIgnoreCase) &&
+                    !file.Name.StartsWith("AudioWorks.Extensions", StringComparison.OrdinalIgnoreCase))
+                    continue;
+
                 logger.LogDebug("Moving '{0}' to '{1}'.",
                     file.FullName, destination.FullName);
 
