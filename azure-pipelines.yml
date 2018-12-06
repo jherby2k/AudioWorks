@@ -29,10 +29,10 @@ steps:
     $content.EnableTelemetry = $false
     $content.ExtensionRepository = $localFeedDir
     $content | ConvertTo-Json | Set-Content "$settingsDir\settings.json"
-  displayName: 'Configuring AudioWorks for testing'
+  displayName: 'Configure extensions for testing'
 
 - task: DotNetCoreCLI@2
   inputs:
     command: test
     projects: 'AudioWorks/tests/*.Tests/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
+    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
