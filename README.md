@@ -7,12 +7,12 @@ This project is intended to supplant [PowerShell Audio](https://github.com/jherb
 Beta release (via NuGet.org and the PowerShell Gallery) is coming soon.
 
 ### Build Status (Master Branch)
-Currently working and relatively stable on Windows and Ubuntu.
+Currently working and relatively stable on Windows, MacOS and Ubuntu.
 
 Platform | Build Status
 -- | --
-Windows | [![Build status](https://ci.appveyor.com/api/projects/status/k7yiy48qkoa5701t/branch/master?svg=true)](https://ci.appveyor.com/project/jherby2k/audioworks-n8ay6/branch/master) [![codecov](https://codecov.io/gh/jherby2k/audioworks/branch/master/graph/badge.svg)](https://codecov.io/gh/jherby2k/audioworks)
-Linux | [![Build status](https://ci.appveyor.com/api/projects/status/8kh6urve97ibwubv/branch/master?svg=true)](https://ci.appveyor.com/project/jherby2k/audioworks-n6p0s/branch/master) [![codecov](https://codecov.io/gh/jherby2k/audioworks/branch/master/graph/badge.svg)](https://codecov.io/gh/jherby2k/audioworks)
+Windows | [![Build Status](https://dev.azure.com/jherby2k/AudioWorks/_apis/build/status/jherby2k.AudioWorks)](https://dev.azure.com/jherby2k/AudioWorks/_build/latest?definitionId=2)
+Linux | TBD
 MacOS | TBD
 
 ### System Requirements
