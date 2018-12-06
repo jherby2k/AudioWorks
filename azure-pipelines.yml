@@ -10,11 +10,13 @@ steps:
   displayName: 'Build $(buildConfiguration) configuration'
 
 - powershell: |
+    Invoke-WebRequest -Uri https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile nuget.exe
     Invoke-WebRequest -Uri https://audioworks.blob.core.windows.net/prerequisites/AppleApplicationSupport.msi -OutFile AppleApplicationSupport.msi
     Invoke-WebRequest -Uri https://audioworks.blob.core.windows.net/prerequisites/AppleApplicationSupport64.msi -OutFile AppleApplicationSupport64.msi
   displayName: 'Download prerequisites'
 
 - script: |
+    COPY /Y nuget.exe "%SystemRoot%\System32"
     msiexec /i AppleApplicationSupport.msi /qb-
     msiexec /i AppleApplicationSupport64.msi /qb-
   displayName: 'Install prerequisites'
