@@ -45,7 +45,7 @@ steps:
 
 - task: PublishTestResults@2
   inputs:
-    testRunner: xUnit
+    testRunner: VSTest
     testResultsFiles: '**/*.trx'
   displayName: 'Publish test results'
 
