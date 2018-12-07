@@ -728,7 +728,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
 #if OSX
-                "C1DFE680420B4D2D46BA02F087ACB488"
+                "A4A51635A3E24D6AD0C377C918FBE7B6"
 #else
                 "09CD8B8C8E9D8BC09121D8C9F871F9B7",
                 "D281CFECEEBE5A14D0D3D953D12F71DC"
@@ -745,7 +745,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
 #if OSX
-                "86FEDE6D1F7EF6216FE5420A4B326F89"
+                "336CE3C01C6F9D430E6FC947B93820F7"
 #else
                 "9A0F6E1984B428F236E1209C13AED4D1",
                 "47189DECF29E68A40F60645F97714BE3"
@@ -762,7 +762,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
 #if OSX
-                "C76FDC7D9181C8A5C64B45315B9E3779"
+                "6C9073E678B05536C0B6AE3BF98691DD"
 #else
                 "CB39DFBF414790022574435C2D30297D",
                 "589C93B14B5A2C8EF39239949A7729FF"
@@ -796,7 +796,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
 #if OSX
-                "047B0319C62CD977077D920DC71295AD"
+                "0F0823DFE0AC879E021E881F70AF5775"
 #else
                 "7BAD797AA7C5F71C7168C24077271029",
                 "A3DC2D21D29A05456284B0B8C09E1F94"
@@ -813,7 +813,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
 #if OSX
-                "987CFD9DF4CBDFDB0BE674395D2165F5"
+                "7F43E990D02B3D55798A69F675362138"
 #else
                 "9AC3DEF9B464D0E1AB2D4F91C1A08B83",
                 "DC77F4678649D575CE3E91DB950CDF55"
@@ -830,7 +830,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
 #if OSX
-                "987CFD9DF4CBDFDB0BE674395D2165F5"
+                "7F43E990D02B3D55798A69F675362138"
 #else
                 "9AC3DEF9B464D0E1AB2D4F91C1A08B83",
                 "DC77F4678649D575CE3E91DB950CDF55"
@@ -849,7 +849,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
 #if OSX
-                "86FEDE6D1F7EF6216FE5420A4B326F89"
+                "336CE3C01C6F9D430E6FC947B93820F7"
 #else
                 "9A0F6E1984B428F236E1209C13AED4D1",
                 "47189DECF29E68A40F60645F97714BE3"
@@ -887,7 +887,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
 #if OSX
-                "672E1988E013BD994E7D428528D7C235"
+                "B26CC58D8473661388019F210607C1B7"
 #else
                 "7EDD94F25082AEEE82B2AA87E795AB6D",
                 "560039278EF9183F0FB2C47E5744E475"
@@ -944,7 +944,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
 #if OSX
-                "F2E26A79A81AC009F83A90E1720926D4"
+                "E36539ED8969070A53809CECCD0B422A"
 #else
                 "EBD496E30A953A8D0FE11C2609EFABC3",
                 "A67A5F8D1A55CD2A29EEFA54E583AEA1"
@@ -963,7 +963,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
 #if OSX
-                "E02E2162305236482A85303CE0A8BCFE"
+                "9116562A92B3F1FA983A180972CE670E"
 #else
                 "DE5F94EC1EACB75A3D049AE9960A7ACB",
                 "8F6858F8F86AA821789D926E0B4F63B6"
@@ -982,7 +982,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
 #if OSX
-                "FB28221E1847925A8E338184A4D154E6"
+                "503F9957F1FE77F23189507AFC641297"
 #else
                 "B26C14FD53A4027C26FA3A57CB96AF4C",
                 "EEEAF1FB2801EF0FB49B9B87350B5587"
@@ -1002,7 +1002,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
 #if OSX
-                "FB28221E1847925A8E338184A4D154E6"
+                "503F9957F1FE77F23189507AFC641297"
 #else
                 "B26C14FD53A4027C26FA3A57CB96AF4C",
                 "EEEAF1FB2801EF0FB49B9B87350B5587"
@@ -1022,7 +1022,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
 #if OSX
-                "592C890A4624C05761ED9E7169354A73"
+                "31FCA720DAD2B27CCFD20D52F8E32B2D"
 #else
                 "B65D496ADABF3DBCDB24136A9655C295",
                 "6AD4BD76918C74B976FD7774163CD7ED"
@@ -1042,7 +1042,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
 #if OSX
-                "681669911753B8226451A31ABF1A9886"
+                "1D7F6BDC889271BEA523A07DD29BDD37"
 #else
                 "365D7E965534C8690B4694B27D0CF1C9",
                 "4E99289AFF43EA387442E30EAFB7305A"
@@ -1061,7 +1061,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
 #if OSX
-                "86FEDE6D1F7EF6216FE5420A4B326F89"
+                "336CE3C01C6F9D430E6FC947B93820F7"
 #else
                 "9A0F6E1984B428F236E1209C13AED4D1",
                 "47189DECF29E68A40F60645F97714BE3"
@@ -1080,7 +1080,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
 #if OSX
-                "2D94FDDB2800F73894BDDE07242C4F2A"
+                "6F97B672D446B19B9370EE3FF4A5DCB5"
 #else
                 "DDA8DBB070EA36F77455A41A2628B6AA",
                 "14145EA9D279E2FA457AD85F19DC0896"
@@ -1099,7 +1099,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
 #if OSX
-                "E1841342DFCE34B07406584F667091B5"
+                "FD0ADBEFE09CE73D7A71768366A029A4"
 #else
                 "5502D724D98AA24FE49FA8AFB0FC63A6",
                 "90D1426E435372B957E6558E4DC5D7FD"
