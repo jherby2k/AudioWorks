@@ -23,6 +23,10 @@ steps:
 
 - script: |
     sudo curl -o /usr/local/bin/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
+    sudo apt-get update
+    sudo apt-get install --yes libmp3lame0
+    sudo apt-get install --yes libebur128-1
+    sudo updatedb
     dotnet tool install --global dotnet-reportgenerator-globaltool
   displayName: 'Install prerequisites'
 
@@ -34,7 +38,7 @@ steps:
     $content.EnableTelemetry = $false
     $content.ExtensionRepository = $localFeedDir
     $content | ConvertTo-Json | Set-Content "$settingsDir/settings.json"
-    Get-ChildItem -Path AudioWorks/tests -Filter *.Tests -Directory | % { dotnet test --no-build $_.FullName --logger trx --configuration $env:BUILDCONFIGURATION --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[*]JetBrains.Annotations.*" /p:IncludeDirectory="$settingsDir/Extensions/netcoreapp2.1/*%2cAudioWorks.Commands\netcoreapp2.1" }
+    Get-ChildItem -Path AudioWorks/tests -Filter *.Tests -Directory | % { dotnet test --no-build $_.FullName --logger trx --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[*]JetBrains.Annotations.*" /p:IncludeDirectory="$settingsDir/Extensions/netcoreapp2.1/*%2cAudioWorks.Commands/netcoreapp2.1" }
   displayName: 'Run tests'
 
 - task: PublishTestResults@2
