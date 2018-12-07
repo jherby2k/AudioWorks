@@ -45,6 +45,7 @@ steps:
     $content.ExtensionRepository = $localFeedDir
     $content | ConvertTo-Json | Set-Content "$settingsDir/settings.json"
     Get-ChildItem -Path AudioWorks/tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[*]JetBrains.Annotations.*" /p:IncludeDirectory="$settingsDir/Extensions/netcoreapp2.1/*%2cAudioWorks.Commands/netcoreapp2.1" }
+    get-childitem $settingsDir/Extensions/netcoreapp2.1
   displayName: 'Run tests'
 
 - task: PublishTestResults@2
