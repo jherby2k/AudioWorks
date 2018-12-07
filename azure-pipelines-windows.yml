@@ -42,8 +42,8 @@ steps:
     $content.EnableTelemetry = $false
     $content.ExtensionRepository = $localFeedDir
     $content | ConvertTo-Json | Set-Content "$settingsDir\settings.json"
-    Get-ChildItem -Path AudioWorks\tests -Filter *.Tests -Directory | % { dotnet test --no-build $_.FullName --logger trx --framework netcoreapp2.1 -c $env:buildConfiguration --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=.\coverage.netcoreapp2.1.xml /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[*]JetBrains.Annotations.*" /p:IncludeDirectory="$settingsDir\Extensions\netcoreapp2.1\*%2cAudioWorks.Commands\netcoreapp2.1" }
-    Get-ChildItem -Path AudioWorks\tests -Filter *.Tests -Directory | % { dotnet test --no-build $_.FullName --logger trx --framework net471 -c $env:buildConfiguration --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=.\coverage.net471.xml /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[*]JetBrains.Annotations.*" /p:IncludeDirectory="$settingsDir\Extensions\netstandard2.0\*%2cAudioWorks.Commands\netstandard2.0" }
+    Get-ChildItem -Path AudioWorks\tests -Filter *.Tests -Directory | % { dotnet test --no-build $_.FullName --logger trx --framework netcoreapp2.1 --configuration $env:BUILDCONFIGURATION --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=.\coverage.netcoreapp2.1.xml /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[*]JetBrains.Annotations.*" /p:IncludeDirectory="$settingsDir\Extensions\netcoreapp2.1\*%2cAudioWorks.Commands\netcoreapp2.1" }
+    Get-ChildItem -Path AudioWorks\tests -Filter *.Tests -Directory | % { dotnet test --no-build $_.FullName --logger trx --framework net471 --configuration $env:BUILDCONFIGURATION --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=.\coverage.net471.xml /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[*]JetBrains.Annotations.*" /p:IncludeDirectory="$settingsDir\Extensions\netstandard2.0\*%2cAudioWorks.Commands\netstandard2.0" }
   displayName: 'Run tests'
 
 - task: PublishTestResults@2

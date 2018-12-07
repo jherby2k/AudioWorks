@@ -22,18 +22,19 @@ steps:
   displayName: 'Build $(buildConfiguration) configuration'
 
 - script: |
+    sudo curl -o /usr/local/bin/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
     dotnet tool install --global dotnet-reportgenerator-globaltool
   displayName: 'Install prerequisites'
 
 - powershell: |
     $settingsDir = "$([System.Environment]::GetFolderPath(28))/AudioWorks"
     $localFeedDir = (New-Item "$settingsDir/LocalFeed" -ItemType Directory).FullName
-    Get-ChildItem -Path AudioWorks/src/Extensions -Filter *.nupkg -Recurse | Select-Object -ExpandProperty FullName | % { nuget add $_ -Source $localFeedDir -NonInteractive }
+    Get-ChildItem -Path AudioWorks/src/Extensions -Filter *.nupkg -Recurse | Select-Object -ExpandProperty FullName | % { mono /usr/local/bin/nuget.exe add $_ -Source $localFeedDir -NonInteractive }
     $content = Get-Content AudioWorks/src/AudioWorks.Common/settings.json | ConvertFrom-Json
     $content.EnableTelemetry = $false
     $content.ExtensionRepository = $localFeedDir
     $content | ConvertTo-Json | Set-Content "$settingsDir/settings.json"
-    Get-ChildItem -Path AudioWorks/tests -Filter *.Tests -Directory | % { dotnet test --no-build $_.FullName --logger trx --configuration $env:buildConfiguration --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./coverage.netcoreapp2.1.xml /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[*]JetBrains.Annotations.*" /p:IncludeDirectory="$settingsDir/Extensions/netcoreapp2.1/*%2cAudioWorks.Commands\netcoreapp2.1" }
+    Get-ChildItem -Path AudioWorks/tests -Filter *.Tests -Directory | % { dotnet test --no-build $_.FullName --logger trx --configuration $env:BUILDCONFIGURATION --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[*]JetBrains.Annotations.*" /p:IncludeDirectory="$settingsDir/Extensions/netcoreapp2.1/*%2cAudioWorks.Commands\netcoreapp2.1" }
   displayName: 'Run tests'
 
 - task: PublishTestResults@2
