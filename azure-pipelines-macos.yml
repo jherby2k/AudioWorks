@@ -27,10 +27,9 @@ steps:
   displayName: 'Install prerequisites'
 
 - powershell: |
-    function nuget { mono /usr/local/bin/nuget.exe }
     $settingsDir = "$([System.Environment]::GetFolderPath(28))/AudioWorks"
     $localFeedDir = (New-Item "$settingsDir/LocalFeed" -ItemType Directory).FullName
-    Get-ChildItem -Path AudioWorks/src/Extensions -Filter *.nupkg -Recurse | Select-Object -ExpandProperty FullName | % { nuget add $_ -Source $localFeedDir -NonInteractive }
+    Get-ChildItem -Path AudioWorks/src/Extensions -Filter *.nupkg -Recurse | Select-Object -ExpandProperty FullName | % { mono /usr/local/bin/nuget.exe add $_ -Source $localFeedDir -NonInteractive }
     $content = Get-Content AudioWorks/src/AudioWorks.Common/settings.json | ConvertFrom-Json
     $content.EnableTelemetry = $false
     $content.ExtensionRepository = $localFeedDir
