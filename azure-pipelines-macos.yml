@@ -1,7 +1,11 @@
 trigger:
   paths:
+    include:
+    - **
     exclude:
+    - .gitignore.txt
     - README.md
+    - LICENSE
     - azure-pipelines-windows.yml
     - azure-pipelines-linux.yml
 
