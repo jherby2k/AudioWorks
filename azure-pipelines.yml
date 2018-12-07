@@ -42,7 +42,7 @@ steps:
 - task: PublishTestResults@2
   inputs:
     testRunner: xUnit
-    testResultsFiles: '**/*.trx'
+    testResultsFiles: **/*.trx
 
 - task: PublishCodeCoverageResults@1
   inputs:
@@ -52,8 +52,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    #sourceFolder: # Optional
-    contents: **\*.nupkg
+    contents: AudioWorks\src\**\*.nupkg
     targetFolder: $(Build.ArtifactStagingDirectory)
 
 - task: PublishBuildArtifacts@1
