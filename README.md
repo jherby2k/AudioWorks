@@ -6,14 +6,11 @@ This project is intended to supplant [PowerShell Audio](https://github.com/jherb
 
 Beta release (via NuGet.org and the PowerShell Gallery) is coming soon.
 
-### Build Status (Master Branch)
-Currently working and relatively stable on Windows, MacOS and Ubuntu.
-
-Platform | Build Status
+Platform | Status (Master Branch)
 -- | --
-Windows | [![Build Status](https://dev.azure.com/jherby2k/AudioWorks/_apis/build/status/jherby2k.AudioWorks)](https://dev.azure.com/jherby2k/AudioWorks/_build/latest?definitionId=2)
-Linux | TBD
-MacOS | TBD
+Windows | [![Build Status](https://dev.azure.com/jherby2k/AudioWorks/_apis/build/status/AudioWorks%20for%20Windows?branchName=master)](https://dev.azure.com/jherby2k/AudioWorks/_build/latest?definitionId=2?branchName=master) [![Code Coverage](https://img.shields.io/azure-devops/coverage/jherby2k/AudioWorks/2.svg)](https://dev.azure.com/jherby2k/AudioWorks/_build/latest?definitionId=2?branchName=master)
+Linux | [![Build Status](https://dev.azure.com/jherby2k/AudioWorks/_apis/build/status/AudioWorks%20for%20Linux?branchName=master)](https://dev.azure.com/jherby2k/AudioWorks/_build/latest?definitionId=3?branchName=master) [![Code Coverage](https://img.shields.io/azure-devops/coverage/jherby2k/AudioWorks/3.svg)](https://dev.azure.com/jherby2k/AudioWorks/_build/latest?definitionId=3?branchName=master)
+MacOS | [![Build Status](https://dev.azure.com/jherby2k/AudioWorks/_apis/build/status/AudioWorks%20for%20MacOS?branchName=master)](https://dev.azure.com/jherby2k/AudioWorks/_build/latest?definitionId=4?branchName=master) [![Code Coverage](https://img.shields.io/azure-devops/coverage/jherby2k/AudioWorks/4.svg)](https://dev.azure.com/jherby2k/AudioWorks/_build/latest?definitionId=4?branchName=master)
 
 ### System Requirements
 AudioWorks runs on Windows 7+, OSX 10.12+, Ubuntu (18.04 or 16.04) and Fedora 28 (other OS versions and distributions may work, but are currently untested).
