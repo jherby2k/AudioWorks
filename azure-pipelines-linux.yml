@@ -16,6 +16,12 @@ pool:
 variables:
   buildConfiguration: 'Release-Linux'
 
+- task: DotNetCoreInstaller@0
+  inputs:
+    packageType: sdk
+    version: 2.1.500
+  displayName: 'Upgrade .NET Core'
+
 steps:
 - script: |
     dotnet build AudioWorks/AudioWorks.sln --configuration $(buildConfiguration)
@@ -38,7 +44,7 @@ steps:
     $content.EnableTelemetry = $false
     $content.ExtensionRepository = $localFeedDir
     $content | ConvertTo-Json | Set-Content "$settingsDir/settings.json"
-    Get-ChildItem -Path AudioWorks/tests -Filter *.Tests -Directory | % { dotnet test --no-build $_.FullName --logger trx --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[*]JetBrains.Annotations.*" /p:IncludeDirectory="$settingsDir/Extensions/netcoreapp2.1/*%2cAudioWorks.Commands/netcoreapp2.1" }
+    Get-ChildItem -Path AudioWorks/tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[*]JetBrains.Annotations.*" /p:IncludeDirectory="$settingsDir/Extensions/netcoreapp2.1/*%2cAudioWorks.Commands/netcoreapp2.1" }
   displayName: 'Run tests'
 
 - task: PublishTestResults@2
@@ -48,8 +54,8 @@ steps:
   displayName: 'Publish test results'
 
 - script: |
-    $HOME/.dotnet/tools/reportgenerator -reports:AudioWorks/tests/*/coverage.*.xml -targetdir:Reports/Cobertura -reporttypes:Cobertura
-    $HOME/.dotnet/tools/reportgenerator -reports:Reports/Cobertura/Cobertura.xml -targetdir:Reports/HTML "-reporttypes:HTMLInline;HTMLChart"
+    reportgenerator -reports:AudioWorks/tests/*/coverage.*.xml -targetdir:Reports/Cobertura -reporttypes:Cobertura
+    reportgenerator -reports:Reports/Cobertura/Cobertura.xml -targetdir:Reports/HTML "-reporttypes:HTMLInline;HTMLChart"
   displayName: 'Generate code coverage results'
 
 - task: PublishCodeCoverageResults@1
