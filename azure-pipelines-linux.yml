@@ -16,13 +16,13 @@ pool:
 variables:
   buildConfiguration: 'Release-Linux'
 
+steps:
 - task: DotNetCoreInstaller@0
   inputs:
     packageType: sdk
     version: 2.1.500
   displayName: 'Upgrade .NET Core'
 
-steps:
 - script: |
     dotnet build AudioWorks/AudioWorks.sln --configuration $(buildConfiguration)
   displayName: 'Build $(buildConfiguration) configuration'
