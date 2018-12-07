@@ -49,3 +49,11 @@ steps:
     codecoverageTool: cobertura
     summaryFileLocation: $(Build.SourcesDirectory)\Reports\Cobertura\Cobertura.xml
     reportDirectory: $(Build.SourcesDirectory)\Reports\HTML
+
+- task: CopyFiles@2
+  inputs:
+    #sourceFolder: # Optional
+    contents: **\*.nupkg
+    targetFolder: $(Build.ArtifactStagingDirectory)
+
+- task: PublishBuildArtifacts@1
