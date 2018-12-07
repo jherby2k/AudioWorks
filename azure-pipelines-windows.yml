@@ -1,7 +1,8 @@
 trigger:
-  paths:
+  branches:
     include:
-    - '**'
+    - master
+  paths:
     exclude:
     - .gitignore.txt
     - README.md
