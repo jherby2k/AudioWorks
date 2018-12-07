@@ -21,6 +21,12 @@ steps:
     dotnet build AudioWorks/AudioWorks.sln --configuration $(buildConfiguration)
   displayName: 'Build $(buildConfiguration) configuration'
 
+- task: DotNetCoreInstaller@0
+  inputs:
+    packageType: sdk
+    version: 2.1.500
+  displayName: 'Upgrade .NET Core'
+
 - script: |
     sudo curl -o /usr/local/bin/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
     dotnet tool install --global dotnet-reportgenerator-globaltool
