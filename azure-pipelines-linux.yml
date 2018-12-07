@@ -30,7 +30,9 @@ steps:
 - script: |
     sudo curl -o /usr/local/bin/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
     sudo apt-get update
+    sudo apt-get install --yes libflac8
     sudo apt-get install --yes libmp3lame0
+    sudo apt-get install --yes libvorbisenc2
     sudo apt-get install --yes libebur128-1
     sudo updatedb
     dotnet tool install --global dotnet-reportgenerator-globaltool
@@ -44,8 +46,7 @@ steps:
     $content.EnableTelemetry = $false
     $content.ExtensionRepository = $localFeedDir
     $content | ConvertTo-Json | Set-Content "$settingsDir/settings.json"
-    Get-ChildItem -Path AudioWorks/tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[*]JetBrains.Annotations.*" /p:IncludeDirectory="$settingsDir/Extensions/netcoreapp2.1/*%2cAudioWorks.Commands/netcoreapp2.1" }
-    get-childitem $settingsDir/Extensions/netcoreapp2.1
+    Get-ChildItem -Path AudioWorks/tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[*]JetBrains.Annotations.*" /p:IncludeDirectory="$settingsDir/Extensions/netcoreapp2.1/*%2c($_.FullName)/bin/$($env:BUILDCONFIGURATION)/netcoreapp2.1/AudioWorks.Commands/netcoreapp2.1" }
   displayName: 'Run tests'
 
 - task: PublishTestResults@2
@@ -68,7 +69,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    contents: 'AudioWorks/src/Extensions/**/*.nupkg'
+    contents: 'AudioWorks/src/Extensions/**/*.Linux.*.nupkg'
     targetFolder: $(Build.ArtifactStagingDirectory)
   displayName: 'Copy artifacts to staging directory'
 
