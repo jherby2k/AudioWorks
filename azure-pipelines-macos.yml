@@ -27,7 +27,7 @@ steps:
   displayName: 'Install prerequisites'
 
 - powershell: |
-    New-Alias -Name nuget -Value "mono /usr/local/bin/nuget.exe"
+    function nuget { mono /usr/local/bin/nuget.exe }
     $settingsDir = "$([System.Environment]::GetFolderPath(28))/AudioWorks"
     $localFeedDir = (New-Item "$settingsDir/LocalFeed" -ItemType Directory).FullName
     Get-ChildItem -Path AudioWorks/src/Extensions -Filter *.nupkg -Recurse | Select-Object -ExpandProperty FullName | % { nuget add $_ -Source $localFeedDir -NonInteractive }
