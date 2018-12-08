@@ -160,8 +160,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensibility.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.TestUtilities", "tests\AudioWorks.TestUtilities\AudioWorks.TestUtilities.csproj", "{D0D6093D-21F6-410E-AF81-E14CC10CCADB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerfTest", "PerfTest\PerfTest.csproj", "{0FE125C7-2B5C-4470-ACDE-7D653BC76103}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -460,22 +458,6 @@ Global
 		{D0D6093D-21F6-410E-AF81-E14CC10CCADB}.Release-OSX|Any CPU.Build.0 = Release-OSX|Any CPU
 		{D0D6093D-21F6-410E-AF81-E14CC10CCADB}.Release-Windows|Any CPU.ActiveCfg = Release-Windows|Any CPU
 		{D0D6093D-21F6-410E-AF81-E14CC10CCADB}.Release-Windows|Any CPU.Build.0 = Release-Windows|Any CPU
-		{0FE125C7-2B5C-4470-ACDE-7D653BC76103}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0FE125C7-2B5C-4470-ACDE-7D653BC76103}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0FE125C7-2B5C-4470-ACDE-7D653BC76103}.Debug-Linux|Any CPU.ActiveCfg = Debug|Any CPU
-		{0FE125C7-2B5C-4470-ACDE-7D653BC76103}.Debug-Linux|Any CPU.Build.0 = Debug|Any CPU
-		{0FE125C7-2B5C-4470-ACDE-7D653BC76103}.Debug-OSX|Any CPU.ActiveCfg = Debug|Any CPU
-		{0FE125C7-2B5C-4470-ACDE-7D653BC76103}.Debug-OSX|Any CPU.Build.0 = Debug|Any CPU
-		{0FE125C7-2B5C-4470-ACDE-7D653BC76103}.Debug-Windows|Any CPU.ActiveCfg = Debug|Any CPU
-		{0FE125C7-2B5C-4470-ACDE-7D653BC76103}.Debug-Windows|Any CPU.Build.0 = Debug|Any CPU
-		{0FE125C7-2B5C-4470-ACDE-7D653BC76103}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0FE125C7-2B5C-4470-ACDE-7D653BC76103}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0FE125C7-2B5C-4470-ACDE-7D653BC76103}.Release-Linux|Any CPU.ActiveCfg = Release|Any CPU
-		{0FE125C7-2B5C-4470-ACDE-7D653BC76103}.Release-Linux|Any CPU.Build.0 = Release|Any CPU
-		{0FE125C7-2B5C-4470-ACDE-7D653BC76103}.Release-OSX|Any CPU.ActiveCfg = Release|Any CPU
-		{0FE125C7-2B5C-4470-ACDE-7D653BC76103}.Release-OSX|Any CPU.Build.0 = Release|Any CPU
-		{0FE125C7-2B5C-4470-ACDE-7D653BC76103}.Release-Windows|Any CPU.ActiveCfg = Release|Any CPU
-		{0FE125C7-2B5C-4470-ACDE-7D653BC76103}.Release-Windows|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
