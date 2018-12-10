@@ -4,8 +4,6 @@ A cross-platform, multi-format audio conversion and tagging suite written in C# 
 
 This project is intended to supplant [PowerShell Audio](https://github.com/jherby2k/PowerShellAudio) by targetting both Windows PowerShell and PowerShell Core (Windows, Linux and Mac OSX).
 
-Beta release (via NuGet.org and the PowerShell Gallery) is coming soon.
-
 Platform | Status (Master Branch)
 -- | --
 Windows | [![Build Status](https://dev.azure.com/jherby2k/AudioWorks/_apis/build/status/AudioWorks%20for%20Windows?branchName=master)](https://dev.azure.com/jherby2k/AudioWorks/_build/latest?definitionId=2?branchName=master) [![Code Coverage](https://img.shields.io/azure-devops/coverage/jherby2k/AudioWorks/2.svg)](https://dev.azure.com/jherby2k/AudioWorks/_build/latest?definitionId=2?branchName=master)
@@ -28,11 +26,7 @@ AudioWorks runs on Windows 7+, OSX 10.12+, Ubuntu (18.04 or 16.04) and Fedora 28
 * [PowerShell Core 6.1+](https://github.com/PowerShell/PowerShell/releases)
 
 ### Installation
-The AudioWorks PowerShell module can be installed via PowerShellGet:
-1. (Windows PowerShell only) [Update PowerShellGet](https://docs.microsoft.com/en-us/powershell/gallery/installing-psget) to a version that supports pre-release modules.
-1. Check your PowerShell execution policy using `Get-ExecutionPolicy`. If it is Restricted, you will need to set your PowerShell execution policy to allow signed scripts using something like `Set-ExecutionPolicy -ExecutionPolicy AllSigned` from an administrator command prompt (`RemoteSigned` and `Unrestricted` will also work, but are less secure).
-1. Register the pre-release repository with `Register-PSRepository -Name AudioWorks -SourceLocation 'https://www.myget.org/F/audioworks-prerelease/api/v2'`.
-1. Install the module with `Install-Module -Name AudioWorks.Commands -Repository AudioWorks -AllowPrerelease -Scope CurrentUser`.
+The AudioWorks PowerShell module can found on [the PowerShell Gallery](https://www.powershellgallery.com/packages/AudioWorks.Commands/1.0.0-beta1/ContactOwners). If you are using Windows PowerShell 5.1, you may need to [update PowerShellGet](https://docs.microsoft.com/en-us/powershell/gallery/installing-psget) to a version that supports pre-release modules.
 
 Keep the module up to date with `Update-Module -Name AudioWorks.Commands -AllowPrerelease`.
 
