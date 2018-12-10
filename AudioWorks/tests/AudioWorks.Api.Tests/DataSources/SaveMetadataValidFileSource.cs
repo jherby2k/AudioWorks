@@ -13,6 +13,7 @@ details.
 You should have received a copy of the GNU Lesser General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AudioWorks.Api.Tests.DataTypes;
@@ -571,6 +572,42 @@ namespace AudioWorks.Api.Tests.DataSources
                 "7F7316891B26F9FC3DE7D2D1304F9CFE"
 #else
                 "7F7316891B26F9FC3DE7D2D1304F9CFE"
+#endif
+            },
+
+            // Updated creation time
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo.m4a",
+                new TestAudioMetadata(),
+                null,
+                new TestSettingDictionary
+                {
+                    ["CreationTime"] = new DateTime(2018, 9, 1),
+                },
+#if LINUX
+                "4AF6E13DD50245A06F6FEA52F2325C47",
+                "4AF6E13DD50245A06F6FEA52F2325C47"
+#else
+                "4AF6E13DD50245A06F6FEA52F2325C47"
+#endif
+            },
+
+            // Updated modification time
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo.m4a",
+                new TestAudioMetadata(),
+                null,
+                new TestSettingDictionary
+                {
+                    ["ModificationTime"] = new DateTime(2018, 9, 1),
+                },
+#if LINUX
+                "D196EAFE7E8617F867136C526718CEF2",
+                "D196EAFE7E8617F867136C526718CEF2"
+#else
+                "D196EAFE7E8617F867136C526718CEF2"
 #endif
             },
 
