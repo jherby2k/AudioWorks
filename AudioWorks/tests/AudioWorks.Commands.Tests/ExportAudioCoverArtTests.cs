@@ -14,15 +14,20 @@ You should have received a copy of the GNU Lesser General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Management.Automation;
+using AudioWorks.Api;
+using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Common;
+using AudioWorks.TestUtilities;
 using JetBrains.Annotations;
 using Moq;
 using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
+    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class ExportAudioCoverArtTests : IClassFixture<ModuleFixture>
     {
         [NotNull] readonly ModuleFixture _moduleFixture;
@@ -108,6 +113,33 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("ExpandProperty", "Type");
 
                 Assert.Equal(typeof(FileInfo), (Type) ps.Invoke()[0].BaseObject);
+            }
+        }
+
+        [Theory(DisplayName = "Export-AudioCoverArt creates the expected image file")]
+        [MemberData(nameof(ValidFileWithCoverArtDataSource.IndexedFileNamesAndDataHash), MemberType = typeof(ValidFileWithCoverArtDataSource))]
+        public void CreatesExpectedImageFile(
+            int index,
+            [NotNull] string sourceFileName,
+            [NotNull] string expectedHash)
+        {
+            using (var ps = PowerShell.Create())
+            {
+                ps.Runspace = _moduleFixture.Runspace;
+                ps.AddCommand("Export-AudioCoverArt")
+                    .AddParameter("AudioFile", new TaggedAudioFile(
+                        Path.Combine(
+                            new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
+                            "TestFiles",
+                            "Valid",
+                            sourceFileName)))
+                    .AddParameter("Path", Path.Combine("Output", "Export-AudioCoverArt"))
+                    .AddParameter("Name", $"{index:00} - {Path.GetFileNameWithoutExtension(sourceFileName)}")
+                    .AddParameter("Replace");
+
+                var result = ps.Invoke();
+                Assert.Equal(expectedHash,
+                    result == null ? null : HashUtility.CalculateHash(((FileInfo) result[0].BaseObject).FullName));
             }
         }
     }

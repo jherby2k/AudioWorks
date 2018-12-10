@@ -147,5 +147,11 @@ namespace AudioWorks.Api.Tests.DataSources
         {
             [UsedImplicitly] get => _data.Select(item => new[] { item[0], item[6] });
         }
+
+        [NotNull, ItemNotNull]
+        public static IEnumerable<object[]> IndexedFileNamesAndDataHash
+        {
+            [UsedImplicitly] get => _data.Select((item, index) => new[] { index, item[0], item[6] });
+        }
     }
 }

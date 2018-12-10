@@ -14,6 +14,9 @@ You should have received a copy of the GNU Lesser General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
 using JetBrains.Annotations;
@@ -22,6 +25,7 @@ using Xunit.Abstractions;
 
 namespace AudioWorks.Api.Tests
 {
+    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class CoverArtExtractorTests
     {
         public CoverArtExtractorTests([NotNull] ITestOutputHelper outputHelper)
@@ -33,6 +37,30 @@ namespace AudioWorks.Api.Tests
         public void ConstructorEncodedDirectoryNameInvalidThrowsException()
         {
             Assert.Throws<ArgumentException>(() => new CoverArtExtractor("{Invalid}"));
+        }
+
+        [Theory(DisplayName = "CoverArtExtractor's Extract method creates the expected image file")]
+        [MemberData(nameof(ValidFileWithCoverArtDataSource.IndexedFileNamesAndDataHash), MemberType = typeof(ValidFileWithCoverArtDataSource))]
+        public void ExtractCreatesExpectedImageFile(
+            int index,
+            [NotNull] string sourceFileName,
+            [NotNull] string expectedHash)
+        {
+            var path = Path.Combine("Output", "Extract");
+            Directory.CreateDirectory(path);
+
+            var result = new CoverArtExtractor(
+                    path,
+                    $"{index:00} - {Path.GetFileNameWithoutExtension(sourceFileName)}",
+                    true)
+                .Extract(new TaggedAudioFile(
+                    Path.Combine(
+                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
+                        "TestFiles",
+                        "Valid",
+                        sourceFileName)));
+
+            Assert.Equal(expectedHash, result == null ? null : HashUtility.CalculateHash(result.FullName));
         }
     }
 }
