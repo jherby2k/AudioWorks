@@ -64,7 +64,8 @@ namespace AudioWorks.Commands
 
             ProcessLogMessages();
 
-            WriteObject(result);
+            if (result != null)
+                WriteObject(result);
         }
     }
 }

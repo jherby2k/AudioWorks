@@ -121,7 +121,7 @@ namespace AudioWorks.Commands.Tests
         public void CreatesExpectedImageFile(
             int index,
             [NotNull] string sourceFileName,
-            [NotNull] string expectedHash)
+            [CanBeNull] string expectedHash)
         {
             using (var ps = PowerShell.Create())
             {
@@ -138,8 +138,16 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("Replace");
 
                 var result = ps.Invoke();
-                Assert.Equal(expectedHash,
-                    result == null ? null : HashUtility.CalculateHash(((FileInfo) result[0].BaseObject).FullName));
+
+                if (expectedHash == null)
+                {
+                    Assert.Empty(result);
+                }
+                else
+                {
+                    Assert.Single(result);
+                    Assert.Equal(expectedHash, HashUtility.CalculateHash(((FileInfo) result[0].BaseObject).FullName));
+                }
             }
         }
     }

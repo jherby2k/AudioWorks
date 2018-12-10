@@ -47,6 +47,17 @@ namespace AudioWorks.Api.Tests.DataSources
 
             new object[]
             {
+                "FLAC Level 5 16-bit 44100Hz Stereo.flac",
+                0,
+                0,
+                0,
+                false,
+                null,
+                null
+            },
+
+            new object[]
+            {
                 "ALAC 16-bit 44100Hz Stereo (Covr atom - PNG).m4a",
                 1280,
                 935,
@@ -65,6 +76,17 @@ namespace AudioWorks.Api.Tests.DataSources
                 false,
                 "image/jpeg",
                 "4BFBE209E1183AE63DBBED12EEE773B8"
+            },
+
+            new object[]
+            {
+                "ALAC 16-bit 44100Hz Stereo.m4a",
+                0,
+                0,
+                0,
+                false,
+                null,
+                null
             },
 
             new object[]
@@ -91,6 +113,17 @@ namespace AudioWorks.Api.Tests.DataSources
 
             new object[]
             {
+                "Lame CBR 128 44100Hz Stereo.mp3",
+                0,
+                0,
+                0,
+                false,
+                null,
+                null
+            },
+
+            new object[]
+            {
                 "Vorbis Quality 3 44100Hz Stereo (PICTURE comment - PNG).ogg",
                 1280,
                 935,
@@ -109,10 +142,22 @@ namespace AudioWorks.Api.Tests.DataSources
                 false,
                 "image/jpeg",
                 "4BFBE209E1183AE63DBBED12EEE773B8"
-            }
+            },
+
+            new object[]
+            {
+                "Vorbis Quality 3 44100Hz Stereo.ogg",
+                0,
+                0,
+                0,
+                false,
+                null,
+                null
+            },
         };
 
-        [NotNull, ItemNotNull]
+        [NotNull, ItemNotNull
+        ]
         public static IEnumerable<object[]> FileNamesAndWidth
         {
             [UsedImplicitly] get => _data.Select(item => new[] { item[0], item[1] });
