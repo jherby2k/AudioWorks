@@ -86,21 +86,17 @@ namespace AudioWorks.Api.Tests
             [NotNull] string expected64BitHash)
 #endif
         {
-            var path = Path.Combine("Output", "Encode", "Valid");
-            Directory.CreateDirectory(path);
-            var audioFile = new TaggedAudioFile(Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                "TestFiles",
-                "Valid",
-                sourceFileName));
-
             var results = (await new AudioFileEncoder(
                         encoderName,
-                        path,
+                        Path.Combine("Output", "Encode", "Valid"),
                         $"{index:00} - {Path.GetFileNameWithoutExtension(sourceFileName)}",
                         settings)
                     { Overwrite = true }
-                .EncodeAsync(audioFile).ConfigureAwait(false)).ToArray();
+                .EncodeAsync(new TaggedAudioFile(Path.Combine(
+                    new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
+                    "TestFiles",
+                    "Valid",
+                    sourceFileName))).ConfigureAwait(false)).ToArray();
 
             Assert.Single(results);
 #if LINUX

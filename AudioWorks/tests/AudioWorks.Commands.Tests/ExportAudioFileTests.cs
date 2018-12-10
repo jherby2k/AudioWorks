@@ -154,8 +154,6 @@ namespace AudioWorks.Commands.Tests
             [NotNull] string expected64BitHash)
 #endif
         {
-            var path = Path.Combine("Output", "Export-AudioFile", "Valid");
-            Directory.CreateDirectory(path);
             var sourceAudioFile = new TaggedAudioFile(Path.Combine(
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
@@ -167,7 +165,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Export-AudioFile")
                     .AddArgument(encoderName)
                     .AddArgument(sourceAudioFile)
-                    .AddParameter("Path", path)
+                    .AddParameter("Path", Path.Combine("Output", "Export-AudioFile", "Valid"))
                     .AddParameter("Name", $"{index:00} - {Path.GetFileNameWithoutExtension(sourceFileName)}")
                     .AddParameter("Replace");
                 if (settings != null)

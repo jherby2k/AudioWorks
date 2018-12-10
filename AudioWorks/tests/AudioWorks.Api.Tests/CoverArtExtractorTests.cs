@@ -46,11 +46,8 @@ namespace AudioWorks.Api.Tests
             [NotNull] string sourceFileName,
             [NotNull] string expectedHash)
         {
-            var path = Path.Combine("Output", "Extract");
-            Directory.CreateDirectory(path);
-
             var result = new CoverArtExtractor(
-                    path,
+                    Path.Combine("Output", "Extract"),
                     $"{index:00} - {Path.GetFileNameWithoutExtension(sourceFileName)}",
                     true)
                 .Extract(new TaggedAudioFile(
