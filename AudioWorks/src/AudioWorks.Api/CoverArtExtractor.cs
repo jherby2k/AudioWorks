@@ -23,28 +23,31 @@ namespace AudioWorks.Api
     /// <summary>
     /// Extracts cover art from audio files.
     /// </summary>
+    [PublicAPI]
     public sealed class CoverArtExtractor
     {
         [CanBeNull] readonly EncodedPath _encodedFileName;
         [CanBeNull] readonly EncodedPath _encodedDirectoryName;
-        readonly bool _overwrite;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether existing files should be overwritten.
+        /// </summary>
+        /// <value><c>true</c> if files should be overwritten; otherwise, <c>false</c>.</value>
+        public bool Overwrite { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CoverArtExtractor"/> class.
         /// </summary>
         /// <param name="encodedDirectoryName">The encoded directory name, or null.</param>
         /// <param name="encodedFileName">The encode file name, or null.</param>
-        /// <param name="overwrite">if set to <c>true</c>, any existing file will be overwritten.</param>
         public CoverArtExtractor(
             [CanBeNull] string encodedDirectoryName = null,
-            [CanBeNull] string encodedFileName = null,
-            bool overwrite = false)
+            [CanBeNull] string encodedFileName = null)
         {
             if (encodedDirectoryName != null)
                 _encodedDirectoryName = new EncodedPath(encodedDirectoryName);
             if (encodedFileName != null)
                 _encodedFileName = new EncodedPath(encodedFileName);
-            _overwrite = overwrite;
         }
 
         /// <summary>
@@ -77,7 +80,7 @@ namespace AudioWorks.Api
             var result = new FileInfo(Path.Combine(outputDirectoryInfo.FullName,
                 outputFileName + audioFile.Metadata.CoverArt.FileExtension));
 
-            using (var fileStream = result.Open(_overwrite ? FileMode.Create : FileMode.CreateNew, FileAccess.Write))
+            using (var fileStream = result.Open(Overwrite ? FileMode.Create : FileMode.CreateNew, FileAccess.Write))
             {
 #if NETCOREAPP2_1
                 fileStream.Write(audioFile.Metadata.CoverArt.Data);

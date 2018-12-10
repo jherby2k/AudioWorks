@@ -52,9 +52,9 @@ namespace AudioWorks.Commands
             base.BeginProcessing();
 
             _extractor = new CoverArtExtractor(
-                SessionState.Path.GetUnresolvedProviderPathFromPSPath(Path),
-                Name,
-                Replace);
+                    SessionState.Path.GetUnresolvedProviderPathFromPSPath(Path),
+                    Name)
+                { Overwrite = Replace };
         }
 
         protected override void ProcessRecord()
