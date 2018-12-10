@@ -71,12 +71,12 @@ namespace AudioWorks.Extensibility
         /// </exception>
         public SampleBuffer(ReadOnlySpan<float> interleavedSamples, int channels)
         {
-            if (interleavedSamples.Length % channels != 0)
-                throw new ArgumentException($"{nameof(interleavedSamples)} has an invalid length.",
-                    nameof(interleavedSamples));
             if (channels < 1 || channels > 2)
                 throw new ArgumentOutOfRangeException(nameof(channels),
                     $"{nameof(channels)} must be 1 or 2.");
+            if (interleavedSamples.Length % channels != 0)
+                throw new ArgumentException($"{nameof(interleavedSamples)} has an invalid length.",
+                    nameof(interleavedSamples));
 
             Channels = channels;
             Frames = interleavedSamples.Length / channels;
@@ -150,15 +150,15 @@ namespace AudioWorks.Extensibility
         /// <paramref name="bitsPerSample"/> is out of range.</exception>
         public SampleBuffer(ReadOnlySpan<int> interleavedSamples, int channels, int bitsPerSample)
         {
-            if (interleavedSamples.Length % channels != 0)
-                throw new ArgumentException($"{nameof(interleavedSamples)} has an invalid length.",
-                    nameof(interleavedSamples));
             if (channels < 1 || channels > 2)
                 throw new ArgumentOutOfRangeException(nameof(channels),
                     $"{nameof(channels)} must be 1 or 2.");
             if (bitsPerSample < 1 || bitsPerSample > 32)
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample),
                     $"{nameof(bitsPerSample)} is out of range.");
+            if (interleavedSamples.Length % channels != 0)
+                throw new ArgumentException($"{nameof(interleavedSamples)} has an invalid length.",
+                    nameof(interleavedSamples));
 
             Channels = channels;
             Frames = interleavedSamples.Length / channels;
@@ -183,17 +183,16 @@ namespace AudioWorks.Extensibility
         /// <paramref name="bitsPerSample"/> is out of range.</exception>
         public SampleBuffer(ReadOnlySpan<byte> interleavedSamples, int channels, int bitsPerSample)
         {
-            var bytesPerSample = (int) Math.Ceiling(bitsPerSample / 8.0);
-
-            if (interleavedSamples.Length % (channels * bytesPerSample) != 0)
-                throw new ArgumentException($"{nameof(interleavedSamples)} has an invalid length.",
-                    nameof(interleavedSamples));
             if (channels < 1 || channels > 2)
                 throw new ArgumentOutOfRangeException(nameof(channels),
                     $"{nameof(channels)} must be 1 or 2.");
             if (bitsPerSample < 1 || bitsPerSample > 32)
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample),
                     $"{nameof(bitsPerSample)} is out of range.");
+            var bytesPerSample = (int) Math.Ceiling(bitsPerSample / 8.0);
+            if (interleavedSamples.Length % (channels * bytesPerSample) != 0)
+                throw new ArgumentException($"{nameof(interleavedSamples)} has an invalid length.",
+                    nameof(interleavedSamples));
 
             Channels = channels;
             Frames = interleavedSamples.Length / channels / bytesPerSample;
@@ -396,13 +395,12 @@ namespace AudioWorks.Extensibility
             if (_isDisposed) throw new ObjectDisposedException(GetType().ToString());
             if (_buffer == null) return;
 
+            if (bitsPerSample < 1 || bitsPerSample > 32)
+                throw new ArgumentOutOfRangeException(nameof(bitsPerSample), "bitsPerSample is out of range.");
             var bytesPerSample = (int) Math.Ceiling(bitsPerSample / 8.0);
-
             if (destination.Length < Frames * Channels * bytesPerSample)
                 throw new ArgumentException("destination is not long enough to store the samples.",
                     nameof(destination));
-            if (bitsPerSample < 1 || bitsPerSample > 32)
-                throw new ArgumentOutOfRangeException(nameof(bitsPerSample), "bitsPerSample is out of range.");
 
             // ReSharper disable once SwitchStatementMissingSomeCases
             switch (bytesPerSample)
