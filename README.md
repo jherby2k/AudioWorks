@@ -26,7 +26,7 @@ AudioWorks runs on Windows 7+, OSX 10.12+, Ubuntu (18.04 or 16.04) and Fedora 28
 * [PowerShell Core 6.1+](https://github.com/PowerShell/PowerShell/releases)
 
 ### Installation
-The AudioWorks PowerShell module can found on [the PowerShell Gallery](https://www.powershellgallery.com/packages/AudioWorks.Commands/1.0.0-beta1/ContactOwners). If you are using Windows PowerShell 5.1, you may need to [update PowerShellGet](https://docs.microsoft.com/en-us/powershell/gallery/installing-psget) to a version that supports pre-release modules.
+The AudioWorks PowerShell module can found on [the PowerShell Gallery](https://www.powershellgallery.com/packages/AudioWorks.Commands/1.0.0-beta1). If you are using Windows PowerShell 5.1, you may need to [update PowerShellGet](https://docs.microsoft.com/en-us/powershell/gallery/installing-psget) to a version that supports pre-release modules.
 
 Keep the module up to date with `Update-Module -Name AudioWorks.Commands -AllowPrerelease`.
 
