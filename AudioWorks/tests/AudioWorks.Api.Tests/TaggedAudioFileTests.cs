@@ -449,7 +449,8 @@ namespace AudioWorks.Api.Tests
             audioFile.Metadata = new AudioMetadata { Title = "Modified" };
             audioFile.LoadMetadata();
 
-            Assert.True(new Comparer().Compare(expectedMetadata, audioFile.Metadata, out var differences), string.Join(" ", differences));
+            Assert.True(new Comparer().Compare(expectedMetadata, audioFile.Metadata, out var differences),
+                string.Join(" ", differences));
         }
 
         [Theory(DisplayName = "TaggedAudioFile's SaveMetadata method creates the expected output")]
