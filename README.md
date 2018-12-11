@@ -2,7 +2,7 @@
 
 A cross-platform, multi-format audio conversion and tagging suite written in C# and featuring a PowerShell front-end. Codecs currently supported are MP3, MP4 AAC, FLAC, Apple Lossless (ALAC) and Ogg Vorbis.
 
-This project supplants [PowerShell Audio](https://github.com/jherby2k/PowerShellAudio) by targetting both Windows PowerShell and PowerShell Core (Windows, Linux and Mac OSX).
+This project supplants [PowerShell Audio](https://github.com/jherby2k/PowerShellAudio) by targetting both Windows PowerShell and PowerShell Core (Windows, Linux and MacOS).
 
 Platform | Status (Master Branch)
 -- | --
@@ -11,7 +11,7 @@ Linux | [![Build Status](https://dev.azure.com/jherby2k/AudioWorks/_apis/build/s
 MacOS | [![Build Status](https://dev.azure.com/jherby2k/AudioWorks/_apis/build/status/AudioWorks%20for%20MacOS?branchName=master)](https://dev.azure.com/jherby2k/AudioWorks/_build/latest?definitionId=4?branchName=master) [![Code Coverage](https://img.shields.io/azure-devops/coverage/jherby2k/AudioWorks/4.svg)](https://dev.azure.com/jherby2k/AudioWorks/_build/latest?definitionId=4?branchName=master)
 
 ### System Requirements
-AudioWorks runs on Windows 7+, OSX 10.12+, Ubuntu (18.04 or 16.04) and Fedora 28 (other OS versions and distributions may work, but are currently untested).
+AudioWorks runs on Windows 7+, MacOS 10.12+, Ubuntu (18.04 or 16.04) and Fedora 28 (other OS versions and distributions may work, but are currently untested).
 
 #### On Windows:
 * [PowerShell Core 6.1+](https://github.com/PowerShell/PowerShell/releases) or Windows PowerShell 5.1
