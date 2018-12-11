@@ -396,6 +396,23 @@ namespace AudioWorks.Api.Tests
             Assert.Equal(expectedHash, result == null ? null : HashUtility.CalculateHash(result));
         }
 
+        [Theory(DisplayName = "TaggedAudioFile's Rename method throws an exception if the name is null")]
+        [MemberData(nameof(RenameValidFileDataSource.FileNames), MemberType = typeof(RenameValidFileDataSource))]
+        public void RenameNullNameThrowsException(
+            [NotNull] string fileName)
+        {
+            var path = Path.Combine("Output", "Rename", fileName);
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            File.Copy(Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
+                "TestFiles",
+                "Valid",
+                fileName), path, true);
+
+            Assert.Throws<ArgumentNullException>(() =>
+                new TaggedAudioFile(path).Rename(null, true));
+        }
+
         [Theory(DisplayName = "TaggedAudioFile's Rename method renames the file")]
         [MemberData(nameof(RenameValidFileDataSource.Data), MemberType = typeof(RenameValidFileDataSource))]
         public void RenameRenamesFile(
