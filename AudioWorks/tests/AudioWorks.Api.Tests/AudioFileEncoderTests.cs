@@ -61,12 +61,26 @@ namespace AudioWorks.Api.Tests
                 new AudioFileEncoder("Wave", null, null, new SettingDictionary { ["Foo"] = "Bar" }));
         }
 
+        [Fact(DisplayName = "AudioFileEncoder's MaxDegreeOfParallelism property throws an exception if it is less than 1")]
+        public void MaxDegreeOfParallelismTooLowThrowsException()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new AudioFileEncoder("Wave").MaxDegreeOfParallelism = 0);
+        }
+
         [Fact(DisplayName = "AudioFileEncoder's Settings property throws an exception if an unexpected setting is provided")]
         public void SettingsUnexpectedSettingThrowsException()
         {
             //TODO move this into a SettingDictionary test class
             var encoder = new AudioFileEncoder("Wave");
             Assert.Throws<ArgumentException>(() => encoder.Settings["Foo"] = "Bar");
+        }
+
+        [Fact(DisplayName = "AudioFileEncoder's Encode method throws an exception if an audio file is null")]
+        public async void EncodeAsyncNullAudioFileThrowsException()
+        {
+            await Assert.ThrowsAsync<ArgumentNullException>(() =>
+                new AudioFileEncoder("Wave").EncodeAsync(null)).ConfigureAwait(true);
         }
 
         [Theory(DisplayName = "AudioFileEncoder's Encode method creates the expected audio file")]

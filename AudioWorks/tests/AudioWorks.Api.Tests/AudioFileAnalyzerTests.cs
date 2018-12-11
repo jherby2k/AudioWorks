@@ -48,6 +48,20 @@ namespace AudioWorks.Api.Tests
             Assert.Throws<ArgumentException>(() => new AudioFileAnalyzer("Foo"));
         }
 
+        [Fact(DisplayName = "AudioFileAnalyzer's MaxDegreeOfParallelism property throws an exception if it is less than 1")]
+        public void MaxDegreeOfParallelismTooLowThrowsException()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new AudioFileAnalyzer("ReplayGain").MaxDegreeOfParallelism = 0);
+        }
+
+        [Fact(DisplayName = "AudioFileEncoder's Encode method throws an exception if an audio file is null")]
+        public async void AnalyzeAsyncNullAudioFileThrowsException()
+        {
+            await Assert.ThrowsAsync<ArgumentNullException>(() =>
+                new AudioFileAnalyzer("ReplayGain").AnalyzeAsync(null)).ConfigureAwait(true);
+        }
+
         [Theory(DisplayName = "AudioFileAnalyzer's Analyze method creates the expected metadata")]
         [MemberData(nameof(AnalyzeValidFileDataSource.Data), MemberType = typeof(AnalyzeValidFileDataSource))]
         public async void AnalyzeAsyncCreatesExpectedMetadata(
