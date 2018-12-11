@@ -233,5 +233,22 @@ namespace AudioWorks.Api.Tests
                         fileName))
                     .Info.PlayLength);
         }
+
+        [Theory(DisplayName = "AudioFile's Rename method throws an exception if the name is null")]
+        [MemberData(nameof(RenameValidFileDataSource.FileNames), MemberType = typeof(RenameValidFileDataSource))]
+        public void RenameNullNameThrowsException(
+            [NotNull] string fileName)
+        {
+            var path = Path.Combine("Output", "Rename", fileName);
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            File.Copy(Path.Combine(
+                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
+                "TestFiles",
+                "Valid",
+                fileName), path, true);
+
+            Assert.Throws<ArgumentNullException>(() =>
+                new AudioFile(path).Rename(null, true));
+        }
     }
 }
