@@ -39,13 +39,15 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "AudioFileAnalyzer's constructor throws an exception if the name is null")]
         public void ConstructorNameNullThrowsException()
         {
-            Assert.Throws<ArgumentNullException>(() => new AudioFileAnalyzer(null));
+            Assert.Throws<ArgumentNullException>(() =>
+                new AudioFileAnalyzer(null));
         }
 
         [Fact(DisplayName = "AudioFileAnalyzer's constructor throws an exception if the name is unsupported")]
         public void ConstructorNameUnsupportedThrowsException()
         {
-            Assert.Throws<ArgumentException>(() => new AudioFileAnalyzer("Foo"));
+            Assert.Throws<ArgumentException>(() =>
+                new AudioFileAnalyzer("Foo"));
         }
 
         [Fact(DisplayName = "AudioFileAnalyzer's MaxDegreeOfParallelism property throws an exception if it is less than 1")]
@@ -81,7 +83,7 @@ namespace AudioWorks.Api.Tests
                 "Valid",
                 fileName));
 
-            await new AudioFileAnalyzer(analyzerName, settings).AnalyzeAsync(audioFile).ConfigureAwait(false);
+            await new AudioFileAnalyzer(analyzerName, settings).AnalyzeAsync(audioFile).ConfigureAwait(true);
 
             Assert.True(
 #if LINUX
@@ -115,7 +117,7 @@ namespace AudioWorks.Api.Tests
                     fileName)))
                 .ToArray<ITaggedAudioFile>();
 
-            await new AudioFileAnalyzer(analyzerName, settings).AnalyzeAsync(audioFiles).ConfigureAwait(false);
+            await new AudioFileAnalyzer(analyzerName, settings).AnalyzeAsync(audioFiles).ConfigureAwait(true);
 
             var i = 0;
             var comparer = new Comparer();

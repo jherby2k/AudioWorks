@@ -38,19 +38,22 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "AudioFileEncoder's constructor throws an exception if the name is null")]
         public void ConstructorNameNullThrowsException()
         {
-            Assert.Throws<ArgumentNullException>(() => new AudioFileEncoder(null));
+            Assert.Throws<ArgumentNullException>(() =>
+                new AudioFileEncoder(null));
         }
 
         [Fact(DisplayName = "AudioFileEncoder's constructor throws an exception if the name is unsupported")]
         public void ConstructorNameUnsupportedThrowsException()
         {
-            Assert.Throws<ArgumentException>(() => new AudioFileEncoder("Foo"));
+            Assert.Throws<ArgumentException>(() =>
+                new AudioFileEncoder("Foo"));
         }
 
         [Fact(DisplayName = "AudioFileEncoder's constructor throws an exception if encodedDirectoryName references an invalid metadata field")]
         public void ConstructorEncodedDirectoryNameInvalidThrowsException()
         {
-            Assert.Throws<ArgumentException>(() => new AudioFileEncoder("Wave", null, "{Invalid}"));
+            Assert.Throws<ArgumentException>(() =>
+                new AudioFileEncoder("Wave", null, "{Invalid}"));
         }
 
         [Fact(DisplayName = "AudioFileEncoder's constructor throws an exception if an unexpected setting is provided")]
@@ -72,8 +75,8 @@ namespace AudioWorks.Api.Tests
         public void SettingsUnexpectedSettingThrowsException()
         {
             //TODO move this into a SettingDictionary test class
-            var encoder = new AudioFileEncoder("Wave");
-            Assert.Throws<ArgumentException>(() => encoder.Settings["Foo"] = "Bar");
+            Assert.Throws<ArgumentException>(() =>
+                new AudioFileEncoder("Wave").Settings["Foo"] = "Bar");
         }
 
         [Fact(DisplayName = "AudioFileEncoder's Encode method throws an exception if an audio file is null")]
@@ -110,7 +113,7 @@ namespace AudioWorks.Api.Tests
                     new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                     "TestFiles",
                     "Valid",
-                    sourceFileName))).ConfigureAwait(false)).ToArray();
+                    sourceFileName))).ConfigureAwait(true)).ToArray();
 
             Assert.Single(results);
 #if LINUX

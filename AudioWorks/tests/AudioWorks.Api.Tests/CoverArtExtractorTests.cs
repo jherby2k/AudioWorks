@@ -36,7 +36,8 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "CoverArtExtractor's constructor throws an exception if encodedDirectoryName references an invalid metadata field")]
         public void ConstructorEncodedDirectoryNameInvalidThrowsException()
         {
-            Assert.Throws<ArgumentException>(() => new CoverArtExtractor("{Invalid}"));
+            Assert.Throws<ArgumentException>(() =>
+                new CoverArtExtractor("{Invalid}"));
         }
 
         [Theory(DisplayName = "CoverArtExtractor's Extract method creates the expected image file")]
