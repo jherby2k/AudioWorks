@@ -185,6 +185,19 @@ namespace AudioWorks.Extensibility.Tests
             Assert.Throws<InvalidOperationException>(() => samples.CopyTo(leftOutSamples, rightOutSamples));
         }
 
+        [Fact(DisplayName = "CopyTo (float, stereo) returns the expected results for interleaved input")]
+        public void CopyToFloatStereoReturnsExpectedResultsForInterleaved()
+        {
+            var samples = new SampleBuffer(new[] { 1f, 2f, 1f, 2f }, 2);
+            var leftOutSamples = new float[2];
+            var rightOutSamples = new float[2];
+
+            samples.CopyTo(leftOutSamples, rightOutSamples);
+
+            Assert.All(leftOutSamples, value => Assert.Equal(1f, value));
+            Assert.All(rightOutSamples, value => Assert.Equal(2f, value));
+        }
+
         [Fact(DisplayName = "CopyTo (integer, stereo) throws an exception when the object has been disposed")]
         public void CopyToIntStereoThrowsExceptionWhenDisposed()
         {
@@ -207,6 +220,32 @@ namespace AudioWorks.Extensibility.Tests
             Assert.Throws<InvalidOperationException>(() => samples.CopyTo(leftOutSamples, rightOutSamples, 16));
         }
 
+        [Fact(DisplayName = "CopyTo (integer, stereo) returns the expected results for interleaved input")]
+        public void CopyToIntStereoReturnsExpectedResultsForInterleaved()
+        {
+            var samples = new SampleBuffer(new[] { 1, 2, 1, 2 }, 2, 16);
+            var leftOutSamples = new int[2];
+            var rightOutSamples = new int[2];
+
+            samples.CopyTo(leftOutSamples, rightOutSamples, 16);
+
+            Assert.All(leftOutSamples, value => Assert.Equal(1, value));
+            Assert.All(rightOutSamples, value => Assert.Equal(2, value));
+        }
+
+        [Fact(DisplayName = "CopyTo (integer, stereo) returns the expected results for stereo input")]
+        public void CopyToIntStereoReturnsExpectedResultsForStereo()
+        {
+            var samples = new SampleBuffer(new[] { 1, 1, }, new[] { 2, 2 }, 16);
+            var leftOutSamples = new int[2];
+            var rightOutSamples = new int[2];
+
+            samples.CopyTo(leftOutSamples, rightOutSamples, 16);
+
+            Assert.All(leftOutSamples, value => Assert.Equal(1, value));
+            Assert.All(rightOutSamples, value => Assert.Equal(2, value));
+        }
+
         [Fact(DisplayName = "CopyToInterleaved (float) throws an exception when the object has been disposed")]
         public void CopyToInterleavedFloatThrowsExceptionWhenDisposed()
         {
@@ -225,6 +264,17 @@ namespace AudioWorks.Extensibility.Tests
             var outSamples = new float[1];
 
             Assert.Throws<ArgumentException>(() => samples.CopyToInterleaved(outSamples));
+        }
+
+        [Fact(DisplayName = "CopyToInterleaved (float) returns the expected results for interleaved input")]
+        public void CopyToInterleavedFloatReturnsExpectedResultsForInterleaved()
+        {
+            var inSamples = new[] { 1f, 2f, 1f, 2f };
+            var outSamples = new float[4];
+
+            new SampleBuffer(inSamples, 2).CopyToInterleaved(outSamples);
+
+            Assert.Equal(inSamples, outSamples);
         }
 
         [Fact(DisplayName = "CopyToInterleaved (int) throws an exception when the object has been disposed")]
@@ -265,6 +315,28 @@ namespace AudioWorks.Extensibility.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => samples.CopyToInterleaved(outSamples, 0));
         }
 
+        [Fact(DisplayName = "CopyToInterleaved (int) returns the expected results for interleaved input")]
+        public void CopyToInterleavedIntReturnsExpectedResultsForInterleaved()
+        {
+            var inSamples = new[] { 1, 2, 1, 2 };
+            var outSamples = new int[4];
+
+            new SampleBuffer(inSamples, 16).CopyToInterleaved(outSamples, 16);
+
+            Assert.Equal(inSamples, outSamples);
+        }
+
+        [Fact(DisplayName = "CopyToInterleaved (int) returns the expected results for stereo input")]
+        public void CopyToInterleavedIntReturnsExpectedResultsForStereo()
+        {
+            var samples = new SampleBuffer(new[] { 1, 1, }, new[] { 2, 2 }, 16);
+            var outSamples = new int[4];
+
+            samples.CopyToInterleaved(outSamples, 16);
+
+            Assert.Equal(new[] { 1, 2, 1, 2 }, outSamples);
+        }
+
         [Fact(DisplayName = "CopyToInterleaved (packed) throws an exception when the object has been disposed")]
         public void CopyToInterleavedPackedThrowsExceptionWhenDisposed()
         {
@@ -301,6 +373,17 @@ namespace AudioWorks.Extensibility.Tests
             var outSamples = new byte[8];
 
             Assert.Throws<ArgumentOutOfRangeException>(() => samples.CopyToInterleaved(outSamples, 0));
+        }
+
+        [Fact(DisplayName = "CopyToInterleaved (packed) returns the expected results for interleaved input")]
+        public void CopyToInterleavedPackedReturnsExpectedResultsForInterleaved()
+        {
+            var inSamples = new byte[] { 1, 2, 1, 2 };
+            var outSamples = new byte[4];
+
+            new SampleBuffer(inSamples, 2, 16).CopyToInterleaved(outSamples, 16);
+
+            Assert.Equal(inSamples, outSamples);
         }
 
         [Fact(DisplayName = "32-bit integers don't overflow")]
