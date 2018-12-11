@@ -34,6 +34,7 @@ Keep the module up to date with `Update-Module -Name AudioWorks.Commands -AllowP
 * [.NET Core SDK 2.1.300+](https://dotnet.github.io/)
 * Windows 7+ or Ubuntu 16.04 (currently does not compile on Ubuntu 18.04)
 * [Visual Studio 2017 15.7+](https://visualstudio.microsoft.com/downloads) (optional - Windows only)
+* [Visual Studio 2017 for Mac 7.7+](https://visualstudio.microsoft.com/downloads) (optional - Mac only)
 * [Visual Studio Code](https://code.visualstudio.com/) (optional - all platforms)
 * [ReSharper 2018.2+](https://www.jetbrains.com/resharper/eap) (optional - Windows only)
 
