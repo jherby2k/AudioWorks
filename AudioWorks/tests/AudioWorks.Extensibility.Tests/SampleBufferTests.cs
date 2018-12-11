@@ -38,109 +38,127 @@ namespace AudioWorks.Extensibility.Tests
         [Fact(DisplayName = "Constructor (float, interleaved) throws an exception when the number of interleaved samples is invalid")]
         public void ConstructorFloatInterleavedInvalidSamplesThrowsException()
         {
-            Assert.Throws<ArgumentException>(() => new SampleBuffer(new float[3], 2));
+            Assert.Throws<ArgumentException>(() =>
+                new SampleBuffer(new float[3], 2));
         }
 
         [Fact(DisplayName = "Constructor (float, interleaved) throws an exception when the number of channels is too low")]
         public void ConstructorFloatInterleavedChannelsTooLowThrowsException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new float[2], 0));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new SampleBuffer(new float[2], 0));
         }
 
         [Fact(DisplayName = "Constructor (float, interleaved) throws an exception when the number of channels is too high")]
         public void ConstructorFloatInterleavedChannelsTooHighThrowsException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new float[2], 3));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new SampleBuffer(new float[2], 3));
         }
 
-        [Fact(DisplayName = "Constructor (integer, mono) throws an exception when the bits per sample is too high")]
+        [Fact(DisplayName = "Constructor (int, mono) throws an exception when the bits per sample is too high")]
         public void ConstructorIntMonoBitsPerSampleTooHighThrowsException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new int[2], 33));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new SampleBuffer(new int[2], 33));
         }
 
-        [Fact(DisplayName = "Constructor (integer, mono) throws an exception when the bits per sample is too low")]
+        [Fact(DisplayName = "Constructor (int, mono) throws an exception when the bits per sample is too low")]
         public void ConstructorIntMonoBitsPerSampleTooLowThrowsException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new int[2], 0));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new SampleBuffer(new int[2], 0));
         }
 
-        [Fact(DisplayName = "Constructor (integer, stereo) throws an exception when the channels contain different numbers of samples")]
+        [Fact(DisplayName = "Constructor (int, stereo) throws an exception when the channels contain different numbers of samples")]
         public void ConstructorIntStereoSamplesDontMatchThrowsException()
         {
-            Assert.Throws<ArgumentException>(() => new SampleBuffer(new int[1], new int[2], 16));
+            Assert.Throws<ArgumentException>(() =>
+                new SampleBuffer(new int[1], new int[2], 16));
         }
 
-        [Fact(DisplayName = "Constructor (integer, stereo) throws an exception when the bits per sample is too high")]
+        [Fact(DisplayName = "Constructor (int, stereo) throws an exception when the bits per sample is too high")]
         public void ConstructorIntStereoBitsPerSampleTooHighThrowsException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new int[2], new int[2], 33));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new SampleBuffer(new int[2], new int[2], 33));
         }
 
-        [Fact(DisplayName = "Constructor (integer, stereo) throws an exception when the bits per sample is too low")]
+        [Fact(DisplayName = "Constructor (int, stereo) throws an exception when the bits per sample is too low")]
         public void ConstructorIntStereoBitsPerSampleTooLowThrowsException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new int[2], new int[2], 0));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new SampleBuffer(new int[2], new int[2], 0));
         }
 
-        [Fact(DisplayName = "Constructor (integer, interleaved) throws an exception when the number of interleaved samples is invalid")]
+        [Fact(DisplayName = "Constructor (int, interleaved) throws an exception when the number of interleaved samples is invalid")]
         public void ConstructorIntInterleavedInvalidSamplesThrowsException()
         {
-            Assert.Throws<ArgumentException>(() => new SampleBuffer(new int[3], 2, 16));
+            Assert.Throws<ArgumentException>(() =>
+                new SampleBuffer(new int[3], 2, 16));
         }
 
-        [Fact(DisplayName = "Constructor (integer, interleaved) throws an exception when the number of channels is too low")]
+        [Fact(DisplayName = "Constructor (int, interleaved) throws an exception when the number of channels is too low")]
         public void ConstructorIntInterleavedChannelsTooLowThrowsException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new int[2], 0, 16));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new SampleBuffer(new int[2], 0, 16));
         }
 
-        [Fact(DisplayName = "Constructor (integer, interleaved) throws an exception when the number of channels is too high")]
+        [Fact(DisplayName = "Constructor (int, interleaved) throws an exception when the number of channels is too high")]
         public void ConstructorIntInterleavedChannelsTooHighThrowsException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new int[2], 3, 16));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new SampleBuffer(new int[2], 3, 16));
         }
 
-        [Fact(DisplayName = "Constructor (integer, interleaved) throws an exception when the bits per sample is too high")]
+        [Fact(DisplayName = "Constructor (int, interleaved) throws an exception when the bits per sample is too high")]
         public void ConstructorIntIntInterleavedBitsPerSampleTooHighThrowsException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new int[2], 2, 33));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new SampleBuffer(new int[2], 2, 33));
         }
 
-        [Fact(DisplayName = "Constructor (integer, interleaved) throws an exception when the bits per sample is too low")]
+        [Fact(DisplayName = "Constructor (int, interleaved) throws an exception when the bits per sample is too low")]
         public void ConstructorIntIntInterleavedBitsPerSampleTooLowThrowsException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new int[2], 2, 0));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new SampleBuffer(new int[2], 2, 0));
         }
 
         [Fact(DisplayName = "Constructor (packed, interleaved) throws an exception when the number of interleaved samples is invalid")]
         public void ConstructorPackedInterleavedInvalidSamplesThrowsException()
         {
-            Assert.Throws<ArgumentException>(() => new SampleBuffer(new byte[5], 2, 16));
+            Assert.Throws<ArgumentException>(() =>
+                new SampleBuffer(new byte[5], 2, 16));
         }
 
         [Fact(DisplayName = "Constructor (packed, interleaved) throws an exception when the number of channels is too low")]
         public void ConstructorPackedInterleavedChannelsTooLowThrowsException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new byte[4], 0, 16));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new SampleBuffer(new byte[4], 0, 16));
         }
 
         [Fact(DisplayName = "Constructor (packed, interleaved) throws an exception when the number of channels is too high")]
         public void ConstructorPackedInterleavedChannelsTooHighThrowsException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new byte[4], 3, 16));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new SampleBuffer(new byte[4], 3, 16));
         }
 
         [Fact(DisplayName = "Constructor (packed, interleaved) throws an exception when the bits per sample is too high")]
         public void ConstructorPackedIntInterleavedBitsPerSampleTooHighThrowsException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new byte[4], 2, 33));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new SampleBuffer(new byte[4], 2, 33));
         }
 
         [Fact(DisplayName = "Constructor (packed, interleaved) throws an exception when the bits per sample is too low")]
         public void ConstructorPackedIntInterleavedBitsPerSampleTooLowThrowsException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new byte[4], 2, 0));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new SampleBuffer(new byte[4], 2, 0));
         }
 
         [Fact(DisplayName = "CopyTo (float, mono) throws an exception when the object has been disposed")]
@@ -151,16 +169,17 @@ namespace AudioWorks.Extensibility.Tests
 
             samples.Dispose();
 
-            Assert.Throws<ObjectDisposedException>(() => samples.CopyTo(outSamples));
+            Assert.Throws<ObjectDisposedException>(() =>
+                samples.CopyTo(outSamples));
         }
 
         [Fact(DisplayName = "CopyTo (float, mono) throws an exception when the samples are in stereo")]
         public void CopyToFloatMonoThrowsExceptionWhenStereo()
         {
-            var samples = new SampleBuffer(new float[2], 2);
             var outSamples = new float[2];
 
-            Assert.Throws<InvalidOperationException>(() => samples.CopyTo(outSamples));
+            Assert.Throws<InvalidOperationException>(() =>
+                new SampleBuffer(new float[2], 2).CopyTo(outSamples));
         }
 
         [Fact(DisplayName = "CopyTo (float, stereo) throws an exception when the object has been disposed")]
@@ -172,33 +191,33 @@ namespace AudioWorks.Extensibility.Tests
 
             samples.Dispose();
 
-            Assert.Throws<ObjectDisposedException>(() => samples.CopyTo(leftOutSamples, rightOutSamples));
+            Assert.Throws<ObjectDisposedException>(() =>
+                samples.CopyTo(leftOutSamples, rightOutSamples));
         }
 
         [Fact(DisplayName = "CopyTo (float, stereo) throws an exception when the samples are in mono")]
         public void CopyToFloatStereoThrowsExceptionWhenMono()
         {
-            var samples = new SampleBuffer(new float[2], 1);
             var leftOutSamples = new float[1];
             var rightOutSamples = new float[1];
 
-            Assert.Throws<InvalidOperationException>(() => samples.CopyTo(leftOutSamples, rightOutSamples));
+            Assert.Throws<InvalidOperationException>(() =>
+                new SampleBuffer(new float[2], 1).CopyTo(leftOutSamples, rightOutSamples));
         }
 
         [Fact(DisplayName = "CopyTo (float, stereo) returns the expected results for interleaved input")]
         public void CopyToFloatStereoReturnsExpectedResultsForInterleaved()
         {
-            var samples = new SampleBuffer(new[] { 1f, 2f, 1f, 2f }, 2);
             var leftOutSamples = new float[2];
             var rightOutSamples = new float[2];
 
-            samples.CopyTo(leftOutSamples, rightOutSamples);
+            new SampleBuffer(new[] { 1f, 2f, 1f, 2f }, 2).CopyTo(leftOutSamples, rightOutSamples);
 
             Assert.All(leftOutSamples, value => Assert.Equal(1f, value));
             Assert.All(rightOutSamples, value => Assert.Equal(2f, value));
         }
 
-        [Fact(DisplayName = "CopyTo (integer, stereo) throws an exception when the object has been disposed")]
+        [Fact(DisplayName = "CopyTo (int, stereo) throws an exception when the object has been disposed")]
         public void CopyToIntStereoThrowsExceptionWhenDisposed()
         {
             var samples = new SampleBuffer(new float[2], 2);
@@ -210,37 +229,35 @@ namespace AudioWorks.Extensibility.Tests
             Assert.Throws<ObjectDisposedException>(() => samples.CopyTo(leftOutSamples, rightOutSamples, 16));
         }
 
-        [Fact(DisplayName = "CopyTo (integer, stereo) throws an exception when the samples are in mono")]
+        [Fact(DisplayName = "CopyTo (int, stereo) throws an exception when the samples are in mono")]
         public void CopyToIntStereoThrowsExceptionWhenMono()
         {
-            var samples = new SampleBuffer(new float[2], 1);
             var leftOutSamples = new int[1];
             var rightOutSamples = new int[1];
 
-            Assert.Throws<InvalidOperationException>(() => samples.CopyTo(leftOutSamples, rightOutSamples, 16));
+            Assert.Throws<InvalidOperationException>(() =>
+                new SampleBuffer(new float[2], 1).CopyTo(leftOutSamples, rightOutSamples, 16));
         }
 
-        [Fact(DisplayName = "CopyTo (integer, stereo) returns the expected results for interleaved input")]
+        [Fact(DisplayName = "CopyTo (int, stereo) returns the expected results for interleaved input")]
         public void CopyToIntStereoReturnsExpectedResultsForInterleaved()
         {
-            var samples = new SampleBuffer(new[] { 1, 2, 1, 2 }, 2, 16);
             var leftOutSamples = new int[2];
             var rightOutSamples = new int[2];
 
-            samples.CopyTo(leftOutSamples, rightOutSamples, 16);
+            new SampleBuffer(new[] { 1, 2, 1, 2 }, 2, 16).CopyTo(leftOutSamples, rightOutSamples, 16);
 
             Assert.All(leftOutSamples, value => Assert.Equal(1, value));
             Assert.All(rightOutSamples, value => Assert.Equal(2, value));
         }
 
-        [Fact(DisplayName = "CopyTo (integer, stereo) returns the expected results for stereo input")]
+        [Fact(DisplayName = "CopyTo (int, stereo) returns the expected results for stereo input")]
         public void CopyToIntStereoReturnsExpectedResultsForStereo()
         {
-            var samples = new SampleBuffer(new[] { 1, 1, }, new[] { 2, 2 }, 16);
             var leftOutSamples = new int[2];
             var rightOutSamples = new int[2];
 
-            samples.CopyTo(leftOutSamples, rightOutSamples, 16);
+            new SampleBuffer(new[] { 1, 1, }, new[] { 2, 2 }, 16).CopyTo(leftOutSamples, rightOutSamples, 16);
 
             Assert.All(leftOutSamples, value => Assert.Equal(1, value));
             Assert.All(rightOutSamples, value => Assert.Equal(2, value));
@@ -254,16 +271,17 @@ namespace AudioWorks.Extensibility.Tests
 
             samples.Dispose();
 
-            Assert.Throws<ObjectDisposedException>(() => samples.CopyToInterleaved(outSamples));
+            Assert.Throws<ObjectDisposedException>(() =>
+                samples.CopyToInterleaved(outSamples));
         }
 
         [Fact(DisplayName = "CopyToInterleaved (float) throws an exception when the destination it too short")]
         public void CopyToInterleavedFloatThrowsExceptionWhenDestinationTooShort()
         {
-            var samples = new SampleBuffer(new float[2], 2);
             var outSamples = new float[1];
 
-            Assert.Throws<ArgumentException>(() => samples.CopyToInterleaved(outSamples));
+            Assert.Throws<ArgumentException>(() =>
+                new SampleBuffer(new float[2], 2).CopyToInterleaved(outSamples));
         }
 
         [Fact(DisplayName = "CopyToInterleaved (float) returns the expected results for interleaved input")]
@@ -285,34 +303,35 @@ namespace AudioWorks.Extensibility.Tests
 
             samples.Dispose();
 
-            Assert.Throws<ObjectDisposedException>(() => samples.CopyToInterleaved(outSamples, 16));
+            Assert.Throws<ObjectDisposedException>(() =>
+                samples.CopyToInterleaved(outSamples, 16));
         }
 
         [Fact(DisplayName = "CopyToInterleaved (int) throws an exception when the destination it too short")]
         public void CopyToInterleavedIntThrowsExceptionWhenDestinationTooShort()
         {
-            var samples = new SampleBuffer(new float[2], 2);
             var outSamples = new int[1];
 
-            Assert.Throws<ArgumentException>(() => samples.CopyToInterleaved(outSamples, 16));
+            Assert.Throws<ArgumentException>(() =>
+                new SampleBuffer(new float[2], 2).CopyToInterleaved(outSamples, 16));
         }
 
         [Fact(DisplayName = "CopyToInterleaved (int) throws an exception when bitsPerSample is too high")]
         public void CopyToInterleavedIntThrowsExceptionWhenBitsPerSampleTooHigh()
         {
-            var samples = new SampleBuffer(new float[2], 2);
             var outSamples = new int[2];
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => samples.CopyToInterleaved(outSamples, 33));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new SampleBuffer(new float[2], 2).CopyToInterleaved(outSamples, 33));
         }
 
         [Fact(DisplayName = "CopyToInterleaved (int) throws an exception when bitsPerSample is too low")]
         public void CopyToInterleavedIntThrowsExceptionWhenBitsPerSampleTooLow()
         {
-            var samples = new SampleBuffer(new float[2], 2);
             var outSamples = new int[2];
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => samples.CopyToInterleaved(outSamples, 0));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new SampleBuffer(new float[2], 2).CopyToInterleaved(outSamples, 0));
         }
 
         [Fact(DisplayName = "CopyToInterleaved (int) returns the expected results for interleaved input")]
@@ -329,10 +348,9 @@ namespace AudioWorks.Extensibility.Tests
         [Fact(DisplayName = "CopyToInterleaved (int) returns the expected results for stereo input")]
         public void CopyToInterleavedIntReturnsExpectedResultsForStereo()
         {
-            var samples = new SampleBuffer(new[] { 1, 1, }, new[] { 2, 2 }, 16);
             var outSamples = new int[4];
 
-            samples.CopyToInterleaved(outSamples, 16);
+            new SampleBuffer(new[] { 1, 1, }, new[] { 2, 2 }, 16).CopyToInterleaved(outSamples, 16);
 
             Assert.Equal(new[] { 1, 2, 1, 2 }, outSamples);
         }
@@ -345,34 +363,35 @@ namespace AudioWorks.Extensibility.Tests
 
             samples.Dispose();
 
-            Assert.Throws<ObjectDisposedException>(() => samples.CopyToInterleaved(outSamples, 16));
+            Assert.Throws<ObjectDisposedException>(() =>
+                samples.CopyToInterleaved(outSamples, 16));
         }
 
         [Fact(DisplayName = "CopyToInterleaved (packed) throws an exception when the destination it too short")]
         public void CopyToInterleavedPackedThrowsExceptionWhenDestinationTooShort()
         {
-            var samples = new SampleBuffer(new float[2], 2);
             var outSamples = new byte[2];
 
-            Assert.Throws<ArgumentException>(() => samples.CopyToInterleaved(outSamples, 16));
+            Assert.Throws<ArgumentException>(() =>
+                new SampleBuffer(new float[2], 2).CopyToInterleaved(outSamples, 16));
         }
 
         [Fact(DisplayName = "CopyToInterleaved (packed) throws an exception when bitsPerSample is too high")]
         public void CopyToInterleavedPackedThrowsExceptionWhenBitsPerSampleTooHigh()
         {
-            var samples = new SampleBuffer(new float[2], 2);
             var outSamples = new byte[8];
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => samples.CopyToInterleaved(outSamples, 33));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new SampleBuffer(new float[2], 2).CopyToInterleaved(outSamples, 33));
         }
 
         [Fact(DisplayName = "CopyToInterleaved (packed) throws an exception when bitsPerSample is too low")]
         public void CopyToInterleavedPackedThrowsExceptionWhenBitsPerSampleTooLow()
         {
-            var samples = new SampleBuffer(new float[2], 2);
             var outSamples = new byte[8];
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => samples.CopyToInterleaved(outSamples, 0));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new SampleBuffer(new float[2], 2).CopyToInterleaved(outSamples, 0));
         }
 
         [Fact(DisplayName = "CopyToInterleaved (packed) returns the expected results for interleaved input")]
@@ -390,8 +409,8 @@ namespace AudioWorks.Extensibility.Tests
         public void IntegersDoNotOverflow()
         {
             var inSamples = new[] { int.MaxValue, int.MinValue };
-
             var outSamples = new int[inSamples.Length];
+
             new SampleBuffer(inSamples, 32).CopyToInterleaved(outSamples, 32);
 
             Assert.True(true);
@@ -438,8 +457,8 @@ namespace AudioWorks.Extensibility.Tests
                 inSamples[i - 1] = Math.Min(j, maxValue);
                 inSamples[i] = Math.Max(k, minValue);
             }
-
             var outSamples = new float[inSamples.Length];
+
             new SampleBuffer(inSamples, bitsPerSample).CopyTo(outSamples);
 
             Assert.All(outSamples, sample =>
@@ -480,8 +499,8 @@ namespace AudioWorks.Extensibility.Tests
                 inSamples[i - 1] = Math.Min(j, maxValue);
                 inSamples[i] = Math.Max(k, minValue);
             }
-
             var outSamples = new int[inSamples.Length];
+
             new SampleBuffer(inSamples, 2, bitsPerSample).CopyToInterleaved(outSamples, bitsPerSample);
 
             Assert.Equal(inSamples, outSamples);
