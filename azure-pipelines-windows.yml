@@ -11,10 +11,10 @@ trigger:
     - azure-pipelines-macos.yml
 
 pool:
-  vmImage: 'vs2017-win2016'
+  vmImage: vs2017-win2016
 
 variables:
-  buildConfiguration: 'Release-Windows'
+  buildConfiguration: Release
 
 steps:
 - task: DotNetCoreInstaller@0

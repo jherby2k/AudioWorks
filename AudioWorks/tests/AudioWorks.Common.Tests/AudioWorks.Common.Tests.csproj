@@ -9,35 +9,16 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <Copyright>© 2018 Jeremy Herbison</Copyright>
     <CodeAnalysisRuleSet>CodeAnalysis.ruleset</CodeAnalysisRuleSet>
-    <Configurations>Debug-Windows;Release-Windows;Debug-OSX;Release-OSX;Debug-Linux;Release-Linux</Configurations>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)'=='Debug-Windows'">
-    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+  <PropertyGroup Condition="'$(OS)'=='Windows_NT'">
+    <DefineConstants>WINDOWS</DefineConstants>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)'=='Release-Windows'">
-    <DefineConstants>RELEASE;TRACE;WINDOWS</DefineConstants>
+  <PropertyGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))'">
+    <DefineConstants>LINUX</DefineConstants>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)'=='Debug-OSX'">
-    <DefineConstants>DEBUG;TRACE;OSX</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)'=='Release-OSX'">
-    <DefineConstants>RELEASE;TRACE;OSX</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)'=='Debug-Linux'">
-    <DefineConstants>DEBUG;TRACE;LINUX</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)'=='Release-Linux'">
-    <DefineConstants>RELEASE;TRACE;LINUX</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="$(DefineConstants.Contains(DEBUG))">
-    <Optimize>false</Optimize>
+  <PropertyGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))'">
+    <DefineConstants>OSX</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

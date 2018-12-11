@@ -11,10 +11,10 @@ trigger:
     - azure-pipelines-macos.yml
 
 pool:
-  vmImage: 'ubuntu-16.04'
+  vmImage: ubuntu-16.04
 
 variables:
-  buildConfiguration: 'Release-Linux'
+  buildConfiguration: Release
 
 steps:
 - task: DotNetCoreInstaller@0
