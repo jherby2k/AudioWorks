@@ -13,6 +13,7 @@ details.
 You should have received a copy of the GNU Lesser General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
@@ -21,6 +22,7 @@ namespace AudioWorks.Api
     /// <summary>
     /// Provides information about an audio encoder.
     /// </summary>
+    [Serializable]
     public sealed class AudioEncoderInfo
     {
         /// <summary>
