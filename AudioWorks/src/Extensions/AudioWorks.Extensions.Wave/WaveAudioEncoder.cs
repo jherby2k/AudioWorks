@@ -86,8 +86,7 @@ namespace AudioWorks.Extensions.Wave
             _writer.FinishChunk();
 
             // The pre-allocation may have been based on an estimated frame count
-            if (_writer.BaseStream.Position != _writer.BaseStream.Length)
-                _writer.BaseStream.SetLength(_writer.BaseStream.Position);
+            _writer.BaseStream.SetLength(_writer.BaseStream.Position);
         }
 
         public void Dispose()
