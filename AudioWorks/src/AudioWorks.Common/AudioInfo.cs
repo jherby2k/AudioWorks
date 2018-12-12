@@ -32,7 +32,7 @@ namespace AudioWorks.Common
         /// <param name="channels">The # of channels.</param>
         /// <param name="bitsPerSample">The # of bits per sample.</param>
         /// <param name="sampleRate">The sample rate (in samples per second).</param>
-        /// <param name="sampleCount">The sample count, or 0 if unknown.</param>
+        /// <param name="frameCount">The frame count, or 0 if unknown.</param>
         /// <returns>The instance.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="format"/> is null or empty.</exception>
         /// <exception cref="AudioInvalidException">Thrown if one or more parameters is out of valid range.</exception>
@@ -44,7 +44,7 @@ namespace AudioWorks.Common
             int channels,
             int bitsPerSample,
             int sampleRate,
-            long sampleCount = 0)
+            long frameCount = 0)
         {
             if (bitsPerSample < 1)
                 throw new AudioInvalidException($"{bitsPerSample} is not a valid # of bits per sample.");
@@ -57,7 +57,7 @@ namespace AudioWorks.Common
                 bitsPerSample,
                 sampleRate,
                 channels * bitsPerSample * sampleRate,
-                sampleCount);
+                frameCount);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace AudioWorks.Common
         /// <param name="format">The format.</param>
         /// <param name="channels">The # of channels.</param>
         /// <param name="sampleRate">The sample rate (in samples per second).</param>
-        /// <param name="sampleCount">The sample count, or 0 if unknown.</param>
+        /// <param name="frameCount">The frame count, or 0 if unknown.</param>
         /// <param name="bitRate">The bit rate (in bits per second).</param>
         /// <returns>The instance.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="format"/> is null or empty.</exception>
@@ -78,7 +78,7 @@ namespace AudioWorks.Common
             [NotNull] string format,
             int channels,
             int sampleRate,
-            long sampleCount = 0,
+            long frameCount = 0,
             int bitRate = 0)
         {
             if (bitRate < 0)
@@ -90,7 +90,7 @@ namespace AudioWorks.Common
                 0,
                 sampleRate,
                 bitRate,
-                sampleCount);
+                frameCount);
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace AudioWorks.Common
         public long FrameCount { get; }
 
         /// <summary>
-        /// Gets the play length, which is 0 if the sample count is unknown.
+        /// Gets the play length, which is 0 if the frame count is unknown.
         /// </summary>
         /// <value>The play length.</value>
         public TimeSpan PlayLength =>
@@ -145,7 +145,7 @@ namespace AudioWorks.Common
             int bitsPerSample,
             int sampleRate,
             int bitRate,
-            long sampleCount)
+            long frameCount)
         {
             if (string.IsNullOrEmpty(format))
                 throw new ArgumentNullException(nameof(format), "The format cannot be null or empty.");
@@ -155,15 +155,15 @@ namespace AudioWorks.Common
                 throw new AudioUnsupportedException($"{channels} is not a supported channel count.");
             if (sampleRate < 1)
                 throw new AudioInvalidException($"{sampleRate} is not a valid sample rate.");
-            if (sampleCount < 0)
-                throw new AudioInvalidException($"{sampleCount} is not a valid sample count.");
+            if (frameCount < 0)
+                throw new AudioInvalidException($"{frameCount} is not a valid frame count.");
 
             Format = format;
             Channels = channels;
             BitsPerSample = bitsPerSample;
             SampleRate = sampleRate;
             BitRate = bitRate;
-            FrameCount = sampleCount;
+            FrameCount = frameCount;
         }
     }
 }
