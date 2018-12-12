@@ -41,6 +41,11 @@ namespace AudioWorks.Extensions.Wave
             _bytesPerSample = (int) Math.Ceiling(info.BitsPerSample / 8.0);
             _writer = new RiffWriter(fileStream);
 
+            // Pre-allocate the entire file to avoid fragmentation
+            var estimatedSize = 44 + info.FrameCount * info.Channels * _bytesPerSample;
+            estimatedSize += estimatedSize % 2;
+            fileStream.SetLength(estimatedSize);
+
             _writer.Initialize("WAVE");
             WriteFmtChunk(info);
             // ReSharper disable once PossibleNullReferenceException
@@ -79,6 +84,10 @@ namespace AudioWorks.Extensions.Wave
             // ReSharper disable once PossibleNullReferenceException
             _writer.FinishChunk();
             _writer.FinishChunk();
+
+            // The pre-allocation may have been based on an estimated frame count
+            if (_writer.BaseStream.Position != _writer.BaseStream.Length)
+                _writer.BaseStream.SetLength(_writer.BaseStream.Position);
         }
 
         public void Dispose()
