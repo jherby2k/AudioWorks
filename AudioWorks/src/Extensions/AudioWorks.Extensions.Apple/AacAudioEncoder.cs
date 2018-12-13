@@ -22,6 +22,7 @@ using System.Runtime.InteropServices;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensions.Apple
 {
@@ -82,16 +83,25 @@ namespace AudioWorks.Extensions.Apple
             _audioFile = new ExtendedAudioFile(GetOutputDescription(inputDescription), AudioFileType.M4A, fileStream);
             _audioFile.SetProperty(ExtendedAudioFilePropertyId.ClientDataFormat, inputDescription);
 
-            // Configure the audio converter
             var converter = _audioFile.GetProperty<IntPtr>(ExtendedAudioFilePropertyId.AudioConverter);
+
+            var logger = LoggerManager.LoggerFactory.CreateLogger<AacAudioEncoder>();
 
             // Enable high quality (defaults to medium, 0x40)
             SetConverterProperty(converter, AudioConverterPropertyId.CodecQuality, 0x60);
 
             if (settings.TryGetValue<int>("BitRate", out var bitRate))
             {
-                // Stereo has a minimum of 64, Mono has a maximum of 256
-                bitRate = info.Channels == 1 ? Math.Min(bitRate, 256) : Math.Max(bitRate, 64);
+                if (bitRate > 256 && info.Channels == 1)
+                {
+                    logger.LogWarning("The maximum bitrate for 1-channel audio is 256 kbps.");
+                    bitRate = 256;
+                }
+                else if (bitRate < 64 && info.Channels == 2)
+                {
+                    logger.LogWarning("The minimum bitrate for 2-channel audio is 64 kbps.");
+                    bitRate = 64;
+                }
 
                 SetConverterProperty(converter, AudioConverterPropertyId.BitRate, bitRate * 1000);
 
