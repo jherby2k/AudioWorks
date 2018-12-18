@@ -121,12 +121,22 @@ namespace AudioWorks.Extensions.Flac
             [NotNull] StreamEncoderHandle handle,
             uint channels);
 
+        [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_get_channels",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint StreamEncoderGetChannels(
+            [NotNull] StreamEncoderHandle handle);
+
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_set_bits_per_sample",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamEncoderSetBitsPerSample(
             [NotNull] StreamEncoderHandle handle,
             uint bitsPerSample);
+
+        [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_get_bits_per_sample",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint StreamEncoderGetBitsPerSample(
+            [NotNull] StreamEncoderHandle handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_set_sample_rate",
             CallingConvention = CallingConvention.Cdecl)]
@@ -141,6 +151,11 @@ namespace AudioWorks.Extensions.Flac
         internal static extern bool StreamEncoderSetTotalSamplesEstimate(
             [NotNull] StreamEncoderHandle handle,
             ulong totalSamples);
+
+        [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_get_total_samples_estimate",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern ulong StreamEncoderGetTotalSamplesEstimate(
+            [NotNull] StreamEncoderHandle handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_set_compression_level",
             CallingConvention = CallingConvention.Cdecl)]

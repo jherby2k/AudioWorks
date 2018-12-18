@@ -31,7 +31,8 @@ namespace AudioWorks.Extensions.Flac
         [NotNull] readonly NativeCallbacks.StreamEncoderWriteCallback _writeCallback;
         [NotNull] readonly NativeCallbacks.StreamEncoderSeekCallback _seekCallback;
         [NotNull] readonly NativeCallbacks.StreamEncoderTellCallback _tellCallback;
-        [NotNull] readonly Stream _stream;
+        [NotNull] Stream _stream;
+        long _endOfData;
 
         internal StreamEncoder([NotNull] Stream stream)
         {
@@ -80,8 +81,25 @@ namespace AudioWorks.Extensions.Flac
             Justification = "Native method is always expected to return 0")]
         internal void Initialize()
         {
-            SafeNativeMethods.StreamEncoderInitStream(_handle, _writeCallback, _seekCallback, _tellCallback, null,
-                IntPtr.Zero);
+            // Buffer the metadata writes in memory by swapping the stream
+            using (var tempStream = new MemoryStream())
+            {
+                var fileStream = _stream;
+                _stream = tempStream;
+                SafeNativeMethods.StreamEncoderInitStream(_handle, _writeCallback, _seekCallback, _tellCallback, null,
+                    IntPtr.Zero);
+
+                // Pre-allocate the whole file (assume worst case compression plus metadata)
+                fileStream.SetLength(
+                    SafeNativeMethods.StreamEncoderGetChannels(_handle) *
+                    (uint) Math.Ceiling(SafeNativeMethods.StreamEncoderGetBitsPerSample(_handle) / 8.0) *
+                    (long) SafeNativeMethods.StreamEncoderGetTotalSamplesEstimate(_handle) +
+                    tempStream.Length);
+
+                // Flush the metadata to the real stream and swap back
+                _stream = fileStream;
+                tempStream.WriteTo(fileStream);
+            }
         }
 
         internal unsafe void Process(ReadOnlySpan<int> leftBuffer, ReadOnlySpan<int> rightBuffer)
@@ -113,6 +131,9 @@ namespace AudioWorks.Extensions.Flac
         {
             if (!SafeNativeMethods.StreamEncoderFinish(_handle))
                 throw new AudioEncodingException($"FLAC encountered error '{GetState()}' while finishing encoding.");
+
+            // The pre-allocation may have been based on an estimated frame count
+            _stream.SetLength(_endOfData);
         }
 
         public void Dispose()
@@ -123,6 +144,7 @@ namespace AudioWorks.Extensions.Flac
         EncoderWriteStatus WriteCallback(IntPtr handle, [NotNull] byte[] buffer, int bytes, uint samples, uint currentFrame, IntPtr userData)
         {
             _stream.Write(buffer, 0, bytes);
+            _endOfData = Math.Max(_endOfData, _stream.Position);
             return EncoderWriteStatus.Ok;
         }
 
