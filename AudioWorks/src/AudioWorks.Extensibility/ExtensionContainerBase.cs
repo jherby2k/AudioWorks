@@ -66,7 +66,7 @@ namespace AudioWorks.Extensibility
                 .WithAssemblies(assemblies).CreateContainer();
         }
 
-        static bool TryHandle([NotNull] IPrerequisiteHandler handler, [NotNull] ILogger<ExtensionContainerBase> logger)
+        static bool TryHandle([NotNull] IPrerequisiteHandler handler, [NotNull] ILogger logger)
         {
             try
             {

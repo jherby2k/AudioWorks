@@ -71,7 +71,7 @@ namespace AudioWorks.Extensibility.Tests
         }
 
         [Fact(DisplayName = "Constructor (int, stereo) throws an exception when the channels contain different numbers of samples")]
-        public void ConstructorIntStereoSamplesDontMatchThrowsException()
+        public void ConstructorIntStereoSamplesDoNotMatchThrowsException()
         {
             Assert.Throws<ArgumentException>(() =>
                 new SampleBuffer(new int[1], new int[2], 16));
@@ -257,7 +257,7 @@ namespace AudioWorks.Extensibility.Tests
             var leftOutSamples = new int[2];
             var rightOutSamples = new int[2];
 
-            new SampleBuffer(new[] { 1, 1, }, new[] { 2, 2 }, 16).CopyTo(leftOutSamples, rightOutSamples, 16);
+            new SampleBuffer(new[] { 1, 1 }, new[] { 2, 2 }, 16).CopyTo(leftOutSamples, rightOutSamples, 16);
 
             Assert.All(leftOutSamples, value => Assert.Equal(1, value));
             Assert.All(rightOutSamples, value => Assert.Equal(2, value));
@@ -350,7 +350,7 @@ namespace AudioWorks.Extensibility.Tests
         {
             var outSamples = new int[4];
 
-            new SampleBuffer(new[] { 1, 1, }, new[] { 2, 2 }, 16).CopyToInterleaved(outSamples, 16);
+            new SampleBuffer(new[] { 1, 1 }, new[] { 2, 2 }, 16).CopyToInterleaved(outSamples, 16);
 
             Assert.Equal(new[] { 1, 2, 1, 2 }, outSamples);
         }

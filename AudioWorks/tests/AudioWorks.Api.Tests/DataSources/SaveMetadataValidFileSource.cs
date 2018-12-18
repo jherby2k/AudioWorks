@@ -583,7 +583,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 new TestSettingDictionary
                 {
-                    ["CreationTime"] = new DateTime(2018, 9, 1),
+                    ["CreationTime"] = new DateTime(2018, 9, 1)
                 },
 #if LINUX
                 "4AF6E13DD50245A06F6FEA52F2325C47",
@@ -601,7 +601,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 new TestSettingDictionary
                 {
-                    ["ModificationTime"] = new DateTime(2018, 9, 1),
+                    ["ModificationTime"] = new DateTime(2018, 9, 1)
                 },
 #if LINUX
                 "D196EAFE7E8617F867136C526718CEF2",

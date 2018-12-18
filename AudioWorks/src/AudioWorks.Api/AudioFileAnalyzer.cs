@@ -227,7 +227,7 @@ namespace AudioWorks.Api
                         foreach (var (audioFile, analyzer) in group)
                             CopyStringProperties(analyzer.GetGroupResult(), audioFile.Metadata);
                     },
-                    new ExecutionDataflowBlockOptions { SingleProducerConstrained = true, });
+                    new ExecutionDataflowBlockOptions { SingleProducerConstrained = true });
                 batchBlock.LinkTo(groupResultBlock, linkOptions);
 
                 try

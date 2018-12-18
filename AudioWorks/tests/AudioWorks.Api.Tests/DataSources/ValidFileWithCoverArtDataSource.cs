@@ -153,7 +153,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 false,
                 null,
                 null
-            },
+            }
         };
 
         [NotNull, ItemNotNull
