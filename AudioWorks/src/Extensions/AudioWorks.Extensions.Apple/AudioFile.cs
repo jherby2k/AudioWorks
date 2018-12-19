@@ -30,7 +30,7 @@ namespace AudioWorks.Extensions.Apple
         [CanBeNull] readonly NativeCallbacks.AudioFileSetSizeCallback _setSizeCallback;
         // ReSharper restore PrivateFieldCanBeConvertedToLocalVariable
         [NotNull] readonly Stream _stream;
-        readonly long _streamLength;
+        long _endOfData;
 
         [NotNull]
         protected AudioFileHandle Handle { get; }
@@ -42,7 +42,7 @@ namespace AudioWorks.Extensions.Apple
             _getSizeCallback = GetSizeCallback;
 
             _stream = stream;
-            _streamLength = stream.Length;
+            _endOfData = stream.Length;
 
             SafeNativeMethods.AudioFileOpenWithCallbacks(IntPtr.Zero,
                 _readCallback, null, _getSizeCallback, null,
@@ -129,8 +129,7 @@ namespace AudioWorks.Extensions.Apple
             Justification = "Part of native API")]
         long GetSizeCallback(IntPtr userData)
         {
-            // Optimization - length is accessed frequently
-            return _streamLength > 0 ? _streamLength : _stream.Length;
+            return _endOfData;
         }
 
         AudioFileStatus WriteCallback(IntPtr userData, long position, uint requestCount, [NotNull] byte[] buffer, out uint actualCount)
@@ -138,12 +137,13 @@ namespace AudioWorks.Extensions.Apple
             _stream.Position = position;
             _stream.Write(buffer, 0, (int) requestCount);
             actualCount = requestCount;
+            _endOfData = Math.Max(_endOfData, _stream.Position);
             return AudioFileStatus.Ok;
         }
 
         AudioFileStatus SetSizeCallback(IntPtr userData, long size)
         {
-            _stream.SetLength(size);
+            _endOfData = size;
             return AudioFileStatus.Ok;
         }
     }

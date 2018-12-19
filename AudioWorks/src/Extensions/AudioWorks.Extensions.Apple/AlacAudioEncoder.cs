@@ -55,6 +55,10 @@ namespace AudioWorks.Extensions.Apple
             _settings = settings;
             _bitsPerSample = info.BitsPerSample;
 
+            // Pre-allocate the whole stream (estimate worst case compression, plus cover art)
+            stream.SetLength(info.FrameCount * info.Channels * (long) Math.Ceiling(info.BitsPerSample / 8.0)
+                             + (metadata.CoverArt?.Data.Length ?? 0));
+
             var inputDescription = GetInputDescription(info);
             _audioFile = new ExtendedAudioFile(GetOutputDescription(inputDescription), AudioFileType.M4A, stream);
             _audioFile.SetProperty(ExtendedAudioFilePropertyId.ClientDataFormat, inputDescription);
