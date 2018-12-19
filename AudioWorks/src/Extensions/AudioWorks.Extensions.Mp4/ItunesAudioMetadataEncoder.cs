@@ -37,6 +37,8 @@ namespace AudioWorks.Extensions.Mp4
             // Create a temporary stream to hold the new atom structure
             using (var tempStream = new TempFileStream())
             {
+                tempStream.SetLength(stream.Length);
+
                 var originalMp4 = new Mp4Model(stream);
                 var tempMp4 = new Mp4Model(tempStream);
 
@@ -51,7 +53,7 @@ namespace AudioWorks.Extensions.Mp4
                 // Move to the start of the ilst atom, or where it should be
                 originalMp4.DescendToAtom("moov", "udta", "meta");
                 tempMp4.DescendToAtom("moov", "udta", "meta");
-                tempStream.SetLength(tempStream.Position);
+                //tempStream.SetLength(tempStream.Position);
 
                 var childInfo = originalMp4.GetChildAtomInfo();
 
@@ -69,8 +71,10 @@ namespace AudioWorks.Extensions.Mp4
                     freeSize = 2048;
                 new FreeAtom((uint) freeSize).Write(tempStream);
 
+                var endOfData = tempStream.Position;
+
                 // Update the parent atom sizes
-                tempMp4.UpdateAtomSizes((uint) tempStream.Length - tempMp4.CurrentAtom.End);
+                tempMp4.UpdateAtomSizes((uint) endOfData - tempMp4.CurrentAtom.End);
 
                 // Update the time stamps, if requested
                 DateTime? newCreationTime = null;
@@ -83,13 +87,16 @@ namespace AudioWorks.Extensions.Mp4
                     tempMp4.UpdateTimeStamps(newCreationTime, newModificationTime);
 
                 // Update the stco atom to reflect the new location of mdat
-                tempMp4.UpdateStco((uint) (tempStream.Length - topAtoms.Single(atom =>
+                tempMp4.UpdateStco((uint) (endOfData - topAtoms.Single(atom =>
                                                atom.FourCc.Equals("mdat", StringComparison.Ordinal)).Start));
 
                 // Copy the mdat atom to the temporary stream, after the moov atom
-                tempStream.Seek(0, SeekOrigin.End);
+                tempStream.Position = endOfData;
                 originalMp4.CopyAtom(topAtoms.Single(atom =>
                     atom.FourCc.Equals("mdat", StringComparison.Ordinal)), tempStream);
+
+                // The pre-allocation was based on an estimated length
+                tempStream.SetLength(tempStream.Position);
 
                 // Overwrite the original stream with the new, optimized one
                 stream.Position = 0;

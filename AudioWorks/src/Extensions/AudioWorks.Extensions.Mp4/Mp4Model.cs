@@ -51,6 +51,14 @@ namespace AudioWorks.Extensions.Mp4
                         (uint) _stream.Position,
                         reader.ReadUInt32BigEndian(),
                         reader.ReadFourCc());
+
+                    // The stream might be padded with empty space
+                    if (childAtom.FourCc.Equals("\0\0\0\0", StringComparison.Ordinal))
+                    {
+                        _stream.Position = result.Count > 0 ? result.Last().End : 0;
+                        break;
+                    }
+
                     result.Add(childAtom);
                     _stream.Position = childAtom.End;
                 }
