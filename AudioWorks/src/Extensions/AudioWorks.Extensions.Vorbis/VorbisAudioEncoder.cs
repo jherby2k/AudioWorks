@@ -105,8 +105,8 @@ namespace AudioWorks.Extensions.Vorbis
                 while (_oggStream.Flush(out var page))
                     WritePage(page);
 
-                // Pre-allocate the whole file (assume 500kbps plus metadata)
-                fileStream.SetLength(info.BitRate * (long) info.PlayLength.TotalSeconds + tempStream.Length);
+                // Pre-allocate the whole file (assume 500kbps worst case, plus metadata)
+                fileStream.SetLength(0xFA00 * (long) info.PlayLength.TotalSeconds + tempStream.Length);
 
                 // Flush the headers to the file stream
                 tempStream.WriteTo(fileStream);
