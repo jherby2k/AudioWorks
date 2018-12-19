@@ -27,6 +27,7 @@ namespace AudioWorks.Extensions.Lame
     [AudioEncoderExport("LameMP3", "Lame MPEG Audio Layer 3")]
     public sealed class LameAudioEncoder : IAudioEncoder, IDisposable
     {
+        [CanBeNull] Stream _fileStream;
         [CanBeNull] Encoder _encoder;
         [CanBeNull] Export<IAudioFilter> _replayGainExport;
 
@@ -66,7 +67,13 @@ namespace AudioWorks.Extensions.Lame
 
         public void Initialize(FileStream fileStream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
+            _fileStream = fileStream;
+
             InitializeReplayGainFilter(info, metadata, settings);
+
+            // Pre-allocate the whole file (guess using 320kbps plus cover art and additional metadata)
+            fileStream.SetLength(0xA000 * (long) info.PlayLength.TotalSeconds
+                                 + (metadata.CoverArt?.Data.Length ?? 0) + 1024);
 
             // Call the external ID3 encoder, if available
             var metadataEncoderFactory =
@@ -139,6 +146,9 @@ namespace AudioWorks.Extensions.Lame
         {
             _encoder.Flush();
             _encoder.UpdateLameTag();
+
+            // The pre-allocation was based on estimates
+            _fileStream.SetLength(_fileStream.Position);
         }
 
         public void Dispose()

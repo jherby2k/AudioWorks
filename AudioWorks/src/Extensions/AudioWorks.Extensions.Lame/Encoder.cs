@@ -184,6 +184,7 @@ namespace AudioWorks.Extensions.Lame
 
         internal void UpdateLameTag()
         {
+            var endOfData = _stream.Position;
             _stream.Position = _startPosition;
 
 #if NETCOREAPP2_1
@@ -206,6 +207,8 @@ namespace AudioWorks.Extensions.Lame
                 ArrayPool<byte>.Shared.Return(buffer);
             }
 #endif
+
+            _stream.Position = endOfData;
         }
 
         public void Dispose()
