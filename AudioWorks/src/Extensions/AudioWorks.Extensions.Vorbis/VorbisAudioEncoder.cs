@@ -31,7 +31,7 @@ namespace AudioWorks.Extensions.Vorbis
     [AudioEncoderExport("Vorbis", "Ogg Vorbis")]
     public sealed class VorbisAudioEncoder : IAudioEncoder, IDisposable
     {
-        [CanBeNull] FileStream _fileStream;
+        [CanBeNull] Stream _outputStream;
         [CanBeNull] OggStream _oggStream;
         [CanBeNull] VorbisEncoder _encoder;
         [CanBeNull] Export<IAudioFilter> _replayGainExport;
@@ -67,7 +67,6 @@ namespace AudioWorks.Extensions.Vorbis
         {
             InitializeReplayGainFilter(info, metadata, settings);
 
-            _fileStream = fileStream;
             _oggStream = new OggStream(settings.TryGetValue("SerialNumber", out var serialNumberValue)
                 ? (int) serialNumberValue
                 : new Random().Next());
@@ -88,7 +87,7 @@ namespace AudioWorks.Extensions.Vorbis
                         ? quality / 10f
                         : 0.5f);
 
-            // Write the header
+            // Generate the header
             using (var comment = new MetadataToVorbisCommentAdapter(metadata))
             {
                 comment.HeaderOut(_encoder.DspState, out var first, out var second, out var third);
@@ -97,9 +96,23 @@ namespace AudioWorks.Extensions.Vorbis
                 _oggStream.PacketIn(third);
             }
 
-            // ReSharper disable once PossibleNullReferenceException
-            while (_oggStream.Flush(out var page))
-                WritePage(page);
+            // Buffer the header writes in memory by swapping the stream
+            using (var tempStream = new MemoryStream())
+            {
+                _outputStream = tempStream;
+
+                // ReSharper disable once PossibleNullReferenceException
+                while (_oggStream.Flush(out var page))
+                    WritePage(page);
+
+                // Pre-allocate the whole file (assume 500kbps plus metadata)
+                fileStream.SetLength(info.BitRate * (long) info.PlayLength.TotalSeconds + tempStream.Length);
+
+                // Flush the headers to the file stream
+                tempStream.WriteTo(fileStream);
+            }
+
+            _outputStream = fileStream;
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
@@ -110,7 +123,7 @@ namespace AudioWorks.Extensions.Vorbis
             if (_replayGainExport != null)
                 samples = _replayGainExport.Value.Process(samples);
 
-            // Request an unmanaged buffer for each channel, then copy the samples to to them
+            // Request an unmanaged buffer for each channel, then copy the samples to them
             var buffers = new Span<IntPtr>(_encoder.GetBuffer(samples.Frames).ToPointer(), samples.Channels);
             if (samples.Channels == 1)
             {
@@ -130,6 +143,10 @@ namespace AudioWorks.Extensions.Vorbis
         public void Finish()
         {
             WriteFrames(0);
+
+            // The pre-allocation was based on an estimated bitrate
+            // ReSharper disable once PossibleNullReferenceException
+            _outputStream.SetLength(_outputStream.Position);
         }
 
         public void Dispose()
@@ -194,7 +211,7 @@ namespace AudioWorks.Extensions.Vorbis
         {
 #if NETCOREAPP2_1
             // ReSharper disable once PossibleNullReferenceException
-            _fileStream.Write(new Span<byte>(location.ToPointer(), length));
+            _outputStream.Write(new Span<byte>(location.ToPointer(), length));
 #else
             var buffer = ArrayPool<byte>.Shared.Rent(4096);
             try
@@ -207,7 +224,7 @@ namespace AudioWorks.Extensions.Vorbis
                     var bytesCopied = Math.Min(length - offset, buffer.Length);
                     data.Slice(offset, bytesCopied).CopyTo(buffer);
                     // ReSharper disable once PossibleNullReferenceException
-                    _fileStream.Write(buffer, 0, bytesCopied);
+                    _outputStream.Write(buffer, 0, bytesCopied);
                     offset += bytesCopied;
                 }
             }
