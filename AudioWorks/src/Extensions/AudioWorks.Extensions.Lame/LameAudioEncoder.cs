@@ -71,16 +71,22 @@ namespace AudioWorks.Extensions.Lame
 
             InitializeReplayGainFilter(info, metadata, settings);
 
-            // Pre-allocate the whole file (guess using 320kbps plus cover art and additional metadata)
-            stream.SetLength(0xA000 * (long) info.PlayLength.TotalSeconds
-                                 + (metadata.CoverArt?.Data.Length ?? 0) + 1024);
-
             // Call the external ID3 encoder, if available
             var metadataEncoderFactory =
                 ExtensionProvider.GetFactories<IAudioMetadataEncoder>("Extension", FileExtension).FirstOrDefault();
             if (metadataEncoderFactory != null)
                 using (var export = metadataEncoderFactory.CreateExport())
-                    export.Value.WriteMetadata(stream, metadata, settings);
+                using (var tempStream = new MemoryStream())
+                {
+                    // Buffer the tag in memory
+                    export.Value.WriteMetadata(tempStream, metadata, settings);
+
+                    // Pre-allocate the whole stream (estimate worst case of 320kbps, plus the tag)
+                    stream.SetLength(0xA000 * (long) info.PlayLength.TotalSeconds + tempStream.Length);
+
+                    // Flush the tag to the output stream
+                    tempStream.WriteTo(stream);
+                }
 
             _encoder = new Encoder(stream);
             _encoder.SetChannels(info.Channels);
