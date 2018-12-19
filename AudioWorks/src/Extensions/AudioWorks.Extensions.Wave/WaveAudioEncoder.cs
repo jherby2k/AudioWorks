@@ -35,16 +35,16 @@ namespace AudioWorks.Extensions.Wave
 
         public string FileExtension { get; } = ".wav";
 
-        public void Initialize(FileStream fileStream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
+        public void Initialize(Stream stream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
             _bitsPerSample = info.BitsPerSample;
             _bytesPerSample = (int) Math.Ceiling(info.BitsPerSample / 8.0);
-            _writer = new RiffWriter(fileStream);
+            _writer = new RiffWriter(stream);
 
-            // Pre-allocate the entire file to avoid fragmentation
+            // Pre-allocate the entire stream to avoid fragmentation
             var estimatedSize = 44 + info.FrameCount * info.Channels * _bytesPerSample;
             estimatedSize += estimatedSize % 2;
-            fileStream.SetLength(estimatedSize);
+            stream.SetLength(estimatedSize);
 
             _writer.Initialize("WAVE");
             WriteFmtChunk(info);

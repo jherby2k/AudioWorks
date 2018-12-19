@@ -26,18 +26,18 @@ namespace AudioWorks.Extensions.Flac
 
         public string Format => _format;
 
-        public AudioInfo ReadAudioInfo(FileStream stream)
+        public AudioInfo ReadAudioInfo(Stream stream)
         {
             using (var decoder = new AudioInfoStreamDecoder(stream))
             {
                 decoder.Initialize();
                 if (!decoder.ProcessMetadata())
                     throw new AudioInvalidException(
-                        $"libFLAC was unable to read the audio information: {decoder.GetState()}.", stream.Name);
+                        $"libFLAC was unable to read the audio information: {decoder.GetState()}.");
                 decoder.Finish();
 
                 return decoder.AudioInfo ??
-                       throw new AudioInvalidException("Audio information was not provided by libFLAC.", stream.Name);
+                       throw new AudioInvalidException("Audio information was not provided by libFLAC.");
             }
         }
     }

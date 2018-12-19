@@ -20,7 +20,7 @@ using JetBrains.Annotations;
 namespace AudioWorks.Extensibility
 {
     /// <summary>
-    /// An extension that can read metadata from an audio file stream.
+    /// An extension that can read metadata from an audio stream.
     /// </summary>
     [PublicAPI]
     public interface IAudioMetadataDecoder
@@ -35,9 +35,9 @@ namespace AudioWorks.Extensibility
         /// <summary>
         /// Reads the metadata.
         /// </summary>
-        /// <param name="stream">The file stream.</param>
+        /// <param name="stream">The stream.</param>
         /// <returns>The metadata.</returns>
         [NotNull]
-        AudioMetadata ReadMetadata([NotNull] FileStream stream);
+        AudioMetadata ReadMetadata([NotNull] Stream stream);
     }
 }

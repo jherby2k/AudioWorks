@@ -32,7 +32,7 @@ namespace AudioWorks.Extensions.Mp4
             ["Padding"] = new IntSettingInfo(0, 16_777_216)
         };
 
-        public void WriteMetadata(FileStream stream, AudioMetadata metadata, SettingDictionary settings)
+        public void WriteMetadata(Stream stream, AudioMetadata metadata, SettingDictionary settings)
         {
             // Create a temporary stream to hold the new atom structure
             using (var tempStream = new TempFileStream())

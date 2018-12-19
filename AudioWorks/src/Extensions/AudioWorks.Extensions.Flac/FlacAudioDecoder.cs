@@ -25,15 +25,13 @@ namespace AudioWorks.Extensions.Flac
     [AudioDecoderExport(".flac")]
     public sealed class FlacAudioDecoder : IAudioDecoder, IDisposable
     {
-        [CanBeNull] string _fileName;
         [CanBeNull] AudioStreamDecoder _decoder;
 
         public bool Finished { get; private set; }
 
-        public void Initialize(FileStream fileStream)
+        public void Initialize(Stream stream)
         {
-            _fileName = fileStream.Name;
-            _decoder = new AudioStreamDecoder(fileStream);
+            _decoder = new AudioStreamDecoder(stream);
             _decoder.Initialize();
         }
 
@@ -43,8 +41,7 @@ namespace AudioWorks.Extensions.Flac
             while (_decoder.GetState() != DecoderState.EndOfStream)
             {
                 if (!_decoder.ProcessSingle())
-                    throw new AudioInvalidException($"libFLAC failed to decode the samples: {_decoder.GetState()}.",
-                        _fileName);
+                    throw new AudioInvalidException($"libFLAC failed to decode the samples: {_decoder.GetState()}.");
 
                 if (_decoder.Samples == null)
                     continue;

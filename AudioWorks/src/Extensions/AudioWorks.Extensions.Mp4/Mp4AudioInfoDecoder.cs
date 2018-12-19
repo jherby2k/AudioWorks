@@ -28,7 +28,7 @@ namespace AudioWorks.Extensions.Mp4
 
         public string Format => _format;
 
-        public AudioInfo ReadAudioInfo(FileStream stream)
+        public AudioInfo ReadAudioInfo(Stream stream)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace AudioWorks.Extensions.Mp4
 
                 // Apple Lossless files have their own atom for storing audio info
                 if (!mp4.DescendToAtom("moov", "trak", "mdia", "minf", "stbl", "stsd", "alac"))
-                    throw new AudioUnsupportedException("Only AAC and ALAC files are supported.", stream.Name);
+                    throw new AudioUnsupportedException("Only AAC and ALAC MP4 streams are supported.");
 
                 var alac = new AlacAtom(mp4.ReadAtom(mp4.CurrentAtom));
                 return AudioInfo.CreateForLossless(
@@ -65,7 +65,7 @@ namespace AudioWorks.Extensions.Mp4
             }
             catch (EndOfStreamException e)
             {
-                throw new AudioInvalidException(e.Message, stream.Name);
+                throw new AudioInvalidException(e.Message);
             }
         }
 

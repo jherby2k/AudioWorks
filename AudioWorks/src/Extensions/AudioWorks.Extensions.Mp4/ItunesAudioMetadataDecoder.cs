@@ -26,7 +26,7 @@ namespace AudioWorks.Extensions.Mp4
 
         public string Format => _format;
 
-        public AudioMetadata ReadMetadata(FileStream stream)
+        public AudioMetadata ReadMetadata(Stream stream)
         {
             var mp4 = new Mp4Model(stream);
             if (mp4.DescendToAtom("moov", "udta", "meta", "ilst"))

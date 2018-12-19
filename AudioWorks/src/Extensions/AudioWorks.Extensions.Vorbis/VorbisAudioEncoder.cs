@@ -63,7 +63,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         public string FileExtension { get; } = ".ogg";
 
-        public void Initialize(FileStream fileStream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
+        public void Initialize(Stream stream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
             InitializeReplayGainFilter(info, metadata, settings);
 
@@ -106,13 +106,13 @@ namespace AudioWorks.Extensions.Vorbis
                     WritePage(page);
 
                 // Pre-allocate the whole file (assume 500kbps worst case, plus metadata)
-                fileStream.SetLength(0xFA00 * (long) info.PlayLength.TotalSeconds + tempStream.Length);
+                stream.SetLength(0xFA00 * (long) info.PlayLength.TotalSeconds + tempStream.Length);
 
                 // Flush the headers to the file stream
-                tempStream.WriteTo(fileStream);
+                tempStream.WriteTo(stream);
             }
 
-            _outputStream = fileStream;
+            _outputStream = stream;
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]

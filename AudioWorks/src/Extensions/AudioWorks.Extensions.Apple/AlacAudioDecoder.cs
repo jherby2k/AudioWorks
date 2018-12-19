@@ -36,13 +36,13 @@ namespace AudioWorks.Extensions.Apple
 
         public bool Finished { get; private set; }
 
-        public void Initialize(FileStream fileStream)
+        public void Initialize(Stream stream)
         {
-            _audioFile = new AudioFile(AudioFileType.M4A, fileStream);
+            _audioFile = new AudioFile(AudioFileType.M4A, stream);
 
             var inputDescription = _audioFile.GetProperty<AudioStreamBasicDescription>(AudioFilePropertyId.DataFormat);
             if (inputDescription.AudioFormat != AudioFormat.AppleLossless)
-                throw new AudioUnsupportedException($"{fileStream.Name} is not an Apple Lossless file.", fileStream.Name);
+                throw new AudioUnsupportedException($"The stream is not in Apple Lossless format.");
 
             _outputDescription = GetOutputDescription(inputDescription);
 

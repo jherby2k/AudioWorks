@@ -31,7 +31,7 @@ namespace AudioWorks.Extensions.Vorbis
     {
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary();
 
-        public unsafe void WriteMetadata(FileStream stream, AudioMetadata metadata, SettingDictionary settings)
+        public unsafe void WriteMetadata(Stream stream, AudioMetadata metadata, SettingDictionary settings)
         {
             using (var tempStream = new TempFileStream())
             {
@@ -62,7 +62,7 @@ namespace AudioWorks.Extensions.Vorbis
                                 var bytesRead = stream.Read(buffer, 0, buffer.Length);
 #endif
                                 if (bytesRead == 0)
-                                    throw new AudioInvalidException("No Ogg stream was found.", stream.Name);
+                                    throw new AudioInvalidException("No Ogg stream was found.");
 
                                 var nativeBuffer = new Span<byte>(sync.Buffer(bytesRead).ToPointer(), bytesRead);
 #if NETCOREAPP2_1

@@ -29,7 +29,7 @@ namespace AudioWorks.Extensions.Flac
             ["Padding"] = new IntSettingInfo(0, 16_777_216)
         };
 
-        public void WriteMetadata(FileStream stream, AudioMetadata metadata, SettingDictionary settings)
+        public void WriteMetadata(Stream stream, AudioMetadata metadata, SettingDictionary settings)
         {
             var padding = GetPadding(settings);
 

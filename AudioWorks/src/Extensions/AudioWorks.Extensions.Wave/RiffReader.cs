@@ -49,7 +49,7 @@ namespace AudioWorks.Extensions.Wave
             var buffer = ReadChars(4);
             if (buffer.Length < 4)
 #endif
-                throw new AudioInvalidException("File is unexpectedly truncated.", ((FileStream) BaseStream).Name);
+                throw new AudioInvalidException("Stream is unexpectedly truncated.");
 
             return new string(buffer);
         }

@@ -38,9 +38,9 @@ namespace AudioWorks.Extensions.Flac
 
         public string FileExtension { get; } = ".flac";
 
-        public void Initialize(FileStream fileStream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
+        public void Initialize(Stream stream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
-            _encoder = new StreamEncoder(fileStream);
+            _encoder = new StreamEncoder(stream);
             _encoder.SetChannels((uint) info.Channels);
             _encoder.SetBitsPerSample((uint) info.BitsPerSample);
             _encoder.SetSampleRate((uint) info.SampleRate);

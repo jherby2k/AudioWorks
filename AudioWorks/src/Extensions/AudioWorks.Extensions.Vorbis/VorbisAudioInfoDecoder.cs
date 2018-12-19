@@ -30,7 +30,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         public string Format => _format;
 
-        public unsafe AudioInfo ReadAudioInfo(FileStream stream)
+        public unsafe AudioInfo ReadAudioInfo(Stream stream)
         {
             OggStream oggStream = null;
             SafeNativeMethods.VorbisCommentInit(out var vorbisComment);
@@ -58,7 +58,7 @@ namespace AudioWorks.Extensions.Vorbis
                             var bytesRead = stream.Read(buffer, 0, buffer.Length);
 #endif
                             if (bytesRead == 0)
-                                throw new AudioInvalidException("No Ogg stream was found.", stream.Name);
+                                throw new AudioInvalidException("No Ogg stream was found.");
 
                             var nativeBuffer = new Span<byte>(sync.Buffer(bytesRead).ToPointer(), bytesRead);
 #if NETCOREAPP2_1
@@ -77,7 +77,7 @@ namespace AudioWorks.Extensions.Vorbis
                         while (oggStream.PacketOut(out var packet))
                         {
                             if (!SafeNativeMethods.VorbisSynthesisIdHeader(packet))
-                                throw new AudioUnsupportedException("Not a Vorbis file.", stream.Name);
+                                throw new AudioUnsupportedException("Not a Vorbis stream.");
 
                             decoder.HeaderIn(vorbisComment, packet);
 
@@ -97,8 +97,7 @@ namespace AudioWorks.Extensions.Vorbis
                         }
                     } while (!SafeNativeMethods.OggPageEos(page));
 
-                    throw new AudioInvalidException("The end of the Ogg stream was reached without finding the header.",
-                        stream.Name);
+                    throw new AudioInvalidException("The end of the Ogg stream was reached without finding a header.");
                 }
             }
             finally

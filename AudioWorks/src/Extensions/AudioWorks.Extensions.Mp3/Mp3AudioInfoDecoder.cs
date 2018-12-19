@@ -28,7 +28,7 @@ namespace AudioWorks.Extensions.Mp3
 
         public string Format => _format;
 
-        public AudioInfo ReadAudioInfo(FileStream stream)
+        public AudioInfo ReadAudioInfo(Stream stream)
         {
             using (var reader = new FrameReader(stream))
             {
@@ -51,7 +51,7 @@ namespace AudioWorks.Extensions.Mp3
                 catch (EndOfStreamException e)
                 {
                     // If a frame sync couldn't be located, this isn't an MP3
-                    throw new AudioInvalidException(e.Message, stream.Name);
+                    throw new AudioInvalidException(e.Message);
                 }
             }
         }
@@ -75,7 +75,7 @@ namespace AudioWorks.Extensions.Mp3
 #else
                 if (reader.Read(buffer, 0, 4) < 4)
 #endif
-                    throw new AudioInvalidException("File is unexpectedly truncated.",
+                    throw new AudioInvalidException("Stream is unexpectedly truncated.",
                         ((FileStream) reader.BaseStream).Name);
 
                 try

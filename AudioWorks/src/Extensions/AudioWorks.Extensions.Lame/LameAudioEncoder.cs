@@ -27,7 +27,7 @@ namespace AudioWorks.Extensions.Lame
     [AudioEncoderExport("LameMP3", "Lame MPEG Audio Layer 3")]
     public sealed class LameAudioEncoder : IAudioEncoder, IDisposable
     {
-        [CanBeNull] Stream _fileStream;
+        [CanBeNull] Stream _stream;
         [CanBeNull] Encoder _encoder;
         [CanBeNull] Export<IAudioFilter> _replayGainExport;
 
@@ -65,14 +65,14 @@ namespace AudioWorks.Extensions.Lame
 
         public string FileExtension { get; } = ".mp3";
 
-        public void Initialize(FileStream fileStream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
+        public void Initialize(Stream stream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
-            _fileStream = fileStream;
+            _stream = stream;
 
             InitializeReplayGainFilter(info, metadata, settings);
 
             // Pre-allocate the whole file (guess using 320kbps plus cover art and additional metadata)
-            fileStream.SetLength(0xA000 * (long) info.PlayLength.TotalSeconds
+            stream.SetLength(0xA000 * (long) info.PlayLength.TotalSeconds
                                  + (metadata.CoverArt?.Data.Length ?? 0) + 1024);
 
             // Call the external ID3 encoder, if available
@@ -80,9 +80,9 @@ namespace AudioWorks.Extensions.Lame
                 ExtensionProvider.GetFactories<IAudioMetadataEncoder>("Extension", FileExtension).FirstOrDefault();
             if (metadataEncoderFactory != null)
                 using (var export = metadataEncoderFactory.CreateExport())
-                    export.Value.WriteMetadata(fileStream, metadata, settings);
+                    export.Value.WriteMetadata(stream, metadata, settings);
 
-            _encoder = new Encoder(fileStream);
+            _encoder = new Encoder(stream);
             _encoder.SetChannels(info.Channels);
             _encoder.SetSampleRate(info.SampleRate);
             if (info.FrameCount > 0)
@@ -148,7 +148,7 @@ namespace AudioWorks.Extensions.Lame
             _encoder.UpdateLameTag();
 
             // The pre-allocation was based on estimates
-            _fileStream.SetLength(_fileStream.Position);
+            _stream.SetLength(_stream.Position);
         }
 
         public void Dispose()

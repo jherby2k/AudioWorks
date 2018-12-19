@@ -20,7 +20,7 @@ using JetBrains.Annotations;
 namespace AudioWorks.Extensibility
 {
     /// <summary>
-    /// An extension that can read basic information about an audio file stream.
+    /// An extension that can read basic information about an audio stream.
     /// </summary>
     [PublicAPI]
     public interface IAudioInfoDecoder
@@ -33,11 +33,11 @@ namespace AudioWorks.Extensibility
         string Format { get; }
 
         /// <summary>
-        /// Reads the audio information from a file stream.
+        /// Reads the audio information from a stream.
         /// </summary>
-        /// <param name="stream">The file stream.</param>
+        /// <param name="stream">The stream.</param>
         /// <returns>The audio information.</returns>
         [NotNull]
-        AudioInfo ReadAudioInfo([NotNull] FileStream stream);
+        AudioInfo ReadAudioInfo([NotNull] Stream stream);
     }
 }

@@ -19,7 +19,7 @@ using JetBrains.Annotations;
 namespace AudioWorks.Extensibility
 {
     /// <summary>
-    /// An extension that can decode an audio file stream.
+    /// An extension that can decode an audio stream.
     /// </summary>
     [PublicAPI]
     public interface IAudioDecoder
@@ -33,8 +33,8 @@ namespace AudioWorks.Extensibility
         /// <summary>
         /// Initializes the decoder.
         /// </summary>
-        /// <param name="fileStream">The file stream.</param>
-        void Initialize([NotNull] FileStream fileStream);
+        /// <param name="stream">The stream.</param>
+        void Initialize([NotNull] Stream stream);
 
         /// <summary>
         /// Decodes a collection of samples.

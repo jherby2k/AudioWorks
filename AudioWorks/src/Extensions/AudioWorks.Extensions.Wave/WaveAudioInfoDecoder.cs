@@ -27,7 +27,7 @@ namespace AudioWorks.Extensions.Wave
 
         public string Format => _format;
 
-        public AudioInfo ReadAudioInfo(FileStream stream)
+        public AudioInfo ReadAudioInfo(Stream stream)
         {
             using (var reader = new RiffReader(stream))
             {
@@ -36,15 +36,15 @@ namespace AudioWorks.Extensions.Wave
                     reader.Initialize();
 
                     if (stream.Length != reader.RiffChunkSize + 8)
-                        throw new AudioInvalidException("File is unexpectedly truncated.", stream.Name);
+                        throw new AudioInvalidException("Stream is unexpectedly truncated.");
 
                     reader.BaseStream.Position = 8;
                     if (!reader.ReadFourCc().Equals("WAVE", StringComparison.Ordinal))
-                        throw new AudioInvalidException("Not a Wave file.", stream.Name);
+                        throw new AudioInvalidException("Not a Wave stream.");
 
                     var fmtChunkSize = reader.SeekToChunk("fmt ");
                     if (fmtChunkSize == 0)
-                        throw new AudioInvalidException("Missing 'fmt' chunk.", stream.Name);
+                        throw new AudioInvalidException("Missing 'fmt' chunk.");
 
                     var isExtensible = false;
                     switch (reader.ReadUInt16())
@@ -59,7 +59,7 @@ namespace AudioWorks.Extensions.Wave
                             break;
 
                         default:
-                            throw new AudioUnsupportedException("Only PCM wave files are supported.", stream.Name);
+                            throw new AudioUnsupportedException("Only PCM wave streams are supported.");
                     }
 
                     var channels = reader.ReadUInt16();
@@ -84,7 +84,7 @@ namespace AudioWorks.Extensions.Wave
                 catch (EndOfStreamException e)
                 {
                     // The end of the stream was unexpectedly reached
-                    throw new AudioInvalidException(e.Message, stream.Name);
+                    throw new AudioInvalidException(e.Message);
                 }
             }
         }

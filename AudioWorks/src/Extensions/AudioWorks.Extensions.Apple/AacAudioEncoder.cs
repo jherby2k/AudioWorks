@@ -31,7 +31,7 @@ namespace AudioWorks.Extensions.Apple
     {
         static readonly uint[] _vbrQualities = { 0, 9, 18, 27, 36, 45, 54, 63, 73, 82, 91, 100, 109, 118, 127 };
 
-        [CanBeNull] FileStream _fileStream;
+        [CanBeNull] Stream _stream;
         [CanBeNull] AudioMetadata _metadata;
         [CanBeNull] SettingDictionary _settings;
         [CanBeNull] ExtendedAudioFile _audioFile;
@@ -71,16 +71,16 @@ namespace AudioWorks.Extensions.Apple
 
         public string FileExtension { get; } = ".m4a";
 
-        public void Initialize(FileStream fileStream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
+        public void Initialize(Stream stream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
-            _fileStream = fileStream;
+            _stream = stream;
             _metadata = metadata;
             _settings = settings;
 
             InitializeReplayGainFilter(info, metadata, settings);
 
             var inputDescription = GetInputDescription(info);
-            _audioFile = new ExtendedAudioFile(GetOutputDescription(inputDescription), AudioFileType.M4A, fileStream);
+            _audioFile = new ExtendedAudioFile(GetOutputDescription(inputDescription), AudioFileType.M4A, stream);
             _audioFile.SetProperty(ExtendedAudioFilePropertyId.ClientDataFormat, inputDescription);
 
             var converter = _audioFile.GetProperty<IntPtr>(ExtendedAudioFilePropertyId.AudioConverter);
@@ -163,7 +163,7 @@ namespace AudioWorks.Extensions.Apple
             _audioFile = null;
 
             // ReSharper disable once PossibleNullReferenceException
-            _fileStream.Position = 0;
+            _stream.Position = 0;
 
             // Call the external MP4 encoder for writing iTunes-compatible atoms
             var metadataEncoderFactory =
@@ -171,7 +171,7 @@ namespace AudioWorks.Extensions.Apple
             if (metadataEncoderFactory == null) return;
             using (var export = metadataEncoderFactory.CreateExport())
                 // ReSharper disable twice AssignNullToNotNullAttribute
-                export.Value.WriteMetadata(_fileStream, _metadata, _settings);
+                export.Value.WriteMetadata(_stream, _metadata, _settings);
         }
 
         public void Dispose()

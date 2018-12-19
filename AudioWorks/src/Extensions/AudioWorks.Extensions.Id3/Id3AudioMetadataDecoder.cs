@@ -28,7 +28,7 @@ namespace AudioWorks.Extensions.Id3
 
         public string Format => _format;
 
-        public AudioMetadata ReadMetadata(FileStream stream)
+        public AudioMetadata ReadMetadata(Stream stream)
         {
             TagModel tagModel;
             try
@@ -46,7 +46,7 @@ namespace AudioWorks.Extensions.Id3
                 }
                 catch (TagNotFoundException e)
                 {
-                    throw new AudioUnsupportedException(e.Message, stream.Name);
+                    throw new AudioUnsupportedException(e.Message);
                 }
             }
 

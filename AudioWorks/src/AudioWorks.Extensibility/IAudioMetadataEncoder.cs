@@ -20,7 +20,7 @@ using JetBrains.Annotations;
 namespace AudioWorks.Extensibility
 {
     /// <summary>
-    /// An extension that can write metadata to an audio file stream.
+    /// An extension that can write metadata to an audio stream.
     /// </summary>
     [PublicAPI]
     public interface IAudioMetadataEncoder
@@ -33,13 +33,13 @@ namespace AudioWorks.Extensibility
         SettingInfoDictionary SettingInfo { get; }
 
         /// <summary>
-        /// Writes the metadata to the file stream.
+        /// Writes the metadata to the stream.
         /// </summary>
-        /// <param name="stream">The file stream.</param>
+        /// <param name="stream">The stream.</param>
         /// <param name="metadata">The metadata.</param>
         /// <param name="settings">The settings.</param>
         void WriteMetadata(
-            [NotNull] FileStream stream,
+            [NotNull] Stream stream,
             [NotNull] AudioMetadata metadata,
             [NotNull] SettingDictionary settings);
     }

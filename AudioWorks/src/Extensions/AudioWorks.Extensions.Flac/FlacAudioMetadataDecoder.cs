@@ -26,7 +26,7 @@ namespace AudioWorks.Extensions.Flac
 
         public string Format => _format;
 
-        public AudioMetadata ReadMetadata(FileStream stream)
+        public AudioMetadata ReadMetadata(Stream stream)
         {
             using (var decoder = new MetadataStreamDecoder(stream))
             {
@@ -36,7 +36,7 @@ namespace AudioWorks.Extensions.Flac
                 decoder.Initialize();
                 if (!decoder.ProcessMetadata())
                     throw new AudioInvalidException(
-                        $"libFLAC was unable to read the audio metadata: {decoder.GetState()}.", stream.Name);
+                        $"libFLAC was unable to read the audio metadata: {decoder.GetState()}.");
                 decoder.Finish();
 
                 return decoder.AudioMetadata;

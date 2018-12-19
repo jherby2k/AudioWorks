@@ -37,10 +37,10 @@ namespace AudioWorks.Extensions.Wave
 
         public bool Finished => _framesRemaining == 0;
 
-        public void Initialize(FileStream fileStream)
+        public void Initialize(Stream stream)
         {
-            _audioInfo = new WaveAudioInfoDecoder().ReadAudioInfo(fileStream);
-            _reader = new RiffReader(fileStream);
+            _audioInfo = new WaveAudioInfoDecoder().ReadAudioInfo(stream);
+            _reader = new RiffReader(stream);
             _bitsPerSample = _audioInfo.BitsPerSample;
             _bytesPerSample = (int) Math.Ceiling(_audioInfo.BitsPerSample / 8.0);
             _framesRemaining = _audioInfo.FrameCount;
@@ -58,8 +58,7 @@ namespace AudioWorks.Extensions.Wave
                                                 * _bytesPerSample];
             // ReSharper disable once PossibleNullReferenceException
             if (_reader.Read(buffer) < buffer.Length)
-                throw new AudioInvalidException("File is unexpectedly truncated.",
-                    ((FileStream) _reader.BaseStream).Name);
+                throw new AudioInvalidException("Stream is unexpectedly truncated.");
 
             var result = new SampleBuffer(buffer, _audioInfo.Channels, _bitsPerSample);
             _framesRemaining -= result.Frames;
@@ -73,8 +72,7 @@ namespace AudioWorks.Extensions.Wave
             {
                 // ReSharper disable once PossibleNullReferenceException
                 if (_reader.Read(buffer, 0, length) < length)
-                    throw new AudioInvalidException("File is unexpectedly truncated.",
-                        ((FileStream) _reader.BaseStream).Name);
+                    throw new AudioInvalidException("Stream is unexpectedly truncated.");
 
                 var result = new SampleBuffer(
                     buffer.AsSpan().Slice(0, length),
