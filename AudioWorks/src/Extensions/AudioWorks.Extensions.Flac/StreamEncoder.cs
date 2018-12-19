@@ -89,14 +89,14 @@ namespace AudioWorks.Extensions.Flac
                 SafeNativeMethods.StreamEncoderInitStream(_handle, _writeCallback, _seekCallback, _tellCallback, null,
                     IntPtr.Zero);
 
-                // Pre-allocate the whole file (assume worst case compression plus metadata)
+                // Pre-allocate the whole stream (estimate worst case compression, plus metadata)
                 fileStream.SetLength(
                     SafeNativeMethods.StreamEncoderGetChannels(_handle) *
                     (uint) Math.Ceiling(SafeNativeMethods.StreamEncoderGetBitsPerSample(_handle) / 8.0) *
                     (long) SafeNativeMethods.StreamEncoderGetTotalSamplesEstimate(_handle) +
                     tempStream.Length);
 
-                // Flush the metadata to the real stream and swap back
+                // Flush the metadata to the output stream, and swap the streams back
                 _stream = fileStream;
                 tempStream.WriteTo(fileStream);
             }

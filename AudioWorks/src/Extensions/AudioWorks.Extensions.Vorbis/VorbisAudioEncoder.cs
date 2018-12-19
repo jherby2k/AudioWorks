@@ -96,7 +96,7 @@ namespace AudioWorks.Extensions.Vorbis
                 _oggStream.PacketIn(third);
             }
 
-            // Buffer the header writes in memory by swapping the stream
+            // Buffer the header in memory
             using (var tempStream = new MemoryStream())
             {
                 _outputStream = tempStream;
@@ -105,10 +105,10 @@ namespace AudioWorks.Extensions.Vorbis
                 while (_oggStream.Flush(out var page))
                     WritePage(page);
 
-                // Pre-allocate the whole file (assume 500kbps worst case, plus metadata)
+                // Pre-allocate the whole stream (estimate worst case of 500kbps, plus the header)
                 stream.SetLength(0xFA00 * (long) info.PlayLength.TotalSeconds + tempStream.Length);
 
-                // Flush the headers to the file stream
+                // Flush the headers to the output stream
                 tempStream.WriteTo(stream);
             }
 
