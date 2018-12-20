@@ -3,7 +3,7 @@
   "AutomaticExtensionDownloads": true,
   "AutomaticExtensionDownloadTimeout": 30,
   "UsePreReleaseExtensions": false,
-  "ExtensionRepository": "https://www.myget.org/F/audioworks-extensions/api/v3/index.json",
+  "ExtensionRepository": "https://www.myget.org/F/audioworks-extensions-v1/api/v3/index.json",
   "PreReleaseExtensionRepository": "https://www.myget.org/F/audioworks-extensions-prerelease/api/v3/index.json",
   "DefaultRepository":  "https://api.nuget.org/v3/index.json"
 }

@@ -14,10 +14,13 @@ You should have received a copy of the GNU Lesser General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace AudioWorks.Common
 {
@@ -26,6 +29,11 @@ namespace AudioWorks.Common
     /// </summary>
     public static class ConfigurationManager
     {
+        const string _currentRepository = "https://www.myget.org/F/audioworks-extensions-v1/api/v3/index.json";
+
+        static readonly List<string> _oldRepositories = new List<string>(new[]
+            { "https://www.myget.org/F/audioworks-extensions/api/v3/index.json" });
+
         /// <summary>
         /// Gets the configuration.
         /// </summary>
@@ -41,10 +49,20 @@ namespace AudioWorks.Common
                 "AudioWorks");
             const string settingsFileName = "settings.json";
 
-            // Copy the settings template if the file doesn't already exist
             var settingsFile = Path.Combine(settingsPath, settingsFileName);
-            if (!File.Exists(settingsFile))
+            if (File.Exists(settingsFile))
             {
+                // Make sure the extension repository URL is up to date (but preserve custom entries)
+                var settings = JObject.Parse(File.ReadAllText(settingsFile));
+                if (_oldRepositories.Contains(settings["ExtensionRepository"].Value<string>()))
+                {
+                    settings.Property("ExtensionRepository").Value = _currentRepository;
+                    File.WriteAllText(settingsFile, settings.ToString());
+                }
+            }
+            else
+            {
+                // Copy the settings template if the file doesn't already exist
                 Directory.CreateDirectory(settingsPath);
                 File.Copy(
                     Path.Combine(
