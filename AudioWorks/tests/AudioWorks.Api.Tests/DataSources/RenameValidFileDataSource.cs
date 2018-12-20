@@ -103,15 +103,12 @@ namespace AudioWorks.Api.Tests.DataSources
         [NotNull, ItemNotNull]
         public static IEnumerable<object[]> FileNames
         {
-            // Prepend an index to each row
-            [UsedImplicitly]
-            get => _data.Select(item => new[] { item[0] });
+            [UsedImplicitly] get => _data.Select(item => new[] { item[0] }).Distinct(new ArrayComparer());
         }
 
         [NotNull, ItemNotNull]
         public static IEnumerable<object[]> FileNamesMetadataAndNames
         {
-            // Prepend an index to each row
             [UsedImplicitly] get => _data.Select(item => new[] { item[0], item[1], item[2] });
         }
     }
