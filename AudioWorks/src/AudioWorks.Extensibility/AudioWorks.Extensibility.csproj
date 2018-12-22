@@ -31,7 +31,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AudioWorks.Common" Version="1.0.0-beta2" />
+    <PackageReference Include="AudioWorks.Common" Version="1.0.0-beta3" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05" PrivateAssets="all" />
     <PackageReference Include="System.Composition" Version="1.2.0" />
