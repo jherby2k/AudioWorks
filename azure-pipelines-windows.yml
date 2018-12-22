@@ -74,6 +74,7 @@ steps:
   inputs:
     contents: |
       AudioWorks\src\**\*.nupkg
+      AudioWorks\src\**\*.snupkg
       AudioWorks\src\AudioWorks.Commands\bin\$(buildConfiguration)\AudioWorks.Commands\**
     targetFolder: $(Build.ArtifactStagingDirectory)
   displayName: 'Copy artifacts to staging directory'
