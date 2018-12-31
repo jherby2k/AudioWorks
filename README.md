@@ -26,7 +26,7 @@ AudioWorks runs on Windows 7+, MacOS 10.12+, Ubuntu (18.04 or 16.04) and Fedora 
 * [PowerShell Core 6.1+](https://github.com/PowerShell/PowerShell/releases)
 
 ### Installation
-The AudioWorks PowerShell module can found on [the PowerShell Gallery](https://www.powershellgallery.com/packages/AudioWorks.Commands/1.0.0-beta1). If you are using Windows PowerShell 5.1, you may need to [update PowerShellGet](https://docs.microsoft.com/en-us/powershell/gallery/installing-psget) to a version that supports pre-release modules.
+The AudioWorks PowerShell module can found on [the PowerShell Gallery](https://www.powershellgallery.com/packages/AudioWorks.Commands). If you are using Windows PowerShell 5.1, you may need to [update PowerShellGet](https://docs.microsoft.com/en-us/powershell/gallery/installing-psget) to a version that supports pre-release modules.
 
 Keep the module up to date with `Update-Module -Name AudioWorks.Commands -AllowPrerelease`.
 
@@ -35,7 +35,7 @@ The .NET API is available via [NuGet](https://www.nuget.org/packages/AudioWorks.
 ### Additional Requirements for Building / Testing
 * [.NET Core SDK 2.1.300+](https://dotnet.github.io/)
 * Windows 7+ or Ubuntu 16.04 (currently does not compile on Ubuntu 18.04)
-* [Visual Studio 2017 15.7+](https://visualstudio.microsoft.com/downloads) (optional - Windows only)
+* [Visual Studio 2017 15.9](https://visualstudio.microsoft.com/downloads) (optional - Windows only)
 * [Visual Studio 2017 for Mac 7.7+](https://visualstudio.microsoft.com/downloads) (optional - Mac only)
 * [Visual Studio Code](https://code.visualstudio.com/) (optional - all platforms)
 * [ReSharper 2018.2+](https://www.jetbrains.com/resharper/eap) (optional - Windows only)
