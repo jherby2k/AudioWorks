@@ -30,7 +30,7 @@ The AudioWorks PowerShell module can found on [the PowerShell Gallery](https://w
 
 Keep the module up to date with `Update-Module -Name AudioWorks.Commands -AllowPrerelease`.
 
-The .NET API is available via [NuGet](https://www.nuget.org/packages/AudioWorks.Api/1.0.0-beta1).
+The .NET API is available via [NuGet](https://www.nuget.org/packages/AudioWorks.Api).
 
 ### Additional Requirements for Building / Testing
 * [.NET Core SDK 2.1.300+](https://dotnet.github.io/)
