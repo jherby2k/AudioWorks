@@ -34,7 +34,7 @@ The .NET API is available via [NuGet](https://www.nuget.org/packages/AudioWorks.
 
 ### Additional Requirements for Building / Testing
 * [.NET Core SDK 2.1.300+](https://dotnet.github.io/)
-* Windows 7+ or Ubuntu 16.04 (currently does not compile on Ubuntu 18.04)
+* Windows 7+, MacOS 10.12+, Ubuntu 16.04 or Ubuntu 18.04.
 * [Visual Studio 2017 15.9](https://visualstudio.microsoft.com/downloads) (optional - Windows only)
 * [Visual Studio 2017 for Mac 7.7+](https://visualstudio.microsoft.com/downloads) (optional - Mac only)
 * [Visual Studio Code](https://code.visualstudio.com/) (optional - all platforms)
