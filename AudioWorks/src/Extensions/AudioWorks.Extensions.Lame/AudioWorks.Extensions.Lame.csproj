@@ -13,7 +13,7 @@
     <Product>AudioWorks</Product>
     <Description>The Lame MP3 encoding extension for AudioWorks. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
     <Copyright>© 2018 Jeremy Herbison</Copyright>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/jherby2k/AudioWorks/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/jherby2k/AudioWorks</PackageProjectUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
