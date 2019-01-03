@@ -25,14 +25,13 @@ namespace AudioWorks.Extensibility
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void Convert(ReadOnlySpan<float> source, Span<byte> destination, int bitsPerSample)
         {
-            var multiplier = (int) Math.Pow(2, bitsPerSample - 1);
-            var max = multiplier - 1;
-
             // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
-            if (Vector.IsHardwareAccelerated)
+            if (Vector.IsHardwareAccelerated && bitsPerSample < 32)
             {
+                var adjustment = (int) GetQuantizationLevels(bitsPerSample);
+                var max = adjustment - 1;
+                var adjustmentVector = new Vector<int>(adjustment);
                 var maxVector = new Vector<int>(max);
-                var adjustmentVector = new Vector<int>(multiplier);
                 var sourceVectors = MemoryMarshal.Cast<float, Vector<float>>(source);
                 sourceVectors = sourceVectors.Slice(0, sourceVectors.Length - sourceVectors.Length % 4);
                 var destinationVectors = MemoryMarshal.Cast<byte, Vector<byte>>(destination);
@@ -40,30 +39,35 @@ namespace AudioWorks.Extensibility
                 for (int sourceIndex = 0, destinationIndex = 0; sourceIndex < sourceVectors.Length; destinationIndex++)
                     destinationVectors[destinationIndex] = Vector.Narrow(
                         Vector.Narrow(
-                            (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier),
+                            (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * adjustment),
                                                 maxVector) - adjustmentVector),
-                            (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier),
+                            (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * adjustment),
                                                 maxVector) - adjustmentVector)),
                         Vector.Narrow(
-                            (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier),
+                            (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * adjustment),
                                                 maxVector) - adjustmentVector),
-                            (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier),
+                            (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * adjustment),
                                                 maxVector) - adjustmentVector)));
 
                 for (var sampleIndex = sourceVectors.Length * Vector<float>.Count;
                     sampleIndex < source.Length;
                     sampleIndex++)
-                    destination[sampleIndex] = (byte) Math.Min(source[sampleIndex] * multiplier - multiplier, max);
+                    destination[sampleIndex] = (byte) Math.Min(source[sampleIndex] * adjustment - adjustment, max);
             }
             else
+            {
+                var adjustment = GetQuantizationLevels(bitsPerSample);
+                var max = adjustment - 1;
+
                 for (var sampleIndex = 0; sampleIndex < source.Length; sampleIndex++)
-                    destination[sampleIndex] = (byte) Math.Min(source[sampleIndex] * multiplier - multiplier, max);
+                    destination[sampleIndex] = (byte) Math.Min(source[sampleIndex] * adjustment - adjustment, max);
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void Convert(ReadOnlySpan<float> source, Span<short> destination, int bitsPerSample)
         {
-            var multiplier = (int) Math.Pow(2, bitsPerSample - 1);
+            var multiplier = (int) GetQuantizationLevels(bitsPerSample);
             var max = multiplier - 1;
 
             // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
@@ -94,7 +98,7 @@ namespace AudioWorks.Extensibility
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void Convert(ReadOnlySpan<float> source, Span<Int24> destination, int bitsPerSample)
         {
-            var multiplier = (int) Math.Pow(2, bitsPerSample - 1);
+            var multiplier = GetQuantizationLevels(bitsPerSample);
             var max = multiplier - 1;
 
             for (var sampleIndex = 0; sampleIndex < source.Length; sampleIndex++)
@@ -107,7 +111,7 @@ namespace AudioWorks.Extensibility
             // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
             if (Vector.IsHardwareAccelerated && bitsPerSample < 32)
             {
-                var multiplier = (int) Math.Pow(2, bitsPerSample - 1);
+                var multiplier = (int) GetQuantizationLevels(bitsPerSample);
                 var max = multiplier - 1;
                 var maxVector = new Vector<int>(max);
                 var sourceVectors = MemoryMarshal.Cast<float, Vector<float>>(source);
@@ -124,8 +128,7 @@ namespace AudioWorks.Extensibility
             }
             else
             {
-                // At 32 bits per sample, multiplier > int.MaxValue
-                var multiplier = (uint) Math.Pow(2, bitsPerSample - 1);
+                var multiplier = GetQuantizationLevels(bitsPerSample);
                 var max = (int) multiplier - 1;
 
                 for (var sampleIndex = 0; sampleIndex < source.Length; sampleIndex++)
@@ -144,8 +147,8 @@ namespace AudioWorks.Extensibility
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void Convert(ReadOnlySpan<byte> source, Span<float> destination, int bitsPerSample)
         {
-            var adjustment = (float) Math.Pow(2, bitsPerSample - 1);
-            var multiplier = 1 / (float) Math.Pow(2, bitsPerSample - 1);
+            var adjustment = (float) GetQuantizationLevels(bitsPerSample);
+            var multiplier = 1 / adjustment;
 
             // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
             if (Vector.IsHardwareAccelerated)
@@ -183,7 +186,7 @@ namespace AudioWorks.Extensibility
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void Convert(ReadOnlySpan<short> source, Span<float> destination, int bitsPerSample)
         {
-            var multiplier = 1 / (float) Math.Pow(2, bitsPerSample - 1);
+            var multiplier = 1 / (float) GetQuantizationLevels(bitsPerSample);
 
             // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
             if (Vector.IsHardwareAccelerated)
@@ -212,7 +215,7 @@ namespace AudioWorks.Extensibility
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void Convert(ReadOnlySpan<Int24> source, Span<float> destination, int bitsPerSample)
         {
-            var multiplier = 1 / (float) Math.Pow(2, bitsPerSample - 1);
+            var multiplier = 1 / (float) GetQuantizationLevels(bitsPerSample);
 
             for (var sampleIndex = 0; sampleIndex < source.Length; sampleIndex++)
                 destination[sampleIndex] = source[sampleIndex] * multiplier;
@@ -221,7 +224,7 @@ namespace AudioWorks.Extensibility
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void Convert(ReadOnlySpan<int> source, Span<float> destination, int bitsPerSample)
         {
-            var multiplier = 1 / (float) Math.Pow(2, bitsPerSample - 1);
+            var multiplier = 1 / (float) GetQuantizationLevels(bitsPerSample);
 
             // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
             if (Vector.IsHardwareAccelerated)
@@ -278,6 +281,12 @@ namespace AudioWorks.Extensibility
                     rightDestination[frameIndex] = *sourcePointer++;
                 }
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static uint GetQuantizationLevels(int bitsPerSample)
+        {
+            return bitsPerSample == 32 ? 0x8000_0000 : (uint) (1 << (bitsPerSample - 1));
         }
     }
 }
