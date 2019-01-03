@@ -23,11 +23,12 @@ namespace AudioWorks.Extensibility
     {
         internal static void Convert(ReadOnlySpan<float> source, Span<byte> destination, int bitsPerSample)
         {
+            var adjustment = (int) GetAbsoluteQuantizationLevels(bitsPerSample);
+            var max = adjustment - 1;
+
             // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
-            if (Vector.IsHardwareAccelerated && bitsPerSample < 32)
+            if (Vector.IsHardwareAccelerated)
             {
-                var adjustment = (int) GetAbsoluteQuantizationLevels(bitsPerSample);
-                var max = adjustment - 1;
                 var adjustmentVector = new Vector<int>(adjustment);
                 var maxVector = new Vector<int>(max);
                 var sourceVectors = MemoryMarshal.Cast<float, Vector<float>>(source);
@@ -54,9 +55,6 @@ namespace AudioWorks.Extensibility
             }
             else
             {
-                var adjustment = GetAbsoluteQuantizationLevels(bitsPerSample);
-                var max = adjustment - 1;
-
                 for (var sampleIndex = 0; sampleIndex < source.Length; sampleIndex++)
                     destination[sampleIndex] = (byte) Math.Min(source[sampleIndex] * adjustment - adjustment, max);
             }
