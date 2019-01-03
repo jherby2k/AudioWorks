@@ -15,14 +15,12 @@ You should have received a copy of the GNU Lesser General Public License along w
 
 using System;
 using System.Numerics;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensibility
 {
     static class SampleProcessor
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void Convert(ReadOnlySpan<float> source, Span<byte> destination, int bitsPerSample)
         {
             // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
@@ -64,7 +62,6 @@ namespace AudioWorks.Extensibility
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void Convert(ReadOnlySpan<float> source, Span<short> destination, int bitsPerSample)
         {
             var multiplier = (int) GetQuantizationLevels(bitsPerSample);
@@ -95,7 +92,6 @@ namespace AudioWorks.Extensibility
                     destination[sampleIndex] = (short) Math.Min(source[sampleIndex] * multiplier, max);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void Convert(ReadOnlySpan<float> source, Span<Int24> destination, int bitsPerSample)
         {
             var multiplier = GetQuantizationLevels(bitsPerSample);
@@ -105,7 +101,6 @@ namespace AudioWorks.Extensibility
                 destination[sampleIndex] = new Int24(Math.Min(source[sampleIndex] * multiplier, max));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void Convert(ReadOnlySpan<float> source, Span<int> destination, int bitsPerSample)
         {
             // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
@@ -144,7 +139,6 @@ namespace AudioWorks.Extensibility
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void Convert(ReadOnlySpan<byte> source, Span<float> destination, int bitsPerSample)
         {
             var adjustment = (float) GetQuantizationLevels(bitsPerSample);
@@ -183,7 +177,6 @@ namespace AudioWorks.Extensibility
                     destination[sampleIndex] = (source[sampleIndex] - adjustment) * multiplier;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void Convert(ReadOnlySpan<short> source, Span<float> destination, int bitsPerSample)
         {
             var multiplier = 1 / (float) GetQuantizationLevels(bitsPerSample);
@@ -212,7 +205,6 @@ namespace AudioWorks.Extensibility
                     destination[sampleIndex] = source[sampleIndex] * multiplier;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void Convert(ReadOnlySpan<Int24> source, Span<float> destination, int bitsPerSample)
         {
             var multiplier = 1 / (float) GetQuantizationLevels(bitsPerSample);
@@ -221,7 +213,6 @@ namespace AudioWorks.Extensibility
                 destination[sampleIndex] = source[sampleIndex] * multiplier;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void Convert(ReadOnlySpan<int> source, Span<float> destination, int bitsPerSample)
         {
             var multiplier = 1 / (float) GetQuantizationLevels(bitsPerSample);
@@ -245,7 +236,6 @@ namespace AudioWorks.Extensibility
                     destination[sampleIndex] = source[sampleIndex] * multiplier;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static unsafe void Interleave(
             ReadOnlySpan<float> leftSource,
             ReadOnlySpan<float> rightSource,
@@ -264,7 +254,6 @@ namespace AudioWorks.Extensibility
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static unsafe void DeInterleave(
             ReadOnlySpan<float> source,
             Span<float> leftDestination,
@@ -283,7 +272,6 @@ namespace AudioWorks.Extensibility
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static uint GetQuantizationLevels(int bitsPerSample)
         {
             return bitsPerSample == 32 ? 0x8000_0000 : (uint) (1 << (bitsPerSample - 1));
