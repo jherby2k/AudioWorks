@@ -26,7 +26,7 @@ namespace AudioWorks.Extensibility
             // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
             if (Vector.IsHardwareAccelerated && bitsPerSample < 32)
             {
-                var adjustment = (int) GetQuantizationLevels(bitsPerSample);
+                var adjustment = (int) GetAbsoluteQuantizationLevels(bitsPerSample);
                 var max = adjustment - 1;
                 var adjustmentVector = new Vector<int>(adjustment);
                 var maxVector = new Vector<int>(max);
@@ -54,7 +54,7 @@ namespace AudioWorks.Extensibility
             }
             else
             {
-                var adjustment = GetQuantizationLevels(bitsPerSample);
+                var adjustment = GetAbsoluteQuantizationLevels(bitsPerSample);
                 var max = adjustment - 1;
 
                 for (var sampleIndex = 0; sampleIndex < source.Length; sampleIndex++)
@@ -64,7 +64,7 @@ namespace AudioWorks.Extensibility
 
         internal static void Convert(ReadOnlySpan<float> source, Span<short> destination, int bitsPerSample)
         {
-            var multiplier = (int) GetQuantizationLevels(bitsPerSample);
+            var multiplier = (int) GetAbsoluteQuantizationLevels(bitsPerSample);
             var max = multiplier - 1;
 
             // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
@@ -94,7 +94,7 @@ namespace AudioWorks.Extensibility
 
         internal static void Convert(ReadOnlySpan<float> source, Span<Int24> destination, int bitsPerSample)
         {
-            var multiplier = GetQuantizationLevels(bitsPerSample);
+            var multiplier = GetAbsoluteQuantizationLevels(bitsPerSample);
             var max = multiplier - 1;
 
             for (var sampleIndex = 0; sampleIndex < source.Length; sampleIndex++)
@@ -106,7 +106,7 @@ namespace AudioWorks.Extensibility
             // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
             if (Vector.IsHardwareAccelerated && bitsPerSample < 32)
             {
-                var multiplier = (int) GetQuantizationLevels(bitsPerSample);
+                var multiplier = (int) GetAbsoluteQuantizationLevels(bitsPerSample);
                 var max = multiplier - 1;
                 var maxVector = new Vector<int>(max);
                 var sourceVectors = MemoryMarshal.Cast<float, Vector<float>>(source);
@@ -123,7 +123,7 @@ namespace AudioWorks.Extensibility
             }
             else
             {
-                var multiplier = GetQuantizationLevels(bitsPerSample);
+                var multiplier = GetAbsoluteQuantizationLevels(bitsPerSample);
                 var max = (int) multiplier - 1;
 
                 for (var sampleIndex = 0; sampleIndex < source.Length; sampleIndex++)
@@ -141,7 +141,7 @@ namespace AudioWorks.Extensibility
 
         internal static void Convert(ReadOnlySpan<byte> source, Span<float> destination, int bitsPerSample)
         {
-            var adjustment = (float) GetQuantizationLevels(bitsPerSample);
+            var adjustment = (float) GetAbsoluteQuantizationLevels(bitsPerSample);
             var multiplier = 1 / adjustment;
 
             // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
@@ -179,7 +179,7 @@ namespace AudioWorks.Extensibility
 
         internal static void Convert(ReadOnlySpan<short> source, Span<float> destination, int bitsPerSample)
         {
-            var multiplier = 1 / (float) GetQuantizationLevels(bitsPerSample);
+            var multiplier = 1 / (float) GetAbsoluteQuantizationLevels(bitsPerSample);
 
             // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
             if (Vector.IsHardwareAccelerated)
@@ -207,7 +207,7 @@ namespace AudioWorks.Extensibility
 
         internal static void Convert(ReadOnlySpan<Int24> source, Span<float> destination, int bitsPerSample)
         {
-            var multiplier = 1 / (float) GetQuantizationLevels(bitsPerSample);
+            var multiplier = 1 / (float) GetAbsoluteQuantizationLevels(bitsPerSample);
 
             for (var sampleIndex = 0; sampleIndex < source.Length; sampleIndex++)
                 destination[sampleIndex] = source[sampleIndex] * multiplier;
@@ -215,7 +215,7 @@ namespace AudioWorks.Extensibility
 
         internal static void Convert(ReadOnlySpan<int> source, Span<float> destination, int bitsPerSample)
         {
-            var multiplier = 1 / (float) GetQuantizationLevels(bitsPerSample);
+            var multiplier = 1 / (float) GetAbsoluteQuantizationLevels(bitsPerSample);
 
             // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
             if (Vector.IsHardwareAccelerated)
@@ -272,9 +272,6 @@ namespace AudioWorks.Extensibility
             }
         }
 
-        static uint GetQuantizationLevels(int bitsPerSample)
-        {
-            return bitsPerSample == 32 ? 0x8000_0000 : (uint) (1 << (bitsPerSample - 1));
-        }
+        static uint GetAbsoluteQuantizationLevels(int bitsPerSample) => 1u << (bitsPerSample - 1);
     }
 }
