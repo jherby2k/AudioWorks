@@ -33,6 +33,7 @@ steps:
     sudo apt-get install --yes libflac8
     sudo apt-get install --yes libmp3lame0
     sudo apt-get install --yes libvorbisenc2
+    sudo apt-get install --yes libopus0
     sudo apt-get install --yes libebur128-1
     sudo updatedb
     dotnet tool install --global dotnet-reportgenerator-globaltool
