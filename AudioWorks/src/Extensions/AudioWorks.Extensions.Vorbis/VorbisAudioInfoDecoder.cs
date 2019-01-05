@@ -49,7 +49,7 @@ namespace AudioWorks.Extensions.Vorbis
 
                     do
                     {
-                        // Read from the buffer into a page:
+                        // Read from the buffer into a page
                         while (!sync.PageOut(out page))
                         {
 #if NETCOREAPP2_1
