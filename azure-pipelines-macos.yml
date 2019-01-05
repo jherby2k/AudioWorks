@@ -47,6 +47,7 @@ steps:
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
+    failOnStandardError: true
   displayName: 'Publish test results'
 
 - script: |
