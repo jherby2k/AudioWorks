@@ -87,7 +87,13 @@ namespace AudioWorks.Extensions.Opus
 #endif
 
             logger.LogInformation("Using libopus version {0}.",
-                Marshal.PtrToStringAnsi(SafeNativeMethods.OpusGetVersion()));
+                // ReSharper disable once PossibleNullReferenceException
+                Marshal.PtrToStringAnsi(SafeNativeMethods.OpusGetVersion())
+#if NETCOREAPP2_1
+                    .Replace("libopus ", string.Empty, StringComparison.Ordinal));
+#else
+                    .Replace("libopus ", string.Empty));
+#endif
 
             return true;
         }
