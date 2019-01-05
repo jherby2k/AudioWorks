@@ -1466,6 +1466,70 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackNumber = "01",
                     TrackCount = "12"
                 }
+            },
+
+            #endregion
+
+            #region Opus
+
+            new object[]
+            {
+                "Opus VBR 8000Hz Stereo.opus",
+                new TestAudioInfo
+                {
+                    Format = "Opus",
+                    Channels = 2,
+                    SampleRate = 8000
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "Opus VBR 44100Hz Mono.opus",
+                new TestAudioInfo
+                {
+                    Format = "Opus",
+                    Channels = 1,
+                    SampleRate = 44100
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo.opus",
+                new TestAudioInfo
+                {
+                    Format = "Opus",
+                    Channels = 2,
+                    SampleRate = 44100
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "Opus VBR 48000Hz Stereo.opus",
+                new TestAudioInfo
+                {
+                    Format = "Opus",
+                    Channels = 2,
+                    SampleRate = 48000
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "Opus VBR 96000Hz Stereo.opus",
+                new TestAudioInfo
+                {
+                    Format = "Opus",
+                    Channels = 2,
+                    SampleRate = 96000
+                },
+                new TestAudioMetadata()
             }
 
             #endregion

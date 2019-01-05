@@ -1,0 +1,70 @@
+﻿<!--EXTERNAL_PROPERTIES: BUILD_BUILDID-->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.1;netstandard2.0</TargetFrameworks>
+    <LangVersion>7.3</LangVersion>
+    <Version>1.0.0</Version>
+    <Revision>$(BUILD_BUILDID)</Revision>
+    <Revision Condition="'$(Revision)'==''">0</Revision>
+    <FileVersion>1.0.0.$(Revision)</FileVersion>
+    <Authors>Jeremy Herbison</Authors>
+    <Company />
+    <Product>AudioWorks</Product>
+    <Description>The Opus extension for AudioWorks. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
+    <Copyright>© 2019 Jeremy Herbison</Copyright>
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/jherby2k/AudioWorks</PackageProjectUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <CodeAnalysisRuleSet>CodeAnalysis.ruleset</CodeAnalysisRuleSet>
+    <ContentTargetFolders>contentFiles</ContentTargetFolders>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <NoWarn>NU5100</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(OS)'=='Windows_NT'">
+    <DefineConstants>WINDOWS</DefineConstants>
+    <PackageId>AudioWorks.Extensions.Opus.Windows</PackageId>
+    <PackageTags>Windows</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))'">
+    <DefineConstants>LINUX</DefineConstants>
+    <PackageId>AudioWorks.Extensions.Opus.Linux</PackageId>
+    <PackageTags>Linux</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))'">
+    <DefineConstants>OSX</DefineConstants>
+    <PackageId>AudioWorks.Extensions.Opus.OSX</PackageId>
+    <PackageTags>OSX</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(OS)'=='Windows_NT'">
+    <None Include="win-*\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))'">
+    <None Include="osx.*\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\AudioWorks.Extensibility\AudioWorks.Extensibility.csproj" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>
