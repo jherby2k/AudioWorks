@@ -30,7 +30,8 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[] { "Not Audio Layer III.mp3"},
             new object[] { "Not MPEG Audio.m4a" },
             new object[] { "Not Ogg Format.ogg"},
-            new object[] { "Not FLAC Format.flac"}
+            new object[] { "Not FLAC Format.flac"},
+            new object[] { "Not Opus Format.opus"},
         };
 
         [NotNull, ItemNotNull]

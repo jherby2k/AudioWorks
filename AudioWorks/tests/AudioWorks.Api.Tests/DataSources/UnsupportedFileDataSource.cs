@@ -25,6 +25,8 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[] { "Text.txt" },
             new object[] { "MS ADPCM.wav" },
             new object[] { "Speex.ogg" },
+            new object[] { "Opus.ogg" },
+            new object[] { "Vorbis.opus" },
             new object[] { "Lame MP3.m4a" }
         };
 
