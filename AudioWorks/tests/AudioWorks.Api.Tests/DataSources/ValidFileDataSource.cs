@@ -1530,6 +1530,259 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleRate = 96000
                 },
                 new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo (Tagged using defaults).opus",
+                new TestAudioInfo
+                {
+                    Format = "Opus",
+                    Channels = 2,
+                    SampleRate = 44100
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo (Tagged using mixed-case fields).opus",
+                new TestAudioInfo
+                {
+                    Format = "Opus",
+                    Channels = 2,
+                    SampleRate = 44100
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo (Tagged using COMMENT).opus",
+                new TestAudioInfo
+                {
+                    Format = "Opus",
+                    Channels = 2,
+                    SampleRate = 44100
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo (Tagged using TOTALTRACKS).opus",
+                new TestAudioInfo
+                {
+                    Format = "Opus",
+                    Channels = 2,
+                    SampleRate = 44100
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo (Tagged using TRACKCOUNT).opus",
+                new TestAudioInfo
+                {
+                    Format = "Opus",
+                    Channels = 2,
+                    SampleRate = 44100
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo (Tagged using TRACKTOTAL).opus",
+                new TestAudioInfo
+                {
+                    Format = "Opus",
+                    Channels = 2,
+                    SampleRate = 44100
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo (Tagged using YEAR).opus",
+                new TestAudioInfo
+                {
+                    Format = "Opus",
+                    Channels = 2,
+                    SampleRate = 44100
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo (Tagged using extended DATE).opus",
+                new TestAudioInfo
+                {
+                    Format = "Opus",
+                    Channels = 2,
+                    SampleRate = 44100
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo (Tagged using invalid DATE).opus",
+                new TestAudioInfo
+                {
+                    Format = "Opus",
+                    Channels = 2,
+                    SampleRate = 44100
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                }
+            },
+
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo (Tagged using invalid TRACKNUMBER).opus",
+                new TestAudioInfo
+                {
+                    Format = "Opus",
+                    Channels = 2,
+                    SampleRate = 44100
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017"
+                }
             }
 
             #endregion

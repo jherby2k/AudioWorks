@@ -153,6 +153,39 @@ namespace AudioWorks.Api.Tests.DataSources
                 false,
                 null,
                 null
+            },
+
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo (PICTURE comment - PNG).opus",
+                1280,
+                935,
+                24,
+                true,
+                "image/png",
+                "85E02F6C2BCF8112E16E63660CADFE02"
+            },
+
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo (PICTURE comment - JPEG).opus",
+                1280,
+                935,
+                24,
+                false,
+                "image/jpeg",
+                "4BFBE209E1183AE63DBBED12EEE773B8"
+            },
+
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo.opus",
+                0,
+                0,
+                0,
+                false,
+                null,
+                null
             }
         };
 

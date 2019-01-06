@@ -39,6 +39,6 @@ namespace AudioWorks.Extensions.Opus
 
         readonly long GranulePosition;
 
-        readonly long PacketNumber;
+        internal readonly long PacketNumber;
     }
 }
