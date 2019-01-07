@@ -1020,6 +1020,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 8000,
+                    SampleCount = 22515,
                     BitRate = 31800
                 },
                 new TestAudioMetadata()
@@ -1033,6 +1034,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     Format = "Vorbis",
                     Channels = 1,
                     SampleRate = 44100,
+                    SampleCount = 124112,
                     BitRate = 80000
                 },
                 new TestAudioMetadata()
@@ -1046,6 +1048,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 44100,
+                    SampleCount = 124112,
                     BitRate = 112000
                 },
                 new TestAudioMetadata()
@@ -1059,6 +1062,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 48000,
+                    SampleCount = 135087,
                     BitRate = 112000
                 },
                 new TestAudioMetadata()
@@ -1071,7 +1075,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     Format = "Vorbis",
                     Channels = 2,
-                    SampleRate = 96000
+                    SampleRate = 96000,
+                    SampleCount = 270174,
                 },
                 new TestAudioMetadata()
             },
@@ -1084,6 +1089,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 44100,
+                    SampleCount = 124112,
                     BitRate = 112000
                 },
                 new TestAudioMetadata
@@ -1115,6 +1121,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 44100,
+                    SampleCount = 124112,
                     BitRate = 112000
                 },
                 new TestAudioMetadata
@@ -1146,6 +1153,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 44100,
+                    SampleCount = 124112,
                     BitRate = 112000
                 },
                 new TestAudioMetadata
@@ -1177,6 +1185,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 44100,
+                    SampleCount = 124112,
                     BitRate = 112000
                 },
                 new TestAudioMetadata
@@ -1208,6 +1217,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 44100,
+                    SampleCount = 124112,
                     BitRate = 112000
                 },
                 new TestAudioMetadata
@@ -1239,6 +1249,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 44100,
+                    SampleCount = 124112,
                     BitRate = 112000
                 },
                 new TestAudioMetadata
@@ -1270,6 +1281,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 44100,
+                    SampleCount = 124112,
                     BitRate = 112000
                 },
                 new TestAudioMetadata
@@ -1299,6 +1311,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 44100,
+                    SampleCount = 124112,
                     BitRate = 112000
                 },
                 new TestAudioMetadata
@@ -1330,6 +1343,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 44100,
+                    SampleCount = 124112,
                     BitRate = 112000
                 },
                 new TestAudioMetadata
@@ -1358,6 +1372,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 44100,
+                    SampleCount = 124112,
                     BitRate = 112000
                 },
                 new TestAudioMetadata
@@ -1387,6 +1402,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 44100,
+                    SampleCount = 124112,
                     BitRate = 112000
                 },
                 new TestAudioMetadata
@@ -1418,6 +1434,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 44100,
+                    SampleCount = 124112,
                     BitRate = 112000
                 },
                 new TestAudioMetadata
@@ -1449,6 +1466,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 44100,
+                    SampleCount = 124112,
                     BitRate = 112000
                 },
                 new TestAudioMetadata

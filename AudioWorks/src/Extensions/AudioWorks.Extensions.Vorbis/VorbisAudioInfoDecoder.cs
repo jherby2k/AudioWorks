@@ -18,8 +18,10 @@ using System;
 using System.Buffers;
 #endif
 using System.IO;
+using System.Text;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Vorbis
 {
@@ -87,11 +89,13 @@ namespace AudioWorks.Extensions.Vorbis
                                 info.Channels,
 #if WINDOWS
                                 info.Rate,
-                                0,
-                                Math.Max(info.BitRateNominal, 0));
 #else
                                 (int) info.Rate,
-                                0,
+#endif
+                                GetFinalGranulePosition(oggStream.SerialNumber, stream),
+#if WINDOWS
+                                Math.Max(info.BitRateNominal, 0));
+#else
                                 Math.Max((int) info.BitRateNominal, 0));
 #endif
                         }
@@ -108,6 +112,42 @@ namespace AudioWorks.Extensions.Vorbis
                 SafeNativeMethods.VorbisCommentClear(ref vorbisComment);
                 oggStream?.Dispose();
             }
+        }
+
+        static long GetFinalGranulePosition(int serialNumber, [NotNull] Stream stream)
+        {
+            // The largest possible Ogg page is 65,307 bytes long
+            stream.Seek(-Math.Min(65307, stream.Length), SeekOrigin.End);
+            try
+            {
+                // Scan to the start of the last Ogg page
+                while (stream.Position < stream.Length)
+                {
+                    if (stream.ReadByte() != 0x4F ||
+                        stream.ReadByte() != 0x67 ||
+                        stream.ReadByte() != 0x67 ||
+                        stream.ReadByte() != 0x53 ||
+                        stream.ReadByte() != 0 ||
+                        (stream.ReadByte() >> 2) != 1)
+                        continue;
+
+                    using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
+                    {
+                        var result = reader.ReadInt64();
+
+                        if (reader.ReadUInt32() == serialNumber)
+                            return result;
+
+                        // If the serial # was from a different stream, just give up
+                        break;
+                    }
+                }
+            }
+            catch (EndOfStreamException)
+            {
+            }
+
+            return 0;
         }
     }
 }
