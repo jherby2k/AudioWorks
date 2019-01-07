@@ -111,7 +111,7 @@ namespace AudioWorks.Extensions.Opus
 #if WINDOWS
             var headerBytes = new Span<byte>(headerPacket.Packet.ToPointer(), headerPacket.Bytes);
 #else
-            var headerBytes = new Span<byte>(packet.Packet.ToPointer(), (int) packet.Bytes);
+            var headerBytes = new Span<byte>(packet.Packet.ToPointer(), (int) headerPacket.Bytes);
 #endif
 
 #if NETCOREAPP2_1
