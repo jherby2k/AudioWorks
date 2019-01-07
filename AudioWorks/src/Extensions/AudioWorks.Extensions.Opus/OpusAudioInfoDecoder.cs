@@ -80,7 +80,7 @@ namespace AudioWorks.Extensions.Opus
                         oggStream.PageIn(page);
 
                         while (oggStream.PacketOut(out var packet))
-                            return ParseHeader(packet);
+                            return GetAudioInfo(oggStream.SerialNumber, packet, stream);
                     } while (!SafeNativeMethods.OggPageEos(page));
 
                     throw new AudioInvalidException("The end of the Ogg stream was reached without finding a header.");
@@ -95,14 +95,21 @@ namespace AudioWorks.Extensions.Opus
             }
         }
 
+        /// <summary>
+        /// Gets the audio information.
+        /// </summary>
+        /// <param name="serialNumber">The serial number.</param>
+        /// <param name="headerPacket">The header packet.</param>
+        /// <param name="stream">The stream.</param>
+        /// <returns></returns>
         [NotNull]
-        static unsafe AudioInfo ParseHeader(in OggPacket packet)
+        static unsafe AudioInfo GetAudioInfo(int serialNumber, in OggPacket headerPacket, [NotNull] Stream stream)
         {
-            if (packet.Bytes < 19)
+            if (headerPacket.Bytes < 19)
                 throw new AudioUnsupportedException("Not an Opus stream.");
 
 #if WINDOWS
-            var headerBytes = new Span<byte>(packet.Packet.ToPointer(), packet.Bytes);
+            var headerBytes = new Span<byte>(headerPacket.Packet.ToPointer(), headerPacket.Bytes);
 #else
             var headerBytes = new Span<byte>(packet.Packet.ToPointer(), (int) packet.Bytes);
 #endif
@@ -115,10 +122,52 @@ namespace AudioWorks.Extensions.Opus
                 .Equals("OpusHead", StringComparison.Ordinal))
                 throw new AudioUnsupportedException("Not an Opus stream.");
 
+            var sampleRate = BinaryPrimitives.ReadUInt32LittleEndian(headerBytes.Slice(12));
+
             return AudioInfo.CreateForLossy(
                 "Opus",
                 headerBytes[9],
-                (int) BinaryPrimitives.ReadUInt32LittleEndian(headerBytes.Slice(12)));
+                (int) sampleRate,
+                (long) Math.Max(
+                    (GetFinalGranulePosition(serialNumber, stream) -
+                     BinaryPrimitives.ReadUInt16LittleEndian(headerBytes.Slice(10))) / (double) 48000 * sampleRate,
+                    0.0));
+        }
+
+        static long GetFinalGranulePosition(int serialNumber, [NotNull] Stream stream)
+        {
+            // The largest possible Ogg page is 65,307 bytes long
+            stream.Seek(-Math.Min(65307, stream.Length), SeekOrigin.End);
+            try
+            {
+                // Scan to the start of the last Ogg page
+                while (stream.Position < stream.Length)
+                {
+                    if (stream.ReadByte() != 0x4F ||
+                        stream.ReadByte() != 0x67 ||
+                        stream.ReadByte() != 0x67 ||
+                        stream.ReadByte() != 0x53 ||
+                        stream.ReadByte() != 0 ||
+                        (stream.ReadByte() >> 2) != 1)
+                        continue;
+
+                    using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
+                    {
+                        var result = reader.ReadInt64();
+
+                        if (reader.ReadUInt32() == serialNumber)
+                            return result;
+
+                        // If the serial # was from a different stream, just give up
+                        break;
+                    }
+                }
+            }
+            catch (EndOfStreamException)
+            {
+            }
+
+            return 0;
         }
     }
 }

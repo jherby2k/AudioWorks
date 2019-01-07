@@ -1479,7 +1479,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     Format = "Opus",
                     Channels = 2,
-                    SampleRate = 8000
+                    SampleRate = 8000,
+                    SampleCount = 22515
                 },
                 new TestAudioMetadata()
             },
@@ -1491,7 +1492,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     Format = "Opus",
                     Channels = 1,
-                    SampleRate = 44100
+                    SampleRate = 44100,
+                    SampleCount = 124112
                 },
                 new TestAudioMetadata()
             },
@@ -1503,7 +1505,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     Format = "Opus",
                     Channels = 2,
-                    SampleRate = 44100
+                    SampleRate = 44100,
+                    SampleCount = 124112
                 },
                 new TestAudioMetadata()
             },
@@ -1515,7 +1518,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     Format = "Opus",
                     Channels = 2,
-                    SampleRate = 48000
+                    SampleRate = 48000,
+                    SampleCount = 135087
                 },
                 new TestAudioMetadata()
             },
@@ -1527,7 +1531,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     Format = "Opus",
                     Channels = 2,
-                    SampleRate = 96000
+                    SampleRate = 96000,
+                    SampleCount = 270174
                 },
                 new TestAudioMetadata()
             },
@@ -1539,7 +1544,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     Format = "Opus",
                     Channels = 2,
-                    SampleRate = 44100
+                    SampleRate = 44100,
+                    SampleCount = 124112
                 },
                 new TestAudioMetadata
                 {
@@ -1565,7 +1571,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     Format = "Opus",
                     Channels = 2,
-                    SampleRate = 44100
+                    SampleRate = 44100,
+                    SampleCount = 124112
                 },
                 new TestAudioMetadata
                 {
@@ -1591,7 +1598,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     Format = "Opus",
                     Channels = 2,
-                    SampleRate = 44100
+                    SampleRate = 44100,
+                    SampleCount = 124112
                 },
                 new TestAudioMetadata
                 {
@@ -1617,7 +1625,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     Format = "Opus",
                     Channels = 2,
-                    SampleRate = 44100
+                    SampleRate = 44100,
+                    SampleCount = 124112
                 },
                 new TestAudioMetadata
                 {
@@ -1643,7 +1652,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     Format = "Opus",
                     Channels = 2,
-                    SampleRate = 44100
+                    SampleRate = 44100,
+                    SampleCount = 124112
                 },
                 new TestAudioMetadata
                 {
@@ -1669,7 +1679,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     Format = "Opus",
                     Channels = 2,
-                    SampleRate = 44100
+                    SampleRate = 44100,
+                    SampleCount = 124112
                 },
                 new TestAudioMetadata
                 {
@@ -1695,7 +1706,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     Format = "Opus",
                     Channels = 2,
-                    SampleRate = 44100
+                    SampleRate = 44100,
+                    SampleCount = 124112
                 },
                 new TestAudioMetadata
                 {
@@ -1719,7 +1731,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     Format = "Opus",
                     Channels = 2,
-                    SampleRate = 44100
+                    SampleRate = 44100,
+                    SampleCount = 124112
                 },
                 new TestAudioMetadata
                 {
@@ -1745,7 +1758,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     Format = "Opus",
                     Channels = 2,
-                    SampleRate = 44100
+                    SampleRate = 44100,
+                    SampleCount = 124112
                 },
                 new TestAudioMetadata
                 {
@@ -1768,7 +1782,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     Format = "Opus",
                     Channels = 2,
-                    SampleRate = 44100
+                    SampleRate = 44100,
+                    SampleCount = 124112
                 },
                 new TestAudioMetadata
                 {

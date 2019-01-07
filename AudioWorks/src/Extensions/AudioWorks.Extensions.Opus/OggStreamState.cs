@@ -69,7 +69,7 @@ namespace AudioWorks.Extensions.Opus
         readonly int BeginningOfStream;
 
 #if WINDOWS
-        readonly int SerialNumber;
+        internal readonly int SerialNumber;
 
         readonly int PageNumber;
 #else
