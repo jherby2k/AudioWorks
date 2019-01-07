@@ -89,13 +89,11 @@ namespace AudioWorks.Extensions.Vorbis
                                 info.Channels,
 #if WINDOWS
                                 info.Rate,
-#else
-                                (int) info.Rate,
-#endif
                                 GetFinalGranulePosition(oggStream.SerialNumber, stream),
-#if WINDOWS
                                 Math.Max(info.BitRateNominal, 0));
 #else
+                                (int) info.Rate,
+                                GetFinalGranulePosition((int) oggStream.SerialNumber, stream),
                                 Math.Max((int) info.BitRateNominal, 0));
 #endif
                         }

@@ -80,7 +80,11 @@ namespace AudioWorks.Extensions.Opus
                         oggStream.PageIn(page);
 
                         while (oggStream.PacketOut(out var packet))
+#if WINDOWS
                             return GetAudioInfo(oggStream.SerialNumber, packet, stream);
+#else
+                            return GetAudioInfo((int) oggStream.SerialNumber, packet, stream);
+#endif
                     } while (!SafeNativeMethods.OggPageEos(page));
 
                     throw new AudioInvalidException("The end of the Ogg stream was reached without finding a header.");
@@ -111,7 +115,7 @@ namespace AudioWorks.Extensions.Opus
 #if WINDOWS
             var headerBytes = new Span<byte>(headerPacket.Packet.ToPointer(), headerPacket.Bytes);
 #else
-            var headerBytes = new Span<byte>(packet.Packet.ToPointer(), (int) headerPacket.Bytes);
+            var headerBytes = new Span<byte>(headerPacket.Packet.ToPointer(), (int) headerPacket.Bytes);
 #endif
 
 #if NETCOREAPP2_1
