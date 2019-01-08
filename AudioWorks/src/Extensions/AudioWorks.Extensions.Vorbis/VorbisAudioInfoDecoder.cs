@@ -116,10 +116,14 @@ namespace AudioWorks.Extensions.Vorbis
         {
             // The largest possible Ogg page is 65,307 bytes long
             stream.Seek(-Math.Min(65307, stream.Length), SeekOrigin.End);
+
             try
             {
+                // Optimization - this is accessed frequently
+                var streamLength = stream.Length;
+
                 // Scan to the start of the last Ogg page
-                while (stream.Position < stream.Length)
+                while (stream.Position < streamLength)
                 {
                     if (stream.ReadByte() != 0x4F ||
                         stream.ReadByte() != 0x67 ||
