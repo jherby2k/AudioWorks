@@ -41,7 +41,7 @@ namespace AudioWorks.Extensions.Mp3
         {
             try
             {
-                // A frame begins with the first 11 bits set:
+                // A frame begins with the first 11 bits set
                 while (true)
                 {
                     if (ReadByte() != 0xFF || ReadByte() < 0xE0) continue;
