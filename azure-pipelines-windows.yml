@@ -59,7 +59,7 @@ steps:
     testRunner: VSTest
     testResultsFiles: '**\*.trx'
   displayName: 'Publish test results'
-  continueOnError: true
+  condition: succeededOrFailed()
 
 - script: |
     reportgenerator -reports:AudioWorks\tests\*\coverage.*.xml -targetdir:Reports\Cobertura -reporttypes:Cobertura
