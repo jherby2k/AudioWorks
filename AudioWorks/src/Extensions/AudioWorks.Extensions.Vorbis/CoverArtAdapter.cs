@@ -28,7 +28,9 @@ namespace AudioWorks.Extensions.Vorbis
         [Pure, CanBeNull]
         internal static ICoverArt FromBase64(ReadOnlySpan<byte> value)
         {
-            Span<byte> decodedValue = new byte[Base64.GetMaxDecodedFromUtf8Length(value.Length)];
+            // Use heap allocations for cover art > 256kB
+            var byteCount = Base64.GetMaxDecodedFromUtf8Length(value.Length);
+            var decodedValue = byteCount < 0x40000 ? stackalloc byte[byteCount] : new byte[byteCount];
             Base64.DecodeFromUtf8(value, decodedValue, out _, out _);
 
             // If the image isn't a "Front Cover" or "Other", return null
