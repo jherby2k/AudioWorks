@@ -155,7 +155,7 @@ namespace AudioWorks.Extensions.Opus
                         stream.ReadByte() != 0x67 ||
                         stream.ReadByte() != 0x53 ||
                         stream.ReadByte() != 0 ||
-                        (stream.ReadByte() >> 2) != 1)
+                        stream.ReadByte() >> 2 != 1)
                         continue;
 
                     using (var reader = new BinaryReader(stream, Encoding.UTF8, true))

@@ -1076,7 +1076,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 96000,
-                    SampleCount = 270174,
+                    SampleCount = 270174
                 },
                 new TestAudioMetadata()
             },

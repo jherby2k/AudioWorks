@@ -216,7 +216,7 @@ namespace AudioWorks.Extensions.Vorbis
             var buffer = ArrayPool<byte>.Shared.Rent(4096);
             try
             {
-                Span<byte> data = new Span<byte>(location.ToPointer(), length);
+                var data = new Span<byte>(location.ToPointer(), length);
                 var offset = 0;
 
                 while (offset < length)

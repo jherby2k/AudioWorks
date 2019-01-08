@@ -42,7 +42,7 @@ namespace AudioWorks.Extensions.Apple
 
             var inputDescription = _audioFile.GetProperty<AudioStreamBasicDescription>(AudioFilePropertyId.DataFormat);
             if (inputDescription.AudioFormat != AudioFormat.AppleLossless)
-                throw new AudioUnsupportedException($"The stream is not in Apple Lossless format.");
+                throw new AudioUnsupportedException("The stream is not in Apple Lossless format.");
 
             _outputDescription = GetOutputDescription(inputDescription);
 

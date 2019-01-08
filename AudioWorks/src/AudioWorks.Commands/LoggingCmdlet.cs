@@ -81,6 +81,7 @@ namespace AudioWorks.Commands
                 // Make sure the assembly is really Newtonsoft.Json
                 var assemblyName = AssemblyName.GetAssemblyName(jsonAssembly);
                 if (assemblyName.Name.Equals("Newtonsoft.Json", StringComparison.Ordinal) &&
+                    // ReSharper disable once StringLiteralTypo
                     assemblyName.FullName.EndsWith("PublicKeyToken=30ad4fe6b2a6aeed", StringComparison.Ordinal))
                     return Assembly.LoadFrom(jsonAssembly);
             }

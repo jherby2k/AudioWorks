@@ -25,7 +25,7 @@ using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Opus
 {
-    internal sealed class CommentHeaderToMetadataAdapter : AudioMetadata
+    sealed class CommentHeaderToMetadataAdapter : AudioMetadata
     {
         internal unsafe CommentHeaderToMetadataAdapter(in OggPacket packet)
         {
