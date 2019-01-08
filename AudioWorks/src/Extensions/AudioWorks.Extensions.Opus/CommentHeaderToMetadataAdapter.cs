@@ -64,92 +64,96 @@ namespace AudioWorks.Extensions.Opus
                 var delimiter = commentBytes.IndexOf((byte) 0x3D); // '='
 #if NETCOREAPP2_1
                 var key = Encoding.ASCII.GetString(commentBytes.Slice(0, delimiter));
-                var value = Encoding.UTF8.GetString(commentBytes.Slice(delimiter + 1));
 #else
                 var keyBytes = commentBytes.Slice(0, delimiter);
-                var valueBytes = commentBytes.Slice(delimiter + 1);
-
                 var key = Encoding.ASCII.GetString(
                     (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)),
                     keyBytes.Length);
-                var value = Encoding.UTF8.GetString(
-                    (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes)),
-                    valueBytes.Length);
 #endif
 
-                try
+                if (key.Equals("METADATA_BLOCK_PICTURE", StringComparison.OrdinalIgnoreCase))
+                    CoverArt = CoverArtAdapter.FromBase64(commentBytes.Slice(delimiter + 1));
+                else
                 {
-                    // ReSharper disable once SwitchStatementMissingSomeCases
-                    switch (key.ToUpperInvariant())
+#if NETCOREAPP2_1
+                    var value = Encoding.UTF8.GetString(commentBytes.Slice(delimiter + 1));
+#else
+                    var valueBytes = commentBytes.Slice(delimiter + 1);
+                    var value = Encoding.UTF8.GetString(
+                        (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes)),
+                        valueBytes.Length);
+#endif
+
+                    try
                     {
-                        case "TITLE":
-                            Title = value;
-                            break;
+                        // ReSharper disable once SwitchStatementMissingSomeCases
+                        switch (key.ToUpperInvariant())
+                        {
+                            case "TITLE":
+                                Title = value;
+                                break;
 
-                        case "ARTIST":
-                            Artist = value;
-                            break;
+                            case "ARTIST":
+                                Artist = value;
+                                break;
 
-                        case "ALBUM":
-                            Album = value;
-                            break;
+                            case "ALBUM":
+                                Album = value;
+                                break;
 
-                        case "ALBUMARTIST":
-                            AlbumArtist = value;
-                            break;
+                            case "ALBUMARTIST":
+                                AlbumArtist = value;
+                                break;
 
-                        case "COMPOSER":
-                            Composer = value;
-                            break;
+                            case "COMPOSER":
+                                Composer = value;
+                                break;
 
-                        case "GENRE":
-                            Genre = value;
-                            break;
+                            case "GENRE":
+                                Genre = value;
+                                break;
 
-                        case "DESCRIPTION":
-                        case "COMMENT":
-                            Comment = value;
-                            break;
+                            case "DESCRIPTION":
+                            case "COMMENT":
+                                Comment = value;
+                                break;
 
-                        case "DATE":
-                        case "YEAR":
-                            // Descriptions are allowed after whitespace
-                            value = value.Split(' ')[0];
-                            // The DATE comment may contain a full date, or only the year
-                            if (DateTime.TryParse(value, CultureInfo.CurrentCulture,
-                                DateTimeStyles.NoCurrentDateDefault, out var result))
-                            {
-                                Day = result.Day.ToString(CultureInfo.InvariantCulture);
-                                Month = result.Month.ToString(CultureInfo.InvariantCulture);
-                                Year = result.Year.ToString(CultureInfo.InvariantCulture);
-                            }
-                            else
-                                Year = value;
+                            case "DATE":
+                            case "YEAR":
+                                // Descriptions are allowed after whitespace
+                                value = value.Split(' ')[0];
+                                // The DATE comment may contain a full date, or only the year
+                                if (DateTime.TryParse(value, CultureInfo.CurrentCulture,
+                                    DateTimeStyles.NoCurrentDateDefault, out var result))
+                                {
+                                    Day = result.Day.ToString(CultureInfo.InvariantCulture);
+                                    Month = result.Month.ToString(CultureInfo.InvariantCulture);
+                                    Year = result.Year.ToString(CultureInfo.InvariantCulture);
+                                }
+                                else
+                                    Year = value;
 
-                            break;
+                                break;
 
-                        case "TRACKNUMBER":
-                            // The track number and count may be packed into the same comment
-                            var segments = value.Split('/');
-                            TrackNumber = segments[0];
-                            if (segments.Length > 1)
-                                TrackCount = segments[1];
-                            break;
+                            case "TRACKNUMBER":
+                                // The track number and count may be packed into the same comment
+                                var segments = value.Split('/');
+                                TrackNumber = segments[0];
+                                if (segments.Length > 1)
+                                    TrackCount = segments[1];
+                                break;
 
-                        case "TRACKCOUNT":
-                        case "TRACKTOTAL":
-                        case "TOTALTRACKS":
-                            TrackCount = value;
-                            break;
-
-                        case "METADATA_BLOCK_PICTURE":
-                            CoverArt = CoverArtAdapter.FromComment(value);
-                            break;
+                            case "TRACKCOUNT":
+                            case "TRACKTOTAL":
+                            case "TOTALTRACKS":
+                                TrackCount = value;
+                                break;
+                        }
                     }
-                }
-                catch (AudioMetadataInvalidException)
-                {
-                    // If a field is invalid, just leave it blank
+                    catch (AudioMetadataInvalidException)
+                    {
+                        // If a field is invalid, just leave it blank
+                    }
                 }
 
                 commentCount--;

@@ -15,6 +15,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 
 using System;
 using System.Buffers.Binary;
+using System.Buffers.Text;
 using System.IO;
 using System.Text;
 using AudioWorks.Common;
@@ -25,25 +26,26 @@ namespace AudioWorks.Extensions.Vorbis
     static class CoverArtAdapter
     {
         [Pure, CanBeNull]
-        internal static ICoverArt FromComment([NotNull] string comment)
+        internal static ICoverArt FromBase64(ReadOnlySpan<byte> value)
         {
-            Span<byte> commentSpan = Convert.FromBase64String(comment);
+            Span<byte> decodedValue = new byte[Base64.GetMaxDecodedFromUtf8Length(value.Length)];
+            Base64.DecodeFromUtf8(value, decodedValue, out _, out _);
 
             // If the image isn't a "Front Cover" or "Other", return null
-            var imageType = BinaryPrimitives.ReadUInt32BigEndian(commentSpan);
+            var imageType = BinaryPrimitives.ReadUInt32BigEndian(decodedValue);
             if (imageType != 3 && imageType != 0) return null;
 
             var offset = 4;
 
             // Seek past the mime type and description
-            offset += (int) BinaryPrimitives.ReadUInt32BigEndian(commentSpan.Slice(offset)) + 4;
-            offset += (int) BinaryPrimitives.ReadUInt32BigEndian(commentSpan.Slice(offset)) + 4;
+            offset += (int) BinaryPrimitives.ReadUInt32BigEndian(decodedValue.Slice(offset)) + 4;
+            offset += (int) BinaryPrimitives.ReadUInt32BigEndian(decodedValue.Slice(offset)) + 4;
 
             // Seek past the width, height, color depth and type
             offset += 16;
 
             return CoverArtFactory.GetOrCreate(
-                commentSpan.Slice(offset + 4, (int) BinaryPrimitives.ReadUInt32BigEndian(commentSpan.Slice(offset))));
+                decodedValue.Slice(offset + 4, (int) BinaryPrimitives.ReadUInt32BigEndian(decodedValue.Slice(offset))));
         }
 
         [Pure, NotNull]
