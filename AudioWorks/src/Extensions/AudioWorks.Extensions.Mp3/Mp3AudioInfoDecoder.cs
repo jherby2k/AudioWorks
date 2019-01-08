@@ -59,10 +59,10 @@ namespace AudioWorks.Extensions.Mp3
         [NotNull]
         static FrameHeader ReadFrameHeader([NotNull] FrameReader reader)
         {
-#if NETCOREAPP2_1
-            Span<byte> buffer = stackalloc byte[4];
-#else
+#if NETSTANDARD2_0
             var buffer = new byte[4];
+#else
+            Span<byte> buffer = stackalloc byte[4];
 #endif
 
             // Seek to the first valid frame header:
@@ -70,10 +70,10 @@ namespace AudioWorks.Extensions.Mp3
             do
             {
                 reader.SeekToNextFrame();
-#if NETCOREAPP2_1
-                if (reader.Read(buffer) < 4)
-#else
+#if NETSTANDARD2_0
                 if (reader.Read(buffer, 0, 4) < 4)
+#else
+                if (reader.Read(buffer) < 4)
 #endif
                     throw new AudioInvalidException("Stream is unexpectedly truncated.",
                         ((FileStream) reader.BaseStream).Name);

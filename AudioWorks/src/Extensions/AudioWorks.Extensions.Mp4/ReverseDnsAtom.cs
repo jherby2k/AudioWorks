@@ -13,11 +13,11 @@ details.
 You should have received a copy of the GNU Lesser General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-#if NETCOREAPP2_1
+#if !NETSTANDARD2_0
 using System;
 #endif
 using System.IO;
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
 using System.Linq;
 #endif
 using System.Text;
@@ -30,7 +30,10 @@ namespace AudioWorks.Extensions.Mp4
         [NotNull] readonly byte[] _data;
 
         [NotNull]
-#if NETCOREAPP2_1
+#if NETSTANDARD2_0
+        internal string Name => new string(CodePagesEncodingProvider.Instance.GetEncoding(1252)
+            .GetChars(_data.Skip(48).Take(8).ToArray()));
+#else
         internal string Name
         {
             get
@@ -41,9 +44,6 @@ namespace AudioWorks.Extensions.Mp4
                 return new string(charBuffer);
             }
         }
-#else
-        internal string Name => new string(CodePagesEncodingProvider.Instance.GetEncoding(1252)
-            .GetChars(_data.Skip(48).Take(8).ToArray()));
 #endif
 
         internal ReverseDnsAtom([NotNull] byte[] data)

@@ -14,7 +14,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
 using System.Buffers;
 #endif
 using System.Diagnostics.CodeAnalysis;
@@ -81,22 +81,7 @@ namespace AudioWorks.Extensions.Lame
 
         internal void Encode(ReadOnlySpan<float> leftSamples, ReadOnlySpan<float> rightSamples)
         {
-#if NETCOREAPP2_1
-            Span<byte> buffer = stackalloc byte[(int) Math.Ceiling(1.25 * leftSamples.Length) + 7200];
-
-            var bytesEncoded = SafeNativeMethods.EncodeBufferIeeeFloat(
-                _handle,
-                MemoryMarshal.GetReference(leftSamples),
-                MemoryMarshal.GetReference(rightSamples),
-                leftSamples.Length,
-                ref MemoryMarshal.GetReference(buffer),
-                buffer.Length);
-
-            if (bytesEncoded < 0)
-                throw new AudioEncodingException($"Lame encountered error '{bytesEncoded}' while encoding.");
-
-            _stream.Write(buffer.Slice(0, bytesEncoded));
-#else
+#if NETSTANDARD2_0
             var buffer = ArrayPool<byte>.Shared.Rent((int) Math.Ceiling(1.25 * leftSamples.Length) + 7200);
             try
             {
@@ -117,18 +102,14 @@ namespace AudioWorks.Extensions.Lame
             {
                 ArrayPool<byte>.Shared.Return(buffer);
             }
-#endif
-        }
+#else
+            Span<byte> buffer = stackalloc byte[(int) Math.Ceiling(1.25 * leftSamples.Length) + 7200];
 
-        internal void EncodeInterleaved(ReadOnlySpan<float> samples, int frameCount)
-        {
-#if NETCOREAPP2_1
-            Span<byte> buffer = stackalloc byte[(int) Math.Ceiling(1.25 * frameCount) + 7200];
-
-            var bytesEncoded = SafeNativeMethods.EncodeBufferInterleavedIeeeFloat(
+            var bytesEncoded = SafeNativeMethods.EncodeBufferIeeeFloat(
                 _handle,
-                MemoryMarshal.GetReference(samples),
-                frameCount,
+                MemoryMarshal.GetReference(leftSamples),
+                MemoryMarshal.GetReference(rightSamples),
+                leftSamples.Length,
                 ref MemoryMarshal.GetReference(buffer),
                 buffer.Length);
 
@@ -136,7 +117,12 @@ namespace AudioWorks.Extensions.Lame
                 throw new AudioEncodingException($"Lame encountered error '{bytesEncoded}' while encoding.");
 
             _stream.Write(buffer.Slice(0, bytesEncoded));
-#else
+#endif
+        }
+
+        internal void EncodeInterleaved(ReadOnlySpan<float> samples, int frameCount)
+        {
+#if NETSTANDARD2_0
             var buffer = ArrayPool<byte>.Shared.Rent((int) Math.Ceiling(1.25 * frameCount) + 7200);
             try
             {
@@ -156,19 +142,26 @@ namespace AudioWorks.Extensions.Lame
             {
                 ArrayPool<byte>.Shared.Return(buffer);
             }
+#else
+            Span<byte> buffer = stackalloc byte[(int) Math.Ceiling(1.25 * frameCount) + 7200];
+
+            var bytesEncoded = SafeNativeMethods.EncodeBufferInterleavedIeeeFloat(
+                _handle,
+                MemoryMarshal.GetReference(samples),
+                frameCount,
+                ref MemoryMarshal.GetReference(buffer),
+                buffer.Length);
+
+            if (bytesEncoded < 0)
+                throw new AudioEncodingException($"Lame encountered error '{bytesEncoded}' while encoding.");
+
+            _stream.Write(buffer.Slice(0, bytesEncoded));
 #endif
         }
 
         internal void Flush()
         {
-#if NETCOREAPP2_1
-            Span<byte> buffer = stackalloc byte[7200];
-            var bytesFlushed = SafeNativeMethods.EncodeFlush(
-                _handle,
-                ref MemoryMarshal.GetReference(buffer),
-                buffer.Length);
-            _stream.Write(buffer.Slice(0, bytesFlushed));
-#else
+#if NETSTANDARD2_0
             var buffer = ArrayPool<byte>.Shared.Rent(7200);
             try
             {
@@ -179,6 +172,13 @@ namespace AudioWorks.Extensions.Lame
             {
                 ArrayPool<byte>.Shared.Return(buffer);
             }
+#else
+            Span<byte> buffer = stackalloc byte[7200];
+            var bytesFlushed = SafeNativeMethods.EncodeFlush(
+                _handle,
+                ref MemoryMarshal.GetReference(buffer),
+                buffer.Length);
+            _stream.Write(buffer.Slice(0, bytesFlushed));
 #endif
         }
 
@@ -187,15 +187,7 @@ namespace AudioWorks.Extensions.Lame
             var endOfData = _stream.Position;
             _stream.Position = _startPosition;
 
-#if NETCOREAPP2_1
-            byte empty = 0;
-            var bufferSize = SafeNativeMethods.GetLameTagFrame(_handle, ref empty, UIntPtr.Zero);
-            Span<byte> buffer = stackalloc byte[(int) bufferSize.ToUInt32()];
-            _stream.Write(buffer.Slice(0, (int) SafeNativeMethods.GetLameTagFrame(
-                _handle,
-                ref MemoryMarshal.GetReference(buffer),
-                bufferSize).ToUInt32()));
-#else
+#if NETSTANDARD2_0
             var bufferSize = SafeNativeMethods.GetLameTagFrame(_handle, Array.Empty<byte>(), UIntPtr.Zero);
             var buffer = ArrayPool<byte>.Shared.Rent((int) bufferSize.ToUInt32());
             try
@@ -206,6 +198,14 @@ namespace AudioWorks.Extensions.Lame
             {
                 ArrayPool<byte>.Shared.Return(buffer);
             }
+#else
+            byte empty = 0;
+            var bufferSize = SafeNativeMethods.GetLameTagFrame(_handle, ref empty, UIntPtr.Zero);
+            Span<byte> buffer = stackalloc byte[(int) bufferSize.ToUInt32()];
+            _stream.Write(buffer.Slice(0, (int) SafeNativeMethods.GetLameTagFrame(
+                _handle,
+                ref MemoryMarshal.GetReference(buffer),
+                bufferSize).ToUInt32()));
 #endif
 
             _stream.Position = endOfData;

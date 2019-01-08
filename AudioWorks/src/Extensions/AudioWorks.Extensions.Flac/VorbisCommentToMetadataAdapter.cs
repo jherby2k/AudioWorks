@@ -97,18 +97,18 @@ namespace AudioWorks.Extensions.Flac
                         break;
 
                     case "REPLAYGAIN_TRACK_GAIN":
-#if NETCOREAPP2_1
-                        TrackGain = value.Replace(" dB", string.Empty, StringComparison.OrdinalIgnoreCase);
-#else
+#if NETSTANDARD2_0
                         TrackGain = value.Replace(" dB", string.Empty);
+#else
+                        TrackGain = value.Replace(" dB", string.Empty, StringComparison.OrdinalIgnoreCase);
 #endif
                         break;
 
                     case "REPLAYGAIN_ALBUM_GAIN":
-#if NETCOREAPP2_1
-                        AlbumGain = value.Replace(" dB", string.Empty, StringComparison.OrdinalIgnoreCase);
-#else
+#if NETSTANDARD2_0
                         AlbumGain = value.Replace(" dB", string.Empty);
+#else
+                        AlbumGain = value.Replace(" dB", string.Empty, StringComparison.OrdinalIgnoreCase);
 #endif
                         break;
                 }

@@ -92,10 +92,10 @@ namespace AudioWorks.Extensions.Lame
             in float leftSamples,
             in float rightSamples,
             int sampleCount,
-#if NETCOREAPP2_1
-            ref byte buffer,
-#else
+#if NETSTANDARD2_0
             [NotNull] [In, Out] byte[] buffer,
+#else
+            ref byte buffer,
 #endif
             int bufferSize);
 
@@ -105,10 +105,10 @@ namespace AudioWorks.Extensions.Lame
             [NotNull] EncoderHandle handle,
             in float samples,
             int sampleCount,
-#if NETCOREAPP2_1
-            ref byte buffer,
-#else
+#if NETSTANDARD2_0
             [NotNull] [In, Out] byte[] buffer,
+#else
+            ref byte buffer,
 #endif
             int bufferSize);
 
@@ -116,10 +116,10 @@ namespace AudioWorks.Extensions.Lame
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int EncodeFlush(
             [NotNull] EncoderHandle handle,
-#if NETCOREAPP2_1
-            ref byte buffer,
-#else
+#if NETSTANDARD2_0
             [NotNull] [In, Out] byte[] buffer,
+#else
+            ref byte buffer,
 #endif
             int bufferSize);
 
@@ -127,10 +127,10 @@ namespace AudioWorks.Extensions.Lame
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern UIntPtr GetLameTagFrame(
             [NotNull] EncoderHandle handle,
-#if NETCOREAPP2_1
-            ref byte buffer,
-#else
+#if NETSTANDARD2_0
             [NotNull] [In, Out] byte[] buffer,
+#else
+            ref byte buffer,
 #endif
             UIntPtr bufferSize);
 

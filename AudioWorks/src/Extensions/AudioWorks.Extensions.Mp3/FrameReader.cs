@@ -13,7 +13,7 @@ details.
 You should have received a copy of the GNU Lesser General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-#if NETCOREAPP2_1
+#if !NETSTANDARD2_0
 using System;
 #endif
 using System.Buffers.Binary;
@@ -26,7 +26,7 @@ namespace AudioWorks.Extensions.Mp3
 {
     sealed class FrameReader : BinaryReader
     {
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
         [NotNull] readonly byte[] _buffer = new byte[4];
 
 #endif
@@ -73,7 +73,13 @@ namespace AudioWorks.Extensions.Mp3
 
         internal uint ReadUInt32BigEndian()
         {
-#if NETCOREAPP2_1
+#if NETSTANDARD2_0
+            if (Read(_buffer, 0, 4) < 4)
+                throw new AudioInvalidException("File is unexpectedly truncated.",
+                    ((FileStream) BaseStream).Name);
+
+            return BinaryPrimitives.ReadUInt32BigEndian(_buffer);
+#else
             Span<byte> buffer = stackalloc byte[4];
 
             if (Read(buffer) < 4)
@@ -81,24 +87,18 @@ namespace AudioWorks.Extensions.Mp3
                     ((FileStream) BaseStream).Name);
 
             return BinaryPrimitives.ReadUInt32BigEndian(buffer);
-#else
-            if (Read(_buffer, 0, 4) < 4)
-                throw new AudioInvalidException("File is unexpectedly truncated.",
-                    ((FileStream) BaseStream).Name);
-
-            return BinaryPrimitives.ReadUInt32BigEndian(_buffer);
 #endif
         }
 
         [NotNull]
         internal string ReadHeaderId()
         {
-#if NETCOREAPP2_1
-            Span<char> buffer = stackalloc char[4];
-            if (Read(buffer) < 4)
-#else
+#if NETSTANDARD2_0
             var buffer = ReadChars(4);
             if (buffer.Length < 4)
+#else
+            Span<char> buffer = stackalloc char[4];
+            if (Read(buffer) < 4)
 #endif
                 throw new AudioInvalidException("File is unexpectedly truncated.", ((FileStream) BaseStream).Name);
 

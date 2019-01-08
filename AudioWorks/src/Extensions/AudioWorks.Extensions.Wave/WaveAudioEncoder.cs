@@ -14,7 +14,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
 using System.Buffers;
 #endif
 using System.IO;
@@ -56,12 +56,7 @@ namespace AudioWorks.Extensions.Wave
         {
             if (samples.Frames == 0) return;
 
-#if NETCOREAPP2_1
-            Span<byte> buffer = stackalloc byte[samples.Channels * samples.Frames * _bytesPerSample];
-            samples.CopyToInterleaved(buffer, _bitsPerSample);
-            // ReSharper disable once PossibleNullReferenceException
-            _writer.Write(buffer);
-#else
+#if NETSTANDARD2_0
             var dataSize = samples.Channels * samples.Frames * _bytesPerSample;
 
             var buffer = ArrayPool<byte>.Shared.Rent(dataSize);
@@ -75,6 +70,11 @@ namespace AudioWorks.Extensions.Wave
             {
                 ArrayPool<byte>.Shared.Return(buffer);
             }
+#else
+            Span<byte> buffer = stackalloc byte[samples.Channels * samples.Frames * _bytesPerSample];
+            samples.CopyToInterleaved(buffer, _bitsPerSample);
+            // ReSharper disable once PossibleNullReferenceException
+            _writer.Write(buffer);
 #endif
         }
 

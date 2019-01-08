@@ -16,7 +16,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
 using System.Runtime.CompilerServices;
 #endif
 using System.Text;
@@ -104,13 +104,13 @@ namespace AudioWorks.Extensions.Vorbis
         {
             // Optimization - avoid allocating on the heap
             Span<byte> keyBytes = stackalloc byte[Encoding.ASCII.GetMaxByteCount(key.Length) + 1];
-#if NETCOREAPP2_1
-            Encoding.ASCII.GetBytes(key, keyBytes);
-#else
+#if NETSTANDARD2_0
             fixed (char* keyAddress = key)
                 Encoding.ASCII.GetBytes(
                     keyAddress, key.Length,
                     (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)), keyBytes.Length);
+#else
+            Encoding.ASCII.GetBytes(key, keyBytes);
 #endif
 
             // Use heap allocations for comments > 256kB (usually pictures)
@@ -118,12 +118,12 @@ namespace AudioWorks.Extensions.Vorbis
             var valueBytes = valueMaxByteCount < 0x40000
                 ? stackalloc byte[valueMaxByteCount]
                 : new byte[valueMaxByteCount];
-#if NETCOREAPP2_1
-            Encoding.ASCII.GetBytes(value, valueBytes);
-#else
+#if NETSTANDARD2_0
             fixed (char* valueAddress = value)
             fixed (byte* valueBytesAddress = valueBytes)
                 Encoding.UTF8.GetBytes(valueAddress, value.Length, valueBytesAddress, valueMaxByteCount);
+#else
+            Encoding.ASCII.GetBytes(value, valueBytes);
 #endif
 
             fixed (byte* valueBytesAddress = valueBytes)
@@ -137,13 +137,13 @@ namespace AudioWorks.Extensions.Vorbis
         {
             // Optimization - avoid allocating on the heap
             Span<byte> keyBytes = stackalloc byte[Encoding.ASCII.GetMaxByteCount(key.Length) + 1];
-#if NETCOREAPP2_1
-            Encoding.ASCII.GetBytes(key, keyBytes);
-#else
+#if NETSTANDARD2_0
             fixed (char* keyAddress = key)
                 Encoding.ASCII.GetBytes(
                     keyAddress, key.Length,
                     (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)), keyBytes.Length);
+#else
+            Encoding.ASCII.GetBytes(key, keyBytes);
 #endif
 
             fixed (byte* valueAddress = value)

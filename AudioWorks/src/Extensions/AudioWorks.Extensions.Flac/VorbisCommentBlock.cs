@@ -33,10 +33,7 @@ namespace AudioWorks.Extensions.Flac
             Span<byte> keyBytes = stackalloc byte[Encoding.ASCII.GetMaxByteCount(key.Length) + 1];
             Span<byte> valueBytes = stackalloc byte[Encoding.UTF8.GetMaxByteCount(value.Length) + 1];
 
-#if NETCOREAPP2_1
-            var keyByteCount = Encoding.ASCII.GetBytes(key, keyBytes) + 1;
-            var valueByteCount = Encoding.UTF8.GetBytes(value, valueBytes) + 1;
-#else
+#if NETSTANDARD2_0
             var keyByteCount = 1;
             fixed (char* keyAddress = key)
                 keyByteCount += Encoding.ASCII.GetBytes(
@@ -48,6 +45,9 @@ namespace AudioWorks.Extensions.Flac
                 valueByteCount += Encoding.UTF8.GetBytes(
                     valueAddress, value.Length,
                     (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes)), valueBytes.Length);
+#else
+            var keyByteCount = Encoding.ASCII.GetBytes(key, keyBytes) + 1;
+            var valueByteCount = Encoding.UTF8.GetBytes(value, valueBytes) + 1;
 #endif
 
             SafeNativeMethods.MetadataObjectVorbisCommentEntryFromNameValuePair(

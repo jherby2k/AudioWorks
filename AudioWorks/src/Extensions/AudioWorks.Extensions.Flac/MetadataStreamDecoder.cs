@@ -15,7 +15,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 
 using System;
 using System.IO;
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
 using System.Runtime.CompilerServices;
 #endif
 using System.Runtime.InteropServices;
@@ -54,11 +54,7 @@ namespace AudioWorks.Extensions.Flac
 
                         var commentBytes = new Span<byte>(entry.Entry.ToPointer(), (int) entry.Length);
                         var delimiter = commentBytes.IndexOf((byte) 0x3D); // '='
-#if NETCOREAPP2_1
-                        AudioMetadata.Set(
-                            Encoding.ASCII.GetString(commentBytes.Slice(0, delimiter)),
-                            Encoding.UTF8.GetString(commentBytes.Slice(delimiter + 1)));
-#else
+#if NETSTANDARD2_0
                         var keyBytes = commentBytes.Slice(0, delimiter);
                         var valueBytes = commentBytes.Slice(delimiter + 1);
                         AudioMetadata.Set(
@@ -68,6 +64,10 @@ namespace AudioWorks.Extensions.Flac
                             Encoding.UTF8.GetString(
                                 (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes)),
                                 valueBytes.Length));
+#else
+                        AudioMetadata.Set(
+                            Encoding.ASCII.GetString(commentBytes.Slice(0, delimiter)),
+                            Encoding.UTF8.GetString(commentBytes.Slice(delimiter + 1)));
 #endif
                     }
 

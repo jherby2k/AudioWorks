@@ -14,7 +14,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
 using System.Buffers;
 #endif
 using System.IO;
@@ -51,19 +51,7 @@ namespace AudioWorks.Extensions.Wave
 
         public SampleBuffer DecodeSamples()
         {
-#if NETCOREAPP2_1
-            // ReSharper disable once PossibleNullReferenceException
-            Span<byte> buffer = stackalloc byte[_audioInfo.Channels *
-                                                (int) Math.Min(_framesRemaining, _defaultFrameCount)
-                                                * _bytesPerSample];
-            // ReSharper disable once PossibleNullReferenceException
-            if (_reader.Read(buffer) < buffer.Length)
-                throw new AudioInvalidException("Stream is unexpectedly truncated.");
-
-            var result = new SampleBuffer(buffer, _audioInfo.Channels, _bitsPerSample);
-            _framesRemaining -= result.Frames;
-            return result;
-#else
+#if NETSTANDARD2_0
             // ReSharper disable once PossibleNullReferenceException
             var length = _audioInfo.Channels * (int) Math.Min(_framesRemaining, _defaultFrameCount) * _bytesPerSample;
 
@@ -85,6 +73,18 @@ namespace AudioWorks.Extensions.Wave
             {
                 ArrayPool<byte>.Shared.Return(buffer);
             }
+#else
+            // ReSharper disable once PossibleNullReferenceException
+            Span<byte> buffer = stackalloc byte[_audioInfo.Channels *
+                                                (int) Math.Min(_framesRemaining, _defaultFrameCount)
+                                                * _bytesPerSample];
+            // ReSharper disable once PossibleNullReferenceException
+            if (_reader.Read(buffer) < buffer.Length)
+                throw new AudioInvalidException("Stream is unexpectedly truncated.");
+
+            var result = new SampleBuffer(buffer, _audioInfo.Channels, _bitsPerSample);
+            _framesRemaining -= result.Frames;
+            return result;
 #endif
         }
 

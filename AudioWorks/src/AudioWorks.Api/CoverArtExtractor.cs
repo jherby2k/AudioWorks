@@ -82,11 +82,11 @@ namespace AudioWorks.Api
 
             using (var fileStream = result.Open(Overwrite ? FileMode.Create : FileMode.CreateNew, FileAccess.Write))
             {
-#if NETCOREAPP2_1
-                fileStream.Write(audioFile.Metadata.CoverArt.Data);
-#else
+#if NETSTANDARD2_0
                 var data = audioFile.Metadata.CoverArt.Data;
                 fileStream.Write(data.ToArray(), 0, data.Length);
+#else
+                fileStream.Write(audioFile.Metadata.CoverArt.Data);
 #endif
             }
 

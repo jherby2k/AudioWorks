@@ -14,7 +14,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
 using System.Buffers;
 #endif
 using System.Buffers.Binary;
@@ -37,10 +37,10 @@ namespace AudioWorks.Extensions.Vorbis
             {
                 OggStream inputOggStream = null;
                 OggStream outputOggStream = null;
-#if NETCOREAPP2_1
-                Span<byte> buffer = stackalloc byte[4096];
-#else
+#if NETSTANDARD2_0
                 var buffer = ArrayPool<byte>.Shared.Rent(4096);
+#else
+                Span<byte> buffer = stackalloc byte[4096];
 #endif
 
                 try
@@ -56,19 +56,19 @@ namespace AudioWorks.Extensions.Vorbis
                             // Read from the buffer into a page
                             while (!sync.PageOut(out page))
                             {
-#if NETCOREAPP2_1
-                                var bytesRead = stream.Read(buffer);
-#else
+#if NETSTANDARD2_0
                                 var bytesRead = stream.Read(buffer, 0, buffer.Length);
+#else
+                                var bytesRead = stream.Read(buffer);
 #endif
                                 if (bytesRead == 0)
                                     throw new AudioInvalidException("No Ogg stream was found.");
 
                                 var nativeBuffer = new Span<byte>(sync.Buffer(bytesRead).ToPointer(), bytesRead);
-#if NETCOREAPP2_1
-                                buffer.Slice(0, bytesRead).CopyTo(nativeBuffer);
-#else
+#if NETSTANDARD2_0
                                 buffer.AsSpan().Slice(0, bytesRead).CopyTo(nativeBuffer);
+#else
+                                buffer.Slice(0, bytesRead).CopyTo(nativeBuffer);
 #endif
                                 sync.Wrote(bytesRead);
                             }
@@ -135,7 +135,7 @@ namespace AudioWorks.Extensions.Vorbis
                 }
                 finally
                 {
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
                     ArrayPool<byte>.Shared.Return(buffer);
 #endif
                     inputOggStream?.Dispose();
@@ -159,9 +159,7 @@ namespace AudioWorks.Extensions.Vorbis
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static unsafe void WriteFromUnmanaged(IntPtr location, int length, [NotNull] Stream stream)
         {
-#if NETCOREAPP2_1
-            stream.Write(new Span<byte>(location.ToPointer(), length));
-#else
+#if NETSTANDARD2_0
             var buffer = ArrayPool<byte>.Shared.Rent(4096);
             try
             {
@@ -180,6 +178,8 @@ namespace AudioWorks.Extensions.Vorbis
             {
                 ArrayPool<byte>.Shared.Return(buffer);
             }
+#else
+            stream.Write(new Span<byte>(location.ToPointer(), length));
 #endif
         }
 

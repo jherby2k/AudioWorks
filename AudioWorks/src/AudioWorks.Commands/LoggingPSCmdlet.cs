@@ -13,12 +13,12 @@ details.
 You should have received a copy of the GNU Lesser General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
 using System;
 using System.IO;
 #endif
 using System.Management.Automation;
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
 using System.Reflection;
 using System.Runtime.InteropServices;
 #endif
@@ -33,7 +33,7 @@ namespace AudioWorks.Commands
         private protected CmdletLoggerProvider LoggerProvider { get; } =
             LoggerManager.AddSingletonProvider(() => new CmdletLoggerProvider());
 
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
         static LoggingPSCmdlet()
         {
             // Workaround for binding issue under Windows PowerShell
@@ -64,7 +64,7 @@ namespace AudioWorks.Commands
                         break;
                 }
         }
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
 
         [CanBeNull]
         static Assembly AssemblyResolve(object sender, [NotNull] ResolveEventArgs args)

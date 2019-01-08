@@ -14,7 +14,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
 using System.Buffers;
 #endif
 using System.Composition;
@@ -209,10 +209,7 @@ namespace AudioWorks.Extensions.Vorbis
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         unsafe void WriteFromUnmanaged(IntPtr location, int length)
         {
-#if NETCOREAPP2_1
-            // ReSharper disable once PossibleNullReferenceException
-            _outputStream.Write(new Span<byte>(location.ToPointer(), length));
-#else
+#if NETSTANDARD2_0
             var buffer = ArrayPool<byte>.Shared.Rent(4096);
             try
             {
@@ -232,6 +229,9 @@ namespace AudioWorks.Extensions.Vorbis
             {
                 ArrayPool<byte>.Shared.Return(buffer);
             }
+#else
+            // ReSharper disable once PossibleNullReferenceException
+            _outputStream.Write(new Span<byte>(location.ToPointer(), length));
 #endif
         }
     }

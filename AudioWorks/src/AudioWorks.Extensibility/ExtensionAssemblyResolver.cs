@@ -13,14 +13,14 @@ details.
 You should have received a copy of the GNU Lesser General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
 using System;
 #endif
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
 using System.Runtime.InteropServices;
 #endif
 using System.Runtime.Loader;
@@ -41,13 +41,13 @@ namespace AudioWorks.Extensibility
         {
             _logger.LogDebug("Loading extension '{0}'.", path);
 
-#if NETCOREAPP2_1
-            Assembly = LoadWithLoader(path);
-#else
+#if NETSTANDARD2_0
             Assembly = RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework",
                 StringComparison.Ordinal)
                 ? Assembly.LoadFrom(path)
                 : LoadWithLoader(path);
+#else
+            Assembly = LoadWithLoader(path);
 #endif
 
             var extensionDir = Path.GetDirectoryName(path);
@@ -58,10 +58,7 @@ namespace AudioWorks.Extensibility
                     Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "*.dll")
                 .Concat(Directory.GetFiles(extensionDir, "*.dll"));
 
-#if NETCOREAPP2_1
-            ResolveWithLoader(assemblyFiles);
-        }
-#else
+#if NETSTANDARD2_0
             if (RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework",
                 StringComparison.Ordinal))
                 ResolveFullFramework(assemblyFiles);
@@ -89,6 +86,9 @@ namespace AudioWorks.Extensibility
 
                 return result;
             };
+        }
+#else
+            ResolveWithLoader(assemblyFiles);
         }
 #endif
 

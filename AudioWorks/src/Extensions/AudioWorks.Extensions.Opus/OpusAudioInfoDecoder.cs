@@ -15,11 +15,11 @@ You should have received a copy of the GNU Lesser General Public License along w
 
 using System;
 using System.Buffers.Binary;
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
 using System.Buffers;
 #endif
 using System.IO;
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 #endif
@@ -40,10 +40,10 @@ namespace AudioWorks.Extensions.Opus
         public unsafe AudioInfo ReadAudioInfo(Stream stream)
         {
             OggStream oggStream = null;
-#if NETCOREAPP2_1
-            Span<byte> buffer = stackalloc byte[4096];
-#else
+#if NETSTANDARD2_0
             var buffer = ArrayPool<byte>.Shared.Rent(4096);
+#else
+            Span<byte> buffer = stackalloc byte[4096];
 #endif
 
             try
@@ -57,19 +57,19 @@ namespace AudioWorks.Extensions.Opus
                         // Read from the buffer into a page
                         while (!sync.PageOut(out page))
                         {
-#if NETCOREAPP2_1
-                            var bytesRead = stream.Read(buffer);
-#else
+#if NETSTANDARD2_0
                             var bytesRead = stream.Read(buffer, 0, buffer.Length);
+#else
+                            var bytesRead = stream.Read(buffer);
 #endif
                             if (bytesRead == 0)
                                 throw new AudioInvalidException("No Ogg stream was found.");
 
                             var nativeBuffer = new Span<byte>(sync.Buffer(bytesRead).ToPointer(), bytesRead);
-#if NETCOREAPP2_1
-                            buffer.Slice(0, bytesRead).CopyTo(nativeBuffer);
-#else
+#if NETSTANDARD2_0
                             buffer.AsSpan().Slice(0, bytesRead).CopyTo(nativeBuffer);
+#else
+                            buffer.Slice(0, bytesRead).CopyTo(nativeBuffer);
 #endif
                             sync.Wrote(bytesRead);
                         }
@@ -92,7 +92,7 @@ namespace AudioWorks.Extensions.Opus
             }
             finally
             {
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
                 ArrayPool<byte>.Shared.Return(buffer);
 #endif
                 oggStream?.Dispose();
@@ -118,10 +118,10 @@ namespace AudioWorks.Extensions.Opus
             var headerBytes = new Span<byte>(headerPacket.Packet.ToPointer(), (int) headerPacket.Bytes);
 #endif
 
-#if NETCOREAPP2_1
-            if (!Encoding.ASCII.GetString(headerBytes.Slice(0, 8))
-#else
+#if NETSTANDARD2_0
             if (!Encoding.ASCII.GetString((byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(headerBytes)), 8)
+#else
+            if (!Encoding.ASCII.GetString(headerBytes.Slice(0, 8))
 #endif
                 .Equals("OpusHead", StringComparison.Ordinal))
                 throw new AudioUnsupportedException("Not an Opus stream.");

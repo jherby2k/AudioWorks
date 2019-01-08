@@ -21,7 +21,7 @@ using System.IO;
 #if !LINUX
 using System.Reflection;
 #endif
-#if WINDOWS && !NETCOREAPP2_1
+#if WINDOWS && NETSTANDARD2_0
 using System.Runtime.InteropServices;
 #endif
 #if !LINUX
@@ -47,15 +47,15 @@ namespace AudioWorks.Extensions.ReplayGain
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
                 Environment.Is64BitProcess ? "win-x64" : "win-x86");
 
-#if NETCOREAPP2_1
-            AddUnmanagedLibraryPath(libPath);
-#else
+#if NETSTANDARD2_0
             // On Full Framework, AssemblyLoadContext isn't available, so we add the directory to PATH
             if (RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework", StringComparison.Ordinal))
                 Environment.SetEnvironmentVariable("PATH",
                     $"{libPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}");
             else
                 AddUnmanagedLibraryPath(libPath);
+#else
+            AddUnmanagedLibraryPath(libPath);
 #endif
 #elif OSX
             var osVersion = GetOSVersion();

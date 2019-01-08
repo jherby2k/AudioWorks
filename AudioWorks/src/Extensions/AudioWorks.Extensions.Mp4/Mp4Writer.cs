@@ -32,10 +32,10 @@ namespace AudioWorks.Extensions.Mp4
         {
             Span<byte> buffer = stackalloc byte[4];
             BinaryPrimitives.WriteUInt32BigEndian(buffer, value);
-#if NETCOREAPP2_1
-            Write(buffer);
-#else
+#if NETSTANDARD2_0
             Write(buffer.ToArray());
+#else
+            Write(buffer);
 #endif
         }
 
@@ -43,10 +43,10 @@ namespace AudioWorks.Extensions.Mp4
         {
             Span<byte> buffer = stackalloc byte[8];
             BinaryPrimitives.WriteUInt64BigEndian(buffer, value);
-#if NETCOREAPP2_1
-            Write(buffer);
-#else
+#if NETSTANDARD2_0
             Write(buffer.ToArray());
+#else
+            Write(buffer);
 #endif
         }
 

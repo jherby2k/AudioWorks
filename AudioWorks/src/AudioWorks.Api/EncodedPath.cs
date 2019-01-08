@@ -34,7 +34,7 @@ namespace AudioWorks.Api
             var validProperties = typeof(AudioMetadata).GetProperties()
                 .Select(propertyInfo => propertyInfo.Name).ToArray();
             if (_replacer.Matches(encoded)
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
                 .Cast<Match>()
 #endif
                 .Select(match => match.Value.Substring(1, match.Value.Length - 2))
@@ -61,13 +61,13 @@ namespace AudioWorks.Api
                     new string(propertyValue.Where(character => !_invalidChars.Contains(character)).ToArray());
 
                 // Remove any double spaces introduced in sanitization
-#if NETCOREAPP2_1
+#if NETSTANDARD2_0
+                if (sanitizedPropertyValue.Contains("  ") && !propertyValue.Contains("  "))
+                    sanitizedPropertyValue = sanitizedPropertyValue.Replace("  ", " ");
+#else
                 if (sanitizedPropertyValue.Contains("  ", StringComparison.Ordinal) &&
                     !propertyValue.Contains("  ", StringComparison.Ordinal))
                     sanitizedPropertyValue = sanitizedPropertyValue.Replace("  ", " ", StringComparison.Ordinal);
-#else
-                if (sanitizedPropertyValue.Contains("  ") && !propertyValue.Contains("  "))
-                    sanitizedPropertyValue = sanitizedPropertyValue.Replace("  ", " ");
 #endif
 
                 return sanitizedPropertyValue;

@@ -16,7 +16,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 using System;
 using System.Buffers.Binary;
 using System.Globalization;
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 #endif
@@ -38,10 +38,10 @@ namespace AudioWorks.Extensions.Opus
             var headerBytes = new Span<byte>(packet.Packet.ToPointer(), (int) packet.Bytes);
 #endif
 
-#if NETCOREAPP2_1
-            if (!Encoding.ASCII.GetString(headerBytes.Slice(0, 8))
-#else
+#if NETSTANDARD2_0
             if (!Encoding.ASCII.GetString((byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(headerBytes)), 8)
+#else
+            if (!Encoding.ASCII.GetString(headerBytes.Slice(0, 8))
 #endif
                 .Equals("OpusTags", StringComparison.Ordinal))
                 throw new AudioMetadataInvalidException("Invalid Opus comment header.");
@@ -62,26 +62,26 @@ namespace AudioWorks.Extensions.Opus
                 headerPosition += length;
 
                 var delimiter = commentBytes.IndexOf((byte) 0x3D); // '='
-#if NETCOREAPP2_1
-                var key = Encoding.ASCII.GetString(commentBytes.Slice(0, delimiter));
-#else
+#if NETSTANDARD2_0
                 var keyBytes = commentBytes.Slice(0, delimiter);
                 var key = Encoding.ASCII.GetString(
                     (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)),
                     keyBytes.Length);
+#else
+                var key = Encoding.ASCII.GetString(commentBytes.Slice(0, delimiter));
 #endif
 
                 if (key.Equals("METADATA_BLOCK_PICTURE", StringComparison.OrdinalIgnoreCase))
                     CoverArt = CoverArtAdapter.FromBase64(commentBytes.Slice(delimiter + 1));
                 else
                 {
-#if NETCOREAPP2_1
-                    var value = Encoding.UTF8.GetString(commentBytes.Slice(delimiter + 1));
-#else
+#if NETSTANDARD2_0
                     var valueBytes = commentBytes.Slice(delimiter + 1);
                     var value = Encoding.UTF8.GetString(
                         (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes)),
                         valueBytes.Length);
+#else
+                    var value = Encoding.UTF8.GetString(commentBytes.Slice(delimiter + 1));
 #endif
 
                     try

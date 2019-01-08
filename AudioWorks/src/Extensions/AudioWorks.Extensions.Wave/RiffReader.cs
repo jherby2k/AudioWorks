@@ -42,12 +42,12 @@ namespace AudioWorks.Extensions.Wave
         [NotNull]
         internal string ReadFourCc()
         {
-#if NETCOREAPP2_1
-            Span<char> buffer = stackalloc char[4];
-            if (Read(buffer) < 4)
-#else
+#if NETSTANDARD2_0
             var buffer = ReadChars(4);
             if (buffer.Length < 4)
+#else
+            Span<char> buffer = stackalloc char[4];
+            if (Read(buffer) < 4)
 #endif
                 throw new AudioInvalidException("Stream is unexpectedly truncated.");
 

@@ -45,15 +45,15 @@ namespace AudioWorks.Extensions.Lame
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
                 Environment.Is64BitProcess ? "win-x64" : "win-x86");
 
-#if NETCOREAPP2_1
-            AddUnmanagedLibraryPath(libPath);
-#else
+#if NETSTANDARD2_0
             // On Full Framework, AssemblyLoadContext isn't available, so we add the directory to PATH
             if (RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework", StringComparison.Ordinal))
                 Environment.SetEnvironmentVariable("PATH",
                     $"{libPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}");
             else
                 AddUnmanagedLibraryPath(libPath);
+#else
+            AddUnmanagedLibraryPath(libPath);
 #endif
 #elif OSX
             var osVersion = GetOSVersion();

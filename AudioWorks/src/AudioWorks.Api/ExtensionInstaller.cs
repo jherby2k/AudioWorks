@@ -40,10 +40,10 @@ namespace AudioWorks.Api
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "AudioWorks",
             "Extensions",
-#if NETCOREAPP2_1
-            "netcoreapp2.1"
-#else
+#if NETSTANDARD2_0
             "netstandard2.0"
+#else
+            "netcoreapp2.1"
 #endif
             );
 
@@ -61,7 +61,7 @@ namespace AudioWorks.Api
 
         [NotNull] static readonly List<string> _compatibleTargets = new List<string>(new[]
         {
-#if NETCOREAPP2_1
+#if NETCOREAPP
             "netcoreapp2.1",
             "netcoreapp2.0",
             "netcoreapp1.1",
@@ -120,10 +120,10 @@ namespace AudioWorks.Api
                                     cancellationTokenSource.Token)
                                 .ConfigureAwait(false);
                         }).Result
-#if NETCOREAPP2_1
-                        .Where(package => package.Tags.Contains(GetOSTag(), StringComparison.OrdinalIgnoreCase))
-#else
+#if NETSTANDARD2_0
                         .Where(package => package.Tags.Contains(GetOSTag()))
+#else
+                        .Where(package => package.Tags.Contains(GetOSTag(), StringComparison.OrdinalIgnoreCase))
 #endif
                         .ToArray();
 

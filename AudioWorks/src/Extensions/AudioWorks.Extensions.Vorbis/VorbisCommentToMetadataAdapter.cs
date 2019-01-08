@@ -15,7 +15,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 
 using System;
 using System.Globalization;
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 #endif
@@ -36,26 +36,26 @@ namespace AudioWorks.Extensions.Vorbis
                 var commentBytes = new Span<byte>(commentPtrs[i].ToPointer(), commentLengths[i]);
                 var delimiter = commentBytes.IndexOf((byte) 0x3D); // '='
 
-#if NETCOREAPP2_1
-                var key = Encoding.ASCII.GetString(commentBytes.Slice(0, delimiter));
-#else
+#if NETSTANDARD2_0
                 var keyBytes = commentBytes.Slice(0, delimiter);
                 var key = Encoding.ASCII.GetString(
                     (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)),
                     keyBytes.Length);
+#else
+                var key = Encoding.ASCII.GetString(commentBytes.Slice(0, delimiter));
 #endif
 
                 if (key.Equals("METADATA_BLOCK_PICTURE", StringComparison.OrdinalIgnoreCase))
                     CoverArt = CoverArtAdapter.FromBase64(commentBytes.Slice(delimiter + 1));
                 else
                 {
-#if NETCOREAPP2_1
-                    var value = Encoding.UTF8.GetString(commentBytes.Slice(delimiter + 1));
-#else
+#if NETSTANDARD2_0
                     var valueBytes = commentBytes.Slice(delimiter + 1);
                     var value = Encoding.UTF8.GetString(
                         (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes)),
                         valueBytes.Length);
+#else
+                    var value = Encoding.UTF8.GetString(commentBytes.Slice(delimiter + 1));
 #endif
 
                     try
@@ -132,18 +132,18 @@ namespace AudioWorks.Extensions.Vorbis
                                 break;
 
                             case "REPLAYGAIN_TRACK_GAIN":
-#if NETCOREAPP2_1
-                                TrackGain = value.Replace(" dB", string.Empty, StringComparison.OrdinalIgnoreCase);
-#else
+#if NETSTANDARD2_0
                                 TrackGain = value.Replace(" dB", string.Empty);
+#else
+                                TrackGain = value.Replace(" dB", string.Empty, StringComparison.OrdinalIgnoreCase);
 #endif
                                 break;
 
                             case "REPLAYGAIN_ALBUM_GAIN":
-#if NETCOREAPP2_1
-                                AlbumGain = value.Replace(" dB", string.Empty, StringComparison.OrdinalIgnoreCase);
-#else
+#if NETSTANDARD2_0
                                 AlbumGain = value.Replace(" dB", string.Empty);
+#else
+                                AlbumGain = value.Replace(" dB", string.Empty, StringComparison.OrdinalIgnoreCase);
 #endif
                                 break;
                         }

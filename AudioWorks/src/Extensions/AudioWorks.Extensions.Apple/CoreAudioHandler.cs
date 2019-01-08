@@ -18,7 +18,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-#if !NETCOREAPP2_1
+#if NETSTANDARD2_0
 using System.Runtime.InteropServices;
 #endif
 using System.Runtime.Loader;
@@ -46,15 +46,15 @@ namespace AudioWorks.Extensions.Apple
                 "Apple",
                 "Apple Application Support");
 
-#if NETCOREAPP2_1
-            AddUnmanagedLibraryPath(libPath);
-#else
+#if NETSTANDARD2_0
             // On Full Framework, AssemblyLoadContext isn't available, so we add the directory to PATH
             if (RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework", StringComparison.Ordinal))
                 Environment.SetEnvironmentVariable("PATH",
                     $"{libPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}");
             else
                 AddUnmanagedLibraryPath(libPath);
+#else
+            AddUnmanagedLibraryPath(libPath);
 #endif
 
             var coreAudioLibrary = Path.Combine(libPath, "CoreAudioToolbox.dll");

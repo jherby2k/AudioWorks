@@ -50,10 +50,10 @@ namespace AudioWorks.Extensions.Vorbis
         }
 
         [Pure]
-#if NETCOREAPP2_1
-        internal static ReadOnlySpan<byte> ToBase64([NotNull] ICoverArt coverArt)
-#else
+#if NETSTANDARD2_0
         internal static unsafe ReadOnlySpan<byte> ToBase64([NotNull] ICoverArt coverArt)
+#else
+        internal static ReadOnlySpan<byte> ToBase64([NotNull] ICoverArt coverArt)
 #endif
         {
             var dataLength = 32 + coverArt.MimeType.Length + coverArt.Data.Length;
@@ -63,14 +63,14 @@ namespace AudioWorks.Extensions.Vorbis
             BinaryPrimitives.WriteUInt32BigEndian(buffer, 3);
 
             BinaryPrimitives.WriteUInt32BigEndian(buffer.Slice(4), (uint) coverArt.MimeType.Length);
-#if NETCOREAPP2_1
-            Encoding.ASCII.GetBytes(coverArt.MimeType, buffer.Slice(8));
-#else
+#if NETSTANDARD2_0
             fixed (char* mimeTypeAddress = coverArt.MimeType)
             fixed (byte* bufferAddress = buffer)
                 Encoding.ASCII.GetBytes(
                     mimeTypeAddress, coverArt.MimeType.Length,
                     bufferAddress + 8, coverArt.MimeType.Length);
+#else
+            Encoding.ASCII.GetBytes(coverArt.MimeType, buffer.Slice(8));
 #endif
 
             BinaryPrimitives.WriteUInt32BigEndian(buffer.Slice(12 + coverArt.MimeType.Length), (uint) coverArt.Width);
