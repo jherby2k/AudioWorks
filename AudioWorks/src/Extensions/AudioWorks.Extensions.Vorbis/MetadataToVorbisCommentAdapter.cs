@@ -72,7 +72,7 @@ namespace AudioWorks.Extensions.Vorbis
 
             // Always store images in JPEG format since Vorbis is also lossy
             if (metadata.CoverArt != null)
-                AddTag("METADATA_BLOCK_PICTURE", CoverArtAdapter.ToComment(
+                AddTag("METADATA_BLOCK_PICTURE", CoverArtAdapter.ToBase64(
                     CoverArtFactory.ConvertToLossy(metadata.CoverArt)));
         }
 
@@ -129,6 +129,26 @@ namespace AudioWorks.Extensions.Vorbis
             fixed (byte* valueBytesAddress = valueBytes)
                 SafeNativeMethods.VorbisCommentAddTag(_comment, ref MemoryMarshal.GetReference(keyBytes),
                     valueBytesAddress);
+
+            _unmanagedMemoryAllocated = true;
+        }
+
+        unsafe void AddTag([NotNull] string key, ReadOnlySpan<byte> value)
+        {
+            // Optimization - avoid allocating on the heap
+            Span<byte> keyBytes = stackalloc byte[Encoding.ASCII.GetMaxByteCount(key.Length) + 1];
+#if NETCOREAPP2_1
+            Encoding.ASCII.GetBytes(key, keyBytes);
+#else
+            fixed (char* keyAddress = key)
+                Encoding.ASCII.GetBytes(
+                    keyAddress, key.Length,
+                    (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)), keyBytes.Length);
+#endif
+
+            fixed (byte* valueAddress = value)
+                SafeNativeMethods.VorbisCommentAddTag(_comment, ref MemoryMarshal.GetReference(keyBytes),
+                    valueAddress);
 
             _unmanagedMemoryAllocated = true;
         }

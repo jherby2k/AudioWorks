@@ -50,8 +50,8 @@ namespace AudioWorks.Extensions.Vorbis
                 decodedValue.Slice(offset + 4, (int) BinaryPrimitives.ReadUInt32BigEndian(decodedValue.Slice(offset))));
         }
 
-        [Pure, NotNull]
-        internal static string ToComment([NotNull] ICoverArt coverArt)
+        [Pure]
+        internal static ReadOnlySpan<byte> ToBase64([NotNull] ICoverArt coverArt)
         {
             using (var stream = new MemoryStream())
             using (var writer = new BinaryWriter(stream, Encoding.UTF8, true))
@@ -75,7 +75,9 @@ namespace AudioWorks.Extensions.Vorbis
                 writer.WriteBigEndian((uint) coverArt.Data.Length);
                 writer.Write(coverArt.Data.ToArray());
 
-                return Convert.ToBase64String(stream.GetBuffer());
+                Span<byte> result = new byte[Base64.GetMaxEncodedToUtf8Length((int) stream.Length)];
+                Base64.EncodeToUtf8(stream.GetBuffer(), result, out _, out var bytesWritten);
+                return result.Slice(0, bytesWritten);
             }
         }
     }
