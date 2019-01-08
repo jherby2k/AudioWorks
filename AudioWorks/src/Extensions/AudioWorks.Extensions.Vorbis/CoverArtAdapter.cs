@@ -57,7 +57,7 @@ namespace AudioWorks.Extensions.Vorbis
 #endif
         {
             var dataLength = 32 + coverArt.MimeType.Length + coverArt.Data.Length;
-            Span<byte> buffer = new byte[Base64.GetMaxEncodedToUtf8Length(dataLength)];
+            Span<byte> buffer = new byte[Base64.GetMaxEncodedToUtf8Length(dataLength) + 1];
 
             // Set the picture type as "Front Cover"
             BinaryPrimitives.WriteUInt32BigEndian(buffer, 3);
@@ -65,10 +65,10 @@ namespace AudioWorks.Extensions.Vorbis
             BinaryPrimitives.WriteUInt32BigEndian(buffer.Slice(4), (uint) coverArt.MimeType.Length);
 #if NETSTANDARD2_0
             fixed (char* mimeTypeAddress = coverArt.MimeType)
-            fixed (byte* bufferAddress = buffer)
+            fixed (byte* bufferAddress = buffer.Slice(8))
                 Encoding.ASCII.GetBytes(
                     mimeTypeAddress, coverArt.MimeType.Length,
-                    bufferAddress + 8, coverArt.MimeType.Length);
+                    bufferAddress, coverArt.MimeType.Length);
 #else
             Encoding.ASCII.GetBytes(coverArt.MimeType, buffer.Slice(8));
 #endif
@@ -81,7 +81,8 @@ namespace AudioWorks.Extensions.Vorbis
             coverArt.Data.CopyTo(buffer.Slice(32 + coverArt.MimeType.Length));
 
             Base64.EncodeToUtf8InPlace(buffer, dataLength, out var bytesWritten);
-            return buffer.Slice(0, bytesWritten);
+
+            return buffer.Slice(0, bytesWritten + 1);
         }
     }
 }
