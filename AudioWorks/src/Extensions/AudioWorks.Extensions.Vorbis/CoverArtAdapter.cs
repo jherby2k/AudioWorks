@@ -16,7 +16,6 @@ You should have received a copy of the GNU Lesser General Public License along w
 using System;
 using System.Buffers.Binary;
 using System.Buffers.Text;
-using System.IO;
 using System.Text;
 using AudioWorks.Common;
 using JetBrains.Annotations;
@@ -51,34 +50,38 @@ namespace AudioWorks.Extensions.Vorbis
         }
 
         [Pure]
+#if NETCOREAPP2_1
         internal static ReadOnlySpan<byte> ToBase64([NotNull] ICoverArt coverArt)
+#else
+        internal static unsafe ReadOnlySpan<byte> ToBase64([NotNull] ICoverArt coverArt)
+#endif
         {
-            using (var stream = new MemoryStream())
-            using (var writer = new BinaryWriter(stream, Encoding.UTF8, true))
-            {
-                // Set the picture type as "Front Cover"
-                writer.WriteBigEndian(3);
+            var dataLength = 32 + coverArt.MimeType.Length + coverArt.Data.Length;
+            Span<byte> buffer = new byte[Base64.GetMaxEncodedToUtf8Length(dataLength)];
 
-                var mimeBytes = Encoding.ASCII.GetBytes(coverArt.MimeType);
-                writer.WriteBigEndian((uint) mimeBytes.Length);
-                writer.Write(mimeBytes);
+            // Set the picture type as "Front Cover"
+            BinaryPrimitives.WriteUInt32BigEndian(buffer, 3);
 
-                var descriptionBytes = Encoding.UTF8.GetBytes(string.Empty);
-                writer.WriteBigEndian((uint) descriptionBytes.Length);
-                writer.Write(descriptionBytes);
+            BinaryPrimitives.WriteUInt32BigEndian(buffer.Slice(4), (uint) coverArt.MimeType.Length);
+#if NETCOREAPP2_1
+            Encoding.ASCII.GetBytes(coverArt.MimeType, buffer.Slice(8));
+#else
+            fixed (char* mimeTypeAddress = coverArt.MimeType)
+            fixed (byte* bufferAddress = buffer)
+                Encoding.ASCII.GetBytes(
+                    mimeTypeAddress, coverArt.MimeType.Length,
+                    bufferAddress + 8, coverArt.MimeType.Length);
+#endif
 
-                writer.WriteBigEndian((uint) coverArt.Width);
-                writer.WriteBigEndian((uint) coverArt.Height);
-                writer.WriteBigEndian((uint) coverArt.ColorDepth);
-                writer.WriteBigEndian(0); // Always 0 for PNG and JPEG
+            BinaryPrimitives.WriteUInt32BigEndian(buffer.Slice(12 + coverArt.MimeType.Length), (uint) coverArt.Width);
+            BinaryPrimitives.WriteUInt32BigEndian(buffer.Slice(16 + coverArt.MimeType.Length), (uint) coverArt.Height);
+            BinaryPrimitives.WriteUInt32BigEndian(buffer.Slice(20 + coverArt.MimeType.Length), (uint) coverArt.ColorDepth);
 
-                writer.WriteBigEndian((uint) coverArt.Data.Length);
-                writer.Write(coverArt.Data.ToArray());
+            BinaryPrimitives.WriteUInt32BigEndian(buffer.Slice(28 + coverArt.MimeType.Length), (uint) coverArt.Data.Length);
+            coverArt.Data.CopyTo(buffer.Slice(32 + coverArt.MimeType.Length));
 
-                Span<byte> result = new byte[Base64.GetMaxEncodedToUtf8Length((int) stream.Length)];
-                Base64.EncodeToUtf8(stream.GetBuffer(), result, out _, out var bytesWritten);
-                return result.Slice(0, bytesWritten);
-            }
+            Base64.EncodeToUtf8InPlace(buffer, dataLength, out var bytesWritten);
+            return buffer.Slice(0, bytesWritten);
         }
     }
 }
