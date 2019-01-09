@@ -18,7 +18,7 @@
     <PackageProjectUrl>https://github.com/jherby2k/AudioWorks</PackageProjectUrl>
     <PackageIconUrl>https://github.com/jherby2k/AudioWorks/raw/master/AudioWorks/src/AudioWorks.Api/Icon.png</PackageIconUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <PackageTags>music encode decode convert export tag cover art FLAC MP3 ID3 Lame MP4 AAC Apple ALAC Ogg Vorbis ReplayGain EBUR128</PackageTags>
+    <PackageTags>music encode decode convert export tag cover art FLAC MP3 ID3 Lame MP4 AAC Apple ALAC Ogg Vorbis Opus ReplayGain EBUR128</PackageTags>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <NeutralLanguage>en-US</NeutralLanguage>
