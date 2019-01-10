@@ -14,6 +14,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
 using JetBrains.Annotations;
@@ -23,12 +24,18 @@ namespace AudioWorks.Extensions.Opus
     [SuppressUnmanagedCodeSecurity]
     static class SafeNativeMethods
     {
-#if LINUX
+#if WINDOWS
+        const string _oggLibrary = "libogg";
+        const string _opusLibrary = "opus";
+        const string _opusEncLibrary = "opusenc";
+#elif LINUX
         const string _oggLibrary = "libogg.so.0";
         const string _opusLibrary = "libopus.so.0";
-#else
+        const string _opusEncLibrary = "libopusenc.so.0";
+#else // MacOS
         const string _oggLibrary = "libogg";
         const string _opusLibrary = "libopus";
+        const string _opusEncLibrary = "libopusenc";
 #endif
 
         [Pure]
@@ -110,5 +117,51 @@ namespace AudioWorks.Extensions.Opus
         [DllImport(_opusLibrary, EntryPoint = "opus_get_version_string",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern IntPtr OpusGetVersion();
+
+        [DllImport(_opusEncLibrary, EntryPoint = "ope_comments_create",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern OpusCommentsHandle OpusEncoderCommentsCreate();
+
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
+        [DllImport(_opusEncLibrary, EntryPoint = "ope_comments_destroy",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void OpusEncoderCommentsDestroy(
+            IntPtr handle);
+
+        [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_create_callbacks",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern OpusEncoderHandle OpusEncoderCreateCallbacks(
+            ref OpusEncoderCallbacks callbacks,
+            IntPtr userData,
+            OpusCommentsHandle comments,
+            int rate,
+            int channels,
+            int family,
+            out int error);
+
+        [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_write_float",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int OpusEncoderWriteFloat(
+            OpusEncoderHandle handle,
+            in float pcm,
+            int samplesPerChannel);
+
+        [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_drain",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int OpusEncoderDrain(
+            [NotNull] OpusEncoderHandle handle);
+
+        [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_ctl",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int OpusEncoderControl(
+            [NotNull] OpusEncoderHandle handle,
+            EncoderControlRequest request,
+            int argument);
+
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
+        [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_destroy",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void OpusEncoderDestroy(
+            IntPtr handle);
     }
 }

@@ -500,6 +500,7 @@ namespace AudioWorks.Api.Tests.DataSources
             #endregion
 
 #if !LINUX
+
             #region ALAC Encoding
 
             new object[]
@@ -1109,6 +1110,7 @@ namespace AudioWorks.Api.Tests.DataSources
             #endregion
 
 #endif
+
             #region Lame MP3 Encoding
 
             new object[]
@@ -2172,6 +2174,22 @@ namespace AudioWorks.Api.Tests.DataSources
                 "6FADE298A3D1D6AD7CB815741249AF6C",
                 "6FADE298A3D1D6AD7CB815741249AF6C"
 #endif
+            },
+
+            #endregion
+
+            #region Opus Encoding
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    ["SerialNumber"] = 1
+                },
+                "3C4223C1EC36D0CD88A7247699EB8064",
+                "AF248106348D5E9C9358365364D3D46A"
             }
 
             #endregion
