@@ -2242,6 +2242,42 @@ namespace AudioWorks.Api.Tests.DataSources
 
             new object[]
             {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    ["SerialNumber"] = 1
+                },
+                "a467DE33E85CDF948219F10F4283D652F",
+                "7797C39CA60F945234EE9F99F891EE7F"
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    ["SerialNumber"] = 1
+                },
+                "b467DE33E85CDF948219F10F4283D652F",
+                "27EA256EC4ABB9C798FD405F116E1DFB"
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    ["SerialNumber"] = 1
+                },
+                "c467DE33E85CDF948219F10F4283D652F",
+                "27EA256EC4ABB9C798FD405F116E1DFB"
+            },
+
+            new object[]
+            {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
                 new TestSettingDictionary

@@ -24,6 +24,7 @@ namespace AudioWorks.Extensions.Opus
     [AudioEncoderExport("Opus", "Opus")]
     public sealed class OpusAudioEncoder : IAudioEncoder, IDisposable
     {
+        [CanBeNull] MetadataToOpusCommentAdapter _comments;
         [CanBeNull] Encoder _encoder;
 
         public SettingInfoDictionary SettingInfo => new SettingInfoDictionary
@@ -37,7 +38,8 @@ namespace AudioWorks.Extensions.Opus
 
         public void Initialize(Stream stream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
-            _encoder = new Encoder(stream, info.SampleRate, info.Channels);
+            _comments = new MetadataToOpusCommentAdapter(metadata);
+            _encoder = new Encoder(stream, info.SampleRate, info.Channels, _comments.Handle);
 
             if (!settings.TryGetValue("SerialNumber", out int serialNumber))
                 serialNumber = new Random().Next();
@@ -82,6 +84,7 @@ namespace AudioWorks.Extensions.Opus
         public void Dispose()
         {
             _encoder?.Dispose();
+            _comments?.Dispose();
         }
     }
 }

@@ -23,21 +23,25 @@ namespace AudioWorks.Extensions.Opus
 {
     sealed class Encoder : IDisposable
     {
+        readonly int _channels;
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         readonly OpusEncoderCallbacks _callbacks;
-        [NotNull] readonly OpusCommentsHandle _commentsHandle;
         [NotNull] readonly OpusEncoderHandle _handle;
-        readonly int _channels;
 
-        internal Encoder([NotNull] Stream stream, int sampleRate, int channels)
+        internal Encoder([NotNull] Stream stream, int sampleRate, int channels, [NotNull] OpusCommentsHandle comments)
         {
+            _channels = channels;
             _callbacks = InitializeCallbacks(stream);
-            _commentsHandle = SafeNativeMethods.OpusEncoderCommentsCreate();
-            _handle = SafeNativeMethods.OpusEncoderCreateCallbacks(ref _callbacks, IntPtr.Zero, _commentsHandle,
-                sampleRate, channels, 0, out var error);
+            _handle = SafeNativeMethods.OpusEncoderCreateCallbacks(
+                ref _callbacks,
+                IntPtr.Zero,
+                comments,
+                sampleRate,
+                channels,
+                0,
+                out var error);
             if (error != 0)
                 throw new AudioEncodingException($"Opus encountered error '{error}' during initialization.");
-            _channels = channels;
         }
 
         internal void SetSerialNumber(int serialNumber)
@@ -92,7 +96,6 @@ namespace AudioWorks.Extensions.Opus
         public void Dispose()
         {
             _handle.Dispose();
-            _commentsHandle.Dispose();
         }
 
         static OpusEncoderCallbacks InitializeCallbacks([NotNull] Stream stream)

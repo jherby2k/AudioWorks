@@ -122,6 +122,22 @@ namespace AudioWorks.Extensions.Opus
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern OpusCommentsHandle OpusEncoderCommentsCreate();
 
+        [DllImport(_opusEncLibrary, EntryPoint = "ope_comments_add",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern unsafe int OpusCommentsAdd(
+            [NotNull] OpusCommentsHandle handle,
+            ref byte tag,
+            byte* value);
+
+        [DllImport(_opusEncLibrary, EntryPoint = "ope_comments_add_picture_from_memory",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern unsafe int OpusCommentsAddPictureFromMemory(
+            [NotNull] OpusCommentsHandle handle,
+            byte* data,
+            IntPtr size,
+            int pictureType,
+            IntPtr description);
+
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         [DllImport(_opusEncLibrary, EntryPoint = "ope_comments_destroy",
             CallingConvention = CallingConvention.Cdecl)]
@@ -133,7 +149,7 @@ namespace AudioWorks.Extensions.Opus
         internal static extern OpusEncoderHandle OpusEncoderCreateCallbacks(
             ref OpusEncoderCallbacks callbacks,
             IntPtr userData,
-            OpusCommentsHandle comments,
+            [NotNull] OpusCommentsHandle comments,
             int rate,
             int channels,
             int family,
@@ -142,7 +158,7 @@ namespace AudioWorks.Extensions.Opus
         [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_write_float",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int OpusEncoderWriteFloat(
-            OpusEncoderHandle handle,
+            [NotNull] OpusEncoderHandle handle,
             in float pcm,
             int samplesPerChannel);
 
