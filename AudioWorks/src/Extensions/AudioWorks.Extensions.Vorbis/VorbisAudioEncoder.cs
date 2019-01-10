@@ -67,8 +67,8 @@ namespace AudioWorks.Extensions.Vorbis
         {
             InitializeReplayGainFilter(info, metadata, settings);
 
-            _oggStream = new OggStream(settings.TryGetValue("SerialNumber", out var serialNumberValue)
-                ? (int) serialNumberValue
+            _oggStream = new OggStream(settings.TryGetValue("SerialNumber", out int serialNumber)
+                ? serialNumber
                 : new Random().Next());
 
             // Default to a quality setting of 5
@@ -83,7 +83,7 @@ namespace AudioWorks.Extensions.Vorbis
             }
             else
                 _encoder = new VorbisEncoder(info.Channels, info.SampleRate,
-                    settings.TryGetValue<int>("Quality", out var quality)
+                    settings.TryGetValue("Quality", out int quality)
                         ? quality / 10f
                         : 0.5f);
 
