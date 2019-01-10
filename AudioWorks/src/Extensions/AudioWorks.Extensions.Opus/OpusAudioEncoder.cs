@@ -14,9 +14,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Composition;
 using System.IO;
-using System.Linq;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
 using JetBrains.Annotations;
@@ -27,48 +25,47 @@ namespace AudioWorks.Extensions.Opus
     public sealed class OpusAudioEncoder : IAudioEncoder, IDisposable
     {
         [CanBeNull] Encoder _encoder;
-        [CanBeNull] Export<IAudioFilter> _replayGainExport;
 
-        public SettingInfoDictionary SettingInfo
+        public SettingInfoDictionary SettingInfo => new SettingInfoDictionary
         {
-            get
-            {
-                var result = new SettingInfoDictionary
-                {
-                    ["SerialNumber"] = new IntSettingInfo(int.MinValue, int.MaxValue)
-                };
-
-                // Merge the external ReplayGain filter's SettingInfo
-                var filterFactory =
-                    ExtensionProvider.GetFactories<IAudioFilter>("Name", "ReplayGain").FirstOrDefault();
-                // ReSharper disable once InvertIf
-                if (filterFactory != null)
-                    using (var export = filterFactory.CreateExport())
-                        foreach (var settingInfo in export.Value.SettingInfo)
-                            result.Add(settingInfo.Key, settingInfo.Value);
-
-                return result;
-            }
-        }
+            ["BitRate"] = new IntSettingInfo(5, 512),
+            ["ControlMode"] = new StringSettingInfo("Variable", "Constrained", "Constant"),
+            ["SerialNumber"] = new IntSettingInfo(int.MinValue, int.MaxValue)
+        };
 
         public string FileExtension { get; } = ".opus";
 
         public void Initialize(Stream stream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
-            InitializeReplayGainFilter(info, metadata, settings);
-
             _encoder = new Encoder(stream, info.SampleRate, info.Channels);
 
             if (!settings.TryGetValue("SerialNumber", out int serialNumber))
                 serialNumber = new Random().Next();
             _encoder.SetSerialNumber(serialNumber);
+
+            // Default to full VBR
+            if (settings.TryGetValue("ControlMode", out string vbrMode))
+                switch (vbrMode)
+                {
+                    case "Variable":
+                        _encoder.SetVbrConstraint(false);
+                        break;
+
+                    // 'Constrained' is the libopusenc default
+
+                    case "Constant":
+                        _encoder.SetVbr(false);
+                        break;
+                }
+            else
+                _encoder.SetVbrConstraint(false);
+
+            if (settings.TryGetValue("BitRate", out int bitRate))
+                _encoder.SetBitRate(bitRate);
         }
 
         public void Submit(SampleBuffer samples)
         {
-            if (_replayGainExport != null)
-                samples = _replayGainExport.Value.Process(samples);
-
             Span<float> buffer = stackalloc float[samples.Channels * samples.Frames];
             samples.CopyToInterleaved(buffer);
 
@@ -85,21 +82,6 @@ namespace AudioWorks.Extensions.Opus
         public void Dispose()
         {
             _encoder?.Dispose();
-            _replayGainExport?.Dispose();
-        }
-
-        void InitializeReplayGainFilter(
-            [NotNull] AudioInfo info,
-            [NotNull] AudioMetadata metadata,
-            [NotNull] SettingDictionary settings)
-        {
-            var filterFactory =
-                ExtensionProvider.GetFactories<IAudioFilter>("Name", "ReplayGain").FirstOrDefault();
-            if (filterFactory == null) return;
-
-            _replayGainExport = filterFactory.CreateExport();
-            // ReSharper disable once PossibleNullReferenceException
-            _replayGainExport.Value.Initialize(info, metadata, settings);
         }
     }
 }

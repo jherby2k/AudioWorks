@@ -23,15 +23,17 @@ namespace AudioWorks.Extensions.Opus
 {
     sealed class Encoder : IDisposable
     {
+        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
+        readonly OpusEncoderCallbacks _callbacks;
         [NotNull] readonly OpusCommentsHandle _commentsHandle;
         [NotNull] readonly OpusEncoderHandle _handle;
         readonly int _channels;
 
         internal Encoder([NotNull] Stream stream, int sampleRate, int channels)
         {
-            var callbacks = InitializeCallbacks(stream);
+            _callbacks = InitializeCallbacks(stream);
             _commentsHandle = SafeNativeMethods.OpusEncoderCommentsCreate();
-            _handle = SafeNativeMethods.OpusEncoderCreateCallbacks(ref callbacks, IntPtr.Zero, _commentsHandle,
+            _handle = SafeNativeMethods.OpusEncoderCreateCallbacks(ref _callbacks, IntPtr.Zero, _commentsHandle,
                 sampleRate, channels, 0, out var error);
             if (error != 0)
                 throw new AudioEncodingException($"Opus encountered error '{error}' during initialization.");
@@ -40,9 +42,34 @@ namespace AudioWorks.Extensions.Opus
 
         internal void SetSerialNumber(int serialNumber)
         {
-            var error = SafeNativeMethods.OpusEncoderControl(_handle, EncoderControlRequest.SetSerialNumber, serialNumber);
+            var error = SafeNativeMethods.OpusEncoderControl(_handle,
+                EncoderControlRequest.SetSerialNumber, serialNumber);
             if (error != 0)
-                throw new AudioEncodingException($"Opus encountered error '{error}' while setting the serial number.");
+                throw new AudioEncodingException($"Opus encountered error '{error}' setting the serial number.");
+        }
+
+        internal void SetVbrConstraint(bool enabled)
+        {
+            var error = SafeNativeMethods.OpusEncoderControl(_handle,
+                EncoderControlRequest.SetVbrConstraint, enabled ? 1 : 0);
+            if (error != 0)
+                throw new AudioEncodingException($"Opus encountered error '{error}' setting VBR constraint.");
+        }
+
+        internal void SetVbr(bool enabled)
+        {
+            var error = SafeNativeMethods.OpusEncoderControl(_handle,
+                EncoderControlRequest.SetVbr, enabled ? 1 : 0);
+            if (error != 0)
+                throw new AudioEncodingException($"Opus encountered error '{error}' setting VBR.");
+        }
+
+        internal void SetBitRate(int bitRate)
+        {
+            var error = SafeNativeMethods.OpusEncoderControl(_handle,
+                EncoderControlRequest.SetBitRate, bitRate * 1000);
+            if (error != 0)
+                throw new AudioEncodingException($"Opus encountered error '{error}' setting the bit rate.");
         }
 
         internal void Write(ReadOnlySpan<float> interleavedSamples)

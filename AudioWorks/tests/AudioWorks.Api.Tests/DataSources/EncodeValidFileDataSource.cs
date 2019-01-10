@@ -2182,14 +2182,158 @@ namespace AudioWorks.Api.Tests.DataSources
 
             new object[]
             {
+                "LPCM 8-bit 8000Hz Stereo.wav",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    ["SerialNumber"] = 1
+                },
+                "482A90587671E3C8CD304E6A239FEEC8",
+                "42611D4D1714FA56697CD733272C7C0C"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Mono.wav",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    ["SerialNumber"] = 1
+                },
+                "34C4AD1925020A9BF59C56A4F77427BE",
+                "D468319B977053942596A06BFB66E6CE"
+            },
+
+            new object[]
+            {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
                 new TestSettingDictionary
                 {
                     ["SerialNumber"] = 1
                 },
+                "467DE33E85CDF948219F10F4283D652F",
+                "1EF306F2A91B196CA4D182E959805D6B"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 48000Hz Stereo.wav",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    ["SerialNumber"] = 1
+                },
+                "415BEDC949FD1C1C0B0D9F5BE64A5A87",
+                "55D62218B5B1918859FEC788DF4D3B0A"
+            },
+
+            new object[]
+            {
+                "LPCM 24-bit 96000Hz Stereo.wav",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    ["SerialNumber"] = 1
+                },
+                "D0C102E07EECAE348B7E67819466BD3E",
+                "7BB39CE4309ABCF3C8052980BF608A5C"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    // Minimum serial #
+                    ["SerialNumber"] = int.MinValue
+                },
+                "B81139966D5D43347B0EB7136EC695E6",
+                "AB532EFD3E9D88FEF66261F8975ABD13"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    // Maximum serial #
+                    ["SerialNumber"] = int.MaxValue
+                },
+                "DE5950E24B8C9F551017E9BB8A83B2AA",
+                "323F30D9157EA82D76CE0BF0DD90971E"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    // Minimum bit rate
+                    ["BitRate"] = 5,
+                    ["SerialNumber"] = 1
+                },
+                "B54C2D71823307D856F8A30028A32231",
+                "B634B6A3BBABBAD1ACA195F85BAC8753"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    // Maximum bit rate
+                    ["BitRate"] = 512,
+                    ["SerialNumber"] = 1
+                },
+                "3D58B21C43A49F1B6A652CCC46F84193",
+                "6DBE8A3898BB58F171D422EBC8995125"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    // Variable control mode (default, explicit)
+                    ["ControlMode"] = "Variable",
+                    ["SerialNumber"] = 1
+                },
+                "467DE33E85CDF948219F10F4283D652F",
+                "1EF306F2A91B196CA4D182E959805D6B"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    // Constrained VBR mode
+                    ["ControlMode"] = "Constrained",
+                    ["SerialNumber"] = 1
+                },
                 "3C4223C1EC36D0CD88A7247699EB8064",
                 "AF248106348D5E9C9358365364D3D46A"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    // CBR mode
+                    ["ControlMode"] = "Constant",
+                    ["SerialNumber"] = 1
+                },
+                "6A3CEA868C0A23D3F398C87D4E65671D",
+                "68E253998F3676BC980EC0046E44D8A5"
             }
 
             #endregion
