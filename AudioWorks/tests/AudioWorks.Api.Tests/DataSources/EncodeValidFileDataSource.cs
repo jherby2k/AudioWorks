@@ -2370,6 +2370,50 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 "E45587F82C897DC2A608CA1165F0E59F",
                 "BC4F66F1F1799C7C643D45F9093FB1E6"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    // Low bit rate, Music signal type (default)
+                    ["BitRate"] = 32,
+                    ["SerialNumber"] = 1
+                },
+                "FD7DA5460DDE4ECC12CF013DF00D81F6",
+                "CE54E2EDA101715201CC42AAC274B3F3"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    // Low bit rate, Music signal type (explicit)
+                    ["SignalType"] = "Music",
+                    ["BitRate"] = 32,
+                    ["SerialNumber"] = 1
+                },
+                "FD7DA5460DDE4ECC12CF013DF00D81F6",
+                "CE54E2EDA101715201CC42AAC274B3F3"
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    // Low bit rate, Speech signal type
+                    ["SignalType"] = "Speech",
+                    ["BitRate"] = 32,
+                    ["SerialNumber"] = 1
+                },
+                "7B2DA2F1E1591A5A2E3A98FF37643A91",
+                "FD4FF9B319A5D79C07DBC4BF00C142AE"
             }
 
             #endregion

@@ -54,26 +54,31 @@ namespace AudioWorks.Extensions.Opus
 
         internal void SetVbrConstraint(bool enabled)
         {
-            var error = SafeNativeMethods.OpusEncoderControl(_handle,
-                EncoderControlRequest.SetVbrConstraint, enabled ? 1 : 0);
+            var error = SafeNativeMethods.OpusEncoderControl(_handle, EncoderControlRequest.SetVbrConstraint,
+                enabled ? 1 : 0);
             if (error != 0)
                 throw new AudioEncodingException($"Opus encountered error '{error}' setting VBR constraint.");
         }
 
         internal void SetVbr(bool enabled)
         {
-            var error = SafeNativeMethods.OpusEncoderControl(_handle,
-                EncoderControlRequest.SetVbr, enabled ? 1 : 0);
+            var error = SafeNativeMethods.OpusEncoderControl(_handle, EncoderControlRequest.SetVbr, enabled ? 1 : 0);
             if (error != 0)
                 throw new AudioEncodingException($"Opus encountered error '{error}' setting VBR.");
         }
 
         internal void SetBitRate(int bitRate)
         {
-            var error = SafeNativeMethods.OpusEncoderControl(_handle,
-                EncoderControlRequest.SetBitRate, bitRate * 1000);
+            var error = SafeNativeMethods.OpusEncoderControl(_handle, EncoderControlRequest.SetBitRate, bitRate * 1000);
             if (error != 0)
                 throw new AudioEncodingException($"Opus encountered error '{error}' setting the bit rate.");
+        }
+
+        internal void SetSignal(SignalType signal)
+        {
+            var error = SafeNativeMethods.OpusEncoderControl(_handle, EncoderControlRequest.SetSignal, (int) signal);
+            if (error != 0)
+                throw new AudioEncodingException($"Opus encountered error '{error}' setting the complexity.");
         }
 
         internal void Write(ReadOnlySpan<float> interleavedSamples)

@@ -31,6 +31,7 @@ namespace AudioWorks.Extensions.Opus
         {
             ["BitRate"] = new IntSettingInfo(5, 512),
             ["ControlMode"] = new StringSettingInfo("Variable", "Constrained", "Constant"),
+            ["SignalType"] = new StringSettingInfo("Music", "Speech"),
             ["SerialNumber"] = new IntSettingInfo(int.MinValue, int.MaxValue)
         };
 
@@ -64,6 +65,13 @@ namespace AudioWorks.Extensions.Opus
 
             if (settings.TryGetValue("BitRate", out int bitRate))
                 _encoder.SetBitRate(bitRate);
+
+            if (settings.TryGetValue("SignalType", out string signalType))
+                _encoder.SetSignal(signalType.Equals("Speech", StringComparison.OrdinalIgnoreCase)
+                    ? SignalType.Speech
+                    : SignalType.Music);
+            else
+                _encoder.SetSignal(SignalType.Music);
         }
 
         public void Submit(SampleBuffer samples)

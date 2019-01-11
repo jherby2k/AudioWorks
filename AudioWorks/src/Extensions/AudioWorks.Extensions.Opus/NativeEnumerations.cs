@@ -20,6 +20,13 @@ namespace AudioWorks.Extensions.Opus
         SetBitRate = 4002,
         SetVbr = 4006,
         SetVbrConstraint = 4020,
+        SetSignal = 4000,
         SetSerialNumber = 14006
+    }
+
+    enum SignalType
+    {
+        Speech = 2048,
+        Music = 2049
     }
 }
