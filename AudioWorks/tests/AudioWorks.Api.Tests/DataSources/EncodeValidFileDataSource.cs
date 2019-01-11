@@ -2188,8 +2188,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "482A90587671E3C8CD304E6A239FEEC8",
-                "42611D4D1714FA56697CD733272C7C0C"
+                "7D55155BAD3F3E883C51F73B5AED91E3",
+                "15E510129D34F401ACEB2E806254AB56"
             },
 
             new object[]
@@ -2200,8 +2200,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "34C4AD1925020A9BF59C56A4F77427BE",
-                "D468319B977053942596A06BFB66E6CE"
+                "DBCC59610166B56A0A54DF2CB2A947CB",
+                "A472D032843578C2764D0BD0CFF63506"
             },
 
             new object[]
@@ -2212,8 +2212,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "467DE33E85CDF948219F10F4283D652F",
-                "1EF306F2A91B196CA4D182E959805D6B"
+                "5E20506D151353B30BE7E70277B31CD9",
+                "D9BA488A2DBD8453CA8CE14EC145788A"
             },
 
             new object[]
@@ -2224,8 +2224,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "415BEDC949FD1C1C0B0D9F5BE64A5A87",
-                "55D62218B5B1918859FEC788DF4D3B0A"
+                "7E41B5EE907C6F4A3F1B4A607A3ADADC",
+                "A1BD2BBBBCD9C636CEF9AC44A5F66637"
             },
 
             new object[]
@@ -2236,8 +2236,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "D0C102E07EECAE348B7E67819466BD3E",
-                "7BB39CE4309ABCF3C8052980BF608A5C"
+                "28F317A9F01AD76DB06745136D721614",
+                "87BF443FEB33187C6CF430CF5870BD75"
             },
 
             new object[]
@@ -2248,8 +2248,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "52C9DA7A9B23EAD8243456F537D8BE04",
-                "7797C39CA60F945234EE9F99F891EE7F"
+                "0C3195FC2BAC098A0F0624ADC0FC7DBB",
+                "285DB36437355E2DFBA44CB7BCD02334"
             },
 
             new object[]
@@ -2260,8 +2260,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "406D667AC6094BEC41AC06E313183ACE",
-                "27EA256EC4ABB9C798FD405F116E1DFB"
+                "A0908DB720CA80C60A699A6D2DCA0D48",
+                "50048D5EC62312C5BED52F4C43D3DF78"
             },
 
             new object[]
@@ -2272,8 +2272,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "406D667AC6094BEC41AC06E313183ACE",
-                "27EA256EC4ABB9C798FD405F116E1DFB"
+                "A0908DB720CA80C60A699A6D2DCA0D48",
+                "50048D5EC62312C5BED52F4C43D3DF78"
             },
 
             new object[]
@@ -2285,8 +2285,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     // Minimum serial #
                     ["SerialNumber"] = int.MinValue
                 },
-                "B81139966D5D43347B0EB7136EC695E6",
-                "AB532EFD3E9D88FEF66261F8975ABD13"
+                "D88166A75683768E1959AC021FCF47BA",
+                "43669F8D4F2FBCB4958D88E7D740B1B5"
             },
 
             new object[]
@@ -2298,8 +2298,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     // Maximum serial #
                     ["SerialNumber"] = int.MaxValue
                 },
-                "DE5950E24B8C9F551017E9BB8A83B2AA",
-                "323F30D9157EA82D76CE0BF0DD90971E"
+                "3B6943FFFDD5BA29F5C648AC7D1AFF16",
+                "C1719DFA38AF9F43A48C53121876A6CA"
             },
 
             new object[]
@@ -2312,8 +2312,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["BitRate"] = 5,
                     ["SerialNumber"] = 1
                 },
-                "B54C2D71823307D856F8A30028A32231",
-                "B634B6A3BBABBAD1ACA195F85BAC8753"
+                "6506A8741E88C2EBB6F654B1E8587BE8",
+                "C7CD733ADBB937579E3C20CB52C9309A"
             },
 
             new object[]
@@ -2326,8 +2326,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["BitRate"] = 512,
                     ["SerialNumber"] = 1
                 },
-                "3D58B21C43A49F1B6A652CCC46F84193",
-                "6DBE8A3898BB58F171D422EBC8995125"
+                "1504BABC1532C20CC2EBE5327478F0DC",
+                "697BB93D82506A58CEFB5CEA3680CA0A"
             },
 
             new object[]
@@ -2340,8 +2340,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ControlMode"] = "Variable",
                     ["SerialNumber"] = 1
                 },
-                "467DE33E85CDF948219F10F4283D652F",
-                "1EF306F2A91B196CA4D182E959805D6B"
+                "5E20506D151353B30BE7E70277B31CD9",
+                "D9BA488A2DBD8453CA8CE14EC145788A"
             },
 
             new object[]
@@ -2354,8 +2354,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ControlMode"] = "Constrained",
                     ["SerialNumber"] = 1
                 },
-                "3C4223C1EC36D0CD88A7247699EB8064",
-                "AF248106348D5E9C9358365364D3D46A"
+                "DA48DCC198E603E5E857DFE9F33E6D3E",
+                "A61290B004B119A14197ACFCD489D5DD"
             },
 
             new object[]
@@ -2368,8 +2368,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ControlMode"] = "Constant",
                     ["SerialNumber"] = 1
                 },
-                "6A3CEA868C0A23D3F398C87D4E65671D",
-                "68E253998F3676BC980EC0046E44D8A5"
+                "E45587F82C897DC2A608CA1165F0E59F",
+                "BC4F66F1F1799C7C643D45F9093FB1E6"
             }
 
             #endregion
