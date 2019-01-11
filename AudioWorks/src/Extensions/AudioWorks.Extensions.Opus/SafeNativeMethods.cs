@@ -113,10 +113,13 @@ namespace AudioWorks.Extensions.Opus
         internal static extern void OggStreamClear(
             IntPtr streamState);
 
-
         [DllImport(_opusLibrary, EntryPoint = "opus_get_version_string",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern IntPtr OpusGetVersion();
+
+        [DllImport(_opusEncLibrary, EntryPoint = "ope_get_version_string",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr OpusEncoderGetVersion();
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_comments_create",
             CallingConvention = CallingConvention.Cdecl)]
@@ -124,14 +127,14 @@ namespace AudioWorks.Extensions.Opus
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_comments_add",
             CallingConvention = CallingConvention.Cdecl)]
-        internal static extern unsafe int OpusCommentsAdd(
+        internal static extern unsafe int OpusEncoderCommentsAdd(
             [NotNull] OpusCommentsHandle handle,
             ref byte tag,
             byte* value);
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_comments_add_picture_from_memory",
             CallingConvention = CallingConvention.Cdecl)]
-        internal static extern unsafe int OpusCommentsAddPictureFromMemory(
+        internal static extern unsafe int OpusEncoderCommentsAddPictureFromMemory(
             [NotNull] OpusCommentsHandle handle,
             byte* data,
             IntPtr size,

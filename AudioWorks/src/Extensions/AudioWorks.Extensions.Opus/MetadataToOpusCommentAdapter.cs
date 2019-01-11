@@ -66,7 +66,7 @@ namespace AudioWorks.Extensions.Opus
             var coverArt = CoverArtFactory.ConvertToLossy(metadata.CoverArt);
             fixed (byte* coverArtAddress = coverArt.Data)
             {
-                var error = SafeNativeMethods.OpusCommentsAddPictureFromMemory(
+                var error = SafeNativeMethods.OpusEncoderCommentsAddPictureFromMemory(
                     Handle,
                     coverArtAddress,
                     new IntPtr(coverArt.Data.Length),
@@ -110,7 +110,7 @@ namespace AudioWorks.Extensions.Opus
 
             fixed (byte* valueBytesAddress = valueBytes)
             {
-                var error = SafeNativeMethods.OpusCommentsAdd(Handle, ref MemoryMarshal.GetReference(keyBytes),
+                var error = SafeNativeMethods.OpusEncoderCommentsAdd(Handle, ref MemoryMarshal.GetReference(keyBytes),
                     valueBytesAddress);
                 if (error != 0)
                     throw new AudioEncodingException($"Opus encountered error {error} writing a comment.");

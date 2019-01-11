@@ -67,6 +67,12 @@ namespace AudioWorks.Extensions.Opus
 
             AddUnmanagedLibraryPath(libPath);
 #else // LINUX
+            if (!VerifyLibrary("libopusenc.so.0"))
+            {
+                logger.LogWarning("Missing libopusenc.so.0.");
+                return false;
+            }
+
             if (!VerifyLibrary("libopus.so.0"))
             {
                 logger.LogWarning(
@@ -84,6 +90,15 @@ namespace AudioWorks.Extensions.Opus
                         : "Missing libogg.so.0.");
                 return false;
             }
+#endif
+
+            logger.LogInformation("Using libopusenc version {0}.",
+                // ReSharper disable once PossibleNullReferenceException
+                Marshal.PtrToStringAnsi(SafeNativeMethods.OpusEncoderGetVersion())
+#if NETSTANDARD2_0
+                    .Replace("libopusenc ", string.Empty));
+#else
+                    .Replace("libopusenc ", string.Empty, StringComparison.Ordinal));
 #endif
 
             logger.LogInformation("Using libopus version {0}.",
