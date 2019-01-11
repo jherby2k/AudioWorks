@@ -2248,7 +2248,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "a467DE33E85CDF948219F10F4283D652F",
+                "52C9DA7A9B23EAD8243456F537D8BE04",
                 "7797C39CA60F945234EE9F99F891EE7F"
             },
 
@@ -2260,7 +2260,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "b467DE33E85CDF948219F10F4283D652F",
+                "406D667AC6094BEC41AC06E313183ACE",
                 "27EA256EC4ABB9C798FD405F116E1DFB"
             },
 
@@ -2272,7 +2272,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["SerialNumber"] = 1
                 },
-                "c467DE33E85CDF948219F10F4283D652F",
+                "406D667AC6094BEC41AC06E313183ACE",
                 "27EA256EC4ABB9C798FD405F116E1DFB"
             },
 

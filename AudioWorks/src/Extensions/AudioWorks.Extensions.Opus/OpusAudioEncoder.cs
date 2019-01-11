@@ -68,6 +68,8 @@ namespace AudioWorks.Extensions.Opus
 
         public void Submit(SampleBuffer samples)
         {
+            if (samples.Frames == 0) return;
+
             Span<float> buffer = stackalloc float[samples.Channels * samples.Frames];
             samples.CopyToInterleaved(buffer);
 
