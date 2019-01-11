@@ -2413,7 +2413,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["SerialNumber"] = 1
                 },
                 "7B2DA2F1E1591A5A2E3A98FF37643A91",
-                "FD4FF9B319A5D79C07DBC4BF00C142AE"
+                "F0B0B8D0F8D3B223FD3DBC1A3EDA2C04"
             }
 
             #endregion
