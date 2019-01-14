@@ -19,18 +19,18 @@ using System.Runtime.InteropServices;
 namespace AudioWorks.Extensions.Opus
 {
     [StructLayout(LayoutKind.Sequential)]
-    readonly struct OggPacket
+    struct OggPacket
     {
-        internal readonly IntPtr Packet;
+        internal IntPtr Packet;
 
 #if WINDOWS
-        internal readonly int Bytes;
+        internal int Bytes;
 
         readonly int BeginningOfStream;
 
         readonly int EndOfStream;
 #else
-        internal readonly long Bytes;
+        internal long Bytes;
 
         readonly long BeginningOfStream;
 
@@ -39,6 +39,6 @@ namespace AudioWorks.Extensions.Opus
 
         readonly long GranulePosition;
 
-        internal readonly long PacketNumber;
+        internal long PacketNumber;
     }
 }

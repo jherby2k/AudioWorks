@@ -48,9 +48,21 @@ namespace AudioWorks.Extensions.Opus
             SafeNativeMethods.OggStreamPageIn(_state, page);
         }
 
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
+            Justification = "Native method is always expected to return 0")]
+        internal void PacketIn(in OggPacket packet)
+        {
+            SafeNativeMethods.OggStreamPacketIn(_state, packet);
+        }
+
         internal bool PacketOut(out OggPacket packet)
         {
             return SafeNativeMethods.OggStreamPacketOut(_state, out packet) == 1;
+        }
+
+        internal bool Flush(out OggPage page)
+        {
+            return SafeNativeMethods.OggStreamFlush(_state, out page) != 0;
         }
 
         public void Dispose()

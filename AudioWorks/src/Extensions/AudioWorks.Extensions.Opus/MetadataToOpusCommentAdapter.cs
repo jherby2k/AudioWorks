@@ -77,6 +77,16 @@ namespace AudioWorks.Extensions.Opus
             }
         }
 
+        internal unsafe void HeaderOut(out OggPacket packet)
+        {
+            packet = new OggPacket
+            {
+                Packet = Marshal.ReadIntPtr(Handle.DangerousGetHandle()),
+                Bytes = Marshal.ReadInt32(IntPtr.Add(Handle.DangerousGetHandle(), sizeof(IntPtr))),
+                PacketNumber = 1
+            };
+        }
+
         public void Dispose()
         {
             Handle.Dispose();

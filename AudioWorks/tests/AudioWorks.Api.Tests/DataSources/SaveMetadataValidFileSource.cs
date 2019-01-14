@@ -1502,6 +1502,260 @@ namespace AudioWorks.Api.Tests.DataSources
 #else
                 "8C9453958E15AF2EFBE2054C8F07EFAF"
 #endif
+            },
+
+            #endregion
+
+            #region Opus
+
+            // All fields
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo.opus",
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                },
+                null,
+                null,
+#if LINUX
+                "unknown",
+                "unknown"
+#elif OSX
+                "unknown"
+#else
+                "5284C0343D8510F5F529D3E8881A014E"
+#endif
+            },
+
+            // Day unset
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo.opus",
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                },
+                null,
+                null,
+#if LINUX
+                "unknown",
+                "unknown"
+#elif OSX
+                "unknown"
+#else
+                "F111890A03DD3DD638106687B486300C"
+#endif
+            },
+
+            // Month unset
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo.opus",
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                },
+                null,
+                null,
+#if LINUX
+                "unknown",
+                "unknown"
+#elif OSX
+                "unknown"
+#else
+                "F111890A03DD3DD638106687B486300C"
+#endif
+            },
+
+            // TrackNumber unset
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo.opus",
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackCount = "12"
+                },
+                null,
+                null,
+#if LINUX
+                "unknown",
+                "unknown"
+#elif OSX
+                "unknown"
+#else
+                "949E7F89B463AD682322D354C8170CF5"
+#endif
+            },
+
+            // TrackCount unset
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo.opus",
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01"
+                },
+                null,
+                null,
+#if LINUX
+                "unknown",
+                "unknown"
+#elif OSX
+                "unknown"
+#else
+                "7252D2507D8414BFA6D5BC659F2CBA98"
+#endif
+            },
+
+            // Existing tag
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo (Tagged using defaults).opus",
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12"
+                },
+                null,
+                null,
+#if LINUX
+                "unknown",
+                "unknown"
+#elif OSX
+                "unknown"
+#else
+                "C5F2FFAB1A2000CBACFE1295A3335728"
+#endif
+            },
+
+            // Existing tag removal
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo (Tagged using defaults).opus",
+                new TestAudioMetadata(),
+                null,
+                null,
+#if LINUX
+                "unknown",
+                "unknown"
+#elif OSX
+                "unknown"
+#else
+                "51C23E67B35D82097EB7F920D275DBF1"
+#endif
+            },
+
+            // Nothing to do
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo.opus",
+                new TestAudioMetadata(),
+                null,
+                null,
+#if LINUX
+                "unknown",
+                "unknown"
+#elif OSX
+                "unknown"
+#else
+                "E13DC4ACD53A04B955C724B37042EFB6"
+#endif
+            },
+
+            // PNG CoverArt (Converted)
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo.opus",
+                new TestAudioMetadata(),
+                "PNG 24-bit 1280 x 935.png",
+                null,
+#if LINUX
+                "unknown",
+                "unknown"
+#elif OSX
+                "unknown"
+#else
+                "3F066B0708B269330B53C3C96119F57A"
+#endif
+            },
+
+            // JPEG CoverArt
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo.opus",
+                new TestAudioMetadata(),
+                "JPEG 24-bit 1280 x 935.jpg",
+                null,
+#if LINUX
+                "unknown",
+                "unknown"
+#elif OSX
+                "unknown"
+#else
+                "3F066B0708B269330B53C3C96119F57A"
+#endif
             }
 
             #endregion

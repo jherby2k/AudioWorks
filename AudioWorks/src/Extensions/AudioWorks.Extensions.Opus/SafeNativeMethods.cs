@@ -51,6 +51,11 @@ namespace AudioWorks.Extensions.Opus
         internal static extern bool OggPageEos(
             in OggPage page);
 
+        [DllImport(_oggLibrary, EntryPoint = "ogg_page_checksum_set",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void OggPageChecksumSet(
+            ref OggPage page);
+
         [DllImport(_oggLibrary, EntryPoint = "ogg_sync_init",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int OggSyncInit(
@@ -102,11 +107,23 @@ namespace AudioWorks.Extensions.Opus
             IntPtr streamState,
             in OggPage page);
 
+        [DllImport(_oggLibrary, EntryPoint = "ogg_stream_packetin",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int OggStreamPacketIn(
+            IntPtr streamState,
+            in OggPacket packet);
+
         [DllImport(_oggLibrary, EntryPoint = "ogg_stream_packetout",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int OggStreamPacketOut(
             IntPtr streamState,
             out OggPacket packet);
+
+        [DllImport(_oggLibrary, EntryPoint = "ogg_stream_flush",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int OggStreamFlush(
+            IntPtr streamState,
+            out OggPage page);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_stream_clear",
             CallingConvention = CallingConvention.Cdecl)]

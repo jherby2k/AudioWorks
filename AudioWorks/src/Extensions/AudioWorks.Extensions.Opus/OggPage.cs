@@ -21,20 +21,20 @@ namespace AudioWorks.Extensions.Opus
     [StructLayout(LayoutKind.Sequential)]
     struct OggPage
     {
-        readonly IntPtr Header;
+        internal readonly IntPtr Header;
 
 #if WINDOWS
-        readonly int HeaderLength;
+        internal readonly int HeaderLength;
 #else
-        readonly long HeaderLength;
+        internal readonly long HeaderLength;
 #endif
 
-        readonly IntPtr Body;
+        internal readonly IntPtr Body;
 
 #if WINDOWS
-        readonly int BodyLength;
+        internal readonly int BodyLength;
 #else
-        readonly long BodyLength;
+        internal readonly long BodyLength;
 #endif
     }
 }
