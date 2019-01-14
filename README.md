@@ -21,11 +21,13 @@ AudioWorks runs on Windows 7+, MacOS 10.12+, and Ubuntu (18.04 or 16.04). Other 
 * [PowerShell Core 6.1+](https://docs.microsoft.com/en-ca/powershell/scripting/install/installing-powershell-core-on-macos?view=powershell-6)
 #### On Ubuntu 18.04:
 * [PowerShell Core 6.1+](https://docs.microsoft.com/en-ca/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-6#ubuntu-1804)
-* libebur128-1 (via apt-get)
+* Via `apt-get install`:
+  * libebur128-1
 #### On Ubuntu 16.04:
 * [PowerShell Core 6.1+](https://docs.microsoft.com/en-ca/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-6#ubuntu-1604)
-* libebur128-1 (via apt-get)
-* libmp3lame0 (via apt-get)
+* Via `apt-get install`:
+  * libmp3lame0
+  * libebur128-1
 
 ### Installation
 The AudioWorks PowerShell module can found on [the PowerShell Gallery](https://www.powershellgallery.com/packages/AudioWorks.Commands). If you are using Windows PowerShell 5.1, you may need to [update PowerShellGet](https://docs.microsoft.com/en-us/powershell/gallery/installing-psget) to a version that supports pre-release modules.
