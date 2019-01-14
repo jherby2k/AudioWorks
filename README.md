@@ -14,16 +14,18 @@ MacOS | [![Build Status](https://dev.azure.com/jherby2k/AudioWorks/_apis/build/s
 AudioWorks runs on Windows 7+, MacOS 10.12+, and Ubuntu (18.04 or 16.04). Other 64-bit Linux distributions may work, but may require additional dependencies and are currently untested.
 
 #### On Windows:
-* [PowerShell Core 6.1+](https://github.com/PowerShell/PowerShell/releases) or Windows PowerShell 5.1
+* [PowerShell Core 6.1+](https://docs.microsoft.com/en-ca/powershell/scripting/install/installing-powershell-core-on-windows?view=powershell-6) (recommended) and/or Windows PowerShell 5.1
 * [.NET Framework 4.7.1+](https://support.microsoft.com/en-us/help/4054530/microsoft-net-framework-4-7-2-offline-installer-for-windows) (if using Windows PowerShell)
 * [iTunes](https://www.apple.com/itunes) (optional, for AAC and ALAC support. Requires the classic installer, not the Windows Store version. Technically only the Apple Application support packages are required)
-#### On Linux:
-* [PowerShell Core 6.1+](https://github.com/PowerShell/PowerShell/releases)
-* libebur128-1 (via apt-get on Ubuntu 16.04 and 18.04)
-* libmp3lame0 (via apt-get on Ubuntu 16.04)
-* libebur128 (via dnf on Fedora 28)
 #### On MacOS:
-* [PowerShell Core 6.1+](https://github.com/PowerShell/PowerShell/releases)
+* [PowerShell Core 6.1+](https://docs.microsoft.com/en-ca/powershell/scripting/install/installing-powershell-core-on-macos?view=powershell-6)
+#### On Ubuntu 18.04:
+* [PowerShell Core 6.1+](https://docs.microsoft.com/en-ca/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-6#ubuntu-1804)
+* libebur128-1 (via apt-get)
+#### On Ubuntu 16.04:
+* [PowerShell Core 6.1+](https://docs.microsoft.com/en-ca/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-6#ubuntu-1604)
+* libebur128-1 (via apt-get)
+* libmp3lame0 (via apt-get)
 
 ### Installation
 The AudioWorks PowerShell module can found on [the PowerShell Gallery](https://www.powershellgallery.com/packages/AudioWorks.Commands). If you are using Windows PowerShell 5.1, you may need to [update PowerShellGet](https://docs.microsoft.com/en-us/powershell/gallery/installing-psget) to a version that supports pre-release modules.
