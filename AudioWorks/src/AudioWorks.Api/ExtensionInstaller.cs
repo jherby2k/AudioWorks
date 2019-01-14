@@ -54,7 +54,7 @@ namespace AudioWorks.Api
                     "https://www.myget.org/F/audioworks-extensions-prerelease/api/v3/index.json")
                 : ConfigurationManager.Configuration.GetValue(
                     "ExtensionRepository",
-                    "https://www.myget.org/F/audioworks-extensions-v1/api/v3/index.json");
+                    "https://www.myget.org/F/audioworks-extensions-v2/api/v3/index.json");
 
         [NotNull] static readonly string _defaultUrl = ConfigurationManager.Configuration.GetValue("DefaultRepository",
             "https://api.nuget.org/v3/index.json");
