@@ -1530,10 +1530,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 null,
 #if LINUX
-                "unknown",
-                "unknown"
+                "9A53EDE65A60F0C1684D16744E33DCFC",
+                "9A53EDE65A60F0C1684D16744E33DCFC"
 #elif OSX
-                "unknown"
+                "5284C0343D8510F5F529D3E8881A014E"
 #else
                 "5284C0343D8510F5F529D3E8881A014E"
 #endif
@@ -1560,10 +1560,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 null,
 #if LINUX
-                "unknown",
-                "unknown"
+                "4A397361C11EC1FE03A43E176E673856",
+                "4A397361C11EC1FE03A43E176E673856"
 #elif OSX
-                "unknown"
+                "F111890A03DD3DD638106687B486300C"
 #else
                 "F111890A03DD3DD638106687B486300C"
 #endif
@@ -1590,10 +1590,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 null,
 #if LINUX
-                "unknown",
-                "unknown"
+                "4A397361C11EC1FE03A43E176E673856",
+                "4A397361C11EC1FE03A43E176E673856"
 #elif OSX
-                "unknown"
+                "F111890A03DD3DD638106687B486300C"
 #else
                 "F111890A03DD3DD638106687B486300C"
 #endif
@@ -1620,10 +1620,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 null,
 #if LINUX
-                "unknown",
-                "unknown"
+                "666B7D0315E667A3D6A943294A32BE1F",
+                "666B7D0315E667A3D6A943294A32BE1F"
 #elif OSX
-                "unknown"
+                "949E7F89B463AD682322D354C8170CF5"
 #else
                 "949E7F89B463AD682322D354C8170CF5"
 #endif
@@ -1650,10 +1650,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 null,
 #if LINUX
-                "unknown",
-                "unknown"
+                "910BF18671BC79D50FB8B9EAE8E4F0DA",
+                "910BF18671BC79D50FB8B9EAE8E4F0DA"
 #elif OSX
-                "unknown"
+                "7252D2507D8414BFA6D5BC659F2CBA98"
 #else
                 "7252D2507D8414BFA6D5BC659F2CBA98"
 #endif
@@ -1681,10 +1681,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 null,
 #if LINUX
-                "unknown",
-                "unknown"
+                "86AD4DC307C9523B2C1213FE2359FDEA",
+                "86AD4DC307C9523B2C1213FE2359FDEA"
 #elif OSX
-                "unknown"
+                "C5F2FFAB1A2000CBACFE1295A3335728"
 #else
                 "C5F2FFAB1A2000CBACFE1295A3335728"
 #endif
@@ -1698,10 +1698,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 null,
 #if LINUX
-                "unknown",
-                "unknown"
+                "C2351EF6BFA1D50983183ADC6136FB9C",
+                "C2351EF6BFA1D50983183ADC6136FB9C"
 #elif OSX
-                "unknown"
+                "51C23E67B35D82097EB7F920D275DBF1"
 #else
                 "51C23E67B35D82097EB7F920D275DBF1"
 #endif
@@ -1715,10 +1715,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 null,
 #if LINUX
-                "unknown",
-                "unknown"
+                "CEF9DD8611EBFEF035761B450D816E95",
+                "CEF9DD8611EBFEF035761B450D816E95"
 #elif OSX
-                "unknown"
+                "E13DC4ACD53A04B955C724B37042EFB6"
 #else
                 "E13DC4ACD53A04B955C724B37042EFB6"
 #endif
@@ -1732,10 +1732,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 "PNG 24-bit 1280 x 935.png",
                 null,
 #if LINUX
-                "unknown",
-                "unknown"
+                "1636B4EF09C4EF2B16135E9C2670473B",
+                "1636B4EF09C4EF2B16135E9C2670473B"
 #elif OSX
-                "unknown"
+                "3F066B0708B269330B53C3C96119F57A"
 #else
                 "3F066B0708B269330B53C3C96119F57A"
 #endif
@@ -1749,10 +1749,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 "JPEG 24-bit 1280 x 935.jpg",
                 null,
 #if LINUX
-                "unknown",
-                "unknown"
+                "1636B4EF09C4EF2B16135E9C2670473B",
+                "1636B4EF09C4EF2B16135E9C2670473B"
 #elif OSX
-                "unknown"
+                "3F066B0708B269330B53C3C96119F57A"
 #else
                 "3F066B0708B269330B53C3C96119F57A"
 #endif
