@@ -1,6 +1,6 @@
 <h1 align="center"><img src="https://github.com/jherby2k/AudioWorks/raw/master/Logo.png" width="567" /></h1>
 
-A cross-platform, multi-format audio conversion and tagging suite written in C# and featuring a PowerShell front-end. Codecs currently supported are MP3, MP4 AAC, FLAC, Apple Lossless (ALAC) and Ogg Vorbis.
+A cross-platform, multi-format audio conversion and tagging suite written in C# and featuring a PowerShell front-end. Formats currently supported are MP3, MP4 AAC, FLAC, Apple Lossless (ALAC), Opus, Ogg Vorbis and Wave.
 
 This project supplants [PowerShell Audio](https://github.com/jherby2k/PowerShellAudio) by targetting both Windows PowerShell and PowerShell Core (Windows, Linux and MacOS).
 
