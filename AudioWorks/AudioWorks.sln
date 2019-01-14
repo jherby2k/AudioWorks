@@ -19,21 +19,38 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unsupported", "Unsupported", "{D2650C7C-32ED-48DC-9B13-A1905BE1F9E7}"
 	ProjectSection(SolutionItems) = preProject
 		TestFiles\Unsupported\Lame MP3.m4a = TestFiles\Unsupported\Lame MP3.m4a
+		tests\TestFiles\Unsupported\Lame MP3.m4a = tests\TestFiles\Unsupported\Lame MP3.m4a
 		TestFiles\Unsupported\MS ADPCM.wav = TestFiles\Unsupported\MS ADPCM.wav
+		tests\TestFiles\Unsupported\MS ADPCM.wav = tests\TestFiles\Unsupported\MS ADPCM.wav
+		tests\TestFiles\Unsupported\Opus.ogg = tests\TestFiles\Unsupported\Opus.ogg
 		TestFiles\Unsupported\Speex.ogg = TestFiles\Unsupported\Speex.ogg
+		tests\TestFiles\Unsupported\Speex.ogg = tests\TestFiles\Unsupported\Speex.ogg
 		TestFiles\Unsupported\Text.txt = TestFiles\Unsupported\Text.txt
+		tests\TestFiles\Unsupported\Text.txt = tests\TestFiles\Unsupported\Text.txt
+		tests\TestFiles\Unsupported\Vorbis.opus = tests\TestFiles\Unsupported\Vorbis.opus
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Invalid", "Invalid", "{F91FD451-BD07-4280-B74F-870DAF191591}"
 	ProjectSection(SolutionItems) = preProject
 		TestFiles\Invalid\Missing 'fmt' Chunk.wav = TestFiles\Invalid\Missing 'fmt' Chunk.wav
+		tests\TestFiles\Invalid\Missing 'fmt' Chunk.wav = tests\TestFiles\Invalid\Missing 'fmt' Chunk.wav
+		tests\TestFiles\Invalid\Not an Image.bmp = tests\TestFiles\Invalid\Not an Image.bmp
 		TestFiles\Invalid\Not Audio Layer III.mp3 = TestFiles\Invalid\Not Audio Layer III.mp3
+		tests\TestFiles\Invalid\Not Audio Layer III.mp3 = tests\TestFiles\Invalid\Not Audio Layer III.mp3
 		TestFiles\Invalid\Not FLAC Format.flac = TestFiles\Invalid\Not FLAC Format.flac
+		tests\TestFiles\Invalid\Not FLAC Format.flac = tests\TestFiles\Invalid\Not FLAC Format.flac
+		tests\TestFiles\Invalid\Not MPEG Audio.m4a = tests\TestFiles\Invalid\Not MPEG Audio.m4a
 		TestFiles\Invalid\Not MPEG Audio.mp3 = TestFiles\Invalid\Not MPEG Audio.mp3
+		tests\TestFiles\Invalid\Not MPEG Audio.mp3 = tests\TestFiles\Invalid\Not MPEG Audio.mp3
 		TestFiles\Invalid\Not Ogg Format.ogg = TestFiles\Invalid\Not Ogg Format.ogg
+		tests\TestFiles\Invalid\Not Ogg Format.ogg = tests\TestFiles\Invalid\Not Ogg Format.ogg
+		tests\TestFiles\Invalid\Not Opus Format.opus = tests\TestFiles\Invalid\Not Opus Format.opus
 		TestFiles\Invalid\Not RIFF Format.wav = TestFiles\Invalid\Not RIFF Format.wav
+		tests\TestFiles\Invalid\Not RIFF Format.wav = tests\TestFiles\Invalid\Not RIFF Format.wav
 		TestFiles\Invalid\Not Wave Format.wav = TestFiles\Invalid\Not Wave Format.wav
+		tests\TestFiles\Invalid\Not Wave Format.wav = tests\TestFiles\Invalid\Not Wave Format.wav
 		TestFiles\Invalid\Unexpectedly Truncated.wav = TestFiles\Invalid\Unexpectedly Truncated.wav
+		tests\TestFiles\Invalid\Unexpectedly Truncated.wav = tests\TestFiles\Invalid\Unexpectedly Truncated.wav
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{5C8B6EE1-CC71-4069-BD6A-E82E550FED11}"
@@ -141,6 +158,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Valid", "Valid", "{F3EE5042
 		TestFiles\Valid\LPCM 8-bit 8000Hz Stereo.wav = TestFiles\Valid\LPCM 8-bit 8000Hz Stereo.wav
 		tests\TestFiles\Valid\LPCM 8-bit 8000Hz Stereo.wav = tests\TestFiles\Valid\LPCM 8-bit 8000Hz Stereo.wav
 		tests\TestFiles\Valid\Opus VBR 44100Hz Mono.opus = tests\TestFiles\Valid\Opus VBR 44100Hz Mono.opus
+		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (PICTURE comment - JPEG).opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (PICTURE comment - JPEG).opus
+		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (PICTURE comment - PNG).opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (PICTURE comment - PNG).opus
+		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using COMMENT).opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using COMMENT).opus
+		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using defaults).opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using defaults).opus
+		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using extended DATE).opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using extended DATE).opus
+		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using invalid DATE).opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using invalid DATE).opus
+		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using invalid TRACKNUMBER).opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using invalid TRACKNUMBER).opus
+		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using mixed-case fields).opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using mixed-case fields).opus
+		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using TOTALTRACKS).opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using TOTALTRACKS).opus
+		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using TRACKCOUNT).opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using TRACKCOUNT).opus
+		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using TRACKTOTAL).opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using TRACKTOTAL).opus
+		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using YEAR).opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using YEAR).opus
 		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo.opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo.opus
 		tests\TestFiles\Valid\Opus VBR 48000Hz Stereo.opus = tests\TestFiles\Valid\Opus VBR 48000Hz Stereo.opus
 		tests\TestFiles\Valid\Opus VBR 8000Hz Stereo.opus = tests\TestFiles\Valid\Opus VBR 8000Hz Stereo.opus
@@ -255,7 +284,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensibility.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.TestUtilities", "tests\AudioWorks.TestUtilities\AudioWorks.TestUtilities.csproj", "{D0D6093D-21F6-410E-AF81-E14CC10CCADB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioWorks.Extensions.Opus", "src\Extensions\AudioWorks.Extensions.Opus\AudioWorks.Extensions.Opus.csproj", "{F5BEBB65-46E4-4599-AD7C-08D7E20160BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Opus", "src\Extensions\AudioWorks.Extensions.Opus\AudioWorks.Extensions.Opus.csproj", "{F5BEBB65-46E4-4599-AD7C-08D7E20160BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
