@@ -66,7 +66,7 @@ namespace AudioWorks.Extensibility
                     var directoryInfo = new DirectoryInfo(path);
                     return directoryInfo.GetFiles(unmanagedDllName)
                         .Concat(directoryInfo.GetFiles($"{unmanagedDllName}.*"));
-                }).SingleOrDefault()?
+                }).FirstOrDefault()?
                 .FullName;
             if (fullPath == null) return base.LoadUnmanagedDll(unmanagedDllName);
 
