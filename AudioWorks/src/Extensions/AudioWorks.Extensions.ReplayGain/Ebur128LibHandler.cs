@@ -63,9 +63,9 @@ namespace AudioWorks.Extensions.ReplayGain
             var libPath = Path.Combine(
                 // ReSharper disable once AssignNullToNotNullAttribute
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
-                osVersion.StartsWith("10.12", StringComparison.Ordinal) ? "osx.10.12" :
-                osVersion.StartsWith("10.13", StringComparison.Ordinal) ? "osx.10.13" :
-                "osx.10.14");
+                osVersion.StartsWith("10.12", StringComparison.Ordinal) ? "osx.10.12-x64" :
+                osVersion.StartsWith("10.13", StringComparison.Ordinal) ? "osx.10.13-x64" :
+                "osx.10.14-x64");
 
             AddUnmanagedLibraryPath(libPath);
 #else // LINUX
