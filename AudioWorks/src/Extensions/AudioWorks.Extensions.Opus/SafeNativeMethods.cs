@@ -31,7 +31,7 @@ namespace AudioWorks.Extensions.Opus
 #elif LINUX
         const string _oggLibrary = "libogg.so.0";
         const string _opusLibrary = "libopus.so.0";
-        const string _opusEncLibrary = "libopusenc.so";
+        const string _opusEncLibrary = "libopusenc";
 #else // MacOS
         const string _oggLibrary = "libogg";
         const string _opusLibrary = "libopus";
