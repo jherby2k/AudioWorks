@@ -81,7 +81,8 @@ namespace AudioWorks.Api
         {
             ".dll",
             ".dylib",
-            ".pdb"
+            ".pdb",
+            ".so"
         });
 
         internal static void Download()
