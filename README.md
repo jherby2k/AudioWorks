@@ -11,7 +11,7 @@ Linux | [![Build Status](https://dev.azure.com/jherby2k/AudioWorks/_apis/build/s
 MacOS | [![Build Status](https://dev.azure.com/jherby2k/AudioWorks/_apis/build/status/AudioWorks%20for%20MacOS?branchName=master)](https://dev.azure.com/jherby2k/AudioWorks/_build/latest?definitionId=4?branchName=master) [![Code Coverage](https://img.shields.io/azure-devops/coverage/jherby2k/AudioWorks/4.svg)](https://dev.azure.com/jherby2k/AudioWorks/_build/latest?definitionId=4?branchName=master)
 
 ### System Requirements
-AudioWorks runs on Windows 7+, MacOS 10.12+, Ubuntu (18.04 or 16.04) and Fedora 28 (other OS versions and distributions may work, but are currently untested).
+AudioWorks runs on Windows 7+, MacOS 10.12+, and Ubuntu (18.04 or 16.04). Other 64-bit Linux distributions may work, but may require additional dependencies and are currently untested.
 
 #### On Windows:
 * [PowerShell Core 6.1+](https://github.com/PowerShell/PowerShell/releases) or Windows PowerShell 5.1
