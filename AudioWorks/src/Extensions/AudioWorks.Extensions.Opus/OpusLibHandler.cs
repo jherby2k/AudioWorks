@@ -67,12 +67,9 @@ namespace AudioWorks.Extensions.Opus
                 AddUnmanagedLibraryPath(Path.Combine(
                     // ReSharper disable once AssignNullToNotNullAttribute
                     Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
-                    "ubuntu.16.04-x64"));
-            else if (release.StartsWith("Ubuntu 18.04", StringComparison.OrdinalIgnoreCase))
-                AddUnmanagedLibraryPath(Path.Combine(
-                    // ReSharper disable once AssignNullToNotNullAttribute
-                    Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
-                    "ubuntu.18.04-x64"));
+                    release.StartsWith("Ubuntu 16.04", StringComparison.OrdinalIgnoreCase)
+                        ? "ubuntu.16.04-x64"
+                        : "ubuntu.18.04-x64"));
 
             if (!VerifyLibrary("libopus.so.0"))
             {
