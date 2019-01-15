@@ -1256,8 +1256,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 null,
 #if LINUX
-                "920ABDF9377A176F1E3BC23A3854B436",
-                "920ABDF9377A176F1E3BC23A3854B436"
+                "7DE488CE969207C50F33962EA5A9DDDE",
+                "7DE488CE969207C50F33962EA5A9DDDE"
 #elif OSX
                 "11F166F272E635021ABD6BAF37A3BFA5"
 #else
@@ -1290,8 +1290,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 null,
 #if LINUX
-                "AE84B97E3D1DC72C8F037F1FB391F176",
-                "AE84B97E3D1DC72C8F037F1FB391F176"
+                "D9C7D27040EF2ECE830AE4FC9B5BF25E",
+                "D9C7D27040EF2ECE830AE4FC9B5BF25E"
 #elif OSX
                 "63BB3732D651F6D3A8496091FCF14725"
 #else
@@ -1324,8 +1324,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 null,
 #if LINUX
-                "AE84B97E3D1DC72C8F037F1FB391F176",
-                "AE84B97E3D1DC72C8F037F1FB391F176"
+                "D9C7D27040EF2ECE830AE4FC9B5BF25E",
+                "D9C7D27040EF2ECE830AE4FC9B5BF25E"
 #elif OSX
                 "63BB3732D651F6D3A8496091FCF14725"
 #else
@@ -1358,8 +1358,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 null,
 #if LINUX
-                "65D70AA25438FADE7F5BD8F3EA50AF14",
-                "65D70AA25438FADE7F5BD8F3EA50AF14"
+                "39B3BD086D3587C78FB2E76B52BD8F12",
+                "39B3BD086D3587C78FB2E76B52BD8F12"
 #elif OSX
                 "ED7210753CB1A870F74DB01E959D2FFE"
 #else
@@ -1392,8 +1392,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 null,
 #if LINUX
-                "E27562A26A75428980854641331A0EDA",
-                "E27562A26A75428980854641331A0EDA"
+                "9E57B6A4089942A55ABD25FC13F7F749",
+                "9E57B6A4089942A55ABD25FC13F7F749"
 #elif OSX
                 "17F5C68F72027655E21870F0E7F06CB8"
 #else
@@ -1427,8 +1427,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 null,
 #if LINUX
-                "920ABDF9377A176F1E3BC23A3854B436",
-                "920ABDF9377A176F1E3BC23A3854B436"
+                "7DE488CE969207C50F33962EA5A9DDDE",
+                "7DE488CE969207C50F33962EA5A9DDDE"
 #elif OSX
                 "11F166F272E635021ABD6BAF37A3BFA5"
 #else
@@ -1444,8 +1444,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 null,
 #if LINUX
-                "BF300A616B52AB534976E2578ACF1C56",
-                "BF300A616B52AB534976E2578ACF1C56"
+                "46539B96ACD38AA00671E0D5F82E57B1",
+                "46539B96ACD38AA00671E0D5F82E57B1"
 #elif OSX
                 "873E47897BB3645B63B5B8D8B932198E"
 #else
@@ -1461,8 +1461,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 null,
                 null,
 #if LINUX
-                "BF300A616B52AB534976E2578ACF1C56",
-                "BF300A616B52AB534976E2578ACF1C56"
+                "46539B96ACD38AA00671E0D5F82E57B1",
+                "46539B96ACD38AA00671E0D5F82E57B1"
 #elif OSX
                 "873E47897BB3645B63B5B8D8B932198E"
 #else
@@ -1478,8 +1478,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "PNG 24-bit 1280 x 935.png",
                 null,
 #if LINUX
-                "5C771ACA31F957E028BE07E3489DCBC3",
-                "5C771ACA31F957E028BE07E3489DCBC3"
+                "FD245B933B515151B8AF17307FF6ECFE",
+                "FD245B933B515151B8AF17307FF6ECFE"
 #elif OSX
                 "2682E9CD4EF8B4FBA041B907FD86614D"
 #else
@@ -1495,8 +1495,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "JPEG 24-bit 1280 x 935.jpg",
                 null,
 #if LINUX
-                "5C771ACA31F957E028BE07E3489DCBC3",
-                "5C771ACA31F957E028BE07E3489DCBC3"
+                "FD245B933B515151B8AF17307FF6ECFE",
+                "FD245B933B515151B8AF17307FF6ECFE"
 #elif OSX
                 "2682E9CD4EF8B4FBA041B907FD86614D"
 #else
