@@ -75,8 +75,4 @@
     <ProjectReference Include="..\..\AudioWorks.Extensibility\AudioWorks.Extensibility.csproj" PrivateAssets="all" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ubuntu.18.04-x64\" />
-  </ItemGroup>
-
 </Project>
