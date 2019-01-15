@@ -58,6 +58,13 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))'">
+    <None Include="ubuntu.*\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
+    </None>
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" PrivateAssets="all" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.3" PrivateAssets="all" />
