@@ -47,17 +47,23 @@ namespace AudioWorks.Api
 #endif
             );
 
-        [NotNull] static readonly string _extensionUrl =
-            ConfigurationManager.Configuration.GetValue("UsePreReleaseExtensions", false)
-                ? ConfigurationManager.Configuration.GetValue(
-                    "PreReleaseExtensionRepository",
-                    "https://www.myget.org/F/audioworks-extensions-prerelease/api/v3/index.json")
-                : ConfigurationManager.Configuration.GetValue(
-                    "ExtensionRepository",
-                    "https://www.myget.org/F/audioworks-extensions-v2/api/v3/index.json");
+        [NotNull] static readonly SourceRepository _customRepository =
+            new SourceRepository(new PackageSource(
+                    ConfigurationManager.Configuration.GetValue("UsePreReleaseExtensions", false)
+                        ? ConfigurationManager.Configuration.GetValue(
+                            "PreReleaseExtensionRepository",
+                            "https://www.myget.org/F/audioworks-extensions-prerelease/api/v3/index.json")
+                        : ConfigurationManager.Configuration.GetValue(
+                            "ExtensionRepository",
+                            "https://www.myget.org/F/audioworks-extensions-v2/api/v3/index.json")),
+                Repository.Provider.GetCoreV3());
 
-        [NotNull] static readonly string _defaultUrl = ConfigurationManager.Configuration.GetValue("DefaultRepository",
-            "https://api.nuget.org/v3/index.json");
+        [NotNull] static readonly SourceRepository _defaultRepository =
+            new SourceRepository(new PackageSource(
+                    ConfigurationManager.Configuration.GetValue(
+                        "DefaultRepository",
+                        "https://api.nuget.org/v3/index.json")),
+                Repository.Provider.GetCoreV3());
 
         [NotNull] static readonly List<string> _compatibleTargets = new List<string>(new[]
         {
@@ -97,120 +103,19 @@ namespace AudioWorks.Api
 
                 Directory.CreateDirectory(_projectRoot);
 
-                var customRepository =
-                    new SourceRepository(new PackageSource(_extensionUrl), Repository.Provider.GetCoreV3());
-                var defaultRepository =
-                    new SourceRepository(new PackageSource(_defaultUrl), Repository.Provider.GetCoreV3());
-
                 var settings = Settings.LoadDefaultSettings(_projectRoot);
                 var packageManager = new NuGetPackageManager(
                     new SourceRepositoryProvider(settings, Repository.Provider.GetCoreV3()), settings, _projectRoot);
 
                 try
                 {
-                    // Search on the thread pool to avoid deadlocks
-                    // ReSharper disable once ImplicitlyCapturedClosure
-                    var publishedPackages = Task.Run(async () =>
-                        {
-                            var cancellationTokenSource = GetCancellationTokenSource();
-                            return await (await customRepository
-                                    .GetResourceAsync<PackageSearchResource>(cancellationTokenSource.Token)
-                                    .ConfigureAwait(false))
-                                .SearchAsync("AudioWorks.Extensions", new SearchFilter(false), 0, 100,
-                                    NullLogger.Instance,
-                                    cancellationTokenSource.Token)
-                                .ConfigureAwait(false);
-                        }).Result
-#if NETSTANDARD2_0
-                        .Where(package => package.Tags.Contains(GetOSTag()))
-#else
-                        .Where(package => package.Tags.Contains(GetOSTag(), StringComparison.OrdinalIgnoreCase))
-#endif
-                        .ToArray();
-
-                    logger.LogDebug("Discovered {0} extension packages published at '{1}'.",
-                        publishedPackages.Length, _extensionUrl);
+                    var publishedPackages = GetPublishedPackages(logger);
 
                     var packagesInstalled = false;
 
-                    foreach (var publishedPackage in publishedPackages)
-                    {
-                        var extensionDir =
-                            new DirectoryInfo(Path.Combine(_projectRoot, publishedPackage.Identity.ToString()));
-                        if (extensionDir.Exists)
-                        {
-                            logger.LogDebug("'{0}' version {1} is already installed. Skipping.",
-                                publishedPackage.Identity.Id, publishedPackage.Identity.Version.ToString());
-
-                            continue;
-                        }
-
-                        logger.LogInformation("Installing '{0}' version {1}.",
-                            publishedPackage.Identity.Id, publishedPackage.Identity.Version.ToString());
-
-                        extensionDir.Create();
-                        var stagingDir = extensionDir.CreateSubdirectory("Staging");
-
-                        var project = new ExtensionNuGetProject(stagingDir.FullName);
-
-                        try
-                        {
-                            // Download on the thread pool to avoid deadlocks
-                            Task.Run(async () =>
-                            {
-                                using (var cancellationTokenSource = GetCancellationTokenSource())
-                                    await packageManager.InstallPackageAsync(
-                                            project,
-                                            publishedPackage.Identity,
-                                            new ResolutionContext(DependencyBehavior.Lowest, true, false,
-                                                VersionConstraints.None),
-                                            new ExtensionProjectContext(),
-                                            customRepository,
-                                            new[] { defaultRepository },
-                                            cancellationTokenSource.Token)
-                                        .ConfigureAwait(false);
-                            }).Wait();
-
-                            // Move newly installed packages into the extension folder
-                            foreach (var installedPackage in project
-                                .GetInstalledPackagesAsync(CancellationToken.None)
-                                .Result)
-                            {
-                                var packageDir = new DirectoryInfo(
-                                    project.GetInstalledPath(installedPackage.PackageIdentity));
-
-                                foreach (var subDir in packageDir.GetDirectories())
-                                    // ReSharper disable once SwitchStatementMissingSomeCases
-                                    switch (subDir.Name)
-                                    {
-                                        case "lib":
-                                            MoveContents(
-                                                SelectDirectory(subDir.GetDirectories()),
-                                                extensionDir,
-                                                logger);
-                                            break;
-
-                                        case "contentFiles":
-                                            MoveContents(
-                                                SelectDirectory(subDir.GetDirectories("any").FirstOrDefault()
-                                                    ?.GetDirectories()),
-                                                extensionDir,
-                                                logger);
-                                            break;
-                                    }
-                            }
-
+                    foreach (var packageMetadata in publishedPackages)
+                        if (InstallPackage(packageManager, packageMetadata, logger))
                             packagesInstalled = true;
-                        }
-                        finally
-                        {
-                            stagingDir.Delete(true);
-
-                            // If the download was cancelled, clean up an empty extension directory
-                            if (!extensionDir.EnumerateFileSystemInfos().Any())
-                                extensionDir.Delete();
-                        }
-                    }
 
                     // Remove any extensions that aren't published
                     foreach (var obsoleteExtension in new DirectoryInfo(_projectRoot).GetDirectories()
@@ -244,6 +149,117 @@ namespace AudioWorks.Api
                         logger.LogError(e, e.Message);
                 }
             }
+        }
+
+        [NotNull, ItemNotNull]
+        static IPackageSearchMetadata[] GetPublishedPackages([NotNull] ILogger logger)
+        {
+            // Search on the thread pool to avoid deadlocks
+            // ReSharper disable once ImplicitlyCapturedClosure
+            var result = Task.Run(async () =>
+                {
+                    var cancellationTokenSource = GetCancellationTokenSource();
+                    return await (await _customRepository
+                            .GetResourceAsync<PackageSearchResource>(cancellationTokenSource.Token)
+                            .ConfigureAwait(false))
+                        .SearchAsync("AudioWorks.Extensions", new SearchFilter(false), 0, 100,
+                            NullLogger.Instance,
+                            cancellationTokenSource.Token)
+                        .ConfigureAwait(false);
+                }).Result
+#if NETSTANDARD2_0
+                    .Where(package => package.Tags.Contains(GetOSTag()))
+#else
+                .Where(package => package.Tags.Contains(GetOSTag(), StringComparison.OrdinalIgnoreCase))
+#endif
+                .ToArray();
+
+            logger.LogDebug("Discovered {0} extension packages published at '{1}'.",
+                result.Length, _customRepository.PackageSource.SourceUri);
+
+            return result;
+        }
+
+        static bool InstallPackage(
+            [NotNull] NuGetPackageManager packageManager,
+            [NotNull] IPackageSearchMetadata packageMetadata,
+            [NotNull] ILogger logger)
+        {
+            var extensionDir =
+                new DirectoryInfo(Path.Combine(_projectRoot, packageMetadata.Identity.ToString()));
+            if (extensionDir.Exists)
+            {
+                logger.LogDebug("'{0}' version {1} is already installed. Skipping.",
+                    packageMetadata.Identity.Id, packageMetadata.Identity.Version.ToString());
+
+                return false;
+            }
+
+            logger.LogInformation("Installing '{0}' version {1}.",
+                packageMetadata.Identity.Id, packageMetadata.Identity.Version.ToString());
+
+            extensionDir.Create();
+            var stagingDir = extensionDir.CreateSubdirectory("Staging");
+
+            var project = new ExtensionNuGetProject(stagingDir.FullName);
+
+            try
+            {
+                // Download on the thread pool to avoid deadlocks
+                Task.Run(async () =>
+                {
+                    using (var cancellationTokenSource = GetCancellationTokenSource())
+                        await packageManager.InstallPackageAsync(
+                                project,
+                                packageMetadata.Identity,
+                                new ResolutionContext(DependencyBehavior.Lowest, true, false,
+                                    VersionConstraints.None),
+                                new ExtensionProjectContext(),
+                                _customRepository,
+                                new[] { _defaultRepository },
+                                cancellationTokenSource.Token)
+                            .ConfigureAwait(false);
+                }).Wait();
+
+                // Move newly installed packages into the extension folder
+                foreach (var installedPackage in project
+                    .GetInstalledPackagesAsync(CancellationToken.None)
+                    .Result)
+                {
+                    var packageDir = new DirectoryInfo(
+                        project.GetInstalledPath(installedPackage.PackageIdentity));
+
+                    foreach (var subDir in packageDir.GetDirectories())
+                        // ReSharper disable once SwitchStatementMissingSomeCases
+                        switch (subDir.Name)
+                        {
+                            case "lib":
+                                MoveContents(
+                                    SelectDirectory(subDir.GetDirectories()),
+                                    extensionDir,
+                                    logger);
+                                break;
+
+                            case "contentFiles":
+                                MoveContents(
+                                    SelectDirectory(subDir.GetDirectories("any").FirstOrDefault()
+                                        ?.GetDirectories()),
+                                    extensionDir,
+                                    logger);
+                                break;
+                        }
+                }
+            }
+            finally
+            {
+                stagingDir.Delete(true);
+
+                // If the download was cancelled, clean up an empty extension directory
+                if (!extensionDir.EnumerateFileSystemInfos().Any())
+                    extensionDir.Delete();
+            }
+
+            return true;
         }
 
         [Pure, NotNull]
