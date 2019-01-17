@@ -40,7 +40,8 @@ namespace AudioWorks.Extensions.Opus
         public void Initialize(Stream stream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
             _comments = new MetadataToOpusCommentAdapter(metadata);
-            _encoder = new Encoder(stream, info.SampleRate, info.Channels, _comments.Handle);
+            _encoder = new Encoder(stream, info.SampleRate, info.Channels, (int) info.PlayLength.TotalSeconds,
+                _comments.Handle);
 
             if (!settings.TryGetValue("SerialNumber", out int serialNumber))
                 serialNumber = new Random().Next();

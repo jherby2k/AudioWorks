@@ -23,15 +23,28 @@ namespace AudioWorks.Extensions.Opus
 {
     sealed class Encoder : IDisposable
     {
+        [NotNull] readonly Stream _realStream;
+        [NotNull] Stream _outputStream;
         readonly int _channels;
+        readonly int _totalSeconds;
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         readonly OpusEncoderCallbacks _callbacks;
         [NotNull] readonly OpusEncoderHandle _handle;
+        int _requestedBitRate;
+        bool _headersFlushed;
 
-        internal Encoder([NotNull] Stream stream, int sampleRate, int channels, [NotNull] OpusCommentsHandle comments)
+        internal Encoder(
+            [NotNull] Stream stream,
+            int sampleRate,
+            int channels,
+            int totalSeconds,
+            [NotNull] OpusCommentsHandle comments)
         {
+            _realStream = stream;
+            _outputStream = new MemoryStream();
             _channels = channels;
-            _callbacks = InitializeCallbacks(stream);
+            _totalSeconds = totalSeconds;
+            _callbacks = InitializeCallbacks();
             _handle = SafeNativeMethods.OpusEncoderCreateCallbacks(
                 ref _callbacks,
                 IntPtr.Zero,
@@ -69,7 +82,10 @@ namespace AudioWorks.Extensions.Opus
 
         internal void SetBitRate(int bitRate)
         {
-            var error = SafeNativeMethods.OpusEncoderControl(_handle, EncoderControlRequest.SetBitRate, bitRate * 1000);
+            // Cache this value for determining pre-allocation
+            _requestedBitRate = bitRate * 1000;
+
+            var error = SafeNativeMethods.OpusEncoderControl(_handle, EncoderControlRequest.SetBitRate, _requestedBitRate);
             if (error != 0)
                 throw new AudioEncodingException($"Opus encountered error '{error}' setting the bit rate.");
         }
@@ -83,6 +99,8 @@ namespace AudioWorks.Extensions.Opus
 
         internal void Write(ReadOnlySpan<float> interleavedSamples)
         {
+            if (!_headersFlushed) FlushHeaders();
+
             var error = SafeNativeMethods.OpusEncoderWriteFloat(
                 _handle,
                 MemoryMarshal.GetReference(interleavedSamples),
@@ -95,27 +113,58 @@ namespace AudioWorks.Extensions.Opus
         {
             var error = SafeNativeMethods.OpusEncoderDrain(_handle);
             if (error != 0)
-                throw new AudioEncodingException($"Opus encountered error '{error}' while finishing encoding.");
+                throw new AudioEncodingException($"Opus encountered error '{error}' draining the encoder.");
+
+            // The pre-allocation was based on an estimated bitrate
+            _outputStream.SetLength(_outputStream.Position);
         }
 
         public void Dispose()
         {
+            if (_outputStream is MemoryStream)
+                _outputStream.Dispose();
             _handle.Dispose();
         }
 
-        static OpusEncoderCallbacks InitializeCallbacks([NotNull] Stream stream)
+        OpusEncoderCallbacks InitializeCallbacks()
         {
             return new OpusEncoderCallbacks
             {
                 Write = (userData, buffer, length) =>
                 {
-                    stream.Write(buffer, 0, length);
+                    _outputStream.Write(buffer, 0, length);
                     return 0;
                 },
 
                 // Leave the stream open
                 Close = userData => 0
             };
+        }
+
+        void FlushHeaders()
+        {
+            var error = SafeNativeMethods.OpusEncoderFlushHeader(_handle);
+            if (error != 0)
+                throw new AudioEncodingException($"Opus encountered error '{error}' flushing the header.");
+
+            if (_requestedBitRate == 0)
+            {
+                // If the bit rate isn't explicit, get the automatic value
+                error = SafeNativeMethods.OpusEncoderControl(_handle, EncoderControlRequest.GetBitRate, out _requestedBitRate);
+                if (error != 0)
+                    throw new AudioEncodingException($"Opus encountered error '{error}' getting the bit rate.");
+            }
+
+            // Pre-allocate the whole stream (estimate worst case bit rate, plus the header)
+            _realStream.SetLength((_requestedBitRate + 25000) / 8 * _totalSeconds + _outputStream.Length);
+
+            // Flush the headers to the real output stream
+            _outputStream.Position = 0;
+            _outputStream.CopyTo(_realStream);
+            _outputStream.Close();
+            _outputStream = _realStream;
+
+            _headersFlushed = true;
         }
     }
 }

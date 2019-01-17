@@ -178,6 +178,11 @@ namespace AudioWorks.Extensions.Opus
             int family,
             out int error);
 
+        [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_flush_header",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int OpusEncoderFlushHeader(
+            [NotNull] OpusEncoderHandle handle);
+
         [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_write_float",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int OpusEncoderWriteFloat(
@@ -189,6 +194,13 @@ namespace AudioWorks.Extensions.Opus
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int OpusEncoderDrain(
             [NotNull] OpusEncoderHandle handle);
+
+        [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_ctl",
+            CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int OpusEncoderControl(
+            [NotNull] OpusEncoderHandle handle,
+            EncoderControlRequest request,
+            out int value);
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_ctl",
             CallingConvention = CallingConvention.Cdecl)]

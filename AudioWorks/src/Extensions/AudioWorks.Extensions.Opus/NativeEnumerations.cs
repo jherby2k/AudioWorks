@@ -18,6 +18,7 @@ namespace AudioWorks.Extensions.Opus
     enum EncoderControlRequest
     {
         SetBitRate = 4002,
+        GetBitRate = 4003,
         SetVbr = 4006,
         SetVbrConstraint = 4020,
         SetSignal = 4000,
