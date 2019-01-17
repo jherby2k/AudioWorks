@@ -2368,7 +2368,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "2AC650212556A504E15F5455B6C47D0E"
 #else
                 "D0131F0C8BF683C384EF2C14CCF820B3",
-                "88D1B93C7675C07B50961F1B55C2979C"
+                "E616E84FD10D27672B28D3F4EA149497"
 #endif
             },
 
@@ -2410,7 +2410,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "82CFCD51DCA4183A072A75971732C6A4"
 #else
                 "CAF08725FBB3A7318B7A4D26DC577688",
-                "697BB93D82506A58CEFB5CEA3680CA0A"
+                "88D1B93C7675C07B50961F1B55C2979C"
 #endif
             },
 
