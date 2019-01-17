@@ -34,7 +34,7 @@ steps:
   displayName: 'Download prerequisites'
 
 - script: |
-    COPY /Y nuget.exe "%SystemRoot%\System32"
+    COPY /Y nuget.exe %USERPROFILE%
     msiexec /i AppleApplicationSupport.msi /qb-
     msiexec /i AppleApplicationSupport64.msi /qb-
     dotnet tool install --global dotnet-reportgenerator-globaltool
@@ -43,14 +43,16 @@ steps:
 - powershell: |
     $settingsDir = "$([System.Environment]::GetFolderPath(28))\AudioWorks"
     $localFeedDir = (New-Item "$settingsDir\LocalFeed" -ItemType Directory).FullName
-    Get-ChildItem -Path AudioWorks\src\Extensions -Filter *.nupkg -Recurse | Select-Object -ExpandProperty FullName | % { nuget add $_ -Source $localFeedDir -NonInteractive }
+    Get-ChildItem -Path AudioWorks\src\Extensions -Filter *.nupkg -Recurse | Select-Object -ExpandProperty FullName | % { &"$env:USERPROFILE\nuget" add $_ -Source $localFeedDir -NonInteractive }
     $content = Get-Content AudioWorks\src\AudioWorks.Common\settings.json | ConvertFrom-Json
     $content.EnableTelemetry = $false
     $content.ExtensionRepository = $localFeedDir
     $content | ConvertTo-Json | Set-Content "$settingsDir\settings.json"
     $testResult = 0
     Get-ChildItem -Path AudioWorks\tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --framework netcoreapp2.1 --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=.\coverage.netcoreapp2.1.xml /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*%2c[*]JetBrains.*" /p:IncludeDirectory="$settingsDir\Extensions\netcoreapp2.1\*%2c$($_.FullName)\bin\$($env:BUILDCONFIGURATION)\netcoreapp2.1\AudioWorks.Commands\netcoreapp2.1"; if ($LastExitCode -ne 0) { $testResult = $LastExitCode } }
+    "Current Test Result is $testResult"
     Get-ChildItem -Path AudioWorks\tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --framework net471 --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=.\coverage.net471.xml /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*%2c[*]JetBrains.*" /p:IncludeDirectory="$settingsDir\Extensions\netstandard2.0\*%2c$($_.FullName)\bin\$($env:BUILDCONFIGURATION)\net471\AudioWorks.Commands\netstandard2.0"; if ($LastExitCode -ne 0) { $testResult = $LastExitCode } }
+    "Current Test Result is $testResult"
     exit $testResult
   displayName: 'Run tests'
 
