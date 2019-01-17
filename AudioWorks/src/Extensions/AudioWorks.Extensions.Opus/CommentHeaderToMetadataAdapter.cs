@@ -22,6 +22,7 @@ using System.Runtime.InteropServices;
 #endif
 using System.Text;
 using AudioWorks.Common;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Opus
 {
@@ -148,6 +149,14 @@ namespace AudioWorks.Extensions.Opus
                             case "TOTALTRACKS":
                                 TrackCount = value;
                                 break;
+
+                            case "R128_TRACK_GAIN":
+                                TrackGain = ConvertGain(value);
+                                break;
+
+                            case "R128_ALBUM_GAIN":
+                                AlbumGain = ConvertGain(value);
+                                break;
                         }
                     }
                     catch (AudioMetadataInvalidException)
@@ -158,6 +167,13 @@ namespace AudioWorks.Extensions.Opus
 
                 commentCount--;
             }
+        }
+
+        [NotNull]
+        static string ConvertGain([NotNull] string gain)
+        {
+            return (int.Parse(gain, CultureInfo.InvariantCulture) / 256.0 + 5)
+                .ToString("F2", CultureInfo.InvariantCulture);
         }
     }
 }

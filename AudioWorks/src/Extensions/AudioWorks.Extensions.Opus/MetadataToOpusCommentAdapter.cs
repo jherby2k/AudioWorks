@@ -14,6 +14,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Globalization;
 using System.Runtime.InteropServices;
 #if NETSTANDARD2_0
 using System.Runtime.CompilerServices;
@@ -59,6 +60,11 @@ namespace AudioWorks.Extensions.Opus
                 AddTag("TRACKNUMBER", !string.IsNullOrEmpty(metadata.TrackCount)
                     ? $"{metadata.TrackNumber}/{metadata.TrackCount}"
                     : metadata.TrackNumber);
+
+            if (!string.IsNullOrEmpty(metadata.TrackGain))
+                AddTag("R128_TRACK_GAIN", ConvertGain(metadata.TrackGain));
+            if (!string.IsNullOrEmpty(metadata.AlbumGain))
+                AddTag("R128_ALBUM_GAIN", ConvertGain(metadata.AlbumGain));
 
             if (metadata.CoverArt == null) return;
 
@@ -125,6 +131,13 @@ namespace AudioWorks.Extensions.Opus
                 if (error != 0)
                     throw new AudioEncodingException($"Opus encountered error {error} writing a comment.");
             }
+        }
+
+        [NotNull]
+        static string ConvertGain([NotNull] string gain)
+        {
+            return Math.Round((double.Parse(gain, CultureInfo.InvariantCulture) - 5) * 256)
+                .ToString("F0", CultureInfo.InvariantCulture);
         }
     }
 }

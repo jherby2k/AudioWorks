@@ -2290,7 +2290,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "4C2B92CF876A283F2D23364F26E83ECC"
 #else
                 "549E388912CAE627DC43D0AEEB9489B4",
-                "9AA245217C5E5706F946ABACB86886E4"
+                "3F313E1C32AFCE60E78F4D4030143081"
 #endif
             },
 
