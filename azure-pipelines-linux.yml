@@ -47,6 +47,8 @@ steps:
     $content.EnableTelemetry = $false
     $content.ExtensionRepository = $localFeedDir
     $content | ConvertTo-Json | Set-Content "$settingsDir/settings.json"
+    dotnet test AudioWorks/tests/AudioWorks.Api.Tests --no-build --configuration Release --framework netcoreapp2.1 --filter "FullyQualifiedName=AudioWorks.Api.Tests.AudioFileTests.HasExpectedPath"
+    dotnet test AudioWorks/tests/AudioWorks.Api.Tests --no-build --configuration Release --framework net471 --filter "FullyQualifiedName=AudioWorks.Api.Tests.AudioFileTests.HasExpectedPath"
     $testResult = 0
     Get-ChildItem -Path AudioWorks/tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*%2c[*]JetBrains.*" /p:IncludeDirectory="$settingsDir/Extensions/netcoreapp2.1/*%2c$($_.FullName)/bin/$($env:BUILDCONFIGURATION)/netcoreapp2.1/AudioWorks.Commands/netcoreapp2.1"; if ($LastExitCode -ne 0) { $testResult = $LastExitCode } }
     exit $testResult
