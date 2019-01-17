@@ -65,6 +65,14 @@ namespace AudioWorks.Extensions.Opus
                 throw new AudioEncodingException($"Opus encountered error '{error}' setting the serial number.");
         }
 
+        internal void SetLsbDepth(int depth)
+        {
+            var error = SafeNativeMethods.OpusEncoderControl(_handle,
+                EncoderControlRequest.SetLsbDepth, depth);
+            if (error != 0)
+                throw new AudioEncodingException($"Opus encountered error '{error}' setting the LSB depth.");
+        }
+
         internal void SetVbrConstraint(bool enabled)
         {
             var error = SafeNativeMethods.OpusEncoderControl(_handle, EncoderControlRequest.SetVbrConstraint,

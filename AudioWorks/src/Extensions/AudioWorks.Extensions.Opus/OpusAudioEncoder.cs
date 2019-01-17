@@ -47,6 +47,9 @@ namespace AudioWorks.Extensions.Opus
                 serialNumber = new Random().Next();
             _encoder.SetSerialNumber(serialNumber);
 
+            if (info.BitsPerSample > 0)
+                _encoder.SetLsbDepth(Math.Min(Math.Max(info.BitsPerSample, 8), 24));
+
             // Default to full VBR
             if (settings.TryGetValue("ControlMode", out string vbrMode))
                 switch (vbrMode)
