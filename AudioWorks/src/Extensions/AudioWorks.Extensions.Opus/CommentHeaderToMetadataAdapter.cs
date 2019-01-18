@@ -157,7 +157,7 @@ namespace AudioWorks.Extensions.Opus
                             case "R128_ALBUM_GAIN":
                                 AlbumGain = ConvertGain(value);
                                 break;
-                            
+
                             // The "REPLAYGAIN" fields are technically not allowed
                             case "REPLAYGAIN_TRACK_PEAK":
                                 TrackPeak = value;
