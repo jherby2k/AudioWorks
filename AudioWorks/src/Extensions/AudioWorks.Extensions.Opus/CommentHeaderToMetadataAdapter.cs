@@ -157,6 +157,31 @@ namespace AudioWorks.Extensions.Opus
                             case "R128_ALBUM_GAIN":
                                 AlbumGain = ConvertGain(value);
                                 break;
+                            
+                            // The "REPLAYGAIN" fields are technically not allowed
+                            case "REPLAYGAIN_TRACK_PEAK":
+                                TrackPeak = value;
+                                break;
+
+                            case "REPLAYGAIN_ALBUM_PEAK":
+                                AlbumPeak = value;
+                                break;
+
+                            case "REPLAYGAIN_TRACK_GAIN":
+#if NETSTANDARD2_0
+                                TrackGain = value.Replace(" dB", string.Empty);
+#else
+                                TrackGain = value.Replace(" dB", string.Empty, StringComparison.OrdinalIgnoreCase);
+#endif
+                                break;
+
+                            case "REPLAYGAIN_ALBUM_GAIN":
+#if NETSTANDARD2_0
+                                AlbumGain = value.Replace(" dB", string.Empty);
+#else
+                                AlbumGain = value.Replace(" dB", string.Empty, StringComparison.OrdinalIgnoreCase);
+#endif
+                                break;
                         }
                     }
                     catch (AudioMetadataInvalidException)
