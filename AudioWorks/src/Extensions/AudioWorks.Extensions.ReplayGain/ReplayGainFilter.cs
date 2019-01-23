@@ -35,8 +35,8 @@ namespace AudioWorks.Extensions.ReplayGain
 
         public void Initialize(AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
-            if (settings.TryGetValue("ApplyGain", out var applyGainValue))
-                _scale = applyGainValue.Equals("Track")
+            if (settings.TryGetValue("ApplyGain", out string applyGain))
+                _scale = applyGain.Equals("Track", StringComparison.OrdinalIgnoreCase)
                     ? CalculateScale(metadata.TrackGain, metadata.TrackPeak)
                     : CalculateScale(metadata.AlbumGain, metadata.AlbumPeak);
 
