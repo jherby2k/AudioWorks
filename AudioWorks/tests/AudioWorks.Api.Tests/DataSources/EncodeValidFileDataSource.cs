@@ -2540,6 +2540,69 @@ namespace AudioWorks.Api.Tests.DataSources
                 "6BE191812B5464AD2A4433A7D3B3AB25",
                 "99A84756727C71BAE8A277A38DA58DA4"
 #endif
+            },
+
+            new object[]
+            {
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    // TrackGain requested but not available
+                    ["ApplyGain"] = "Track",
+                    ["SerialNumber"] = 1
+                },
+#if LINUX
+                "94AADBE44ECF34AF98982F17BCCE7C97",
+                "94AADBE44ECF34AF98982F17BCCE7C97"
+#elif OSX
+                "0130D94C0E77473D536579E7E8FAB95E"
+#else
+                "111B5172265BA0BAFD86935C0120ADFC",
+                "35E3A4F9C7E13F2635ED9175BEA9352A"
+#endif
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    // Scaled to TrackGain
+                    ["ApplyGain"] = "Track",
+                    ["SerialNumber"] = 1
+                },
+#if LINUX
+                "CFB8A61E3244DAB5AC1601A42AD630BF",
+                "CFB8A61E3244DAB5AC1601A42AD630BF"
+#elif OSX
+                "CFB8A61E3244DAB5AC1601A42AD630BF"
+#else
+                "BD14643AFF43D6B06843089E60BE373B",
+                "CFB8A61E3244DAB5AC1601A42AD630BF"
+#endif
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    // Scaled to AlbumGain
+                    ["ApplyGain"] = "Album",
+                    ["SerialNumber"] = 1
+                },
+#if LINUX
+                "1A7C16E6D4CB9BE9B6572FE95F0254C8",
+                "1A7C16E6D4CB9BE9B6572FE95F0254C8"
+#elif OSX
+                "1A7C16E6D4CB9BE9B6572FE95F0254C8"
+#else
+                "6828FE4B8982E9EC88E318FBEAB97B8A",
+                "1A7C16E6D4CB9BE9B6572FE95F0254C8"
+#endif
             }
 
             #endregion

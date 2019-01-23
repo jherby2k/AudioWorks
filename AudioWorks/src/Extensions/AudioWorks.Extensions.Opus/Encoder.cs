@@ -65,6 +65,14 @@ namespace AudioWorks.Extensions.Opus
                 throw new AudioEncodingException($"Opus encountered error '{error}' setting the serial number.");
         }
 
+        internal void SetHeaderGain(int gain)
+        {
+            var error = SafeNativeMethods.OpusEncoderControl(_handle,
+                EncoderControlRequest.SetHeaderGain, gain);
+            if (error != 0)
+                throw new AudioEncodingException($"Opus encountered error '{error}' setting the gain.");
+        }
+
         internal void SetLsbDepth(int depth)
         {
             var error = SafeNativeMethods.OpusEncoderControl(_handle,

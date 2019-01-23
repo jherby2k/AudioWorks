@@ -23,7 +23,8 @@ namespace AudioWorks.Extensions.Opus
         SetVbr = 4006,
         SetVbrConstraint = 4020,
         SetLsbDepth = 4036,
-        SetSerialNumber = 14006
+        SetSerialNumber = 14006,
+        SetHeaderGain = 14010
     }
 
     enum SignalType

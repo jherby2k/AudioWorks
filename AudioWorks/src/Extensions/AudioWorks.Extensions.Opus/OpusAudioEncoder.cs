@@ -14,6 +14,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Globalization;
 using System.IO;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
@@ -29,6 +30,7 @@ namespace AudioWorks.Extensions.Opus
 
         public SettingInfoDictionary SettingInfo => new SettingInfoDictionary
         {
+            ["ApplyGain"] = new StringSettingInfo("Track", "Album"),
             ["BitRate"] = new IntSettingInfo(5, 512),
             ["ControlMode"] = new StringSettingInfo("Variable", "Constrained", "Constant"),
             ["SignalType"] = new StringSettingInfo("Music", "Speech"),
@@ -39,16 +41,32 @@ namespace AudioWorks.Extensions.Opus
 
         public void Initialize(Stream stream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
+            var gain = 0;
+            if (settings.TryGetValue("ApplyGain", out string applyGain))
+            {
+                var scale = applyGain.Equals("Track", StringComparison.OrdinalIgnoreCase)
+                    ? CalculateScale(metadata.TrackGain, metadata.TrackPeak)
+                    : CalculateScale(metadata.AlbumGain, metadata.AlbumPeak);
+
+                // Adjust the metadata so that it remains valid
+                metadata.TrackGain = CalculateGain(metadata.TrackGain, scale);
+                metadata.AlbumGain = CalculateGain(metadata.AlbumGain, scale);
+
+                gain = (int) Math.Round(Math.Log10(scale) * 5120);
+            }
+
             _comments = new MetadataToOpusCommentAdapter(metadata);
             _encoder = new Encoder(stream, info.SampleRate, info.Channels, (int) info.PlayLength.TotalSeconds,
                 _comments.Handle);
 
+            if (info.BitsPerSample > 0)
+                _encoder.SetLsbDepth(Math.Min(Math.Max(info.BitsPerSample, 8), 24));
+
+            _encoder.SetHeaderGain(gain);
+
             if (!settings.TryGetValue("SerialNumber", out int serialNumber))
                 serialNumber = new Random().Next();
             _encoder.SetSerialNumber(serialNumber);
-
-            if (info.BitsPerSample > 0)
-                _encoder.SetLsbDepth(Math.Min(Math.Max(info.BitsPerSample, 8), 24));
 
             // Default to full VBR
             if (settings.TryGetValue("ControlMode", out string vbrMode))
@@ -99,6 +117,25 @@ namespace AudioWorks.Extensions.Opus
         {
             _encoder?.Dispose();
             _comments?.Dispose();
+        }
+
+        [Pure]
+        static float CalculateScale([CanBeNull] string gain, [CanBeNull] string peak)
+        {
+            return string.IsNullOrEmpty(gain) || string.IsNullOrEmpty(peak)
+                ? 1
+                : Math.Min(
+                    (float) Math.Pow(10, (float.Parse(gain, CultureInfo.InvariantCulture) - 5) / 20),
+                    1 / float.Parse(peak, CultureInfo.InvariantCulture));
+        }
+
+        [Pure, ContractAnnotation("gain:null => null; gain:notnull => notnull")]
+        static string CalculateGain([CanBeNull] string gain, float scale)
+        {
+            return string.IsNullOrEmpty(gain)
+                ? string.Empty
+                : string.Format(CultureInfo.InvariantCulture, "{0:0.00}",
+                    float.Parse(gain, CultureInfo.InvariantCulture) - Math.Log10(scale) * 20);
         }
     }
 }
