@@ -14,7 +14,7 @@
     <Product>AudioWorks</Product>
     <Description>The primary AudioWorks API. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
     <Copyright>© 2018 Jeremy Herbison</Copyright>
-    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+    <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/jherby2k/AudioWorks</PackageProjectUrl>
     <PackageIconUrl>https://github.com/jherby2k/AudioWorks/raw/master/AudioWorks/src/AudioWorks.Api/Icon.png</PackageIconUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
