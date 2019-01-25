@@ -15,6 +15,7 @@
     <Copyright>© 2018 Jeremy Herbison</Copyright>
     <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/jherby2k/AudioWorks</PackageProjectUrl>
+    <PackageReleaseNotes>https://github.com/jherby2k/AudioWorks/wiki/MP3-Extension#release-notes</PackageReleaseNotes>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     <PackageTags>Windows, OSX, Linux</PackageTags>
