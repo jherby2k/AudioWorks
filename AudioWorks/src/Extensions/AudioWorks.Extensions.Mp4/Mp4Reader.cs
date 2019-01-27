@@ -45,7 +45,7 @@ namespace AudioWorks.Extensions.Mp4
             Span<char> buffer = stackalloc char[4];
             if (Read(buffer) < 4)
 #endif
-                throw new AudioInvalidException("File is unexpectedly truncated.", ((FileStream) BaseStream).Name);
+                throw new AudioInvalidException("Stream is unexpectedly truncated.");
 
             return new string(buffer);
         }
@@ -54,13 +54,13 @@ namespace AudioWorks.Extensions.Mp4
         {
 #if NETSTANDARD2_0
             if (Read(_buffer, 0, 4) < 4)
-                throw new AudioInvalidException("File is unexpectedly truncated.", ((FileStream) BaseStream).Name);
+                throw new AudioInvalidException("Stream is unexpectedly truncated.");
 
             return BinaryPrimitives.ReadUInt32BigEndian(_buffer);
 #else
             Span<byte> buffer = stackalloc byte[4];
             if (Read(buffer) < 4)
-                throw new AudioInvalidException("File is unexpectedly truncated.", ((FileStream) BaseStream).Name);
+                throw new AudioInvalidException("Stream is unexpectedly truncated.");
 
             return BinaryPrimitives.ReadUInt32BigEndian(buffer);
 #endif

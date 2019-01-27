@@ -34,17 +34,5 @@ namespace AudioWorks.Common.Tests
         {
             Assert.IsAssignableFrom<AudioException>(new ImageUnsupportedException());
         }
-
-        [Fact(DisplayName = "ImageUnsupportedException's Path property is properly serialized")]
-        public void PathIsSerialized()
-        {
-            using (var stream = new MemoryStream())
-            {
-                var formatter = new BinaryFormatter();
-                formatter.Serialize(stream, new ImageUnsupportedException(null, "Foo"));
-                stream.Position = 0;
-                Assert.Equal("Foo", ((ImageUnsupportedException) formatter.Deserialize(stream)).Path);
-            }
-        }
     }
 }

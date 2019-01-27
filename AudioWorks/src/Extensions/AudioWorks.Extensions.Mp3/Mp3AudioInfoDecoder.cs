@@ -75,8 +75,7 @@ namespace AudioWorks.Extensions.Mp3
 #else
                 if (reader.Read(buffer) < 4)
 #endif
-                    throw new AudioInvalidException("Stream is unexpectedly truncated.",
-                        ((FileStream) reader.BaseStream).Name);
+                    throw new AudioInvalidException("Stream is unexpectedly truncated.");
 
                 try
                 {

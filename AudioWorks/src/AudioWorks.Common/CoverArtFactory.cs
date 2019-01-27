@@ -75,7 +75,7 @@ namespace AudioWorks.Common
                 throw new FileNotFoundException($"The file '{path}' cannot be found.", path);
 
             if (!_acceptedExtensions.Contains(Path.GetExtension(path), StringComparer.OrdinalIgnoreCase))
-                throw new ImageUnsupportedException("Not a supported image file format.", path);
+                throw new ImageUnsupportedException("Not a supported image format.");
 
             using (var fileStream = File.OpenRead(path))
                 return GetOrCreate(fileStream);

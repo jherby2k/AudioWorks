@@ -47,16 +47,6 @@ namespace AudioWorks.Common
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioUnsupportedException"/> class.
         /// </summary>
-        /// <param name="message">The message.</param>
-        /// <param name="path">The file path.</param>
-        public AudioUnsupportedException([CanBeNull] string message, [CanBeNull] string path)
-            : base(message, path)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AudioUnsupportedException"/> class.
-        /// </summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference
         /// (Nothing in Visual Basic) if no inner exception is specified.</param>
