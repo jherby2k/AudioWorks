@@ -67,7 +67,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    contents: 'AudioWorks/src/Extensions/**/*.OSX.*.nupkg'
+    contents: 'AudioWorks/src/Extensions/**/*.MacOS.*.nupkg'
     targetFolder: $(Build.ArtifactStagingDirectory)
   displayName: 'Copy artifacts to staging directory'
 
