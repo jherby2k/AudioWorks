@@ -41,8 +41,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))'">
     <DefineConstants>OSX</DefineConstants>
-    <PackageId>AudioWorks.Extensions.Flac.OSX</PackageId>
-    <PackageTags>OSX</PackageTags>
+    <PackageId>AudioWorks.Extensions.Flac.MacOS</PackageId>
+    <PackageTags>MacOS</PackageTags>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(OS)'=='Windows_NT'">

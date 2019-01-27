@@ -267,7 +267,7 @@ namespace AudioWorks.Api
             ? "Windows"
             : RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
                 ? "Linux"
-                : "OSX";
+                : "MacOS";
 
         [Pure, NotNull]
         static CancellationTokenSource GetCancellationTokenSource() => new CancellationTokenSource(

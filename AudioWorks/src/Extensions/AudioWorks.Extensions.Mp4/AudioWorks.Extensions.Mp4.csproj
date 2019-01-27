@@ -18,7 +18,7 @@
     <PackageReleaseNotes>https://github.com/jherby2k/AudioWorks/wiki/MP4-Extension#release-notes</PackageReleaseNotes>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-    <PackageTags>Windows, OSX, Linux</PackageTags>
+    <PackageTags>Windows, MacOS, Linux</PackageTags>
     <NeutralLanguage>en-US</NeutralLanguage>
     <CodeAnalysisRuleSet>CodeAnalysis.ruleset</CodeAnalysisRuleSet>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>

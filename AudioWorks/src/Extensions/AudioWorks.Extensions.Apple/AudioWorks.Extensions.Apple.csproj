@@ -30,8 +30,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))'">
     <DefineConstants>OSX</DefineConstants>
-    <PackageId>AudioWorks.Extensions.Apple.OSX</PackageId>
-    <PackageTags>OSX</PackageTags>
+    <PackageId>AudioWorks.Extensions.Apple.MacOS</PackageId>
+    <PackageTags>MacOS</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
