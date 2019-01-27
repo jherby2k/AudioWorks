@@ -13,8 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using AudioWorks.TestUtilities;
 using JetBrains.Annotations;
 using Xunit;
