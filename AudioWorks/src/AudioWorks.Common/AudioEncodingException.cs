@@ -38,7 +38,7 @@ namespace AudioWorks.Common
         /// Initializes a new instance of the <see cref="AudioEncodingException"/> class.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
-        public AudioEncodingException([CanBeNull] string message)
+        public AudioEncodingException([NotNull] string message)
             : base(message)
         {
         }
@@ -49,7 +49,7 @@ namespace AudioWorks.Common
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference
         /// (Nothing in Visual Basic) if no inner exception is specified.</param>
-        public AudioEncodingException([CanBeNull] string message, [CanBeNull] Exception innerException)
+        public AudioEncodingException([NotNull] string message, [NotNull] Exception innerException)
             : base(message, innerException)
         {
         }

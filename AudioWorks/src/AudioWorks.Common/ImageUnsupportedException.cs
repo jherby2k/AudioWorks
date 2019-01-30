@@ -39,7 +39,7 @@ namespace AudioWorks.Common
         /// Initializes a new instance of the <see cref="ImageUnsupportedException"/> class.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
-        public ImageUnsupportedException([CanBeNull] string message)
+        public ImageUnsupportedException([NotNull] string message)
             : base(message)
         {
         }
@@ -50,7 +50,7 @@ namespace AudioWorks.Common
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference
         /// (Nothing in Visual Basic) if no inner exception is specified.</param>
-        public ImageUnsupportedException([CanBeNull] string message, [CanBeNull] Exception innerException)
+        public ImageUnsupportedException([NotNull] string message, [NotNull] Exception innerException)
             : base(message, innerException)
         {
         }

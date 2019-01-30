@@ -35,9 +35,11 @@ namespace AudioWorks.Extensibility
         /// </remarks>
         /// <param name="groupState">A new group state object.</param>
         /// <returns>The current group state</returns>
-        [CanBeNull]
-        public object GetOrSetGroupState([CanBeNull] object groupState)
+        [NotNull]
+        public object GetOrSetGroupState([NotNull] object groupState)
         {
+            if (groupState == null) throw new ArgumentNullException(nameof(groupState));
+
             lock (_syncRoot)
             {
                 if (_groupState == null)
