@@ -44,7 +44,7 @@ namespace AudioWorks.TestUtilities
                         _categoryName,
                         formatter(state, exception));
                 else
-                    _provider.OutputHelper?.WriteLine("{0}: {2}",
+                    _provider.OutputHelper?.WriteLine("{0}: {1}",
                         Enum.GetName(typeof(LogLevel), logLevel),
                         formatter(state, exception));
             }
