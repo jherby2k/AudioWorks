@@ -39,7 +39,7 @@ namespace AudioWorks.Extensions.Id3
             var existingTagLength = GetExistingTagLength(stream);
 
             var tagModel = new MetadataToTagModelAdapter(metadata,
-                settings.TryGetValue<string>("TagEncoding", out var encoding)
+                settings.TryGetValue("TagEncoding", out string encoding)
                     ? encoding
                     : "Latin1");
 
@@ -47,13 +47,13 @@ namespace AudioWorks.Extensions.Id3
             {
                 // Set the version (default to 3)
                 tagModel.Header.Version = (byte) (
-                    settings.TryGetValue<string>("TagVersion", out var version) &&
+                    settings.TryGetValue("TagVersion", out string version) &&
                     version.Equals("2.4", StringComparison.Ordinal)
                         ? 4
                         : 3);
 
                 // Set the padding (default to 2048)
-                if (settings.TryGetValue<int>("TagPadding", out var padding))
+                if (settings.TryGetValue("TagPadding", out int padding))
                     tagModel.Header.PaddingSize = (uint) padding;
                 else
                     tagModel.Header.PaddingSize = 2048;

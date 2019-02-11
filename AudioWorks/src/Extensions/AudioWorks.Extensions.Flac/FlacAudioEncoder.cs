@@ -48,12 +48,12 @@ namespace AudioWorks.Extensions.Flac
 
             // Use a default compression level of 5
             _encoder.SetCompressionLevel(
-                settings.TryGetValue<int>("CompressionLevel", out var compressionLevel)
+                settings.TryGetValue("CompressionLevel", out int compressionLevel)
                     ? (uint) compressionLevel
                     : 5);
 
             // Use a default seek point interval of 10 seconds
-            if (!settings.TryGetValue<int>("SeekPointInterval", out var seekPointInterval))
+            if (!settings.TryGetValue("SeekPointInterval", out int seekPointInterval))
                 seekPointInterval = info.FrameCount > 0 ? 10 : 0;
             if (seekPointInterval > 0)
                 _metadataBlocks.Add(new SeekTableBlock(
@@ -64,7 +64,7 @@ namespace AudioWorks.Extensions.Flac
                 _metadataBlocks.Add(new CoverArtToPictureBlockAdapter(metadata.CoverArt));
 
             // Use a default padding of 8192
-            if (!settings.TryGetValue<int>("Padding", out var padding))
+            if (!settings.TryGetValue("Padding", out int padding))
                 padding = 8192;
             if (padding > 0)
                 _metadataBlocks.Add(new PaddingBlock(padding));

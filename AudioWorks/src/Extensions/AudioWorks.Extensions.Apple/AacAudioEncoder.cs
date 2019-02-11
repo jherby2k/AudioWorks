@@ -90,7 +90,7 @@ namespace AudioWorks.Extensions.Apple
             // Enable high quality (defaults to medium, 0x40)
             SetConverterProperty(converter, AudioConverterPropertyId.CodecQuality, 0x60);
 
-            if (settings.TryGetValue<int>("BitRate", out var bitRate))
+            if (settings.TryGetValue("BitRate", out int bitRate))
             {
                 if (bitRate > 256 && info.Channels == 1)
                 {
@@ -107,7 +107,7 @@ namespace AudioWorks.Extensions.Apple
 
                 // Set the control mode (constrained is the default)
                 var controlMode = BitrateControlMode.VariableConstrained;
-                if (settings.TryGetValue<string>("ControlMode", out var controlModeValue))
+                if (settings.TryGetValue("ControlMode", out string controlModeValue))
                     if (controlModeValue.Equals("Average", StringComparison.OrdinalIgnoreCase))
                         controlMode = BitrateControlMode.LongTermAverage;
                     else if (controlModeValue.Equals("Constant", StringComparison.OrdinalIgnoreCase))
@@ -122,7 +122,7 @@ namespace AudioWorks.Extensions.Apple
 
                 // Use a default VBR quality index of 9
                 SetConverterProperty(converter, AudioConverterPropertyId.VbrQuality,
-                    settings.TryGetValue<int>("VBRQuality", out var quality)
+                    settings.TryGetValue("VBRQuality", out int quality)
                         ? _vbrQualities[quality]
                         : _vbrQualities[9]);
             }

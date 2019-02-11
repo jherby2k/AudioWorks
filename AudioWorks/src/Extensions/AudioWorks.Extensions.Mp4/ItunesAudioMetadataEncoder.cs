@@ -77,9 +77,9 @@ namespace AudioWorks.Extensions.Mp4
                 // Update the time stamps, if requested
                 DateTime? newCreationTime = null;
                 DateTime? newModificationTime = null;
-                if (settings.TryGetValue<DateTime>("CreationTime", out var creationTime))
+                if (settings.TryGetValue("CreationTime", out DateTime creationTime))
                     newCreationTime = creationTime;
-                if (settings.TryGetValue<DateTime>("ModificationTime", out var modificationTime))
+                if (settings.TryGetValue("ModificationTime", out DateTime modificationTime))
                     newModificationTime = modificationTime;
                 if (newCreationTime.HasValue || newModificationTime.HasValue)
                     tempMp4.UpdateTimeStamps(newCreationTime, newModificationTime);

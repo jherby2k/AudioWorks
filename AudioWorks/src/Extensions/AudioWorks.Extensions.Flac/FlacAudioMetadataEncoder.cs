@@ -72,7 +72,7 @@ namespace AudioWorks.Extensions.Flac
         [Pure]
         static int? GetPadding([NotNull] SettingDictionary settings)
         {
-            if (settings.TryGetValue<int>("Padding", out var result))
+            if (settings.TryGetValue("Padding", out int result))
                 return result;
             return null;
         }
