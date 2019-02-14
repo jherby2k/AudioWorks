@@ -78,127 +78,127 @@ namespace AudioWorks.Extensions.Opus
                 {
 #if NETSTANDARD2_0
                     var valueBytes = commentBytes.Slice(delimiter + 1);
-                    var value = Encoding.UTF8.GetString(
+                    SetText(key, Encoding.UTF8.GetString(
                         (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes)),
-                        valueBytes.Length);
+                        valueBytes.Length));
 #else
-                    var value = Encoding.UTF8.GetString(commentBytes.Slice(delimiter + 1));
+                    SetText(key, Encoding.UTF8.GetString(commentBytes.Slice(delimiter + 1)));
 #endif
-
-                    try
-                    {
-                        // ReSharper disable once SwitchStatementMissingSomeCases
-                        switch (key.ToUpperInvariant())
-                        {
-                            case "TITLE":
-                                Title = value;
-                                break;
-
-                            case "ARTIST":
-                                Artist = value;
-                                break;
-
-                            case "ALBUM":
-                                Album = value;
-                                break;
-
-                            case "ALBUMARTIST":
-                                AlbumArtist = value;
-                                break;
-
-                            case "COMPOSER":
-                                Composer = value;
-                                break;
-
-                            case "GENRE":
-                                Genre = value;
-                                break;
-
-                            case "DESCRIPTION":
-                            case "COMMENT":
-                                Comment = value;
-                                break;
-
-                            case "DATE":
-                            case "YEAR":
-                                // Descriptions are allowed after whitespace
-                                value = value.Split(' ')[0];
-                                // The DATE comment may contain a full date, or only the year
-                                if (DateTime.TryParse(value, CultureInfo.CurrentCulture,
-                                    DateTimeStyles.NoCurrentDateDefault, out var result))
-                                {
-                                    Day = result.Day.ToString(CultureInfo.InvariantCulture);
-                                    Month = result.Month.ToString(CultureInfo.InvariantCulture);
-                                    Year = result.Year.ToString(CultureInfo.InvariantCulture);
-                                }
-                                else
-                                    Year = value;
-
-                                break;
-
-                            case "TRACKNUMBER":
-                                // The track number and count may be packed into the same comment
-                                var segments = value.Split('/');
-                                TrackNumber = segments[0];
-                                if (segments.Length > 1)
-                                    TrackCount = segments[1];
-                                break;
-
-                            case "TRACKCOUNT":
-                            case "TRACKTOTAL":
-                            case "TOTALTRACKS":
-                                TrackCount = value;
-                                break;
-
-                            case "R128_TRACK_GAIN":
-                                TrackGain = ConvertGain(value);
-                                break;
-
-                            case "R128_ALBUM_GAIN":
-                                AlbumGain = ConvertGain(value);
-                                break;
-
-                            // The "REPLAYGAIN" fields are technically not allowed
-                            case "REPLAYGAIN_TRACK_PEAK":
-                                TrackPeak = value;
-                                break;
-
-                            case "REPLAYGAIN_ALBUM_PEAK":
-                                AlbumPeak = value;
-                                break;
-
-                            case "REPLAYGAIN_TRACK_GAIN":
-#if NETSTANDARD2_0
-                                TrackGain = value.Replace(" dB", string.Empty);
-#else
-                                TrackGain = value.Replace(" dB", string.Empty, StringComparison.OrdinalIgnoreCase);
-#endif
-                                break;
-
-                            case "REPLAYGAIN_ALBUM_GAIN":
-#if NETSTANDARD2_0
-                                AlbumGain = value.Replace(" dB", string.Empty);
-#else
-                                AlbumGain = value.Replace(" dB", string.Empty, StringComparison.OrdinalIgnoreCase);
-#endif
-                                break;
-                        }
-                    }
-                    catch (AudioMetadataInvalidException)
-                    {
-                        // If a field is invalid, just leave it blank
-                    }
                 }
 
                 commentCount--;
             }
         }
 
-        [NotNull]
-        static string ConvertGain([NotNull] string gain)
+        void SetText([NotNull] string key, [NotNull] string value)
         {
-            return (int.Parse(gain, CultureInfo.InvariantCulture) / 256.0 + 5)
-                .ToString("F2", CultureInfo.InvariantCulture);
+            try
+            {
+                // ReSharper disable once SwitchStatementMissingSomeCases
+                switch (key.ToUpperInvariant())
+                {
+                    case "TITLE":
+                        Title = value;
+                        break;
+
+                    case "ARTIST":
+                        Artist = value;
+                        break;
+
+                    case "ALBUM":
+                        Album = value;
+                        break;
+
+                    case "ALBUMARTIST":
+                        AlbumArtist = value;
+                        break;
+
+                    case "COMPOSER":
+                        Composer = value;
+                        break;
+
+                    case "GENRE":
+                        Genre = value;
+                        break;
+
+                    case "DESCRIPTION":
+                    case "COMMENT":
+                        Comment = value;
+                        break;
+
+                    case "DATE":
+                    case "YEAR":
+                        // Descriptions are allowed after whitespace
+                        value = value.Split(' ')[0];
+                        // The DATE comment may contain a full date, or only the year
+                        if (DateTime.TryParse(value, CultureInfo.CurrentCulture,
+                            DateTimeStyles.NoCurrentDateDefault, out var result))
+                        {
+                            Day = result.Day.ToString(CultureInfo.InvariantCulture);
+                            Month = result.Month.ToString(CultureInfo.InvariantCulture);
+                            Year = result.Year.ToString(CultureInfo.InvariantCulture);
+                        }
+                        else
+                            Year = value;
+
+                        break;
+
+                    case "TRACKNUMBER":
+                        // The track number and count may be packed into the same comment
+                        var segments = value.Split('/');
+                        TrackNumber = segments[0];
+                        if (segments.Length > 1)
+                            TrackCount = segments[1];
+                        break;
+
+                    case "TRACKCOUNT":
+                    case "TRACKTOTAL":
+                    case "TOTALTRACKS":
+                        TrackCount = value;
+                        break;
+
+                    case "R128_TRACK_GAIN":
+                        TrackGain = ConvertGain(value);
+                        break;
+
+                    case "R128_ALBUM_GAIN":
+                        AlbumGain = ConvertGain(value);
+                        break;
+
+                    // The "REPLAYGAIN" fields are technically not allowed
+                    case "REPLAYGAIN_TRACK_PEAK":
+                        TrackPeak = value;
+                        break;
+
+                    case "REPLAYGAIN_ALBUM_PEAK":
+                        AlbumPeak = value;
+                        break;
+
+                    case "REPLAYGAIN_TRACK_GAIN":
+#if NETSTANDARD2_0
+                        TrackGain = value.Replace(" dB", string.Empty);
+#else
+                        TrackGain = value.Replace(" dB", string.Empty, StringComparison.OrdinalIgnoreCase);
+#endif
+                        break;
+
+                    case "REPLAYGAIN_ALBUM_GAIN":
+#if NETSTANDARD2_0
+                        AlbumGain = value.Replace(" dB", string.Empty);
+#else
+                        AlbumGain = value.Replace(" dB", string.Empty, StringComparison.OrdinalIgnoreCase);
+#endif
+                        break;
+                }
+            }
+            catch (AudioMetadataInvalidException)
+            {
+                // If a field is invalid, just leave it blank
+            }
         }
+
+        [NotNull]
+        static string ConvertGain([NotNull] string gain) =>
+            (int.Parse(gain, CultureInfo.InvariantCulture) / 256.0 + 5).ToString("F2", CultureInfo.InvariantCulture);
     }
 }
