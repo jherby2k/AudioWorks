@@ -13,7 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System;
 using JetBrains.Annotations;
 
 namespace AudioWorks.Common
@@ -26,12 +25,11 @@ namespace AudioWorks.Common
     public interface ITaggedAudioFile : IAudioFile
     {
         /// <summary>
-        /// Gets or sets the metadata.
+        /// Gets the metadata.
         /// </summary>
         /// <value>The metadata.</value>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
         [NotNull]
-        AudioMetadata Metadata { get; set; }
+        AudioMetadata Metadata { get; }
 
         /// <summary>
         /// Loads the metadata from disk, replacing the current values.
