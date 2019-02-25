@@ -31,11 +31,7 @@ namespace AudioWorks.Api
         [CanBeNull] AudioMetadata _metadata;
 
         /// <inheritdoc/>
-        public AudioMetadata Metadata
-        {
-            get => _metadata ?? (_metadata = LoadMetadata(Path));
-            set => _metadata = value ?? throw new ArgumentNullException(nameof(value));
-        }
+        public AudioMetadata Metadata => _metadata ?? (_metadata = LoadMetadata(Path));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TaggedAudioFile"/> class.

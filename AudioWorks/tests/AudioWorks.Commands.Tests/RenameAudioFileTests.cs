@@ -21,6 +21,7 @@ using AudioWorks.Api;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
+using AutoMapper;
 using JetBrains.Annotations;
 using Moq;
 using Xunit;
@@ -31,10 +32,12 @@ namespace AudioWorks.Commands.Tests
     public sealed class RenameAudioFileTests : IClassFixture<ModuleFixture>
     {
         [NotNull] readonly ModuleFixture _moduleFixture;
+        [NotNull] readonly IMapper _mapper;
 
         public RenameAudioFileTests([NotNull] ModuleFixture moduleFixture)
         {
             _moduleFixture = moduleFixture;
+            _mapper = new MapperConfiguration(config => config.CreateMap<AudioMetadata, AudioMetadata>()).CreateMapper();
         }
 
         [Fact(DisplayName = "Rename-AudioFile command exists")]
@@ -193,11 +196,9 @@ namespace AudioWorks.Commands.Tests
         }
 
         [Theory(DisplayName = "Rename-AudioFile with PassThru switch returns the AudioFile")]
-        [MemberData(nameof(RenameValidFileDataSource.FileNamesMetadataAndNames), MemberType = typeof(RenameValidFileDataSource))]
+        [MemberData(nameof(RenameValidFileDataSource.FileNames), MemberType = typeof(RenameValidFileDataSource))]
         public void PassThruSwitchReturnsAudioFile(
-            [NotNull] string fileName,
-            [NotNull] TestAudioMetadata metadata,
-            [NotNull] string name)
+            [NotNull] string fileName)
         {
             var path = Path.Combine("Output", "Rename-AudioFile", fileName);
             Directory.CreateDirectory(Path.GetDirectoryName(path));
@@ -206,13 +207,13 @@ namespace AudioWorks.Commands.Tests
                 "TestFiles",
                 "Valid",
                 fileName), path, true);
-            var audioFile = new TaggedAudioFile(path) { Metadata = metadata };
+            var audioFile = new TaggedAudioFile(path);
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Rename-AudioFile")
                     .AddParameter("AudioFile", audioFile)
-                    .AddParameter("Name", name)
+                    .AddParameter("Name", "Foo")
                     .AddParameter("Replace")
                     .AddParameter("PassThru");
 
@@ -235,7 +236,8 @@ namespace AudioWorks.Commands.Tests
                 "TestFiles",
                 "Valid",
                 fileName), path, true);
-            var audioFile = new TaggedAudioFile(path) { Metadata = metadata };
+            var audioFile = new TaggedAudioFile(path);
+            _mapper.Map(metadata, audioFile.Metadata);
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;

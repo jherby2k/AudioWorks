@@ -17,7 +17,6 @@ using System;
 using System.Linq;
 using System.Management.Automation;
 using AudioWorks.Common;
-using AutoMapper;
 using JetBrains.Annotations;
 using Moq;
 using ObjectsComparer;
@@ -27,11 +26,6 @@ namespace AudioWorks.Commands.Tests
 {
     public sealed class ClearAudioMetadataTests : IClassFixture<ModuleFixture>
     {
-        static ClearAudioMetadataTests()
-        {
-            Mapper.Initialize(config => config.CreateMap<AudioMetadata, AudioMetadata>());
-        }
-
         [NotNull] readonly ModuleFixture _moduleFixture;
         [NotNull] readonly AudioMetadata _testMetadata = new AudioMetadata
         {
@@ -155,7 +149,7 @@ namespace AudioWorks.Commands.Tests
         public void NoSwitchesClearsAll()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
@@ -191,7 +185,7 @@ namespace AudioWorks.Commands.Tests
         public void TitleSwitchClearsTitle()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
@@ -231,7 +225,7 @@ namespace AudioWorks.Commands.Tests
         public void ArtistSwitchClearsArtist()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
@@ -271,7 +265,7 @@ namespace AudioWorks.Commands.Tests
         public void AlbumSwitchClearsAlbum()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
@@ -311,7 +305,7 @@ namespace AudioWorks.Commands.Tests
         public void AlbumArtistSwitchClearsAlbumArtist()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
@@ -351,7 +345,7 @@ namespace AudioWorks.Commands.Tests
         public void ComposerSwitchClearsComposer()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
@@ -391,7 +385,7 @@ namespace AudioWorks.Commands.Tests
         public void GenreSwitchClearsGenre()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
@@ -431,7 +425,7 @@ namespace AudioWorks.Commands.Tests
         public void CommentSwitchClearsComment()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
@@ -471,7 +465,7 @@ namespace AudioWorks.Commands.Tests
         public void DaySwitchClearsDay()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
@@ -511,7 +505,7 @@ namespace AudioWorks.Commands.Tests
         public void MonthSwitchClearsMonth()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
@@ -551,7 +545,7 @@ namespace AudioWorks.Commands.Tests
         public void YearSwitchClearsYear()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
@@ -591,7 +585,7 @@ namespace AudioWorks.Commands.Tests
         public void TrackNumberSwitchClearsTrackNumber()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
@@ -631,7 +625,7 @@ namespace AudioWorks.Commands.Tests
         public void TrackCountSwitchClearsTrackCount()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
@@ -671,7 +665,7 @@ namespace AudioWorks.Commands.Tests
         public void LoudnessSwitchClearsPeakAndGain()
         {
             var mock = new Mock<ITaggedAudioFile>();
-            mock.SetupGet(audioFile => audioFile.Metadata).Returns(Mapper.Map<AudioMetadata>(_testMetadata));
+            mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;

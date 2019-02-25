@@ -32,14 +32,12 @@ namespace AudioWorks.Api.Tests
     [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class TaggedAudioFileTests
     {
-        static TaggedAudioFileTests()
-        {
-            Mapper.Initialize(config => config.CreateMap<AudioMetadata, AudioMetadata>());
-        }
+        [NotNull] readonly IMapper _mapper;
 
         public TaggedAudioFileTests([NotNull] ITestOutputHelper outputHelper)
         {
             LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
+            _mapper = new MapperConfiguration(config => config.CreateMap<AudioMetadata, AudioMetadata>()).CreateMapper();
         }
 
         [Fact(DisplayName = "TaggedAudioFile's constructor throws an exception if the path is null")]
@@ -88,18 +86,6 @@ namespace AudioWorks.Api.Tests
                     "TestFiles",
                     "Valid",
                     fileName)).Metadata);
-        }
-
-        [Theory(DisplayName = "TaggedAudioFile's Metadata property throws an exception when set to null")]
-        [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
-        public void MetadataNullThrowsException([NotNull] string fileName)
-        {
-            Assert.Throws<ArgumentNullException>(() =>
-                new TaggedAudioFile(Path.Combine(
-                    new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                    "TestFiles",
-                    "Valid",
-                    fileName)).Metadata = null);
         }
 
         [Theory(DisplayName = "TaggedAudioFile's Metadata property has the expected Title")]
@@ -428,7 +414,8 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName), path, true);
-            var audioFile = new TaggedAudioFile(path) { Metadata = metadata };
+            var audioFile = new TaggedAudioFile(path);
+            _mapper.Map(metadata, audioFile.Metadata);
 
             audioFile.Rename(name, true);
 
@@ -444,9 +431,9 @@ namespace AudioWorks.Api.Tests
                 "TestFiles",
                 "Valid",
                 fileName));
-            var expectedMetadata = Mapper.Map<AudioMetadata>(audioFile.Metadata);
+            var expectedMetadata = new AudioMetadata(audioFile.Metadata);
 
-            audioFile.Metadata = new AudioMetadata { Title = "Modified" };
+            audioFile.Metadata.Title = "Modified";
             audioFile.LoadMetadata();
 
             Assert.True(new Comparer().Compare(expectedMetadata, audioFile.Metadata, out var differences),
@@ -475,7 +462,8 @@ namespace AudioWorks.Api.Tests
             var path = Path.Combine("Output", "SaveMetadata", "Valid", $"{index:00} - {fileName}");
             Directory.CreateDirectory(Path.GetDirectoryName(path));
             File.Copy(Path.Combine(sourceDirectory, fileName), path, true);
-            var audioFile = new TaggedAudioFile(path) { Metadata = metadata };
+            var audioFile = new TaggedAudioFile(path);
+            _mapper.Map(metadata, audioFile.Metadata);
             if (imageFileName != null)
                 audioFile.Metadata.CoverArt = CoverArtFactory.GetOrCreate(Path.Combine(sourceDirectory, imageFileName));
 

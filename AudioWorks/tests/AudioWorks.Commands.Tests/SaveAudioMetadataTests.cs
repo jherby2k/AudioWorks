@@ -19,8 +19,10 @@ using System.IO;
 using System.Management.Automation;
 using AudioWorks.Api;
 using AudioWorks.Api.Tests.DataSources;
+using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
+using AutoMapper;
 using JetBrains.Annotations;
 using Moq;
 using Xunit;
@@ -31,10 +33,12 @@ namespace AudioWorks.Commands.Tests
     public sealed class SaveAudioMetadataTests : IClassFixture<ModuleFixture>
     {
         [NotNull] readonly ModuleFixture _moduleFixture;
+        [NotNull] readonly IMapper _mapper;
 
         public SaveAudioMetadataTests([NotNull] ModuleFixture moduleFixture)
         {
             _moduleFixture = moduleFixture;
+            _mapper = new MapperConfiguration(config => config.CreateMap<AudioMetadata, AudioMetadata>()).CreateMapper();
         }
 
         [Fact(DisplayName = "Save-AudioMetadata command exists")]
@@ -192,7 +196,7 @@ namespace AudioWorks.Commands.Tests
         public void CreatesExpectedOutput(
             int index,
             [NotNull] string fileName,
-            [NotNull] AudioMetadata metadata,
+            [NotNull] TestAudioMetadata metadata,
             [CanBeNull] string imageFileName,
             [CanBeNull] SettingDictionary settings,
 #if LINUX
@@ -209,7 +213,8 @@ namespace AudioWorks.Commands.Tests
             var path = Path.Combine("Output", "Save-AudioMetadata", "Valid", $"{index:00} - {fileName}");
             Directory.CreateDirectory(Path.GetDirectoryName(path));
             File.Copy(Path.Combine(sourceDirectory, fileName), path, true);
-            var audioFile = new TaggedAudioFile(path) { Metadata = metadata };
+            var audioFile = new TaggedAudioFile(path);
+            _mapper.Map(metadata, audioFile.Metadata);
             if (imageFileName != null)
                 audioFile.Metadata.CoverArt = CoverArtFactory.GetOrCreate(Path.Combine(sourceDirectory, imageFileName));
             using (var ps = PowerShell.Create())
