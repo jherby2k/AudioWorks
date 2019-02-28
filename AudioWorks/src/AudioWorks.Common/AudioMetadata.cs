@@ -149,7 +149,7 @@ namespace AudioWorks.Common
                 else
                 {
                     if (!int.TryParse(value, out var intValue) || intValue < 1 || intValue > 31)
-                        throw new AudioMetadataInvalidException("Month must be between 1 and 31.");
+                        throw new AudioMetadataInvalidException("Day must be between 1 and 31.");
                     _day = intValue.ToString("00", CultureInfo.InvariantCulture);
                 }
             }
