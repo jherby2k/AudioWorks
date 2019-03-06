@@ -40,22 +40,33 @@ namespace AudioWorks.Extensibility
         public string Extension { get; }
 
         /// <summary>
+        /// Gets the audio format.
+        /// </summary>
+        /// <value>The format.</value>
+        [NotNull]
+        public string Format { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AudioInfoDecoderExportAttribute"/> class.
         /// </summary>
         /// <param name="extension">The file extension.</param>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="extension"/> is null.</exception>
+        /// <param name="format">The audio format.</param>
+        /// <exception cref="ArgumentNullException">Thrown if either <paramref name="extension"/> or
+        /// <paramref name="format"/> is null or empty.</exception>
         /// <exception cref="ArgumentException">Thrown if <paramref name="extension"/> is not a valid file extension.
         /// </exception>
-        public AudioInfoDecoderExportAttribute([NotNull] string extension)
+        public AudioInfoDecoderExportAttribute([NotNull] string extension, [NotNull] string format)
             : base(typeof(IAudioInfoDecoder))
         {
-            if (extension == null) throw new ArgumentNullException(nameof(extension));
+            if (string.IsNullOrEmpty(extension)) throw new ArgumentNullException(nameof(extension));
             if (!extension.StartsWith(".", StringComparison.OrdinalIgnoreCase)
                 || extension.Any(char.IsWhiteSpace)
                 || extension.Any(character => Path.GetInvalidFileNameChars().Contains(character)))
                 throw new ArgumentException($"'{extension}' is not a valid file extension.", nameof(extension));
+            if (string.IsNullOrEmpty(format)) throw new ArgumentNullException(nameof(format));
 
             Extension = extension;
+            Format = format;
         }
     }
 }

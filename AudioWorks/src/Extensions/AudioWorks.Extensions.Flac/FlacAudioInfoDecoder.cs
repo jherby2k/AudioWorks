@@ -19,7 +19,7 @@ using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.Flac
 {
-    [AudioInfoDecoderExport(".flac")]
+    [AudioInfoDecoderExport(".flac", "FLAC")]
     public sealed class FlacAudioInfoDecoder : IAudioInfoDecoder
     {
         const string _format = "Free Lossless Audio Codec (FLAC)";

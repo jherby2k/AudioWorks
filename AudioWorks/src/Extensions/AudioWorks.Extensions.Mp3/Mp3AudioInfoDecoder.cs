@@ -21,7 +21,7 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp3
 {
-    [AudioInfoDecoderExport(".mp3")]
+    [AudioInfoDecoderExport(".mp3", "MPEG Audio Layer 3")]
     public sealed class Mp3AudioInfoDecoder : IAudioInfoDecoder
     {
         const string _format = "MPEG Audio Layer 3 (MP3)";

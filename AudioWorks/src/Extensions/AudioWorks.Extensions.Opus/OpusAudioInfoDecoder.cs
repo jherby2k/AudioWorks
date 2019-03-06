@@ -30,7 +30,7 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Opus
 {
-    [AudioInfoDecoderExport(".opus")]
+    [AudioInfoDecoderExport(".opus", "Opus")]
     public sealed class OpusAudioInfoDecoder : IAudioInfoDecoder
     {
         const string _format = "Opus";

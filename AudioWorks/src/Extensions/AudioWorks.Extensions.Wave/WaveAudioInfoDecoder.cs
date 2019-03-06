@@ -20,7 +20,7 @@ using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.Wave
 {
-    [AudioInfoDecoderExport(".wav")]
+    [AudioInfoDecoderExport(".wav", "Waveform Audio")]
     public sealed class WaveAudioInfoDecoder : IAudioInfoDecoder
     {
         const string _format = "Waveform Audio File Format (WAVE)";

@@ -21,7 +21,7 @@ using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.Mp4
 {
-    [AudioInfoDecoderExport(".m4a")]
+    [AudioInfoDecoderExport(".m4a", "MPEG-4 Audio")]
     public sealed class Mp4AudioInfoDecoder : IAudioInfoDecoder
     {
         const string _format = "MPEG-4 Audio";

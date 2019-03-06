@@ -25,7 +25,7 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Vorbis
 {
-    [AudioInfoDecoderExport(".ogg")]
+    [AudioInfoDecoderExport(".ogg", "Ogg Vorbis")]
     public sealed class VorbisAudioInfoDecoder : IAudioInfoDecoder
     {
         const string _format = "Ogg Vorbis";
