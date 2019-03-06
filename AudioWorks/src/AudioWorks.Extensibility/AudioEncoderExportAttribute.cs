@@ -54,10 +54,8 @@ namespace AudioWorks.Extensibility
         public AudioEncoderExportAttribute([NotNull] string name, [NotNull] string description)
             : base(typeof(IAudioEncoder))
         {
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentException("Value cannot be null or empty.", nameof(name));
-            if (string.IsNullOrEmpty(description))
-                throw new ArgumentException("Value cannot be null or empty.", nameof(description));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+            if (string.IsNullOrEmpty(description)) throw new ArgumentNullException(nameof(description));
 
             Name = name;
             Description = description;

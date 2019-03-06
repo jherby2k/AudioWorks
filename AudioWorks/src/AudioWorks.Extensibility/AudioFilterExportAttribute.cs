@@ -31,7 +31,7 @@ namespace AudioWorks.Extensibility
     public sealed class AudioFilterExportAttribute : ExportAttribute
     {
         /// <summary>
-        /// Gets the name of the encoder.
+        /// Gets the name of the filter.
         /// </summary>
         /// <value>The name.</value>
         [NotNull]
@@ -45,8 +45,7 @@ namespace AudioWorks.Extensibility
         public AudioFilterExportAttribute([NotNull] string name)
             : base(typeof(IAudioFilter))
         {
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentException("Value cannot be null or empty.", nameof(name));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
 
             Name = name;
         }
