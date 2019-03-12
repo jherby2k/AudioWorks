@@ -267,7 +267,7 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "2F893F4E2A6FCF6507763801A1CD908C"
 #else
-                "4EE86066868F97A45F5901CAC7205D0A"
+                "EF5897A2C113E8AE5F3FB823C05BA3B1"
 #endif
             },
 

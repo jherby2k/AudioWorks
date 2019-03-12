@@ -122,7 +122,7 @@ namespace AudioWorks.Extensions.Flac
                 iterator.InsertBlockAfter(pictureBlock);
 
             // If padding was explicitly requested, add it
-            if (padding.HasValue)
+            if (padding.HasValue && padding.Value > 0)
                 iterator.InsertBlockAfter(new PaddingBlock(padding.Value));
         }
     }
