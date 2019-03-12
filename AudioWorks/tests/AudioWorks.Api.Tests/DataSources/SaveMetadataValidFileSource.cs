@@ -262,10 +262,10 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["Padding"] = 0
                 },
 #if LINUX
-                "446F286CFEC2285F3C5F8996A7489617",
-                "2F893F4E2A6FCF6507763801A1CD908C"
+                "C6F468D2AFF114854647623FEC1B8F8F",
+                "4D1C0B9CD6909E81C2D5BD38A6F7CF4B"
 #elif OSX
-                "2F893F4E2A6FCF6507763801A1CD908C"
+                "4D1C0B9CD6909E81C2D5BD38A6F7CF4B"
 #else
                 "EF5897A2C113E8AE5F3FB823C05BA3B1"
 #endif
