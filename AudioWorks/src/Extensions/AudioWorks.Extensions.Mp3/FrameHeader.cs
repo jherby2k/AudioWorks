@@ -139,7 +139,6 @@ namespace AudioWorks.Extensions.Mp3
 
         enum MpegVersion
         {
-            [UsedImplicitly] TwoPointFive = 0b00000000,
             Two = 0b00000010,
             One = 0b00000011
         }
