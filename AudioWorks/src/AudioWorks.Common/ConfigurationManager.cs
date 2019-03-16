@@ -34,7 +34,7 @@ namespace AudioWorks.Common
         {
             "https://www.myget.org/F/audioworks-extensions/api/v3/index.json",
             "https://www.myget.org/F/audioworks-extensions-v1/api/v3/index.json",
-            "https://www.myget.org/F/audioworks-extensions-v2/api/v3/index.json",
+            "https://www.myget.org/F/audioworks-extensions-v2/api/v3/index.json"
         });
 
         /// <summary>

@@ -310,7 +310,7 @@ namespace AudioWorks.Api
         }
 
         [NotNull]
-        static string GetUniquePath([NotNull] string path, [NotNull, ItemNotNull] List<string> uniquePaths)
+        static string GetUniquePath([NotNull] string path, [NotNull, ItemNotNull] ICollection<string> uniquePaths)
         {
             if (uniquePaths.Contains(path, StringComparer.OrdinalIgnoreCase))
                 path = $"{Path.ChangeExtension(path, null)}~{uniquePaths.Count}{Path.GetExtension(path)}";

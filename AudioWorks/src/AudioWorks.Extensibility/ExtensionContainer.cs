@@ -34,7 +34,8 @@ namespace AudioWorks.Extensibility
         [UsedImplicitly]
         [ImportMany]
         // ReSharper disable once UnassignedGetOnlyAutoProperty
-        internal IEnumerable<ExportFactory<T, IDictionary<string, object>>> Factories { get; }
+        // ReSharper disable once UnusedAutoPropertyAccessor.Local
+        internal IEnumerable<ExportFactory<T, IDictionary<string, object>>> Factories { get; private set; }
 
         ExtensionContainer()
         {

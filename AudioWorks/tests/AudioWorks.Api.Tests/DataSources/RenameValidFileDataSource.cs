@@ -105,11 +105,5 @@ namespace AudioWorks.Api.Tests.DataSources
         {
             [UsedImplicitly] get => _data.Select(item => new[] { item[0] }).Distinct(new ArrayComparer());
         }
-
-        [NotNull, ItemNotNull]
-        public static IEnumerable<object[]> FileNamesMetadataAndNames
-        {
-            [UsedImplicitly] get => _data.Select(item => new[] { item[0], item[1], item[2] });
-        }
     }
 }
