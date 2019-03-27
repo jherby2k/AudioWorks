@@ -31,22 +31,25 @@ namespace AudioWorks.Extensions.Flac
 
         public void WriteMetadata(Stream stream, AudioMetadata metadata, SettingDictionary settings)
         {
-            var padding = GetPadding(settings);
-
             using (var chain = new MetadataChain(stream))
             using (var comments = new MetadataToVorbisCommentAdapter(metadata))
             {
                 chain.Read();
 
                 PictureBlock pictureBlock = null;
+                PaddingBlock paddingBlock = null;
                 try
                 {
                     if (metadata.CoverArt != null)
                         pictureBlock = new CoverArtToPictureBlockAdapter(metadata.CoverArt);
 
+                    var padding = GetPadding(settings);
+                    if (padding.HasValue && padding.Value > 0)
+                        paddingBlock = new PaddingBlock(padding.Value);
+
                     // Iterate over the existing blocks, replacing and deleting as needed
                     using (var iterator = chain.GetIterator())
-                        UpdateChain(iterator, comments, pictureBlock, padding);
+                        UpdateChain(iterator, comments, pictureBlock, paddingBlock);
 
                     if (chain.CheckIfTempFileNeeded(!padding.HasValue))
                         using (var tempStream = new TempFileStream())
@@ -65,6 +68,7 @@ namespace AudioWorks.Extensions.Flac
                 finally
                 {
                     pictureBlock?.Dispose();
+                    paddingBlock?.Dispose();
                 }
             }
         }
@@ -81,7 +85,7 @@ namespace AudioWorks.Extensions.Flac
             [NotNull] MetadataIterator iterator,
             [NotNull] VorbisCommentBlock newComments,
             [CanBeNull] PictureBlock pictureBlock,
-            int? padding)
+            [CanBeNull] PaddingBlock paddingBlock)
         {
             var metadataInserted = false;
             var pictureInserted = false;
@@ -122,8 +126,8 @@ namespace AudioWorks.Extensions.Flac
                 iterator.InsertBlockAfter(pictureBlock);
 
             // If padding was explicitly requested, add it
-            if (padding.HasValue && padding.Value > 0)
-                iterator.InsertBlockAfter(new PaddingBlock(padding.Value));
+            if (paddingBlock != null)
+                iterator.InsertBlockAfter(paddingBlock);
         }
     }
 }
