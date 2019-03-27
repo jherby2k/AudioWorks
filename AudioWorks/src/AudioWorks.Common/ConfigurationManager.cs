@@ -75,7 +75,7 @@ namespace AudioWorks.Common
                 .Build();
         }
 
-        static void MigrateToRoamingProfile(string settingsFile)
+        static void MigrateToRoamingProfile([NotNull] string settingsFile)
         {
             var oldSettingsFile = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
@@ -87,7 +87,7 @@ namespace AudioWorks.Common
             File.Delete(oldSettingsFile);
         }
 
-        static void UpgradeRepositoryUrl(string settingsFile)
+        static void UpgradeRepositoryUrl([NotNull] string settingsFile)
         {
             // Make sure the extension repository URL is up to date (but preserve custom entries)
             var settings = JObject.Parse(File.ReadAllText(settingsFile));
