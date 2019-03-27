@@ -34,7 +34,6 @@ namespace AudioWorks.Api
     public sealed class AudioFileAnalyzer
     {
         [NotNull] readonly ExportFactory<IAudioAnalyzer> _analyzerFactory;
-        [NotNull] readonly string _progressDescription;
         int _maxDegreeOfParallelism = Environment.ProcessorCount;
 
         /// <summary>
@@ -42,7 +41,7 @@ namespace AudioWorks.Api
         /// <see cref="Environment.ProcessorCount"/>.
         /// </summary>
         /// <value>The maximum degree of parallelism.</value>
-        /// <exception cref="ArgumentOutOfRangeException">Throw in <paramref name="value"/> is less than 1.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is less than 1.</exception>
         public int MaxDegreeOfParallelism
         {
             get => _maxDegreeOfParallelism;
@@ -80,8 +79,6 @@ namespace AudioWorks.Api
 
             using (var export = _analyzerFactory.CreateExport())
                 Settings = new ValidatingSettingDictionary(export.Value.SettingInfo, settings);
-
-            _progressDescription = $"Performing {name} analysis";
         }
 
         /// <summary>
