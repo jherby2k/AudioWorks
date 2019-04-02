@@ -48,21 +48,15 @@ namespace AudioWorks.Common
         static ConfigurationManager()
         {
             var settingsPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 "AudioWorks");
             const string settingsFileName = "settings.json";
-
             var settingsFile = Path.Combine(settingsPath, settingsFileName);
+
+            MigrateToRoamingProfile(settingsFile);
+
             if (File.Exists(settingsFile))
-            {
-                // Make sure the extension repository URL is up to date (but preserve custom entries)
-                var settings = JObject.Parse(File.ReadAllText(settingsFile));
-                if (_oldRepositories.Contains(settings["ExtensionRepository"].Value<string>()))
-                {
-                    settings.Property("ExtensionRepository").Value = _currentRepository;
-                    File.WriteAllText(settingsFile, settings.ToString());
-                }
-            }
+                UpgradeRepositoryUrl(settingsFile);
             else
             {
                 // Copy the settings template if the file doesn't already exist
@@ -79,6 +73,28 @@ namespace AudioWorks.Common
                 .SetBasePath(settingsPath)
                 .AddJsonFile(settingsFileName, true)
                 .Build();
+        }
+
+        static void MigrateToRoamingProfile([NotNull] string settingsFile)
+        {
+            var oldSettingsFile = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "AudioWorks", Path.GetFileName(settingsFile));
+            if (!File.Exists(oldSettingsFile)) return;
+
+            if (!File.Exists(settingsFile))
+                File.Copy(oldSettingsFile, settingsFile);
+            File.Delete(oldSettingsFile);
+        }
+
+        static void UpgradeRepositoryUrl([NotNull] string settingsFile)
+        {
+            // Make sure the extension repository URL is up to date (but preserve custom entries)
+            var settings = JObject.Parse(File.ReadAllText(settingsFile));
+            if (!_oldRepositories.Contains(settings["ExtensionRepository"].Value<string>())) return;
+
+            settings.Property("ExtensionRepository").Value = _currentRepository;
+            File.WriteAllText(settingsFile, settings.ToString());
         }
     }
 }

@@ -20,7 +20,7 @@ steps:
 - task: DotNetCoreInstaller@0
   inputs:
     packageType: sdk
-    version: 2.1.503
+    version: 2.1.505
   displayName: 'Upgrade .NET Core'
 
 - script: |
@@ -39,7 +39,7 @@ steps:
   displayName: 'Install prerequisites'
 
 - powershell: |
-    $settingsDir = "$([System.Environment]::GetFolderPath(28))/AudioWorks"
+    $settingsDir = "$([System.Environment]::GetFolderPath(26))/AudioWorks"
     $localFeedDir = (New-Item "$settingsDir/LocalFeed" -ItemType Directory).FullName
     Get-ChildItem -Path AudioWorks/src/Extensions -Filter *.nupkg -Recurse | Select-Object -ExpandProperty FullName | % { mono /usr/local/bin/nuget.exe add $_ -Source $localFeedDir -NonInteractive }
     $content = Get-Content AudioWorks/src/AudioWorks.Common/settings.json | ConvertFrom-Json
@@ -47,15 +47,17 @@ steps:
     $content.ExtensionRepository = $localFeedDir
     $content | ConvertTo-Json | Set-Content "$settingsDir/settings.json"
     dotnet test AudioWorks/tests/AudioWorks.Api.Tests --no-build --configuration Release --filter "FullyQualifiedName=AudioWorks.Api.Tests.AudioFileTests.HasExpectedPath"
-    Get-ChildItem -Path AudioWorks/tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*%2c[*]JetBrains.*" /p:IncludeDirectory="$settingsDir/Extensions/netcoreapp2.1/*%2c$($_.FullName)/bin/$($env:BUILDCONFIGURATION)/netcoreapp2.1/AudioWorks.Commands/netcoreapp2.1" }
+    $testResult = 0
+    Get-ChildItem -Path AudioWorks/tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*%2c[*]JetBrains.*" /p:IncludeDirectory="$settingsDir/Extensions/netcoreapp2.1/*%2c$($_.FullName)/bin/$($env:BUILDCONFIGURATION)/netcoreapp2.1/AudioWorks.Commands/netcoreapp2.1"; if ($LastExitCode -ne 0) { $testResult = $LastExitCode } }
+    exit $testResult
   displayName: 'Run tests'
 
 - task: PublishTestResults@2
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
-    failTaskOnFailedTests: true
   displayName: 'Publish test results'
+  condition: succeededOrFailed()
 
 - script: |
     reportgenerator -reports:AudioWorks/tests/*/coverage.*.xml -targetdir:Reports/Cobertura -reporttypes:Cobertura
