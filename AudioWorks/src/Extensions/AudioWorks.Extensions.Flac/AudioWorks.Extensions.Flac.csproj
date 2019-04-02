@@ -7,7 +7,7 @@
     <Version>1.4.0</Version>
     <Revision>$(BUILD_BUILDID)</Revision>
     <Revision Condition="'$(Revision)'==''">0</Revision>
-    <FileVersion>1.3.2.$(Revision)</FileVersion>
+    <FileVersion>1.4.0.$(Revision)</FileVersion>
     <Authors>Jeremy Herbison</Authors>
     <Company />
     <Product>AudioWorks</Product>
