@@ -28,13 +28,14 @@ namespace AudioWorks.Common
     /// </summary>
     public static class ConfigurationManager
     {
-        const string _currentRepository = "https://www.myget.org/F/audioworks-extensions-v3/api/v3/index.json";
+        const string _currentRepository = "https://www.myget.org/F/audioworks-extensions-v4/api/v3/index.json";
 
         static readonly List<string> _oldRepositories = new List<string>(new[]
         {
             "https://www.myget.org/F/audioworks-extensions/api/v3/index.json",
             "https://www.myget.org/F/audioworks-extensions-v1/api/v3/index.json",
-            "https://www.myget.org/F/audioworks-extensions-v2/api/v3/index.json"
+            "https://www.myget.org/F/audioworks-extensions-v2/api/v3/index.json",
+            "https://www.myget.org/F/audioworks-extensions-v3/api/v3/index.json"
         });
 
         /// <summary>
