@@ -13,21 +13,24 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using AudioWorks.Extensibility;
 using System.Collections.Generic;
 using System.Linq;
+using AudioWorks.Extensibility;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Api
 {
     /// <summary>
     /// Provides information about available audio file formats, and helper methods for loading them.
     /// </summary>
+    [PublicAPI]
     public static class AudioFileManager
     {
         /// <summary>
         /// Gets information about the available audio file formats.
         /// </summary>
         /// <returns>The format info.</returns>
+        [NotNull]
         public static IEnumerable<AudioFileFormatInfo> GetFormatInfo()
         {
             return ExtensionProviderWrapper.GetFactories<IAudioInfoDecoder>()

@@ -15,6 +15,7 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace AudioWorks.Api
 {
@@ -28,15 +29,17 @@ namespace AudioWorks.Api
         /// Gets the file extension that this format uses.
         /// </summary>
         /// <value>The file extension.</value>
+        [NotNull]
         public string Extension { get; }
 
         /// <summary>
         /// Gets the audio format.
         /// </summary>
         /// <value>The format.</value>
+        [NotNull]
         public string Format { get; }
 
-        internal AudioFileFormatInfo(IDictionary<string, object> metadata)
+        internal AudioFileFormatInfo([NotNull, ItemNotNull] IDictionary<string, object> metadata)
         {
             Extension = (string) metadata["Extension"];
             Format = (string) metadata["Format"];
