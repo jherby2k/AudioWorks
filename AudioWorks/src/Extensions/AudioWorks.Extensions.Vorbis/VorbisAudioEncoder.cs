@@ -18,6 +18,7 @@ using System;
 using System.Buffers;
 #endif
 using System.Composition;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
