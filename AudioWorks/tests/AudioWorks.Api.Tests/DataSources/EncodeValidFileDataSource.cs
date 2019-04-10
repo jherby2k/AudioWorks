@@ -200,8 +200,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "44AA2E52CED28503D02D51957B19DF74"
 #else
-                "DA1B22653EA13248457445321394ABFF",
-                "DA1B22653EA13248457445321394ABFF"
+                "CB1D6A33DA49FC73DF635D5E586B3723",
+                "CB1D6A33DA49FC73DF635D5E586B3723"
 #endif
             },
 
@@ -216,8 +216,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "588ACB7827AF0D1A6A18751EEFEA3604"
 #else
-                "D240AE43A260F2CB43B6B00C771342B8",
-                "D240AE43A260F2CB43B6B00C771342B8"
+                "283E4BC36FF501D0270EC0D65A1B155F",
+                "283E4BC36FF501D0270EC0D65A1B155F"
 #endif
             },
 
@@ -232,8 +232,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "3983A342A074A7E8871FEF4FBE0AC73F"
 #else
-                "4C8DC1C6AFBF380117E3E82B1E815AD6",
-                "4C8DC1C6AFBF380117E3E82B1E815AD6"
+                "B2B05B6CA5D2637A53EE6B3DA1E2E81E",
+                "B2B05B6CA5D2637A53EE6B3DA1E2E81E"
 #endif
             },
 
@@ -248,8 +248,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "8A532C4C9D61AF027BC6F684C59FE9A6"
 #else
-                "C97923466544A38E62AF59CA54ECDDC9",
-                "C97923466544A38E62AF59CA54ECDDC9"
+                "300CAF6DBE50F55C656479C09C80F549",
+                "300CAF6DBE50F55C656479C09C80F549"
 #endif
             },
 
@@ -264,8 +264,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "4A4DE0494E31D82F446421C876FB10EA"
 #else
-                "B5C92EBB7AB8FA63093BCB5054790CEF",
-                "B5C92EBB7AB8FA63093BCB5054790CEF"
+                "D1D9B1C83E566E5636B4AABAE68A53E8",
+                "D1D9B1C83E566E5636B4AABAE68A53E8"
 #endif
             },
 
@@ -280,8 +280,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "A6B18F2B4DDC51DC37154410E701251F"
 #else
-                "D90EE4DAD902F9315C903037EF7884C3",
-                "D90EE4DAD902F9315C903037EF7884C3"
+                "C542D7414270A8005180955BC067AAD2",
+                "C542D7414270A8005180955BC067AAD2"
 #endif
             },
 
@@ -296,8 +296,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "CC3E8D9A5B48AE40CB9D0EDD38D433B5"
 #else
-                "666A57DB8FBF422B87B7021DB3B3EE1B",
-                "666A57DB8FBF422B87B7021DB3B3EE1B"
+                "3EF5A3226AAE8B9FB8CF1071FB1F4283",
+                "3EF5A3226AAE8B9FB8CF1071FB1F4283"
 #endif
             },
 
@@ -312,8 +312,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "93016EE621E1F515BDAF0D405917DA25"
 #else
-                "B893FF9BF70F1385A6F11959674D0989",
-                "B893FF9BF70F1385A6F11959674D0989"
+                "17861B26D0B7A7EAAE797A88A3DDAD09",
+                "17861B26D0B7A7EAAE797A88A3DDAD09"
 #endif
             },
 
@@ -332,8 +332,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "3983A342A074A7E8871FEF4FBE0AC73F"
 #else
-                "4C8DC1C6AFBF380117E3E82B1E815AD6",
-                "4C8DC1C6AFBF380117E3E82B1E815AD6"
+                "B2B05B6CA5D2637A53EE6B3DA1E2E81E",
+                "B2B05B6CA5D2637A53EE6B3DA1E2E81E"
 #endif
             },
 
@@ -352,8 +352,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "D352B276E4712ABBA3A8F1B9CA8BAB55"
 #else
-                "EA0E6BB691169DDBF56B7293C1EC2FA0",
-                "EA0E6BB691169DDBF56B7293C1EC2FA0"
+                "7A1DB858F2D081888F77E40DB326AC90",
+                "7A1DB858F2D081888F77E40DB326AC90"
 #endif
             },
 
@@ -372,8 +372,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "C73F21F10850A4542EEA2435226F1DEB"
 #else
-                "756A63E648F02A5BAE9FE76B026050A8",
-                "756A63E648F02A5BAE9FE76B026050A8"
+                "0E1F80EC1E6DA0B214B4B48B8D8B9A47",
+                "0E1F80EC1E6DA0B214B4B48B8D8B9A47"
 #endif
             },
 
@@ -392,8 +392,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "3983A342A074A7E8871FEF4FBE0AC73F"
 #else
-                "4C8DC1C6AFBF380117E3E82B1E815AD6",
-                "4C8DC1C6AFBF380117E3E82B1E815AD6"
+                "B2B05B6CA5D2637A53EE6B3DA1E2E81E",
+                "B2B05B6CA5D2637A53EE6B3DA1E2E81E"
 #endif
             },
 
@@ -412,8 +412,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "7DBB3E3E8079E60932AA5F8B4D9CD57C"
 #else
-                "F9F6F9ED54A42B67228617C1710AF7F6",
-                "F9F6F9ED54A42B67228617C1710AF7F6"
+                "760DD05CEDE71C7F9B69F23010C8BC29",
+                "760DD05CEDE71C7F9B69F23010C8BC29"
 #endif
             },
 
@@ -432,8 +432,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "3983A342A074A7E8871FEF4FBE0AC73F"
 #else
-                "4C8DC1C6AFBF380117E3E82B1E815AD6",
-                "4C8DC1C6AFBF380117E3E82B1E815AD6"
+                "B2B05B6CA5D2637A53EE6B3DA1E2E81E",
+                "B2B05B6CA5D2637A53EE6B3DA1E2E81E"
 #endif
             },
 
@@ -452,8 +452,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "3983A342A074A7E8871FEF4FBE0AC73F"
 #else
-                "4C8DC1C6AFBF380117E3E82B1E815AD6",
-                "4C8DC1C6AFBF380117E3E82B1E815AD6"
+                "B2B05B6CA5D2637A53EE6B3DA1E2E81E",
+                "B2B05B6CA5D2637A53EE6B3DA1E2E81E"
 #endif
             },
 
@@ -472,8 +472,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "FFB7D9F0F4CDF37EDBA799FE371424A7"
 #else
-                "9486C386DEFAE335BD46C8867B59ECCD",
-                "9486C386DEFAE335BD46C8867B59ECCD"
+                "D19405704036182A720AADD70F1C1BB0",
+                "D19405704036182A720AADD70F1C1BB0"
 #endif
             },
 
@@ -492,8 +492,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "F03F417B853C560705CD424AD329EFBC"
 #else
-                "23D680BF6916737C15E438D39F5D7BC0",
-                "23D680BF6916737C15E438D39F5D7BC0"
+                "C45FD63C6BAF49A37A9019063B975F69",
+                "C45FD63C6BAF49A37A9019063B975F69"
 #endif
             },
 
@@ -1722,8 +1722,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "738178D4B462373D934D228C4A82C1E0"
 #else
-                "ED535E5C67B9EE0957D58E1EB8124158",
-                "ED535E5C67B9EE0957D58E1EB8124158"
+                "48FB0655BD5730B8DE83A69CE6606989",
+                "48FB0655BD5730B8DE83A69CE6606989"
 #endif
             },
 
@@ -1741,8 +1741,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "4E39AB0FDDEDB3EA444E9F874D627A25"
 #else
-                "CB61E7BB603092313C5D5E141D2188FE",
-                "CB61E7BB603092313C5D5E141D2188FE"
+                "01D92AFE644FCA99676BDB7F2719384D",
+                "01D92AFE644FCA99676BDB7F2719384D"
 #endif
             },
 
@@ -1760,8 +1760,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "733244985AA835C9C7B36FB18C6FEBD6"
 #else
-                "7CD2FC94813058B6A47C8B53DFA11CEE",
-                "7CD2FC94813058B6A47C8B53DFA11CEE"
+                "DA4FD2B1DF8E97DACEB0818C3C5D4A61",
+                "DA4FD2B1DF8E97DACEB0818C3C5D4A61"
 #endif
             },
 
@@ -1779,8 +1779,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "36A8224974E97D78AFF5C7CFA2F7AEDC"
 #else
-                "A8CF14D30559FBB49A9CE468924EBD12",
-                "A8CF14D30559FBB49A9CE468924EBD12"
+                "A9472CF99A5029F29C3E3440B2A725FE",
+                "A9472CF99A5029F29C3E3440B2A725FE"
 #endif
             },
 
@@ -1798,8 +1798,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "92D75343184BCC158795A7B7E9042211"
 #else
-                "9FD54F359E34C9714ECB70FDF6804FEC",
-                "9FD54F359E34C9714ECB70FDF6804FEC"
+                "5C7139C872A467371512CFDF4CA2801F",
+                "5C7139C872A467371512CFDF4CA2801F"
 #endif
             },
 
@@ -1817,8 +1817,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "9A0F96C0DEBAB71FD1DAA96288864883"
 #else
-                "2E4668B7F6F6FE935E82019D91470D60",
-                "2E4668B7F6F6FE935E82019D91470D60"
+                "45B8F1212F569A3715646040BB1CADA9",
+                "45B8F1212F569A3715646040BB1CADA9"
 #endif
             },
 
@@ -1836,8 +1836,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "4E0FA8F81B728E85EEE2B347965AB42D"
 #else
-                "8C08F9C59831A0EF5D6DDB88EE2EB2CA",
-                "8C08F9C59831A0EF5D6DDB88EE2EB2CA"
+                "3ABCC84E2DA559211D5CB8C4D5807810",
+                "3ABCC84E2DA559211D5CB8C4D5807810"
 #endif
             },
 
@@ -1855,8 +1855,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "4E0FA8F81B728E85EEE2B347965AB42D"
 #else
-                "8C08F9C59831A0EF5D6DDB88EE2EB2CA",
-                "8C08F9C59831A0EF5D6DDB88EE2EB2CA"
+                "3ABCC84E2DA559211D5CB8C4D5807810",
+                "3ABCC84E2DA559211D5CB8C4D5807810"
 #endif
             },
 
@@ -1875,8 +1875,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "19FED7709729025B3B872DA904B2EC20"
 #else
-                "8BABA3CAEDF0553F1B1301B5F7512BD6",
-                "8BABA3CAEDF0553F1B1301B5F7512BD6"
+                "C06D2E290A5AF84194267144414AD2FB",
+                "C06D2E290A5AF84194267144414AD2FB"
 #endif
             },
 
@@ -1895,8 +1895,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "D256FD4F9FD69A42EB39B915633970B6"
 #else
-                "70CFD76214458B69BA60201B280AB061",
-                "70CFD76214458B69BA60201B280AB061"
+                "0E53AD3D8B3B9139D50F04AE438F9D5E",
+                "0E53AD3D8B3B9139D50F04AE438F9D5E"
 #endif
             },
 
@@ -1916,8 +1916,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "733244985AA835C9C7B36FB18C6FEBD6"
 #else
-                "7CD2FC94813058B6A47C8B53DFA11CEE",
-                "7CD2FC94813058B6A47C8B53DFA11CEE"
+                "DA4FD2B1DF8E97DACEB0818C3C5D4A61",
+                "DA4FD2B1DF8E97DACEB0818C3C5D4A61"
 #endif
             },
 
@@ -1937,8 +1937,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "163BB28847D6D19F33BA89B9A9BE0BAA"
 #else
-                "04978FA3F4718F76C8BAA78EC1454346",
-                "04978FA3F4718F76C8BAA78EC1454346"
+                "7D05638316212F739F6BF15ED894AF24",
+                "7D05638316212F739F6BF15ED894AF24"
 #endif
             },
 
@@ -1958,8 +1958,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "F8332CC8B5B0A63F8F1DEC3E6B10C79A"
 #else
-                "EC567F760CB3FF35962EA015026EE16D",
-                "EC567F760CB3FF35962EA015026EE16D"
+                "D46EE71C3FF5B1C61D016972BE9BBC46",
+                "D46EE71C3FF5B1C61D016972BE9BBC46"
 #endif
             },
 
@@ -1979,8 +1979,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "6B91A80210D065277B7D73F2EC4EFB00"
 #else
-                "5CF4F81A1F1EBABFB7D153970EF5D3F1",
-                "5CF4F81A1F1EBABFB7D153970EF5D3F1"
+                "FB561924D6828C62E1BC4A26245B5364",
+                "FB561924D6828C62E1BC4A26245B5364"
 #endif
             },
 
@@ -2000,8 +2000,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "3175BF4C12BB57181EEF01F48BD0B489"
 #else
-                "82947F4262A932185C57A2512298C9BF",
-                "82947F4262A932185C57A2512298C9BF"
+                "52D18D24F46C4D647510012AB0ECD2D4",
+                "52D18D24F46C4D647510012AB0ECD2D4"
 #endif
             },
 
@@ -2021,8 +2021,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "9B357D4D2A24C48FE45FE559D2456EE2"
 #else
-                "0C63C637FEBC46C4633693BE1D0FD28D",
-                "0C63C637FEBC46C4633693BE1D0FD28D"
+                "B0B8AAE55E06B1026CE5A854FE2A12BC",
+                "B0B8AAE55E06B1026CE5A854FE2A12BC"
 #endif
             },
 
@@ -2043,8 +2043,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "9B357D4D2A24C48FE45FE559D2456EE2"
 #else
-                "0C63C637FEBC46C4633693BE1D0FD28D",
-                "0C63C637FEBC46C4633693BE1D0FD28D"
+                "B0B8AAE55E06B1026CE5A854FE2A12BC",
+                "B0B8AAE55E06B1026CE5A854FE2A12BC"
 #endif
             },
 
@@ -2065,8 +2065,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "AB341C45F387E300554DC1350034E6D6"
 #else
-                "14FBB8DC1DEF0B6466BE813561804BA1",
-                "14FBB8DC1DEF0B6466BE813561804BA1"
+                "507FC9D4D061124B1D0597B530039F29",
+                "507FC9D4D061124B1D0597B530039F29"
 #endif
             },
 
@@ -2086,8 +2086,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "733244985AA835C9C7B36FB18C6FEBD6"
 #else
-                "7CD2FC94813058B6A47C8B53DFA11CEE",
-                "7CD2FC94813058B6A47C8B53DFA11CEE"
+                "DA4FD2B1DF8E97DACEB0818C3C5D4A61",
+                "DA4FD2B1DF8E97DACEB0818C3C5D4A61"
 #endif
             },
 
@@ -2108,8 +2108,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "9B357D4D2A24C48FE45FE559D2456EE2"
 #else
-                "0C63C637FEBC46C4633693BE1D0FD28D",
-                "0C63C637FEBC46C4633693BE1D0FD28D"
+                "B0B8AAE55E06B1026CE5A854FE2A12BC",
+                "B0B8AAE55E06B1026CE5A854FE2A12BC"
 #endif
             },
 
@@ -2129,8 +2129,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "733244985AA835C9C7B36FB18C6FEBD6"
 #else
-                "7CD2FC94813058B6A47C8B53DFA11CEE",
-                "7CD2FC94813058B6A47C8B53DFA11CEE"
+                "DA4FD2B1DF8E97DACEB0818C3C5D4A61",
+                "DA4FD2B1DF8E97DACEB0818C3C5D4A61"
 #endif
             },
 
@@ -2150,8 +2150,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "380662754A2C3A8CD837F53D8E09A5CA"
 #else
-                "CA839C1F9E4A6B720D27FBC6DB7B6EEC",
-                "CA839C1F9E4A6B720D27FBC6DB7B6EEC"
+                "80D0C8F78A4575912410660568BBA99D",
+                "80D0C8F78A4575912410660568BBA99D"
 #endif
             },
 
@@ -2171,8 +2171,8 @@ namespace AudioWorks.Api.Tests.DataSources
 #elif OSX
                 "33717D870DC9A3B9BCCD191BA8ADAAEE"
 #else
-                "6FADE298A3D1D6AD7CB815741249AF6C",
-                "6FADE298A3D1D6AD7CB815741249AF6C"
+                "3AF8982E501F01E50A502704324CD270",
+                "3AF8982E501F01E50A502704324CD270"
 #endif
             },
 
@@ -2389,7 +2389,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "133CB3DC2A123817FF98113C6D15274A"
 #else
                 "6506A8741E88C2EBB6F654B1E8587BE8",
-                "C7CD733ADBB937579E3C20CB52C9309A"
+                "96749DB47470729587EFB6E024D3E766"
 #endif
             },
 
