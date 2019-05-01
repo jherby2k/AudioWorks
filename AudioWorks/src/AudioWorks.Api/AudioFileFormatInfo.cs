@@ -22,6 +22,7 @@ namespace AudioWorks.Api
     /// <summary>
     /// Provides information about an audio file format.
     /// </summary>
+    [PublicAPI]
     [Serializable]
     public sealed class AudioFileFormatInfo
     {
@@ -39,7 +40,7 @@ namespace AudioWorks.Api
         [NotNull]
         public string Format { get; }
 
-        internal AudioFileFormatInfo([NotNull, ItemNotNull] IDictionary<string, object> metadata)
+        internal AudioFileFormatInfo([NotNull] IDictionary<string, object> metadata)
         {
             Extension = (string) metadata["Extension"];
             Format = (string) metadata["Format"];

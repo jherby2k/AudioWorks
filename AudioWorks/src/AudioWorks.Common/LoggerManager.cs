@@ -24,6 +24,7 @@ namespace AudioWorks.Common
     /// <summary>
     /// Manages logging to various destinations.
     /// </summary>
+    [PublicAPI]
     public static class LoggerManager
     {
         [NotNull] static readonly List<ILoggerProvider> _providerSingletons = new List<ILoggerProvider>();

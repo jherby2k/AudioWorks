@@ -26,6 +26,7 @@ namespace AudioWorks.Common
     /// <summary>
     /// Manages the retrieval of configuration settings from disk.
     /// </summary>
+    [PublicAPI]
     public static class ConfigurationManager
     {
         const string _currentRepository = "https://www.myget.org/F/audioworks-extensions-v4/api/v3/index.json";
