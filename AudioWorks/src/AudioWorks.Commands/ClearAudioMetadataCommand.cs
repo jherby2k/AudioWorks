@@ -73,6 +73,8 @@ namespace AudioWorks.Commands
         [Parameter]
         public SwitchParameter PassThru { get; set; }
 
+        [SuppressMessage("Maintainability", "CA1502:Avoid excessive complexity", Justification =
+            "Complexity cannot easily be reduced and the method is easy to understand, test, and maintain.")]
         protected override void ProcessRecord()
         {
             if (Title) AudioFile.Metadata.Title = string.Empty;
@@ -94,6 +96,7 @@ namespace AudioWorks.Commands
                 AudioFile.Metadata.TrackGain = string.Empty;
                 AudioFile.Metadata.AlbumGain = string.Empty;
             }
+
             if (CoverArt) AudioFile.Metadata.CoverArt = null;
 
             // If no switches were specified, clear everything
