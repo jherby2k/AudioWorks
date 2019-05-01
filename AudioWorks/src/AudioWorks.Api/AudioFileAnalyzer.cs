@@ -17,6 +17,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Composition;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -147,6 +148,8 @@ namespace AudioWorks.Api
         /// <param name="audioFiles">The audio files.</param>
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
+        [SuppressMessage("Maintainability", "CA1506:Avoid excessive class coupling", Justification =
+            "Method is considered maintainable.")]
         public async Task AnalyzeAsync(
             [CanBeNull] IProgress<ProgressToken> progress,
             CancellationToken cancellationToken,

@@ -16,6 +16,7 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Collections.Generic;
 using System.Composition;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -176,6 +177,8 @@ namespace AudioWorks.Api
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
         [NotNull, ItemNotNull]
+        [SuppressMessage("Maintainability", "CA1506:Avoid excessive class coupling", Justification =
+            "Method is considered maintainable.")]
         public async Task<IEnumerable<ITaggedAudioFile>> EncodeAsync(
             [CanBeNull] IProgress<ProgressToken> progress,
             CancellationToken cancellationToken,
