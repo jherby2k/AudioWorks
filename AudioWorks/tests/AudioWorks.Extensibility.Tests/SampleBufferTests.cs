@@ -211,7 +211,8 @@ namespace AudioWorks.Extensibility.Tests
             var leftOutSamples = new float[2];
             var rightOutSamples = new float[2];
 
-            new SampleBuffer(new[] { 1f, 2f, 1f, 2f }, 2).CopyTo(leftOutSamples, rightOutSamples);
+            using (var samples = new SampleBuffer(new[] { 1f, 2f, 1f, 2f }, 2))
+                samples.CopyTo(leftOutSamples, rightOutSamples);
 
             Assert.All(leftOutSamples, value => Assert.Equal(1f, value));
             Assert.All(rightOutSamples, value => Assert.Equal(2f, value));
@@ -245,7 +246,8 @@ namespace AudioWorks.Extensibility.Tests
             var leftOutSamples = new int[2];
             var rightOutSamples = new int[2];
 
-            new SampleBuffer(new[] { 1, 2, 1, 2 }, 2, 16).CopyTo(leftOutSamples, rightOutSamples, 16);
+            using (var samples = new SampleBuffer(new[] { 1, 2, 1, 2 }, 2, 16))
+                samples.CopyTo(leftOutSamples, rightOutSamples, 16);
 
             Assert.All(leftOutSamples, value => Assert.Equal(1, value));
             Assert.All(rightOutSamples, value => Assert.Equal(2, value));
@@ -257,7 +259,8 @@ namespace AudioWorks.Extensibility.Tests
             var leftOutSamples = new int[2];
             var rightOutSamples = new int[2];
 
-            new SampleBuffer(new[] { 1, 1 }, new[] { 2, 2 }, 16).CopyTo(leftOutSamples, rightOutSamples, 16);
+            using (var samples = new SampleBuffer(new[] { 1, 1 }, new[] { 2, 2 }, 16))
+                samples.CopyTo(leftOutSamples, rightOutSamples, 16);
 
             Assert.All(leftOutSamples, value => Assert.Equal(1, value));
             Assert.All(rightOutSamples, value => Assert.Equal(2, value));
@@ -290,7 +293,8 @@ namespace AudioWorks.Extensibility.Tests
             var inSamples = new[] { 1f, 2f, 1f, 2f };
             var outSamples = new float[4];
 
-            new SampleBuffer(inSamples, 2).CopyToInterleaved(outSamples);
+            using (var samples = new SampleBuffer(inSamples, 2))
+                samples.CopyToInterleaved(outSamples);
 
             Assert.Equal(inSamples, outSamples);
         }
@@ -340,7 +344,8 @@ namespace AudioWorks.Extensibility.Tests
             var inSamples = new[] { 1, 2, 1, 2 };
             var outSamples = new int[4];
 
-            new SampleBuffer(inSamples, 16).CopyToInterleaved(outSamples, 16);
+            using (var samples = new SampleBuffer(inSamples, 16))
+                samples.CopyToInterleaved(outSamples, 16);
 
             Assert.Equal(inSamples, outSamples);
         }
@@ -350,7 +355,8 @@ namespace AudioWorks.Extensibility.Tests
         {
             var outSamples = new int[4];
 
-            new SampleBuffer(new[] { 1, 1 }, new[] { 2, 2 }, 16).CopyToInterleaved(outSamples, 16);
+            using (var samples = new SampleBuffer(new[] { 1, 1 }, new[] { 2, 2 }, 16))
+                samples.CopyToInterleaved(outSamples, 16);
 
             Assert.Equal(new[] { 1, 2, 1, 2 }, outSamples);
         }
@@ -400,7 +406,8 @@ namespace AudioWorks.Extensibility.Tests
             var inSamples = new byte[] { 1, 2, 1, 2 };
             var outSamples = new byte[4];
 
-            new SampleBuffer(inSamples, 2, 16).CopyToInterleaved(outSamples, 16);
+            using (var samples = new SampleBuffer(inSamples, 2, 16))
+                samples.CopyToInterleaved(outSamples, 16);
 
             Assert.Equal(inSamples, outSamples);
         }
@@ -411,7 +418,8 @@ namespace AudioWorks.Extensibility.Tests
             var inSamples = new[] { int.MaxValue, int.MinValue };
             var outSamples = new int[inSamples.Length];
 
-            new SampleBuffer(inSamples, 32).CopyToInterleaved(outSamples, 32);
+            using (var samples = new SampleBuffer(inSamples, 32))
+                samples.CopyToInterleaved(outSamples, 32);
 
             Assert.True(true);
         }
@@ -459,7 +467,8 @@ namespace AudioWorks.Extensibility.Tests
             }
             var outSamples = new float[inSamples.Length];
 
-            new SampleBuffer(inSamples, bitsPerSample).CopyTo(outSamples);
+            using (var samples = new SampleBuffer(inSamples, bitsPerSample))
+                samples.CopyTo(outSamples);
 
             Assert.All(outSamples, sample =>
                 Assert.True(sample >= -1.0 && sample <= 1.0));
@@ -501,7 +510,8 @@ namespace AudioWorks.Extensibility.Tests
             }
             var outSamples = new int[inSamples.Length];
 
-            new SampleBuffer(inSamples, 2, bitsPerSample).CopyToInterleaved(outSamples, bitsPerSample);
+            using (var samples = new SampleBuffer(inSamples, 2, bitsPerSample))
+                samples.CopyToInterleaved(outSamples, bitsPerSample);
 
             Assert.Equal(inSamples, outSamples);
         }
