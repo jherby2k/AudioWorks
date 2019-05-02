@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="Custom Rules" ToolsVersion="15.0">
+<RuleSet Name="Custom Rules" ToolsVersion="16.0">
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
     <Rule Id="CA1000" Action="Warning" />
     <Rule Id="CA1001" Action="Warning" />
@@ -59,7 +59,6 @@
     <Rule Id="CA1060" Action="Warning" />
     <Rule Id="CA1061" Action="Warning" />
     <Rule Id="CA1062" Action="Warning" />
-    <Rule Id="CA1063" Action="None" />
     <Rule Id="CA1064" Action="Warning" />
     <Rule Id="CA1065" Action="Warning" />
     <Rule Id="CA1300" Action="Warning" />
@@ -223,7 +222,6 @@
     <Rule Id="CA2232" Action="Warning" />
     <Rule Id="CA2233" Action="Warning" />
     <Rule Id="CA2234" Action="Warning" />
-    <Rule Id="CA2235" Action="None" />
     <Rule Id="CA2236" Action="Warning" />
     <Rule Id="CA2237" Action="Warning" />
     <Rule Id="CA2238" Action="Warning" />
