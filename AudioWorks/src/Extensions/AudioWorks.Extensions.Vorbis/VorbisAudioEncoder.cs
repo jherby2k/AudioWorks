@@ -117,7 +117,6 @@ namespace AudioWorks.Extensions.Vorbis
             _outputStream = stream;
         }
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public unsafe void Submit(SampleBuffer samples)
         {
             if (samples.Frames == 0) return;
@@ -126,6 +125,7 @@ namespace AudioWorks.Extensions.Vorbis
                 samples = _replayGainExport.Value.Process(samples);
 
             // Request an unmanaged buffer for each channel, then copy the samples to them
+            // ReSharper disable once PossibleNullReferenceException
             var buffers = new Span<IntPtr>(_encoder.GetBuffer(samples.Frames).ToPointer(), samples.Channels);
             if (samples.Channels == 1)
             {

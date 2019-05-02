@@ -120,7 +120,6 @@ namespace AudioWorks.Extensions.Lame
             _encoder.InitializeParameters();
         }
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public void Submit(SampleBuffer samples)
         {
             if (samples.Frames == 0) return;
@@ -132,12 +131,14 @@ namespace AudioWorks.Extensions.Lame
             {
                 Span<float> interleavedSamples = stackalloc float[samples.Frames * samples.Channels];
                 samples.CopyToInterleaved(interleavedSamples);
+                // ReSharper disable once PossibleNullReferenceException
                 _encoder.EncodeInterleaved(interleavedSamples, samples.Frames);
             }
             else if (samples.Channels == 1)
             {
                 Span<float> monoSamples = stackalloc float[samples.Frames];
                 samples.CopyTo(monoSamples);
+                // ReSharper disable once PossibleNullReferenceException
                 _encoder.Encode(monoSamples, null);
             }
             else
@@ -145,17 +146,19 @@ namespace AudioWorks.Extensions.Lame
                 Span<float> leftSamples = stackalloc float[samples.Frames];
                 Span<float> rightSamples = stackalloc float[samples.Frames];
                 samples.CopyTo(leftSamples, rightSamples);
+                // ReSharper disable once PossibleNullReferenceException
                 _encoder.Encode(leftSamples, rightSamples);
             }
         }
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public void Finish()
         {
+            // ReSharper disable once PossibleNullReferenceException
             _encoder.Flush();
             _encoder.UpdateLameTag();
 
             // The pre-allocation was based on estimates
+            // ReSharper disable once PossibleNullReferenceException
             _stream.SetLength(_stream.Position);
         }
 

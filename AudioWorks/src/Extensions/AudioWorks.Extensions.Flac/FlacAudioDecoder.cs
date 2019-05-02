@@ -22,8 +22,10 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
 {
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
+        "Instances are created via MEF.")]
     [AudioDecoderExport(".flac")]
-    public sealed class FlacAudioDecoder : IAudioDecoder, IDisposable
+    sealed class FlacAudioDecoder : IAudioDecoder, IDisposable
     {
         [CanBeNull] AudioStreamDecoder _decoder;
 
@@ -35,9 +37,9 @@ namespace AudioWorks.Extensions.Flac
             _decoder.Initialize();
         }
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public SampleBuffer DecodeSamples()
         {
+            // ReSharper disable once PossibleNullReferenceException
             while (_decoder.GetState() != DecoderState.EndOfStream)
             {
                 if (!_decoder.ProcessSingle())

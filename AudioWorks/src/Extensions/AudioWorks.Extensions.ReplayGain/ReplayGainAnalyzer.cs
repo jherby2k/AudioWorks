@@ -50,19 +50,19 @@ namespace AudioWorks.Extensions.ReplayGain
             _groupState.Handles.Enqueue(_analyzer.Handle);
         }
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public void Submit(SampleBuffer samples)
         {
             if (samples.Frames == 0) return;
 
             Span<float> buffer = stackalloc float[samples.Frames * samples.Channels];
             samples.CopyToInterleaved(buffer);
+            // ReSharper disable once PossibleNullReferenceException
             _analyzer.AddFrames(buffer, (uint) samples.Frames);
         }
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public AudioMetadata GetResult()
         {
+            // ReSharper disable twice PossibleNullReferenceException
             var peak = _analyzer.GetPeak();
             _groupState.AddPeak(peak);
 
@@ -74,7 +74,6 @@ namespace AudioWorks.Extensions.ReplayGain
             };
         }
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public AudioMetadata GetGroupResult()
         {
             return new AudioMetadata

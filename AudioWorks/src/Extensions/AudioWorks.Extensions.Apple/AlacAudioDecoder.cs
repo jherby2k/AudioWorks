@@ -52,7 +52,6 @@ namespace AudioWorks.Extensions.Apple
             _magicCookie = GetMagicCookie(_audioFile, _converter);
         }
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public unsafe SampleBuffer DecodeSamples()
         {
             Span<int> buffer = stackalloc int[(int) (_defaultFrameCount * _outputDescription.ChannelsPerFrame)];
@@ -67,6 +66,7 @@ namespace AudioWorks.Extensions.Apple
             bufferList.Buffers[0].Data = new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)));
 
             var frameCount = _defaultFrameCount;
+            // ReSharper disable once PossibleNullReferenceException
             _converter.FillBuffer(ref frameCount, ref bufferList, null);
 
             if (frameCount == 0)
