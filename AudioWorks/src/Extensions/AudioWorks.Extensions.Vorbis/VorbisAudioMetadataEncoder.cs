@@ -18,6 +18,7 @@ using System;
 using System.Buffers;
 #endif
 using System.Buffers.Binary;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.CompilerServices;
 using AudioWorks.Common;
@@ -26,8 +27,10 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Vorbis
 {
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
+        "Instances are created via MEF.")]
     [AudioMetadataEncoderExport(".ogg", "Vorbis", "Vorbis Comments")]
-    public sealed class VorbisAudioMetadataEncoder : IAudioMetadataEncoder
+    sealed class VorbisAudioMetadataEncoder : IAudioMetadataEncoder
     {
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary();
 

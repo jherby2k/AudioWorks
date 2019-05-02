@@ -28,8 +28,10 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Vorbis
 {
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
+        "Instances are created via MEF.")]
     [AudioEncoderExport("Vorbis", "Ogg Vorbis")]
-    public sealed class VorbisAudioEncoder : IAudioEncoder, IDisposable
+    sealed class VorbisAudioEncoder : IAudioEncoder, IDisposable
     {
         [CanBeNull] Stream _outputStream;
         [CanBeNull] OggStream _oggStream;

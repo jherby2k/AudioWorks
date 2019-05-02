@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 #if NETSTANDARD2_0
 using System.Buffers;
 #endif
@@ -24,8 +25,10 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Wave
 {
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
+        "Instances are created via MEF.")]
     [AudioEncoderExport("Wave", "Waveform Audio File Format")]
-    public sealed class WaveAudioEncoder : IAudioEncoder, IDisposable
+    sealed class WaveAudioEncoder : IAudioEncoder, IDisposable
     {
         int _bitsPerSample;
         int _bytesPerSample;

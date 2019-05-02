@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using AudioWorks.Common;
@@ -22,8 +23,10 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp4
 {
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
+        "Instances are created via MEF.")]
     [AudioMetadataEncoderExport(".m4a", "iTunes", "iTunes-compatible MPEG-4")]
-    public sealed class ItunesAudioMetadataEncoder : IAudioMetadataEncoder
+    sealed class ItunesAudioMetadataEncoder : IAudioMetadataEncoder
     {
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
         {

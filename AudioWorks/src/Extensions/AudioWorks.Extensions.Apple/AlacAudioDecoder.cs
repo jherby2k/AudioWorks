@@ -24,8 +24,10 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Apple
 {
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
+        "Instances are created via MEF.")]
     [AudioDecoderExport(".m4a")]
-    public sealed class AlacAudioDecoder : IAudioDecoder, IDisposable
+    sealed class AlacAudioDecoder : IAudioDecoder, IDisposable
     {
         const uint _defaultFrameCount = 4096;
 

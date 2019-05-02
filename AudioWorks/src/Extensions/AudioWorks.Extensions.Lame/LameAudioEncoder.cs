@@ -24,8 +24,10 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Lame
 {
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
+        "Instances are created via MEF.")]
     [AudioEncoderExport("LameMP3", "Lame MPEG Audio Layer 3")]
-    public sealed class LameAudioEncoder : IAudioEncoder, IDisposable
+    sealed class LameAudioEncoder : IAudioEncoder, IDisposable
     {
         [CanBeNull] Stream _stream;
         [CanBeNull] Encoder _encoder;

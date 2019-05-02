@@ -15,6 +15,7 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Buffers.Binary;
+using System.Diagnostics.CodeAnalysis;
 #if NETSTANDARD2_0
 using System.Buffers;
 #endif
@@ -30,8 +31,10 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Opus
 {
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
+        "Instances are created via MEF.")]
     [AudioInfoDecoderExport(".opus", "Opus")]
-    public sealed class OpusAudioInfoDecoder : IAudioInfoDecoder
+    sealed class OpusAudioInfoDecoder : IAudioInfoDecoder
     {
         const string _format = "Opus";
 

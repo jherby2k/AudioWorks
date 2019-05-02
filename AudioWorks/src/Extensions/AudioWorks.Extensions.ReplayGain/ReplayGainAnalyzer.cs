@@ -22,8 +22,10 @@ using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.ReplayGain
 {
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
+        "Instances are created via MEF.")]
     [AudioAnalyzerExport("ReplayGain", "ReplayGain 2.0")]
-    public sealed class ReplayGainAnalyzer : IAudioAnalyzer
+    sealed class ReplayGainAnalyzer : IAudioAnalyzer
     {
         const int _referenceLevel = -18;
 

@@ -15,6 +15,7 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Composition;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -26,8 +27,10 @@ using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensions.Apple
 {
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
+        "Instances are created via MEF.")]
     [AudioEncoderExport("AppleAAC", "Apple MPEG-4 Advanced Audio Codec")]
-    public sealed class AacAudioEncoder : IAudioEncoder, IDisposable
+    sealed class AacAudioEncoder : IAudioEncoder, IDisposable
     {
         static readonly uint[] _vbrQualities = { 0, 9, 18, 27, 36, 45, 54, 63, 73, 82, 91, 100, 109, 118, 127 };
 
