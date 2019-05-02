@@ -37,6 +37,8 @@ namespace AudioWorks.Extensions.ReplayGain
             ["PeakAnalysis"] = new StringSettingInfo("Simple", "Interpolated")
         };
 
+        [SuppressMessage("Usage", "CA2000:Dispose objects before losing scope", Justification =
+            "GroupState is disposed by the GroupToken, outside this method.")]
         public void Initialize(AudioInfo info, SettingDictionary settings, GroupToken groupToken)
         {
             _analyzer = new R128Analyzer((uint) info.Channels, (uint) info.SampleRate,
