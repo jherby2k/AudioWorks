@@ -57,8 +57,8 @@ namespace AudioWorks.Commands
                 _client = new TelemetryClient();
                 _client.Context.Device.OperatingSystem = RuntimeInformation.OSDescription;
                 _client.Context.Component.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-                _client.Context.Properties["Framework"] = RuntimeInformation.FrameworkDescription;
-                _client.Context.Properties["Architecture"] = RuntimeInformation.ProcessArchitecture.ToString();
+                _client.Context.GlobalProperties["Framework"] = RuntimeInformation.FrameworkDescription;
+                _client.Context.GlobalProperties["Architecture"] = RuntimeInformation.ProcessArchitecture.ToString();
             }
 
             _client.TrackEvent(eventName, properties);
