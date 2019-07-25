@@ -20,7 +20,7 @@ steps:
 - task: DotNetCoreInstaller@0
   inputs:
     packageType: sdk
-    version: 2.1.507
+    version: 2.1.508
   displayName: 'Upgrade .NET Core'
 
 - script: |
