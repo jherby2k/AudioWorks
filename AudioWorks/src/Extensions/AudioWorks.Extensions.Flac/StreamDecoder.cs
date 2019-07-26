@@ -30,7 +30,9 @@ namespace AudioWorks.Extensions.Flac
         [NotNull] readonly NativeCallbacks.StreamDecoderWriteCallback _writeCallback;
         [NotNull] readonly NativeCallbacks.StreamDecoderMetadataCallback _metadataCallback;
         [NotNull] readonly NativeCallbacks.StreamDecoderErrorCallback _errorCallback;
+#pragma warning disable CA2213 // Disposable fields should be disposed
         [NotNull] readonly Stream _stream;
+#pragma warning restore CA2213 // Disposable fields should be disposed
         readonly long _streamLength;
 
         [NotNull]

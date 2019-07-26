@@ -23,7 +23,9 @@ namespace AudioWorks.Extensions.Opus
 {
     sealed class Encoder : IDisposable
     {
+#pragma warning disable CA2213 // Disposable fields should be disposed
         [NotNull] readonly Stream _realStream;
+#pragma warning restore CA2213 // Disposable fields should be disposed
         [NotNull] Stream _outputStream;
         readonly int _channels;
         readonly int _totalSeconds;

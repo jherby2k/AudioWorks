@@ -33,7 +33,9 @@ namespace AudioWorks.Extensions.Vorbis
     [AudioEncoderExport("Vorbis", "Ogg Vorbis")]
     sealed class VorbisAudioEncoder : IAudioEncoder, IDisposable
     {
+#pragma warning disable CA2213 // Disposable fields should be disposed
         [CanBeNull] Stream _outputStream;
+#pragma warning restore CA2213 // Disposable fields should be disposed
         [CanBeNull] OggStream _oggStream;
         [CanBeNull] VorbisEncoder _encoder;
         [CanBeNull] Export<IAudioFilter> _replayGainExport;

@@ -28,7 +28,9 @@ namespace AudioWorks.Extensions.Lame
     sealed class Encoder : IDisposable
     {
         [NotNull] readonly EncoderHandle _handle = SafeNativeMethods.Init();
+#pragma warning disable CA2213 // Disposable fields should be disposed
         [NotNull] readonly Stream _stream;
+#pragma warning restore CA2213 // Disposable fields should be disposed
         long _startPosition;
 
         internal Encoder([NotNull] Stream stream)

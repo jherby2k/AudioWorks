@@ -29,7 +29,9 @@ namespace AudioWorks.Extensions.Apple
         [CanBeNull] readonly NativeCallbacks.AudioFileWriteCallback _writeCallback;
         [CanBeNull] readonly NativeCallbacks.AudioFileSetSizeCallback _setSizeCallback;
         // ReSharper restore PrivateFieldCanBeConvertedToLocalVariable
+#pragma warning disable CA2213 // Disposable fields should be disposed
         [NotNull] readonly Stream _stream;
+#pragma warning restore CA2213 // Disposable fields should be disposed
         long _endOfData;
 
         [NotNull]
