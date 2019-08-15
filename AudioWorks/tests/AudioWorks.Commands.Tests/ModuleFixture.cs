@@ -36,6 +36,7 @@ namespace AudioWorks.Commands.Tests
             // This bypasses the execution policy (InitialSessionState.ExecutionPolicy isn't available with PowerShell 5)
             state.AuthorizationManager = new AuthorizationManager("Microsoft.PowerShell");
 
+            // ReSharper disable once RedundantExplicitParamsArrayCreation
             state.ImportPSModule(new[]
             {
                 Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).FullName, _moduleProject)

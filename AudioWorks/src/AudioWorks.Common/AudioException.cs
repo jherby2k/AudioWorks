@@ -65,14 +65,5 @@ namespace AudioWorks.Common
             : base(info, context)
         {
         }
-
-        /// <inheritdoc/>
-#if NETSTANDARD2_0
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-#else
-        public override void GetObjectData([NotNull] SerializationInfo info, StreamingContext context)
-#endif
-        {
-        }
     }
 }
