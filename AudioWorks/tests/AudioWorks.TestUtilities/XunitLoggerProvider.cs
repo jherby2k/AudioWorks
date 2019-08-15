@@ -26,16 +26,10 @@ namespace AudioWorks.TestUtilities
 
         public LogLevel MinLogLevel { get; }
 
-        public XunitLoggerProvider(LogLevel minLogLevel = LogLevel.Debug)
-        {
-            MinLogLevel = minLogLevel;
-        }
+        public XunitLoggerProvider(LogLevel minLogLevel = LogLevel.Debug) => MinLogLevel = minLogLevel;
 
         [NotNull]
-        public ILogger CreateLogger([CanBeNull] string categoryName)
-        {
-            return new XunitLogger(this, categoryName);
-        }
+        public ILogger CreateLogger([CanBeNull] string categoryName) => new XunitLogger(this, categoryName);
 
         public void Dispose()
         {

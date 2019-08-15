@@ -35,10 +35,8 @@ namespace AudioWorks.Extensibility
         /// <returns>The extension factories.</returns>
         [NotNull]
         public static IEnumerable<ExportFactory<T, IDictionary<string, object>>> GetFactories<T>()
-            where T : class
-        {
-            return ExtensionContainer<T>.Instance.Factories;
-        }
+            where T : class =>
+            ExtensionContainer<T>.Instance.Factories;
 
         /// <summary>
         /// Gets an <see cref="IEnumerable{T}"/> of extensions wrapped in <see cref="ExportFactory{T}"/> objects to
@@ -50,10 +48,8 @@ namespace AudioWorks.Extensibility
         /// <returns>The extension factories.</returns>
         [NotNull]
         public static IEnumerable<ExportFactory<T>> GetFactories<T>([NotNull] string key, [NotNull] string value)
-            where T : class
-        {
-            return ExtensionContainer<T>.Instance.Factories.Where(factory =>
+            where T : class =>
+            ExtensionContainer<T>.Instance.Factories.Where(factory =>
                 value.Equals((string) factory.Metadata[key], StringComparison.OrdinalIgnoreCase));
-        }
     }
 }

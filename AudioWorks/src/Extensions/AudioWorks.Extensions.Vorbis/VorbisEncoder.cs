@@ -46,41 +46,24 @@ namespace AudioWorks.Extensions.Vorbis
             SafeNativeMethods.VorbisBlockInit(DspState, _block);
         }
 
-        internal IntPtr GetBuffer(int samples)
-        {
-            return SafeNativeMethods.VorbisAnalysisBuffer(DspState, samples);
-        }
+        internal IntPtr GetBuffer(int samples) => SafeNativeMethods.VorbisAnalysisBuffer(DspState, samples);
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
-        internal void Wrote(int samples)
-        {
-            SafeNativeMethods.VorbisAnalysisWrote(DspState, samples);
-        }
+        internal void Wrote(int samples) => SafeNativeMethods.VorbisAnalysisWrote(DspState, samples);
 
-        internal bool BlockOut()
-        {
-            return SafeNativeMethods.VorbisAnalysisBlockOut(DspState, _block) == 1;
-        }
+        internal bool BlockOut() => SafeNativeMethods.VorbisAnalysisBlockOut(DspState, _block) == 1;
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
-        internal void Analysis(IntPtr packet)
-        {
-            SafeNativeMethods.VorbisAnalysis(_block, packet);
-        }
+        internal void Analysis(IntPtr packet) => SafeNativeMethods.VorbisAnalysis(_block, packet);
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
-        internal void AddBlock()
-        {
-            SafeNativeMethods.VorbisBitrateAddBlock(_block);
-        }
+        internal void AddBlock() => SafeNativeMethods.VorbisBitrateAddBlock(_block);
 
-        internal bool FlushPacket(out OggPacket packet)
-        {
-            return SafeNativeMethods.VorbisBitrateFlushPacket(DspState, out packet) == 1;
-        }
+        internal bool FlushPacket(out OggPacket packet) =>
+            SafeNativeMethods.VorbisBitrateFlushPacket(DspState, out packet) == 1;
 
         public void Dispose()
         {
@@ -98,9 +81,6 @@ namespace AudioWorks.Extensions.Vorbis
             Marshal.FreeHGlobal(_info);
         }
 
-        ~VorbisEncoder()
-        {
-            FreeUnmanaged();
-        }
+        ~VorbisEncoder() => FreeUnmanaged();
     }
 }

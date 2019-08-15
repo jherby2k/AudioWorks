@@ -22,15 +22,11 @@ namespace AudioWorks.Common.Tests
 {
     public sealed class ImageUnsupportedExceptionTests
     {
-        public ImageUnsupportedExceptionTests([NotNull] ITestOutputHelper outputHelper)
-        {
+        public ImageUnsupportedExceptionTests([NotNull] ITestOutputHelper outputHelper) =>
             LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
-        }
 
         [Fact(DisplayName = "ImageUnsupportedException is an AudioException")]
-        public void IsAudioException()
-        {
+        public void IsAudioException() =>
             Assert.IsAssignableFrom<AudioException>(new ImageUnsupportedException());
-        }
     }
 }

@@ -36,10 +36,8 @@ namespace AudioWorks.Extensions.ReplayGain
                 calculateTruePeaks ? Modes.Global | Modes.TruePeak : Modes.Global | Modes.SamplePeak);
         }
 
-        internal void AddFrames(Span<float> samples, uint frames)
-        {
+        internal void AddFrames(Span<float> samples, uint frames) =>
             SafeNativeMethods.AddFramesFloat(Handle, MemoryMarshal.GetReference(samples), new UIntPtr(frames));
-        }
 
         internal double GetPeak()
         {

@@ -56,8 +56,7 @@ namespace AudioWorks.Extensions.Flac
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
-        internal void Initialize()
-        {
+        internal void Initialize() =>
             SafeNativeMethods.StreamDecoderInitStream(Handle,
                 _readCallback,
                 _seekCallback,
@@ -68,28 +67,15 @@ namespace AudioWorks.Extensions.Flac
                 _metadataCallback,
                 _errorCallback,
                 IntPtr.Zero);
-        }
 
-        internal bool ProcessMetadata()
-        {
-            return SafeNativeMethods.StreamDecoderProcessUntilEndOfMetadata(Handle);
-        }
+        internal bool ProcessMetadata() => SafeNativeMethods.StreamDecoderProcessUntilEndOfMetadata(Handle);
 
-        internal void Finish()
-        {
-            SafeNativeMethods.StreamDecoderFinish(Handle);
-        }
+        internal void Finish() => SafeNativeMethods.StreamDecoderFinish(Handle);
 
         [Pure]
-        internal DecoderState GetState()
-        {
-            return SafeNativeMethods.StreamDecoderGetState(Handle);
-        }
+        internal DecoderState GetState() => SafeNativeMethods.StreamDecoderGetState(Handle);
 
-        public void Dispose()
-        {
-            Handle.Dispose();
-        }
+        public void Dispose() => Handle.Dispose();
 
         [SuppressMessage("Performance", "CA1801:Review unused parameters",
             Justification = "Part of FLAC API")]
@@ -125,19 +111,13 @@ namespace AudioWorks.Extensions.Flac
 
         [SuppressMessage("Performance", "CA1801:Review unused parameters",
             Justification = "Part of FLAC API")]
-        bool EofCallback(IntPtr handle, IntPtr userData)
-        {
-            // Optimization - this is accessed frequently
-            return _stream.Position >= _streamLength;
-        }
+        bool EofCallback(IntPtr handle, IntPtr userData) => _stream.Position >= _streamLength;
 
         [SuppressMessage("Performance", "CA1801:Review unused parameters",
             Justification = "Part of FLAC API")]
         protected virtual DecoderWriteStatus WriteCallback(IntPtr handle, ref Frame frame, IntPtr buffer,
-            IntPtr userData)
-        {
-            return DecoderWriteStatus.Continue;
-        }
+            IntPtr userData) =>
+            DecoderWriteStatus.Continue;
 
         protected virtual void MetadataCallback(IntPtr handle, IntPtr metadataBlock, IntPtr userData)
         {

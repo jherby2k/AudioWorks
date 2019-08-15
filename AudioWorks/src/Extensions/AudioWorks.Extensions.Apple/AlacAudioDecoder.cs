@@ -87,10 +87,7 @@ namespace AudioWorks.Extensions.Apple
             GC.SuppressFinalize(this);
         }
 
-        void FreeUnmanaged()
-        {
-            Marshal.FreeHGlobal(_magicCookie);
-        }
+        void FreeUnmanaged() => Marshal.FreeHGlobal(_magicCookie);
 
         static AudioStreamBasicDescription GetOutputDescription(AudioStreamBasicDescription inputDescription)
         {
@@ -135,9 +132,6 @@ namespace AudioWorks.Extensions.Apple
             return cookie;
         }
 
-        ~AlacAudioDecoder()
-        {
-            FreeUnmanaged();
-        }
+        ~AlacAudioDecoder() => FreeUnmanaged();
     }
 }

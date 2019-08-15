@@ -30,10 +30,7 @@ namespace AudioWorks.Extensions.Flac
         {
         }
 
-        internal bool ProcessSingle()
-        {
-            return SafeNativeMethods.StreamDecoderProcessSingle(Handle);
-        }
+        internal bool ProcessSingle() => SafeNativeMethods.StreamDecoderProcessSingle(Handle);
 
         protected override unsafe DecoderWriteStatus WriteCallback(IntPtr handle, ref Frame frame, IntPtr buffer,
             IntPtr userData)

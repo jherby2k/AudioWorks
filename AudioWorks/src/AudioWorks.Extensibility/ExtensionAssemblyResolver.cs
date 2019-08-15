@@ -66,8 +66,7 @@ namespace AudioWorks.Extensibility
                 ResolveWithLoader(assemblyFiles);
         }
 
-        void ResolveFullFramework([NotNull, ItemNotNull] IEnumerable<string> assemblyFiles)
-        {
+        void ResolveFullFramework([NotNull, ItemNotNull] IEnumerable<string> assemblyFiles) =>
             AppDomain.CurrentDomain.AssemblyResolve += (context, args) =>
             {
                 var assemblyName = new AssemblyName(args.Name);
@@ -86,20 +85,16 @@ namespace AudioWorks.Extensibility
 
                 return result;
             };
-        }
 #else
             ResolveWithLoader(assemblyFiles);
         }
 #endif
 
         [NotNull]
-        static Assembly LoadWithLoader([CanBeNull] string path)
-        {
-            return new ExtensionLoadContext().LoadFromAssemblyPath(path);
-        }
+        static Assembly LoadWithLoader([CanBeNull] string path) =>
+            new ExtensionLoadContext().LoadFromAssemblyPath(path);
 
-        void ResolveWithLoader([NotNull, ItemNotNull] IEnumerable<string> assemblyFiles)
-        {
+        void ResolveWithLoader([NotNull, ItemNotNull] IEnumerable<string> assemblyFiles) =>
             AssemblyLoadContext.Default.Resolving += (context, name) =>
             {
                 _logger.LogTrace("Attempting to resolve a dependency on '{1}'.", name.FullName);
@@ -117,6 +112,5 @@ namespace AudioWorks.Extensibility
 
                 return result;
             };
-        }
     }
 }

@@ -47,10 +47,7 @@ namespace AudioWorks.Commands.Tests
             AlbumGain = "0.8"
         };
 
-        public ClearAudioMetadataTests([NotNull] ModuleFixture moduleFixture)
-        {
-            _moduleFixture = moduleFixture;
-        }
+        public ClearAudioMetadataTests([NotNull] ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
 
         [Fact(DisplayName = "Clear-AudioMetadata command exists")]
         public void CommandExists()

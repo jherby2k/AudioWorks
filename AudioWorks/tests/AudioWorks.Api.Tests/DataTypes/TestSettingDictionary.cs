@@ -35,11 +35,9 @@ namespace AudioWorks.Api.Tests.DataTypes
             }
         }
 
-        public void Serialize([NotNull] IXunitSerializationInfo info)
-        {
+        public void Serialize([NotNull] IXunitSerializationInfo info) =>
             info.AddValue("Items", this.Select(item =>
                 $"{item.Key}|{item.Value}|{item.Value.GetType().AssemblyQualifiedName}"
             ).ToArray());
-        }
     }
 }

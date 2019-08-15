@@ -29,10 +29,7 @@ namespace AudioWorks.Commands.Tests
     {
         [NotNull] readonly ModuleFixture _moduleFixture;
 
-        public GetAudioFileTests([NotNull] ModuleFixture moduleFixture)
-        {
-            _moduleFixture = moduleFixture;
-        }
+        public GetAudioFileTests([NotNull] ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
 
         [Fact(DisplayName = "Get-AudioFile command exists")]
         public void CommandExists()

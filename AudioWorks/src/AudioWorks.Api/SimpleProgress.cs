@@ -33,15 +33,9 @@ namespace AudioWorks.Api
         /// Initializes a new instance of the <see cref="SimpleProgress{T}"/> class.
         /// </summary>
         /// <param name="handler">The handler to invoke for each reported progress value.</param>
-        public SimpleProgress([NotNull] Action<T> handler)
-        {
-            _handler = handler;
-        }
+        public SimpleProgress([NotNull] Action<T> handler) => _handler = handler;
 
         /// <inheritdoc/>
-        public void Report([NotNull] T value)
-        {
-            _handler(value);
-        }
+        public void Report([NotNull] T value) => _handler(value);
     }
 }

@@ -25,10 +25,7 @@ namespace AudioWorks.Commands.Tests
     {
         [NotNull] readonly ModuleFixture _moduleFixture;
 
-        public GetAudioAnalyzerInfoTests([NotNull] ModuleFixture moduleFixture)
-        {
-            _moduleFixture = moduleFixture;
-        }
+        public GetAudioAnalyzerInfoTests([NotNull] ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
 
         [Fact(DisplayName = "Get-AudioAnalyzerInfo command exists")]
         public void CommandExists()

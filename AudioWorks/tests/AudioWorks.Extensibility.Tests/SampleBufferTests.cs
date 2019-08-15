@@ -24,142 +24,84 @@ namespace AudioWorks.Extensibility.Tests
 {
     public sealed class SampleBufferTests
     {
-        public SampleBufferTests([NotNull] ITestOutputHelper outputHelper)
-        {
+        public SampleBufferTests([NotNull] ITestOutputHelper outputHelper) =>
             LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
-        }
 
         [Fact(DisplayName = "SampleBuffer.Empty returns an empty SampleBuffer")]
-        public void SampleBufferEmptyReturnsEmpty()
-        {
+        public void SampleBufferEmptyReturnsEmpty() =>
             Assert.Equal(0, SampleBuffer.Empty.Frames);
-        }
 
         [Fact(DisplayName = "Constructor (float, interleaved) throws an exception when the number of interleaved samples is invalid")]
-        public void ConstructorFloatInterleavedInvalidSamplesThrowsException()
-        {
-            Assert.Throws<ArgumentException>(() =>
-                new SampleBuffer(new float[3], 2));
-        }
+        public void ConstructorFloatInterleavedInvalidSamplesThrowsException() =>
+            Assert.Throws<ArgumentException>(() => new SampleBuffer(new float[3], 2));
 
         [Fact(DisplayName = "Constructor (float, interleaved) throws an exception when the number of channels is too low")]
-        public void ConstructorFloatInterleavedChannelsTooLowThrowsException()
-        {
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                new SampleBuffer(new float[2], 0));
-        }
+        public void ConstructorFloatInterleavedChannelsTooLowThrowsException() =>
+            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new float[2], 0));
 
         [Fact(DisplayName = "Constructor (float, interleaved) throws an exception when the number of channels is too high")]
-        public void ConstructorFloatInterleavedChannelsTooHighThrowsException()
-        {
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                new SampleBuffer(new float[2], 3));
-        }
+        public void ConstructorFloatInterleavedChannelsTooHighThrowsException() =>
+            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new float[2], 3));
 
         [Fact(DisplayName = "Constructor (int, mono) throws an exception when the bits per sample is too high")]
-        public void ConstructorIntMonoBitsPerSampleTooHighThrowsException()
-        {
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                new SampleBuffer(new int[2], 33));
-        }
+        public void ConstructorIntMonoBitsPerSampleTooHighThrowsException() =>
+            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new int[2], 33));
 
         [Fact(DisplayName = "Constructor (int, mono) throws an exception when the bits per sample is too low")]
-        public void ConstructorIntMonoBitsPerSampleTooLowThrowsException()
-        {
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                new SampleBuffer(new int[2], 0));
-        }
+        public void ConstructorIntMonoBitsPerSampleTooLowThrowsException() =>
+            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new int[2], 0));
 
         [Fact(DisplayName = "Constructor (int, stereo) throws an exception when the channels contain different numbers of samples")]
-        public void ConstructorIntStereoSamplesDoNotMatchThrowsException()
-        {
-            Assert.Throws<ArgumentException>(() =>
-                new SampleBuffer(new int[1], new int[2], 16));
-        }
+        public void ConstructorIntStereoSamplesDoNotMatchThrowsException() =>
+            Assert.Throws<ArgumentException>(() => new SampleBuffer(new int[1], new int[2], 16));
 
         [Fact(DisplayName = "Constructor (int, stereo) throws an exception when the bits per sample is too high")]
-        public void ConstructorIntStereoBitsPerSampleTooHighThrowsException()
-        {
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                new SampleBuffer(new int[2], new int[2], 33));
-        }
+        public void ConstructorIntStereoBitsPerSampleTooHighThrowsException() =>
+            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new int[2], new int[2], 33));
 
         [Fact(DisplayName = "Constructor (int, stereo) throws an exception when the bits per sample is too low")]
-        public void ConstructorIntStereoBitsPerSampleTooLowThrowsException()
-        {
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                new SampleBuffer(new int[2], new int[2], 0));
-        }
+        public void ConstructorIntStereoBitsPerSampleTooLowThrowsException() =>
+            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new int[2], new int[2], 0));
 
         [Fact(DisplayName = "Constructor (int, interleaved) throws an exception when the number of interleaved samples is invalid")]
-        public void ConstructorIntInterleavedInvalidSamplesThrowsException()
-        {
-            Assert.Throws<ArgumentException>(() =>
-                new SampleBuffer(new int[3], 2, 16));
-        }
+        public void ConstructorIntInterleavedInvalidSamplesThrowsException() =>
+            Assert.Throws<ArgumentException>(() => new SampleBuffer(new int[3], 2, 16));
 
         [Fact(DisplayName = "Constructor (int, interleaved) throws an exception when the number of channels is too low")]
-        public void ConstructorIntInterleavedChannelsTooLowThrowsException()
-        {
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                new SampleBuffer(new int[2], 0, 16));
-        }
+        public void ConstructorIntInterleavedChannelsTooLowThrowsException() =>
+            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new int[2], 0, 16));
 
         [Fact(DisplayName = "Constructor (int, interleaved) throws an exception when the number of channels is too high")]
-        public void ConstructorIntInterleavedChannelsTooHighThrowsException()
-        {
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                new SampleBuffer(new int[2], 3, 16));
-        }
+        public void ConstructorIntInterleavedChannelsTooHighThrowsException() =>
+            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new int[2], 3, 16));
 
         [Fact(DisplayName = "Constructor (int, interleaved) throws an exception when the bits per sample is too high")]
-        public void ConstructorIntIntInterleavedBitsPerSampleTooHighThrowsException()
-        {
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                new SampleBuffer(new int[2], 2, 33));
-        }
+        public void ConstructorIntIntInterleavedBitsPerSampleTooHighThrowsException() =>
+            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new int[2], 2, 33));
 
         [Fact(DisplayName = "Constructor (int, interleaved) throws an exception when the bits per sample is too low")]
-        public void ConstructorIntIntInterleavedBitsPerSampleTooLowThrowsException()
-        {
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                new SampleBuffer(new int[2], 2, 0));
-        }
+        public void ConstructorIntIntInterleavedBitsPerSampleTooLowThrowsException() =>
+            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new int[2], 2, 0));
 
         [Fact(DisplayName = "Constructor (packed, interleaved) throws an exception when the number of interleaved samples is invalid")]
-        public void ConstructorPackedInterleavedInvalidSamplesThrowsException()
-        {
-            Assert.Throws<ArgumentException>(() =>
-                new SampleBuffer(new byte[5], 2, 16));
-        }
+        public void ConstructorPackedInterleavedInvalidSamplesThrowsException() =>
+            Assert.Throws<ArgumentException>(() => new SampleBuffer(new byte[5], 2, 16));
 
         [Fact(DisplayName = "Constructor (packed, interleaved) throws an exception when the number of channels is too low")]
-        public void ConstructorPackedInterleavedChannelsTooLowThrowsException()
-        {
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                new SampleBuffer(new byte[4], 0, 16));
-        }
+        public void ConstructorPackedInterleavedChannelsTooLowThrowsException() =>
+            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new byte[4], 0, 16));
 
         [Fact(DisplayName = "Constructor (packed, interleaved) throws an exception when the number of channels is too high")]
-        public void ConstructorPackedInterleavedChannelsTooHighThrowsException()
-        {
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                new SampleBuffer(new byte[4], 3, 16));
-        }
+        public void ConstructorPackedInterleavedChannelsTooHighThrowsException() =>
+            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new byte[4], 3, 16));
 
         [Fact(DisplayName = "Constructor (packed, interleaved) throws an exception when the bits per sample is too high")]
-        public void ConstructorPackedIntInterleavedBitsPerSampleTooHighThrowsException()
-        {
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                new SampleBuffer(new byte[4], 2, 33));
-        }
+        public void ConstructorPackedIntInterleavedBitsPerSampleTooHighThrowsException() =>
+            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new byte[4], 2, 33));
 
         [Fact(DisplayName = "Constructor (packed, interleaved) throws an exception when the bits per sample is too low")]
-        public void ConstructorPackedIntInterleavedBitsPerSampleTooLowThrowsException()
-        {
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                new SampleBuffer(new byte[4], 2, 0));
-        }
+        public void ConstructorPackedIntInterleavedBitsPerSampleTooLowThrowsException() =>
+            Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new byte[4], 2, 0));
 
         [Fact(DisplayName = "CopyTo (float, mono) throws an exception when the object has been disposed")]
         public void CopyToFloatMonoThrowsExceptionWhenDisposed()

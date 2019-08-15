@@ -36,10 +36,8 @@ namespace AudioWorks.Common
         /// </summary>
         /// <param name="valueType">Type of the setting value.</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="valueType"/> is null.</exception>
-        protected SettingInfo([NotNull] Type valueType)
-        {
+        protected SettingInfo([NotNull] Type valueType) =>
             ValueType = valueType ?? throw new ArgumentNullException(nameof(valueType));
-        }
 
         /// <summary>
         /// Validates the specified value.

@@ -43,10 +43,7 @@ namespace AudioWorks.Commands
         }
 
 #endif
-        protected override void BeginProcessing()
-        {
-            Telemetry.TrackFirstLaunch();
-        }
+        protected override void BeginProcessing() => Telemetry.TrackFirstLaunch();
 
         private protected void ProcessLogMessages()
         {

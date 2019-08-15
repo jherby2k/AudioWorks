@@ -26,10 +26,7 @@ namespace AudioWorks.Commands.Tests
     {
         [NotNull] readonly ModuleFixture _moduleFixture;
 
-        public SetAudioMetadataTests([NotNull] ModuleFixture moduleFixture)
-        {
-            _moduleFixture = moduleFixture;
-        }
+        public SetAudioMetadataTests([NotNull] ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
 
         [Fact(DisplayName = "Set-AudioMetadata command exists")]
         public void CommandExists()

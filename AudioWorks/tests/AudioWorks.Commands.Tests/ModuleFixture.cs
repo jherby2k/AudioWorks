@@ -46,9 +46,6 @@ namespace AudioWorks.Commands.Tests
             Runspace.Open();
         }
 
-        public void Dispose()
-        {
-            Runspace.Close();
-        }
+        public void Dispose() => Runspace.Close();
     }
 }

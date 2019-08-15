@@ -92,10 +92,7 @@ namespace AudioWorks.Extensions.Wave
             _writer.BaseStream.SetLength(_writer.BaseStream.Position);
         }
 
-        public void Dispose()
-        {
-            _writer?.Dispose();
-        }
+        public void Dispose() => _writer?.Dispose();
 
         void WriteFmtChunk([NotNull] AudioInfo audioInfo)
         {

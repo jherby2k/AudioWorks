@@ -22,15 +22,11 @@ namespace AudioWorks.Common.Tests
 {
     public sealed class AudioEncodingExceptionTests
     {
-        public AudioEncodingExceptionTests([NotNull] ITestOutputHelper outputHelper)
-        {
+        public AudioEncodingExceptionTests([NotNull] ITestOutputHelper outputHelper) =>
             LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
-        }
 
         [Fact(DisplayName = "AudioEncodingException is an AudioException")]
-        public void IsAudioException()
-        {
+        public void IsAudioException() =>
             Assert.IsAssignableFrom<AudioException>(new AudioEncodingException());
-        }
     }
 }

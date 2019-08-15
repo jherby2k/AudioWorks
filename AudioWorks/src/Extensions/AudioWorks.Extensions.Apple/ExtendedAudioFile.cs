@@ -27,10 +27,8 @@ namespace AudioWorks.Extensions.Apple
             AudioStreamBasicDescription description,
             AudioFileType fileType,
             [NotNull] Stream stream)
-            : base(description, fileType, stream)
-        {
+            : base(description, fileType, stream) =>
             SafeNativeMethods.ExtAudioFileWrapAudioFile(Handle, true, out _handle);
-        }
 
         internal void SetProperty<T>(ExtendedAudioFilePropertyId id, T value) where T : unmanaged
         {
@@ -62,10 +60,8 @@ namespace AudioWorks.Extensions.Apple
             }
         }
 
-        internal ExtendedAudioFileStatus Write(AudioBufferList data, uint frames)
-        {
-            return SafeNativeMethods.ExtAudioFileWrite(_handle, frames, ref data);
-        }
+        internal ExtendedAudioFileStatus Write(AudioBufferList data, uint frames) =>
+            SafeNativeMethods.ExtAudioFileWrite(_handle, frames, ref data);
 
         protected override void Dispose(bool disposing)
         {

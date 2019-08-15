@@ -77,9 +77,8 @@ namespace AudioWorks.Api
         {
             var logger = LoggerManager.LoggerFactory.CreateLogger<AudioFile>();
 
+            // Try each info decoder that supports this file extension
             using (var fileStream = File.OpenRead(Path))
-            {
-                // Try each info decoder that supports this file extension
                 foreach (var factory in ExtensionProviderWrapper.GetFactories<IAudioInfoDecoder>(
                     "Extension", IO.Path.GetExtension(Path)))
                 {
@@ -101,7 +100,6 @@ namespace AudioWorks.Api
                         fileStream.Position = 0;
                     }
                 }
-            }
 
             throw new AudioUnsupportedException($"Unable to decode '{Path}' with any loaded extension.");
         }

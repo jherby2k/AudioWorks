@@ -46,30 +46,19 @@ namespace AudioWorks.Extensions.Flac
             _stream = stream;
         }
 
-        internal void SetChannels(uint channels)
-        {
-            SafeNativeMethods.StreamEncoderSetChannels(_handle, channels);
-        }
+        internal void SetChannels(uint channels) => SafeNativeMethods.StreamEncoderSetChannels(_handle, channels);
 
-        internal void SetBitsPerSample(uint bitsPerSample)
-        {
+        internal void SetBitsPerSample(uint bitsPerSample) =>
             SafeNativeMethods.StreamEncoderSetBitsPerSample(_handle, bitsPerSample);
-        }
 
-        internal void SetSampleRate(uint sampleRate)
-        {
+        internal void SetSampleRate(uint sampleRate) =>
             SafeNativeMethods.StreamEncoderSetSampleRate(_handle, sampleRate);
-        }
 
-        internal void SetTotalSamplesEstimate(ulong sampleCount)
-        {
+        internal void SetTotalSamplesEstimate(ulong sampleCount) =>
             SafeNativeMethods.StreamEncoderSetTotalSamplesEstimate(_handle, sampleCount);
-        }
 
-        internal void SetCompressionLevel(uint compressionLevel)
-        {
+        internal void SetCompressionLevel(uint compressionLevel) =>
             SafeNativeMethods.StreamEncoderSetCompressionLevel(_handle, compressionLevel);
-        }
 
         [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods",
             Justification = "Can't pass an array of SafeHandles")]
@@ -138,10 +127,7 @@ namespace AudioWorks.Extensions.Flac
             _stream.SetLength(_endOfData);
         }
 
-        public void Dispose()
-        {
-            _handle.Dispose();
-        }
+        public void Dispose() => _handle.Dispose();
 
         EncoderWriteStatus WriteCallback(IntPtr handle, [NotNull] byte[] buffer, int bytes, uint samples, uint currentFrame, IntPtr userData)
         {
@@ -163,9 +149,6 @@ namespace AudioWorks.Extensions.Flac
         }
 
         [Pure]
-        EncoderState GetState()
-        {
-            return SafeNativeMethods.StreamEncoderGetState(_handle);
-        }
+        EncoderState GetState() => SafeNativeMethods.StreamEncoderGetState(_handle);
     }
 }

@@ -31,38 +31,26 @@ namespace AudioWorks.Api.Tests
     [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class AudioFileAnalyzerTests
     {
-        public AudioFileAnalyzerTests([NotNull] ITestOutputHelper outputHelper)
-        {
+        public AudioFileAnalyzerTests([NotNull] ITestOutputHelper outputHelper) =>
             LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
-        }
 
         [Fact(DisplayName = "AudioFileAnalyzer's constructor throws an exception if the name is null")]
-        public void ConstructorNameNullThrowsException()
-        {
-            Assert.Throws<ArgumentNullException>(() =>
-                new AudioFileAnalyzer(null));
-        }
+        public void ConstructorNameNullThrowsException() =>
+            Assert.Throws<ArgumentNullException>(() => new AudioFileAnalyzer(null));
 
         [Fact(DisplayName = "AudioFileAnalyzer's constructor throws an exception if the name is unsupported")]
-        public void ConstructorNameUnsupportedThrowsException()
-        {
-            Assert.Throws<ArgumentException>(() =>
-                new AudioFileAnalyzer("Foo"));
-        }
+        public void ConstructorNameUnsupportedThrowsException() =>
+            Assert.Throws<ArgumentException>(() => new AudioFileAnalyzer("Foo"));
 
         [Fact(DisplayName = "AudioFileAnalyzer's MaxDegreeOfParallelism property throws an exception if it is less than 1")]
-        public void MaxDegreeOfParallelismTooLowThrowsException()
-        {
+        public void MaxDegreeOfParallelismTooLowThrowsException() =>
             Assert.Throws<ArgumentOutOfRangeException>(() =>
                 new AudioFileAnalyzer("ReplayGain").MaxDegreeOfParallelism = 0);
-        }
 
         [Fact(DisplayName = "AudioFileEncoder's Encode method throws an exception if an audio file is null")]
-        public async void AnalyzeAsyncNullAudioFileThrowsException()
-        {
+        public async void AnalyzeAsyncNullAudioFileThrowsException() =>
             await Assert.ThrowsAsync<ArgumentNullException>(() =>
                 new AudioFileAnalyzer("ReplayGain").AnalyzeAsync(null)).ConfigureAwait(true);
-        }
 
         [Theory(DisplayName = "AudioFileAnalyzer's Analyze method creates the expected metadata")]
         [MemberData(nameof(AnalyzeValidFileDataSource.Data), MemberType = typeof(AnalyzeValidFileDataSource))]

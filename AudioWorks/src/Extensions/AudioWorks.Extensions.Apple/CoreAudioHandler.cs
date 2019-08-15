@@ -73,11 +73,9 @@ namespace AudioWorks.Extensions.Apple
         }
 #if WINDOWS
 
-        static void AddUnmanagedLibraryPath([NotNull] string libPath)
-        {
+        static void AddUnmanagedLibraryPath([NotNull] string libPath) =>
             ((ExtensionLoadContext) AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()))
-                .AddUnmanagedLibraryPath(libPath);
-        }
+            .AddUnmanagedLibraryPath(libPath);
 #endif
     }
 }

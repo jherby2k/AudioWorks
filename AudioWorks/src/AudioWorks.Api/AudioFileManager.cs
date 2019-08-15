@@ -31,10 +31,8 @@ namespace AudioWorks.Api
         /// </summary>
         /// <returns>The format info.</returns>
         [NotNull]
-        public static IEnumerable<AudioFileFormatInfo> GetFormatInfo()
-        {
-            return ExtensionProviderWrapper.GetFactories<IAudioInfoDecoder>()
+        public static IEnumerable<AudioFileFormatInfo> GetFormatInfo() =>
+            ExtensionProviderWrapper.GetFactories<IAudioInfoDecoder>()
                 .Select(factory => new AudioFileFormatInfo(factory.Metadata));
-        }
     }
 }

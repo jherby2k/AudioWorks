@@ -119,11 +119,9 @@ namespace AudioWorks.Extensions.Id3
         }
 
         [Pure]
-        static TextCode GetTextCode([NotNull] string encoding)
-        {
-            return encoding.Equals("Latin1", StringComparison.Ordinal)
+        static TextCode GetTextCode([NotNull] string encoding) =>
+            encoding.Equals("Latin1", StringComparison.Ordinal)
                 ? TextCode.Ascii
                 : TextCode.Utf16;
-        }
     }
 }

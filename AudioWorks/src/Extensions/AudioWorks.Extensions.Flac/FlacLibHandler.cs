@@ -161,11 +161,9 @@ namespace AudioWorks.Extensions.Flac
             }
         }
 #else
-        static void AddUnmanagedLibraryPath([NotNull] string libPath)
-        {
+        static void AddUnmanagedLibraryPath([NotNull] string libPath) =>
             ((ExtensionLoadContext) AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()))
-                .AddUnmanagedLibraryPath(libPath);
-        }
+            .AddUnmanagedLibraryPath(libPath);
 #endif
 #if OSX
 

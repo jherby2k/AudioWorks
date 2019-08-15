@@ -83,20 +83,15 @@ namespace AudioWorks.Extensions.Opus
             }
         }
 
-        internal unsafe void HeaderOut(out OggPacket packet)
-        {
+        internal unsafe void HeaderOut(out OggPacket packet) =>
             packet = new OggPacket
             {
                 Packet = Marshal.ReadIntPtr(Handle.DangerousGetHandle()),
                 Bytes = Marshal.ReadInt32(IntPtr.Add(Handle.DangerousGetHandle(), sizeof(IntPtr))),
                 PacketNumber = 1
             };
-        }
 
-        public void Dispose()
-        {
-            Handle.Dispose();
-        }
+        public void Dispose() => Handle.Dispose();
 
         unsafe void AddTag([NotNull] string key, [NotNull] string value)
         {
@@ -134,10 +129,8 @@ namespace AudioWorks.Extensions.Opus
         }
 
         [NotNull]
-        static string ConvertGain([NotNull] string gain)
-        {
-            return Math.Round((double.Parse(gain, CultureInfo.InvariantCulture) - 5) * 256)
+        static string ConvertGain([NotNull] string gain) =>
+            Math.Round((double.Parse(gain, CultureInfo.InvariantCulture) - 5) * 256)
                 .ToString("F0", CultureInfo.InvariantCulture);
-        }
     }
 }

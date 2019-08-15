@@ -21,10 +21,7 @@ namespace AudioWorks.Extensions.Mp4
     {
         readonly uint _size;
 
-        internal FreeAtom(uint size)
-        {
-            _size = size;
-        }
+        internal FreeAtom(uint size) => _size = size;
 
         internal override void Write(Stream output)
         {

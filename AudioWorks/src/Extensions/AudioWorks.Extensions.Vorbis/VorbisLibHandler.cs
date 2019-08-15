@@ -87,11 +87,9 @@ namespace AudioWorks.Extensions.Vorbis
             return true;
         }
 
-        static void AddUnmanagedLibraryPath([NotNull] string libPath)
-        {
+        static void AddUnmanagedLibraryPath([NotNull] string libPath) =>
             ((ExtensionLoadContext)AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()))
-                .AddUnmanagedLibraryPath(libPath);
-        }
+            .AddUnmanagedLibraryPath(libPath);
 #if LINUX
 
         [NotNull]

@@ -45,10 +45,7 @@ namespace AudioWorks.Api
         }
 
         /// <inheritdoc/>
-        public void LoadMetadata()
-        {
-            _metadata = LoadMetadata(Path);
-        }
+        public void LoadMetadata() => _metadata = LoadMetadata(Path);
 
         /// <inheritdoc/>
         public void SaveMetadata(SettingDictionary settings = null)
@@ -60,9 +57,8 @@ namespace AudioWorks.Api
             // Make sure the provided settings are clean
             AudioMetadataEncoderManager.GetSettingInfoByExtension(extension).ValidateSettings(settings);
 
+            // Try each encoder that supports this file extension
             using (var fileStream = File.Open(Path, FileMode.Open))
-            {
-                // Try each encoder that supports this file extension
                 foreach (var factory in ExtensionProviderWrapper.GetFactories<IAudioMetadataEncoder>(
                     "Extension", extension))
                     using (var export = factory.CreateExport())
@@ -73,7 +69,6 @@ namespace AudioWorks.Api
                         export.Value.WriteMetadata(fileStream, _metadata, settings);
                         return;
                     }
-            }
 
             throw new AudioUnsupportedException("No supporting extensions are available.");
         }

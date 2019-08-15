@@ -91,9 +91,6 @@ namespace AudioWorks.Extensions.Wave
 #endif
         }
 
-        public void Dispose()
-        {
-            _reader?.Dispose();
-        }
+        public void Dispose() => _reader?.Dispose();
     }
 }

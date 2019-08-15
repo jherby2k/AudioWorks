@@ -146,10 +146,8 @@ namespace AudioWorks.Api
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
         [NotNull, ItemNotNull]
         public async Task<IEnumerable<ITaggedAudioFile>> EncodeAsync(
-            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
-        {
-            return await EncodeAsync(null, CancellationToken.None, audioFiles).ConfigureAwait(false);
-        }
+            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles) =>
+            await EncodeAsync(null, CancellationToken.None, audioFiles).ConfigureAwait(false);
 
         /// <summary>
         /// Encodes the specified audio files.
@@ -162,10 +160,8 @@ namespace AudioWorks.Api
         [NotNull, ItemNotNull]
         public async Task<IEnumerable<ITaggedAudioFile>> EncodeAsync(
             CancellationToken cancellationToken,
-            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
-        {
-            return await EncodeAsync(null, cancellationToken, audioFiles).ConfigureAwait(false);
-        }
+            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles) =>
+            await EncodeAsync(null, cancellationToken, audioFiles).ConfigureAwait(false);
 
         /// <summary>
         /// Encodes the specified audio files.

@@ -78,10 +78,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
-        internal void HeaderOut(out OggPacket packet)
-        {
-            SafeNativeMethods.VorbisCommentHeaderOut(_comment, out packet);
-        }
+        internal void HeaderOut(out OggPacket packet) => SafeNativeMethods.VorbisCommentHeaderOut(_comment, out packet);
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
@@ -89,10 +86,8 @@ namespace AudioWorks.Extensions.Vorbis
             IntPtr dspState,
             out OggPacket first,
             out OggPacket second,
-            out OggPacket third)
-        {
+            out OggPacket third) =>
             SafeNativeMethods.VorbisAnalysisHeaderOut(dspState, _comment, out first, out second, out third);
-        }
 
         public void Dispose()
         {
@@ -159,9 +154,6 @@ namespace AudioWorks.Extensions.Vorbis
                 SafeNativeMethods.VorbisCommentClear(ref _comment);
         }
 
-        ~MetadataToVorbisCommentAdapter()
-        {
-            FreeUnmanaged();
-        }
+        ~MetadataToVorbisCommentAdapter() => FreeUnmanaged();
     }
 }

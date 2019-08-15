@@ -33,7 +33,6 @@ namespace AudioWorks.Extensions.Wave
         public AudioInfo ReadAudioInfo(Stream stream)
         {
             using (var reader = new RiffReader(stream))
-            {
                 try
                 {
                     reader.Initialize();
@@ -89,7 +88,6 @@ namespace AudioWorks.Extensions.Wave
                     // The end of the stream was unexpectedly reached
                     throw new AudioInvalidException(e.Message);
                 }
-            }
         }
     }
 }

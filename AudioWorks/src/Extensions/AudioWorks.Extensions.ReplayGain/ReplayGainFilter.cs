@@ -79,31 +79,25 @@ namespace AudioWorks.Extensions.ReplayGain
         }
 
         [Pure]
-        static float CalculateScale([CanBeNull] string gain, [CanBeNull] string peak)
-        {
-            return string.IsNullOrEmpty(gain) || string.IsNullOrEmpty(peak)
+        static float CalculateScale([CanBeNull] string gain, [CanBeNull] string peak) =>
+            string.IsNullOrEmpty(gain) || string.IsNullOrEmpty(peak)
                 ? 1
                 : Math.Min(
                     (float) Math.Pow(10, float.Parse(gain, CultureInfo.InvariantCulture) / 20),
                     1 / float.Parse(peak, CultureInfo.InvariantCulture));
-        }
 
         [Pure, ContractAnnotation("peak:null => null; peak:notnull => notnull")]
-        static string CalculatePeak([CanBeNull] string peak, float scale)
-        {
-            return string.IsNullOrEmpty(peak)
+        static string CalculatePeak([CanBeNull] string peak, float scale) =>
+            string.IsNullOrEmpty(peak)
                 ? string.Empty
                 : string.Format(CultureInfo.InvariantCulture, "{0:0.000000}",
                     float.Parse(peak, CultureInfo.InvariantCulture) * scale);
-        }
 
         [Pure, ContractAnnotation("gain:null => null; gain:notnull => notnull")]
-        static string CalculateGain([CanBeNull] string gain, float scale)
-        {
-            return string.IsNullOrEmpty(gain)
+        static string CalculateGain([CanBeNull] string gain, float scale) =>
+            string.IsNullOrEmpty(gain)
                 ? string.Empty
                 : string.Format(CultureInfo.InvariantCulture, "{0:0.00}",
                     float.Parse(gain, CultureInfo.InvariantCulture) - Math.Log10(scale) * 20);
-        }
     }
 }

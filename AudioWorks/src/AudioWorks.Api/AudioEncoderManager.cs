@@ -55,10 +55,8 @@ namespace AudioWorks.Api
         /// </summary>
         /// <returns>The encoder info.</returns>
         [NotNull]
-        public static IEnumerable<AudioEncoderInfo> GetEncoderInfo()
-        {
-            return ExtensionProviderWrapper.GetFactories<IAudioEncoder>()
+        public static IEnumerable<AudioEncoderInfo> GetEncoderInfo() =>
+            ExtensionProviderWrapper.GetFactories<IAudioEncoder>()
                 .Select(factory => new AudioEncoderInfo(factory.Metadata));
-        }
     }
 }

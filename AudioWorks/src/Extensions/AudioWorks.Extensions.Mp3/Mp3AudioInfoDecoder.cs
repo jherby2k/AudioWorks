@@ -31,7 +31,6 @@ namespace AudioWorks.Extensions.Mp3
         public AudioInfo ReadAudioInfo(Stream stream)
         {
             using (var reader = new FrameReader(stream))
-            {
                 try
                 {
                     var frameHeader = ReadFrameHeader(reader);
@@ -53,7 +52,6 @@ namespace AudioWorks.Extensions.Mp3
                     // If a frame sync couldn't be located, this isn't an MP3
                     throw new AudioInvalidException(e.Message);
                 }
-            }
         }
 
         [NotNull]

@@ -184,9 +184,8 @@ namespace AudioWorks.Extensions.Apple
         }
 
         [Pure]
-        static AudioStreamBasicDescription GetInputDescription([NotNull] AudioInfo info)
-        {
-            return new AudioStreamBasicDescription
+        static AudioStreamBasicDescription GetInputDescription([NotNull] AudioInfo info) =>
+            new AudioStreamBasicDescription
             {
                 SampleRate = info.SampleRate,
                 AudioFormat = AudioFormat.LinearPcm,
@@ -197,7 +196,6 @@ namespace AudioWorks.Extensions.Apple
                 ChannelsPerFrame = (uint) info.Channels,
                 BitsPerChannel = 32
             };
-        }
 
         [Pure]
         static AudioStreamBasicDescription GetOutputDescription(AudioStreamBasicDescription inputDescription)

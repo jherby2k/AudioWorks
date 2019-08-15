@@ -47,9 +47,8 @@ namespace AudioWorks.Extensibility
             var logger = LoggerManager.LoggerFactory.CreateLogger<ExtensionContainerBase>();
             logger.LogDebug("Discovered {0} extension assemblies.", assemblies.Count);
 
+            // Remove any extension assemblies that can't have prerequisites handled automatically
             using (var unvalidatedContainer = new ContainerConfiguration().WithAssemblies(assemblies).CreateContainer())
-            {
-                // Remove any extension assemblies that can't have prerequisites handled automatically
                 foreach (var handler in unvalidatedContainer.GetExports<IPrerequisiteHandler>())
                     if (!TryHandle(handler, logger))
                     {
@@ -60,7 +59,6 @@ namespace AudioWorks.Extensibility
                         assemblies.RemoveAll(assembly =>
                             assembly.CodeBase.Equals(validatorAssembly.CodeBase, StringComparison.OrdinalIgnoreCase));
                     }
-            }
 
             CompositionHost = new ContainerConfiguration()
                 .WithAssemblies(assemblies).CreateContainer();

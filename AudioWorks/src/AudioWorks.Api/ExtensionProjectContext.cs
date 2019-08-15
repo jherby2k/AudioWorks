@@ -51,10 +51,7 @@ namespace AudioWorks.Api
             }
         }
 
-        public void ReportError([NotNull] string message)
-        {
-            _logger.LogError(message);
-        }
+        public void ReportError([NotNull] string message) => _logger.LogError(message);
 
         public FileConflictAction ResolveFileConflict([CanBeNull] string message) => FileConflictAction.Overwrite;
 

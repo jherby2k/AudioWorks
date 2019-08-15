@@ -52,10 +52,7 @@ namespace AudioWorks.Extensibility
 
         /// <inheritdoc/>
         [CanBeNull]
-        protected override Assembly Load([CanBeNull] AssemblyName assemblyName)
-        {
-            return null;
-        }
+        protected override Assembly Load([CanBeNull] AssemblyName assemblyName) => null;
 
         /// <inheritdoc/>
         protected override IntPtr LoadUnmanagedDll([NotNull] string unmanagedDllName)

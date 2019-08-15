@@ -74,14 +74,12 @@ namespace AudioWorks.Extensions.ReplayGain
             };
         }
 
-        public AudioMetadata GetGroupResult()
-        {
-            return new AudioMetadata
+        public AudioMetadata GetGroupResult() =>
+            new AudioMetadata
             {
                 AlbumPeak = _groupState.GroupPeak.ToString(CultureInfo.InvariantCulture),
                 AlbumGain = (_referenceLevel - R128Analyzer.GetLoudnessMultiple(_groupState.Handles.ToArray()))
                     .ToString(CultureInfo.InvariantCulture)
             };
-        }
     }
 }

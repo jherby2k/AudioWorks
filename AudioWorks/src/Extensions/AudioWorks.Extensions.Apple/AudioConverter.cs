@@ -46,16 +46,12 @@ namespace AudioWorks.Extensions.Apple
         internal void FillBuffer(
             ref uint packetSize,
             ref AudioBufferList outputBuffer,
-            [CanBeNull] AudioStreamPacketDescription[] packetDescriptions)
-        {
+            [CanBeNull] AudioStreamPacketDescription[] packetDescriptions) =>
             SafeNativeMethods.AudioConverterFillComplexBuffer(_handle, _inputCallback, IntPtr.Zero,
                 ref packetSize, ref outputBuffer, packetDescriptions);
-        }
 
-        internal void SetProperty(AudioConverterPropertyId propertyId, uint size, IntPtr data)
-        {
+        internal void SetProperty(AudioConverterPropertyId propertyId, uint size, IntPtr data) =>
             SafeNativeMethods.AudioConverterSetProperty(_handle, propertyId, size, data);
-        }
 
         public void Dispose()
         {

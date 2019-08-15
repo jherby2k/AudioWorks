@@ -94,7 +94,6 @@ namespace AudioWorks.Extensions.Flac
             var pictureInserted = false;
 
             do
-            {
                 // ReSharper disable once SwitchStatementMissingSomeCases
                 switch ((MetadataType) Marshal.ReadInt32(iterator.GetBlock()))
                 {
@@ -117,8 +116,7 @@ namespace AudioWorks.Extensions.Flac
                     case MetadataType.Padding:
                         iterator.DeleteBlock(false);
                         break;
-                }
-            } while (iterator.Next());
+                } while (iterator.Next());
 
             // If there was no existing metadata block to replace, insert it now
             if (!metadataInserted)

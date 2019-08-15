@@ -28,10 +28,7 @@ namespace AudioWorks.Api.Tests.DataSources
             return x.SequenceEqual(y);
         }
 
-        // ReSharper disable once AnnotationRedundancyInHierarchy
-        public int GetHashCode([NotNull, ItemCanBeNull] object[] obj)
-        {
-            return obj.Aggregate(0, (x, y) => x ^ (y?.GetHashCode() ?? 0));
-        }
+        public int GetHashCode([ItemCanBeNull] object[] obj) =>
+            obj.Aggregate(0, (x, y) => x ^ (y?.GetHashCode() ?? 0));
     }
 }

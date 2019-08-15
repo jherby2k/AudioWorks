@@ -24,10 +24,7 @@ namespace AudioWorks.Commands
         [NotNull] readonly ConcurrentQueue<object> _messageQueue = new ConcurrentQueue<object>();
 
         [NotNull]
-        public ILogger CreateLogger([CanBeNull] string categoryName)
-        {
-            return new CmdletLogger(_messageQueue);
-        }
+        public ILogger CreateLogger([CanBeNull] string categoryName) => new CmdletLogger(_messageQueue);
 
         public void Dispose()
         {

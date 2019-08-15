@@ -91,21 +91,17 @@ namespace AudioWorks.Extensions.Apple
             }
         }
 
-        internal void GetPropertyInfo(AudioFilePropertyId id, out uint dataSize, out uint isWritable)
-        {
+        internal void GetPropertyInfo(AudioFilePropertyId id, out uint dataSize, out uint isWritable) =>
             SafeNativeMethods.AudioFileGetPropertyInfo(Handle, id, out dataSize, out isWritable);
-        }
 
         internal void ReadPackets(
             out uint numBytes,
             [NotNull] AudioStreamPacketDescription[] packetDescriptions,
             long startingPacket,
             ref uint packets,
-            IntPtr data)
-        {
+            IntPtr data) =>
             SafeNativeMethods.AudioFileReadPackets(Handle, false, out numBytes, packetDescriptions,
                 startingPacket, ref packets, data);
-        }
 
         protected virtual void Dispose(bool disposing)
         {
@@ -113,10 +109,7 @@ namespace AudioWorks.Extensions.Apple
                 Handle.Dispose();
         }
 
-        public void Dispose()
-        {
-            Dispose(true);
-        }
+        public void Dispose() => Dispose(true);
 
         [SuppressMessage("Performance", "CA1801:Review unused parameters",
             Justification = "Part of native API")]
@@ -129,10 +122,7 @@ namespace AudioWorks.Extensions.Apple
 
         [SuppressMessage("Performance", "CA1801:Review unused parameters",
             Justification = "Part of native API")]
-        long GetSizeCallback(IntPtr userData)
-        {
-            return _endOfData;
-        }
+        long GetSizeCallback(IntPtr userData) => _endOfData;
 
         AudioFileStatus WriteCallback(IntPtr userData, long position, uint requestCount, [NotNull] byte[] buffer, out uint actualCount)
         {

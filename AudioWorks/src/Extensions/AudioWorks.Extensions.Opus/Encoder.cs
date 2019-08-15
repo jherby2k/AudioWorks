@@ -144,9 +144,8 @@ namespace AudioWorks.Extensions.Opus
             _handle.Dispose();
         }
 
-        OpusEncoderCallbacks InitializeCallbacks()
-        {
-            return new OpusEncoderCallbacks
+        OpusEncoderCallbacks InitializeCallbacks() =>
+            new OpusEncoderCallbacks
             {
                 Write = (userData, buffer, length) =>
                 {
@@ -157,7 +156,6 @@ namespace AudioWorks.Extensions.Opus
                 // Leave the stream open
                 Close = userData => 0
             };
-        }
 
         void FlushHeaders()
         {

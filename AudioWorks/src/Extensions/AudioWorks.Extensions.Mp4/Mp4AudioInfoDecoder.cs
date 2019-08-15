@@ -69,9 +69,7 @@ namespace AudioWorks.Extensions.Mp4
             }
         }
 
-        static int CalculateBitRate(uint byteCount, uint sampleCount, uint sampleRate)
-        {
-            return (int) Math.Round(byteCount * 8 / (sampleCount / (double) sampleRate));
-        }
+        static int CalculateBitRate(uint byteCount, uint sampleCount, uint sampleRate) =>
+            (int) Math.Round(byteCount * 8 / (sampleCount / (double) sampleRate));
     }
 }

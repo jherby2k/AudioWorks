@@ -49,10 +49,7 @@ namespace AudioWorks.Commands
         [Parameter]
         public SwitchParameter PassThru { get; set; }
 
-        protected override void ProcessRecord()
-        {
-            _audioFiles.Add(AudioFile);
-        }
+        protected override void ProcessRecord() => _audioFiles.Add(AudioFile);
 
         protected override void EndProcessing()
         {
@@ -106,10 +103,7 @@ namespace AudioWorks.Commands
                 WriteObject(_audioFiles, true);
         }
 
-        protected override void StopProcessing()
-        {
-            _cancellationSource.Cancel();
-        }
+        protected override void StopProcessing() => _cancellationSource.Cancel();
 
         [CanBeNull]
         public object GetDynamicParameters()
@@ -121,9 +115,6 @@ namespace AudioWorks.Commands
                 AudioAnalyzerManager.GetSettingInfo(Analyzer));
         }
 
-        public void Dispose()
-        {
-            _cancellationSource.Dispose();
-        }
+        public void Dispose() => _cancellationSource.Dispose();
     }
 }

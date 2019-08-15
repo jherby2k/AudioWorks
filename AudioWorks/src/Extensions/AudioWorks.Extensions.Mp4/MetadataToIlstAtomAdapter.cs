@@ -58,10 +58,7 @@ namespace AudioWorks.Extensions.Mp4
                     : metadata.CoverArt));
         }
 
-        internal void Prepend([NotNull] WritableAtom atom)
-        {
-            _atoms.Insert(0, atom);
-        }
+        internal void Prepend([NotNull] WritableAtom atom) => _atoms.Insert(0, atom);
 
         internal void Write([NotNull] Stream output)
         {

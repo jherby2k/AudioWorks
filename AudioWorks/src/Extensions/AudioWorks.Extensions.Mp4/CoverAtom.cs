@@ -26,17 +26,11 @@ namespace AudioWorks.Extensions.Mp4
         [NotNull]
         public ICoverArt Value { get; }
 
-        internal CoverAtom([NotNull] ICoverArt coverArt)
-        {
-            Value = coverArt;
-        }
+        internal CoverAtom([NotNull] ICoverArt coverArt) => Value = coverArt;
 
-        public CoverAtom(ReadOnlySpan<byte> data)
-        {
-            // There could be more than one data atom. Ignore all but the first.
+        public CoverAtom(ReadOnlySpan<byte> data) =>
             Value = CoverArtFactory.GetOrCreate(data.Slice(24,
                 (int) BinaryPrimitives.ReadUInt32BigEndian(data.Slice(8, 4)) - 16));
-        }
 
         internal override void Write(Stream output)
         {

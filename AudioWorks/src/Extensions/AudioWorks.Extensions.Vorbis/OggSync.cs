@@ -31,10 +31,7 @@ namespace AudioWorks.Extensions.Vorbis
             SafeNativeMethods.OggSyncInit(_state);
         }
 
-        internal bool PageOut(out OggPage page)
-        {
-            return SafeNativeMethods.OggSyncPageOut(_state, out page) == 1;
-        }
+        internal bool PageOut(out OggPage page) => SafeNativeMethods.OggSyncPageOut(_state, out page) == 1;
 
 #if WINDOWS
         internal IntPtr Buffer(int size)
@@ -70,9 +67,6 @@ namespace AudioWorks.Extensions.Vorbis
             Marshal.FreeHGlobal(_state);
         }
 
-        ~OggSync()
-        {
-            FreeUnmanaged();
-        }
+        ~OggSync() => FreeUnmanaged();
     }
 }

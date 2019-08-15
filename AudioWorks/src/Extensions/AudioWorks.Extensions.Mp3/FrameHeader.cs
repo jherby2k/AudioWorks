@@ -106,10 +106,7 @@ namespace AudioWorks.Extensions.Mp3
         }
 
         [Pure]
-        static int ParsePadding(ReadOnlySpan<byte> data)
-        {
-            return (data[2] >> 1) & 0b00000001;
-        }
+        static int ParsePadding(ReadOnlySpan<byte> data) => (data[2] >> 1) & 0b00000001;
 
         [Pure]
         static int ParseChannels(ReadOnlySpan<byte> data)
@@ -124,10 +121,7 @@ namespace AudioWorks.Extensions.Mp3
         }
 
         [Pure]
-        static int CalculateSamplesPerFrame(MpegVersion mpegVersion)
-        {
-            return mpegVersion == MpegVersion.One ? 1152 : 576;
-        }
+        static int CalculateSamplesPerFrame(MpegVersion mpegVersion) => mpegVersion == MpegVersion.One ? 1152 : 576;
 
         [Pure]
         static int CalculateSideInfoLength(MpegVersion mpegVersion, int channels)

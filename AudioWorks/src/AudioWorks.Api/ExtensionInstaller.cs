@@ -275,15 +275,11 @@ namespace AudioWorks.Api
             1000);
 
         [CanBeNull]
-        static DirectoryInfo SelectDirectory([CanBeNull, ItemNotNull] IEnumerable<DirectoryInfo> directories)
-        {
-            // Select the first directory in the list of compatible TFMs
-            return directories?
-                .Where(dir => _compatibleTargets.Contains(dir.Name, StringComparer.OrdinalIgnoreCase))
+        static DirectoryInfo SelectDirectory([CanBeNull, ItemNotNull] IEnumerable<DirectoryInfo> directories) =>
+            directories?.Where(dir => _compatibleTargets.Contains(dir.Name, StringComparer.OrdinalIgnoreCase))
                 .OrderBy(dir => _compatibleTargets
                     .FindIndex(target => target.Equals(dir.Name, StringComparison.OrdinalIgnoreCase)))
                 .FirstOrDefault();
-        }
 
         static void MoveContents(
             [CanBeNull] DirectoryInfo source,

@@ -28,17 +28,12 @@ namespace AudioWorks.Api.Tests
     [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class CoverArtExtractorTests
     {
-        public CoverArtExtractorTests([NotNull] ITestOutputHelper outputHelper)
-        {
+        public CoverArtExtractorTests([NotNull] ITestOutputHelper outputHelper) =>
             LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
-        }
 
         [Fact(DisplayName = "CoverArtExtractor's constructor throws an exception if encodedDirectoryName references an invalid metadata field")]
-        public void ConstructorEncodedDirectoryNameInvalidThrowsException()
-        {
-            Assert.Throws<ArgumentException>(() =>
-                new CoverArtExtractor("{Invalid}"));
-        }
+        public void ConstructorEncodedDirectoryNameInvalidThrowsException() =>
+            Assert.Throws<ArgumentException>(() => new CoverArtExtractor("{Invalid}"));
 
         [Theory(DisplayName = "CoverArtExtractor's Extract method creates the expected image file")]
         [MemberData(nameof(ValidFileWithCoverArtDataSource.IndexedFileNamesAndDataHash), MemberType = typeof(ValidFileWithCoverArtDataSource))]

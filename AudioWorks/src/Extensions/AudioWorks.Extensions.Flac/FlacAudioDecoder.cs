@@ -58,9 +58,6 @@ namespace AudioWorks.Extensions.Flac
             return SampleBuffer.Empty;
         }
 
-        public void Dispose()
-        {
-            _decoder?.Dispose();
-        }
+        public void Dispose() => _decoder?.Dispose();
     }
 }

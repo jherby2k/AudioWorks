@@ -24,23 +24,15 @@ namespace AudioWorks.Extensions.Vorbis
     {
         readonly IntPtr _info = Marshal.AllocHGlobal(Marshal.SizeOf<VorbisInfo>());
 
-        internal VorbisDecoder()
-        {
-            SafeNativeMethods.VorbisInfoInit(_info);
-        }
+        internal VorbisDecoder() => SafeNativeMethods.VorbisInfoInit(_info);
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
-        internal void HeaderIn(in VorbisComment comment, in OggPacket packet)
-        {
+        internal void HeaderIn(in VorbisComment comment, in OggPacket packet) =>
             SafeNativeMethods.VorbisSynthesisHeaderIn(_info, comment, packet);
-        }
 
         [Pure]
-        internal VorbisInfo GetInfo()
-        {
-            return Marshal.PtrToStructure<VorbisInfo>(_info);
-        }
+        internal VorbisInfo GetInfo() => Marshal.PtrToStructure<VorbisInfo>(_info);
 
         public void Dispose()
         {
@@ -54,9 +46,6 @@ namespace AudioWorks.Extensions.Vorbis
             Marshal.FreeHGlobal(_info);
         }
 
-        ~VorbisDecoder()
-        {
-            FreeUnmanaged();
-        }
+        ~VorbisDecoder() => FreeUnmanaged();
     }
 }

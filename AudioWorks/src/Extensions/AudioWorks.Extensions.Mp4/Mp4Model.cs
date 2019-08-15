@@ -29,10 +29,7 @@ namespace AudioWorks.Extensions.Mp4
         [NotNull]
         internal AtomInfo CurrentAtom => _atomInfoStack.Peek();
 
-        internal Mp4Model([NotNull] Stream stream)
-        {
-            _stream = stream;
-        }
+        internal Mp4Model([NotNull] Stream stream) => _stream = stream;
 
         [NotNull, ItemNotNull]
         internal AtomInfo[] GetChildAtomInfo()
@@ -72,7 +69,6 @@ namespace AudioWorks.Extensions.Mp4
             Reset();
 
             using (var reader = new Mp4Reader(_stream))
-            {
                 foreach (var fourCc in hierarchy)
                     do
                     {
@@ -92,7 +88,6 @@ namespace AudioWorks.Extensions.Mp4
                         _stream.Position = subAtom.End;
 
                     } while (_stream.Position < (_atomInfoStack.Count == 0 ? _stream.Length : _atomInfoStack.Peek().End));
-            }
 
             return hierarchy.Last().Equals(_atomInfoStack.Peek().FourCc, StringComparison.Ordinal);
         }
@@ -131,14 +126,12 @@ namespace AudioWorks.Extensions.Mp4
             if (_atomInfoStack.Count <= 0) return;
 
             using (var writer = new Mp4Writer(_stream))
-            {
                 do
                 {
                     var currentAtom = _atomInfoStack.Pop();
                     _stream.Position = currentAtom.Start;
                     writer.WriteBigEndian(currentAtom.Size + increase);
                 } while (_atomInfoStack.Count > 0);
-            }
         }
 
         internal void UpdateStco(uint offset)
@@ -184,7 +177,6 @@ namespace AudioWorks.Extensions.Mp4
             var modificationSeconds = modificationTime?.Subtract(epoch).TotalSeconds ?? 0;
 
             using (var writer = new Mp4Writer(_stream))
-            {
                 if (version == 0)
                 {
                     if (creationTime.HasValue)
@@ -205,7 +197,6 @@ namespace AudioWorks.Extensions.Mp4
                     if (modificationTime.HasValue)
                         writer.WriteBigEndian((ulong) modificationSeconds);
                 }
-            }
         }
 
         static int GetDataLength(string fourCc)

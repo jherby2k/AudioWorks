@@ -35,10 +35,8 @@ namespace AudioWorks.Extensions.Flac
         {
         }
 
-        internal void SetMetadataRespond(MetadataType type)
-        {
+        internal void SetMetadataRespond(MetadataType type) =>
             SafeNativeMethods.StreamDecoderSetMetadataRespond(Handle, type);
-        }
 
         protected override unsafe void MetadataCallback(IntPtr handle, IntPtr metadataBlock, IntPtr userData)
         {

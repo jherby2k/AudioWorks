@@ -27,10 +27,7 @@ namespace AudioWorks.Commands
     {
         [NotNull] readonly ConcurrentQueue<object> _messageQueue;
 
-        internal CmdletLogger([NotNull] ConcurrentQueue<object> messageQueue)
-        {
-            _messageQueue = messageQueue;
-        }
+        internal CmdletLogger([NotNull] ConcurrentQueue<object> messageQueue) => _messageQueue = messageQueue;
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, [CanBeNull] TState state, [CanBeNull] Exception exception, [NotNull] Func<TState, Exception, string> formatter)
         {

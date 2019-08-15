@@ -107,15 +107,11 @@ namespace AudioWorks.Extensions.Apple
                 export.Value.WriteMetadata(_stream, _metadata, _settings);
         }
 
-        public void Dispose()
-        {
-            _audioFile?.Dispose();
-        }
+        public void Dispose() => _audioFile?.Dispose();
 
         [Pure]
-        static AudioStreamBasicDescription GetInputDescription([NotNull] AudioInfo info)
-        {
-            return new AudioStreamBasicDescription
+        static AudioStreamBasicDescription GetInputDescription([NotNull] AudioInfo info) =>
+            new AudioStreamBasicDescription
             {
                 SampleRate = info.SampleRate,
                 AudioFormat = AudioFormat.LinearPcm,
@@ -126,7 +122,6 @@ namespace AudioWorks.Extensions.Apple
                 ChannelsPerFrame = (uint) info.Channels,
                 BitsPerChannel = (uint) info.BitsPerSample
             };
-        }
 
         [Pure]
         static AudioStreamBasicDescription GetOutputDescription(AudioStreamBasicDescription inputDescription)

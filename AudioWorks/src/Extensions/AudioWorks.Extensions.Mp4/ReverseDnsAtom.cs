@@ -46,14 +46,8 @@ namespace AudioWorks.Extensions.Mp4
         }
 #endif
 
-        internal ReverseDnsAtom([NotNull] byte[] data)
-        {
-            _data = data;
-        }
+        internal ReverseDnsAtom([NotNull] byte[] data) => _data = data;
 
-        internal override void Write(Stream output)
-        {
-            output.Write(_data, 0, _data.Length);
-        }
+        internal override void Write(Stream output) => output.Write(_data, 0, _data.Length);
     }
 }

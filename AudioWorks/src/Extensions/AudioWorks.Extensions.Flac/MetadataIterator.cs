@@ -22,20 +22,12 @@ namespace AudioWorks.Extensions.Flac
     {
         [NotNull] readonly MetadataIteratorHandle _handle = SafeNativeMethods.MetadataIteratorNew();
 
-        internal MetadataIterator([NotNull] MetadataChainHandle chainHandle)
-        {
+        internal MetadataIterator([NotNull] MetadataChainHandle chainHandle) =>
             SafeNativeMethods.MetadataIteratorInit(_handle, chainHandle);
-        }
 
-        internal bool Next()
-        {
-            return SafeNativeMethods.MetadataIteratorNext(_handle);
-        }
+        internal bool Next() => SafeNativeMethods.MetadataIteratorNext(_handle);
 
-        internal IntPtr GetBlock()
-        {
-            return SafeNativeMethods.MetadataIteratorGetBlock(_handle);
-        }
+        internal IntPtr GetBlock() => SafeNativeMethods.MetadataIteratorGetBlock(_handle);
 
         internal void InsertBlockAfter([NotNull] MetadataBlock metadataBlock)
         {
@@ -44,14 +36,9 @@ namespace AudioWorks.Extensions.Flac
             metadataBlock.Handle.DropOwnership();
         }
 
-        internal void DeleteBlock(bool replaceWithPadding)
-        {
+        internal void DeleteBlock(bool replaceWithPadding) =>
             SafeNativeMethods.MetadataIteratorDeleteBlock(_handle, replaceWithPadding);
-        }
 
-        public void Dispose()
-        {
-            _handle.Dispose();
-        }
+        public void Dispose() => _handle.Dispose();
     }
 }

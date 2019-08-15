@@ -31,10 +31,7 @@ namespace AudioWorks.Commands
         [CanBeNull] static TelemetryClient _client;
         static readonly object _syncRoot = new object();
 
-        static Telemetry()
-        {
-            TelemetryConfiguration.Active.InstrumentationKey = _instrumentationKey;
-        }
+        static Telemetry() => TelemetryConfiguration.Active.InstrumentationKey = _instrumentationKey;
 
         internal static void TrackFirstLaunch()
         {

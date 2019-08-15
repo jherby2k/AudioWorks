@@ -37,9 +37,6 @@ namespace AudioWorks.Extensions.Flac
             return true;
         }
 
-        internal void DropOwnership()
-        {
-            _dropOwnership = true;
-        }
+        internal void DropOwnership() => _dropOwnership = true;
     }
 }

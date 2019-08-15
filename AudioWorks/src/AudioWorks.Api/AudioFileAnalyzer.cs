@@ -121,10 +121,8 @@ namespace AudioWorks.Api
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
         public async Task AnalyzeAsync(
-            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
-        {
+            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles) =>
             await AnalyzeAsync(CancellationToken.None, audioFiles).ConfigureAwait(false);
-        }
 
         /// <summary>
         /// Analyzes the specified audio files.
@@ -135,10 +133,8 @@ namespace AudioWorks.Api
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
         public async Task AnalyzeAsync(
             CancellationToken cancellationToken,
-            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
-        {
+            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles) =>
             await AnalyzeAsync(null, cancellationToken, audioFiles).ConfigureAwait(false);
-        }
 
         /// <summary>
         /// Analyzes the specified audio files.

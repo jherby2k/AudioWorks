@@ -23,14 +23,9 @@ namespace AudioWorks.Extensions.Flac
         [NotNull]
         internal MetadataBlockHandle Handle { get; }
 
-        protected MetadataBlock(MetadataType metadataType)
-        {
+        protected MetadataBlock(MetadataType metadataType) =>
             Handle = SafeNativeMethods.MetadataObjectNew(metadataType);
-        }
 
-        public void Dispose()
-        {
-            Handle.Dispose();
-        }
+        public void Dispose() => Handle.Dispose();
     }
 }

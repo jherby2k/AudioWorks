@@ -39,10 +39,8 @@ namespace AudioWorks.Common
         /// </summary>
         /// <param name="acceptedValues">The accepted values.</param>
         public StringSettingInfo([NotNull, ItemNotNull] params string[] acceptedValues)
-            : base(typeof(string))
-        {
+            : base(typeof(string)) =>
             AcceptedValues = acceptedValues;
-        }
 
         /// <inheritdoc/>
         public override void Validate(object value)

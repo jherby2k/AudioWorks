@@ -52,51 +52,31 @@ namespace AudioWorks.Common
 
         /// <inheritdoc/>
         [CollectionAccess(CollectionAccessType.Read)]
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
-        {
-            return _dictionary.GetEnumerator();
-        }
+        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => _dictionary.GetEnumerator();
 
         [CollectionAccess(CollectionAccessType.Read)]
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return ((IEnumerable) _dictionary).GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable) _dictionary).GetEnumerator();
 
         /// <inheritdoc/>
         [CollectionAccess(CollectionAccessType.UpdatedContent)]
-        public virtual void Add(KeyValuePair<string, object> item)
-        {
-            _dictionary.Add(item);
-        }
+        public virtual void Add(KeyValuePair<string, object> item) => _dictionary.Add(item);
 
         /// <inheritdoc/>
         [CollectionAccess(CollectionAccessType.ModifyExistingContent)]
-        public void Clear()
-        {
-            _dictionary.Clear();
-        }
+        public void Clear() => _dictionary.Clear();
 
         /// <inheritdoc/>
         [CollectionAccess(CollectionAccessType.Read)]
-        public bool Contains(KeyValuePair<string, object> item)
-        {
-            return _dictionary.Contains(item);
-        }
+        public bool Contains(KeyValuePair<string, object> item) => _dictionary.Contains(item);
 
         /// <inheritdoc/>
         [CollectionAccess(CollectionAccessType.Read)]
-        public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
-        {
+        public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex) =>
             _dictionary.CopyTo(array, arrayIndex);
-        }
 
         /// <inheritdoc/>
         [CollectionAccess(CollectionAccessType.ModifyExistingContent)]
-        public bool Remove(KeyValuePair<string, object> item)
-        {
-            return _dictionary.Remove(item);
-        }
+        public bool Remove(KeyValuePair<string, object> item) => _dictionary.Remove(item);
 
         /// <inheritdoc/>
         [CollectionAccess(CollectionAccessType.Read)]
@@ -116,25 +96,16 @@ namespace AudioWorks.Common
 
         /// <inheritdoc/>
         [CollectionAccess(CollectionAccessType.Read)]
-        public bool ContainsKey(string key)
-        {
-            return _dictionary.ContainsKey(key);
-        }
+        public bool ContainsKey(string key) => _dictionary.ContainsKey(key);
 
         /// <inheritdoc/>
         [CollectionAccess(CollectionAccessType.ModifyExistingContent)]
-        public bool Remove(string key)
-        {
-            return _dictionary.Remove(key);
-        }
+        public bool Remove(string key) => _dictionary.Remove(key);
 
         /// <inheritdoc/>
         [CollectionAccess(CollectionAccessType.Read)]
         [ContractAnnotation("=> false, value:null; => true, value:notnull")]
-        public bool TryGetValue(string key, out object value)
-        {
-            return _dictionary.TryGetValue(key, out value);
-        }
+        public bool TryGetValue(string key, out object value) => _dictionary.TryGetValue(key, out value);
 
         /// <inheritdoc/>
         [CollectionAccess(CollectionAccessType.UpdatedContent), NotNull]

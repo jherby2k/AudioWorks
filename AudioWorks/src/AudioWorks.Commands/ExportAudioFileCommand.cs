@@ -57,10 +57,7 @@ namespace AudioWorks.Commands
         [Parameter, ValidateRange(1, int.MaxValue)]
         public int MaxDegreeOfParallelism { get; set; } = Environment.ProcessorCount;
 
-        protected override void ProcessRecord()
-        {
-            _sourceAudioFiles.Add(AudioFile);
-        }
+        protected override void ProcessRecord() => _sourceAudioFiles.Add(AudioFile);
 
         protected override void EndProcessing()
         {
@@ -124,10 +121,7 @@ namespace AudioWorks.Commands
             }
         }
 
-        protected override void StopProcessing()
-        {
-            _cancellationSource.Cancel();
-        }
+        protected override void StopProcessing() => _cancellationSource.Cancel();
 
         [CanBeNull]
         public object GetDynamicParameters()
@@ -139,9 +133,6 @@ namespace AudioWorks.Commands
                 AudioEncoderManager.GetSettingInfo(Encoder));
         }
 
-        public void Dispose()
-        {
-            _cancellationSource.Dispose();
-        }
+        public void Dispose() => _cancellationSource.Dispose();
     }
 }
