@@ -17,11 +17,11 @@ variables:
   buildConfiguration: Release
 
 steps:
-- task: DotNetCoreInstaller@0
+- task: UseDotNet@2
   inputs:
     packageType: sdk
-    version: 2.1.508
-  displayName: 'Upgrade .NET Core'
+    version: 2.1.802
+  displayName: 'Upgrade .NET Core SDK'
 
 - script: |
     dotnet build AudioWorks\AudioWorks.sln --configuration $(buildConfiguration)
