@@ -19,7 +19,6 @@ using System.IO;
 using System.Reflection;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json.Linq;
 
 namespace AudioWorks.Common
 {
@@ -91,12 +90,14 @@ namespace AudioWorks.Common
 
         static void UpgradeRepositoryUrl([NotNull] string settingsFile)
         {
-            // Make sure the extension repository URL is up to date (but preserve custom entries)
-            var settings = JObject.Parse(File.ReadAllText(settingsFile));
-            if (!_oldRepositories.Contains(settings["ExtensionRepository"].Value<string>())) return;
-
-            settings.Property("ExtensionRepository").Value = _currentRepository;
-            File.WriteAllText(settingsFile, settings.ToString());
+            var settings = File.ReadAllText(settingsFile);
+            foreach (var oldRepository in _oldRepositories)
+#if NETSTANDARD2_0
+                settings = settings.Replace(oldRepository, _currentRepository);
+#else
+                settings = settings.Replace(oldRepository, _currentRepository, StringComparison.OrdinalIgnoreCase);
+#endif
+            File.WriteAllText(settingsFile, settings);
         }
     }
 }

@@ -18,7 +18,6 @@ using System.Collections.Concurrent;
 using System.Management.Automation;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions.Internal;
 
 namespace AudioWorks.Commands
 {
@@ -63,6 +62,6 @@ namespace AudioWorks.Commands
         }
 
         [NotNull]
-        public IDisposable BeginScope<TState>([CanBeNull] TState state) => NullScope.Instance;
+        public IDisposable BeginScope<TState>([CanBeNull] TState state) => new NullScope();
     }
 }
