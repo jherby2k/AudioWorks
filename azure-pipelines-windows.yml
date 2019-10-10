@@ -11,7 +11,7 @@ trigger:
     - azure-pipelines-macos.yml
 
 pool:
-  vmImage: windows-2019
+  vmImage: windows-latest
 
 variables:
   buildConfiguration: Release

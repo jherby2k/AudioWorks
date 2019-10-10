@@ -11,7 +11,7 @@ trigger:
     - azure-pipelines-linux.yml
 
 pool:
-  vmImage: macOS-10.14
+  vmImage: macOS-latest
 
 variables:
   buildConfiguration: Release
