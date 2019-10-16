@@ -22,7 +22,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensions.Apple
@@ -34,11 +33,11 @@ namespace AudioWorks.Extensions.Apple
     {
         static readonly uint[] _vbrQualities = { 0, 9, 18, 27, 36, 45, 54, 63, 73, 82, 91, 100, 109, 118, 127 };
 
-        [CanBeNull] Stream _stream;
-        [CanBeNull] AudioMetadata _metadata;
-        [CanBeNull] SettingDictionary _settings;
-        [CanBeNull] ExtendedAudioFile _audioFile;
-        [CanBeNull] Export<IAudioFilter> _replayGainExport;
+        Stream? _stream;
+        AudioMetadata? _metadata;
+        SettingDictionary? _settings;
+        ExtendedAudioFile? _audioFile;
+        Export<IAudioFilter>? _replayGainExport;
 
         public SettingInfoDictionary SettingInfo
         {
@@ -153,27 +152,23 @@ namespace AudioWorks.Extensions.Apple
             bufferList.Buffers[0].DataByteSize = (uint) (buffer.Length * Marshal.SizeOf<float>());
             bufferList.Buffers[0].Data = new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)));
 
-            // ReSharper disable once PossibleNullReferenceException
-            var status = _audioFile.Write(bufferList, (uint)samples.Frames);
+            var status = _audioFile!.Write(bufferList, (uint)samples.Frames);
             if (status != ExtendedAudioFileStatus.Ok)
                 throw new AudioEncodingException($"Apple AAC encoder encountered error '{status}'.");
         }
 
         public void Finish()
         {
-            // ReSharper disable once PossibleNullReferenceException
-            _audioFile.Dispose();
+            _audioFile!.Dispose();
             _audioFile = null;
 
-            // ReSharper disable once PossibleNullReferenceException
-            _stream.Position = 0;
+            _stream!.Position = 0;
 
             // Call the external MP4 encoder for writing iTunes-compatible atoms
             var metadataEncoderFactory =
                 ExtensionProvider.GetFactories<IAudioMetadataEncoder>("Extension", FileExtension).FirstOrDefault();
             if (metadataEncoderFactory == null) return;
             using (var export = metadataEncoderFactory.CreateExport())
-                // ReSharper disable twice AssignNullToNotNullAttribute
                 export.Value.WriteMetadata(_stream, _metadata, _settings);
         }
 
@@ -183,8 +178,7 @@ namespace AudioWorks.Extensions.Apple
             _replayGainExport?.Dispose();
         }
 
-        [Pure]
-        static AudioStreamBasicDescription GetInputDescription([NotNull] AudioInfo info) =>
+        static AudioStreamBasicDescription GetInputDescription(AudioInfo info) =>
             new AudioStreamBasicDescription
             {
                 SampleRate = info.SampleRate,
@@ -197,7 +191,6 @@ namespace AudioWorks.Extensions.Apple
                 BitsPerChannel = 32
             };
 
-        [Pure]
         static AudioStreamBasicDescription GetOutputDescription(AudioStreamBasicDescription inputDescription)
         {
             var result = new AudioStreamBasicDescription
@@ -208,53 +201,37 @@ namespace AudioWorks.Extensions.Apple
                 ChannelsPerFrame = inputDescription.ChannelsPerFrame
             };
 
-            switch (inputDescription.SampleRate)
+            result.SampleRate = inputDescription.SampleRate switch
             {
-                case 192000:
-                case 144000:
-                case 128000: // conversion required
-                case 96000:
-                case 64000:  // conversion required
-                case 48000:
-                    result.SampleRate = 48000;
-                    break;
-
-                case 176400:
-                case 88200:
-                case 44100:
-                case 37800:  // conversion required
-                case 36000:  // conversion required
-                    result.SampleRate = 44100;
-                    break;
-
-                case 32000:
-                case 28000:  // conversion required
-                    result.SampleRate = 32000;
-                    break;
-
-                case 22050:
-                case 18900:  // conversion required
-                    result.SampleRate = 22050;
-                    break;
-                default:
-                    throw new AudioUnsupportedException(
-                        $"Apple AAC does not support a {inputDescription.SampleRate} Hz sample rate.");
-            }
+                192000 => 48000,
+                144000 => 48000,
+                128000 => 48000,
+                96000 => 48000,
+                64000 => 48000,
+                48000 => 48000,
+                176400 => 44100,
+                88200 => 44100,
+                44100 => 44100,
+                37800 => 44100,
+                36000 => 44100,
+                32000 => 32000,
+                28000 => 32000,
+                22050 => 22050,
+                18900 => 22050,
+                _ => throw new AudioUnsupportedException(
+                    $"Apple AAC does not support a {inputDescription.SampleRate} Hz sample rate.")
+            };
 
             return result;
         }
 
-        void InitializeReplayGainFilter(
-            [NotNull] AudioInfo info,
-            [NotNull] AudioMetadata metadata,
-            [NotNull] SettingDictionary settings)
+        void InitializeReplayGainFilter(AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
             var filterFactory =
                 ExtensionProvider.GetFactories<IAudioFilter>("Name", "ReplayGain").FirstOrDefault();
             if (filterFactory == null) return;
 
             _replayGainExport = filterFactory.CreateExport();
-            // ReSharper disable once PossibleNullReferenceException
             _replayGainExport.Value.Initialize(info, metadata, settings);
         }
 

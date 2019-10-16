@@ -16,7 +16,6 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Lame
 {
@@ -33,7 +32,6 @@ namespace AudioWorks.Extensions.Lame
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern IntPtr GetVersion();
 
-        [NotNull]
         [DllImport(_lameLibrary, EntryPoint = "lame_init",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern EncoderHandle Init();
@@ -41,59 +39,59 @@ namespace AudioWorks.Extensions.Lame
         [DllImport(_lameLibrary, EntryPoint = "lame_set_num_channels",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern void SetNumChannels(
-            [NotNull] EncoderHandle handle,
+            EncoderHandle handle,
             int channels);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_set_in_samplerate",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern void SetInSampleRate(
-            [NotNull] EncoderHandle handle,
+            EncoderHandle handle,
             int sampleRate);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_set_num_samples",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern void SetNumSamples(
-            [NotNull] EncoderHandle handle,
+            EncoderHandle handle,
             uint samples);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_set_brate",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern void SetBRate(
-            [NotNull] EncoderHandle handle,
+            EncoderHandle handle,
             int bitRate);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_set_VBR",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern void SetVbr(
-            [NotNull] EncoderHandle handle,
+            EncoderHandle handle,
             VbrMode vbrMode);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_set_VBR_mean_bitrate_kbps",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern void SetVbrMeanBitRateKbps(
-            [NotNull] EncoderHandle handle,
+            EncoderHandle handle,
             int bitRate);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_set_VBR_quality",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern void SetVbrQuality(
-            [NotNull] EncoderHandle handle,
+            EncoderHandle handle,
             float quality);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_init_params",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int InitParams(
-            [NotNull] EncoderHandle handle);
+            EncoderHandle handle);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_encode_buffer_ieee_float",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int EncodeBufferIeeeFloat(
-            [NotNull] EncoderHandle handle,
+            EncoderHandle handle,
             in float leftSamples,
             in float rightSamples,
             int sampleCount,
 #if NETSTANDARD2_0
-            [NotNull] [In, Out] byte[] buffer,
+            [In, Out] byte[] buffer,
 #else
             ref byte buffer,
 #endif
@@ -102,11 +100,11 @@ namespace AudioWorks.Extensions.Lame
         [DllImport(_lameLibrary, EntryPoint = "lame_encode_buffer_interleaved_ieee_float",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int EncodeBufferInterleavedIeeeFloat(
-            [NotNull] EncoderHandle handle,
+            EncoderHandle handle,
             in float samples,
             int sampleCount,
 #if NETSTANDARD2_0
-            [NotNull] [In, Out] byte[] buffer,
+            [In, Out] byte[] buffer,
 #else
             ref byte buffer,
 #endif
@@ -115,9 +113,9 @@ namespace AudioWorks.Extensions.Lame
         [DllImport(_lameLibrary, EntryPoint = "lame_encode_flush",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int EncodeFlush(
-            [NotNull] EncoderHandle handle,
+            EncoderHandle handle,
 #if NETSTANDARD2_0
-            [NotNull] [In, Out] byte[] buffer,
+            [In, Out] byte[] buffer,
 #else
             ref byte buffer,
 #endif
@@ -126,9 +124,9 @@ namespace AudioWorks.Extensions.Lame
         [DllImport(_lameLibrary, EntryPoint = "lame_get_lametag_frame",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern UIntPtr GetLameTagFrame(
-            [NotNull] EncoderHandle handle,
+            EncoderHandle handle,
 #if NETSTANDARD2_0
-            [NotNull] [In, Out] byte[] buffer,
+            [In, Out] byte[] buffer,
 #else
             ref byte buffer,
 #endif

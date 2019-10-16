@@ -18,7 +18,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
 {
@@ -27,7 +26,7 @@ namespace AudioWorks.Extensions.Flac
     [AudioDecoderExport(".flac")]
     sealed class FlacAudioDecoder : IAudioDecoder, IDisposable
     {
-        [CanBeNull] AudioStreamDecoder _decoder;
+        AudioStreamDecoder? _decoder;
 
         public bool Finished { get; private set; }
 
@@ -39,8 +38,7 @@ namespace AudioWorks.Extensions.Flac
 
         public SampleBuffer DecodeSamples()
         {
-            // ReSharper disable once PossibleNullReferenceException
-            while (_decoder.GetState() != DecoderState.EndOfStream)
+            while (_decoder!.GetState() != DecoderState.EndOfStream)
             {
                 if (!_decoder.ProcessSingle())
                     throw new AudioInvalidException($"libFLAC failed to decode the samples: {_decoder.GetState()}.");

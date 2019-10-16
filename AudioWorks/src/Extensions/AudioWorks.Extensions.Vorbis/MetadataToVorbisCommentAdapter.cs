@@ -21,7 +21,6 @@ using System.Runtime.CompilerServices;
 #endif
 using System.Text;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Vorbis
 {
@@ -30,7 +29,7 @@ namespace AudioWorks.Extensions.Vorbis
         VorbisComment _comment;
         bool _unmanagedMemoryAllocated;
 
-        internal MetadataToVorbisCommentAdapter([NotNull] AudioMetadata metadata)
+        internal MetadataToVorbisCommentAdapter(AudioMetadata metadata)
         {
             SafeNativeMethods.VorbisCommentInit(out _comment);
 
@@ -95,7 +94,7 @@ namespace AudioWorks.Extensions.Vorbis
             GC.SuppressFinalize(this);
         }
 
-        unsafe void AddTag([NotNull] string key, [NotNull] string value)
+        unsafe void AddTag(string key, string value)
         {
             // Optimization - avoid allocating on the heap
             Span<byte> keyBytes = stackalloc byte[Encoding.ASCII.GetMaxByteCount(key.Length) + 1];
@@ -128,7 +127,7 @@ namespace AudioWorks.Extensions.Vorbis
             _unmanagedMemoryAllocated = true;
         }
 
-        unsafe void AddTag([NotNull] string key, ReadOnlySpan<byte> value)
+        unsafe void AddTag(string key, ReadOnlySpan<byte> value)
         {
             // Optimization - avoid allocating on the heap
             Span<byte> keyBytes = stackalloc byte[Encoding.ASCII.GetMaxByteCount(key.Length) + 1];

@@ -16,7 +16,6 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Linq;
 using System.Runtime.InteropServices;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.ReplayGain
 {
@@ -25,7 +24,6 @@ namespace AudioWorks.Extensions.ReplayGain
         readonly uint _channels;
         readonly bool _calculateTruePeaks;
 
-        [NotNull]
         internal StateHandle Handle { get; }
 
         internal R128Analyzer(uint channels, uint sampleRate, bool calculateTruePeaks)
@@ -62,7 +60,7 @@ namespace AudioWorks.Extensions.ReplayGain
             return loudness;
         }
 
-        internal static double GetLoudnessMultiple([NotNull, ItemNotNull] StateHandle[] handles)
+        internal static double GetLoudnessMultiple(StateHandle[] handles)
         {
             SafeNativeMethods.LoudnessGlobalMultiple(
                 handles.Select(handle => handle.DangerousGetHandle()).ToArray(),

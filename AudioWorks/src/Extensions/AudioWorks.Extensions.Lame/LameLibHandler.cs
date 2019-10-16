@@ -27,7 +27,6 @@ using System.Runtime.Loader;
 #endif
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensions.Lame
@@ -83,8 +82,7 @@ namespace AudioWorks.Extensions.Lame
         }
 
 #if LINUX
-        [Pure]
-        static bool VerifyLibrary([NotNull] string libraryName)
+        static bool VerifyLibrary(string libraryName)
         {
             var process = new Process
             {
@@ -101,7 +99,6 @@ namespace AudioWorks.Extensions.Lame
             return process.ExitCode == 0;
         }
 
-        [NotNull]
         public static string GetDistribution()
         {
             try
@@ -127,13 +124,12 @@ namespace AudioWorks.Extensions.Lame
             }
         }
 #else
-        static void AddUnmanagedLibraryPath([NotNull] string libPath) =>
+        static void AddUnmanagedLibraryPath(string libPath) =>
             ((ExtensionLoadContext) AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()))
             .AddUnmanagedLibraryPath(libPath);
 #endif
 #if OSX
 
-        [NotNull]
         public static string GetOSVersion()
         {
             var process = new Process

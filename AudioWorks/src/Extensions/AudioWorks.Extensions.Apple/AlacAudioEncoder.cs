@@ -21,7 +21,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Apple
 {
@@ -30,11 +29,11 @@ namespace AudioWorks.Extensions.Apple
     [AudioEncoderExport("ALAC", "Apple Lossless Audio Codec")]
     sealed class AlacAudioEncoder : IAudioEncoder, IDisposable
     {
-        [CanBeNull] Stream _stream;
-        [CanBeNull] AudioMetadata _metadata;
-        [CanBeNull] SettingDictionary _settings;
+        Stream? _stream;
+        AudioMetadata? _metadata;
+        SettingDictionary? _settings;
         int _bitsPerSample;
-        [CanBeNull] ExtendedAudioFile _audioFile;
+        ExtendedAudioFile? _audioFile;
 
         public SettingInfoDictionary SettingInfo
         {
@@ -83,34 +82,29 @@ namespace AudioWorks.Extensions.Apple
             bufferList.Buffers[0].DataByteSize = (uint) (buffer.Length * Marshal.SizeOf<int>());
             bufferList.Buffers[0].Data = new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)));
 
-            // ReSharper disable once PossibleNullReferenceException
-            var status = _audioFile.Write(bufferList, (uint) samples.Frames);
+            var status = _audioFile!.Write(bufferList, (uint) samples.Frames);
             if (status != ExtendedAudioFileStatus.Ok)
                 throw new AudioEncodingException($"Apple Lossless encoder encountered error '{status}'.");
         }
 
         public void Finish()
         {
-            // ReSharper disable once PossibleNullReferenceException
-            _audioFile.Dispose();
+            _audioFile!.Dispose();
             _audioFile = null;
 
-            // ReSharper disable once PossibleNullReferenceException
-            _stream.Position = 0;
+            _stream!.Position = 0;
 
             // Call the external MP4 encoder for writing iTunes-compatible atoms
             var metadataEncoderFactory =
                 ExtensionProvider.GetFactories<IAudioMetadataEncoder>("Extension", FileExtension).FirstOrDefault();
             if (metadataEncoderFactory == null) return;
             using (var export = metadataEncoderFactory.CreateExport())
-                // ReSharper disable twice AssignNullToNotNullAttribute
                 export.Value.WriteMetadata(_stream, _metadata, _settings);
         }
 
         public void Dispose() => _audioFile?.Dispose();
 
-        [Pure]
-        static AudioStreamBasicDescription GetInputDescription([NotNull] AudioInfo info) =>
+        static AudioStreamBasicDescription GetInputDescription(AudioInfo info) =>
             new AudioStreamBasicDescription
             {
                 SampleRate = info.SampleRate,
@@ -123,7 +117,6 @@ namespace AudioWorks.Extensions.Apple
                 BitsPerChannel = (uint) info.BitsPerSample
             };
 
-        [Pure]
         static AudioStreamBasicDescription GetOutputDescription(AudioStreamBasicDescription inputDescription)
         {
             var result = new AudioStreamBasicDescription
@@ -131,27 +124,17 @@ namespace AudioWorks.Extensions.Apple
                 SampleRate = inputDescription.SampleRate,
                 FramesPerPacket = 4096,
                 AudioFormat = AudioFormat.AppleLossless,
-                ChannelsPerFrame = inputDescription.ChannelsPerFrame
+                ChannelsPerFrame = inputDescription.ChannelsPerFrame,
+                Flags = inputDescription.BitsPerChannel switch
+                {
+                    16u => AudioFormatFlags.Alac16BitSourceData,
+                    20u => AudioFormatFlags.Alac20BitSourceData,
+                    24u => AudioFormatFlags.Alac24BitSourceData,
+                    32u => AudioFormatFlags.Alac32BitSourceData,
+                    _ => throw new AudioUnsupportedException(
+                        $"ALAC does not support {inputDescription.BitsPerChannel}-bit audio.")
+                }
             };
-
-            switch (inputDescription.BitsPerChannel)
-            {
-                case 16:
-                    result.Flags = AudioFormatFlags.Alac16BitSourceData;
-                    break;
-                case 20:
-                    result.Flags = AudioFormatFlags.Alac20BitSourceData;
-                    break;
-                case 24:
-                    result.Flags = AudioFormatFlags.Alac24BitSourceData;
-                    break;
-                case 32:
-                    result.Flags = AudioFormatFlags.Alac32BitSourceData;
-                    break;
-                default:
-                    throw new AudioUnsupportedException(
-                        $"ALAC does not support {inputDescription.BitsPerChannel}-bit audio.");
-            }
 
             return result;
         }

@@ -20,19 +20,18 @@ using System.Buffers.Binary;
 using System.IO;
 using System.Text;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp3
 {
     sealed class FrameReader : BinaryReader
     {
 #if NETSTANDARD2_0
-        [NotNull] readonly byte[] _buffer = new byte[4];
+        readonly byte[] _buffer = new byte[4];
 
 #endif
         internal long FrameStart { get; private set; }
 
-        internal FrameReader([NotNull] Stream input)
+        internal FrameReader(Stream input)
             : base(input, Encoding.ASCII, true)
         {
         }
@@ -55,7 +54,7 @@ namespace AudioWorks.Extensions.Mp3
             }
         }
 
-        internal bool VerifyFrameSync([NotNull] FrameHeader header)
+        internal bool VerifyFrameSync(FrameHeader header)
         {
             var frameLength = header.SamplesPerFrame / 8 * header.BitRate * 1000 /
                                 header.SampleRate + header.Padding;
@@ -88,7 +87,6 @@ namespace AudioWorks.Extensions.Mp3
 #endif
         }
 
-        [NotNull]
         internal string ReadHeaderId()
         {
 #if NETSTANDARD2_0

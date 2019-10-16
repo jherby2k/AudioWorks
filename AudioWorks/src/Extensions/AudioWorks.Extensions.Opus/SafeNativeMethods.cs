@@ -17,7 +17,6 @@ using System;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Opus
 {
@@ -41,13 +40,11 @@ namespace AudioWorks.Extensions.Opus
         const string _opusEncLibrary = "libopusenc";
 #endif
 
-        [Pure]
         [DllImport(_oggLibrary, EntryPoint = "ogg_page_serialno",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int OggPageSerialNo(
             in OggPage page);
 
-        [Pure]
         [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport(_oggLibrary, EntryPoint = "ogg_page_eos",
             CallingConvention = CallingConvention.Cdecl)]
@@ -148,14 +145,14 @@ namespace AudioWorks.Extensions.Opus
         [DllImport(_opusEncLibrary, EntryPoint = "ope_comments_add",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern unsafe int OpusEncoderCommentsAdd(
-            [NotNull] OpusCommentsHandle handle,
+            OpusCommentsHandle handle,
             ref byte tag,
             byte* value);
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_comments_add_picture_from_memory",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern unsafe int OpusEncoderCommentsAddPictureFromMemory(
-            [NotNull] OpusCommentsHandle handle,
+            OpusCommentsHandle handle,
             byte* data,
             IntPtr size,
             int pictureType,
@@ -172,7 +169,7 @@ namespace AudioWorks.Extensions.Opus
         internal static extern OpusEncoderHandle OpusEncoderCreateCallbacks(
             ref OpusEncoderCallbacks callbacks,
             IntPtr userData,
-            [NotNull] OpusCommentsHandle comments,
+            OpusCommentsHandle comments,
             int rate,
             int channels,
             int family,
@@ -181,31 +178,31 @@ namespace AudioWorks.Extensions.Opus
         [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_flush_header",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int OpusEncoderFlushHeader(
-            [NotNull] OpusEncoderHandle handle);
+            OpusEncoderHandle handle);
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_write_float",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int OpusEncoderWriteFloat(
-            [NotNull] OpusEncoderHandle handle,
+            OpusEncoderHandle handle,
             in float pcm,
             int samplesPerChannel);
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_drain",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int OpusEncoderDrain(
-            [NotNull] OpusEncoderHandle handle);
+            OpusEncoderHandle handle);
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_ctl",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int OpusEncoderControl(
-            [NotNull] OpusEncoderHandle handle,
+            OpusEncoderHandle handle,
             EncoderControlRequest request,
             out int value);
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_ctl",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int OpusEncoderControl(
-            [NotNull] OpusEncoderHandle handle,
+            OpusEncoderHandle handle,
             EncoderControlRequest request,
             int argument);
 

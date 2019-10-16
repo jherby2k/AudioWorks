@@ -22,7 +22,6 @@ using System.Runtime.InteropServices;
 #endif
 using System.Text;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Opus
 {
@@ -90,7 +89,7 @@ namespace AudioWorks.Extensions.Opus
             }
         }
 
-        void SetText([NotNull] string key, [NotNull] string value)
+        void SetText(string key, string value)
         {
             try
             {
@@ -197,8 +196,7 @@ namespace AudioWorks.Extensions.Opus
             }
         }
 
-        [NotNull]
-        static string ConvertGain([NotNull] string gain) =>
+        static string ConvertGain(string gain) =>
             (int.Parse(gain, CultureInfo.InvariantCulture) / 256.0 + 5).ToString("F2", CultureInfo.InvariantCulture);
     }
 }

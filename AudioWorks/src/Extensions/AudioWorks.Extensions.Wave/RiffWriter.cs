@@ -16,34 +16,33 @@ You should have received a copy of the GNU Affero General Public License along w
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Wave
 {
     sealed class RiffWriter : BinaryWriter
     {
-        [NotNull] readonly Stack<(bool sizeUpdated, uint position)> _chunkSizePositions =
+        readonly Stack<(bool sizeUpdated, uint position)> _chunkSizePositions =
             new Stack<(bool sizeUpdated, uint position)>();
 
-        internal RiffWriter([NotNull] Stream output)
+        internal RiffWriter(Stream output)
             : base(output, Encoding.ASCII, true)
         {
         }
 
-        internal void Initialize([NotNull] string fourCc)
+        internal void Initialize(string fourCc)
         {
             BeginChunk("RIFF");
             Write(fourCc.ToCharArray());
         }
 
-        internal void BeginChunk([NotNull] string chunkId)
+        internal void BeginChunk(string chunkId)
         {
             Write(chunkId.ToCharArray());
             _chunkSizePositions.Push((false, (uint) BaseStream.Position));
             Write((uint) 0);
         }
 
-        internal void BeginChunk([NotNull] string chunkId, uint chunkSize)
+        internal void BeginChunk(string chunkId, uint chunkSize)
         {
             Write(chunkId.ToCharArray());
             _chunkSizePositions.Push((true, (uint) BaseStream.Position));

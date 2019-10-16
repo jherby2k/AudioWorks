@@ -14,13 +14,11 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
 {
     abstract class MetadataBlock : IDisposable
     {
-        [NotNull]
         internal MetadataBlockHandle Handle { get; }
 
         protected MetadataBlock(MetadataType metadataType) =>

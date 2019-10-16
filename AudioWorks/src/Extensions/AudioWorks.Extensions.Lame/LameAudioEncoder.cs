@@ -20,7 +20,6 @@ using System.IO;
 using System.Linq;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Lame
 {
@@ -29,9 +28,9 @@ namespace AudioWorks.Extensions.Lame
     [AudioEncoderExport("LameMP3", "Lame MPEG Audio Layer 3")]
     sealed class LameAudioEncoder : IAudioEncoder, IDisposable
     {
-        [CanBeNull] Stream _stream;
-        [CanBeNull] Encoder _encoder;
-        [CanBeNull] Export<IAudioFilter> _replayGainExport;
+        Stream? _stream;
+        Encoder? _encoder;
+        Export<IAudioFilter>? _replayGainExport;
 
         public SettingInfoDictionary SettingInfo
         {
@@ -131,35 +130,30 @@ namespace AudioWorks.Extensions.Lame
             {
                 Span<float> interleavedSamples = stackalloc float[samples.Frames * samples.Channels];
                 samples.CopyToInterleaved(interleavedSamples);
-                // ReSharper disable once PossibleNullReferenceException
-                _encoder.EncodeInterleaved(interleavedSamples, samples.Frames);
+                _encoder!.EncodeInterleaved(interleavedSamples, samples.Frames);
             }
             else if (samples.Channels == 1)
             {
                 Span<float> monoSamples = stackalloc float[samples.Frames];
                 samples.CopyTo(monoSamples);
-                // ReSharper disable once PossibleNullReferenceException
-                _encoder.Encode(monoSamples, null);
+                _encoder!.Encode(monoSamples, null);
             }
             else
             {
                 Span<float> leftSamples = stackalloc float[samples.Frames];
                 Span<float> rightSamples = stackalloc float[samples.Frames];
                 samples.CopyTo(leftSamples, rightSamples);
-                // ReSharper disable once PossibleNullReferenceException
-                _encoder.Encode(leftSamples, rightSamples);
+                _encoder!.Encode(leftSamples, rightSamples);
             }
         }
 
         public void Finish()
         {
-            // ReSharper disable once PossibleNullReferenceException
-            _encoder.Flush();
+            _encoder!.Flush();
             _encoder.UpdateLameTag();
 
             // The pre-allocation was based on estimates
-            // ReSharper disable once PossibleNullReferenceException
-            _stream.SetLength(_stream.Position);
+            _stream!.SetLength(_stream.Position);
         }
 
         public void Dispose()
@@ -168,17 +162,13 @@ namespace AudioWorks.Extensions.Lame
             _replayGainExport?.Dispose();
         }
 
-        void InitializeReplayGainFilter(
-            [NotNull] AudioInfo info,
-            [NotNull] AudioMetadata metadata,
-            [NotNull] SettingDictionary settings)
+        void InitializeReplayGainFilter(AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
             var filterFactory =
                 ExtensionProvider.GetFactories<IAudioFilter>("Name", "ReplayGain").FirstOrDefault();
             if (filterFactory == null) return;
 
             _replayGainExport = filterFactory.CreateExport();
-            // ReSharper disable once PossibleNullReferenceException
             _replayGainExport.Value.Initialize(info, metadata, settings);
         }
     }

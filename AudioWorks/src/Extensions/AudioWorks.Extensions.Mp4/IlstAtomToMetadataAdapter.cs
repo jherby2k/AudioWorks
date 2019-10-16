@@ -17,15 +17,12 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp4
 {
     sealed class IlstAtomToMetadataAdapter : AudioMetadata
     {
-        internal IlstAtomToMetadataAdapter(
-            [NotNull] Mp4Model mp4,
-            [NotNull, ItemNotNull] IEnumerable<AtomInfo> atoms)
+        internal IlstAtomToMetadataAdapter(Mp4Model mp4, IEnumerable<AtomInfo> atoms)
         {
             foreach (var atom in atoms)
             {
@@ -63,7 +60,7 @@ namespace AudioWorks.Extensions.Mp4
                         break;
 
                     case "©day":
-                        // The ©day atom may contain a full date, or only the year:
+                        // The ©day atom may contain a full date, or only the year
                         var dayAtom = new TextAtom(atomData);
                         if (DateTime.TryParse(dayAtom.Value, CultureInfo.CurrentCulture,
                                 DateTimeStyles.NoCurrentDateDefault, out var result))

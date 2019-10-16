@@ -17,16 +17,14 @@ using System;
 using System.Buffers.Binary;
 using System.IO;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp4
 {
     sealed class CoverAtom : WritableAtom
     {
-        [NotNull]
         public ICoverArt Value { get; }
 
-        internal CoverAtom([NotNull] ICoverArt coverArt) => Value = coverArt;
+        internal CoverAtom(ICoverArt coverArt) => Value = coverArt;
 
         public CoverAtom(ReadOnlySpan<byte> data) =>
             Value = CoverArtFactory.GetOrCreate(data.Slice(24,

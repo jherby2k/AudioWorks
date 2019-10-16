@@ -16,15 +16,14 @@ You should have received a copy of the GNU Affero General Public License along w
 using System.Collections.Generic;
 using System.IO;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp4
 {
     sealed class MetadataToIlstAtomAdapter
     {
-        [NotNull, ItemNotNull] readonly List<WritableAtom> _atoms = new List<WritableAtom>();
+        readonly List<WritableAtom> _atoms = new List<WritableAtom>();
 
-        internal MetadataToIlstAtomAdapter([NotNull] AudioMetadata metadata, bool compressCoverArt)
+        internal MetadataToIlstAtomAdapter(AudioMetadata metadata, bool compressCoverArt)
         {
             if (!string.IsNullOrEmpty(metadata.Title))
                 _atoms.Add(new TextAtom("©nam", metadata.Title));
@@ -58,9 +57,9 @@ namespace AudioWorks.Extensions.Mp4
                     : metadata.CoverArt));
         }
 
-        internal void Prepend([NotNull] WritableAtom atom) => _atoms.Insert(0, atom);
+        internal void Prepend(WritableAtom atom) => _atoms.Insert(0, atom);
 
-        internal void Write([NotNull] Stream output)
+        internal void Write(Stream output)
         {
             if (_atoms.Count == 0) return;
 

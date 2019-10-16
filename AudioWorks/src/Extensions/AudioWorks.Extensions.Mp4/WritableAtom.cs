@@ -14,12 +14,11 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System.IO;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp4
 {
     abstract class WritableAtom
     {
-        internal abstract void Write([NotNull] Stream output);
+        internal abstract void Write(Stream output);
     }
 }

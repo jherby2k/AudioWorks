@@ -17,7 +17,6 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
 {
@@ -28,7 +27,7 @@ namespace AudioWorks.Extensions.Flac
         {
         }
 
-        internal unsafe void Append([NotNull] string key, [NotNull] string value)
+        internal unsafe void Append(string key, string value)
         {
             Span<byte> keyBytes = stackalloc byte[Encoding.ASCII.GetMaxByteCount(key.Length) + 1];
             Span<byte> valueBytes = stackalloc byte[Encoding.UTF8.GetMaxByteCount(value.Length) + 1];

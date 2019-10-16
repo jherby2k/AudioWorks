@@ -15,7 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Runtime.InteropServices;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Apple
 {
@@ -26,7 +25,7 @@ namespace AudioWorks.Extensions.Apple
             IntPtr userData,
             long position,
             uint requestCount,
-            [NotNull] [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] buffer,
+            [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] buffer,
             out uint actualCount);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -34,7 +33,7 @@ namespace AudioWorks.Extensions.Apple
             IntPtr userData,
             long position,
             uint requestCount,
-            [NotNull] [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] buffer,
+            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] buffer,
             out uint actualCount);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

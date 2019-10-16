@@ -16,7 +16,6 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Vorbis
 {
@@ -31,7 +30,6 @@ namespace AudioWorks.Extensions.Vorbis
         internal void HeaderIn(in VorbisComment comment, in OggPacket packet) =>
             SafeNativeMethods.VorbisSynthesisHeaderIn(_info, comment, packet);
 
-        [Pure]
         internal VorbisInfo GetInfo() => Marshal.PtrToStructure<VorbisInfo>(_info);
 
         public void Dispose()

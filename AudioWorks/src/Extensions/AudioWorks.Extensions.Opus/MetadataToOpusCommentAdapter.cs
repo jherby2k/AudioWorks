@@ -21,16 +21,14 @@ using System.Runtime.CompilerServices;
 #endif
 using System.Text;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Opus
 {
     sealed class MetadataToOpusCommentAdapter : IDisposable
     {
-        [NotNull]
         internal OpusCommentsHandle Handle { get; }
 
-        internal unsafe MetadataToOpusCommentAdapter([NotNull] AudioMetadata metadata)
+        internal unsafe MetadataToOpusCommentAdapter(AudioMetadata metadata)
         {
             Handle = SafeNativeMethods.OpusEncoderCommentsCreate();
 
@@ -93,7 +91,7 @@ namespace AudioWorks.Extensions.Opus
 
         public void Dispose() => Handle.Dispose();
 
-        unsafe void AddTag([NotNull] string key, [NotNull] string value)
+        unsafe void AddTag(string key, string value)
         {
             // Optimization - avoid allocating on the heap
             Span<byte> keyBytes = stackalloc byte[Encoding.ASCII.GetMaxByteCount(key.Length) + 1];
@@ -128,8 +126,7 @@ namespace AudioWorks.Extensions.Opus
             }
         }
 
-        [NotNull]
-        static string ConvertGain([NotNull] string gain) =>
+        static string ConvertGain(string gain) =>
             Math.Round((double.Parse(gain, CultureInfo.InvariantCulture) - 5) * 256)
                 .ToString("F0", CultureInfo.InvariantCulture);
     }

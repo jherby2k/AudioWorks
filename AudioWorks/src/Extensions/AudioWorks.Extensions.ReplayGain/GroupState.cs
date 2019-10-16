@@ -15,7 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Collections.Concurrent;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.ReplayGain
 {
@@ -25,7 +24,6 @@ namespace AudioWorks.Extensions.ReplayGain
 
         internal double GroupPeak { get; private set; }
 
-        [NotNull]
         internal ConcurrentQueue<StateHandle> Handles { get; } = new ConcurrentQueue<StateHandle>();
 
         internal void AddPeak(double peak)

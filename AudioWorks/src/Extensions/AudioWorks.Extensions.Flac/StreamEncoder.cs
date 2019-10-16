@@ -21,22 +21,21 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
 {
     sealed class StreamEncoder : IDisposable
     {
-        [NotNull] readonly StreamEncoderHandle _handle = SafeNativeMethods.StreamEncoderNew();
-        [NotNull] readonly NativeCallbacks.StreamEncoderWriteCallback _writeCallback;
-        [NotNull] readonly NativeCallbacks.StreamEncoderSeekCallback _seekCallback;
-        [NotNull] readonly NativeCallbacks.StreamEncoderTellCallback _tellCallback;
+        readonly StreamEncoderHandle _handle = SafeNativeMethods.StreamEncoderNew();
+        readonly NativeCallbacks.StreamEncoderWriteCallback _writeCallback;
+        readonly NativeCallbacks.StreamEncoderSeekCallback _seekCallback;
+        readonly NativeCallbacks.StreamEncoderTellCallback _tellCallback;
 #pragma warning disable CA2213 // Disposable fields should be disposed
-        [NotNull] Stream _stream;
+        Stream _stream;
 #pragma warning restore CA2213 // Disposable fields should be disposed
         long _endOfData;
 
-        internal StreamEncoder([NotNull] Stream stream)
+        internal StreamEncoder(Stream stream)
         {
             // Need a reference to the callbacks for the lifetime of the encoder
             _writeCallback = WriteCallback;
@@ -62,7 +61,7 @@ namespace AudioWorks.Extensions.Flac
 
         [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods",
             Justification = "Can't pass an array of SafeHandles")]
-        internal void SetMetadata([NotNull, ItemNotNull] IEnumerable<MetadataBlock> metadataBlocks)
+        internal void SetMetadata(IEnumerable<MetadataBlock> metadataBlocks)
         {
             var blockPointers = metadataBlocks.Select(block => block.Handle.DangerousGetHandle()).ToArray();
             SafeNativeMethods.StreamEncoderSetMetadata(_handle, blockPointers, (uint) blockPointers.Length);
@@ -129,7 +128,13 @@ namespace AudioWorks.Extensions.Flac
 
         public void Dispose() => _handle.Dispose();
 
-        EncoderWriteStatus WriteCallback(IntPtr handle, [NotNull] byte[] buffer, int bytes, uint samples, uint currentFrame, IntPtr userData)
+        EncoderWriteStatus WriteCallback(
+            IntPtr handle,
+            byte[] buffer,
+            int bytes,
+            uint samples,
+            uint currentFrame,
+            IntPtr userData)
         {
             _stream.Write(buffer, 0, bytes);
             _endOfData = Math.Max(_endOfData, _stream.Position);
@@ -148,7 +153,6 @@ namespace AudioWorks.Extensions.Flac
             return EncoderTellStatus.Ok;
         }
 
-        [Pure]
         EncoderState GetState() => SafeNativeMethods.StreamEncoderGetState(_handle);
     }
 }

@@ -13,13 +13,13 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.ConstrainedExecution;
-using JetBrains.Annotations;
 using Microsoft.Win32.SafeHandles;
 
 namespace AudioWorks.Extensions.Apple
 {
-    [UsedImplicitly]
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     sealed class ExtendedAudioFileHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
         internal ExtendedAudioFileHandle()

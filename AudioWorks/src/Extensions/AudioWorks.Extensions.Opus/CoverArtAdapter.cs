@@ -17,14 +17,12 @@ using System;
 using System.Buffers.Binary;
 using System.Buffers.Text;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Opus
 {
     static class CoverArtAdapter
     {
-        [Pure, CanBeNull]
-        internal static ICoverArt FromBase64(ReadOnlySpan<byte> value)
+        internal static ICoverArt? FromBase64(ReadOnlySpan<byte> value)
         {
             // Use heap allocations for cover art > 256kB
             var byteCount = Base64.GetMaxDecodedFromUtf8Length(value.Length);

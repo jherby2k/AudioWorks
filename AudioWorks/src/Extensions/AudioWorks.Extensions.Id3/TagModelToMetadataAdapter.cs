@@ -17,13 +17,12 @@ using System;
 using AudioWorks.Common;
 using Id3Lib;
 using Id3Lib.Frames;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Id3
 {
     sealed class TagModelToMetadataAdapter : AudioMetadata
     {
-        internal TagModelToMetadataAdapter([NotNull] TagModel tagModel)
+        internal TagModelToMetadataAdapter(TagModel tagModel)
         {
             foreach (var frame in tagModel)
                 switch (frame)
@@ -56,7 +55,7 @@ namespace AudioWorks.Extensions.Id3
                                 Genre = frameText.Text;
                                 break;
 
-                            // The TDAT frame contains the day and the month:
+                            // The TDAT frame contains the day and the month
                             case "TDAT":
                                 Day = frameText.Text.Substring(0, 2);
                                 Month = frameText.Text.Substring(2);
@@ -66,7 +65,7 @@ namespace AudioWorks.Extensions.Id3
                                 Year = frameText.Text;
                                 break;
 
-                            // The TRCK frame contains the track number and (optionally) the track count:
+                            // The TRCK frame contains the track number and (optionally) the track count
                             case "TRCK":
                                 var segments = frameText.Text.Split('/');
                                 TrackNumber = segments[0];

@@ -26,7 +26,6 @@ using AudioWorks.Common;
 #endif
 using AudioWorks.Extensibility;
 #if WINDOWS
-using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 #endif
 
@@ -41,7 +40,6 @@ namespace AudioWorks.Extensions.Apple
             var logger = LoggerManager.LoggerFactory.CreateLogger<CoreAudioHandler>();
 
             var libPath = Path.Combine(
-                // ReSharper disable once AssignNullToNotNullAttribute
                 Environment.GetEnvironmentVariable("CommonProgramFiles"),
                 "Apple",
                 "Apple Application Support");
@@ -73,7 +71,7 @@ namespace AudioWorks.Extensions.Apple
         }
 #if WINDOWS
 
-        static void AddUnmanagedLibraryPath([NotNull] string libPath) =>
+        static void AddUnmanagedLibraryPath(string libPath) =>
             ((ExtensionLoadContext) AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()))
             .AddUnmanagedLibraryPath(libPath);
 #endif

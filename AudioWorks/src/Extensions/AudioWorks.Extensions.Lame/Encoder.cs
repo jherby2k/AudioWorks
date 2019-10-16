@@ -21,19 +21,18 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Lame
 {
     sealed class Encoder : IDisposable
     {
-        [NotNull] readonly EncoderHandle _handle = SafeNativeMethods.Init();
+        readonly EncoderHandle _handle = SafeNativeMethods.Init();
 #pragma warning disable CA2213 // Disposable fields should be disposed
-        [NotNull] readonly Stream _stream;
+        readonly Stream _stream;
 #pragma warning restore CA2213 // Disposable fields should be disposed
         long _startPosition;
 
-        internal Encoder([NotNull] Stream stream) => _stream = stream;
+        internal Encoder(Stream stream) => _stream = stream;
 
         internal void SetChannels(int channels) => SafeNativeMethods.SetNumChannels(_handle, channels);
 

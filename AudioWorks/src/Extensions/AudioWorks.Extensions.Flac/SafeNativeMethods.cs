@@ -17,7 +17,6 @@ using System;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
 {
@@ -54,7 +53,6 @@ namespace AudioWorks.Extensions.Flac
         internal static extern IntPtr DlSym(IntPtr handle, string symbol);
 #endif
 
-        [NotNull]
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_new",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern StreamDecoderHandle StreamDecoderNew();
@@ -62,15 +60,15 @@ namespace AudioWorks.Extensions.Flac
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_init_stream",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int StreamDecoderInitStream(
-            [NotNull] StreamDecoderHandle handle,
-            [NotNull] NativeCallbacks.StreamDecoderReadCallback readCallback,
-            [CanBeNull] NativeCallbacks.StreamDecoderSeekCallback seekCallback,
-            [CanBeNull] NativeCallbacks.StreamDecoderTellCallback tellCallback,
-            [CanBeNull] NativeCallbacks.StreamDecoderLengthCallback lengthCallback,
-            [CanBeNull] NativeCallbacks.StreamDecoderEofCallback eofCallback,
-            [NotNull] NativeCallbacks.StreamDecoderWriteCallback writeCallback,
-            [CanBeNull] NativeCallbacks.StreamDecoderMetadataCallback metadataCallback,
-            [NotNull] NativeCallbacks.StreamDecoderErrorCallback errorCallback,
+            StreamDecoderHandle handle,
+            NativeCallbacks.StreamDecoderReadCallback readCallback,
+            NativeCallbacks.StreamDecoderSeekCallback? seekCallback,
+            NativeCallbacks.StreamDecoderTellCallback? tellCallback,
+            NativeCallbacks.StreamDecoderLengthCallback? lengthCallback,
+            NativeCallbacks.StreamDecoderEofCallback? eofCallback,
+            NativeCallbacks.StreamDecoderWriteCallback writeCallback,
+            NativeCallbacks.StreamDecoderMetadataCallback? metadataCallback,
+            NativeCallbacks.StreamDecoderErrorCallback errorCallback,
             IntPtr userData);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_set_metadata_respond",
@@ -84,24 +82,24 @@ namespace AudioWorks.Extensions.Flac
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamDecoderProcessUntilEndOfMetadata(
-            [NotNull] StreamDecoderHandle handle);
+            StreamDecoderHandle handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_process_single",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamDecoderProcessSingle(
-            [NotNull] StreamDecoderHandle handle);
+            StreamDecoderHandle handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_get_state",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern DecoderState StreamDecoderGetState(
-            [NotNull] StreamDecoderHandle handle);
+            StreamDecoderHandle handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_finish",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamDecoderFinish(
-            [NotNull] StreamDecoderHandle handle);
+            StreamDecoderHandle handle);
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_delete",
@@ -109,7 +107,6 @@ namespace AudioWorks.Extensions.Flac
         internal static extern void StreamDecoderDelete(
             IntPtr handle);
 
-        [NotNull]
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_new",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern StreamEncoderHandle StreamEncoderNew();
@@ -118,75 +115,75 @@ namespace AudioWorks.Extensions.Flac
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamEncoderSetChannels(
-            [NotNull] StreamEncoderHandle handle,
+            StreamEncoderHandle handle,
             uint channels);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_get_channels",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern uint StreamEncoderGetChannels(
-            [NotNull] StreamEncoderHandle handle);
+            StreamEncoderHandle handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_set_bits_per_sample",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamEncoderSetBitsPerSample(
-            [NotNull] StreamEncoderHandle handle,
+            StreamEncoderHandle handle,
             uint bitsPerSample);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_get_bits_per_sample",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern uint StreamEncoderGetBitsPerSample(
-            [NotNull] StreamEncoderHandle handle);
+            StreamEncoderHandle handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_set_sample_rate",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamEncoderSetSampleRate(
-            [NotNull] StreamEncoderHandle handle,
+            StreamEncoderHandle handle,
             uint sampleRate);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_set_total_samples_estimate",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamEncoderSetTotalSamplesEstimate(
-            [NotNull] StreamEncoderHandle handle,
+            StreamEncoderHandle handle,
             ulong totalSamples);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_get_total_samples_estimate",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern ulong StreamEncoderGetTotalSamplesEstimate(
-            [NotNull] StreamEncoderHandle handle);
+            StreamEncoderHandle handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_set_compression_level",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern void StreamEncoderSetCompressionLevel(
-            [NotNull] StreamEncoderHandle handle,
+            StreamEncoderHandle handle,
             uint compressionLevel);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_set_metadata",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamEncoderSetMetadata(
-            [NotNull] StreamEncoderHandle handle,
-            [NotNull] [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] IntPtr[] metaData,
+            StreamEncoderHandle handle,
+            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] IntPtr[] metaData,
             uint blocks);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_init_stream",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int StreamEncoderInitStream(
-            [NotNull] StreamEncoderHandle handle,
-            [NotNull] NativeCallbacks.StreamEncoderWriteCallback writeCallback,
-            [CanBeNull] NativeCallbacks.StreamEncoderSeekCallback seekCallback,
-            [CanBeNull] NativeCallbacks.StreamEncoderTellCallback tellCallback,
-            [CanBeNull] NativeCallbacks.StreamEncoderMetadataCallback metadataCallback,
+            StreamEncoderHandle handle,
+            NativeCallbacks.StreamEncoderWriteCallback writeCallback,
+            NativeCallbacks.StreamEncoderSeekCallback? seekCallback,
+            NativeCallbacks.StreamEncoderTellCallback? tellCallback,
+            NativeCallbacks.StreamEncoderMetadataCallback? metadataCallback,
             IntPtr userData);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_process",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamEncoderProcess(
-            [NotNull] StreamEncoderHandle handle,
+            StreamEncoderHandle handle,
             in IntPtr buffer,
             uint samples);
 
@@ -194,7 +191,7 @@ namespace AudioWorks.Extensions.Flac
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamEncoderProcessInterleaved(
-            [NotNull] StreamEncoderHandle handle,
+            StreamEncoderHandle handle,
             in int buffer,
             uint samples);
 
@@ -202,12 +199,12 @@ namespace AudioWorks.Extensions.Flac
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamEncoderFinish(
-            [NotNull] StreamEncoderHandle handle);
+            StreamEncoderHandle handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_get_state",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern EncoderState StreamEncoderGetState(
-            [NotNull] StreamEncoderHandle handle);
+            StreamEncoderHandle handle);
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_delete",
@@ -215,7 +212,6 @@ namespace AudioWorks.Extensions.Flac
         internal static extern void StreamEncoderDelete(
             IntPtr handle);
 
-        [NotNull]
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_object_new", CallingConvention = CallingConvention.Cdecl)]
         internal static extern MetadataBlockHandle MetadataObjectNew(
             MetadataType blockType);
@@ -232,7 +228,7 @@ namespace AudioWorks.Extensions.Flac
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataObjectVorbisCommentAppendComment(
-            [NotNull] MetadataBlockHandle handle,
+            MetadataBlockHandle handle,
             VorbisCommentEntry vorbisComment,
             [MarshalAs(UnmanagedType.Bool)] bool copy);
 
@@ -240,7 +236,7 @@ namespace AudioWorks.Extensions.Flac
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataObjectSeekTableTemplateAppendSpacedPoints(
-            [NotNull] MetadataBlockHandle handle,
+            MetadataBlockHandle handle,
             uint num,
             ulong totalSamples);
 
@@ -248,7 +244,7 @@ namespace AudioWorks.Extensions.Flac
             CallingConvention = CallingConvention.Cdecl, BestFitMapping = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataObjectPictureSetMimeType(
-            [NotNull] MetadataBlockHandle handle,
+            MetadataBlockHandle handle,
             [MarshalAs(UnmanagedType.LPStr)] string mimeType,
             [MarshalAs(UnmanagedType.Bool)] bool copy);
 
@@ -256,7 +252,7 @@ namespace AudioWorks.Extensions.Flac
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern unsafe bool MetadataObjectPictureSetData(
-            [NotNull] MetadataBlockHandle handle,
+            MetadataBlockHandle handle,
             byte* data,
             uint length,
             [MarshalAs(UnmanagedType.Bool)] bool copy);
@@ -267,7 +263,6 @@ namespace AudioWorks.Extensions.Flac
         internal static extern void MetadataObjectDelete(
             IntPtr handle);
 
-        [NotNull]
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_chain_new", CallingConvention = CallingConvention.Cdecl)]
         internal static extern MetadataChainHandle MetadataChainNew();
 
@@ -275,7 +270,7 @@ namespace AudioWorks.Extensions.Flac
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataChainReadWithCallbacks(
-            [NotNull] MetadataChainHandle handle,
+            MetadataChainHandle handle,
             IntPtr ioHandle,
             IoCallbacks callbacks);
 
@@ -283,14 +278,14 @@ namespace AudioWorks.Extensions.Flac
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataChainCheckIfTempFileNeeded(
-            [NotNull] MetadataChainHandle handle,
+            MetadataChainHandle handle,
             [MarshalAs(UnmanagedType.Bool)] bool usePadding);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_chain_write_with_callbacks",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataChainWriteWithCallbacks(
-            [NotNull] MetadataChainHandle handle,
+            MetadataChainHandle handle,
             [MarshalAs(UnmanagedType.Bool)] bool usePadding,
             IntPtr ioHandle,
             IoCallbacks callbacks);
@@ -299,7 +294,7 @@ namespace AudioWorks.Extensions.Flac
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataChainWriteWithCallbacksAndTempFile(
-            [NotNull] MetadataChainHandle handle,
+            MetadataChainHandle handle,
             [MarshalAs(UnmanagedType.Bool)] bool usePadding,
             IntPtr ioHandle,
             IoCallbacks callbacks,
@@ -312,7 +307,6 @@ namespace AudioWorks.Extensions.Flac
         internal static extern void MetadataChainDelete(
             IntPtr handle);
 
-        [NotNull]
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_iterator_new",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern MetadataIteratorHandle MetadataIteratorNew();
@@ -320,32 +314,32 @@ namespace AudioWorks.Extensions.Flac
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_iterator_init",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern void MetadataIteratorInit(
-            [NotNull] MetadataIteratorHandle handle,
-            [NotNull] MetadataChainHandle chainHandle);
+            MetadataIteratorHandle handle,
+            MetadataChainHandle chainHandle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_iterator_next",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataIteratorNext(
-            [NotNull] MetadataIteratorHandle handle);
+            MetadataIteratorHandle handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_iterator_get_block",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern IntPtr MetadataIteratorGetBlock(
-            [NotNull] MetadataIteratorHandle handle);
+            MetadataIteratorHandle handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_iterator_insert_block_after",
             CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataIteratorInsertBlockAfter(
-            [NotNull] MetadataIteratorHandle handle,
-            [NotNull] MetadataBlockHandle metadataHandle);
+            MetadataIteratorHandle handle,
+            MetadataBlockHandle metadataHandle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_iterator_delete_block"
             , CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataIteratorDeleteBlock(
-            [NotNull] MetadataIteratorHandle handle,
+            MetadataIteratorHandle handle,
             [MarshalAs(UnmanagedType.Bool)] bool replaceWithPadding);
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]

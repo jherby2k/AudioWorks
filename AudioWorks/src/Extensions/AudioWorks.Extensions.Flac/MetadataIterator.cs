@@ -14,22 +14,21 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
 {
     sealed class MetadataIterator : IDisposable
     {
-        [NotNull] readonly MetadataIteratorHandle _handle = SafeNativeMethods.MetadataIteratorNew();
+        readonly MetadataIteratorHandle _handle = SafeNativeMethods.MetadataIteratorNew();
 
-        internal MetadataIterator([NotNull] MetadataChainHandle chainHandle) =>
+        internal MetadataIterator(MetadataChainHandle chainHandle) =>
             SafeNativeMethods.MetadataIteratorInit(_handle, chainHandle);
 
         internal bool Next() => SafeNativeMethods.MetadataIteratorNext(_handle);
 
         internal IntPtr GetBlock() => SafeNativeMethods.MetadataIteratorGetBlock(_handle);
 
-        internal void InsertBlockAfter([NotNull] MetadataBlock metadataBlock)
+        internal void InsertBlockAfter(MetadataBlock metadataBlock)
         {
             // The iterator takes ownership of the handle
             SafeNativeMethods.MetadataIteratorInsertBlockAfter(_handle, metadataBlock.Handle);

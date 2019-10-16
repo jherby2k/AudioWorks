@@ -17,16 +17,14 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
 {
     class AudioInfoStreamDecoder : StreamDecoder
     {
-        [CanBeNull]
-        internal AudioInfo AudioInfo { get; private set; }
+        internal AudioInfo? AudioInfo { get; private set; }
 
-        internal AudioInfoStreamDecoder([NotNull] Stream stream)
+        internal AudioInfoStreamDecoder(Stream stream)
             : base(stream)
         {
         }

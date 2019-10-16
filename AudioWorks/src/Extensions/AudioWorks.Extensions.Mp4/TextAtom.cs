@@ -16,15 +16,13 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.IO;
 using System.Text;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp4
 {
     sealed class TextAtom : WritableAtom
     {
-        [NotNull] readonly string _fourCc;
+        readonly string _fourCc;
 
-        [NotNull]
         internal string Value { get; }
 
         internal TextAtom(ReadOnlySpan<byte> data)
@@ -45,7 +43,7 @@ namespace AudioWorks.Extensions.Mp4
 #endif
         }
 
-        internal TextAtom([NotNull] string fourCc, [NotNull] string value)
+        internal TextAtom(string fourCc, string value)
         {
             _fourCc = fourCc;
             Value = value;

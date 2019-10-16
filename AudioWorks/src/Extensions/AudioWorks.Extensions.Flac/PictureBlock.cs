@@ -15,7 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Runtime.InteropServices;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
 {
@@ -31,7 +30,7 @@ namespace AudioWorks.Extensions.Flac
                 Marshal.OffsetOf<PictureMetadataBlock>("Picture").ToInt32() +
                 Marshal.OffsetOf<Picture>("Type").ToInt32()), (int) type);
 
-        internal void SetMimeType([NotNull] string mimeType) =>
+        internal void SetMimeType(string mimeType) =>
             SafeNativeMethods.MetadataObjectPictureSetMimeType(Handle, mimeType, true);
 
         internal void SetWidth(int width) =>

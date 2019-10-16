@@ -18,7 +18,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.ReplayGain
 {
@@ -29,8 +28,8 @@ namespace AudioWorks.Extensions.ReplayGain
     {
         const int _referenceLevel = -18;
 
-        [CanBeNull] R128Analyzer _analyzer;
-        [CanBeNull] GroupState _groupState;
+        R128Analyzer? _analyzer;
+        GroupState? _groupState;
 
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
         {
@@ -46,7 +45,6 @@ namespace AudioWorks.Extensions.ReplayGain
                 peakAnalysis.Equals("Interpolated", StringComparison.Ordinal));
 
             _groupState = (GroupState) groupToken.GetOrSetGroupState(new GroupState());
-            // ReSharper disable once PossibleNullReferenceException
             _groupState.Handles.Enqueue(_analyzer.Handle);
         }
 
@@ -56,15 +54,13 @@ namespace AudioWorks.Extensions.ReplayGain
 
             Span<float> buffer = stackalloc float[samples.Frames * samples.Channels];
             samples.CopyToInterleaved(buffer);
-            // ReSharper disable once PossibleNullReferenceException
-            _analyzer.AddFrames(buffer, (uint) samples.Frames);
+            _analyzer!.AddFrames(buffer, (uint) samples.Frames);
         }
 
         public AudioMetadata GetResult()
         {
-            // ReSharper disable twice PossibleNullReferenceException
-            var peak = _analyzer.GetPeak();
-            _groupState.AddPeak(peak);
+            var peak = _analyzer!.GetPeak();
+            _groupState!.AddPeak(peak);
 
             return new AudioMetadata
             {
@@ -77,7 +73,7 @@ namespace AudioWorks.Extensions.ReplayGain
         public AudioMetadata GetGroupResult() =>
             new AudioMetadata
             {
-                AlbumPeak = _groupState.GroupPeak.ToString(CultureInfo.InvariantCulture),
+                AlbumPeak = _groupState!.GroupPeak.ToString(CultureInfo.InvariantCulture),
                 AlbumGain = (_referenceLevel - R128Analyzer.GetLoudnessMultiple(_groupState.Handles.ToArray()))
                     .ToString(CultureInfo.InvariantCulture)
             };

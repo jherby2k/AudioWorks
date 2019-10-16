@@ -14,13 +14,12 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
 {
     sealed class MetadataToVorbisCommentAdapter : VorbisCommentBlock
     {
-        internal MetadataToVorbisCommentAdapter([NotNull] AudioMetadata metadata)
+        internal MetadataToVorbisCommentAdapter(AudioMetadata metadata)
         {
             if (!string.IsNullOrEmpty(metadata.Title))
                 Append("TITLE", metadata.Title);

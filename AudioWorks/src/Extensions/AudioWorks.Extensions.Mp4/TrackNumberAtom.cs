@@ -16,7 +16,6 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Globalization;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp4
 {
@@ -32,7 +31,7 @@ namespace AudioWorks.Extensions.Mp4
             TrackCount = data[29];
         }
 
-        internal TrackNumberAtom([NotNull] string trackNumber, [NotNull] string trackCount)
+        internal TrackNumberAtom(string trackNumber, string trackCount)
         {
             TrackNumber =
                 !string.IsNullOrEmpty(trackNumber)

@@ -35,7 +35,7 @@ namespace AudioWorks.Extensions.Opus
 
         public unsafe AudioMetadata ReadMetadata(Stream stream)
         {
-            OggStream oggStream = null;
+            OggStream? oggStream = null;
 #if NETSTANDARD2_0
             var buffer = ArrayPool<byte>.Shared.Rent(4096);
 #else

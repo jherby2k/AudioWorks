@@ -16,13 +16,12 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Globalization;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
 {
     sealed class VorbisCommentToMetadataAdapter : AudioMetadata
     {
-        internal void Set([NotNull] string field, [NotNull] string value)
+        internal void Set(string field, string value)
         {
             try
             {

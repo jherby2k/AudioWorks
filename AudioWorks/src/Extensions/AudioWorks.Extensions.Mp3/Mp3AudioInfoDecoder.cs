@@ -17,7 +17,6 @@ using System;
 using System.IO;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp3
 {
@@ -54,8 +53,7 @@ namespace AudioWorks.Extensions.Mp3
                 }
         }
 
-        [NotNull]
-        static FrameHeader ReadFrameHeader([NotNull] FrameReader reader)
+        static FrameHeader ReadFrameHeader(FrameReader reader)
         {
 #if NETSTANDARD2_0
             var buffer = new byte[4];
@@ -63,8 +61,8 @@ namespace AudioWorks.Extensions.Mp3
             Span<byte> buffer = stackalloc byte[4];
 #endif
 
-            // Seek to the first valid frame header:
-            FrameHeader result = null;
+            // Seek to the first valid frame header
+            FrameHeader? result = null;
             do
             {
                 reader.SeekToNextFrame();
@@ -87,7 +85,7 @@ namespace AudioWorks.Extensions.Mp3
             return result;
         }
 
-        static OptionalHeader ReadXingHeader([NotNull] FrameReader reader, [NotNull] FrameHeader header)
+        static OptionalHeader ReadXingHeader(FrameReader reader, FrameHeader header)
         {
             // Xing header (if present) is located after the side info
             reader.BaseStream.Position = reader.FrameStart + 4 + header.SideInfoLength;
@@ -109,7 +107,7 @@ namespace AudioWorks.Extensions.Mp3
             return result;
         }
 
-        static OptionalHeader ReadVbriHeader([NotNull] FrameReader reader)
+        static OptionalHeader ReadVbriHeader(FrameReader reader)
         {
             // VBRI header (if present) is located 32 bytes past the frame header
             reader.BaseStream.Position = reader.FrameStart + 36;
@@ -125,7 +123,7 @@ namespace AudioWorks.Extensions.Mp3
             return result;
         }
 
-        static int DetermineBitRate([NotNull] FrameHeader frameHeader, OptionalHeader optionalHeader)
+        static int DetermineBitRate(FrameHeader frameHeader, OptionalHeader optionalHeader)
         {
             // If the BitRate can't be calculated because of an incomplete or missing VBR header, assume CBR
             if (optionalHeader.Incomplete)

@@ -17,13 +17,12 @@ using System;
 using System.Buffers.Binary;
 using System.IO;
 using System.Text;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp4
 {
     sealed class Mp4Writer : BinaryWriter
     {
-        internal Mp4Writer([NotNull] Stream output)
+        internal Mp4Writer(Stream output)
             : base(output, Encoding.UTF8, true)
         {
         }

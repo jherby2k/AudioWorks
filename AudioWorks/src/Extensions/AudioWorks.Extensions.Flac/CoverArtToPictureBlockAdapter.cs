@@ -14,13 +14,12 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
 {
     sealed class CoverArtToPictureBlockAdapter : PictureBlock
     {
-        internal CoverArtToPictureBlockAdapter([NotNull] ICoverArt coverArt)
+        internal CoverArtToPictureBlockAdapter(ICoverArt coverArt)
         {
             SetData(coverArt.Data);
             SetType(PictureType.CoverFront);

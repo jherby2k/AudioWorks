@@ -15,18 +15,14 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System.IO;
 using System.Runtime.InteropServices;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Apple
 {
     sealed class ExtendedAudioFile : AudioFile
     {
-        [NotNull] readonly ExtendedAudioFileHandle _handle;
+        readonly ExtendedAudioFileHandle _handle;
 
-        public ExtendedAudioFile(
-            AudioStreamBasicDescription description,
-            AudioFileType fileType,
-            [NotNull] Stream stream)
+        public ExtendedAudioFile(AudioStreamBasicDescription description, AudioFileType fileType, Stream stream)
             : base(description, fileType, stream) =>
             SafeNativeMethods.ExtAudioFileWrapAudioFile(Handle, true, out _handle);
 

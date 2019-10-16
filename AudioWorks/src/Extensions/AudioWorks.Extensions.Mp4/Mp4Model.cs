@@ -17,21 +17,18 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp4
 {
     sealed class Mp4Model
     {
-        [NotNull] readonly Stream _stream;
-        [NotNull] readonly Stack<AtomInfo> _atomInfoStack = new Stack<AtomInfo>();
+        readonly Stream _stream;
+        readonly Stack<AtomInfo> _atomInfoStack = new Stack<AtomInfo>();
 
-        [NotNull]
         internal AtomInfo CurrentAtom => _atomInfoStack.Peek();
 
-        internal Mp4Model([NotNull] Stream stream) => _stream = stream;
+        internal Mp4Model(Stream stream) => _stream = stream;
 
-        [NotNull, ItemNotNull]
         internal AtomInfo[] GetChildAtomInfo()
         {
             var result = new List<AtomInfo>();
@@ -64,7 +61,7 @@ namespace AudioWorks.Extensions.Mp4
             return result.ToArray();
         }
 
-        internal bool DescendToAtom([NotNull, ItemNotNull] params string[] hierarchy)
+        internal bool DescendToAtom(params string[] hierarchy)
         {
             Reset();
 
@@ -98,8 +95,7 @@ namespace AudioWorks.Extensions.Mp4
             _atomInfoStack.Clear();
         }
 
-        [NotNull]
-        internal byte[] ReadAtom([NotNull] AtomInfo atom)
+        internal byte[] ReadAtom(AtomInfo atom)
         {
             _stream.Position = atom.Start;
 
@@ -107,7 +103,7 @@ namespace AudioWorks.Extensions.Mp4
                 return reader.ReadBytes((int)atom.Size);
         }
 
-        internal void CopyAtom([NotNull] AtomInfo atom, [NotNull] Stream output)
+        internal void CopyAtom(AtomInfo atom, Stream output)
         {
             _stream.Position = atom.Start;
 
@@ -162,10 +158,7 @@ namespace AudioWorks.Extensions.Mp4
             UpdateTimeStamp(new[] { "moov", "trak", "mdia", "mdhd" }, creationTime, modificationTime);
         }
 
-        void UpdateTimeStamp(
-            [NotNull, ItemNotNull] string[] hierarchy,
-            DateTime? creationTime,
-            DateTime? modificationTime)
+        void UpdateTimeStamp(string[] hierarchy, DateTime? creationTime, DateTime? modificationTime)
         {
             DescendToAtom(hierarchy);
 
@@ -199,20 +192,13 @@ namespace AudioWorks.Extensions.Mp4
                 }
         }
 
-        static int GetDataLength(string fourCc)
-        {
-            // Some containers also contain data, which needs to be skipped
-            switch (fourCc)
+        static int GetDataLength(string fourCc) =>
+            fourCc switch
             {
-                case "meta":
-                    return 4;
-                case "stsd":
-                    return 8;
-                case "mp4a":
-                    return 28;
-                default:
-                    return 0;
-            }
-        }
+                "meta" => 4,
+                "stsd" => 8,
+                "mp4a" => 28,
+                _ => 0
+            };
     }
 }

@@ -17,7 +17,6 @@ using System;
 using System.IO;
 using System.Text;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Wave
 {
@@ -25,7 +24,7 @@ namespace AudioWorks.Extensions.Wave
     {
         internal uint RiffChunkSize { get; private set; }
 
-        internal RiffReader([NotNull] Stream input)
+        internal RiffReader(Stream input)
             : base(input, Encoding.ASCII, true)
         {
         }
@@ -39,7 +38,6 @@ namespace AudioWorks.Extensions.Wave
             RiffChunkSize = ReadUInt32();
         }
 
-        [NotNull]
         internal string ReadFourCc()
         {
 #if NETSTANDARD2_0
@@ -54,7 +52,7 @@ namespace AudioWorks.Extensions.Wave
             return new string(buffer);
         }
 
-        internal uint SeekToChunk([NotNull] string chunkId)
+        internal uint SeekToChunk(string chunkId)
         {
             BaseStream.Position = 12;
 
@@ -63,7 +61,7 @@ namespace AudioWorks.Extensions.Wave
 
             while (!currentChunkId.Equals(chunkId, StringComparison.Ordinal))
             {
-                // Chunks are word-aligned:
+                // Chunks are word-aligned
                 BaseStream.Seek(currentChunkLength + currentChunkLength % 2, SeekOrigin.Current);
 
                 if (BaseStream.Position >= RiffChunkSize + 8)

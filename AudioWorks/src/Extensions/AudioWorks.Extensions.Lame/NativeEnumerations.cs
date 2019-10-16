@@ -13,15 +13,16 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AudioWorks.Extensions.Lame
 {
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     enum VbrMode
     {
-        [UsedImplicitly] Off,
-        [UsedImplicitly] Mt,
-        [UsedImplicitly] Rh,
+        Off,
+        Mt,
+        Rh,
         Abr,
         Mtrh
     }

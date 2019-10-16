@@ -18,14 +18,12 @@ using System.Buffers.Binary;
 using System.Buffers.Text;
 using System.Text;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Vorbis
 {
     static class CoverArtAdapter
     {
-        [Pure, CanBeNull]
-        internal static ICoverArt FromBase64(ReadOnlySpan<byte> value)
+        internal static ICoverArt? FromBase64(ReadOnlySpan<byte> value)
         {
             // Use heap allocations for cover art > 256kB
             var byteCount = Base64.GetMaxDecodedFromUtf8Length(value.Length);
@@ -49,11 +47,10 @@ namespace AudioWorks.Extensions.Vorbis
                 decodedValue.Slice(offset + 4, (int) BinaryPrimitives.ReadUInt32BigEndian(decodedValue.Slice(offset))));
         }
 
-        [Pure]
 #if NETSTANDARD2_0
-        internal static unsafe ReadOnlySpan<byte> ToBase64([NotNull] ICoverArt coverArt)
+        internal static unsafe ReadOnlySpan<byte> ToBase64(ICoverArt coverArt)
 #else
-        internal static ReadOnlySpan<byte> ToBase64([NotNull] ICoverArt coverArt)
+        internal static ReadOnlySpan<byte> ToBase64(ICoverArt coverArt)
 #endif
         {
             var dataLength = 32 + coverArt.MimeType.Length + coverArt.Data.Length;

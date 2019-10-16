@@ -14,13 +14,12 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp4
 {
     sealed class EsdsAtom
     {
-        [NotNull] static readonly uint[] _sampleRates =
+        static readonly uint[] _sampleRates =
         {
             96000,
             88200,

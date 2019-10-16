@@ -17,27 +17,25 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Apple
 {
     class AudioFile : IDisposable
     {
         // ReSharper disable PrivateFieldCanBeConvertedToLocalVariable
-        [NotNull] readonly NativeCallbacks.AudioFileReadCallback _readCallback;
-        [NotNull] readonly NativeCallbacks.AudioFileGetSizeCallback _getSizeCallback;
-        [CanBeNull] readonly NativeCallbacks.AudioFileWriteCallback _writeCallback;
-        [CanBeNull] readonly NativeCallbacks.AudioFileSetSizeCallback _setSizeCallback;
+        readonly NativeCallbacks.AudioFileReadCallback _readCallback;
+        readonly NativeCallbacks.AudioFileGetSizeCallback _getSizeCallback;
+        readonly NativeCallbacks.AudioFileWriteCallback? _writeCallback;
+        readonly NativeCallbacks.AudioFileSetSizeCallback? _setSizeCallback;
         // ReSharper restore PrivateFieldCanBeConvertedToLocalVariable
 #pragma warning disable CA2213 // Disposable fields should be disposed
-        [NotNull] readonly Stream _stream;
+        readonly Stream _stream;
 #pragma warning restore CA2213 // Disposable fields should be disposed
         long _endOfData;
 
-        [NotNull]
         protected AudioFileHandle Handle { get; }
 
-        internal AudioFile(AudioFileType fileType, [NotNull] Stream stream)
+        internal AudioFile(AudioFileType fileType, Stream stream)
         {
             // This constructor is for reading
             _readCallback = ReadCallback;
@@ -52,7 +50,7 @@ namespace AudioWorks.Extensions.Apple
             Handle = handle;
         }
 
-        internal AudioFile(AudioStreamBasicDescription description, AudioFileType fileType, [NotNull] Stream stream)
+        internal AudioFile(AudioStreamBasicDescription description, AudioFileType fileType, Stream stream)
         {
             // This constructor is for writing
             _readCallback = ReadCallback;
@@ -96,7 +94,7 @@ namespace AudioWorks.Extensions.Apple
 
         internal void ReadPackets(
             out uint numBytes,
-            [NotNull] AudioStreamPacketDescription[] packetDescriptions,
+            AudioStreamPacketDescription[] packetDescriptions,
             long startingPacket,
             ref uint packets,
             IntPtr data) =>
@@ -113,7 +111,7 @@ namespace AudioWorks.Extensions.Apple
 
         [SuppressMessage("Performance", "CA1801:Review unused parameters",
             Justification = "Part of native API")]
-        AudioFileStatus ReadCallback(IntPtr userData, long position, uint requestCount, [NotNull] byte[] buffer, out uint actualCount)
+        AudioFileStatus ReadCallback(IntPtr userData, long position, uint requestCount, byte[] buffer, out uint actualCount)
         {
             _stream.Position = position;
             actualCount = (uint) _stream.Read(buffer, 0, (int) requestCount);
@@ -124,7 +122,7 @@ namespace AudioWorks.Extensions.Apple
             Justification = "Part of native API")]
         long GetSizeCallback(IntPtr userData) => _endOfData;
 
-        AudioFileStatus WriteCallback(IntPtr userData, long position, uint requestCount, [NotNull] byte[] buffer, out uint actualCount)
+        AudioFileStatus WriteCallback(IntPtr userData, long position, uint requestCount, byte[] buffer, out uint actualCount)
         {
             _stream.Position = position;
             _stream.Write(buffer, 0, (int) requestCount);

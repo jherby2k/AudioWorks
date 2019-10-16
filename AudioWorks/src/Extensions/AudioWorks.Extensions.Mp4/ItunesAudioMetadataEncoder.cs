@@ -19,7 +19,6 @@ using System.IO;
 using System.Linq;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp4
 {
@@ -107,7 +106,6 @@ namespace AudioWorks.Extensions.Mp4
             }
         }
 
-        [NotNull]
         static Stream GetTempStream(long length)
         {
             // Use a memory stream for < 64 MB
@@ -116,10 +114,7 @@ namespace AudioWorks.Extensions.Mp4
             return result;
         }
 
-        static void WriteIlst(
-            [NotNull] Mp4Model originalMp4,
-            [NotNull] AudioMetadata metadata,
-            [NotNull] Stream output)
+        static void WriteIlst(Mp4Model originalMp4, AudioMetadata metadata, Stream output)
         {
             // Always store images in JPEG format for AAC, since it is also lossy
             originalMp4.DescendToAtom("moov", "trak", "mdia", "minf", "stbl", "stsd", "mp4a", "esds");

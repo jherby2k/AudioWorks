@@ -21,7 +21,6 @@ using System.Buffers;
 using System.IO;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Wave
 {
@@ -32,7 +31,7 @@ namespace AudioWorks.Extensions.Wave
     {
         int _bitsPerSample;
         int _bytesPerSample;
-        [CanBeNull] RiffWriter _writer;
+        RiffWriter? _writer;
 
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary();
 
@@ -51,7 +50,6 @@ namespace AudioWorks.Extensions.Wave
 
             _writer.Initialize("WAVE");
             WriteFmtChunk(info);
-            // ReSharper disable once PossibleNullReferenceException
             _writer.BeginChunk("data");
         }
 
@@ -66,8 +64,7 @@ namespace AudioWorks.Extensions.Wave
             try
             {
                 samples.CopyToInterleaved(buffer, _bitsPerSample);
-                // ReSharper disable once PossibleNullReferenceException
-                _writer.Write(buffer, 0, dataSize);
+                _writer!.Write(buffer, 0, dataSize);
             }
             finally
             {
@@ -76,16 +73,14 @@ namespace AudioWorks.Extensions.Wave
 #else
             Span<byte> buffer = stackalloc byte[samples.Channels * samples.Frames * _bytesPerSample];
             samples.CopyToInterleaved(buffer, _bitsPerSample);
-            // ReSharper disable once PossibleNullReferenceException
-            _writer.Write(buffer);
+            _writer!.Write(buffer);
 #endif
         }
 
         public void Finish()
         {
             // Finish both data and RIFF chunks
-            // ReSharper disable once PossibleNullReferenceException
-            _writer.FinishChunk();
+            _writer!.FinishChunk();
             _writer.FinishChunk();
 
             // The pre-allocation may have been based on an estimated frame count
@@ -94,10 +89,9 @@ namespace AudioWorks.Extensions.Wave
 
         public void Dispose() => _writer?.Dispose();
 
-        void WriteFmtChunk([NotNull] AudioInfo audioInfo)
+        void WriteFmtChunk(AudioInfo audioInfo)
         {
-            // ReSharper disable once PossibleNullReferenceException
-            _writer.BeginChunk("fmt ", 16);
+            _writer!.BeginChunk("fmt ", 16);
             _writer.Write((ushort) 1);
             _writer.Write((ushort) audioInfo.Channels);
             _writer.Write((uint) audioInfo.SampleRate);

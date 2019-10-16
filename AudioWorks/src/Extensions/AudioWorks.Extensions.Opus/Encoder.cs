@@ -17,30 +17,29 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Opus
 {
     sealed class Encoder : IDisposable
     {
 #pragma warning disable CA2213 // Disposable fields should be disposed
-        [NotNull] readonly Stream _realStream;
+        readonly Stream _realStream;
 #pragma warning restore CA2213 // Disposable fields should be disposed
-        [NotNull] Stream _outputStream;
+        Stream _outputStream;
         readonly int _channels;
         readonly int _totalSeconds;
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         readonly OpusEncoderCallbacks _callbacks;
-        [NotNull] readonly OpusEncoderHandle _handle;
+        readonly OpusEncoderHandle _handle;
         int _requestedBitRate;
         bool _headersFlushed;
 
         internal Encoder(
-            [NotNull] Stream stream,
+            Stream stream,
             int sampleRate,
             int channels,
             int totalSeconds,
-            [NotNull] OpusCommentsHandle comments)
+            OpusCommentsHandle comments)
         {
             _realStream = stream;
             _outputStream = new MemoryStream();

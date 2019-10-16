@@ -20,7 +20,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Apple
 {
@@ -31,9 +30,9 @@ namespace AudioWorks.Extensions.Apple
     {
         const uint _defaultFrameCount = 4096;
 
-        [CanBeNull] AudioFile _audioFile;
+        AudioFile? _audioFile;
         AudioStreamBasicDescription _outputDescription;
-        [CanBeNull] AudioConverter _converter;
+        AudioConverter? _converter;
         IntPtr _magicCookie;
 
         public bool Finished { get; private set; }
@@ -66,8 +65,7 @@ namespace AudioWorks.Extensions.Apple
             bufferList.Buffers[0].Data = new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)));
 
             var frameCount = _defaultFrameCount;
-            // ReSharper disable once PossibleNullReferenceException
-            _converter.FillBuffer(ref frameCount, ref bufferList, null);
+            _converter!.FillBuffer(ref frameCount, ref bufferList, null);
 
             if (frameCount == 0)
                 Finished = true;
@@ -91,25 +89,14 @@ namespace AudioWorks.Extensions.Apple
 
         static AudioStreamBasicDescription GetOutputDescription(AudioStreamBasicDescription inputDescription)
         {
-            uint bitsPerSample;
-            // ReSharper disable once SwitchStatementMissingSomeCases
-            switch (inputDescription.Flags)
+            var bitsPerSample = inputDescription.Flags switch
             {
-                case AudioFormatFlags.Alac16BitSourceData:
-                    bitsPerSample = 16;
-                    break;
-                case AudioFormatFlags.Alac20BitSourceData:
-                    bitsPerSample = 20;
-                    break;
-                case AudioFormatFlags.Alac24BitSourceData:
-                    bitsPerSample = 24;
-                    break;
-                case AudioFormatFlags.Alac32BitSourceData:
-                    bitsPerSample = 32;
-                    break;
-                default:
-                    throw new AudioUnsupportedException("Unknown audio format.");
-            }
+                AudioFormatFlags.Alac16BitSourceData => 16u,
+                AudioFormatFlags.Alac20BitSourceData => 20u,
+                AudioFormatFlags.Alac24BitSourceData => 24u,
+                AudioFormatFlags.Alac32BitSourceData => 32u,
+                _ => throw new AudioUnsupportedException("Unknown audio format.")
+            };
 
             return new AudioStreamBasicDescription
             {
@@ -124,7 +111,7 @@ namespace AudioWorks.Extensions.Apple
             };
         }
 
-        static IntPtr GetMagicCookie([NotNull] AudioFile audioFile, [NotNull] AudioConverter converter)
+        static IntPtr GetMagicCookie(AudioFile audioFile, AudioConverter converter)
         {
             audioFile.GetPropertyInfo(AudioFilePropertyId.MagicCookieData, out var dataSize, out _);
             var cookie = audioFile.GetProperty(AudioFilePropertyId.MagicCookieData, dataSize);

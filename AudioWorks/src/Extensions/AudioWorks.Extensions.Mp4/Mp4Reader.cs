@@ -20,22 +20,20 @@ using System.Buffers.Binary;
 using System.IO;
 using System.Text;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Mp4
 {
     sealed class Mp4Reader : BinaryReader
     {
 #if NETSTANDARD2_0
-        [NotNull] readonly byte[] _buffer = new byte[4];
+        readonly byte[] _buffer = new byte[4];
 
 #endif
-        internal Mp4Reader([NotNull] Stream input)
+        internal Mp4Reader(Stream input)
             : base(input, CodePagesEncodingProvider.Instance.GetEncoding(1252), true)
         {
         }
 
-        [NotNull]
         internal string ReadFourCc()
         {
 #if NETSTANDARD2_0

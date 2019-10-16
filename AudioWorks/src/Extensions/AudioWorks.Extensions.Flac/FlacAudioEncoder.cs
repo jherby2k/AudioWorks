@@ -19,7 +19,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
 {
@@ -28,8 +27,8 @@ namespace AudioWorks.Extensions.Flac
     [AudioEncoderExport("FLAC", "Free Lossless Audio Codec")]
     sealed class FlacAudioEncoder : IAudioEncoder, IDisposable
     {
-        [NotNull] readonly List<MetadataBlock> _metadataBlocks = new List<MetadataBlock>(4);
-        [CanBeNull] StreamEncoder _encoder;
+        readonly List<MetadataBlock> _metadataBlocks = new List<MetadataBlock>(4);
+        StreamEncoder? _encoder;
         int _bitsPerSample;
 
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
@@ -86,8 +85,7 @@ namespace AudioWorks.Extensions.Flac
             {
                 Span<int> buffer = stackalloc int[samples.Frames * samples.Channels];
                 samples.CopyToInterleaved(buffer, _bitsPerSample);
-                // ReSharper disable once PossibleNullReferenceException
-                _encoder.ProcessInterleaved(buffer, (uint) samples.Frames);
+                _encoder!.ProcessInterleaved(buffer, (uint) samples.Frames);
             }
             else
             {
@@ -95,8 +93,7 @@ namespace AudioWorks.Extensions.Flac
                 Span<int> leftBuffer = stackalloc int[samples.Frames];
                 Span<int> rightBuffer = stackalloc int[samples.Frames];
                 samples.CopyTo(leftBuffer, rightBuffer, _bitsPerSample);
-                // ReSharper disable once PossibleNullReferenceException
-                _encoder.Process(leftBuffer, rightBuffer);
+                _encoder!.Process(leftBuffer, rightBuffer);
             }
         }
 
@@ -104,8 +101,7 @@ namespace AudioWorks.Extensions.Flac
         {
             try
             {
-                // ReSharper disable once PossibleNullReferenceException
-                _encoder.Finish();
+                _encoder!.Finish();
             }
             finally
             {

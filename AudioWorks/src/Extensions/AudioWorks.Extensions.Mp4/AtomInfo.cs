@@ -13,8 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using JetBrains.Annotations;
-
 namespace AudioWorks.Extensions.Mp4
 {
     sealed class AtomInfo
@@ -27,7 +25,7 @@ namespace AudioWorks.Extensions.Mp4
 
         internal string FourCc { get; }
 
-        internal AtomInfo(uint start, uint size, [NotNull] string fourCc)
+        internal AtomInfo(uint start, uint size, string fourCc)
         {
             Start = start;
             Size = size;

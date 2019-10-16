@@ -16,29 +16,27 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Flac
 {
     abstract class StreamDecoder : IDisposable
     {
-        [NotNull] readonly NativeCallbacks.StreamDecoderReadCallback _readCallback;
-        [NotNull] readonly NativeCallbacks.StreamDecoderSeekCallback _seekCallback;
-        [NotNull] readonly NativeCallbacks.StreamDecoderTellCallback _tellCallback;
-        [NotNull] readonly NativeCallbacks.StreamDecoderLengthCallback _lengthCallback;
-        [NotNull] readonly NativeCallbacks.StreamDecoderEofCallback _eofCallback;
-        [NotNull] readonly NativeCallbacks.StreamDecoderWriteCallback _writeCallback;
-        [NotNull] readonly NativeCallbacks.StreamDecoderMetadataCallback _metadataCallback;
-        [NotNull] readonly NativeCallbacks.StreamDecoderErrorCallback _errorCallback;
+        readonly NativeCallbacks.StreamDecoderReadCallback _readCallback;
+        readonly NativeCallbacks.StreamDecoderSeekCallback _seekCallback;
+        readonly NativeCallbacks.StreamDecoderTellCallback _tellCallback;
+        readonly NativeCallbacks.StreamDecoderLengthCallback _lengthCallback;
+        readonly NativeCallbacks.StreamDecoderEofCallback _eofCallback;
+        readonly NativeCallbacks.StreamDecoderWriteCallback _writeCallback;
+        readonly NativeCallbacks.StreamDecoderMetadataCallback _metadataCallback;
+        readonly NativeCallbacks.StreamDecoderErrorCallback _errorCallback;
 #pragma warning disable CA2213 // Disposable fields should be disposed
-        [NotNull] readonly Stream _stream;
+        readonly Stream _stream;
 #pragma warning restore CA2213 // Disposable fields should be disposed
         readonly long _streamLength;
 
-        [NotNull]
         protected StreamDecoderHandle Handle { get; } = SafeNativeMethods.StreamDecoderNew();
 
-        internal StreamDecoder([NotNull] Stream stream)
+        internal StreamDecoder(Stream stream)
         {
             // Need a reference to the callbacks for the lifetime of the decoder
             _readCallback = ReadCallback;
@@ -72,14 +70,13 @@ namespace AudioWorks.Extensions.Flac
 
         internal void Finish() => SafeNativeMethods.StreamDecoderFinish(Handle);
 
-        [Pure]
         internal DecoderState GetState() => SafeNativeMethods.StreamDecoderGetState(Handle);
 
         public void Dispose() => Handle.Dispose();
 
         [SuppressMessage("Performance", "CA1801:Review unused parameters",
             Justification = "Part of FLAC API")]
-        DecoderReadStatus ReadCallback(IntPtr handle, [NotNull] byte[] buffer, ref int bytes, IntPtr userData)
+        DecoderReadStatus ReadCallback(IntPtr handle, byte[] buffer, ref int bytes, IntPtr userData)
         {
             bytes = _stream.Read(buffer, 0, bytes);
             return bytes == 0 ? DecoderReadStatus.EndOfStream : DecoderReadStatus.Continue;

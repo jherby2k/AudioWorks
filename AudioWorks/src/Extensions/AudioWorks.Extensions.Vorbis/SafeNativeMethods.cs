@@ -16,7 +16,6 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensions.Vorbis
 {
@@ -33,13 +32,11 @@ namespace AudioWorks.Extensions.Vorbis
         const string _vorbisEncLibrary = "libvorbisenc";
 #endif
 
-        [Pure]
         [DllImport(_oggLibrary, EntryPoint = "ogg_page_serialno",
             CallingConvention = CallingConvention.Cdecl)]
         internal static extern int OggPageSerialNo(
             in OggPage page);
 
-        [Pure]
         [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport(_oggLibrary, EntryPoint = "ogg_page_eos",
             CallingConvention = CallingConvention.Cdecl)]
@@ -273,7 +270,6 @@ namespace AudioWorks.Extensions.Vorbis
         internal static extern void VorbisBlockClear(
             IntPtr block);
 
-        [Pure]
         [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_synthesis_idheader",
             CallingConvention = CallingConvention.Cdecl)]

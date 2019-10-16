@@ -23,7 +23,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensions.Vorbis
@@ -87,12 +86,11 @@ namespace AudioWorks.Extensions.Vorbis
             return true;
         }
 
-        static void AddUnmanagedLibraryPath([NotNull] string libPath) =>
+        static void AddUnmanagedLibraryPath(string libPath) =>
             ((ExtensionLoadContext)AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()))
             .AddUnmanagedLibraryPath(libPath);
 #if LINUX
 
-        [NotNull]
         public static string GetRelease()
         {
             try
@@ -118,8 +116,7 @@ namespace AudioWorks.Extensions.Vorbis
             }
         }
 
-        [Pure]
-        static bool VerifyLibrary([NotNull] string libraryName)
+        static bool VerifyLibrary(string libraryName)
         {
             var process = new Process
             {
@@ -138,7 +135,6 @@ namespace AudioWorks.Extensions.Vorbis
 #endif
 #if OSX
 
-        [NotNull]
         public static string GetOSVersion()
         {
             var process = new Process
