@@ -16,18 +16,16 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.IO;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Api
 {
     /// <summary>
     /// Extracts cover art from audio files.
     /// </summary>
-    [PublicAPI]
     public sealed class CoverArtExtractor
     {
-        [CanBeNull] readonly EncodedPath _encodedFileName;
-        [CanBeNull] readonly EncodedPath _encodedDirectoryName;
+        readonly EncodedPath? _encodedFileName;
+        readonly EncodedPath? _encodedDirectoryName;
 
         /// <summary>
         /// Gets or sets a value indicating whether existing files should be overwritten.
@@ -40,9 +38,7 @@ namespace AudioWorks.Api
         /// </summary>
         /// <param name="encodedDirectoryName">The encoded directory name, or null.</param>
         /// <param name="encodedFileName">The encode file name, or null.</param>
-        public CoverArtExtractor(
-            [CanBeNull] string encodedDirectoryName = null,
-            [CanBeNull] string encodedFileName = null)
+        public CoverArtExtractor(string? encodedDirectoryName = null, string? encodedFileName = null)
         {
             if (encodedDirectoryName != null)
                 _encodedDirectoryName = new EncodedPath(encodedDirectoryName);
@@ -59,8 +55,7 @@ namespace AudioWorks.Api
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="audioFile"/> is null.</exception>
         /// <exception cref="IOException">Throw if the image file already exists, and overwrite was not enabled in the
         /// constructor.</exception>
-        [CanBeNull]
-        public FileInfo Extract([NotNull] ITaggedAudioFile audioFile)
+        public FileInfo? Extract(ITaggedAudioFile audioFile)
         {
             if (audioFile == null) throw new ArgumentNullException(nameof(audioFile));
 

@@ -14,19 +14,18 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Commands.Tests
 {
-    [UsedImplicitly]
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public sealed class ModuleFixture : IDisposable
     {
         const string _moduleProject = "AudioWorks.Commands";
 
-        [NotNull]
         internal Runspace Runspace { get; }
 
         public ModuleFixture()

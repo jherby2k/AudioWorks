@@ -14,23 +14,21 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System.Collections.Concurrent;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Commands
 {
     sealed class CmdletLoggerProvider : ILoggerProvider
     {
-        [NotNull] readonly ConcurrentQueue<object> _messageQueue = new ConcurrentQueue<object>();
+        readonly ConcurrentQueue<object> _messageQueue = new ConcurrentQueue<object>();
 
-        [NotNull]
-        public ILogger CreateLogger([CanBeNull] string categoryName) => new CmdletLogger(_messageQueue);
+        public ILogger CreateLogger(string? categoryName) => new CmdletLogger(_messageQueue);
 
         public void Dispose()
         {
         }
 
-        [ContractAnnotation("=> false, result:null; => true, result:notnull")]
-        internal bool TryDequeueMessage(out object result) => _messageQueue.TryDequeue(out result);
+        internal bool TryDequeueMessage([NotNullWhen(true)] out object? result) => _messageQueue.TryDequeue(out result);
     }
 }

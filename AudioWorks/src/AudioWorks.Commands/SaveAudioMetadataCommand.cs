@@ -19,25 +19,21 @@ using System.Linq;
 using System.Management.Automation;
 using AudioWorks.Api;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Commands
 {
-    [PublicAPI]
     [Cmdlet(VerbsData.Save, "AudioMetadata", SupportsShouldProcess = true), OutputType(typeof(ITaggedAudioFile))]
     public sealed class SaveAudioMetadataCommand : LoggingCmdlet, IDynamicParameters
     {
-        [CanBeNull] RuntimeDefinedParameterDictionary _parameters;
-        [CanBeNull] string _expectedExtension;
+        RuntimeDefinedParameterDictionary? _parameters;
+        string? _expectedExtension;
 
-        [CanBeNull]
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
-        public ITaggedAudioFile AudioFile { get; set; }
+        public ITaggedAudioFile? AudioFile { get; set; }
 
-        [CanBeNull]
         [Parameter]
         [ArgumentCompleter(typeof(MetadataFormatCompleter))]
-        public string Format { get; set; }
+        public string? Format { get; set; }
 
         [Parameter]
         public SwitchParameter PassThru { get; set; }
@@ -53,8 +49,7 @@ namespace AudioWorks.Commands
         {
             if (_expectedExtension != null)
             {
-                // ReSharper disable once PossibleNullReferenceException
-                var fileExtension = Path.GetExtension(AudioFile.Path);
+                var fileExtension = Path.GetExtension(AudioFile!.Path);
                 if (!fileExtension.Equals(_expectedExtension, StringComparison.OrdinalIgnoreCase))
                 {
                     WriteError(new ErrorRecord(new ArgumentException(
@@ -66,8 +61,7 @@ namespace AudioWorks.Commands
 
             try
             {
-                // ReSharper disable twice PossibleNullReferenceException
-                if (ShouldProcess(AudioFile.Path))
+                if (ShouldProcess(AudioFile!.Path))
                 {
                     AudioFile.SaveMetadata(SettingAdapter.ParametersToSettings(_parameters));
                     ProcessLogMessages();
@@ -82,8 +76,7 @@ namespace AudioWorks.Commands
                 WriteObject(AudioFile);
         }
 
-        [CanBeNull]
-        public object GetDynamicParameters()
+        public object? GetDynamicParameters()
         {
             if (Format != null)
                 return _parameters = SettingAdapter.SettingInfoToParameters(

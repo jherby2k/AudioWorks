@@ -16,7 +16,6 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Xml.Linq;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 using NuGet.Common;
 using NuGet.Packaging;
@@ -27,9 +26,9 @@ namespace AudioWorks.Api
 {
     sealed class ExtensionProjectContext : INuGetProjectContext
     {
-        [NotNull] readonly ILogger _logger = LoggerManager.LoggerFactory.CreateLogger<ExtensionProjectContext>();
+        readonly ILogger _logger = LoggerManager.LoggerFactory.CreateLogger<ExtensionProjectContext>();
 
-        public void Log(MessageLevel level, [CanBeNull] string message, [NotNull, ItemNotNull] params object[] args)
+        public void Log(MessageLevel level, string? message, params object[] args)
         {
             if (string.IsNullOrWhiteSpace(message)) return;
 
@@ -51,25 +50,21 @@ namespace AudioWorks.Api
             }
         }
 
-        public void ReportError([NotNull] string message) => _logger.LogError(message);
+        public void ReportError(string message) => _logger.LogError(message);
 
-        public FileConflictAction ResolveFileConflict([CanBeNull] string message) => FileConflictAction.Overwrite;
+        public FileConflictAction ResolveFileConflict(string? message) => FileConflictAction.Overwrite;
 
-        [CanBeNull]
-        public PackageExtractionContext PackageExtractionContext { get; set; } = new PackageExtractionContext(
+        public PackageExtractionContext? PackageExtractionContext { get; set; } = new PackageExtractionContext(
             PackageSaveMode.Defaultv3,
             XmlDocFileSaveMode.Skip,
             null,
             NullLogger.Instance);
 
-        [CanBeNull]
-        public ISourceControlManagerProvider SourceControlManagerProvider => null;
+        public ISourceControlManagerProvider? SourceControlManagerProvider => null;
 
-        [CanBeNull]
-        public ExecutionContext ExecutionContext => null;
+        public ExecutionContext? ExecutionContext => null;
 
-        [CanBeNull]
-        public XDocument OriginalPackagesConfig { get; set; }
+        public XDocument? OriginalPackagesConfig { get; set; }
 
         public NuGetActionType ActionType { get; set; }
 

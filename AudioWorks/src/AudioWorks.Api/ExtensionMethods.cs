@@ -18,16 +18,15 @@ using System.IO;
 using System.Threading;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Api
 {
     static class ExtensionMethods
     {
         internal static void ProcessSamples(
-            [NotNull] this ISampleProcessor sampleProcessor,
-            [NotNull] string inputFilePath,
-            [CanBeNull] IProgress<int> progress,
+            this ISampleProcessor sampleProcessor,
+            string inputFilePath,
+            IProgress<int>? progress,
             CancellationToken cancellationToken)
         {
             using (var inputStream = File.OpenRead(inputFilePath))

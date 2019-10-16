@@ -15,7 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Composition;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensibility
 {
@@ -26,7 +25,6 @@ namespace AudioWorks.Extensibility
     /// Classes marked with this attribute must implement <see cref="IAudioEncoder"/>.
     /// </remarks>
     /// <seealso cref="ExportAttribute"/>
-    [PublicAPI, MeansImplicitUse, BaseTypeRequired(typeof(IAudioEncoder))]
     [MetadataAttribute, AttributeUsage(AttributeTargets.Class)]
     public sealed class AudioEncoderExportAttribute : ExportAttribute
     {
@@ -34,14 +32,12 @@ namespace AudioWorks.Extensibility
         /// Gets the name of the encoder.
         /// </summary>
         /// <value>The name.</value>
-        [NotNull]
         public string Name { get; }
 
         /// <summary>
         /// Gets a description of the encoder.
         /// </summary>
         /// <value>The description.</value>
-        [NotNull]
         public string Description { get; }
 
         /// <summary>
@@ -51,7 +47,7 @@ namespace AudioWorks.Extensibility
         /// <param name="description">The encoder description.</param>
         /// <exception cref="ArgumentNullException">Thrown if either <paramref name="name"/> or
         /// <paramref name="description"/> is null or empty.</exception>
-        public AudioEncoderExportAttribute([NotNull] string name, [NotNull] string description)
+        public AudioEncoderExportAttribute(string name, string description)
             : base(typeof(IAudioEncoder))
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));

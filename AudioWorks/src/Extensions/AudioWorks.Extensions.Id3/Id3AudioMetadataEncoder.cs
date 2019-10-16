@@ -41,16 +41,16 @@ namespace AudioWorks.Extensions.Id3
             var existingTagLength = GetExistingTagLength(stream);
 
             var tagModel = new MetadataToTagModelAdapter(metadata,
-                settings.TryGetValue("TagEncoding", out string encoding)
-                    ? encoding
+                settings.TryGetValue("TagEncoding", out string? encoding)
+                    ? encoding!
                     : "Latin1");
 
             if (tagModel.Count > 0)
             {
                 // Set the version (default to 3)
                 tagModel.Header.Version = (byte) (
-                    settings.TryGetValue("TagVersion", out string version) &&
-                    version.Equals("2.4", StringComparison.Ordinal)
+                    settings.TryGetValue("TagVersion", out string? version) &&
+                    version!.Equals("2.4", StringComparison.Ordinal)
                         ? 4
                         : 3);
 

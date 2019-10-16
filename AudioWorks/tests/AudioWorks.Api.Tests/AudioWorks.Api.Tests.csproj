@@ -3,7 +3,8 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.1;net471</TargetFrameworks>
     <TargetFrameworks Condition="'$(OS)'!='Windows_NT'">netcoreapp2.1</TargetFrameworks>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
     <Product>AudioWorks</Product>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -32,7 +33,6 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="coverlet.msbuild" Version="2.7.0" PrivateAssets="all" />
-    <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.6" PrivateAssets="all" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
     <PackageReference Include="Moq" Version="4.13.0" />

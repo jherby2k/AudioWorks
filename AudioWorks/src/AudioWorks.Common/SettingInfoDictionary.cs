@@ -16,7 +16,6 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Common
 {
@@ -25,7 +24,6 @@ namespace AudioWorks.Common
     /// pass to various methods.
     /// </summary>
     /// <seealso cref="Dictionary{String, SettingInfo}"/>
-    [PublicAPI]
     public sealed class SettingInfoDictionary : Dictionary<string, SettingInfo>
     {
         /// <summary>
@@ -34,7 +32,7 @@ namespace AudioWorks.Common
         /// <param name="settings">The settings.</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="settings"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more settings are not valid.</exception>
-        public void ValidateSettings([NotNull] SettingDictionary settings)
+        public void ValidateSettings(SettingDictionary settings)
         {
             if (settings == null) throw new ArgumentNullException(nameof(settings));
 

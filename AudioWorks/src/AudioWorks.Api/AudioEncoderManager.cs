@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Linq;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Api
 {
@@ -26,7 +25,6 @@ namespace AudioWorks.Api
     /// Provides information about the available encoders, which are used by an <see cref="AudioFileEncoder"/>'s
     /// Encode method.
     /// </summary>
-    [PublicAPI]
     public static class AudioEncoderManager
     {
         /// <summary>
@@ -36,8 +34,7 @@ namespace AudioWorks.Api
         /// <param name="name">The name of the encoder.</param>
         /// <returns>Information about the available settings.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="name"/> is null.</exception>
-        [NotNull]
-        public static SettingInfoDictionary GetSettingInfo([NotNull] string name)
+        public static SettingInfoDictionary GetSettingInfo(string name)
         {
             if (name == null) throw new ArgumentNullException(nameof(name));
 
@@ -54,7 +51,6 @@ namespace AudioWorks.Api
         /// Gets information about the available encoders.
         /// </summary>
         /// <returns>The encoder info.</returns>
-        [NotNull]
         public static IEnumerable<AudioEncoderInfo> GetEncoderInfo() =>
             ExtensionProviderWrapper.GetFactories<IAudioEncoder>()
                 .Select(factory => new AudioEncoderInfo(factory.Metadata));

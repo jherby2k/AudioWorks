@@ -17,7 +17,6 @@ using System;
 using System.Composition;
 using System.IO;
 using System.Linq;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensibility
 {
@@ -28,7 +27,6 @@ namespace AudioWorks.Extensibility
     /// Classes marked with this attribute must implement <see cref="IAudioInfoDecoder"/>.
     /// </remarks>
     /// <seealso cref="ExportAttribute"/>
-    [PublicAPI, MeansImplicitUse, BaseTypeRequired(typeof(IAudioInfoDecoder))]
     [MetadataAttribute, AttributeUsage(AttributeTargets.Class)]
     public sealed class AudioInfoDecoderExportAttribute : ExportAttribute
     {
@@ -36,14 +34,12 @@ namespace AudioWorks.Extensibility
         /// Gets the file extension.
         /// </summary>
         /// <value>The file extension.</value>
-        [NotNull]
         public string Extension { get; }
 
         /// <summary>
         /// Gets the audio format.
         /// </summary>
         /// <value>The format.</value>
-        [NotNull]
         public string Format { get; }
 
         /// <summary>
@@ -55,7 +51,7 @@ namespace AudioWorks.Extensibility
         /// <paramref name="format"/> is null or empty.</exception>
         /// <exception cref="ArgumentException">Thrown if <paramref name="extension"/> is not a valid file extension.
         /// </exception>
-        public AudioInfoDecoderExportAttribute([NotNull] string extension, [NotNull] string format)
+        public AudioInfoDecoderExportAttribute(string extension, string format)
             : base(typeof(IAudioInfoDecoder))
         {
             if (string.IsNullOrEmpty(extension)) throw new ArgumentNullException(nameof(extension));

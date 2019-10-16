@@ -41,8 +41,8 @@ namespace AudioWorks.Extensions.ReplayGain
         public void Initialize(AudioInfo info, SettingDictionary settings, GroupToken groupToken)
         {
             _analyzer = new R128Analyzer((uint) info.Channels, (uint) info.SampleRate,
-                settings.TryGetValue("PeakAnalysis", out string peakAnalysis) &&
-                peakAnalysis.Equals("Interpolated", StringComparison.Ordinal));
+                settings.TryGetValue("PeakAnalysis", out string? peakAnalysis) &&
+                peakAnalysis!.Equals("Interpolated", StringComparison.Ordinal));
 
             _groupState = (GroupState) groupToken.GetOrSetGroupState(new GroupState());
             _groupState.Handles.Enqueue(_analyzer.Handle);

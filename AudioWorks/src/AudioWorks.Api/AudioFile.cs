@@ -17,14 +17,12 @@ using System;
 using System.IO;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 using IO = System.IO;
 
 namespace AudioWorks.Api
 {
     /// <inheritdoc/>
-    [PublicAPI]
     [Serializable]
     public class AudioFile : IAudioFile
     {
@@ -44,7 +42,7 @@ namespace AudioWorks.Api
         /// <exception cref="UnauthorizedAccessException">Thrown if <paramref name="path"/> cannot be accessed due to
         /// permissions.</exception>
         /// <exception cref="PathTooLongException">Thrown if <paramref name="path"/> is too long.</exception>
-        public AudioFile([NotNull] string path)
+        public AudioFile(string path)
         {
             if (string.IsNullOrEmpty(path))
                 throw new ArgumentNullException(nameof(path), "Value cannot be null or empty.");
@@ -72,7 +70,6 @@ namespace AudioWorks.Api
             Path = newPath;
         }
 
-        [NotNull]
         AudioInfo LoadInfo()
         {
             var logger = LoggerManager.LoggerFactory.CreateLogger<AudioFile>();

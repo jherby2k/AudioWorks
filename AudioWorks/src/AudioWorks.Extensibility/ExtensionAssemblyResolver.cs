@@ -25,7 +25,6 @@ using System.Runtime.InteropServices;
 #endif
 using System.Runtime.Loader;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensibility
@@ -34,10 +33,9 @@ namespace AudioWorks.Extensibility
     {
         readonly ILogger _logger = LoggerManager.LoggerFactory.CreateLogger<ExtensionAssemblyResolver>();
 
-        [NotNull]
         internal Assembly Assembly { get; }
 
-        internal ExtensionAssemblyResolver([NotNull] string path)
+        internal ExtensionAssemblyResolver(string path)
         {
             _logger.LogDebug("Loading extension '{0}'.", path);
 
@@ -66,7 +64,7 @@ namespace AudioWorks.Extensibility
                 ResolveWithLoader(assemblyFiles);
         }
 
-        void ResolveFullFramework([NotNull, ItemNotNull] IEnumerable<string> assemblyFiles) =>
+        void ResolveFullFramework(IEnumerable<string> assemblyFiles) =>
             AppDomain.CurrentDomain.AssemblyResolve += (context, args) =>
             {
                 var assemblyName = new AssemblyName(args.Name);
@@ -90,11 +88,10 @@ namespace AudioWorks.Extensibility
         }
 #endif
 
-        [NotNull]
-        static Assembly LoadWithLoader([CanBeNull] string path) =>
+        static Assembly LoadWithLoader(string? path) =>
             new ExtensionLoadContext().LoadFromAssemblyPath(path);
 
-        void ResolveWithLoader([NotNull, ItemNotNull] IEnumerable<string> assemblyFiles) =>
+        void ResolveWithLoader(IEnumerable<string> assemblyFiles) =>
             AssemblyLoadContext.Default.Resolving += (context, name) =>
             {
                 _logger.LogTrace("Attempting to resolve a dependency on '{1}'.", name.FullName);

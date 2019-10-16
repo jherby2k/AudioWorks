@@ -18,7 +18,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 using NuGet.Frameworks;
 using NuGet.Packaging;
 using NuGet.ProjectManagement;
@@ -27,11 +26,10 @@ namespace AudioWorks.Api
 {
     sealed class ExtensionNuGetProject : FolderNuGetProject
     {
-        internal ExtensionNuGetProject([NotNull] string root) : base(root)
+        internal ExtensionNuGetProject(string root) : base(root)
         {
         }
 
-        [NotNull]
         public override Task<IEnumerable<PackageReference>> GetInstalledPackagesAsync(CancellationToken token)
         {
             var result = new List<PackageReference>();

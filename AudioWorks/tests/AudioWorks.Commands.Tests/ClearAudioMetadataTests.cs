@@ -17,7 +17,6 @@ using System;
 using System.Linq;
 using System.Management.Automation;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 using Moq;
 using ObjectsComparer;
 using Xunit;
@@ -26,8 +25,8 @@ namespace AudioWorks.Commands.Tests
 {
     public sealed class ClearAudioMetadataTests : IClassFixture<ModuleFixture>
     {
-        [NotNull] readonly ModuleFixture _moduleFixture;
-        [NotNull] readonly AudioMetadata _testMetadata = new AudioMetadata
+        readonly ModuleFixture _moduleFixture;
+        readonly AudioMetadata _testMetadata = new AudioMetadata
         {
             Title = "Test Title",
             Artist = "Test Artist",
@@ -47,7 +46,7 @@ namespace AudioWorks.Commands.Tests
             AlbumGain = "0.8"
         };
 
-        public ClearAudioMetadataTests([NotNull] ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
+        public ClearAudioMetadataTests(ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
 
         [Fact(DisplayName = "Clear-AudioMetadata command exists")]
         public void CommandExists()

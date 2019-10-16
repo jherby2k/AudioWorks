@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Linq;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Api
 {
@@ -26,7 +25,6 @@ namespace AudioWorks.Api
     /// Provides information about the available metadata encoders, which are used by an
     /// <see cref="ITaggedAudioFile"/>'s SaveMetadata method.
     /// </summary>
-    [PublicAPI]
     public static class AudioMetadataEncoderManager
     {
         /// <summary>
@@ -36,8 +34,7 @@ namespace AudioWorks.Api
         /// <param name="extension">The file extension.</param>
         /// <returns>Information about the available settings.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="extension"/> is null.</exception>
-        [NotNull]
-        public static SettingInfoDictionary GetSettingInfoByExtension([NotNull] string extension)
+        public static SettingInfoDictionary GetSettingInfoByExtension(string extension)
         {
             if (extension == null) throw new ArgumentNullException(nameof(extension));
 
@@ -57,8 +54,7 @@ namespace AudioWorks.Api
         /// <param name="format">The format.</param>
         /// <returns>Information about the available settings.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="format"/> is null.</exception>
-        [NotNull]
-        public static SettingInfoDictionary GetSettingInfoByFormat([NotNull] string format)
+        public static SettingInfoDictionary GetSettingInfoByFormat(string format)
         {
             if (format == null) throw new ArgumentNullException(nameof(format));
 
@@ -75,7 +71,6 @@ namespace AudioWorks.Api
         /// Gets information about the available metadata encoders.
         /// </summary>
         /// <returns>The encoder info.</returns>
-        [NotNull]
         public static IEnumerable<AudioMetadataEncoderInfo> GetEncoderInfo() =>
             ExtensionProviderWrapper.GetFactories<IAudioMetadataEncoder>()
                 .Select(factory => new AudioMetadataEncoderInfo(factory.Metadata));

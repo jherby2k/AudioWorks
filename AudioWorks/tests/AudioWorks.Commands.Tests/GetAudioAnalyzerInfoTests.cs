@@ -16,16 +16,15 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Management.Automation;
 using AudioWorks.Api;
-using JetBrains.Annotations;
 using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
     public sealed class GetAudioAnalyzerInfoTests : IClassFixture<ModuleFixture>
     {
-        [NotNull] readonly ModuleFixture _moduleFixture;
+        readonly ModuleFixture _moduleFixture;
 
-        public GetAudioAnalyzerInfoTests([NotNull] ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
+        public GetAudioAnalyzerInfoTests(ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
 
         [Fact(DisplayName = "Get-AudioAnalyzerInfo command exists")]
         public void CommandExists()

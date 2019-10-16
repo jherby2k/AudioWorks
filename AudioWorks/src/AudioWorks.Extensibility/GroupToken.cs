@@ -14,18 +14,16 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensibility
 {
     /// <summary>
     /// Identifies an audio file as a member of a group.
     /// </summary>
-    [PublicAPI]
     public sealed class GroupToken : IDisposable
     {
-        [NotNull] readonly object _syncRoot = new object();
-        [CanBeNull] object _groupState;
+        readonly object _syncRoot = new object();
+        object? _groupState;
 
         /// <summary>
         /// Sets a group state object, or returns the current one if it has already been set.
@@ -36,8 +34,7 @@ namespace AudioWorks.Extensibility
         /// </remarks>
         /// <param name="groupState">A new group state object.</param>
         /// <returns>The current group state</returns>
-        [NotNull]
-        public object GetOrSetGroupState([NotNull] object groupState)
+        public object GetOrSetGroupState(object groupState)
         {
             if (groupState == null) throw new ArgumentNullException(nameof(groupState));
 

@@ -16,19 +16,22 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Collections.Concurrent;
 using System.Management.Automation;
-using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Commands
 {
-    [UsedImplicitly]
     sealed class CmdletLogger : ILogger
     {
-        [NotNull] readonly ConcurrentQueue<object> _messageQueue;
+        readonly ConcurrentQueue<object> _messageQueue;
 
-        internal CmdletLogger([NotNull] ConcurrentQueue<object> messageQueue) => _messageQueue = messageQueue;
+        internal CmdletLogger(ConcurrentQueue<object> messageQueue) => _messageQueue = messageQueue;
 
-        public void Log<TState>(LogLevel logLevel, EventId eventId, [CanBeNull] TState state, [CanBeNull] Exception exception, [NotNull] Func<TState, Exception, string> formatter)
+        public void Log<TState>(
+            LogLevel logLevel,
+            EventId eventId,
+            TState state,
+            Exception? exception,
+            Func<TState, Exception?, string> formatter)
         {
             var message = formatter(state, exception);
 
@@ -47,21 +50,15 @@ namespace AudioWorks.Commands
             }
         }
 
-        public bool IsEnabled(LogLevel logLevel)
-        {
-            // ReSharper disable once SwitchStatementMissingSomeCases
-            switch (logLevel)
+        public bool IsEnabled(LogLevel logLevel) =>
+            logLevel switch
             {
-                case LogLevel.Debug:
-                case LogLevel.Information:
-                case LogLevel.Warning:
-                    return true;
-                default:
-                    return false;
-            }
-        }
+                LogLevel.Debug => true,
+                LogLevel.Information => true,
+                LogLevel.Warning => true,
+                _ => false
+            };
 
-        [NotNull]
-        public IDisposable BeginScope<TState>([CanBeNull] TState state) => new NullScope();
+        public IDisposable BeginScope<TState>(TState state) => new NullScope();
     }
 }

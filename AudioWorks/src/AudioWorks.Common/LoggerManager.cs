@@ -16,7 +16,6 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Common
@@ -24,16 +23,14 @@ namespace AudioWorks.Common
     /// <summary>
     /// Manages logging to various destinations.
     /// </summary>
-    [PublicAPI]
     public static class LoggerManager
     {
-        [NotNull] static readonly List<ILoggerProvider> _providerSingletons = new List<ILoggerProvider>();
+        static readonly List<ILoggerProvider> _providerSingletons = new List<ILoggerProvider>();
 
         /// <summary>
         /// Gets the singleton logger factory.
         /// </summary>
         /// <value>The logger factory.</value>
-        [NotNull]
         [CLSCompliant(false)]
         public static ILoggerFactory LoggerFactory { get; } = new LoggerFactory();
 
@@ -46,9 +43,8 @@ namespace AudioWorks.Common
         /// <returns>The new provider, or an existing one if there is already one of type <typeparamref name="T"/>.
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="createProviderFunc"/> is null.</exception>
-        [NotNull]
         [CLSCompliant(false)]
-        public static T AddSingletonProvider<T>([NotNull] Func<T> createProviderFunc) where T : ILoggerProvider
+        public static T AddSingletonProvider<T>(Func<T> createProviderFunc) where T : ILoggerProvider
         {
             if (createProviderFunc == null) throw new ArgumentNullException(nameof(createProviderFunc));
 

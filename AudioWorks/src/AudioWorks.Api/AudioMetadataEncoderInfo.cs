@@ -15,14 +15,12 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Api
 {
     /// <summary>
     /// Provides information about a metadata encoder.
     /// </summary>
-    [PublicAPI]
     [Serializable]
     public sealed class AudioMetadataEncoderInfo
     {
@@ -30,14 +28,12 @@ namespace AudioWorks.Api
         /// Gets the file extension that this metadata encoder supports.
         /// </summary>
         /// <value>The file extension.</value>
-        [NotNull]
         public string Extension { get; }
 
         /// <summary>
         /// Gets the name of the format written by this metadata encoder.
         /// </summary>
         /// <value>The format.</value>
-        [NotNull]
         public string Format { get; }
 
 
@@ -45,10 +41,9 @@ namespace AudioWorks.Api
         /// Gets a description of the format written by this metadata encoder.
         /// </summary>
         /// <value>The description.</value>
-        [NotNull]
         public string Description { get; }
 
-        internal AudioMetadataEncoderInfo([NotNull] IDictionary<string, object> metadata)
+        internal AudioMetadataEncoderInfo(IDictionary<string, object> metadata)
         {
             Extension = (string) metadata["Extension"];
             Format = (string) metadata["Format"];

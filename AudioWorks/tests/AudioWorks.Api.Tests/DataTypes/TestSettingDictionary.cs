@@ -17,14 +17,13 @@ using System;
 using System.Globalization;
 using System.Linq;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 using Xunit.Abstractions;
 
 namespace AudioWorks.Api.Tests.DataTypes
 {
     public sealed class TestSettingDictionary : SettingDictionary, IXunitSerializable
     {
-        public void Deserialize([NotNull] IXunitSerializationInfo info)
+        public void Deserialize(IXunitSerializationInfo info)
         {
             foreach (var item in info.GetValue<string[]>("Items"))
             {
@@ -35,7 +34,7 @@ namespace AudioWorks.Api.Tests.DataTypes
             }
         }
 
-        public void Serialize([NotNull] IXunitSerializationInfo info) =>
+        public void Serialize(IXunitSerializationInfo info) =>
             info.AddValue("Items", this.Select(item =>
                 $"{item.Key}|{item.Value}|{item.Value.GetType().AssemblyQualifiedName}"
             ).ToArray());

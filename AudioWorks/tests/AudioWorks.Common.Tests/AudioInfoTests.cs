@@ -18,19 +18,18 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using AudioWorks.TestUtilities;
-using JetBrains.Annotations;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace AudioWorks.Common.Tests
 {
-    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class AudioInfoTests
     {
-        public AudioInfoTests([NotNull] ITestOutputHelper outputHelper) =>
+        public AudioInfoTests(ITestOutputHelper outputHelper) =>
             LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
 
         [Fact(DisplayName = "AudioInfo throws an exception if the Format is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void FormatNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => AudioInfo.CreateForLossless(null, 2, 16, 44100));
 

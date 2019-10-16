@@ -14,24 +14,21 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Management.Automation;
 using AudioWorks.Api;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 using Moq;
 using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class GetAudioInfoTests : IClassFixture<ModuleFixture>
     {
-        [NotNull] readonly ModuleFixture _moduleFixture;
+        readonly ModuleFixture _moduleFixture;
 
-        public GetAudioInfoTests([NotNull] ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
+        public GetAudioInfoTests(ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
 
         [Fact(DisplayName = "Get-AudioInfo command exists")]
         public void CommandExists()
@@ -139,13 +136,14 @@ namespace AudioWorks.Commands.Tests
 
         [Theory(DisplayName = "Get-AudioInfo returns an AudioInfo")]
         [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
-        public void ReturnsAudioInfo([NotNull] string fileName)
+        public void ReturnsAudioInfo(string fileName)
         {
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioInfo")
                     .AddArgument(new AudioFile(Path.Combine(
+                        // ReSharper disable once AssignNullToNotNullAttribute
                         new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                         "TestFiles",
                         "Valid",

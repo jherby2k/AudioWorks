@@ -18,14 +18,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Management.Automation;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Commands
 {
     static class SettingAdapter
     {
-        [CanBeNull, ContractAnnotation("null => null")]
-        internal static SettingDictionary ParametersToSettings([CanBeNull] RuntimeDefinedParameterDictionary parameters)
+        internal static SettingDictionary? ParametersToSettings(RuntimeDefinedParameterDictionary? parameters)
         {
             if (parameters == null) return null;
 
@@ -38,8 +36,7 @@ namespace AudioWorks.Commands
             return result;
         }
 
-        [NotNull]
-        internal static RuntimeDefinedParameterDictionary SettingInfoToParameters([NotNull] SettingInfoDictionary settingInfos)
+        internal static RuntimeDefinedParameterDictionary SettingInfoToParameters(SettingInfoDictionary settingInfos)
         {
             var result = new RuntimeDefinedParameterDictionary();
             foreach (var item in settingInfos)

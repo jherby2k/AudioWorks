@@ -17,18 +17,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AudioWorks.Api.Tests.DataTypes;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Api.Tests.DataSources
 {
     public static class SaveMetadataValidFileSource
     {
-        [NotNull, ItemNotNull] static readonly List<object[]> _data = new List<object[]>
+        static readonly List<object?[]> _data = new List<object?[]>
         {
             #region FLAC
 
             // All fields
-            new object[]
+            new object?[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 new TestAudioMetadata
@@ -63,7 +62,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Day unset
-            new object[]
+            new object?[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 new TestAudioMetadata
@@ -97,7 +96,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Month unset
-            new object[]
+            new object?[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 new TestAudioMetadata
@@ -131,7 +130,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // TrackNumber unset
-            new object[]
+            new object?[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 new TestAudioMetadata
@@ -165,7 +164,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // TrackCount unset
-            new object[]
+            new object?[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 new TestAudioMetadata
@@ -199,7 +198,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Existing tag
-            new object[]
+            new object?[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 new TestAudioMetadata
@@ -234,7 +233,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // No padding
-            new object[]
+            new object?[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 new TestAudioMetadata
@@ -272,7 +271,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // 100 bytes of padding
-            new object[]
+            new object?[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 new TestAudioMetadata
@@ -310,7 +309,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Existing tag removal
-            new object[]
+            new object?[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 new TestAudioMetadata(),
@@ -327,7 +326,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Nothing to do
-            new object[]
+            new object?[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 new TestAudioMetadata(),
@@ -344,7 +343,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // PNG CoverArt
-            new object[]
+            new object?[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 new TestAudioMetadata(),
@@ -361,7 +360,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // JPEG CoverArt
-            new object[]
+            new object?[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 new TestAudioMetadata(),
@@ -382,7 +381,7 @@ namespace AudioWorks.Api.Tests.DataSources
             #region MP4
 
             // All fields
-            new object[]
+            new object?[]
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 new TestAudioMetadata
@@ -415,7 +414,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Day unset
-            new object[]
+            new object?[]
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 new TestAudioMetadata
@@ -447,7 +446,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Month unset
-            new object[]
+            new object?[]
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 new TestAudioMetadata
@@ -479,7 +478,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // TrackNumber unset
-            new object[]
+            new object?[]
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 new TestAudioMetadata
@@ -511,7 +510,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // TrackCount unset
-            new object[]
+            new object?[]
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 new TestAudioMetadata
@@ -543,7 +542,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Existing tag
-            new object[]
+            new object?[]
             {
                 "ALAC 16-bit 44100Hz Stereo (Tagged).m4a",
                 new TestAudioMetadata
@@ -576,7 +575,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Updated creation time
-            new object[]
+            new object?[]
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 new TestAudioMetadata(),
@@ -594,7 +593,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Updated modification time
-            new object[]
+            new object?[]
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 new TestAudioMetadata(),
@@ -612,7 +611,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Existing tag removal
-            new object[]
+            new object?[]
             {
                 "ALAC 16-bit 44100Hz Stereo (Tagged).m4a",
                 new TestAudioMetadata(),
@@ -627,7 +626,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Nothing to do
-            new object[]
+            new object?[]
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 new TestAudioMetadata(),
@@ -642,7 +641,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Default padding (explicit)
-            new object[]
+            new object?[]
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 new TestAudioMetadata(),
@@ -660,7 +659,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Disabled padding
-            new object[]
+            new object?[]
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 new TestAudioMetadata(),
@@ -678,7 +677,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Maximum padding
-            new object[]
+            new object?[]
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 new TestAudioMetadata(),
@@ -696,7 +695,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // PNG CoverArt (ALAC)
-            new object[]
+            new object?[]
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 new TestAudioMetadata(),
@@ -711,7 +710,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // JPEG CoverArt (ALAC)
-            new object[]
+            new object?[]
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 new TestAudioMetadata(),
@@ -726,7 +725,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // PNG CoverArt (AAC, converted)
-            new object[]
+            new object?[]
             {
                 "QAAC TVBR 91 44100Hz Stereo.m4a",
                 new TestAudioMetadata(),
@@ -741,7 +740,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // JPEG CoverArt (AAC)
-            new object[]
+            new object?[]
             {
                 "QAAC TVBR 91 44100Hz Stereo.m4a",
                 new TestAudioMetadata(),
@@ -760,7 +759,7 @@ namespace AudioWorks.Api.Tests.DataSources
             #region ID3
 
             // All fields
-            new object[]
+            new object?[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
                 new TestAudioMetadata
@@ -793,7 +792,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Day unset
-            new object[]
+            new object?[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
                 new TestAudioMetadata
@@ -825,7 +824,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Month unset
-            new object[]
+            new object?[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
                 new TestAudioMetadata
@@ -857,7 +856,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // TrackNumber unset
-            new object[]
+            new object?[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
                 new TestAudioMetadata
@@ -889,7 +888,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // TrackCount unset
-            new object[]
+            new object?[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
                 new TestAudioMetadata
@@ -921,7 +920,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Existing tag
-            new object[]
+            new object?[]
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
                 new TestAudioMetadata
@@ -954,7 +953,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Tag version 2.4
-            new object[]
+            new object?[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
                 new TestAudioMetadata
@@ -990,7 +989,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // UTF-16 encoding
-            new object[]
+            new object?[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
                 new TestAudioMetadata
@@ -1026,7 +1025,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Default padding (explicit)
-            new object[]
+            new object?[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
                 new TestAudioMetadata
@@ -1062,7 +1061,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // No padding
-            new object[]
+            new object?[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
                 new TestAudioMetadata
@@ -1098,7 +1097,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Maximum padding
-            new object[]
+            new object?[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
                 new TestAudioMetadata
@@ -1134,7 +1133,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Existing v1 tag
-            new object[]
+            new object?[]
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v1).mp3",
                 new TestAudioMetadata
@@ -1167,7 +1166,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Existing tag removal
-            new object[]
+            new object?[]
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
                 new TestAudioMetadata(),
@@ -1182,7 +1181,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Nothing to do
-            new object[]
+            new object?[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
                 new TestAudioMetadata(),
@@ -1197,7 +1196,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // PNG CoverArt (converted)
-            new object[]
+            new object?[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
                 new TestAudioMetadata(),
@@ -1212,7 +1211,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // JPEG CoverArt
-            new object[]
+            new object?[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
                 new TestAudioMetadata(),
@@ -1231,7 +1230,7 @@ namespace AudioWorks.Api.Tests.DataSources
             #region Ogg Vorbis
 
             // All fields
-            new object[]
+            new object?[]
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
                 new TestAudioMetadata
@@ -1266,7 +1265,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Day unset
-            new object[]
+            new object?[]
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
                 new TestAudioMetadata
@@ -1300,7 +1299,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Month unset
-            new object[]
+            new object?[]
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
                 new TestAudioMetadata
@@ -1334,7 +1333,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // TrackNumber unset
-            new object[]
+            new object?[]
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
                 new TestAudioMetadata
@@ -1368,7 +1367,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // TrackCount unset
-            new object[]
+            new object?[]
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
                 new TestAudioMetadata
@@ -1402,7 +1401,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Existing tag
-            new object[]
+            new object?[]
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using defaults).ogg",
                 new TestAudioMetadata
@@ -1437,7 +1436,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Existing tag removal
-            new object[]
+            new object?[]
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using defaults).ogg",
                 new TestAudioMetadata(),
@@ -1454,7 +1453,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Nothing to do
-            new object[]
+            new object?[]
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
                 new TestAudioMetadata(),
@@ -1471,7 +1470,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // PNG CoverArt (Converted)
-            new object[]
+            new object?[]
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
                 new TestAudioMetadata(),
@@ -1488,7 +1487,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // JPEG CoverArt
-            new object[]
+            new object?[]
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
                 new TestAudioMetadata(),
@@ -1509,7 +1508,7 @@ namespace AudioWorks.Api.Tests.DataSources
             #region Opus
 
             // All fields
-            new object[]
+            new object?[]
             {
                 "Opus VBR 44100Hz Stereo.opus",
                 new TestAudioMetadata
@@ -1540,7 +1539,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Day unset
-            new object[]
+            new object?[]
             {
                 "Opus VBR 44100Hz Stereo.opus",
                 new TestAudioMetadata
@@ -1570,7 +1569,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Month unset
-            new object[]
+            new object?[]
             {
                 "Opus VBR 44100Hz Stereo.opus",
                 new TestAudioMetadata
@@ -1600,7 +1599,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // TrackNumber unset
-            new object[]
+            new object?[]
             {
                 "Opus VBR 44100Hz Stereo.opus",
                 new TestAudioMetadata
@@ -1630,7 +1629,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // TrackCount unset
-            new object[]
+            new object?[]
             {
                 "Opus VBR 44100Hz Stereo.opus",
                 new TestAudioMetadata
@@ -1660,7 +1659,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Existing tag
-            new object[]
+            new object?[]
             {
                 "Opus VBR 44100Hz Stereo (Tagged using defaults).opus",
                 new TestAudioMetadata
@@ -1691,7 +1690,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Existing tag removal
-            new object[]
+            new object?[]
             {
                 "Opus VBR 44100Hz Stereo (Tagged using defaults).opus",
                 new TestAudioMetadata(),
@@ -1708,7 +1707,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Nothing to do
-            new object[]
+            new object?[]
             {
                 "Opus VBR 44100Hz Stereo.opus",
                 new TestAudioMetadata(),
@@ -1725,7 +1724,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // PNG CoverArt (Converted)
-            new object[]
+            new object?[]
             {
                 "Opus VBR 44100Hz Stereo.opus",
                 new TestAudioMetadata(),
@@ -1742,7 +1741,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // JPEG CoverArt
-            new object[]
+            new object?[]
             {
                 "Opus VBR 44100Hz Stereo.opus",
                 new TestAudioMetadata(),
@@ -1761,11 +1760,6 @@ namespace AudioWorks.Api.Tests.DataSources
             #endregion
         };
 
-        [NotNull, ItemNotNull]
-        public static IEnumerable<object[]> Data
-        {
-            // Prepend an index to each row
-            [UsedImplicitly] get => _data.Select((item, index) => item.Prepend(index).ToArray());
-        }
+        public static IEnumerable<object?[]> Data => _data.Select((item, index) => item.Prepend(index).ToArray());
     }
 }

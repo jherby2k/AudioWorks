@@ -16,15 +16,14 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Collections.Generic;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Api
 {
     sealed class ValidatingSettingDictionary : SettingDictionary
     {
-        [NotNull] readonly SettingInfoDictionary _settingInfos;
+        readonly SettingInfoDictionary _settingInfos;
 
-        internal ValidatingSettingDictionary([NotNull] SettingInfoDictionary settingInfos, [CanBeNull] SettingDictionary settings = null)
+        internal ValidatingSettingDictionary(SettingInfoDictionary settingInfos, SettingDictionary? settings = null)
         {
             _settingInfos = settingInfos;
 
@@ -56,7 +55,7 @@ namespace AudioWorks.Api
             }
         }
 
-        void Validate([NotNull] string key, [NotNull] object value)
+        void Validate(string key, object value)
         {
             if (key == null) throw new ArgumentNullException(nameof(key));
 

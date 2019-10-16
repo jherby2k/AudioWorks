@@ -17,21 +17,19 @@ using System;
 using System.IO;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 using IO = System.IO;
 
 namespace AudioWorks.Api
 {
     /// <inheritdoc cref="ITaggedAudioFile"/>
-    [PublicAPI]
     [Serializable]
     public sealed class TaggedAudioFile : AudioFile, ITaggedAudioFile
     {
-        [CanBeNull] AudioMetadata _metadata;
+        AudioMetadata? _metadata;
 
         /// <inheritdoc/>
-        public AudioMetadata Metadata => _metadata ?? (_metadata = LoadMetadata(Path));
+        public AudioMetadata Metadata => _metadata ??= LoadMetadata(Path);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TaggedAudioFile"/> class.
@@ -39,7 +37,7 @@ namespace AudioWorks.Api
         /// <param name="path">The fully-qualified path to the file.</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="path"/> is null or empty.</exception>
         /// <exception cref="FileNotFoundException">Thrown if <paramref name="path"/> does not exist.</exception>
-        public TaggedAudioFile([NotNull] string path)
+        public TaggedAudioFile(string path)
             : base(path)
         {
         }
@@ -48,7 +46,7 @@ namespace AudioWorks.Api
         public void LoadMetadata() => _metadata = LoadMetadata(Path);
 
         /// <inheritdoc/>
-        public void SaveMetadata(SettingDictionary settings = null)
+        public void SaveMetadata(SettingDictionary? settings = null)
         {
             if (settings == null)
                 settings = new SettingDictionary();
@@ -82,15 +80,13 @@ namespace AudioWorks.Api
             base.Rename(new EncodedPath(name).ReplaceWith(Metadata), replace);
         }
 
-        [NotNull]
-        static AudioMetadata LoadMetadata([NotNull] string path)
+        static AudioMetadata LoadMetadata(string path)
         {
             using (var fileStream = File.OpenRead(path))
                 return LoadMetadata(fileStream);
         }
 
-        [NotNull]
-        static AudioMetadata LoadMetadata([NotNull] FileStream stream)
+        static AudioMetadata LoadMetadata(FileStream stream)
         {
             var initialPosition = stream.Position;
             var logger = LoggerManager.LoggerFactory.CreateLogger<TaggedAudioFile>();

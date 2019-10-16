@@ -16,14 +16,12 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Buffers;
 using System.Runtime.InteropServices;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensibility
 {
     /// <summary>
     /// Represents a block of audio samples.
     /// </summary>
-    [PublicAPI]
     public sealed class SampleBuffer : IDisposable
     {
         /// <summary>
@@ -32,7 +30,7 @@ namespace AudioWorks.Extensibility
         /// <value>An empty <see cref="SampleBuffer"/>.</value>
         public static SampleBuffer Empty { get; } = new SampleBuffer();
 
-        [CanBeNull] readonly IMemoryOwner<float> _buffer;
+        readonly IMemoryOwner<float>? _buffer;
         bool _isDisposed;
 
         /// <summary>
@@ -205,22 +203,18 @@ namespace AudioWorks.Extensibility
             switch (bytesPerSample)
             {
                 case 1:
-                    // ReSharper disable once PossibleNullReferenceException
                     SampleProcessor.Convert(interleavedSamples, _buffer.Memory.Span, bitsPerSample);
                     break;
                 case 2:
                     var interleavedInt16Samples = MemoryMarshal.Cast<byte, short>(interleavedSamples);
-                    // ReSharper disable once PossibleNullReferenceException
                     SampleProcessor.Convert(interleavedInt16Samples, _buffer.Memory.Span, bitsPerSample);
                     break;
                 case 3:
                     var interleavedInt24Samples = MemoryMarshal.Cast<byte, Int24>(interleavedSamples);
-                    // ReSharper disable once PossibleNullReferenceException
                     SampleProcessor.Convert(interleavedInt24Samples, _buffer.Memory.Span, bitsPerSample);
                     break;
                 case 4:
                     var interleavedInt32Samples = MemoryMarshal.Cast<byte, int>(interleavedSamples);
-                    // ReSharper disable once PossibleNullReferenceException
                     SampleProcessor.Convert(interleavedInt32Samples, _buffer.Memory.Span, bitsPerSample);
                     break;
             }

@@ -17,7 +17,6 @@ using System;
 using System.Composition;
 using System.IO;
 using System.Linq;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensibility
 {
@@ -28,7 +27,6 @@ namespace AudioWorks.Extensibility
     /// Classes marked with this attribute must implement <see cref="IAudioMetadataEncoder"/>.
     /// </remarks>
     /// <seealso cref="ExportAttribute"/>
-    [PublicAPI, MeansImplicitUse, BaseTypeRequired(typeof(IAudioMetadataEncoder))]
     [MetadataAttribute, AttributeUsage(AttributeTargets.Class)]
     public sealed class AudioMetadataEncoderExportAttribute : ExportAttribute
     {
@@ -36,21 +34,18 @@ namespace AudioWorks.Extensibility
         /// Gets the file extension.
         /// </summary>
         /// <value>The file extension.</value>
-        [NotNull]
         public string Extension { get; }
 
         /// <summary>
         /// Gets the metadata format.
         /// </summary>
         /// <value>The format.</value>
-        [NotNull]
         public string Format { get; }
 
         /// <summary>
         /// Gets a description of the metadata format.
         /// </summary>
         /// <value>The description.</value>
-        [NotNull]
         public string Description { get; }
 
         /// <summary>
@@ -63,7 +58,7 @@ namespace AudioWorks.Extensibility
         /// <paramref name="description"/> is null or empty.</exception>
         /// <exception cref="ArgumentException">Thrown if <paramref name="extension"/> is not a valid file extension.
         /// </exception>
-        public AudioMetadataEncoderExportAttribute([NotNull] string extension, [NotNull] string format, [NotNull] string description)
+        public AudioMetadataEncoderExportAttribute(string extension, string format, string description)
             : base(typeof(IAudioMetadataEncoder))
         {
             if (string.IsNullOrEmpty(extension)) throw new ArgumentNullException(nameof(extension));

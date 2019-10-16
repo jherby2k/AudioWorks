@@ -18,14 +18,12 @@ using System.Composition.Hosting;
 using System.IO;
 using System.Linq;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensibility
 {
     abstract class ExtensionContainerBase
     {
-        [NotNull]
         protected static CompositionHost CompositionHost { get; }
 
         static ExtensionContainerBase()
@@ -64,7 +62,7 @@ namespace AudioWorks.Extensibility
                 .WithAssemblies(assemblies).CreateContainer();
         }
 
-        static bool TryHandle([NotNull] IPrerequisiteHandler handler, [NotNull] ILogger logger)
+        static bool TryHandle(IPrerequisiteHandler handler, ILogger logger)
         {
             try
             {

@@ -17,14 +17,12 @@ using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensibility
 {
     /// <summary>
     /// Provides methods for accessing extensions of various types.
     /// </summary>
-    [PublicAPI]
     public static class ExtensionProvider
     {
         /// <summary>
@@ -33,7 +31,6 @@ namespace AudioWorks.Extensibility
         /// </summary>
         /// <typeparam name="T">The type of extension.</typeparam>
         /// <returns>The extension factories.</returns>
-        [NotNull]
         public static IEnumerable<ExportFactory<T, IDictionary<string, object>>> GetFactories<T>()
             where T : class =>
             ExtensionContainer<T>.Instance.Factories;
@@ -46,8 +43,7 @@ namespace AudioWorks.Extensibility
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>The extension factories.</returns>
-        [NotNull]
-        public static IEnumerable<ExportFactory<T>> GetFactories<T>([NotNull] string key, [NotNull] string value)
+        public static IEnumerable<ExportFactory<T>> GetFactories<T>(string key, string value)
             where T : class =>
             ExtensionContainer<T>.Instance.Factories.Where(factory =>
                 value.Equals((string) factory.Metadata[key], StringComparison.OrdinalIgnoreCase));

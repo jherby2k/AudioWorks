@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Management.Automation;
 using AudioWorks.Api;
@@ -22,18 +21,16 @@ using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
-using JetBrains.Annotations;
 using Moq;
 using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class ExportAudioFileTests : IClassFixture<ModuleFixture>
     {
-        [NotNull] readonly ModuleFixture _moduleFixture;
+        readonly ModuleFixture _moduleFixture;
 
-        public ExportAudioFileTests([NotNull] ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
+        public ExportAudioFileTests(ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
 
         [Fact(DisplayName = "Export-AudioFile command exists")]
         public void CommandExists()
@@ -138,20 +135,21 @@ namespace AudioWorks.Commands.Tests
         [MemberData(nameof(EncodeValidFileDataSource.Data), MemberType = typeof(EncodeValidFileDataSource))]
         public void CreatesExpectedAudioFile(
             int index,
-            [NotNull] string sourceFileName,
-            [NotNull] string encoderName,
-            [CanBeNull] TestSettingDictionary settings,
+            string sourceFileName,
+            string encoderName,
+            TestSettingDictionary? settings,
 #if LINUX
-            [NotNull] string expectedUbuntu1604Hash,
-            [NotNull] string expectedUbuntu1804Hash)
+            string expectedUbuntu1604Hash,
+            string expectedUbuntu1804Hash)
 #elif OSX
-            [NotNull] string expectedHash)
+            string expectedHash)
 #else
-            [NotNull] string expected32BitHash,
-            [NotNull] string expected64BitHash)
+            string expected32BitHash,
+            string expected64BitHash)
 #endif
         {
             var sourceAudioFile = new TaggedAudioFile(Path.Combine(
+                // ReSharper disable once AssignNullToNotNullAttribute
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",

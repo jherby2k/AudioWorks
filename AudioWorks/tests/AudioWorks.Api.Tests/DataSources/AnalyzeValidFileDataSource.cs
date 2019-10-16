@@ -16,16 +16,15 @@ You should have received a copy of the GNU Affero General Public License along w
 using System.Collections.Generic;
 using System.Linq;
 using AudioWorks.Api.Tests.DataTypes;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Api.Tests.DataSources
 {
     public static class AnalyzeValidFileDataSource
     {
-        [NotNull, ItemNotNull] static readonly List<object[]> _data = new List<object[]>
+        static readonly List<object?[]> _data = new List<object?[]>
         {
             // 8000Hz Stereo, default (simple) peaks
-            new object[]
+            new object?[]
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "ReplayGain",
@@ -92,7 +91,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // 44100Hz Mono, default (simple) peaks
-            new object[]
+            new object?[]
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "ReplayGain",
@@ -159,7 +158,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // 44100Hz Stereo, default (simple) peaks
-            new object[]
+            new object?[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ReplayGain",
@@ -226,7 +225,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // 48000Hz Stereo, default (simple) peaks
-            new object[]
+            new object?[]
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "ReplayGain",
@@ -293,7 +292,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // 96000Hz Stereo, default (simple) peaks
-            new object[]
+            new object?[]
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "ReplayGain",
@@ -395,23 +394,12 @@ namespace AudioWorks.Api.Tests.DataSources
             }
         };
 
-        [NotNull, ItemNotNull]
-        public static IEnumerable<object[]> Data
-        {
-            [UsedImplicitly] get => _data;
-        }
+        public static IEnumerable<object?[]> Data => _data;
 
-        [NotNull, ItemNotNull]
-        public static IEnumerable<object[]> Analyzers
-        {
-            [UsedImplicitly]
-            get => _data.Select(item => new[] { item[1] }).Distinct(new ArrayComparer());
-        }
+        public static IEnumerable<object?[]> Analyzers =>
+            _data.Select(item => new[] { item[1] }).Distinct(new ArrayComparer());
 
-        [NotNull, ItemNotNull]
-        public static IEnumerable<object[]> FileNamesAndAnalyzers
-        {
-            [UsedImplicitly] get => _data.Select(item => new[] { item[0], item[1] }).Distinct(new ArrayComparer());
-        }
+        public static IEnumerable<object?[]> FileNamesAndAnalyzers =>
+            _data.Select(item => new[] { item[0], item[1] }).Distinct(new ArrayComparer());
     }
 }

@@ -14,20 +14,19 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using AudioWorks.Common;
-using JetBrains.Annotations;
 using Xunit.Abstractions;
 
 namespace AudioWorks.Api.Tests.DataTypes
 {
     public sealed class TestAudioMetadata : AudioMetadata, IXunitSerializable
     {
-        public void Deserialize([NotNull] IXunitSerializationInfo info)
+        public void Deserialize(IXunitSerializationInfo info)
         {
             foreach (var property in GetType().GetProperties())
                 property.SetValue(this, info.GetValue(property.Name, property.PropertyType));
         }
 
-        public void Serialize([NotNull] IXunitSerializationInfo info)
+        public void Serialize(IXunitSerializationInfo info)
         {
             foreach (var property in GetType().GetProperties())
                 info.AddValue(property.Name, property.GetValue(this));

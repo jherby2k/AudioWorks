@@ -13,36 +13,26 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Management.Automation;
 using AudioWorks.Api;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Commands
 {
-    [PublicAPI]
     [Cmdlet(VerbsData.Export, "AudioCoverArt"), OutputType(typeof(FileInfo))]
     public sealed class ExportAudioCoverArtCommand : LoggingPSCmdlet
     {
-        [CanBeNull] CoverArtExtractor _extractor;
+        CoverArtExtractor? _extractor;
 
-        [NotNull]
-        [SuppressMessage("ReSharper", "NotNullMemberIsNotInitialized",
-            Justification = "Mandatory properties cannot be null by default")]
         [Parameter(Mandatory = true, Position = 0)]
-        public string Path { get; set; }
+        public string? Path { get; set; }
 
-        [NotNull]
-        [SuppressMessage("ReSharper", "NotNullMemberIsNotInitialized",
-            Justification = "Mandatory properties cannot be null by default")]
         [Parameter(Mandatory = true, Position = 1, ValueFromPipeline = true)]
-        public ITaggedAudioFile AudioFile { get; set; }
+        public ITaggedAudioFile? AudioFile { get; set; }
 
-        [CanBeNull]
         [Parameter]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [Parameter]
         public SwitchParameter Replace { get; set; }
@@ -59,8 +49,7 @@ namespace AudioWorks.Commands
 
         protected override void ProcessRecord()
         {
-            // ReSharper disable once PossibleNullReferenceException
-            var result = _extractor.Extract(AudioFile);
+            var result = _extractor!.Extract(AudioFile!);
 
             ProcessLogMessages();
 

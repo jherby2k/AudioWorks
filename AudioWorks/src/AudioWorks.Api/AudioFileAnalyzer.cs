@@ -24,17 +24,15 @@ using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Api
 {
     /// <summary>
     /// Performs analysis on one or more audio files.
     /// </summary>
-    [PublicAPI]
     public sealed class AudioFileAnalyzer
     {
-        [NotNull] readonly ExportFactory<IAudioAnalyzer> _analyzerFactory;
+        readonly ExportFactory<IAudioAnalyzer> _analyzerFactory;
         int _maxDegreeOfParallelism = Environment.ProcessorCount;
 
         /// <summary>
@@ -59,7 +57,6 @@ namespace AudioWorks.Api
         /// Gets the settings.
         /// </summary>
         /// <value>The settings.</value>
-        [NotNull]
         public SettingDictionary Settings { get; }
 
         /// <summary>
@@ -70,7 +67,7 @@ namespace AudioWorks.Api
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="name"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if <see paramref="name"/> is not the name of an available analyzer.
         /// </exception>
-        public AudioFileAnalyzer([NotNull] string name, [CanBeNull] SettingDictionary settings = null)
+        public AudioFileAnalyzer(string name, SettingDictionary? settings = null)
         {
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
@@ -88,8 +85,7 @@ namespace AudioWorks.Api
         /// <param name="audioFiles">The audio files.</param>
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
-        public async Task AnalyzeAsync(
-            [NotNull, ItemNotNull] IEnumerable<ITaggedAudioFile> audioFiles)
+        public async Task AnalyzeAsync(IEnumerable<ITaggedAudioFile> audioFiles)
         {
             if (audioFiles == null) throw new ArgumentNullException(nameof(audioFiles));
 
@@ -105,9 +101,9 @@ namespace AudioWorks.Api
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
         public async Task AnalyzeAsync(
-            [NotNull, ItemNotNull] IEnumerable<ITaggedAudioFile> audioFiles,
+            IEnumerable<ITaggedAudioFile> audioFiles,
             CancellationToken cancellationToken,
-            [CanBeNull] IProgress<ProgressToken> progress = null)
+            IProgress<ProgressToken>? progress = null)
         {
             if (audioFiles == null) throw new ArgumentNullException(nameof(audioFiles));
 
@@ -120,8 +116,7 @@ namespace AudioWorks.Api
         /// <param name="audioFiles">The audio files.</param>
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
-        public async Task AnalyzeAsync(
-            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles) =>
+        public async Task AnalyzeAsync(params ITaggedAudioFile[] audioFiles) =>
             await AnalyzeAsync(CancellationToken.None, audioFiles).ConfigureAwait(false);
 
         /// <summary>
@@ -131,9 +126,7 @@ namespace AudioWorks.Api
         /// <param name="audioFiles">The audio files.</param>
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
-        public async Task AnalyzeAsync(
-            CancellationToken cancellationToken,
-            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles) =>
+        public async Task AnalyzeAsync(CancellationToken cancellationToken, params ITaggedAudioFile[] audioFiles) =>
             await AnalyzeAsync(null, cancellationToken, audioFiles).ConfigureAwait(false);
 
         /// <summary>
@@ -147,9 +140,9 @@ namespace AudioWorks.Api
         [SuppressMessage("Maintainability", "CA1506:Avoid excessive class coupling", Justification =
             "Method is considered maintainable.")]
         public async Task AnalyzeAsync(
-            [CanBeNull] IProgress<ProgressToken> progress,
+            IProgress<ProgressToken>? progress,
             CancellationToken cancellationToken,
-            [NotNull, ItemNotNull] params ITaggedAudioFile[] audioFiles)
+            params ITaggedAudioFile[] audioFiles)
         {
             if (audioFiles == null) throw new ArgumentNullException(nameof(audioFiles));
             if (audioFiles.Any(audioFile => audioFile == null))
@@ -252,7 +245,7 @@ namespace AudioWorks.Api
             });
         }
 
-        static void CopyStringProperties([NotNull] AudioMetadata source, [NotNull] AudioMetadata destination)
+        static void CopyStringProperties(AudioMetadata source, AudioMetadata destination)
         {
             // Copy every non-blank string property from source to destination
             foreach (var property in typeof(AudioMetadata).GetProperties())

@@ -16,7 +16,6 @@ You should have received a copy of the GNU Affero General Public License along w
 using System.Collections.Generic;
 using System.Composition;
 using AudioWorks.Extensibility;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Api
 {
@@ -24,13 +23,11 @@ namespace AudioWorks.Api
     {
         static ExtensionProviderWrapper() => ExtensionInstaller.Download();
 
-        [NotNull]
         internal static IEnumerable<ExportFactory<T, IDictionary<string, object>>> GetFactories<T>()
             where T : class =>
             ExtensionProvider.GetFactories<T>();
 
-        [NotNull]
-        internal static IEnumerable<ExportFactory<T>> GetFactories<T>([NotNull] string key, [NotNull] string value)
+        internal static IEnumerable<ExportFactory<T>> GetFactories<T>(string key, string value)
             where T : class =>
             ExtensionProvider.GetFactories<T>(key, value);
     }

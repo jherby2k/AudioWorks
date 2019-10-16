@@ -21,20 +21,19 @@ using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
-using JetBrains.Annotations;
 using ObjectsComparer;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace AudioWorks.Api.Tests
 {
-    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class AudioFileAnalyzerTests
     {
-        public AudioFileAnalyzerTests([NotNull] ITestOutputHelper outputHelper) =>
+        public AudioFileAnalyzerTests(ITestOutputHelper outputHelper) =>
             LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
 
         [Fact(DisplayName = "AudioFileAnalyzer's constructor throws an exception if the name is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void ConstructorNameNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => new AudioFileAnalyzer(null));
 
@@ -48,6 +47,7 @@ namespace AudioWorks.Api.Tests
                 new AudioFileAnalyzer("ReplayGain").MaxDegreeOfParallelism = 0);
 
         [Fact(DisplayName = "AudioFileEncoder's Encode method throws an exception if an audio file is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public async void AnalyzeAsyncNullAudioFileThrowsException() =>
             await Assert.ThrowsAsync<ArgumentNullException>(() =>
                 new AudioFileAnalyzer("ReplayGain").AnalyzeAsync(null)).ConfigureAwait(true);
@@ -55,14 +55,14 @@ namespace AudioWorks.Api.Tests
         [Theory(DisplayName = "AudioFileAnalyzer's Analyze method creates the expected metadata")]
         [MemberData(nameof(AnalyzeValidFileDataSource.Data), MemberType = typeof(AnalyzeValidFileDataSource))]
         public async void AnalyzeAsyncCreatesExpectedMetadata(
-            [NotNull] string fileName,
-            [NotNull] string analyzerName,
-            [CanBeNull] TestSettingDictionary settings,
+            string fileName,
+            string analyzerName,
+            TestSettingDictionary? settings,
 #if LINUX
-            [NotNull] TestAudioMetadata expectedUbuntu1604Metadata,
-            [NotNull] TestAudioMetadata expectedUbuntu1804Metadata)
+            TestAudioMetadata expectedUbuntu1604Metadata,
+            TestAudioMetadata expectedUbuntu1804Metadata)
 #else
-            [NotNull] TestAudioMetadata expectedMetadata)
+            TestAudioMetadata expectedMetadata)
 #endif
         {
             var audioFile = new TaggedAudioFile(Path.Combine(
@@ -88,14 +88,14 @@ namespace AudioWorks.Api.Tests
         [Theory(DisplayName = "AudioFileAnalyzer's Analyze method creates the expected metadata for a group")]
         [MemberData(nameof(AnalyzeGroupDataSource.Data), MemberType = typeof(AnalyzeGroupDataSource))]
         public async void AnalyzeAsyncCreatesExpectedMetadataForGroup(
-            [NotNull] string[] fileNames,
-            [NotNull] string analyzerName,
-            [CanBeNull] TestSettingDictionary settings,
+            string[] fileNames,
+            string analyzerName,
+            TestSettingDictionary? settings,
 #if LINUX
-            [NotNull] TestAudioMetadata[] expectedUbuntu1604Metadata,
-            [NotNull] TestAudioMetadata[] expectedUbuntu1804Metadata)
+            TestAudioMetadata[] expectedUbuntu1604Metadata,
+            TestAudioMetadata[] expectedUbuntu1804Metadata)
 #else
-            [NotNull] TestAudioMetadata[] expectedMetadata)
+            TestAudioMetadata[] expectedMetadata)
 #endif
         {
             var audioFiles = fileNames.Select(fileName => new TaggedAudioFile(Path.Combine(

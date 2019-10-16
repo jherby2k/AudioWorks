@@ -18,18 +18,17 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Api
 {
     sealed class EncodedPath
     {
-        [NotNull] static readonly Regex _replacer = new Regex(@"\{[^{]+\}");
-        [NotNull] static readonly char[] _invalidChars = Path.GetInvalidFileNameChars();
-        [NotNull] readonly string _encoded;
+        static readonly Regex _replacer = new Regex(@"\{[^{]+\}");
+        static readonly char[] _invalidChars = Path.GetInvalidFileNameChars();
+        readonly string _encoded;
 
-        internal EncodedPath([NotNull] string encoded)
+        internal EncodedPath(string encoded)
         {
             var validProperties = typeof(AudioMetadata).GetProperties()
                 .Select(propertyInfo => propertyInfo.Name).ToArray();
@@ -45,8 +44,7 @@ namespace AudioWorks.Api
             _encoded = encoded;
         }
 
-        [NotNull]
-        internal string ReplaceWith([NotNull] AudioMetadata metadata)
+        internal string ReplaceWith(AudioMetadata metadata)
         {
             var result = _replacer.Replace(_encoded, match =>
             {

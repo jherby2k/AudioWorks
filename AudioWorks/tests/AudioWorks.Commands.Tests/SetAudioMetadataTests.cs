@@ -16,7 +16,6 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Management.Automation;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 using Moq;
 using Xunit;
 
@@ -24,9 +23,9 @@ namespace AudioWorks.Commands.Tests
 {
     public sealed class SetAudioMetadataTests : IClassFixture<ModuleFixture>
     {
-        [NotNull] readonly ModuleFixture _moduleFixture;
+        readonly ModuleFixture _moduleFixture;
 
-        public SetAudioMetadataTests([NotNull] ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
+        public SetAudioMetadataTests(ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
 
         [Fact(DisplayName = "Set-AudioMetadata command exists")]
         public void CommandExists()

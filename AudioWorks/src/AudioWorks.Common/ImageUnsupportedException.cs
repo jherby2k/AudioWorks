@@ -15,7 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Runtime.Serialization;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Common
 {
@@ -24,7 +23,6 @@ namespace AudioWorks.Common
     /// unsupported data.
     /// </summary>
     /// <seealso cref="AudioException"/>
-    [PublicAPI]
     [Serializable]
     public sealed class ImageUnsupportedException : AudioException
     {
@@ -39,7 +37,7 @@ namespace AudioWorks.Common
         /// Initializes a new instance of the <see cref="ImageUnsupportedException"/> class.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
-        public ImageUnsupportedException([NotNull] string message)
+        public ImageUnsupportedException(string message)
             : base(message)
         {
         }
@@ -50,7 +48,7 @@ namespace AudioWorks.Common
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference
         /// (Nothing in Visual Basic) if no inner exception is specified.</param>
-        public ImageUnsupportedException([NotNull] string message, [NotNull] Exception innerException)
+        public ImageUnsupportedException(string message, Exception innerException)
             : base(message, innerException)
         {
         }
@@ -62,7 +60,7 @@ namespace AudioWorks.Common
         /// exception being thrown.</param>
         /// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the
         /// source or destination.</param>
-        ImageUnsupportedException([NotNull] SerializationInfo info, StreamingContext context)
+        ImageUnsupportedException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }

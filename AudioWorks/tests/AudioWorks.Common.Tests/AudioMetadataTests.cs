@@ -18,19 +18,18 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using AudioWorks.TestUtilities;
-using JetBrains.Annotations;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace AudioWorks.Common.Tests
 {
-    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class AudioMetadataTests
     {
-        public AudioMetadataTests([NotNull] ITestOutputHelper outputHelper) =>
+        public AudioMetadataTests(ITestOutputHelper outputHelper) =>
             LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Title is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void TitleNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata{ Title = null });
 
@@ -70,6 +69,7 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Artist is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void ArtistNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Artist = null });
 
@@ -109,6 +109,7 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Album is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void AlbumNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Album = null });
 
@@ -148,6 +149,7 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if AlbumArtist is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void AlbumArtistNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { AlbumArtist = null });
 
@@ -187,6 +189,7 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Composer is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void ComposerNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Composer = null });
 
@@ -226,6 +229,7 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Genre is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void GenreNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Genre = null });
 
@@ -265,6 +269,7 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Comment is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void CommentNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Comment = null });
 
@@ -304,6 +309,7 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Day is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void DayNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Day = null });
 
@@ -359,6 +365,7 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Month is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void MonthNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Month = null });
 
@@ -414,6 +421,7 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Year is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void YearNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Year = null });
 
@@ -469,6 +477,7 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if TrackNumber is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void TrackNumberNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { TrackNumber = null });
 
@@ -524,6 +533,7 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if TrackCount is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void TrackCountNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { TrackCount = null });
 
@@ -579,6 +589,7 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if TrackPeak is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void TrackPeakNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { TrackPeak = null });
 
@@ -630,6 +641,7 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if AlbumPeak is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void AlbumPeakNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { AlbumPeak = null });
 
@@ -681,6 +693,7 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if TrackGain is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void TrackGainNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { TrackGain = null });
 
@@ -728,6 +741,7 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if AlbumGain is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void AlbumGainNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { AlbumGain = null });
 

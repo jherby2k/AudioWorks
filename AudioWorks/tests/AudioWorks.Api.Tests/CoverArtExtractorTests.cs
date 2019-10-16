@@ -14,21 +14,18 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
-using JetBrains.Annotations;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace AudioWorks.Api.Tests
 {
-    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class CoverArtExtractorTests
     {
-        public CoverArtExtractorTests([NotNull] ITestOutputHelper outputHelper) =>
+        public CoverArtExtractorTests(ITestOutputHelper outputHelper) =>
             LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
 
         [Fact(DisplayName = "CoverArtExtractor's constructor throws an exception if encodedDirectoryName references an invalid metadata field")]
@@ -37,10 +34,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "CoverArtExtractor's Extract method creates the expected image file")]
         [MemberData(nameof(ValidFileWithCoverArtDataSource.IndexedFileNamesAndDataHash), MemberType = typeof(ValidFileWithCoverArtDataSource))]
-        public void ExtractCreatesExpectedImageFile(
-            int index,
-            [NotNull] string sourceFileName,
-            [NotNull] string expectedHash)
+        public void ExtractCreatesExpectedImageFile(int index, string sourceFileName, string expectedHash)
         {
             var result = new CoverArtExtractor(
                         Path.Combine("Output", "Extract"),

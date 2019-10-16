@@ -109,8 +109,8 @@ namespace AudioWorks.Extensions.Apple
 
                 // Set the control mode (constrained is the default)
                 var controlMode = BitrateControlMode.VariableConstrained;
-                if (settings.TryGetValue("ControlMode", out string controlModeValue))
-                    if (controlModeValue.Equals("Average", StringComparison.OrdinalIgnoreCase))
+                if (settings.TryGetValue("ControlMode", out string? controlModeValue))
+                    if (controlModeValue!.Equals("Average", StringComparison.OrdinalIgnoreCase))
                         controlMode = BitrateControlMode.LongTermAverage;
                     else if (controlModeValue.Equals("Constant", StringComparison.OrdinalIgnoreCase))
                         controlMode = BitrateControlMode.Constant;
@@ -169,7 +169,7 @@ namespace AudioWorks.Extensions.Apple
                 ExtensionProvider.GetFactories<IAudioMetadataEncoder>("Extension", FileExtension).FirstOrDefault();
             if (metadataEncoderFactory == null) return;
             using (var export = metadataEncoderFactory.CreateExport())
-                export.Value.WriteMetadata(_stream, _metadata, _settings);
+                export.Value.WriteMetadata(_stream, _metadata!, _settings!);
         }
 
         public void Dispose()

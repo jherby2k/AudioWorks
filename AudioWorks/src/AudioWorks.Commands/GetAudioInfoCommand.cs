@@ -13,24 +13,20 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System.Diagnostics.CodeAnalysis;
 using System.Management.Automation;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Commands
 {
-    [PublicAPI]
     [Cmdlet(VerbsCommon.Get, "AudioInfo"), OutputType(typeof(AudioInfo))]
     public sealed class GetAudioInfoCommand : LoggingCmdlet
     {
-        [NotNull, SuppressMessage("ReSharper", "NotNullMemberIsNotInitialized")]
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
-        public IAudioFile AudioFile { get; set; }
+        public IAudioFile? AudioFile { get; set; }
 
         protected override void ProcessRecord()
         {
-            var result = AudioFile.Info;
+            var result = AudioFile!.Info;
 
             ProcessLogMessages();
 

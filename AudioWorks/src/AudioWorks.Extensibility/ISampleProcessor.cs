@@ -13,8 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using JetBrains.Annotations;
-
 namespace AudioWorks.Extensibility
 {
     /// <summary>
@@ -26,6 +24,6 @@ namespace AudioWorks.Extensibility
         /// Submits samples for processing.
         /// </summary>
         /// <param name="samples">The samples.</param>
-        void Submit([NotNull] SampleBuffer samples);
+        void Submit(SampleBuffer samples);
     }
 }

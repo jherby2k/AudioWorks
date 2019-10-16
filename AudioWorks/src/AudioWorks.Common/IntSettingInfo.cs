@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Common
 {
@@ -22,7 +21,6 @@ namespace AudioWorks.Common
     /// Describes an integer setting which has maximum and minimum values.
     /// </summary>
     /// <seealso cref="SettingInfo"/>
-    [PublicAPI]
     public sealed class IntSettingInfo : SettingInfo
     {
         /// <summary>

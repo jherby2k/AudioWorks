@@ -15,28 +15,24 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System.IO;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensibility
 {
     /// <summary>
     /// An extension that can encode audio samples into a specific format.
     /// </summary>
-    [PublicAPI]
     public interface IAudioEncoder : ISampleProcessor
     {
         /// <summary>
         /// Gets information about the settings that can be passed to the <see cref="Initialize"/> method.
         /// </summary>
         /// <value>The setting information.</value>
-        [NotNull]
         SettingInfoDictionary SettingInfo { get; }
 
         /// <summary>
         /// Gets the file extension used by the encoder.
         /// </summary>
         /// <value>The file extension.</value>
-        [NotNull]
         string FileExtension { get; }
 
         /// <summary>
@@ -46,11 +42,7 @@ namespace AudioWorks.Extensibility
         /// <param name="info">The audio information.</param>
         /// <param name="metadata">The audio metadata.</param>
         /// <param name="settings">The settings.</param>
-        void Initialize(
-            [NotNull] Stream stream,
-            [NotNull] AudioInfo info,
-            [NotNull] AudioMetadata metadata,
-            [NotNull] SettingDictionary settings);
+        void Initialize(Stream stream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings);
 
         /// <summary>
         /// Finishes encoding.

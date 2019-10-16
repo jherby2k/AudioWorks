@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Linq;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Api
 {
@@ -26,7 +25,6 @@ namespace AudioWorks.Api
     /// Provides information about the available analyzers, which are used by an <see cref="AudioFileAnalyzer"/>'s
     /// Analyze method.
     /// </summary>
-    [PublicAPI]
     public static class AudioAnalyzerManager
     {
         /// <summary>
@@ -36,8 +34,7 @@ namespace AudioWorks.Api
         /// <param name="name">The name of the analyzer.</param>
         /// <returns>Information about the available settings.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="name"/> is null.</exception>
-        [NotNull]
-        public static SettingInfoDictionary GetSettingInfo([NotNull] string name)
+        public static SettingInfoDictionary GetSettingInfo(string name)
         {
             if (name == null) throw new ArgumentNullException(nameof(name));
 
@@ -54,7 +51,6 @@ namespace AudioWorks.Api
         /// Gets information about the available analyzers.
         /// </summary>
         /// <returns>The analyzer info.</returns>
-        [NotNull]
         public static IEnumerable<AudioAnalyzerInfo> GetAnalyzerInfo() =>
             ExtensionProviderWrapper.GetFactories<IAudioAnalyzer>()
                 .Select(factory => new AudioAnalyzerInfo(factory.Metadata));

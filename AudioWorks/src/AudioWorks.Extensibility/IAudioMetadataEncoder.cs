@@ -15,21 +15,18 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System.IO;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensibility
 {
     /// <summary>
     /// An extension that can write metadata to an audio stream.
     /// </summary>
-    [PublicAPI]
     public interface IAudioMetadataEncoder
     {
         /// <summary>
         /// Gets information about the settings that can be passed to the <see cref="WriteMetadata"/> method.
         /// </summary>
         /// <value>The setting information.</value>
-        [NotNull]
         SettingInfoDictionary SettingInfo { get; }
 
         /// <summary>
@@ -38,9 +35,6 @@ namespace AudioWorks.Extensibility
         /// <param name="stream">The stream.</param>
         /// <param name="metadata">The metadata.</param>
         /// <param name="settings">The settings.</param>
-        void WriteMetadata(
-            [NotNull] Stream stream,
-            [NotNull] AudioMetadata metadata,
-            [NotNull] SettingDictionary settings);
+        void WriteMetadata(Stream stream, AudioMetadata metadata, SettingDictionary settings);
     }
 }

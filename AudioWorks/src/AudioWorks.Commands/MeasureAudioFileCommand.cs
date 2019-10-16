@@ -22,26 +22,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using AudioWorks.Api;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Commands
 {
-    [PublicAPI]
     [Cmdlet(VerbsDiagnostic.Measure, "AudioFile"), OutputType(typeof(ITaggedAudioFile))]
     public sealed class MeasureAudioFileCommand : LoggingCmdlet, IDynamicParameters, IDisposable
     {
-        [NotNull] readonly CancellationTokenSource _cancellationSource = new CancellationTokenSource();
-        [NotNull] readonly List<ITaggedAudioFile> _audioFiles = new List<ITaggedAudioFile>();
-        [CanBeNull] RuntimeDefinedParameterDictionary _parameters;
+        readonly CancellationTokenSource _cancellationSource = new CancellationTokenSource();
+        readonly List<ITaggedAudioFile> _audioFiles = new List<ITaggedAudioFile>();
+        RuntimeDefinedParameterDictionary? _parameters;
 
-        [CanBeNull]
         [Parameter(Mandatory = true, Position = 0)]
         [ArgumentCompleter(typeof(AnalyzerCompleter))]
-        public string Analyzer { get; set; }
+        public string? Analyzer { get; set; }
 
-        [CanBeNull]
         [Parameter(Mandatory = true, Position = 1, ValueFromPipeline = true)]
-        public ITaggedAudioFile AudioFile { get; set; }
+        public ITaggedAudioFile? AudioFile { get; set; }
 
         [Parameter, ValidateRange(1, int.MaxValue)]
         public int MaxDegreeOfParallelism { get; set; } = Environment.ProcessorCount;
@@ -49,12 +45,11 @@ namespace AudioWorks.Commands
         [Parameter]
         public SwitchParameter PassThru { get; set; }
 
-        protected override void ProcessRecord() => _audioFiles.Add(AudioFile);
+        protected override void ProcessRecord() => _audioFiles.Add(AudioFile!);
 
         protected override void EndProcessing()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
-            var analyzer = new AudioFileAnalyzer(Analyzer, SettingAdapter.ParametersToSettings(_parameters))
+            var analyzer = new AudioFileAnalyzer(Analyzer!, SettingAdapter.ParametersToSettings(_parameters))
                 { MaxDegreeOfParallelism = MaxDegreeOfParallelism };
 
             var activity = $"Performing {Analyzer} analysis on {_audioFiles.Count} audio files";
@@ -105,8 +100,7 @@ namespace AudioWorks.Commands
 
         protected override void StopProcessing() => _cancellationSource.Cancel();
 
-        [CanBeNull]
-        public object GetDynamicParameters()
+        public object? GetDynamicParameters()
         {
             // AudioFile parameter may not be bound yet
             if (Analyzer == null) return null;

@@ -16,40 +16,37 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Common
 {
     /// <summary>
     /// Contains mutable metadata about the audio file.
     /// </summary>
-    [PublicAPI]
     [Serializable]
     public class AudioMetadata
     {
-        [NotNull] string _title;
-        [NotNull] string _artist;
-        [NotNull] string _album;
-        [NotNull] string _albumArtist;
-        [NotNull] string _composer;
-        [NotNull] string _genre;
-        [NotNull] string _comment;
-        [NotNull] string _day;
-        [NotNull] string _month;
-        [NotNull] string _year;
-        [NotNull] string _trackNumber;
-        [NotNull] string _trackCount;
-        [NotNull] string _trackPeak;
-        [NotNull] string _albumPeak;
-        [NotNull] string _trackGain;
-        [NotNull] string _albumGain;
+        string _title;
+        string _artist;
+        string _album;
+        string _albumArtist;
+        string _composer;
+        string _genre;
+        string _comment;
+        string _day;
+        string _month;
+        string _year;
+        string _trackNumber;
+        string _trackCount;
+        string _trackPeak;
+        string _albumPeak;
+        string _trackGain;
+        string _albumGain;
 
         /// <summary>
         /// Gets or sets the title. To clear the title, set an empty <paramref name="value"/>.
         /// </summary>
         /// <value>The title.</value>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
-        [NotNull]
         public string Title
         {
             get => _title;
@@ -61,7 +58,6 @@ namespace AudioWorks.Common
         /// </summary>
         /// <value>The artist.</value>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
-        [NotNull]
         public string Artist
         {
             get => _artist;
@@ -73,7 +69,6 @@ namespace AudioWorks.Common
         /// </summary>
         /// <value>The album.</value>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
-        [NotNull]
         public string Album
         {
             get => _album;
@@ -85,7 +80,6 @@ namespace AudioWorks.Common
         /// </summary>
         /// <value>The album artist.</value>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
-        [NotNull]
         public string AlbumArtist
         {
             get => _albumArtist;
@@ -97,7 +91,6 @@ namespace AudioWorks.Common
         /// </summary>
         /// <value>The composer.</value>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
-        [NotNull]
         public string Composer
         {
             get => _composer;
@@ -109,7 +102,6 @@ namespace AudioWorks.Common
         /// </summary>
         /// <value>The genre.</value>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
-        [NotNull]
         public string Genre
         {
             get => _genre;
@@ -121,7 +113,6 @@ namespace AudioWorks.Common
         /// </summary>
         /// <value>The comment.</value>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
-        [NotNull]
         public string Comment
         {
             get => _comment;
@@ -136,7 +127,6 @@ namespace AudioWorks.Common
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
         /// <exception cref="AudioMetadataInvalidException">Thrown if <paramref name="value"/> is not valid.
         /// </exception>
-        [NotNull]
         public string Day
         {
             get => _day;
@@ -162,7 +152,6 @@ namespace AudioWorks.Common
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
         /// <exception cref="AudioMetadataInvalidException">Thrown if <paramref name="value"/> is not valid.
         /// </exception>
-        [NotNull]
         public string Month
         {
             get => _month;
@@ -188,7 +177,6 @@ namespace AudioWorks.Common
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
         /// <exception cref="AudioMetadataInvalidException">Thrown if <paramref name="value"/> is not valid.
         /// </exception>
-        [NotNull]
         public string Year
         {
             get => _year;
@@ -214,7 +202,6 @@ namespace AudioWorks.Common
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
         /// <exception cref="AudioMetadataInvalidException">Thrown if <paramref name="value"/> is not valid.
         /// </exception>
-        [NotNull]
         public string TrackNumber
         {
             get => _trackNumber;
@@ -240,7 +227,6 @@ namespace AudioWorks.Common
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
         /// <exception cref="AudioMetadataInvalidException">Thrown if <paramref name="value"/> is not valid.
         /// </exception>
-        [NotNull]
         public string TrackCount
         {
             get => _trackCount;
@@ -266,7 +252,6 @@ namespace AudioWorks.Common
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
         /// <exception cref="AudioMetadataInvalidException">Thrown if <paramref name="value"/> is not valid.
         /// </exception>
-        [NotNull]
         public string TrackPeak
         {
             get => _trackPeak;
@@ -292,7 +277,6 @@ namespace AudioWorks.Common
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
         /// <exception cref="AudioMetadataInvalidException">Thrown if <paramref name="value"/> is not valid.
         /// </exception>
-        [NotNull]
         public string AlbumPeak
         {
             get => _albumPeak;
@@ -319,7 +303,6 @@ namespace AudioWorks.Common
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
         /// <exception cref="AudioMetadataInvalidException">Thrown if <paramref name="value"/> is not valid.
         /// </exception>
-        [NotNull]
         public string TrackGain
         {
             get => _trackGain;
@@ -346,7 +329,6 @@ namespace AudioWorks.Common
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
         /// <exception cref="AudioMetadataInvalidException">Thrown if <paramref name="value"/> is not valid.
         /// </exception>
-        [NotNull]
         public string AlbumGain
         {
             get => _albumGain;
@@ -369,8 +351,7 @@ namespace AudioWorks.Common
         /// Gets or sets the cover art. To clear the cover art, set a null <paramref name="value"/>.
         /// </summary>
         /// <value>The cover art.</value>
-        [CanBeNull]
-        public ICoverArt CoverArt { get; set; }
+        public ICoverArt? CoverArt { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioMetadata"/> class.
@@ -401,7 +382,7 @@ namespace AudioWorks.Common
         /// </summary>
         /// <param name="metadata">The <see cref="AudioMetadata"/> object to copy.</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="metadata"/> is null.</exception>
-        public AudioMetadata([NotNull] AudioMetadata metadata)
+        public AudioMetadata(AudioMetadata metadata)
         {
             if (metadata == null) throw new ArgumentNullException(nameof(metadata));
 

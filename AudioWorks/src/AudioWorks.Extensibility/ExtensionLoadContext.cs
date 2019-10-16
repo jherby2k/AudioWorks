@@ -21,7 +21,6 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensibility
@@ -31,10 +30,9 @@ namespace AudioWorks.Extensibility
     /// Each AudioWorks extension is loaded into its own <see cref="ExtensionLoadContext"/> instance.
     /// </summary>
     /// <seealso cref="AssemblyLoadContext"/>
-    [PublicAPI]
     public sealed class ExtensionLoadContext : AssemblyLoadContext
     {
-        [NotNull, ItemNotNull] readonly List<string> _unmanagedLibraryPaths = new List<string>();
+        readonly List<string> _unmanagedLibraryPaths = new List<string>();
 
         /// <summary>
         /// Adds a path that contains unmanaged libraries. When an unmanaged method is called via
@@ -43,7 +41,7 @@ namespace AudioWorks.Extensibility
         /// </summary>
         /// <param name="path">The path.</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="path"/> is null.</exception>
-        public void AddUnmanagedLibraryPath([NotNull] string path)
+        public void AddUnmanagedLibraryPath(string path)
         {
             if (path == null) throw new ArgumentNullException(nameof(path));
 
@@ -51,11 +49,10 @@ namespace AudioWorks.Extensibility
         }
 
         /// <inheritdoc/>
-        [CanBeNull]
-        protected override Assembly Load([CanBeNull] AssemblyName assemblyName) => null;
+        protected override Assembly? Load(AssemblyName? assemblyName) => null;
 
         /// <inheritdoc/>
-        protected override IntPtr LoadUnmanagedDll([NotNull] string unmanagedDllName)
+        protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
         {
             var fullPath = _unmanagedLibraryPaths
                 .SelectMany(path =>

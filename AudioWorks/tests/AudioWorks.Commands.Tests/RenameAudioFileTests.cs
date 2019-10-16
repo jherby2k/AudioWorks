@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Management.Automation;
 using AudioWorks.Api;
@@ -22,19 +21,17 @@ using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
 using AutoMapper;
-using JetBrains.Annotations;
 using Moq;
 using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class RenameAudioFileTests : IClassFixture<ModuleFixture>
     {
-        [NotNull] readonly ModuleFixture _moduleFixture;
-        [NotNull] readonly IMapper _mapper;
+        readonly ModuleFixture _moduleFixture;
+        readonly IMapper _mapper;
 
-        public RenameAudioFileTests([NotNull] ModuleFixture moduleFixture)
+        public RenameAudioFileTests(ModuleFixture moduleFixture)
         {
             _moduleFixture = moduleFixture;
             _mapper = new MapperConfiguration(config => config.CreateMap<AudioMetadata, AudioMetadata>()).CreateMapper();
@@ -197,12 +194,12 @@ namespace AudioWorks.Commands.Tests
 
         [Theory(DisplayName = "Rename-AudioFile with PassThru switch returns the AudioFile")]
         [MemberData(nameof(RenameValidFileDataSource.FileNames), MemberType = typeof(RenameValidFileDataSource))]
-        public void PassThruSwitchReturnsAudioFile(
-            [NotNull] string fileName)
+        public void PassThruSwitchReturnsAudioFile(string fileName)
         {
             var path = Path.Combine("Output", "Rename-AudioFile", fileName);
             Directory.CreateDirectory(Path.GetDirectoryName(path));
             File.Copy(Path.Combine(
+                // ReSharper disable once AssignNullToNotNullAttribute
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",
@@ -223,15 +220,12 @@ namespace AudioWorks.Commands.Tests
 
         [Theory(DisplayName = "Rename-AudioFile renames the file")]
         [MemberData(nameof(RenameValidFileDataSource.Data), MemberType = typeof(RenameValidFileDataSource))]
-        public void RenamesFile(
-            [NotNull] string fileName,
-            [NotNull] TestAudioMetadata metadata,
-            [NotNull] string name,
-            [NotNull] string expectedFileName)
+        public void RenamesFile(string fileName, TestAudioMetadata metadata, string name, string expectedFileName)
         {
             var path = Path.Combine("Output", "Rename-AudioFile", fileName);
             Directory.CreateDirectory(Path.GetDirectoryName(path));
             File.Copy(Path.Combine(
+                // ReSharper disable once AssignNullToNotNullAttribute
                 new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                 "TestFiles",
                 "Valid",

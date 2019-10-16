@@ -17,7 +17,6 @@ using System;
 using System.Composition;
 using System.IO;
 using System.Linq;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensibility
 {
@@ -28,7 +27,6 @@ namespace AudioWorks.Extensibility
     /// Classes marked with this attribute must implement <see cref="IAudioDecoder"/>.
     /// </remarks>
     /// <seealso cref="ExportAttribute"/>
-    [PublicAPI, MeansImplicitUse, BaseTypeRequired(typeof(IAudioDecoder))]
     [MetadataAttribute, AttributeUsage(AttributeTargets.Class)]
     public sealed class AudioDecoderExportAttribute : ExportAttribute
     {
@@ -36,7 +34,6 @@ namespace AudioWorks.Extensibility
         /// Gets the file extension.
         /// </summary>
         /// <value>The file extension.</value>
-        [NotNull]
         public string Extension { get; }
 
         /// <summary>
@@ -46,7 +43,7 @@ namespace AudioWorks.Extensibility
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="extension"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if <paramref name="extension"/> is not a valid file extension.
         /// </exception>
-        public AudioDecoderExportAttribute([NotNull] string extension)
+        public AudioDecoderExportAttribute(string extension)
             : base(typeof(IAudioDecoder))
         {
             if (string.IsNullOrEmpty(extension)) throw new ArgumentNullException(nameof(extension));

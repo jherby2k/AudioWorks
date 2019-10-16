@@ -21,7 +21,6 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NuGet.Common;
@@ -36,7 +35,7 @@ namespace AudioWorks.Api
 {
     static class ExtensionInstaller
     {
-        [NotNull] static readonly string _projectRoot = Path.Combine(
+        static readonly string _projectRoot = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "AudioWorks",
             "Extensions",
@@ -47,25 +46,25 @@ namespace AudioWorks.Api
 #endif
             );
 
-        [NotNull] static readonly SourceRepository _customRepository =
-            new SourceRepository(new PackageSource(
-                    ConfigurationManager.Configuration.GetValue("UsePreReleaseExtensions", false)
-                        ? ConfigurationManager.Configuration.GetValue(
-                            "PreReleaseExtensionRepository",
-                            "https://www.myget.org/F/audioworks-extensions-prerelease/api/v3/index.json")
-                        : ConfigurationManager.Configuration.GetValue(
-                            "ExtensionRepository",
-                            "https://www.myget.org/F/audioworks-extensions-v4/api/v3/index.json")),
-                Repository.Provider.GetCoreV3());
+        static readonly SourceRepository _customRepository = new SourceRepository(
+            new PackageSource(
+                ConfigurationManager.Configuration.GetValue("UsePreReleaseExtensions", false)
+                    ? ConfigurationManager.Configuration.GetValue(
+                        "PreReleaseExtensionRepository",
+                        "https://www.myget.org/F/audioworks-extensions-prerelease/api/v3/index.json")
+                    : ConfigurationManager.Configuration.GetValue(
+                        "ExtensionRepository",
+                        "https://www.myget.org/F/audioworks-extensions-v4/api/v3/index.json")),
+            Repository.Provider.GetCoreV3());
 
-        [NotNull] static readonly SourceRepository _defaultRepository =
-            new SourceRepository(new PackageSource(
-                    ConfigurationManager.Configuration.GetValue(
-                        "DefaultRepository",
-                        "https://api.nuget.org/v3/index.json")),
-                Repository.Provider.GetCoreV3());
+        static readonly SourceRepository _defaultRepository = new SourceRepository(
+            new PackageSource(
+                ConfigurationManager.Configuration.GetValue(
+                    "DefaultRepository",
+                    "https://api.nuget.org/v3/index.json")),
+            Repository.Provider.GetCoreV3());
 
-        [NotNull] static readonly List<string> _compatibleTargets = new List<string>(new[]
+        static readonly List<string> _compatibleTargets = new List<string>(new[]
         {
 #if NETCOREAPP
             "netcoreapp2.1",
@@ -83,7 +82,7 @@ namespace AudioWorks.Api
             "netstandard1.0"
         });
 
-        [NotNull] static readonly List<string> _fileTypesToInstall = new List<string>(new[]
+        static readonly List<string> _fileTypesToInstall = new List<string>(new[]
         {
             ".dll",
             ".dylib",
@@ -151,8 +150,7 @@ namespace AudioWorks.Api
             }
         }
 
-        [NotNull, ItemNotNull]
-        static IPackageSearchMetadata[] GetPublishedPackages([NotNull] ILogger logger)
+        static IPackageSearchMetadata[] GetPublishedPackages(ILogger logger)
         {
             // Search on the thread pool to avoid deadlocks
             // ReSharper disable once ImplicitlyCapturedClosure
@@ -181,9 +179,9 @@ namespace AudioWorks.Api
         }
 
         static bool InstallPackage(
-            [NotNull] NuGetPackageManager packageManager,
-            [NotNull] IPackageSearchMetadata packageMetadata,
-            [NotNull] ILogger logger)
+            NuGetPackageManager packageManager,
+            IPackageSearchMetadata packageMetadata,
+            ILogger logger)
         {
             var extensionDir =
                 new DirectoryInfo(Path.Combine(_projectRoot, packageMetadata.Identity.ToString()));
@@ -262,29 +260,23 @@ namespace AudioWorks.Api
             return true;
         }
 
-        [Pure, NotNull]
         static string GetOSTag() => RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
             ? "Windows"
             : RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
                 ? "Linux"
                 : "MacOS";
 
-        [Pure, NotNull]
         static CancellationTokenSource GetCancellationTokenSource() => new CancellationTokenSource(
             ConfigurationManager.Configuration.GetValue("AutomaticExtensionDownloadTimeout", 30) *
             1000);
 
-        [CanBeNull]
-        static DirectoryInfo SelectDirectory([CanBeNull, ItemNotNull] IEnumerable<DirectoryInfo> directories) =>
+        static DirectoryInfo? SelectDirectory(IEnumerable<DirectoryInfo>? directories) =>
             directories?.Where(dir => _compatibleTargets.Contains(dir.Name, StringComparer.OrdinalIgnoreCase))
                 .OrderBy(dir => _compatibleTargets
                     .FindIndex(target => target.Equals(dir.Name, StringComparison.OrdinalIgnoreCase)))
                 .FirstOrDefault();
 
-        static void MoveContents(
-            [CanBeNull] DirectoryInfo source,
-            [NotNull] DirectoryInfo destination,
-            [NotNull] ILogger logger)
+        static void MoveContents(DirectoryInfo? source, DirectoryInfo destination, ILogger logger)
         {
             if (source == null || !source.Exists) return;
 

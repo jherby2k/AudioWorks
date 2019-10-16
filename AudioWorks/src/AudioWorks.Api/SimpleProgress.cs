@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Api
 {
@@ -24,18 +23,17 @@ namespace AudioWorks.Api
     /// </summary>
     /// <typeparam name="T">Specifies the type of the progress report value.</typeparam>
     /// <seealso cref="IProgress{T}"/>
-    [PublicAPI]
     public sealed class SimpleProgress<T> : IProgress<T>
     {
-        [NotNull] readonly Action<T> _handler;
+        readonly Action<T> _handler;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleProgress{T}"/> class.
         /// </summary>
         /// <param name="handler">The handler to invoke for each reported progress value.</param>
-        public SimpleProgress([NotNull] Action<T> handler) => _handler = handler;
+        public SimpleProgress(Action<T> handler) => _handler = handler;
 
         /// <inheritdoc/>
-        public void Report([NotNull] T value) => _handler(value);
+        public void Report(T value) => _handler(value);
     }
 }

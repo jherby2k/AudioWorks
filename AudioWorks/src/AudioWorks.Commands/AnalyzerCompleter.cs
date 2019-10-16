@@ -19,13 +19,11 @@ using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Language;
 using AudioWorks.Api;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Commands
 {
     public sealed class AnalyzerCompleter : IArgumentCompleter
     {
-        [NotNull]
         public IEnumerable<CompletionResult> CompleteArgument(
             string commandName,
             string parameterName,

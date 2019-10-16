@@ -37,8 +37,8 @@ namespace AudioWorks.Extensions.ReplayGain
 
         public void Initialize(AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
-            if (settings.TryGetValue("ApplyGain", out string applyGain))
-                _scale = applyGain.Equals("Track", StringComparison.OrdinalIgnoreCase)
+            if (settings.TryGetValue("ApplyGain", out string? applyGain))
+                _scale = applyGain!.Equals("Track", StringComparison.OrdinalIgnoreCase)
                     ? CalculateScale(metadata.TrackGain, metadata.TrackPeak)
                     : CalculateScale(metadata.AlbumGain, metadata.AlbumPeak);
 
@@ -84,13 +84,13 @@ namespace AudioWorks.Extensions.ReplayGain
                     (float) Math.Pow(10, float.Parse(gain, CultureInfo.InvariantCulture) / 20),
                     1 / float.Parse(peak, CultureInfo.InvariantCulture));
 
-        static string? CalculatePeak(string? peak, float scale) =>
+        static string CalculatePeak(string? peak, float scale) =>
             string.IsNullOrEmpty(peak)
                 ? string.Empty
                 : string.Format(CultureInfo.InvariantCulture, "{0:0.000000}",
                     float.Parse(peak, CultureInfo.InvariantCulture) * scale);
 
-        static string? CalculateGain(string? gain, float scale) =>
+        static string CalculateGain(string? gain, float scale) =>
             string.IsNullOrEmpty(gain)
                 ? string.Empty
                 : string.Format(CultureInfo.InvariantCulture, "{0:0.00}",

@@ -15,13 +15,12 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Common.Tests.DataSources
 {
     public static class ValidImageFileDataSource
     {
-        [NotNull, ItemNotNull] static readonly List<object[]> _data = new List<object[]>
+        static readonly List<object[]> _data = new List<object[]>
         {
             new object[]
             {
@@ -61,46 +60,18 @@ namespace AudioWorks.Common.Tests.DataSources
             }
         };
 
-        [NotNull, ItemNotNull]
-        public static IEnumerable<object[]> FileNames
-        {
-            [UsedImplicitly] get => _data.Select(item => new[] { item[0] });
-        }
+        public static IEnumerable<object[]> FileNames => _data.Select(item => new[] { item[0] });
 
-        [NotNull, ItemNotNull]
-        public static IEnumerable<object[]> FileNamesAndWidth
-        {
-            [UsedImplicitly] get => _data.Select(item => new[] { item[0], item[1] });
-        }
+        public static IEnumerable<object[]> FileNamesAndWidth => _data.Select(item => new[] { item[0], item[1] });
 
-        [NotNull, ItemNotNull]
-        public static IEnumerable<object[]> FileNamesAndHeight
-        {
-            [UsedImplicitly] get => _data.Select(item => new[] { item[0], item[2] });
-        }
+        public static IEnumerable<object[]> FileNamesAndHeight => _data.Select(item => new[] { item[0], item[2] });
 
-        [NotNull, ItemNotNull]
-        public static IEnumerable<object[]> FileNamesAndColorDepth
-        {
-            [UsedImplicitly] get => _data.Select(item => new[] { item[0], item[3] });
-        }
+        public static IEnumerable<object[]> FileNamesAndColorDepth => _data.Select(item => new[] { item[0], item[3] });
 
-        [NotNull, ItemNotNull]
-        public static IEnumerable<object[]> FileNamesAndLossless
-        {
-            [UsedImplicitly] get => _data.Select(item => new[] { item[0], item[4] });
-        }
+        public static IEnumerable<object[]> FileNamesAndLossless => _data.Select(item => new[] { item[0], item[4] });
 
-        [NotNull, ItemNotNull]
-        public static IEnumerable<object[]> FileNamesAndMimeType
-        {
-            [UsedImplicitly] get => _data.Select(item => new[] { item[0], item[5] });
-        }
+        public static IEnumerable<object[]> FileNamesAndMimeType => _data.Select(item => new[] { item[0], item[5] });
 
-        [NotNull, ItemNotNull]
-        public static IEnumerable<object[]> FileNamesAndDataHash
-        {
-            [UsedImplicitly] get => _data.Select(item => new[] { item[0], item[6] });
-        }
+        public static IEnumerable<object[]> FileNamesAndDataHash => _data.Select(item => new[] { item[0], item[6] });
     }
 }

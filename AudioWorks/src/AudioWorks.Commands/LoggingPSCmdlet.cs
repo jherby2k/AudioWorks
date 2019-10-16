@@ -23,13 +23,11 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 #endif
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Commands
 {
     public abstract class LoggingPSCmdlet : PSCmdlet
     {
-        [NotNull]
         private protected CmdletLoggerProvider LoggerProvider { get; } =
             LoggerManager.AddSingletonProvider(() => new CmdletLoggerProvider());
 
@@ -63,8 +61,7 @@ namespace AudioWorks.Commands
         }
 #if NETSTANDARD2_0
 
-        [CanBeNull]
-        static Assembly AssemblyResolve(object sender, [NotNull] ResolveEventArgs args)
+        static Assembly? AssemblyResolve(object sender, ResolveEventArgs args)
         {
             // Load the available version of Newtonsoft.Json, regardless of the requested version
             if (args.Name.StartsWith("Newtonsoft.Json", StringComparison.Ordinal))

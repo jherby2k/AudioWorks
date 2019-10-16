@@ -14,14 +14,12 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Common
 {
     /// <summary>
     /// Contains information about the audio itself, which cannot be modified without re-encoding.
     /// </summary>
-    [PublicAPI]
     [Serializable]
     public sealed class AudioInfo
     {
@@ -38,9 +36,8 @@ namespace AudioWorks.Common
         /// <exception cref="AudioInvalidException">Thrown if one or more parameters is out of valid range.</exception>
         /// <exception cref="AudioUnsupportedException">Thrown if one or more parameters is out of the range supported
         /// by AudioWorks.</exception>
-        [NotNull]
         public static AudioInfo CreateForLossless(
-            [NotNull] string format,
+            string format,
             int channels,
             int bitsPerSample,
             int sampleRate,
@@ -73,9 +70,8 @@ namespace AudioWorks.Common
         /// <exception cref="AudioInvalidException">Thrown if one or more parameters is out of valid range.</exception>
         /// <exception cref="AudioUnsupportedException">Thrown if one or more parameters is out of the range supported
         /// by AudioWorks.</exception>
-        [NotNull]
         public static AudioInfo CreateForLossy(
-            [NotNull] string format,
+            string format,
             int channels,
             int sampleRate,
             long frameCount = 0,
@@ -97,7 +93,6 @@ namespace AudioWorks.Common
         /// Gets the format.
         /// </summary>
         /// <value>The format.</value>
-        [NotNull]
         public string Format { get; }
 
         /// <summary>
@@ -140,7 +135,7 @@ namespace AudioWorks.Common
                 : new TimeSpan(0, 0, (int) Math.Round(FrameCount / (double) SampleRate));
 
         AudioInfo(
-            [NotNull] string format,
+            string format,
             int channels,
             int bitsPerSample,
             int sampleRate,

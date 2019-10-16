@@ -14,13 +14,12 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Api.Tests.DataSources
 {
     public static class InvalidFileDataSource
     {
-        [NotNull, ItemNotNull] static readonly List<object[]> _data = new List<object[]>
+        static readonly List<object[]> _data = new List<object[]>
         {
             new object[] { "Not RIFF Format.wav" },
             new object[] { "Unexpectedly Truncated.wav" },
@@ -34,10 +33,6 @@ namespace AudioWorks.Api.Tests.DataSources
             new object[] { "Not Opus Format.opus"}
         };
 
-        [NotNull, ItemNotNull]
-        public static IEnumerable<object[]> Data
-        {
-            [UsedImplicitly] get => _data;
-        }
+        public static IEnumerable<object[]> Data => _data;
     }
 }

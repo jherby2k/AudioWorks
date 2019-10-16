@@ -15,7 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Composition;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensibility
 {
@@ -26,7 +25,6 @@ namespace AudioWorks.Extensibility
     /// Classes marked with this attribute must implement <see cref="IAudioFilter"/>.
     /// </remarks>
     /// <seealso cref="ExportAttribute"/>
-    [PublicAPI, MeansImplicitUse, BaseTypeRequired(typeof(IAudioFilter))]
     [MetadataAttribute, AttributeUsage(AttributeTargets.Class)]
     public sealed class AudioFilterExportAttribute : ExportAttribute
     {
@@ -34,7 +32,6 @@ namespace AudioWorks.Extensibility
         /// Gets the name of the filter.
         /// </summary>
         /// <value>The name.</value>
-        [NotNull]
         public string Name { get; }
 
         /// <summary>
@@ -42,7 +39,7 @@ namespace AudioWorks.Extensibility
         /// </summary>
         /// <param name="name">The filter name.</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="name"/> is null or empty.</exception>
-        public AudioFilterExportAttribute([NotNull] string name)
+        public AudioFilterExportAttribute(string name)
             : base(typeof(IAudioFilter))
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));

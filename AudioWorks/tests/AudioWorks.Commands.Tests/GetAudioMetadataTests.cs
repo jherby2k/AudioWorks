@@ -14,24 +14,21 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Management.Automation;
 using AudioWorks.Api;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 using Moq;
 using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class GetAudioMetadataTests : IClassFixture<ModuleFixture>
     {
-        [NotNull] readonly ModuleFixture _moduleFixture;
+        readonly ModuleFixture _moduleFixture;
 
-        public GetAudioMetadataTests([NotNull] ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
+        public GetAudioMetadataTests(ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
 
         [Fact(DisplayName = "Get-AudioMetadata command exists")]
         public void CommandExists()
@@ -139,13 +136,14 @@ namespace AudioWorks.Commands.Tests
 
         [Theory(DisplayName = "Get-AudioMetadata returns an AudioMetadata")]
         [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
-        public void ReturnsAudioMetadata([NotNull] string fileName)
+        public void ReturnsAudioMetadata(string fileName)
         {
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioMetadata")
                     .AddArgument(new TaggedAudioFile(Path.Combine(
+                        // ReSharper disable once AssignNullToNotNullAttribute
                         new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                         "TestFiles",
                         "Valid",

@@ -16,13 +16,12 @@ You should have received a copy of the GNU Affero General Public License along w
 using System.Collections.Generic;
 using System.Linq;
 using AudioWorks.Api.Tests.DataTypes;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Api.Tests.DataSources
 {
     public static class ValidFileDataSource
     {
-        [NotNull, ItemNotNull] static readonly List<object[]> _data = new List<object[]>
+        static readonly List<object[]> _data = new List<object[]>
         {
             #region Wave
 
@@ -1821,22 +1820,10 @@ namespace AudioWorks.Api.Tests.DataSources
             #endregion
         };
 
-        [NotNull, ItemNotNull]
-        public static IEnumerable<object[]> FileNames
-        {
-            [UsedImplicitly] get => _data.Select(item => new[] { item[0] });
-        }
+        public static IEnumerable<object[]> FileNames => _data.Select(item => new[] { item[0] });
 
-        [NotNull, ItemNotNull]
-        public static IEnumerable<object[]> FileNamesAndAudioInfo
-        {
-            [UsedImplicitly] get => _data.Select(item => new[] { item[0], item[1] });
-        }
+        public static IEnumerable<object[]> FileNamesAndAudioInfo => _data.Select(item => new[] { item[0], item[1] });
 
-        [NotNull, ItemNotNull]
-        public static IEnumerable<object[]> FileNamesAndMetadata
-        {
-            [UsedImplicitly] get => _data.Select(item => new[] { item[0], item[2] });
-        }
+        public static IEnumerable<object[]> FileNamesAndMetadata => _data.Select(item => new[] { item[0], item[2] });
     }
 }

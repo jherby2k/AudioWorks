@@ -15,7 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Composition;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensibility
 {
@@ -26,7 +25,6 @@ namespace AudioWorks.Extensibility
     /// Classes marked with this attribute must implement <see cref="IPrerequisiteHandler"/>.
     /// </remarks>
     /// <seealso cref="ExportAttribute"/>
-    [PublicAPI, MeansImplicitUse, BaseTypeRequired(typeof(IPrerequisiteHandler))]
     [MetadataAttribute, AttributeUsage(AttributeTargets.Class)]
     public sealed class PrerequisiteHandlerExportAttribute : ExportAttribute
     {

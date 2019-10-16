@@ -14,25 +14,22 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Management.Automation;
 using AudioWorks.Api;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
-using JetBrains.Annotations;
 using Moq;
 using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class ExportAudioCoverArtTests : IClassFixture<ModuleFixture>
     {
-        [NotNull] readonly ModuleFixture _moduleFixture;
+        readonly ModuleFixture _moduleFixture;
 
-        public ExportAudioCoverArtTests([NotNull] ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
+        public ExportAudioCoverArtTests(ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
 
         [Fact(DisplayName = "Export-AudioCoverArt command exists")]
         public void CommandExists()
@@ -115,10 +112,7 @@ namespace AudioWorks.Commands.Tests
 
         [Theory(DisplayName = "Export-AudioCoverArt creates the expected image file")]
         [MemberData(nameof(ValidFileWithCoverArtDataSource.IndexedFileNamesAndDataHash), MemberType = typeof(ValidFileWithCoverArtDataSource))]
-        public void CreatesExpectedImageFile(
-            int index,
-            [NotNull] string sourceFileName,
-            [CanBeNull] string expectedHash)
+        public void CreatesExpectedImageFile(int index, string sourceFileName, string? expectedHash)
         {
             using (var ps = PowerShell.Create())
             {
@@ -126,6 +120,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Export-AudioCoverArt")
                     .AddParameter("AudioFile", new TaggedAudioFile(
                         Path.Combine(
+                            // ReSharper disable once AssignNullToNotNullAttribute
                             new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                             "TestFiles",
                             "Valid",

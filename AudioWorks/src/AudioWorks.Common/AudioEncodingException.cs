@@ -15,7 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Runtime.Serialization;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Common
 {
@@ -23,7 +22,6 @@ namespace AudioWorks.Common
     /// Represents errors that occur during the encoding of a new <see cref="IAudioFile"/>.
     /// </summary>
     /// <seealso cref="AudioException"/>
-    [PublicAPI]
     [Serializable]
     public sealed class AudioEncodingException : AudioException
     {
@@ -38,7 +36,7 @@ namespace AudioWorks.Common
         /// Initializes a new instance of the <see cref="AudioEncodingException"/> class.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
-        public AudioEncodingException([NotNull] string message)
+        public AudioEncodingException(string message)
             : base(message)
         {
         }
@@ -49,7 +47,7 @@ namespace AudioWorks.Common
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference
         /// (Nothing in Visual Basic) if no inner exception is specified.</param>
-        public AudioEncodingException([NotNull] string message, [NotNull] Exception innerException)
+        public AudioEncodingException(string message, Exception innerException)
             : base(message, innerException)
         {
         }
@@ -61,7 +59,7 @@ namespace AudioWorks.Common
         /// exception being thrown.</param>
         /// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the
         /// source or destination.</param>
-        AudioEncodingException([NotNull] SerializationInfo info, StreamingContext context)
+        AudioEncodingException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }

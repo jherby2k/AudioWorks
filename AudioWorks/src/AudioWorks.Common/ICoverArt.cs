@@ -14,14 +14,12 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Common
 {
     /// <summary>
     /// Represents a cover art image.
     /// </summary>
-    [PublicAPI]
     public interface ICoverArt
     {
         /// <summary>
@@ -52,14 +50,12 @@ namespace AudioWorks.Common
         /// Gets the MIME type.
         /// </summary>
         /// <value>The MIME type.</value>
-        [NotNull]
         string MimeType { get; }
 
         /// <summary>
         /// Gets the default file extension (.png for lossless, or .jpg for lossy files).
         /// </summary>
         /// <value>The file extension.</value>
-        [NotNull]
         string FileExtension { get; set; }
 
         /// <summary>

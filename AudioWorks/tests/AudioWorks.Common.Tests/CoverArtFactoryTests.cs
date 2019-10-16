@@ -18,25 +18,26 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using AudioWorks.Common.Tests.DataSources;
 using AudioWorks.TestUtilities;
-using JetBrains.Annotations;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace AudioWorks.Common.Tests
 {
-    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class CoverArtFactoryTests
     {
-        public CoverArtFactoryTests([NotNull] ITestOutputHelper outputHelper) =>
+        public CoverArtFactoryTests(ITestOutputHelper outputHelper) =>
             LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
 
         [Fact(DisplayName = "CoverArtFactory's Create method throws an exception if the path is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void CreateDataNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => CoverArtFactory.GetOrCreate((byte[]) null));
+            Assert.Throws<ArgumentNullException>(() => CoverArtFactory.GetOrCreate((byte[]?) null));
 
         [Fact(DisplayName = "CoverArtFactory's Create method throws an exception if the path is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void CreatePathNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => CoverArtFactory.GetOrCreate((string) null));
+            Assert.Throws<ArgumentNullException>(() => CoverArtFactory.GetOrCreate((string?) null));
+
 
         [Fact(DisplayName = "CoverArtFactory's Create method throws an exception if the path cannot be found")]
         public void CreatePathNotFoundThrowsException() =>
@@ -44,9 +45,10 @@ namespace AudioWorks.Common.Tests
 
         [Theory(DisplayName = "CoverArtFactory's Create method throws an exception if the path is an unsupported file")]
         [MemberData(nameof(UnsupportedImageFileDataSource.Data), MemberType = typeof(UnsupportedImageFileDataSource))]
-        public void CreatePathUnsupportedThrowsException([NotNull] string fileName) =>
+        public void CreatePathUnsupportedThrowsException(string fileName) =>
             Assert.Throws<ImageUnsupportedException>(() =>
                 CoverArtFactory.GetOrCreate(Path.Combine(
+                    // ReSharper disable once AssignNullToNotNullAttribute
                     new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                     "TestFiles",
                     "Unsupported",
@@ -54,9 +56,10 @@ namespace AudioWorks.Common.Tests
 
         [Theory(DisplayName = "CoverArtFactory's Create method throws an exception if the path is an unsupported file")]
         [MemberData(nameof(InvalidImageFileDataSource.Data), MemberType = typeof(InvalidImageFileDataSource))]
-        public void CreatePathInvalidThrowsException([NotNull] string fileName) =>
+        public void CreatePathInvalidThrowsException(string fileName) =>
             Assert.Throws<ImageInvalidException>(() =>
                 CoverArtFactory.GetOrCreate(Path.Combine(
+                    // ReSharper disable once AssignNullToNotNullAttribute
                     new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
                     "TestFiles",
                     "Invalid",

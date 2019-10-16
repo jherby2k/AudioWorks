@@ -13,7 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 using Xunit.Abstractions;
 
@@ -21,15 +20,13 @@ namespace AudioWorks.TestUtilities
 {
     public sealed class XunitLoggerProvider : ILoggerProvider
     {
-        [CanBeNull]
-        public ITestOutputHelper OutputHelper { get; set; }
+        public ITestOutputHelper? OutputHelper { get; set; }
 
         public LogLevel MinLogLevel { get; }
 
         public XunitLoggerProvider(LogLevel minLogLevel = LogLevel.Debug) => MinLogLevel = minLogLevel;
 
-        [NotNull]
-        public ILogger CreateLogger([CanBeNull] string categoryName) => new XunitLogger(this, categoryName);
+        public ILogger CreateLogger(string? categoryName) => new XunitLogger(this, categoryName);
 
         public void Dispose()
         {

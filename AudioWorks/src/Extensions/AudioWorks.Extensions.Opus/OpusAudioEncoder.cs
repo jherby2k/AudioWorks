@@ -44,9 +44,9 @@ namespace AudioWorks.Extensions.Opus
         public void Initialize(Stream stream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
             var gain = 0;
-            if (settings.TryGetValue("ApplyGain", out string applyGain))
+            if (settings.TryGetValue("ApplyGain", out string? applyGain))
             {
-                var scale = applyGain.Equals("Track", StringComparison.OrdinalIgnoreCase)
+                var scale = applyGain!.Equals("Track", StringComparison.OrdinalIgnoreCase)
                     ? CalculateScale(metadata.TrackGain, metadata.TrackPeak)
                     : CalculateScale(metadata.AlbumGain, metadata.AlbumPeak);
 
@@ -71,7 +71,7 @@ namespace AudioWorks.Extensions.Opus
             _encoder.SetSerialNumber(serialNumber);
 
             // Default to full VBR
-            if (settings.TryGetValue("ControlMode", out string vbrMode))
+            if (settings.TryGetValue("ControlMode", out string? vbrMode))
                 // ReSharper disable once SwitchStatementMissingSomeCases
                 switch (vbrMode)
                 {
@@ -91,8 +91,8 @@ namespace AudioWorks.Extensions.Opus
             if (settings.TryGetValue("BitRate", out int bitRate))
                 _encoder.SetBitRate(bitRate);
 
-            if (settings.TryGetValue("SignalType", out string signalType))
-                _encoder.SetSignal(signalType.Equals("Speech", StringComparison.OrdinalIgnoreCase)
+            if (settings.TryGetValue("SignalType", out string? signalType))
+                _encoder.SetSignal(signalType!.Equals("Speech", StringComparison.OrdinalIgnoreCase)
                     ? SignalType.Speech
                     : SignalType.Music);
             else
@@ -124,7 +124,7 @@ namespace AudioWorks.Extensions.Opus
                     (float) Math.Pow(10, (float.Parse(gain, CultureInfo.InvariantCulture) - 5) / 20),
                     1 / float.Parse(peak, CultureInfo.InvariantCulture));
 
-        static string? CalculateGain(string? gain, float scale) =>
+        static string CalculateGain(string? gain, float scale) =>
             string.IsNullOrEmpty(gain)
                 ? string.Empty
                 : string.Format(CultureInfo.InvariantCulture, "{0:0.00}",

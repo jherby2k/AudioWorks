@@ -16,21 +16,18 @@ You should have received a copy of the GNU Affero General Public License along w
 using System.Collections.Generic;
 using System.Linq;
 using AudioWorks.Extensibility;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Api
 {
     /// <summary>
     /// Provides information about available audio file formats, and helper methods for loading them.
     /// </summary>
-    [PublicAPI]
     public static class AudioFileManager
     {
         /// <summary>
         /// Gets information about the available audio file formats.
         /// </summary>
         /// <returns>The format info.</returns>
-        [NotNull]
         public static IEnumerable<AudioFileFormatInfo> GetFormatInfo() =>
             ExtensionProviderWrapper.GetFactories<IAudioInfoDecoder>()
                 .Select(factory => new AudioFileFormatInfo(factory.Metadata));

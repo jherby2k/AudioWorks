@@ -15,20 +15,19 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Api.Tests.DataSources
 {
-    sealed class ArrayComparer : IEqualityComparer<object[]>
+    sealed class ArrayComparer : IEqualityComparer<object?[]>
     {
-        public bool Equals([ItemCanBeNull] object[] x, [ItemCanBeNull] object[] y)
+        public bool Equals(object?[] x, object?[] y)
         {
             if (x == y) return true;
             if (x == null || y == null) return false;
             return x.SequenceEqual(y);
         }
 
-        public int GetHashCode([ItemCanBeNull] object[] obj) =>
+        public int GetHashCode(object?[] obj) =>
             obj.Aggregate(0, (x, y) => x ^ (y?.GetHashCode() ?? 0));
     }
 }

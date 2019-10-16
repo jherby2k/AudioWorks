@@ -15,21 +15,18 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System.IO;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Extensibility
 {
     /// <summary>
     /// An extension that can read metadata from an audio stream.
     /// </summary>
-    [PublicAPI]
     public interface IAudioMetadataDecoder
     {
         /// <summary>
         /// Gets the name of the metadata format decoded by this extension.
         /// </summary>
         /// <value>The metadata format.</value>
-        [NotNull]
         string Format { get; }
 
         /// <summary>
@@ -37,7 +34,6 @@ namespace AudioWorks.Extensibility
         /// </summary>
         /// <param name="stream">The stream.</param>
         /// <returns>The metadata.</returns>
-        [NotNull]
-        AudioMetadata ReadMetadata([NotNull] Stream stream);
+        AudioMetadata ReadMetadata(Stream stream);
     }
 }

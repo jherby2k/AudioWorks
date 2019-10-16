@@ -13,24 +13,19 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System.Diagnostics.CodeAnalysis;
 using System.Management.Automation;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Commands
 {
-    [PublicAPI]
     [Cmdlet(VerbsCommon.Rename, "AudioFile"), OutputType(typeof(ITaggedAudioFile))]
     public sealed class RenameAudioFileCommand : LoggingCmdlet
     {
-        [NotNull, SuppressMessage("ReSharper", "NotNullMemberIsNotInitialized")]
         [Parameter(Mandatory = true, Position = 0)]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
-        [NotNull, SuppressMessage("ReSharper", "NotNullMemberIsNotInitialized")]
         [Parameter(Mandatory = true, Position = 1, ValueFromPipeline = true)]
-        public ITaggedAudioFile AudioFile { get; set; }
+        public ITaggedAudioFile? AudioFile { get; set; }
 
         [Parameter]
         public SwitchParameter Replace { get; set; }
@@ -40,7 +35,7 @@ namespace AudioWorks.Commands
 
         protected override void ProcessRecord()
         {
-            AudioFile.Rename(Name, Replace);
+            AudioFile!.Rename(Name!, Replace);
 
             ProcessLogMessages();
 

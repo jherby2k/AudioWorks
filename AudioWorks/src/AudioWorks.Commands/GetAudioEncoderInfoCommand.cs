@@ -15,11 +15,9 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System.Management.Automation;
 using AudioWorks.Api;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Commands
 {
-    [PublicAPI]
     [Cmdlet(VerbsCommon.Get, "AudioEncoderInfo"), OutputType(typeof(AudioEncoderInfo))]
     public sealed class GetAudioEncoderInfoCommand : LoggingCmdlet
     {

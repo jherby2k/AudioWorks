@@ -17,16 +17,14 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Security.Cryptography;
-using JetBrains.Annotations;
 
 namespace AudioWorks.TestUtilities
 {
     public static class HashUtility
     {
-        [Pure, NotNull]
         [SuppressMessage("Microsoft.Security", "CA5351:Do not use insecure cryptographic algorithm MD5.",
             Justification = "This method is not security critical")]
-        public static string CalculateHash([NotNull] string filePath)
+        public static string CalculateHash(string filePath)
         {
             using (var md5 = MD5.Create())
             using (var fileStream = File.OpenRead(filePath))
@@ -34,10 +32,9 @@ namespace AudioWorks.TestUtilities
                     .Replace("-", string.Empty);
         }
 
-        [Pure, NotNull]
         [SuppressMessage("Microsoft.Security", "CA5351:Do not use insecure cryptographic algorithm MD5.",
             Justification = "This method is not security critical")]
-        public static string CalculateHash([CanBeNull] byte[] data)
+        public static string CalculateHash(byte[]? data)
         {
             if (data == null) return string.Empty;
 

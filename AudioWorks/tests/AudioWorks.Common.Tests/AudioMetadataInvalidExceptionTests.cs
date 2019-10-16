@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using AudioWorks.TestUtilities;
-using JetBrains.Annotations;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -22,7 +21,7 @@ namespace AudioWorks.Common.Tests
 {
     public sealed class AudioMetadataInvalidExceptionTests
     {
-        public AudioMetadataInvalidExceptionTests([NotNull] ITestOutputHelper outputHelper) =>
+        public AudioMetadataInvalidExceptionTests(ITestOutputHelper outputHelper) =>
             LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
 
         [Fact(DisplayName = "AudioMetadataInvalidException is an AudioException")]

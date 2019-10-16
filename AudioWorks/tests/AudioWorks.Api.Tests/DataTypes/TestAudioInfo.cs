@@ -13,14 +13,12 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using JetBrains.Annotations;
 using Xunit.Abstractions;
 
 namespace AudioWorks.Api.Tests.DataTypes
 {
     public sealed class TestAudioInfo : IXunitSerializable
     {
-        [NotNull]
         public string Format { get; set; } = string.Empty;
 
         public int Channels { get; set; }
@@ -33,13 +31,13 @@ namespace AudioWorks.Api.Tests.DataTypes
 
         public long SampleCount { get; set; }
 
-        public void Deserialize([NotNull] IXunitSerializationInfo info)
+        public void Deserialize(IXunitSerializationInfo info)
         {
             foreach (var property in GetType().GetProperties())
                 property.SetValue(this, info.GetValue(property.Name, property.PropertyType));
         }
 
-        public void Serialize([NotNull] IXunitSerializationInfo info)
+        public void Serialize(IXunitSerializationInfo info)
         {
             foreach (var property in GetType().GetProperties())
                 info.AddValue(property.Name, property.GetValue(this));

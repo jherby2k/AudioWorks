@@ -16,25 +16,20 @@ You should have received a copy of the GNU Affero General Public License along w
 using System.IO;
 using System.Management.Automation;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Commands
 {
-    [PublicAPI]
     [Cmdlet(VerbsCommon.Get, "AudioCoverArt", DefaultParameterSetName = "ByPath"), OutputType(typeof(ICoverArt))]
     public sealed class GetAudioCoverArtCommand : LoggingPSCmdlet
     {
-        [CanBeNull]
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByPath")]
-        public string Path { get; set; }
+        public string? Path { get; set; }
 
-        [CanBeNull]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "ByLiteralPath"), Alias("PSPath")]
-        public string LiteralPath { get; set; }
+        public string? LiteralPath { get; set; }
 
-        [CanBeNull]
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByFileInfo")]
-        public FileInfo FileInfo { get; set; }
+        public FileInfo? FileInfo { get; set; }
 
         protected override void ProcessRecord()
         {
@@ -52,7 +47,7 @@ namespace AudioWorks.Commands
             }
         }
 
-        void ProcessPath([NotNull] string path)
+        void ProcessPath(string path)
         {
             try
             {

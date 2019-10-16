@@ -13,14 +13,11 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using JetBrains.Annotations;
-
 namespace AudioWorks.Extensibility
 {
     /// <summary>
     /// An extension that checks for prerequisites required by other extensions within the same assembly.
     /// </summary>
-    [PublicAPI]
     public interface IPrerequisiteHandler
     {
         /// <summary>

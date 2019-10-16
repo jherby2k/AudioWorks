@@ -16,19 +16,17 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.IO;
 using System.Linq;
-using JetBrains.Annotations;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Png;
 
 namespace AudioWorks.Common
 {
     /// <inheritdoc/>
-    [PublicAPI]
     [Serializable]
     public sealed class CoverArt : ICoverArt
     {
         readonly int _dataSize;
-        [NotNull] readonly byte[] _data;
+        readonly byte[] _data;
 
         /// <inheritdoc/>
         public int Width { get; }
@@ -51,7 +49,7 @@ namespace AudioWorks.Common
         /// <inheritdoc/>
         public ReadOnlySpan<byte> Data => _data.AsSpan().Slice(0, _dataSize);
 
-        internal CoverArt([NotNull] Stream stream)
+        internal CoverArt(Stream stream)
         {
             var format = Image.DetectFormat(stream) ??
                          throw new ImageInvalidException("Not a valid image.");

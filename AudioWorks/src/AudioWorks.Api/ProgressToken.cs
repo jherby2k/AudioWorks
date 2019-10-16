@@ -14,14 +14,12 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System.Diagnostics.CodeAnalysis;
-using JetBrains.Annotations;
 
 namespace AudioWorks.Api
 {
     /// <summary>
     /// Represents progress for an asynchronous activity.
     /// </summary>
-    [PublicAPI]
     [SuppressMessage("Performance", "CA1815:Override equals and operator equals on value types",
         Justification = "Instances will not be compared.")]
     public struct ProgressToken

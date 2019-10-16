@@ -15,13 +15,11 @@ You should have received a copy of the GNU Affero General Public License along w
 
 #if LINUX
 using System.Diagnostics;
-using JetBrains.Annotations;
 
 namespace AudioWorks.TestUtilities
 {
     public static class LinuxUtility
     {
-        [NotNull]
         public static string GetRelease()
         {
             var process = new Process

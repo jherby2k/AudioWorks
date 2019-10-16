@@ -18,26 +18,25 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
 using AudioWorks.Common;
-using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensibility
 {
     sealed class ExtensionContainer<T> : ExtensionContainerBase
     {
-        [NotNull] static readonly Lazy<ExtensionContainer<T>> _lazyInstance =
+        static readonly Lazy<ExtensionContainer<T>> _lazyInstance =
             new Lazy<ExtensionContainer<T>>(() => new ExtensionContainer<T>());
 
-        [NotNull]
         internal static ExtensionContainer<T> Instance => _lazyInstance.Value;
 
-        [UsedImplicitly]
         [ImportMany]
         // ReSharper disable once UnassignedGetOnlyAutoProperty
         // ReSharper disable once UnusedAutoPropertyAccessor.Local
         internal IEnumerable<ExportFactory<T, IDictionary<string, object>>> Factories { get; private set; }
 
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
         ExtensionContainer()
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
         {
             CompositionHost.SatisfyImports(this);
 

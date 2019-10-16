@@ -21,19 +21,18 @@ using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
-using JetBrains.Annotations;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace AudioWorks.Api.Tests
 {
-    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public sealed class AudioFileEncoderTests
     {
-        public AudioFileEncoderTests([NotNull] ITestOutputHelper outputHelper) =>
+        public AudioFileEncoderTests(ITestOutputHelper outputHelper) =>
             LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
 
         [Fact(DisplayName = "AudioFileEncoder's constructor throws an exception if the name is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void ConstructorNameNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => new AudioFileEncoder(null));
 
@@ -60,6 +59,7 @@ namespace AudioWorks.Api.Tests
             Assert.Throws<ArgumentException>(() => new AudioFileEncoder("Wave").Settings["Foo"] = "Bar");
 
         [Fact(DisplayName = "AudioFileEncoder's Encode method throws an exception if an audio file is null")]
+        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public async void EncodeAsyncNullAudioFileThrowsException() =>
             await Assert.ThrowsAsync<ArgumentNullException>(() =>
                 new AudioFileEncoder("Wave").EncodeAsync(null)).ConfigureAwait(true);
@@ -68,17 +68,17 @@ namespace AudioWorks.Api.Tests
         [MemberData(nameof(EncodeValidFileDataSource.Data), MemberType = typeof(EncodeValidFileDataSource))]
         public async void EncodeAsyncCreatesExpectedAudioFile(
             int index,
-            [NotNull] string sourceFileName,
-            [NotNull] string encoderName,
-            [CanBeNull] TestSettingDictionary settings,
+            string sourceFileName,
+            string encoderName,
+            TestSettingDictionary? settings,
 #if LINUX
-            [NotNull] string expectedUbuntu1604Hash,
-            [NotNull] string expectedUbuntu1804Hash)
+            string expectedUbuntu1604Hash,
+            string expectedUbuntu1804Hash)
 #elif OSX
-            [NotNull] string expectedHash)
+            string expectedHash)
 #else
-            [NotNull] string expected32BitHash,
-            [NotNull] string expected64BitHash)
+            string expected32BitHash,
+            string expected64BitHash)
 #endif
         {
             var results = (await new AudioFileEncoder(
