@@ -24,114 +24,114 @@ namespace AudioWorks.Api.Tests.DataSources
 {
     public static class EncodeValidFileDataSource
     {
-        static readonly List<object?[]> _data = new List<object?[]>
+        static readonly List<object[]> _data = new List<object[]>
         {
             #region Wave Encoding
 
-            new object?[]
+            new object[]
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "Wave",
-                null,
+                new TestSettingDictionary(),
 #if !OSX
                 "818EE6CBF16F76F923D33650E7A52708",
 #endif
                 "818EE6CBF16F76F923D33650E7A52708"
             },
 
-            new object?[]
+            new object[]
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "Wave",
-                null,
+                new TestSettingDictionary(),
 #if !OSX
                 "509B83828F13945E4121E4C4897A8649",
 #endif
                 "509B83828F13945E4121E4C4897A8649"
             },
 
-            new object?[]
+            new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Wave",
-                null,
+                new TestSettingDictionary(),
 #if !OSX
                 "5D4B869CD72BE208BC7B47F35E13BE9A",
 #endif
                 "5D4B869CD72BE208BC7B47F35E13BE9A"
             },
 
-            new object?[]
+            new object[]
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "Wave",
-                null,
+                new TestSettingDictionary(),
 #if !OSX
                 "EFBC44B9FA9C04449D67ECD16CB7F3D8",
 #endif
                 "EFBC44B9FA9C04449D67ECD16CB7F3D8"
             },
 
-            new object?[]
+            new object[]
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "Wave",
-                null,
+                new TestSettingDictionary(),
 #if !OSX
                 "D55BD1987676A7D6C2A04BF09C10F64F",
 #endif
                 "D55BD1987676A7D6C2A04BF09C10F64F"
             },
 
-            new object?[]
+            new object[]
             {
                 "FLAC Level 5 8-bit 8000Hz Stereo.flac",
                 "Wave",
-                null,
+                new TestSettingDictionary(),
 #if !OSX
                 "818EE6CBF16F76F923D33650E7A52708",
 #endif
                 "818EE6CBF16F76F923D33650E7A52708"
             },
 
-            new object?[]
+            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Mono.flac",
                 "Wave",
-                null,
+                new TestSettingDictionary(),
 #if !OSX
                 "509B83828F13945E4121E4C4897A8649",
 #endif
                 "509B83828F13945E4121E4C4897A8649"
             },
 
-            new object?[]
+            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 "Wave",
-                null,
+                new TestSettingDictionary(),
 #if !OSX
                 "5D4B869CD72BE208BC7B47F35E13BE9A",
 #endif
                 "5D4B869CD72BE208BC7B47F35E13BE9A"
             },
 
-            new object?[]
+            new object[]
             {
                 "FLAC Level 5 16-bit 48000Hz Stereo.flac",
                 "Wave",
-                null,
+                new TestSettingDictionary(),
 #if !OSX
                 "EFBC44B9FA9C04449D67ECD16CB7F3D8",
 #endif
                 "EFBC44B9FA9C04449D67ECD16CB7F3D8"
             },
 
-            new object?[]
+            new object[]
             {
                 "FLAC Level 5 24-bit 96000Hz Stereo.flac",
                 "Wave",
-                null,
+                new TestSettingDictionary(),
 #if !OSX
                 "D55BD1987676A7D6C2A04BF09C10F64F",
 #endif
@@ -139,44 +139,44 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
 #if !LINUX
-            new object?[]
+            new object[]
             {
                 "ALAC 16-bit 44100Hz Mono.m4a",
                 "Wave",
-                null,
+                new TestSettingDictionary(),
 #if !OSX
                 "509B83828F13945E4121E4C4897A8649",
 #endif
                 "509B83828F13945E4121E4C4897A8649"
             },
 
-            new object?[]
+            new object[]
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 "Wave",
-                null,
+                new TestSettingDictionary(),
 #if !OSX
                 "5D4B869CD72BE208BC7B47F35E13BE9A",
 #endif
                 "5D4B869CD72BE208BC7B47F35E13BE9A"
             },
 
-            new object?[]
+            new object[]
             {
                 "ALAC 16-bit 48000Hz Stereo.m4a",
                 "Wave",
-                null,
+                new TestSettingDictionary(),
 #if !OSX
                 "EFBC44B9FA9C04449D67ECD16CB7F3D8",
 #endif
                 "EFBC44B9FA9C04449D67ECD16CB7F3D8"
             },
 
-            new object?[]
+            new object[]
             {
                 "ALAC 24-bit 96000Hz Stereo.m4a",
                 "Wave",
-                null,
+                new TestSettingDictionary(),
 #if !OSX
                 "D55BD1987676A7D6C2A04BF09C10F64F",
 #endif
@@ -188,11 +188,11 @@ namespace AudioWorks.Api.Tests.DataSources
 
             #region FLAC Encoding
 
-            new object?[]
+            new object[]
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "FLAC",
-                null,
+                new TestSettingDictionary(),
 #if LINUX
                 "ADF68390D58F5312FE3B01D75FE5BE57",
                 "44AA2E52CED28503D02D51957B19DF74"
@@ -204,11 +204,11 @@ namespace AudioWorks.Api.Tests.DataSources
 #endif
             },
 
-            new object?[]
+            new object[]
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "FLAC",
-                null,
+                new TestSettingDictionary(),
 #if LINUX
                 "9A4394FF3EA062E68526EFBCC3851FB9",
                 "588ACB7827AF0D1A6A18751EEFEA3604"
@@ -220,11 +220,11 @@ namespace AudioWorks.Api.Tests.DataSources
 #endif
             },
 
-            new object?[]
+            new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
-                null,
+                new TestSettingDictionary(),
 #if LINUX
                 "75A88A48CC2EDE69F79E4D86F3B67B11",
                 "3983A342A074A7E8871FEF4FBE0AC73F"
@@ -236,11 +236,11 @@ namespace AudioWorks.Api.Tests.DataSources
 #endif
             },
 
-            new object?[]
+            new object[]
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "FLAC",
-                null,
+                new TestSettingDictionary(),
 #if LINUX
                 "EFAA1634FCAC4C0AA6544F085DCAA315",
                 "8A532C4C9D61AF027BC6F684C59FE9A6"
@@ -252,11 +252,11 @@ namespace AudioWorks.Api.Tests.DataSources
 #endif
             },
 
-            new object?[]
+            new object[]
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "FLAC",
-                null,
+                new TestSettingDictionary(),
 #if LINUX
                 "20A6542862C62E47F75FA91CA3863F21",
                 "4A4DE0494E31D82F446421C876FB10EA"
@@ -268,11 +268,11 @@ namespace AudioWorks.Api.Tests.DataSources
 #endif
             },
 
-            new object?[]
+            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "FLAC",
-                null,
+                new TestSettingDictionary(),
 #if LINUX
                 "AE5FE89E167550019A672C46D81B765E",
                 "A6B18F2B4DDC51DC37154410E701251F"
@@ -284,11 +284,11 @@ namespace AudioWorks.Api.Tests.DataSources
 #endif
             },
 
-            new object?[]
+            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
                 "FLAC",
-                null,
+                new TestSettingDictionary(),
 #if LINUX
                 "4E48D943C0D10F7B59490398AA68C305",
                 "CC3E8D9A5B48AE40CB9D0EDD38D433B5"
@@ -300,11 +300,11 @@ namespace AudioWorks.Api.Tests.DataSources
 #endif
             },
 
-            new object?[]
+            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "FLAC",
-                null,
+                new TestSettingDictionary(),
 #if LINUX
                 "075CCCEB8C9263F21C95CDF5C2B9D691",
                 "93016EE621E1F515BDAF0D405917DA25"
@@ -1112,11 +1112,11 @@ namespace AudioWorks.Api.Tests.DataSources
 
             #region Lame MP3 Encoding
 
-            new object?[]
+            new object[]
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "LameMP3",
-                null,
+                new TestSettingDictionary(),
 #if LINUX
                 "362C1DC415B6ED27B3BB0C43EEC7614A",
                 "F2BD0875E273743A8908F96DCCFDFC44"
@@ -1128,11 +1128,11 @@ namespace AudioWorks.Api.Tests.DataSources
 #endif
             },
 
-            new object?[]
+            new object[]
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "LameMP3",
-                null,
+                new TestSettingDictionary(),
 #if LINUX
                 "3FBE256A1ABC2C530FAAA632929F9AC2",
                 "1CB5B915B3A72CBE76087E16F96A0A3E"
@@ -1144,11 +1144,11 @@ namespace AudioWorks.Api.Tests.DataSources
 #endif
             },
 
-            new object?[]
+            new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
-                null,
+                new TestSettingDictionary(),
 #if LINUX
                 "B46B30D5E331FE64F24C620CFD5C717D",
                 "10E44CEE38E66E9737677BE52E7A286D"
@@ -1160,11 +1160,11 @@ namespace AudioWorks.Api.Tests.DataSources
 #endif
             },
 
-            new object?[]
+            new object[]
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "LameMP3",
-                null,
+                new TestSettingDictionary(),
 #if LINUX
                 "F2FFFC7C7001A93C0CC19466D51FC597",
                 "1454732B48913F2A3898164BA366DA01"
@@ -1176,11 +1176,11 @@ namespace AudioWorks.Api.Tests.DataSources
 #endif
             },
 
-            new object?[]
+            new object[]
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "LameMP3",
-                null,
+                new TestSettingDictionary(),
 #if LINUX
                 "BFF278600EB87215603D727BAA7905BD",
                 "AD56C3A1ACD627DBDA4B5A28AFE0355D"
@@ -1192,11 +1192,11 @@ namespace AudioWorks.Api.Tests.DataSources
 #endif
             },
 
-            new object?[]
+            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
-                null,
+                new TestSettingDictionary(),
 #if LINUX
                 "EED1BD58A65E3CA92EEC176F156DEF24",
                 "32EEC2B69A048975FB3BD034E8B392A4"
@@ -1208,11 +1208,11 @@ namespace AudioWorks.Api.Tests.DataSources
 #endif
             },
 
-            new object?[]
+            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
                 "LameMP3",
-                null,
+                new TestSettingDictionary(),
 #if LINUX
                 "E73399A30F5497FD72E1AEE0A3E76EAF",
                 "FB1B7DECB2C2A2C9CAA1FBB917A81472"
@@ -1224,11 +1224,11 @@ namespace AudioWorks.Api.Tests.DataSources
 #endif
             },
 
-            new object?[]
+            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "LameMP3",
-                null,
+                new TestSettingDictionary(),
 #if LINUX
                 "E73399A30F5497FD72E1AEE0A3E76EAF",
                 "FB1B7DECB2C2A2C9CAA1FBB917A81472"
@@ -2607,6 +2607,6 @@ namespace AudioWorks.Api.Tests.DataSources
             #endregion
         };
 
-        public static IEnumerable<object?[]> Data => _data.Select((item, index) => item.Prepend(index).ToArray());
+        public static IEnumerable<object[]> Data => _data.Select((item, index) => item.Prepend(index).ToArray());
     }
 }

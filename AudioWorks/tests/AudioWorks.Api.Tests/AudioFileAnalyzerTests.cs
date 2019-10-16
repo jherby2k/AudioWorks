@@ -57,7 +57,7 @@ namespace AudioWorks.Api.Tests
         public async void AnalyzeAsyncCreatesExpectedMetadata(
             string fileName,
             string analyzerName,
-            TestSettingDictionary? settings,
+            TestSettingDictionary settings,
 #if LINUX
             TestAudioMetadata expectedUbuntu1604Metadata,
             TestAudioMetadata expectedUbuntu1804Metadata)
@@ -90,7 +90,7 @@ namespace AudioWorks.Api.Tests
         public async void AnalyzeAsyncCreatesExpectedMetadataForGroup(
             string[] fileNames,
             string analyzerName,
-            TestSettingDictionary? settings,
+            TestSettingDictionary settings,
 #if LINUX
             TestAudioMetadata[] expectedUbuntu1604Metadata,
             TestAudioMetadata[] expectedUbuntu1804Metadata)

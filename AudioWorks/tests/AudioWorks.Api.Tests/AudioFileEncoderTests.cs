@@ -70,7 +70,7 @@ namespace AudioWorks.Api.Tests
             int index,
             string sourceFileName,
             string encoderName,
-            TestSettingDictionary? settings,
+            TestSettingDictionary settings,
 #if LINUX
             string expectedUbuntu1604Hash,
             string expectedUbuntu1804Hash)

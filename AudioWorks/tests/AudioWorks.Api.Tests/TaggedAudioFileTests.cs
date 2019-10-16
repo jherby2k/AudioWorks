@@ -312,7 +312,7 @@ namespace AudioWorks.Api.Tests
         [Theory(DisplayName = "TaggedAudioFile's Metadata.CoverArt property has the expected MimeType")]
         [MemberData(nameof(ValidFileWithCoverArtDataSource.FileNamesAndMimeType),
             MemberType = typeof(ValidFileWithCoverArtDataSource))]
-        public void CoverArtHasExpectedMimeType(string fileName, string? expectedMimeType) =>
+        public void CoverArtHasExpectedMimeType(string fileName, string expectedMimeType) =>
             Assert.Equal(
                 expectedMimeType,
                 new TaggedAudioFile(
@@ -321,12 +321,12 @@ namespace AudioWorks.Api.Tests
                             "TestFiles",
                             "Valid",
                             fileName))
-                    .Metadata.CoverArt?.MimeType);
+                    .Metadata.CoverArt?.MimeType ?? string.Empty);
 
         [Theory(DisplayName = "TaggedAudioFile's Metadata.CoverArt.GetData method returns the expected value")]
         [MemberData(nameof(ValidFileWithCoverArtDataSource.FileNamesAndDataHash),
             MemberType = typeof(ValidFileWithCoverArtDataSource))]
-        public void CoverArtGetDataReturnsExpectedValue(string fileName, string? expectedHash)
+        public void CoverArtGetDataReturnsExpectedValue(string fileName, string expectedHash)
         {
             var result = new TaggedAudioFile(
                 Path.Combine(
@@ -336,7 +336,7 @@ namespace AudioWorks.Api.Tests
                     fileName))
                 .Metadata.CoverArt?.Data.ToArray();
 
-            Assert.Equal(expectedHash, result == null ? null : HashUtility.CalculateHash(result));
+            Assert.Equal(expectedHash, result == null ? string.Empty : HashUtility.CalculateHash(result));
         }
 
         [Theory(DisplayName = "TaggedAudioFile's Rename method throws an exception if the name is null")]
@@ -399,8 +399,8 @@ namespace AudioWorks.Api.Tests
             int index,
             string fileName,
             TestAudioMetadata metadata,
-            string? imageFileName,
-            TestSettingDictionary? settings,
+            string imageFileName,
+            TestSettingDictionary settings,
 #if LINUX
             string expectedUbuntu1604Hash,
             string expectedUbuntu1804Hash)
@@ -417,7 +417,7 @@ namespace AudioWorks.Api.Tests
             File.Copy(Path.Combine(sourceDirectory, fileName), path, true);
             var audioFile = new TaggedAudioFile(path);
             _mapper.Map(metadata, audioFile.Metadata);
-            if (imageFileName != null)
+            if (!string.IsNullOrEmpty(imageFileName))
                 audioFile.Metadata.CoverArt = CoverArtFactory.GetOrCreate(Path.Combine(sourceDirectory, imageFileName));
 
             audioFile.SaveMetadata(settings);

@@ -194,8 +194,8 @@ namespace AudioWorks.Commands.Tests
             int index,
             string fileName,
             TestAudioMetadata metadata,
-            string? imageFileName,
-            SettingDictionary? settings,
+            string imageFileName,
+            SettingDictionary settings,
 #if LINUX
             string expectedUbuntu1604Hash,
             string expectedUbuntu1804Hash)
@@ -214,22 +214,21 @@ namespace AudioWorks.Commands.Tests
             File.Copy(Path.Combine(sourceDirectory, fileName), path, true);
             var audioFile = new TaggedAudioFile(path);
             _mapper.Map(metadata, audioFile.Metadata);
-            if (imageFileName != null)
+            if (!string.IsNullOrEmpty(imageFileName))
                 audioFile.Metadata.CoverArt = CoverArtFactory.GetOrCreate(Path.Combine(sourceDirectory, imageFileName));
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata")
                     .AddArgument(audioFile);
-                if (settings != null)
-                    foreach (var item in settings)
-                        if (item.Value is bool boolValue)
-                        {
-                            if (boolValue)
-                                ps.AddParameter(item.Key);
-                        }
-                        else
-                            ps.AddParameter(item.Key, item.Value);
+                foreach (var item in settings)
+                    if (item.Value is bool boolValue)
+                    {
+                        if (boolValue)
+                            ps.AddParameter(item.Key);
+                    }
+                    else
+                        ps.AddParameter(item.Key, item.Value);
 
                 ps.Invoke();
             }

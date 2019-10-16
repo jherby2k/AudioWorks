@@ -112,7 +112,7 @@ namespace AudioWorks.Commands.Tests
 
         [Theory(DisplayName = "Export-AudioCoverArt creates the expected image file")]
         [MemberData(nameof(ValidFileWithCoverArtDataSource.IndexedFileNamesAndDataHash), MemberType = typeof(ValidFileWithCoverArtDataSource))]
-        public void CreatesExpectedImageFile(int index, string sourceFileName, string? expectedHash)
+        public void CreatesExpectedImageFile(int index, string sourceFileName, string expectedHash)
         {
             using (var ps = PowerShell.Create())
             {
@@ -131,10 +131,8 @@ namespace AudioWorks.Commands.Tests
 
                 var result = ps.Invoke();
 
-                if (expectedHash == null)
-                {
+                if (string.IsNullOrEmpty(expectedHash))
                     Assert.Empty(result);
-                }
                 else
                 {
                     Assert.Single(result);

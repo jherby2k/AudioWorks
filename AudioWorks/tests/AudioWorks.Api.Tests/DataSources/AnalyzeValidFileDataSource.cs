@@ -21,14 +21,14 @@ namespace AudioWorks.Api.Tests.DataSources
 {
     public static class AnalyzeValidFileDataSource
     {
-        static readonly List<object?[]> _data = new List<object?[]>
+        static readonly List<object[]> _data = new List<object[]>
         {
             // 8000Hz Stereo, default (simple) peaks
-            new object?[]
+            new object[]
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "ReplayGain",
-                null,
+                new TestSettingDictionary(),
 #if LINUX
                 new TestAudioMetadata
                 {
@@ -91,11 +91,11 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // 44100Hz Mono, default (simple) peaks
-            new object?[]
+            new object[]
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "ReplayGain",
-                null,
+                new TestSettingDictionary(),
 #if LINUX
                 new TestAudioMetadata
                 {
@@ -158,11 +158,11 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // 44100Hz Stereo, default (simple) peaks
-            new object?[]
+            new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ReplayGain",
-                null,
+                new TestSettingDictionary(),
 #if LINUX
                 new TestAudioMetadata
                 {
@@ -225,11 +225,11 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // 48000Hz Stereo, default (simple) peaks
-            new object?[]
+            new object[]
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "ReplayGain",
-                null,
+                new TestSettingDictionary(),
 #if LINUX
                 new TestAudioMetadata
                 {
@@ -292,11 +292,11 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // 96000Hz Stereo, default (simple) peaks
-            new object?[]
+            new object[]
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "ReplayGain",
-                null,
+                new TestSettingDictionary(),
 #if LINUX
                 new TestAudioMetadata
                 {
@@ -394,12 +394,12 @@ namespace AudioWorks.Api.Tests.DataSources
             }
         };
 
-        public static IEnumerable<object?[]> Data => _data;
+        public static IEnumerable<object[]> Data => _data;
 
-        public static IEnumerable<object?[]> Analyzers =>
+        public static IEnumerable<object[]> Analyzers =>
             _data.Select(item => new[] { item[1] }).Distinct(new ArrayComparer());
 
-        public static IEnumerable<object?[]> FileNamesAndAnalyzers =>
+        public static IEnumerable<object[]> FileNamesAndAnalyzers =>
             _data.Select(item => new[] { item[0], item[1] }).Distinct(new ArrayComparer());
     }
 }

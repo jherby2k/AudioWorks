@@ -137,7 +137,7 @@ namespace AudioWorks.Commands.Tests
             int index,
             string sourceFileName,
             string encoderName,
-            TestSettingDictionary? settings,
+            TestSettingDictionary settings,
 #if LINUX
             string expectedUbuntu1604Hash,
             string expectedUbuntu1804Hash)
@@ -163,15 +163,14 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("Path", Path.Combine("Output", "Export-AudioFile", "Valid"))
                     .AddParameter("Name", $"{index:00} - {Path.GetFileNameWithoutExtension(sourceFileName)}")
                     .AddParameter("Replace");
-                if (settings != null)
-                    foreach (var item in settings)
-                        if (item.Value is bool boolValue)
-                        {
-                            if (boolValue)
-                                ps.AddParameter(item.Key);
-                        }
-                        else
-                            ps.AddParameter(item.Key, item.Value);
+                foreach (var item in settings)
+                    if (item.Value is bool boolValue)
+                    {
+                        if (boolValue)
+                            ps.AddParameter(item.Key);
+                    }
+                    else
+                        ps.AddParameter(item.Key, item.Value);
 
                 var results = ps.Invoke();
 

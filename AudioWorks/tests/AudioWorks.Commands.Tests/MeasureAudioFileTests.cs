@@ -270,7 +270,7 @@ namespace AudioWorks.Commands.Tests
         public void CreatesExpectedMetadata(
             string fileName,
             string analyzerName,
-            TestSettingDictionary? settings,
+            TestSettingDictionary settings,
 #if LINUX
             TestAudioMetadata expectedUbuntu1604Metadata,
             TestAudioMetadata expectedUbuntu1804Metadata)
@@ -320,7 +320,7 @@ namespace AudioWorks.Commands.Tests
         public void CreatesExpectedMetadataForGroup(
             string[] fileNames,
             string analyzerName,
-            TestSettingDictionary? settings,
+            TestSettingDictionary settings,
 #if LINUX
             TestAudioMetadata[] expectedUbuntu1604Metadata,
             TestAudioMetadata[] expectedUbuntu1804Metadata)

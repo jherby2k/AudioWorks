@@ -47,7 +47,7 @@ namespace AudioWorks.Api.Tests
                         "Valid",
                         sourceFileName)));
 
-            Assert.Equal(expectedHash, result == null ? null : HashUtility.CalculateHash(result.FullName));
+            Assert.Equal(expectedHash, result == null ? string.Empty : HashUtility.CalculateHash(result.FullName));
         }
     }
 }
