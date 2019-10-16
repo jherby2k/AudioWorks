@@ -20,7 +20,7 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: sdk
-    version: 2.1.802
+    version: 3.0.100
   displayName: 'Upgrade .NET Core SDK'
 
 - script: |
