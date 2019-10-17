@@ -38,7 +38,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     new TestAudioMetadata
                     {
-                        TrackPeak = "0.820313",
+                        TrackPeak = "0.820312",
                         AlbumPeak = "1.000000",
                         TrackGain = "-1.36",
                         AlbumGain = "-6.11"
@@ -62,7 +62,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     new TestAudioMetadata
                     {
-                        TrackPeak = "0.820313",
+                        TrackPeak = "0.820312",
                         AlbumPeak = "1.000000",
                         TrackGain = "-1.36",
                         AlbumGain = "-5.90"
