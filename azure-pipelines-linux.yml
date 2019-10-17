@@ -39,7 +39,7 @@ steps:
   displayName: 'Install prerequisites'
 
 - powershell: |
-    $localAppDir = $([System.Environment]::GetFolderPath(28))\AudioWorks"
+    $localAppDir = "$([System.Environment]::GetFolderPath(28))\AudioWorks"
     $localFeedDir = (New-Item "$localAppDir/LocalFeed" -ItemType Directory).FullName
     Get-ChildItem -Path AudioWorks/src/Extensions -Filter *.nupkg -Recurse | Select-Object -ExpandProperty FullName | % { mono /usr/local/bin/nuget.exe add $_ -Source $localFeedDir -NonInteractive }
     $roamingAppDir = "$([System.Environment]::GetFolderPath(26))/AudioWorks"
