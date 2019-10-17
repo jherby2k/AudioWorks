@@ -42,7 +42,7 @@ steps:
     $content | ConvertTo-Json | Set-Content "$settingsDir/settings.json"
     dotnet test AudioWorks/tests/AudioWorks.Api.Tests --no-build --configuration Release --filter "FullyQualifiedName=AudioWorks.Api.Tests.AudioFileTests.HasExpectedPath"
     $testResult = 0
-    Get-ChildItem -Path AudioWorks/tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$settingsDir/Extensions/netcoreapp2.1/*%2c$($_.FullName)/bin/$($env:BUILDCONFIGURATION)/netcoreapp2.1/AudioWorks.Commands/netcoreapp2.1"; if ($LastExitCode -ne 0) { $testResult = $LastExitCode } }
+    Get-ChildItem -Path AudioWorks/tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$settingsDir/Extensions/netstandard2.1/*%2c$($_.FullName)/bin/$($env:BUILDCONFIGURATION)/netcoreapp3.0/AudioWorks.Commands/netstandard2.1"; if ($LastExitCode -ne 0) { $testResult = $LastExitCode } }
     exit $testResult
   displayName: 'Run tests'
 

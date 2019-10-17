@@ -34,7 +34,7 @@ Remove-Item -Path "$outputDir\*" -Recurse -Include "*.psd1", "*.ps1xml", "*.xml"
 Write-Host "Generating help file..."
 
 # Only do this once, as platyPS can't be loaded if it is already in use.
-if ($Framework -eq "netcoreapp2.1")
+if ($Framework -eq "netstandard2.1")
 {
 	Install-Module -Name platyPS -Scope CurrentUser -Force -ErrorAction SilentlyContinue
 	Import-Module platyPS -ErrorAction Stop

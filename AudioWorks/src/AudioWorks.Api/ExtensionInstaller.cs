@@ -42,7 +42,7 @@ namespace AudioWorks.Api
 #if NETSTANDARD2_0
             "netstandard2.0"
 #else
-            "netcoreapp2.1"
+            "netstandard2.1"
 #endif
             );
 
@@ -66,11 +66,8 @@ namespace AudioWorks.Api
 
         static readonly List<string> _compatibleTargets = new List<string>(new[]
         {
-#if NETCOREAPP
-            "netcoreapp2.1",
-            "netcoreapp2.0",
-            "netcoreapp1.1",
-            "netcoreapp1.0",
+#if NETSTANDARD2_1
+            "netstandard2.1",
 #endif
             "netstandard2.0",
             "netstandard1.6",

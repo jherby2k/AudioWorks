@@ -32,10 +32,10 @@ namespace AudioWorks.Extensibility
                     Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                     "AudioWorks",
                     "Extensions",
-#if NETCOREAPP2_1
-                    "netcoreapp2.1"))
-#else
+#if NETSTANDARD2_0
                     "netstandard2.0"))
+#else
+                    "netstandard2.1"))
 #endif
                 .GetDirectories()
                 .SelectMany(extensionDir => extensionDir.GetFiles("AudioWorks.Extensions.*.dll"))
