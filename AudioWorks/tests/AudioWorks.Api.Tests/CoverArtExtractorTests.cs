@@ -40,12 +40,7 @@ namespace AudioWorks.Api.Tests
                         Path.Combine("Output", "Extract"),
                         $"{index:00} - {Path.GetFileNameWithoutExtension(sourceFileName)}")
                     { Overwrite = true }
-                .Extract(new TaggedAudioFile(
-                    Path.Combine(
-                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                        "TestFiles",
-                        "Valid",
-                        sourceFileName)));
+                .Extract(new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", sourceFileName)));
 
             Assert.Equal(expectedHash, result == null ? string.Empty : HashUtility.CalculateHash(result.FullName));
         }

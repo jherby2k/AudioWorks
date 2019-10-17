@@ -47,22 +47,12 @@ namespace AudioWorks.Common.Tests
         [MemberData(nameof(UnsupportedImageFileDataSource.Data), MemberType = typeof(UnsupportedImageFileDataSource))]
         public void CreatePathUnsupportedThrowsException(string fileName) =>
             Assert.Throws<ImageUnsupportedException>(() =>
-                CoverArtFactory.GetOrCreate(Path.Combine(
-                    // ReSharper disable once AssignNullToNotNullAttribute
-                    new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                    "TestFiles",
-                    "Unsupported",
-                    fileName)));
+                CoverArtFactory.GetOrCreate(Path.Combine(PathUtility.GetTestFileRoot(), "Unsupported", fileName)));
 
         [Theory(DisplayName = "CoverArtFactory's Create method throws an exception if the path is an unsupported file")]
         [MemberData(nameof(InvalidImageFileDataSource.Data), MemberType = typeof(InvalidImageFileDataSource))]
         public void CreatePathInvalidThrowsException(string fileName) =>
             Assert.Throws<ImageInvalidException>(() =>
-                CoverArtFactory.GetOrCreate(Path.Combine(
-                    // ReSharper disable once AssignNullToNotNullAttribute
-                    new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                    "TestFiles",
-                    "Invalid",
-                    fileName)));
+                CoverArtFactory.GetOrCreate(Path.Combine(PathUtility.GetTestFileRoot(), "Invalid", fileName)));
     }
 }

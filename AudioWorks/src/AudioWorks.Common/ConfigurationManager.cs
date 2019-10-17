@@ -61,7 +61,6 @@ namespace AudioWorks.Common
                 Directory.CreateDirectory(settingsPath);
                 File.Copy(
                     Path.Combine(
-                        // ReSharper disable once AssignNullToNotNullAttribute
                         Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
                         settingsFileName),
                     settingsFile);
@@ -77,7 +76,6 @@ namespace AudioWorks.Common
         {
             var oldSettingsFile = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                // ReSharper disable once AssignNullToNotNullAttribute
                 "AudioWorks", Path.GetFileName(settingsFile));
             if (!File.Exists(oldSettingsFile)) return;
 

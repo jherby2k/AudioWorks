@@ -188,7 +188,6 @@ namespace AudioWorks.Api
                 message =>
                 {
                     var tempOutputPath = Path.Combine(
-                        // ReSharper disable once AssignNullToNotNullAttribute
                         Path.GetDirectoryName(message.outputPath),
                         Path.GetRandomFileName());
 
@@ -264,7 +263,6 @@ namespace AudioWorks.Api
             foreach (var audioFile in audioFiles)
             {
                 var outputPath = GetUniquePath(Path.Combine(
-                    // ReSharper disable once AssignNullToNotNullAttribute
                     Directory.CreateDirectory(_encodedDirectoryName?.ReplaceWith(audioFile.Metadata) ??
                                               Path.GetDirectoryName(audioFile.Path)).FullName,
                     (_encodedFileName?.ReplaceWith(audioFile.Metadata) ??

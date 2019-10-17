@@ -67,7 +67,6 @@ namespace AudioWorks.Commands
             if (args.Name.StartsWith("Newtonsoft.Json", StringComparison.Ordinal))
             {
                 var jsonAssembly = Path.Combine(
-                    // ReSharper disable once AssignNullToNotNullAttribute
                     Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Newtonsoft.Json.dll");
 
                 if (!File.Exists(jsonAssembly)) return null;

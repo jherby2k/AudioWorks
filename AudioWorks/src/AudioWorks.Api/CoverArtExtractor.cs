@@ -65,7 +65,6 @@ namespace AudioWorks.Api
             var outputDirectory = _encodedDirectoryName?.ReplaceWith(audioFile.Metadata) ??
                                   Path.GetDirectoryName(audioFile.Path);
 
-            // ReSharper disable once AssignNullToNotNullAttribute
             var outputDirectoryInfo = Directory.CreateDirectory(outputDirectory);
 
             // The output file names default to the input file names

@@ -24,6 +24,7 @@ using AudioWorks.TestUtilities;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
+using AudioWorks.TestUtilities;
 using Moq;
 using ObjectsComparer;
 using Xunit;
@@ -95,12 +96,8 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
                     .AddParameter("Analyzer", analyzerName)
-                    .AddParameter("AudioFile", new TaggedAudioFile(Path.Combine(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                        "TestFiles",
-                        "Valid",
-                        fileName)));
+                    .AddParameter("AudioFile",
+                        new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)));
 
                 ps.Invoke();
 
@@ -117,12 +114,8 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
                     .AddArgument(analyzerName)
-                    .AddParameter("AudioFile", new TaggedAudioFile(Path.Combine(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                        "TestFiles",
-                        "Valid",
-                        fileName)));
+                    .AddParameter("AudioFile",
+                        new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)));
 
                 ps.Invoke();
 
@@ -139,12 +132,8 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
                     .AddParameter("Analyzer", analyzerName)
-                    .AddParameter("AudioFile", new TaggedAudioFile(Path.Combine(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                        "TestFiles",
-                        "Valid",
-                        fileName)));
+                    .AddParameter("AudioFile",
+                        new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)));
 
                 ps.Invoke();
 
@@ -175,12 +164,7 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
                     .AddArgument(analyzerName)
-                    .AddArgument(new TaggedAudioFile(Path.Combine(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                        "TestFiles",
-                        "Valid",
-                        fileName)));
+                    .AddArgument(new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)));
 
                 ps.Invoke();
 
@@ -197,12 +181,7 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Set-Variable")
                     .AddArgument("audioFile")
-                    .AddArgument(new TaggedAudioFile(Path.Combine(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                        "TestFiles",
-                        "Valid",
-                        fileName)))
+                    .AddArgument(new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)))
                     .AddParameter("PassThru");
                 ps.AddCommand("Select-Object")
                     .AddParameter("ExpandProperty", "Value");
@@ -229,12 +208,8 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
                     .AddParameter("Analyzer", analyzerName)
-                    .AddParameter("AudioFile", new TaggedAudioFile(Path.Combine(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                        "TestFiles",
-                        "Valid",
-                        fileName)))
+                    .AddParameter("AudioFile",
+                        new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)))
                     .AddParameter("PassThru");
 
                 ps.Invoke();
@@ -247,12 +222,7 @@ namespace AudioWorks.Commands.Tests
         [MemberData(nameof(AnalyzeValidFileDataSource.FileNamesAndAnalyzers), MemberType = typeof(AnalyzeValidFileDataSource))]
         public void PassThruSwitchReturnsAudioFile(string fileName, string analyzerName)
         {
-            var audioFile = new TaggedAudioFile(Path.Combine(
-                // ReSharper disable once AssignNullToNotNullAttribute
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                "TestFiles",
-                "Valid",
-                fileName));
+            var audioFile = new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
@@ -278,12 +248,7 @@ namespace AudioWorks.Commands.Tests
             TestAudioMetadata expectedMetadata)
 #endif
         {
-            var audioFile = new TaggedAudioFile(Path.Combine(
-                // ReSharper disable once AssignNullToNotNullAttribute
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                "TestFiles",
-                "Valid",
-                fileName));
+            var audioFile = new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;
@@ -328,12 +293,8 @@ namespace AudioWorks.Commands.Tests
             TestAudioMetadata[] expectedMetadata)
 #endif
         {
-            var audioFiles = fileNames.Select(fileName => new TaggedAudioFile(Path.Combine(
-                    // ReSharper disable once AssignNullToNotNullAttribute
-                    new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                    "TestFiles",
-                    "Valid",
-                    fileName)))
+            var audioFiles = fileNames.Select(fileName =>
+                    new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)))
                 .ToArray<ITaggedAudioFile>();
             using (var ps = PowerShell.Create())
             {
@@ -346,15 +307,14 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("ExpandProperty", "Value");
                 ps.AddCommand("Measure-AudioFile")
                     .AddArgument(analyzerName);
-                if (settings != null)
-                    foreach (var item in settings)
-                        if (item.Value is bool boolValue)
-                        {
-                            if (boolValue)
-                                ps.AddParameter(item.Key);
-                        }
-                        else
-                            ps.AddParameter(item.Key, item.Value);
+                foreach (var item in settings)
+                    if (item.Value is bool boolValue)
+                    {
+                        if (boolValue)
+                            ps.AddParameter(item.Key);
+                    }
+                    else
+                        ps.AddParameter(item.Key, item.Value);
 
                 ps.Invoke();
             }

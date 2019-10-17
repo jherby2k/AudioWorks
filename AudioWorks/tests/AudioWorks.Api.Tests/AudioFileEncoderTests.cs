@@ -87,11 +87,8 @@ namespace AudioWorks.Api.Tests
                         $"{index:00} - {Path.GetFileNameWithoutExtension(sourceFileName)}",
                         settings)
                     { Overwrite = true }
-                .EncodeAsync(new TaggedAudioFile(Path.Combine(
-                    new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                    "TestFiles",
-                    "Valid",
-                    sourceFileName))).ConfigureAwait(true)).ToArray();
+                .EncodeAsync(new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", sourceFileName)))
+                .ConfigureAwait(true)).ToArray();
 
             Assert.Single(results);
 #if LINUX

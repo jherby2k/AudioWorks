@@ -20,6 +20,7 @@ using AudioWorks.Api;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
+using AudioWorks.TestUtilities;
 using AutoMapper;
 using Moq;
 using Xunit;
@@ -199,12 +200,7 @@ namespace AudioWorks.Commands.Tests
             var path = Path.Combine("Output", "Rename-AudioFile", fileName);
             // ReSharper disable once AssignNullToNotNullAttribute
             Directory.CreateDirectory(Path.GetDirectoryName(path));
-            File.Copy(Path.Combine(
-                // ReSharper disable once AssignNullToNotNullAttribute
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                "TestFiles",
-                "Valid",
-                fileName), path, true);
+            File.Copy(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName), path, true);
             var audioFile = new TaggedAudioFile(path);
             using (var ps = PowerShell.Create())
             {
@@ -224,14 +220,8 @@ namespace AudioWorks.Commands.Tests
         public void RenamesFile(string fileName, TestAudioMetadata metadata, string name, string expectedFileName)
         {
             var path = Path.Combine("Output", "Rename-AudioFile", fileName);
-            // ReSharper disable once AssignNullToNotNullAttribute
             Directory.CreateDirectory(Path.GetDirectoryName(path));
-            File.Copy(Path.Combine(
-                // ReSharper disable once AssignNullToNotNullAttribute
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                "TestFiles",
-                "Valid",
-                fileName), path, true);
+            File.Copy(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName), path, true);
             var audioFile = new TaggedAudioFile(path);
             _mapper.Map(metadata, audioFile.Metadata);
             using (var ps = PowerShell.Create())

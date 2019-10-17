@@ -18,6 +18,7 @@ using System.IO;
 using System.Management.Automation;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Common;
+using AudioWorks.TestUtilities;
 using Xunit;
 
 namespace AudioWorks.Commands.Tests
@@ -162,12 +163,7 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioFile")
-                    .AddArgument(Path.Combine(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                        "TestFiles",
-                        "Unsupported",
-                        fileName));
+                    .AddArgument(Path.Combine(PathUtility.GetTestFileRoot(), "Unsupported", fileName));
 
                 ps.Invoke();
 
@@ -188,12 +184,7 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioFile")
-                    .AddArgument(Path.Combine(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                        "TestFiles",
-                        "Invalid",
-                        fileName));
+                    .AddArgument(Path.Combine(PathUtility.GetTestFileRoot(), "Invalid", fileName));
 
                 ps.Invoke();
 
@@ -214,12 +205,7 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioFile")
-                    .AddArgument(Path.Combine(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                        "TestFiles",
-                        "Valid",
-                        fileName));
+                    .AddArgument(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
 
                 Assert.IsAssignableFrom<ITaggedAudioFile>(ps.Invoke()[0].BaseObject);
             }
@@ -233,11 +219,7 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Push-Location")
-                    .AddArgument(Path.Combine(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                        "TestFiles",
-                        "Valid"));
+                    .AddArgument(Path.Combine(PathUtility.GetTestFileRoot(), "Valid"));
                 ps.AddStatement();
                 ps.AddCommand("Get-AudioFile")
                     .AddArgument(fileName);

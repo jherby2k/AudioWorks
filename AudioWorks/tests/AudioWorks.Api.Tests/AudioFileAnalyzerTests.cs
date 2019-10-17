@@ -65,11 +65,7 @@ namespace AudioWorks.Api.Tests
             TestAudioMetadata expectedMetadata)
 #endif
         {
-            var audioFile = new TaggedAudioFile(Path.Combine(
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                "TestFiles",
-                "Valid",
-                fileName));
+            var audioFile = new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
 
             await new AudioFileAnalyzer(analyzerName, settings).AnalyzeAsync(audioFile).ConfigureAwait(true);
 
@@ -98,11 +94,8 @@ namespace AudioWorks.Api.Tests
             TestAudioMetadata[] expectedMetadata)
 #endif
         {
-            var audioFiles = fileNames.Select(fileName => new TaggedAudioFile(Path.Combine(
-                    new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                    "TestFiles",
-                    "Valid",
-                    fileName)))
+            var audioFiles = fileNames.Select(fileName =>
+                    new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)))
                 .ToArray<ITaggedAudioFile>();
 
             await new AudioFileAnalyzer(analyzerName, settings).AnalyzeAsync(audioFiles).ConfigureAwait(true);

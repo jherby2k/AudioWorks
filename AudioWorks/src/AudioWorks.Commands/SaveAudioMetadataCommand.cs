@@ -50,6 +50,7 @@ namespace AudioWorks.Commands
             if (_expectedExtension != null)
             {
                 var fileExtension = Path.GetExtension(AudioFile!.Path);
+                // ReSharper disable once PossibleNullReferenceException
                 if (!fileExtension.Equals(_expectedExtension, StringComparison.OrdinalIgnoreCase))
                 {
                     WriteError(new ErrorRecord(new ArgumentException(

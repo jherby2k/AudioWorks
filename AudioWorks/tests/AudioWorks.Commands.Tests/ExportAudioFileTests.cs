@@ -148,12 +148,7 @@ namespace AudioWorks.Commands.Tests
             string expected64BitHash)
 #endif
         {
-            var sourceAudioFile = new TaggedAudioFile(Path.Combine(
-                // ReSharper disable once AssignNullToNotNullAttribute
-                new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                "TestFiles",
-                "Valid",
-                sourceFileName));
+            var sourceAudioFile = new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", sourceFileName));
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = _moduleFixture.Runspace;

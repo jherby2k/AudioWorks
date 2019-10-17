@@ -40,7 +40,6 @@ namespace AudioWorks.Extensions.Apple
             var logger = LoggerManager.LoggerFactory.CreateLogger<CoreAudioHandler>();
 
             var libPath = Path.Combine(
-                // ReSharper disable once AssignNullToNotNullAttribute
                 Environment.GetEnvironmentVariable("CommonProgramFiles"),
                 "Apple",
                 "Apple Application Support");

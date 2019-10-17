@@ -18,6 +18,7 @@ using System.IO;
 using System.Management.Automation;
 using AudioWorks.Common.Tests.DataSources;
 using AudioWorks.Common;
+using AudioWorks.TestUtilities;
 using Xunit;
 
 namespace AudioWorks.Commands.Tests
@@ -162,12 +163,7 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioCoverArt")
-                    .AddArgument(Path.Combine(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                        "TestFiles",
-                        "Valid",
-                        fileName));
+                    .AddArgument(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
 
                 Assert.IsAssignableFrom<CoverArt>(ps.Invoke()[0].BaseObject);
             }
@@ -181,12 +177,7 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioCoverArt")
-                    .AddArgument(Path.Combine(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                        "TestFiles",
-                        "Unsupported",
-                        fileName));
+                    .AddArgument(Path.Combine(PathUtility.GetTestFileRoot(), "Unsupported", fileName));
 
                 ps.Invoke();
 
@@ -207,12 +198,7 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioCoverArt")
-                    .AddArgument(Path.Combine(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                        "TestFiles",
-                        "Invalid",
-                        fileName));
+                    .AddArgument(Path.Combine(PathUtility.GetTestFileRoot(), "Invalid", fileName));
 
                 ps.Invoke();
 

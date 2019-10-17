@@ -40,7 +40,6 @@ namespace AudioWorks.Extensions.Lame
 
 #if WINDOWS
             var libPath = Path.Combine(
-                // ReSharper disable once AssignNullToNotNullAttribute
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
                 Environment.Is64BitProcess ? "win-x64" : "win-x86");
 
@@ -58,7 +57,6 @@ namespace AudioWorks.Extensions.Lame
             var osVersion = GetOSVersion();
 
             AddUnmanagedLibraryPath(Path.Combine(
-                // ReSharper disable once AssignNullToNotNullAttribute
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
                 osVersion.StartsWith("10.13", StringComparison.Ordinal) ? "osx.10.13-x64" :
                 osVersion.StartsWith("10.14", StringComparison.Ordinal) ? "osx.10.14-x64" :

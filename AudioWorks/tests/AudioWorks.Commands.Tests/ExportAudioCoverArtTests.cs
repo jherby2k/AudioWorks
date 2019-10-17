@@ -118,13 +118,8 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Export-AudioCoverArt")
-                    .AddParameter("AudioFile", new TaggedAudioFile(
-                        Path.Combine(
-                            // ReSharper disable once AssignNullToNotNullAttribute
-                            new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                            "TestFiles",
-                            "Valid",
-                            sourceFileName)))
+                    .AddParameter("AudioFile",
+                        new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", sourceFileName)))
                     .AddParameter("Path", Path.Combine("Output", "Export-AudioCoverArt"))
                     .AddParameter("Name", $"{index:00} - {Path.GetFileNameWithoutExtension(sourceFileName)}")
                     .AddParameter("Replace");

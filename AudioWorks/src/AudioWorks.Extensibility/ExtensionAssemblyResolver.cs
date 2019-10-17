@@ -51,7 +51,6 @@ namespace AudioWorks.Extensibility
             var extensionDir = Path.GetDirectoryName(path);
 
             // Resolve dependencies from both the main and extension directories
-            // ReSharper disable twice AssignNullToNotNullAttribute
             var assemblyFiles = Directory.GetFiles(
                     Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "*.dll")
                 .Concat(Directory.GetFiles(extensionDir, "*.dll"));

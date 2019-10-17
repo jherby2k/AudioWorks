@@ -19,6 +19,7 @@ using System.Management.Automation;
 using AudioWorks.Api;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Common;
+using AudioWorks.TestUtilities;
 using Moq;
 using Xunit;
 
@@ -142,12 +143,7 @@ namespace AudioWorks.Commands.Tests
             {
                 ps.Runspace = _moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioInfo")
-                    .AddArgument(new AudioFile(Path.Combine(
-                        // ReSharper disable once AssignNullToNotNullAttribute
-                        new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName,
-                        "TestFiles",
-                        "Valid",
-                        fileName)));
+                    .AddArgument(new AudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)));
 
                 Assert.IsAssignableFrom<AudioInfo>(ps.Invoke()[0].BaseObject);
             }
