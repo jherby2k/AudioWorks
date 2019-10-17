@@ -87,7 +87,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     new TestAudioMetadata
                     {
+#if NET471
                         TrackPeak = "0.820313",
+#else
+                        TrackPeak = "0.820312",
+#endif
                         AlbumPeak = "1.000000",
                         TrackGain = "-1.36",
                         AlbumGain = "-5.90"

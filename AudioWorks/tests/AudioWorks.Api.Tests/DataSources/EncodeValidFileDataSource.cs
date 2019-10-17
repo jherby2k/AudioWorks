@@ -1673,13 +1673,13 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ApplyGain"] = "Track"
                 },
 #if LINUX
-                "C6F6B42CCBC2435DC612F643A76E46FC",
-                "8EFA63733A5527E08092CAD86E86F76E"
+                "C4BE1E9B133ECF06E397F812D5AF250E",
+                "AFC1B4A4D1D02944A0902C5FA3A3E7E7"
 #elif OSX
-                "8EFA63733A5527E08092CAD86E86F76E"
+                "AFC1B4A4D1D02944A0902C5FA3A3E7E7"
 #else
-                "56C04FEBD02CB1127649A21E70B78C0E",
-                "56C04FEBD02CB1127649A21E70B78C0E"
+                "4D8A7B003B2E5C6041C4C704A72DAE0E",
+                "4D8A7B003B2E5C6041C4C704A72DAE0E"
 #endif
             },
 
@@ -1693,13 +1693,13 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ApplyGain"] = "Album"
                 },
 #if LINUX
-                "F1C20FE496BD523FFC1088A44091D84F",
-                "FB96F0590FB1A603C847DEF075D8FC5F"
+                "D4757E5D593DCB6C139790DFC4FE0C6D",
+                "A3CEC39BF25ED93F5729BD8179853E2E"
 #elif OSX
-                "FB96F0590FB1A603C847DEF075D8FC5F"
+                "A3CEC39BF25ED93F5729BD8179853E2E"
 #else
-                "F8A627B834782D13EBB9A9B722094F05",
-                "F8A627B834782D13EBB9A9B722094F05"
+                "B16F2CE036498A5D8C2A8658AA5DE098",
+                "B16F2CE036498A5D8C2A8658AA5DE098"
 #endif
             },
 
@@ -2144,13 +2144,13 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["SerialNumber"] = 1
                 },
 #if LINUX
-                "7508A275052C3AD7057208132BE5F233",
-                "7508A275052C3AD7057208132BE5F233"
+                "F8D1973844C250D9960695304C5EE217",
+                "F8D1973844C250D9960695304C5EE217"
 #elif OSX
-                "8C54CD37E0EF253C482EB0E486ACCDB3"
+                "D21A100762D895FB5338204E81922971"
 #else
-                "62D8E5794AFAC335E1D6396D5C9CD2BC",
-                "62D8E5794AFAC335E1D6396D5C9CD2BC"
+                "FD4B8C9B1E743D731F20DFF4A3BFD5D3",
+                "FD4B8C9B1E743D731F20DFF4A3BFD5D3"
 #endif
             },
 
@@ -2165,13 +2165,13 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["SerialNumber"] = 1
                 },
 #if LINUX
-                "1313B8C8D0EE8933D5B518D6F3E933A2",
-                "1313B8C8D0EE8933D5B518D6F3E933A2"
+                "1A35111ED26A079B6A972992C2E2105B",
+                "1A35111ED26A079B6A972992C2E2105B"
 #elif OSX
-                "B91F6ED893D23D6F27C693F2F844D56C"
+                "DFA1457680EC838FBBB6C14CE83760B9"
 #else
-                "2D26A6E733CC1788B55463088F8BACAF",
-                "2D26A6E733CC1788B55463088F8BACAF"
+                "59A18D2C8C05B83FDEA6FF3605A782B1",
+                "59A18D2C8C05B83FDEA6FF3605A782B1"
 #endif
             },
 
