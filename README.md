@@ -2,7 +2,7 @@
 
 A cross-platform, multi-format audio conversion and tagging suite for .NET and PowerShell. Formats currently supported are MP3, MP4 AAC, FLAC, Apple Lossless (ALAC), Opus, Ogg Vorbis and Wave.
 
-A full user interface (Windows only) is coming soon.
+A full user interface (Windows only) is in development.
 
 This project supplants [PowerShell Audio](https://github.com/jherby2k/PowerShellAudio) by targetting both Windows PowerShell and PowerShell Core (Windows, Linux and MacOS).
 
@@ -16,17 +16,17 @@ MacOS | [![Build Status](https://dev.azure.com/jherby2k/AudioWorks/_apis/build/s
 AudioWorks runs on Windows 7+, MacOS 10.13+, and Ubuntu (18.04 or 16.04). Other 64-bit Linux distributions may work, but may require additional dependencies and are currently untested.
 
 #### On Windows:
-* [PowerShell Core 6.1+](https://docs.microsoft.com/en-ca/powershell/scripting/install/installing-powershell-core-on-windows?view=powershell-6) (recommended) and/or Windows PowerShell 5.1
+* [PowerShell Core 6.1+](https://aka.ms/powershell) (The PowerShell 7 preview is recommended for maximum performance) and/or Windows PowerShell 5.1
 * [.NET Framework 4.7.1+](https://support.microsoft.com/en-us/help/4054530/microsoft-net-framework-4-7-2-offline-installer-for-windows) (if using Windows PowerShell)
 * [iTunes](https://www.apple.com/itunes) (optional, for AAC and ALAC support. Requires the classic installer, not the Windows Store version. Technically only the Apple Application support packages are required)
 #### On MacOS:
-* [PowerShell Core 6.1+](https://docs.microsoft.com/en-ca/powershell/scripting/install/installing-powershell-core-on-macos?view=powershell-6)
+* [PowerShell Core 6.1+](https://aka.ms/powershell) (The PowerShell 7 preview is recommended for maximum performance)
 #### On Ubuntu 18.04:
-* [PowerShell Core 6.1+](https://docs.microsoft.com/en-ca/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-6#ubuntu-1804)
+* [PowerShell Core 6.1+](https://aka.ms/powershell) (The PowerShell 7 preview is recommended for maximum performance)
 * Via `apt-get install`:
   * libebur128-1
 #### On Ubuntu 16.04:
-* [PowerShell Core 6.1+](https://docs.microsoft.com/en-ca/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-6#ubuntu-1604)
+* [PowerShell Core 6.1+](https://aka.ms/powershell) (The PowerShell 7 preview is recommended for maximum performance)
 * Via `apt-get install`:
   * libmp3lame0
   * libebur128-1
@@ -39,12 +39,12 @@ Keep the module up to date with `Update-Module -Name AudioWorks.Commands -AllowP
 The .NET API is available via [NuGet](https://www.nuget.org/packages/AudioWorks.Api).
 
 ### Additional Requirements for Building / Testing
-* [.NET Core SDK 2.1.300+](https://dotnet.github.io/)
-* Windows 7+, MacOS 10.12+, Ubuntu 16.04 or Ubuntu 18.04.
-* [Visual Studio 2017 15.9](https://visualstudio.microsoft.com/downloads) (optional - Windows only)
-* [Visual Studio 2017 for Mac 7.7+](https://visualstudio.microsoft.com/downloads) (optional - Mac only)
+* [.NET Core SDK 3.0.100+](https://dotnet.github.io/)
+* Windows 7+, MacOS 10.13+, Ubuntu 16.04 or Ubuntu 18.04.
+* [Visual Studio 2019 16.3](https://visualstudio.microsoft.com/downloads) (optional - Windows only)
+* [Visual Studio 2019 for Mac 8.3+](https://visualstudio.microsoft.com/downloads) (optional - Mac only)
 * [Visual Studio Code](https://code.visualstudio.com/) (optional - all platforms)
-* [ReSharper 2018.2+](https://www.jetbrains.com/resharper/eap) (optional - Windows only)
+* [ReSharper 2019.2+](https://www.jetbrains.com/resharper) (optional - Windows only)
 
 ### Special Thanks
 This project wouldn't be possible without the work of these other fine projects and organizations:
