@@ -22,21 +22,21 @@ namespace AudioWorks.TestUtilities
     {
         public static string GetRelease()
         {
-            var process = new Process
+            using (var process = new Process())
             {
-                StartInfo = new ProcessStartInfo("lsb_release", "-d -s")
+                process.StartInfo = new ProcessStartInfo("lsb_release", "-d -s")
                 {
                     RedirectStandardOutput = true,
                     UseShellExecute = false,
                     CreateNoWindow = true
-                }
-            };
-            process.Start();
-            var result = process.StandardOutput.ReadToEnd();
-            process.WaitForExit();
-            return result.Trim();
+                };
+
+                process.Start();
+                var result = process.StandardOutput.ReadToEnd();
+                process.WaitForExit();
+                return result.Trim();
+            }
         }
     }
 }
-
 #endif

@@ -116,38 +116,40 @@ namespace AudioWorks.Extensions.Flac
 #if LINUX
         static bool VerifyLibrary(string libraryName)
         {
-            var process = new Process
+            using (var process = new Process())
             {
-                StartInfo = new ProcessStartInfo("locate", $"-r {libraryName}$")
+                process.StartInfo = new ProcessStartInfo("locate", $"-r {libraryName}$")
                 {
                     RedirectStandardOutput = true,
                     UseShellExecute = false,
                     CreateNoWindow = true
-                }
-            };
-            process.Start();
-            process.StandardOutput.ReadToEnd();
-            process.WaitForExit();
-            return process.ExitCode == 0;
+                };
+
+                process.Start();
+                process.StandardOutput.ReadToEnd();
+                process.WaitForExit();
+                return process.ExitCode == 0;
+            }
         }
 
         public static string GetDistribution()
         {
             try
             {
-                var process = new Process
+                using (var process = new Process())
                 {
-                    StartInfo = new ProcessStartInfo("lsb_release", "-i -s")
+                    process.StartInfo = new ProcessStartInfo("lsb_release", "-d -s")
                     {
                         RedirectStandardOutput = true,
                         UseShellExecute = false,
                         CreateNoWindow = true
-                    }
-                };
-                process.Start();
-                var result = process.StandardOutput.ReadToEnd();
-                process.WaitForExit();
-                return result.Trim();
+                    };
+
+                    process.Start();
+                    var result = process.StandardOutput.ReadToEnd();
+                    process.WaitForExit();
+                    return result.Trim();
+                }
             }
             catch (FileNotFoundException)
             {
@@ -164,19 +166,20 @@ namespace AudioWorks.Extensions.Flac
 
         public static string GetOSVersion()
         {
-            var process = new Process
+            using (var process = new Process())
             {
-                StartInfo = new ProcessStartInfo("sw_vers", "-productVersion")
+                process.StartInfo = new ProcessStartInfo("sw_vers", "-productVersion")
                 {
                     RedirectStandardOutput = true,
                     UseShellExecute = false,
                     CreateNoWindow = true
-                }
-            };
-            process.Start();
-            var result = process.StandardOutput.ReadToEnd();
-            process.WaitForExit();
-            return result.Trim();
+                };
+
+                process.Start();
+                var result = process.StandardOutput.ReadToEnd();
+                process.WaitForExit();
+                return result.Trim();
+            }
         }
 #endif
     }
