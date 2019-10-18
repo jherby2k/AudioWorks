@@ -17,11 +17,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using AudioWorks.Common;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Logging;
 using NuGet.Common;
 using NuGet.Configuration;
@@ -87,6 +89,8 @@ namespace AudioWorks.Api
             ".so"
         });
 
+        static readonly string[] _rootAssemblyNames = GetRootAssemblyNames();
+
         internal static void Download()
         {
             var logger = LoggerManager.LoggerFactory.CreateLogger(typeof(ExtensionInstaller).FullName);
@@ -145,6 +149,33 @@ namespace AudioWorks.Api
                         logger.LogError(e, e.Message);
                 }
             }
+        }
+
+        static string[] GetRootAssemblyNames()
+        {
+            var rootDirectory = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+
+            var result = rootDirectory.GetFiles("*.dll")
+                .Select(file =>
+                {
+                    try
+                    {
+                        return AssemblyName.GetAssemblyName(file.FullName).Name;
+                    }
+                    catch (BadImageFormatException)
+                    {
+                        // The DLL might not be managed
+                        return Path.GetFileNameWithoutExtension(file.Name);
+                    }
+                });
+
+            // .NET Core applications may be loading via a runtime configuration file
+            foreach (var dependenciesFile in rootDirectory.GetFiles("*.deps.json"))
+                using (var stream = dependenciesFile.OpenRead())
+                using (var reader = new DependencyContextJsonReader())
+                    result = result.Union(reader.Read(stream).RuntimeLibraries.Select(library => library.Name));
+
+            return result.ToArray();
         }
 
         static IPackageSearchMetadata[] GetPublishedPackages(ILogger logger)
@@ -284,6 +315,19 @@ namespace AudioWorks.Api
                 if (file.Extension.Equals(".pdb", StringComparison.OrdinalIgnoreCase) &&
                     !file.Name.StartsWith("AudioWorks.Extensions", StringComparison.OrdinalIgnoreCase))
                     continue;
+
+                try
+                {
+                    // Skip any assemblies already used by AudioWorks
+                    if (file.Extension.Equals(".dll", StringComparison.OrdinalIgnoreCase) &&
+                        _rootAssemblyNames.Contains(
+                            AssemblyName.GetAssemblyName(file.FullName).Name, StringComparer.OrdinalIgnoreCase))
+                        continue;
+                }
+                catch (BadImageFormatException)
+                {
+                    // Native DLLs don't have an assembly name. Just move them.
+                }
 
                 logger.LogDebug("Moving '{0}' to '{1}'.",
                     file.FullName, destination.FullName);
