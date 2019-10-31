@@ -34,9 +34,10 @@ namespace AudioWorks.Api
                 .Select(propertyInfo => propertyInfo.Name).ToArray();
             if (_replacer.Matches(encoded)
 #if NETSTANDARD2_0
-                .Cast<Match>()
+                .Cast<Match>().Select(match => match.Value.Substring(1, match.Value.Length - 2))
+#else
+                .Select(match => match.Value[1..^1])
 #endif
-                .Select(match => match.Value.Substring(1, match.Value.Length - 2))
                 .Except(validProperties).Any())
                 throw new ArgumentException("Parameter contains one or more invalid metadata properties.",
                     nameof(encoded));
@@ -48,7 +49,11 @@ namespace AudioWorks.Api
         {
             var result = _replacer.Replace(_encoded, match =>
             {
+#if NETSTANDARD2_0
                 var propertyName = match.Value.Substring(1, match.Value.Length - 2);
+#else
+                var propertyName = match.Value[1..^1];
+#endif
                 // ReSharper disable once PossibleNullReferenceException
                 var propertyValue = (string) typeof(AudioMetadata).GetProperty(propertyName).GetValue(metadata);
 
