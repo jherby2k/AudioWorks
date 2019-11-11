@@ -156,7 +156,7 @@ namespace AudioWorks.Commands.Tests
                     .AddArgument(encoderName)
                     .AddArgument(sourceAudioFile)
                     .AddParameter("Path", Path.Combine("Output", "Export-AudioFile", "Valid"))
-                    .AddParameter("Name", $"{index:00} - {Path.GetFileNameWithoutExtension(sourceFileName)}")
+                    .AddParameter("Name", $"{index:000} - {Path.GetFileNameWithoutExtension(sourceFileName)}")
                     .AddParameter("Replace");
                 foreach (var item in settings)
                     if (item.Value is bool boolValue)

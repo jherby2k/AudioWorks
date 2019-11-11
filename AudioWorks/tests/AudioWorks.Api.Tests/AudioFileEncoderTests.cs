@@ -84,7 +84,7 @@ namespace AudioWorks.Api.Tests
             var results = (await new AudioFileEncoder(
                         encoderName,
                         Path.Combine("Output", "Encode", "Valid"),
-                        $"{index:00} - {Path.GetFileNameWithoutExtension(sourceFileName)}",
+                        $"{index:000} - {Path.GetFileNameWithoutExtension(sourceFileName)}",
                         settings)
                     { Overwrite = true }
                 .EncodeAsync(new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", sourceFileName)))

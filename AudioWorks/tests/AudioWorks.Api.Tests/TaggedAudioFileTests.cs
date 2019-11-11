@@ -291,7 +291,7 @@ namespace AudioWorks.Api.Tests
 #endif
         {
             var sourceDirectory = Path.Combine(PathUtility.GetTestFileRoot(), "Valid");
-            var path = Path.Combine("Output", "SaveMetadata", "Valid", $"{index:00} - {fileName}");
+            var path = Path.Combine("Output", "SaveMetadata", "Valid", $"{index:000} - {fileName}");
             Directory.CreateDirectory(Path.GetDirectoryName(path));
             File.Copy(Path.Combine(sourceDirectory, fileName), path, true);
             var audioFile = new TaggedAudioFile(path);
@@ -315,7 +315,7 @@ namespace AudioWorks.Api.Tests
         [MemberData(nameof(SaveMetadataUnsupportedFileDataSource.Data), MemberType = typeof(SaveMetadataUnsupportedFileDataSource))]
         public void SaveMetadataUnsupportedFileThrowsException(int index, string fileName)
         {
-            var path = Path.Combine("Output", "SaveMetadata", "Unsupported", $"{index:00} - {fileName}");
+            var path = Path.Combine("Output", "SaveMetadata", "Unsupported", $"{index:000} - {fileName}");
             Directory.CreateDirectory(Path.GetDirectoryName(path));
             File.Copy(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName), path, true);
             var audioFile = new TaggedAudioFile(path);

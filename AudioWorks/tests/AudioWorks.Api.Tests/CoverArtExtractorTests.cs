@@ -38,7 +38,7 @@ namespace AudioWorks.Api.Tests
         {
             var result = new CoverArtExtractor(
                         Path.Combine("Output", "Extract"),
-                        $"{index:00} - {Path.GetFileNameWithoutExtension(sourceFileName)}")
+                        $"{index:000} - {Path.GetFileNameWithoutExtension(sourceFileName)}")
                     { Overwrite = true }
                 .Extract(new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", sourceFileName)));
 
