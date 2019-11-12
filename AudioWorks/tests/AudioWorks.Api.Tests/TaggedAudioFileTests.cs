@@ -22,7 +22,6 @@ using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
 using AutoMapper;
-using ObjectsComparer;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -271,8 +270,7 @@ namespace AudioWorks.Api.Tests
             audioFile.Metadata.Title = "Modified";
             audioFile.LoadMetadata();
 
-            Assert.True(new Comparer().Compare(expectedMetadata, audioFile.Metadata, out var differences),
-                string.Join(" ", differences));
+            Assert.True(new MetadataComparer().Equals(expectedMetadata, audioFile.Metadata));
         }
 
         [Theory(DisplayName = "TaggedAudioFile's SaveMetadata method creates the expected output")]
@@ -283,12 +281,7 @@ namespace AudioWorks.Api.Tests
             TestAudioMetadata metadata,
             string imageFileName,
             TestSettingDictionary settings,
-#if LINUX
-            string expectedUbuntu1604Hash,
-            string expectedUbuntu1804Hash)
-#else
-            string expectedHash)
-#endif
+            string[] validHashes)
         {
             var sourceDirectory = Path.Combine(PathUtility.GetTestFileRoot(), "Valid");
             var path = Path.Combine("Output", "SaveMetadata", "Valid", $"{index:000} - {fileName}");
@@ -301,14 +294,7 @@ namespace AudioWorks.Api.Tests
 
             audioFile.SaveMetadata(settings);
 
-#if LINUX
-            Assert.Equal(LinuxUtility.GetRelease().StartsWith("Ubuntu 16.04", StringComparison.Ordinal)
-                ? expectedUbuntu1604Hash
-                : expectedUbuntu1804Hash,
-                HashUtility.CalculateHash(audioFile.Path));
-#else
-            Assert.Equal(expectedHash, HashUtility.CalculateHash(audioFile.Path));
-#endif
+            Assert.Contains(HashUtility.CalculateHash(audioFile.Path), validHashes);
         }
 
         [Theory(DisplayName = "TaggedAudioFile's SaveMetadata method throws an exception if the file is unsupported")]
@@ -341,7 +327,7 @@ namespace AudioWorks.Api.Tests
                 formatter.Serialize(stream, audioFile);
                 stream.Position = 0;
 
-                Assert.True(new Comparer<AudioMetadata>().Compare(
+                Assert.True(new MetadataComparer().Equals(
                     audioFile.Metadata,
                     ((TaggedAudioFile) formatter.Deserialize(stream)).Metadata));
             }

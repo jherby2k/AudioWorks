@@ -21,7 +21,6 @@ using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
-using ObjectsComparer;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -93,7 +92,7 @@ namespace AudioWorks.Api.Tests
                 formatter.Serialize(stream, audioFile);
                 stream.Position = 0;
 
-                Assert.True(new Comparer<AudioInfo>().Compare(
+                Assert.True(new AudioInfoComparer().Equals(
                     audioFile.Info,
                     ((AudioFile) formatter.Deserialize(stream)).Info));
             }

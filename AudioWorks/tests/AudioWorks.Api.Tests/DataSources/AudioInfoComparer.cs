@@ -1,4 +1,4 @@
-﻿/* Copyright © 2018 Jeremy Herbison
+﻿/* Copyright © 2019 Jeremy Herbison
 
 This file is part of AudioWorks.
 
@@ -13,27 +13,34 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using AudioWorks.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AudioWorks.Api.Tests.DataSources
 {
-    sealed class ArrayComparer : IEqualityComparer<object[]>
+    sealed class AudioInfoComparer : IEqualityComparer<AudioInfo>
     {
-        public bool Equals(object[]? x, object[]? y)
+        public bool Equals(AudioInfo? x, AudioInfo? y)
         {
             if (x == y) return true;
             if (x == null || y == null) return false;
-            return x.SequenceEqual(y);
+
+            return x.Format.Equals(y.Format, StringComparison.Ordinal) &&
+                   x.Channels == y.Channels &&
+                   x.BitsPerSample == y.BitsPerSample &&
+                   x.SampleRate == y.SampleRate &&
+                   x.BitRate == y.BitRate &&
+                   x.FrameCount == y.FrameCount;
         }
 
-        public int GetHashCode(object[] obj)
-        {
-            var hashCode = new HashCode();
-            foreach (var item in obj)
-                hashCode.Add(item);
-            return hashCode.ToHashCode();
-        }
+        public int GetHashCode(AudioInfo obj) =>
+            HashCode.Combine(
+                obj.Format,
+                obj.Channels,
+                obj.BitsPerSample,
+                obj.SampleRate,
+                obj.BitRate,
+                obj.FrameCount);
     }
 }

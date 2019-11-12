@@ -138,15 +138,7 @@ namespace AudioWorks.Commands.Tests
             string sourceFileName,
             string encoderName,
             TestSettingDictionary settings,
-#if LINUX
-            string expectedUbuntu1604Hash,
-            string expectedUbuntu1804Hash)
-#elif OSX
-            string expectedHash)
-#else
-            string expected32BitHash,
-            string expected64BitHash)
-#endif
+            string[] validHashes)
         {
             var sourceAudioFile = new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", sourceFileName));
             using (var ps = PowerShell.Create())
@@ -170,16 +162,9 @@ namespace AudioWorks.Commands.Tests
                 var results = ps.Invoke();
 
                 Assert.Single(results);
-#if LINUX
-                Assert.Equal(LinuxUtility.GetRelease().StartsWith("Ubuntu 16.04", StringComparison.Ordinal)
-                    ? expectedUbuntu1604Hash
-                    : expectedUbuntu1804Hash,
-#elif OSX
-                Assert.Equal(expectedHash,
-#else
-                Assert.Equal(Environment.Is64BitProcess ? expected64BitHash : expected32BitHash,
-#endif
-                    HashUtility.CalculateHash(((ITaggedAudioFile) results[0].BaseObject).Path));
+                Assert.Contains(
+                    HashUtility.CalculateHash(((ITaggedAudioFile) results[0].BaseObject).Path),
+                    validHashes);
             }
         }
     }

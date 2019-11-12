@@ -71,15 +71,7 @@ namespace AudioWorks.Api.Tests
             string sourceFileName,
             string encoderName,
             TestSettingDictionary settings,
-#if LINUX
-            string expectedUbuntu1604Hash,
-            string expectedUbuntu1804Hash)
-#elif OSX
-            string expectedHash)
-#else
-            string expected32BitHash,
-            string expected64BitHash)
-#endif
+            string[] validHashes)
         {
             var results = (await new AudioFileEncoder(
                         encoderName,
@@ -91,16 +83,7 @@ namespace AudioWorks.Api.Tests
                 .ConfigureAwait(true)).ToArray();
 
             Assert.Single(results);
-#if LINUX
-            Assert.Equal(LinuxUtility.GetRelease().StartsWith("Ubuntu 16.04", StringComparison.Ordinal)
-                ? expectedUbuntu1604Hash
-                : expectedUbuntu1804Hash,
-#elif OSX
-            Assert.Equal(expectedHash,
-#else
-            Assert.Equal(Environment.Is64BitProcess ? expected64BitHash : expected32BitHash,
-#endif
-                HashUtility.CalculateHash(results[0].Path));
+            Assert.Contains(HashUtility.CalculateHash(results[0].Path), validHashes);
         }
     }
 }

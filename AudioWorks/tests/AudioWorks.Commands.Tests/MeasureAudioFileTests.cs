@@ -18,15 +18,11 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using AudioWorks.Api;
-#if LINUX
-using AudioWorks.TestUtilities;
-#endif
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
 using Moq;
-using ObjectsComparer;
 using Xunit;
 
 namespace AudioWorks.Commands.Tests
@@ -241,12 +237,7 @@ namespace AudioWorks.Commands.Tests
             string fileName,
             string analyzerName,
             TestSettingDictionary settings,
-#if LINUX
-            TestAudioMetadata expectedUbuntu1604Metadata,
-            TestAudioMetadata expectedUbuntu1804Metadata)
-#else
-            TestAudioMetadata expectedMetadata)
-#endif
+            TestAudioMetadata[] validMetadata)
         {
             var audioFile = new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
             using (var ps = PowerShell.Create())
@@ -268,16 +259,7 @@ namespace AudioWorks.Commands.Tests
                 ps.Invoke();
             }
 
-            Assert.True(
-#if LINUX
-                new Comparer().Compare(LinuxUtility.GetRelease().StartsWith("Ubuntu 16.04", StringComparison.Ordinal)
-                        ? expectedUbuntu1604Metadata
-                        : expectedUbuntu1804Metadata,
-                    audioFile.Metadata, out var differences),
-#else
-                new Comparer().Compare(expectedMetadata, audioFile.Metadata, out var differences),
-#endif
-                string.Join(" ", differences));
+            Assert.Contains(audioFile.Metadata, validMetadata, new MetadataComparer());
         }
 
         [Theory(DisplayName = "Measure-AudioFile creates the expected metadata for a group")]
@@ -286,12 +268,7 @@ namespace AudioWorks.Commands.Tests
             string[] fileNames,
             string analyzerName,
             TestSettingDictionary settings,
-#if LINUX
-            TestAudioMetadata[] expectedUbuntu1604Metadata,
-            TestAudioMetadata[] expectedUbuntu1804Metadata)
-#else
-            TestAudioMetadata[] expectedMetadata)
-#endif
+            TestAudioMetadata[][] validMetadata)
         {
             var audioFiles = fileNames.Select(fileName =>
                     new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)))
@@ -320,18 +297,12 @@ namespace AudioWorks.Commands.Tests
             }
 
             var i = 0;
-            var comparer = new Comparer();
+            var comparer = new MetadataComparer();
             Assert.All(audioFiles, audioFile =>
-#if LINUX
-                Assert.True(comparer.Compare(
-                        LinuxUtility.GetRelease().StartsWith("Ubuntu 16.04", StringComparison.Ordinal)
-                            ? expectedUbuntu1604Metadata[i++]
-                            : expectedUbuntu1804Metadata[i++],
-                        audioFile.Metadata, out var differences),
-#else
-                Assert.True(comparer.Compare(expectedMetadata[i++], audioFile.Metadata, out var differences),
-#endif
-                    string.Join(" ", differences)));
+            {
+                Assert.Contains(audioFile.Metadata, validMetadata.Select(group => group[i]), comparer);
+                i++;
+            });
         }
     }
 }

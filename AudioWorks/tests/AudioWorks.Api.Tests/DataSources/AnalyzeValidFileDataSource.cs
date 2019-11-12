@@ -29,35 +29,23 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "ReplayGain",
                 new TestSettingDictionary(),
-#if LINUX
-                new TestAudioMetadata
+                new[]
                 {
-                    TrackPeak = "0.976562",
-                    AlbumPeak = "0.976562",
-                    TrackGain = "-8.84",
-                    AlbumGain = "-8.84"
-                },
-                new TestAudioMetadata
-                {
-                    TrackPeak = "0.976562",
-                    AlbumPeak = "0.976562",
-                    TrackGain = "-8.84",
-                    AlbumGain = "-8.84"
+                    new TestAudioMetadata // .NET Core 3.0+
+                    {
+                        TrackPeak = "0.976562",
+                        AlbumPeak = "0.976562",
+                        TrackGain = "-8.84",
+                        AlbumGain = "-8.84"
+                    },
+                    new TestAudioMetadata // Legacy .NET
+                    {
+                        TrackPeak = "0.976563",
+                        AlbumPeak = "0.976563",
+                        TrackGain = "-8.84",
+                        AlbumGain = "-8.84"
+                    }
                 }
-#else
-                new TestAudioMetadata
-                {
-#if NETFRAMEWORK
-                    TrackPeak = "0.976563",
-                    AlbumPeak = "0.976563",
-#else
-                    TrackPeak = "0.976562",
-                    AlbumPeak = "0.976562",
-#endif
-                    TrackGain = "-8.84",
-                    AlbumGain = "-8.84"
-                }
-#endif
             },
 
             // 8000Hz Stereo, interpolated peaks
@@ -69,30 +57,23 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
-#if LINUX
-                new TestAudioMetadata
+                new[]
                 {
-                    TrackPeak = "0.988234",
-                    AlbumPeak = "0.988234",
-                    TrackGain = "-8.84",
-                    AlbumGain = "-8.84"
-                },
-                new TestAudioMetadata
-                {
-                    TrackPeak = "0.987757",
-                    AlbumPeak = "0.987757",
-                    TrackGain = "-8.84",
-                    AlbumGain = "-8.84"
+                    new TestAudioMetadata // libebur128 1.1.0 (Ubuntu 16.04)
+                    {
+                        TrackPeak = "0.988234",
+                        AlbumPeak = "0.988234",
+                        TrackGain = "-8.84",
+                        AlbumGain = "-8.84"
+                    },
+                    new TestAudioMetadata // libebur128 1.2.4
+                    {
+                        TrackPeak = "0.987757",
+                        AlbumPeak = "0.987757",
+                        TrackGain = "-8.84",
+                        AlbumGain = "-8.84"
+                    }
                 }
-#else
-                new TestAudioMetadata
-                {
-                    TrackPeak = "0.987757",
-                    AlbumPeak = "0.987757",
-                    TrackGain = "-8.84",
-                    AlbumGain = "-8.84"
-                }
-#endif
             },
 
             // 44100Hz Mono, default (simple) peaks
@@ -101,30 +82,16 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "ReplayGain",
                 new TestSettingDictionary(),
-#if LINUX
-                new TestAudioMetadata
+                new[]
                 {
-                    TrackPeak = "1.000000",
-                    AlbumPeak = "1.000000",
-                    TrackGain = "-9.75",
-                    AlbumGain = "-9.75"
-                },
-                new TestAudioMetadata
-                {
-                    TrackPeak = "1.000000",
-                    AlbumPeak = "1.000000",
-                    TrackGain = "-9.75",
-                    AlbumGain = "-9.75"
+                    new TestAudioMetadata
+                    {
+                        TrackPeak = "1.000000",
+                        AlbumPeak = "1.000000",
+                        TrackGain = "-9.75",
+                        AlbumGain = "-9.75"
+                    }
                 }
-#else
-                new TestAudioMetadata
-                {
-                    TrackPeak = "1.000000",
-                    AlbumPeak = "1.000000",
-                    TrackGain = "-9.75",
-                    AlbumGain = "-9.75"
-                }
-#endif
             },
 
             // 44100Hz Mono, interpolated peaks
@@ -136,30 +103,23 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
-#if LINUX
-                new TestAudioMetadata
+                new[]
                 {
-                    TrackPeak = "1.326816",
-                    AlbumPeak = "1.326816",
-                    TrackGain = "-9.75",
-                    AlbumGain = "-9.75"
-                },
-                new TestAudioMetadata
-                {
-                    TrackPeak = "1.342166",
-                    AlbumPeak = "1.342166",
-                    TrackGain = "-9.75",
-                    AlbumGain = "-9.75"
+                    new TestAudioMetadata // libebur128 1.1.0 (Ubuntu 16.04)
+                    {
+                        TrackPeak = "1.326816",
+                        AlbumPeak = "1.326816",
+                        TrackGain = "-9.75",
+                        AlbumGain = "-9.75"
+                    },
+                    new TestAudioMetadata // libebur128 1.2.4
+                    {
+                        TrackPeak = "1.342166",
+                        AlbumPeak = "1.342166",
+                        TrackGain = "-9.75",
+                        AlbumGain = "-9.75"
+                    }
                 }
-#else
-                new TestAudioMetadata
-                {
-                    TrackPeak = "1.342166",
-                    AlbumPeak = "1.342166",
-                    TrackGain = "-9.75",
-                    AlbumGain = "-9.75"
-                }
-#endif
             },
 
             // 44100Hz Stereo, default (simple) peaks
@@ -168,30 +128,16 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ReplayGain",
                 new TestSettingDictionary(),
-#if LINUX
-                new TestAudioMetadata
+                new[]
                 {
-                    TrackPeak = "1.000000",
-                    AlbumPeak = "1.000000",
-                    TrackGain = "-8.67",
-                    AlbumGain = "-8.67"
-                },
-                new TestAudioMetadata
-                {
-                    TrackPeak = "1.000000",
-                    AlbumPeak = "1.000000",
-                    TrackGain = "-8.67",
-                    AlbumGain = "-8.67"
+                    new TestAudioMetadata
+                    {
+                        TrackPeak = "1.000000",
+                        AlbumPeak = "1.000000",
+                        TrackGain = "-8.67",
+                        AlbumGain = "-8.67"
+                    }
                 }
-#else
-                new TestAudioMetadata
-                {
-                    TrackPeak = "1.000000",
-                    AlbumPeak = "1.000000",
-                    TrackGain = "-8.67",
-                    AlbumGain = "-8.67"
-                }
-#endif
             },
 
             // 44100Hz Stereo, interpolated peaks
@@ -203,30 +149,23 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
-#if LINUX
-                new TestAudioMetadata
+                new[]
                 {
-                    TrackPeak = "1.013034",
-                    AlbumPeak = "1.013034",
-                    TrackGain = "-8.67",
-                    AlbumGain = "-8.67"
-                },
-                new TestAudioMetadata
-                {
-                    TrackPeak = "1.012000",
-                    AlbumPeak = "1.012000",
-                    TrackGain = "-8.67",
-                    AlbumGain = "-8.67"
+                    new TestAudioMetadata // libebur128 1.1.0 (Ubuntu 16.04)
+                    {
+                        TrackPeak = "1.013034",
+                        AlbumPeak = "1.013034",
+                        TrackGain = "-8.67",
+                        AlbumGain = "-8.67"
+                    },
+                    new TestAudioMetadata // libebur128 1.2.4
+                    {
+                        TrackPeak = "1.012000",
+                        AlbumPeak = "1.012000",
+                        TrackGain = "-8.67",
+                        AlbumGain = "-8.67"
+                    }
                 }
-#else
-                new TestAudioMetadata
-                {
-                    TrackPeak = "1.012000",
-                    AlbumPeak = "1.012000",
-                    TrackGain = "-8.67",
-                    AlbumGain = "-8.67"
-                }
-#endif
             },
 
             // 48000Hz Stereo, default (simple) peaks
@@ -235,30 +174,16 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "ReplayGain",
                 new TestSettingDictionary(),
-#if LINUX
-                new TestAudioMetadata
+                new[]
                 {
-                    TrackPeak = "0.999969",
-                    AlbumPeak = "0.999969",
-                    TrackGain = "-8.66",
-                    AlbumGain = "-8.66"
-                },
-                new TestAudioMetadata
-                {
-                    TrackPeak = "0.999969",
-                    AlbumPeak = "0.999969",
-                    TrackGain = "-8.66",
-                    AlbumGain = "-8.66"
+                    new TestAudioMetadata
+                    {
+                        TrackPeak = "0.999969",
+                        AlbumPeak = "0.999969",
+                        TrackGain = "-8.66",
+                        AlbumGain = "-8.66"
+                    }
                 }
-#else
-                new TestAudioMetadata
-                {
-                    TrackPeak = "0.999969",
-                    AlbumPeak = "0.999969",
-                    TrackGain = "-8.66",
-                    AlbumGain = "-8.66"
-                }
-#endif
             },
 
             // 48000Hz Stereo, interpolated peaks
@@ -270,30 +195,23 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
-#if LINUX
-                new TestAudioMetadata
+                new[]
                 {
-                    TrackPeak = "1.011720",
-                    AlbumPeak = "1.011720",
-                    TrackGain = "-8.66",
-                    AlbumGain = "-8.66"
-                },
-                new TestAudioMetadata
-                {
-                    TrackPeak = "1.014152",
-                    AlbumPeak = "1.014152",
-                    TrackGain = "-8.66",
-                    AlbumGain = "-8.66"
+                    new TestAudioMetadata // libebur128 1.1.0 (Ubuntu 16.04)
+                    {
+                        TrackPeak = "1.011720",
+                        AlbumPeak = "1.011720",
+                        TrackGain = "-8.66",
+                        AlbumGain = "-8.66"
+                    },
+                    new TestAudioMetadata // libebur128 1.2.4
+                    {
+                        TrackPeak = "1.014152",
+                        AlbumPeak = "1.014152",
+                        TrackGain = "-8.66",
+                        AlbumGain = "-8.66"
+                    }
                 }
-#else
-                new TestAudioMetadata
-                {
-                    TrackPeak = "1.014152",
-                    AlbumPeak = "1.014152",
-                    TrackGain = "-8.66",
-                    AlbumGain = "-8.66"
-                }
-#endif
             },
 
             // 96000Hz Stereo, default (simple) peaks
@@ -302,30 +220,16 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "ReplayGain",
                 new TestSettingDictionary(),
-#if LINUX
-                new TestAudioMetadata
+                new[]
                 {
-                    TrackPeak = "0.988553",
-                    AlbumPeak = "0.988553",
-                    TrackGain = "-8.64",
-                    AlbumGain = "-8.64"
-                },
-                new TestAudioMetadata
-                {
-                    TrackPeak = "0.988553",
-                    AlbumPeak = "0.988553",
-                    TrackGain = "-8.64",
-                    AlbumGain = "-8.64"
+                    new TestAudioMetadata
+                    {
+                        TrackPeak = "0.988553",
+                        AlbumPeak = "0.988553",
+                        TrackGain = "-8.64",
+                        AlbumGain = "-8.64"
+                    }
                 }
-#else
-                new TestAudioMetadata
-                {
-                    TrackPeak = "0.988553",
-                    AlbumPeak = "0.988553",
-                    TrackGain = "-8.64",
-                    AlbumGain = "-8.64"
-                }
-#endif
             },
 
             // 96000Hz Stereo, interpolated peaks
@@ -337,30 +241,23 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
-#if LINUX
-                new TestAudioMetadata
+                new[]
                 {
-                    TrackPeak = "0.993001",
-                    AlbumPeak = "0.993001",
-                    TrackGain = "-8.64",
-                    AlbumGain = "-8.64"
-                },
-                new TestAudioMetadata
-                {
-                    TrackPeak = "0.992940",
-                    AlbumPeak = "0.992940",
-                    TrackGain = "-8.64",
-                    AlbumGain = "-8.64"
+                    new TestAudioMetadata // libebur128 1.1.0 (Ubuntu 16.04)
+                    {
+                        TrackPeak = "0.993001",
+                        AlbumPeak = "0.993001",
+                        TrackGain = "-8.64",
+                        AlbumGain = "-8.64"
+                    },
+                    new TestAudioMetadata // libebur128 1.2.4
+                    {
+                        TrackPeak = "0.992940",
+                        AlbumPeak = "0.992940",
+                        TrackGain = "-8.64",
+                        AlbumGain = "-8.64"
+                    }
                 }
-#else
-                new TestAudioMetadata
-                {
-                    TrackPeak = "0.992940",
-                    AlbumPeak = "0.992940",
-                    TrackGain = "-8.64",
-                    AlbumGain = "-8.64"
-                }
-#endif
             },
 
             // 44100Hz Stereo, simple peaks (explicit)
@@ -372,30 +269,16 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["PeakAnalysis"] = "Simple"
                 },
-#if LINUX
-                new TestAudioMetadata
+                new[]
                 {
-                    TrackPeak = "1.000000",
-                    AlbumPeak = "1.000000",
-                    TrackGain = "-8.67",
-                    AlbumGain = "-8.67"
-                },
-                new TestAudioMetadata
-                {
-                    TrackPeak = "1.000000",
-                    AlbumPeak = "1.000000",
-                    TrackGain = "-8.67",
-                    AlbumGain = "-8.67"
+                    new TestAudioMetadata
+                    {
+                        TrackPeak = "1.000000",
+                        AlbumPeak = "1.000000",
+                        TrackGain = "-8.67",
+                        AlbumGain = "-8.67"
+                    }
                 }
-#else
-                new TestAudioMetadata
-                {
-                    TrackPeak = "1.000000",
-                    AlbumPeak = "1.000000",
-                    TrackGain = "-8.67",
-                    AlbumGain = "-8.67"
-                }
-#endif
             }
         };
 

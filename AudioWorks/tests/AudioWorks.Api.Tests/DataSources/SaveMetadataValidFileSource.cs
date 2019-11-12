@@ -51,14 +51,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "4707C81E467497975458C152234AD13F",
-                "79528DB2721970437C6D8877F655E273"
-#elif OSX
-                "BAE0A61EB5C4912A4793C8B259ED5633"
-#else
-                "BAE0A61EB5C4912A4793C8B259ED5633"
-#endif
+                new[]
+                {
+                    "4707C81E467497975458C152234AD13F", // FLAC 1.3.1 (Ubuntu 16.04)
+                    "79528DB2721970437C6D8877F655E273", // FLAC 1.3.2 (Ubuntu 18.04)
+                    "BAE0A61EB5C4912A4793C8B259ED5633" // FLAC 1.3.3
+                }
             },
 
             // Day unset
@@ -85,14 +83,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "8233F3397D5097D50A061504D10AA644",
-                "B903A8E9B17014CDDB563A3CC73AB7F5"
-#elif OSX
-                "FDB702CF53676594BDD9FBEC77F154A3"
-#else
-                "FDB702CF53676594BDD9FBEC77F154A3"
-#endif
+                new[]
+                {
+                    "8233F3397D5097D50A061504D10AA644", // FLAC 1.3.1 (Ubuntu 16.04)
+                    "B903A8E9B17014CDDB563A3CC73AB7F5", // FLAC 1.3.2 (Ubuntu 18.04)
+                    "FDB702CF53676594BDD9FBEC77F154A3" // FLAC 1.3.3
+                }
             },
 
             // Month unset
@@ -119,14 +115,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "8233F3397D5097D50A061504D10AA644",
-                "B903A8E9B17014CDDB563A3CC73AB7F5"
-#elif OSX
-                "FDB702CF53676594BDD9FBEC77F154A3"
-#else
-                "FDB702CF53676594BDD9FBEC77F154A3"
-#endif
+                new[]
+                {
+                    "8233F3397D5097D50A061504D10AA644", // FLAC 1.3.1 (Ubuntu 16.04)
+                    "B903A8E9B17014CDDB563A3CC73AB7F5", // FLAC 1.3.2 (Ubuntu 18.04)
+                    "FDB702CF53676594BDD9FBEC77F154A3" // FLAC 1.3.3
+                }
             },
 
             // TrackNumber unset
@@ -153,14 +147,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "5449B08E4A9CEB9D86B3BEA443F02662",
-                "C830D5913F20AEF93853E1A01462708D"
-#elif OSX
-                "A05D916A5C03E9599CBC9A9F6989FDB0"
-#else
-                "A05D916A5C03E9599CBC9A9F6989FDB0"
-#endif
+                new[]
+                {
+                    "5449B08E4A9CEB9D86B3BEA443F02662", // FLAC 1.3.1 (Ubuntu 16.04)
+                    "C830D5913F20AEF93853E1A01462708D", // FLAC 1.3.2 (Ubuntu 18.04)
+                    "A05D916A5C03E9599CBC9A9F6989FDB0" // FLAC 1.3.3
+                }
             },
 
             // TrackCount unset
@@ -187,14 +179,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "34B8ED1508B895CE54E48035C2F8F459",
-                "27C19A7309E49A5B07C0AD932A7B2875"
-#elif OSX
-                "0917BADDD895CCFD370BB222AF216E7B"
-#else
-                "0917BADDD895CCFD370BB222AF216E7B"
-#endif
+                new[]
+                {
+                    "34B8ED1508B895CE54E48035C2F8F459", // FLAC 1.3.1 (Ubuntu 16.04)
+                    "27C19A7309E49A5B07C0AD932A7B2875", // FLAC 1.3.2 (Ubuntu 18.04)
+                    "0917BADDD895CCFD370BB222AF216E7B" // FLAC 1.3.3
+                }
             },
 
             // Existing tag
@@ -222,14 +212,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "4707C81E467497975458C152234AD13F",
-                "79528DB2721970437C6D8877F655E273"
-#elif OSX
-                "BAE0A61EB5C4912A4793C8B259ED5633"
-#else
-                "BAE0A61EB5C4912A4793C8B259ED5633"
-#endif
+                new[]
+                {
+                    "4707C81E467497975458C152234AD13F", // FLAC 1.3.1 (Ubuntu 16.04)
+                    "79528DB2721970437C6D8877F655E273", // FLAC 1.3.2 (Ubuntu 18.04)
+                    "BAE0A61EB5C4912A4793C8B259ED5633" // FLAC 1.3.3
+                }
             },
 
             // No padding
@@ -260,14 +248,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["Padding"] = 0
                 },
-#if LINUX
-                "C6F468D2AFF114854647623FEC1B8F8F",
-                "4D1C0B9CD6909E81C2D5BD38A6F7CF4B"
-#elif OSX
-                "41092DD891ABD71749834EAF571D30D5"
-#else
-                "41092DD891ABD71749834EAF571D30D5"
-#endif
+                new[]
+                {
+                    "C6F468D2AFF114854647623FEC1B8F8F", // FLAC 1.3.1 (Ubuntu 16.04)
+                    "4D1C0B9CD6909E81C2D5BD38A6F7CF4B", // FLAC 1.3.2 (Ubuntu 18.04)
+                    "41092DD891ABD71749834EAF571D30D5" // FLAC 1.3.3
+                }
             },
 
             // 100 bytes of padding
@@ -298,14 +284,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["Padding"] = 100
                 },
-#if LINUX
-                "C8D99C071580D2C34E42B815B680A1CA",
-                "D10242261CDBC3FF2D9BEB2C232DC1F7"
-#elif OSX
-                "D6EF71E33501C350CD5378D55BC25D8C"
-#else
-                "D6EF71E33501C350CD5378D55BC25D8C"
-#endif
+                new[]
+                {
+                    "C8D99C071580D2C34E42B815B680A1CA", // FLAC 1.3.1 (Ubuntu 16.04)
+                    "D10242261CDBC3FF2D9BEB2C232DC1F7", // FLAC 1.3.2 (Ubuntu 18.04)
+                    "D6EF71E33501C350CD5378D55BC25D8C" // FLAC 1.3.3
+                }
             },
 
             // Existing tag removal
@@ -315,14 +299,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "D858D62481CDF540B881F2151C0ABB80",
-                "3983A342A074A7E8871FEF4FBE0AC73F"
-#elif OSX
-                "734954C2D360CD6D6C4F7FE23F6970AF"
-#else
-                "734954C2D360CD6D6C4F7FE23F6970AF"
-#endif
+                new[]
+                {
+                    "D858D62481CDF540B881F2151C0ABB80", // FLAC 1.3.1 (Ubuntu 16.04)
+                    "3983A342A074A7E8871FEF4FBE0AC73F", // FLAC 1.3.2 (Ubuntu 18.04)
+                    "734954C2D360CD6D6C4F7FE23F6970AF" // FLAC 1.3.3
+                }
             },
 
             // Nothing to do
@@ -332,14 +314,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "D858D62481CDF540B881F2151C0ABB80",
-                "3983A342A074A7E8871FEF4FBE0AC73F"
-#elif OSX
-                "734954C2D360CD6D6C4F7FE23F6970AF"
-#else
-                "734954C2D360CD6D6C4F7FE23F6970AF"
-#endif
+                new[]
+                {
+                    "D858D62481CDF540B881F2151C0ABB80", // FLAC 1.3.1 (Ubuntu 16.04)
+                    "3983A342A074A7E8871FEF4FBE0AC73F", // FLAC 1.3.2 (Ubuntu 18.04)
+                    "734954C2D360CD6D6C4F7FE23F6970AF" // FLAC 1.3.3
+                }
             },
 
             // PNG CoverArt
@@ -349,14 +329,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "PNG 24-bit 1280 x 935.png",
                 new TestSettingDictionary(),
-#if LINUX
-                "86C7A296259858EC6063A3B0740D18CB",
-                "8E3D1A13C4F9BE314C0AD61892472AC6"
-#elif OSX
-                "1399992DC07E38EBCD3F5DB1AF48B8C3"
-#else
-                "1399992DC07E38EBCD3F5DB1AF48B8C3"
-#endif
+                new[]
+                {
+                    "86C7A296259858EC6063A3B0740D18CB", // FLAC 1.3.1 (Ubuntu 16.04)
+                    "8E3D1A13C4F9BE314C0AD61892472AC6", // FLAC 1.3.2 (Ubuntu 18.04)
+                    "1399992DC07E38EBCD3F5DB1AF48B8C3" // FLAC 1.3.3
+                }
             },
 
             // JPEG CoverArt
@@ -366,14 +344,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "JPEG 24-bit 1280 x 935.jpg",
                 new TestSettingDictionary(),
-#if LINUX
-                "CB279829CACD8B102E3288CA3360BC52",
-                "F489D849B9ACD653B8986D45C487742E"
-#elif OSX
-                "BB1A252DAA1100EA9D0B4658DE863A86"
-#else
-                "BB1A252DAA1100EA9D0B4658DE863A86"
-#endif
+                new[]
+                {
+                    "CB279829CACD8B102E3288CA3360BC52", // FLAC 1.3.1 (Ubuntu 16.04)
+                    "F489D849B9ACD653B8986D45C487742E", // FLAC 1.3.2 (Ubuntu 18.04)
+                    "BB1A252DAA1100EA9D0B4658DE863A86" // FLAC 1.3.3
+                }
             },
 
             #endregion
@@ -405,12 +381,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "7F7316891B26F9FC3DE7D2D1304F9CFE",
-                "7F7316891B26F9FC3DE7D2D1304F9CFE"
-#else
-                "7F7316891B26F9FC3DE7D2D1304F9CFE"
-#endif
+                new[]
+                {
+                    "7F7316891B26F9FC3DE7D2D1304F9CFE"
+                }
             },
 
             // Day unset
@@ -437,12 +411,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "9957A905E53C3D2411A3A4BF3DA4DBA3",
-                "9957A905E53C3D2411A3A4BF3DA4DBA3"
-#else
-                "9957A905E53C3D2411A3A4BF3DA4DBA3"
-#endif
+                new[]
+                {
+                    "9957A905E53C3D2411A3A4BF3DA4DBA3"
+                }
             },
 
             // Month unset
@@ -469,12 +441,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "9957A905E53C3D2411A3A4BF3DA4DBA3",
-                "9957A905E53C3D2411A3A4BF3DA4DBA3"
-#else
-                "9957A905E53C3D2411A3A4BF3DA4DBA3"
-#endif
+                new[]
+                {
+                    "9957A905E53C3D2411A3A4BF3DA4DBA3"
+                }
             },
 
             // TrackNumber unset
@@ -501,12 +471,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "847E8C85293966F62132E8F851FA7BAE",
-                "847E8C85293966F62132E8F851FA7BAE"
-#else
-                "847E8C85293966F62132E8F851FA7BAE"
-#endif
+                new[]
+                {
+                    "847E8C85293966F62132E8F851FA7BAE"
+                }
             },
 
             // TrackCount unset
@@ -533,12 +501,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "BD8C422B4F08A50532168922680B0C2E",
-                "BD8C422B4F08A50532168922680B0C2E"
-#else
-                "BD8C422B4F08A50532168922680B0C2E"
-#endif
+                new[]
+                {
+                    "BD8C422B4F08A50532168922680B0C2E"
+                }
             },
 
             // Existing tag
@@ -566,12 +532,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "7F7316891B26F9FC3DE7D2D1304F9CFE",
-                "7F7316891B26F9FC3DE7D2D1304F9CFE"
-#else
-                "7F7316891B26F9FC3DE7D2D1304F9CFE"
-#endif
+                new[]
+                {
+                    "7F7316891B26F9FC3DE7D2D1304F9CFE"
+                }
             },
 
             // Updated creation time
@@ -584,12 +548,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["CreationTime"] = new DateTime(2018, 9, 1)
                 },
-#if LINUX
-                "4AF6E13DD50245A06F6FEA52F2325C47",
-                "4AF6E13DD50245A06F6FEA52F2325C47"
-#else
-                "4AF6E13DD50245A06F6FEA52F2325C47"
-#endif
+                new[]
+                {
+                    "4AF6E13DD50245A06F6FEA52F2325C47"
+                }
             },
 
             // Updated modification time
@@ -602,12 +564,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["ModificationTime"] = new DateTime(2018, 9, 1)
                 },
-#if LINUX
-                "D196EAFE7E8617F867136C526718CEF2",
-                "D196EAFE7E8617F867136C526718CEF2"
-#else
-                "D196EAFE7E8617F867136C526718CEF2"
-#endif
+                new[]
+                {
+                    "D196EAFE7E8617F867136C526718CEF2"
+                }
             },
 
             // Existing tag removal
@@ -617,12 +577,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "090FD975097BAFC4164370A3DEA9E696",
-                "090FD975097BAFC4164370A3DEA9E696"
-#else
-                "090FD975097BAFC4164370A3DEA9E696"
-#endif
+                new[]
+                {
+                    "090FD975097BAFC4164370A3DEA9E696"
+                }
             },
 
             // Nothing to do
@@ -632,12 +590,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "090FD975097BAFC4164370A3DEA9E696",
-                "090FD975097BAFC4164370A3DEA9E696"
-#else
-                "090FD975097BAFC4164370A3DEA9E696"
-#endif
+                new[]
+                {
+                    "090FD975097BAFC4164370A3DEA9E696"
+                }
             },
 
             // Default padding (explicit)
@@ -650,12 +606,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["Padding"] = 2048
                 },
-#if LINUX
-                "090FD975097BAFC4164370A3DEA9E696",
-                "090FD975097BAFC4164370A3DEA9E696"
-#else
-                "090FD975097BAFC4164370A3DEA9E696"
-#endif
+                new[]
+                {
+                    "090FD975097BAFC4164370A3DEA9E696"
+                }
             },
 
             // Disabled padding
@@ -668,12 +622,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["Padding"] = 0
                 },
-#if LINUX
-                "2A66A8458C32EC663AE48C6294E829AB",
-                "2A66A8458C32EC663AE48C6294E829AB"
-#else
-                "2A66A8458C32EC663AE48C6294E829AB"
-#endif
+                new[]
+                {
+                    "2A66A8458C32EC663AE48C6294E829AB"
+                }
             },
 
             // Maximum padding
@@ -686,12 +638,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["Padding"] = 16_777_216
                 },
-#if LINUX
-                "D4615919A461B54512B3863ADD487D4B",
-                "D4615919A461B54512B3863ADD487D4B"
-#else
-                "D4615919A461B54512B3863ADD487D4B"
-#endif
+                new[]
+                {
+                    "D4615919A461B54512B3863ADD487D4B"
+                }
             },
 
             // PNG CoverArt (ALAC)
@@ -701,12 +651,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "PNG 24-bit 1280 x 935.png",
                 new TestSettingDictionary(),
-#if LINUX
-                "767F47AEEA8A8F85DA214D51E0751CD5",
-                "767F47AEEA8A8F85DA214D51E0751CD5"
-#else
-                "767F47AEEA8A8F85DA214D51E0751CD5"
-#endif
+                new[]
+                {
+                    "767F47AEEA8A8F85DA214D51E0751CD5"
+                }
             },
 
             // JPEG CoverArt (ALAC)
@@ -716,12 +664,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "JPEG 24-bit 1280 x 935.jpg",
                 new TestSettingDictionary(),
-#if LINUX
-                "D419908A6F39E2D402BFDE1CB4DA8821",
-                "D419908A6F39E2D402BFDE1CB4DA8821"
-#else
-                "D419908A6F39E2D402BFDE1CB4DA8821"
-#endif
+                new[]
+                {
+                    "D419908A6F39E2D402BFDE1CB4DA8821"
+                }
             },
 
             // PNG CoverArt (AAC, converted)
@@ -731,12 +677,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "PNG 24-bit 1280 x 935.png",
                 new TestSettingDictionary(),
-#if LINUX
-                "679251C0E61FC8EB10286525FE64F60F",
-                "679251C0E61FC8EB10286525FE64F60F"
-#else
-                "679251C0E61FC8EB10286525FE64F60F"
-#endif
+                new[]
+                {
+                    "679251C0E61FC8EB10286525FE64F60F"
+                }
             },
 
             // JPEG CoverArt (AAC)
@@ -746,12 +690,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "JPEG 24-bit 1280 x 935.jpg",
                 new TestSettingDictionary(),
-#if LINUX
-                "679251C0E61FC8EB10286525FE64F60F",
-                "679251C0E61FC8EB10286525FE64F60F"
-#else
-                "679251C0E61FC8EB10286525FE64F60F"
-#endif
+                new[]
+                {
+                    "679251C0E61FC8EB10286525FE64F60F"
+                }
             },
 
             #endregion
@@ -783,12 +725,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "D44FACB05A7F0CB3CB5F5A31B9B52022",
-                "D44FACB05A7F0CB3CB5F5A31B9B52022"
-#else
-                "D44FACB05A7F0CB3CB5F5A31B9B52022"
-#endif
+                new[]
+                {
+                    "D44FACB05A7F0CB3CB5F5A31B9B52022"
+                }
             },
 
             // Day unset
@@ -815,12 +755,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "C64330448267EA7595D19378766B38C5",
-                "C64330448267EA7595D19378766B38C5"
-#else
-                "C64330448267EA7595D19378766B38C5"
-#endif
+                new[]
+                {
+                    "C64330448267EA7595D19378766B38C5"
+                }
             },
 
             // Month unset
@@ -847,12 +785,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "C64330448267EA7595D19378766B38C5",
-                "C64330448267EA7595D19378766B38C5"
-#else
-                "C64330448267EA7595D19378766B38C5"
-#endif
+                new[]
+                {
+                    "C64330448267EA7595D19378766B38C5"
+                }
             },
 
             // TrackNumber unset
@@ -879,12 +815,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "8E71F084665F7763560EAEF79292B1ED",
-                "8E71F084665F7763560EAEF79292B1ED"
-#else
-                "8E71F084665F7763560EAEF79292B1ED"
-#endif
+                new[]
+                {
+                    "8E71F084665F7763560EAEF79292B1ED"
+                }
             },
 
             // TrackCount unset
@@ -911,12 +845,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "B4BAD75711B480844A735B8EF169F82A",
-                "B4BAD75711B480844A735B8EF169F82A"
-#else
-                "B4BAD75711B480844A735B8EF169F82A"
-#endif
+                new[]
+                {
+                    "B4BAD75711B480844A735B8EF169F82A"
+                }
             },
 
             // Existing tag
@@ -944,12 +876,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "076B838A43E883DCC9F0D0ABE8A263D6",
-                "076B838A43E883DCC9F0D0ABE8A263D6"
-#else
-                "076B838A43E883DCC9F0D0ABE8A263D6"
-#endif
+                new[]
+                {
+                    "076B838A43E883DCC9F0D0ABE8A263D6"
+                }
             },
 
             // Tag version 2.4
@@ -980,12 +910,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["TagVersion"] = "2.4"
                 },
-#if LINUX
-                "E00628B6DA2A93F2832EAC420B2D8DF0",
-                "E00628B6DA2A93F2832EAC420B2D8DF0"
-#else
-                "E00628B6DA2A93F2832EAC420B2D8DF0"
-#endif
+                new[]
+                {
+                    "E00628B6DA2A93F2832EAC420B2D8DF0"
+                }
             },
 
             // UTF-16 encoding
@@ -1016,12 +944,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["TagEncoding"] = "UTF16"
                 },
-#if LINUX
-                "476D2A59E830366CBFF9F0AE0305B8E2",
-                "476D2A59E830366CBFF9F0AE0305B8E2"
-#else
-                "476D2A59E830366CBFF9F0AE0305B8E2"
-#endif
+                new[]
+                {
+                    "476D2A59E830366CBFF9F0AE0305B8E2"
+                }
             },
 
             // Default padding (explicit)
@@ -1052,12 +978,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["TagPadding"] = 2048
                 },
-#if LINUX
-                "D44FACB05A7F0CB3CB5F5A31B9B52022",
-                "D44FACB05A7F0CB3CB5F5A31B9B52022"
-#else
-                "D44FACB05A7F0CB3CB5F5A31B9B52022"
-#endif
+                new[]
+                {
+                    "D44FACB05A7F0CB3CB5F5A31B9B52022"
+                }
             },
 
             // No padding
@@ -1088,12 +1012,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["TagPadding"] = 0
                 },
-#if LINUX
-                "076B838A43E883DCC9F0D0ABE8A263D6",
-                "076B838A43E883DCC9F0D0ABE8A263D6"
-#else
-                "076B838A43E883DCC9F0D0ABE8A263D6"
-#endif
+                new[]
+                {
+                    "076B838A43E883DCC9F0D0ABE8A263D6"
+                }
             },
 
             // Maximum padding
@@ -1124,12 +1046,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["TagPadding"] = 16_777_216
                 },
-#if LINUX
-                "189A55453749DA1FFAFFEAC6A06DF99B",
-                "189A55453749DA1FFAFFEAC6A06DF99B"
-#else
-                "189A55453749DA1FFAFFEAC6A06DF99B"
-#endif
+                new[]
+                {
+                    "189A55453749DA1FFAFFEAC6A06DF99B"
+                }
             },
 
             // Existing v1 tag
@@ -1157,12 +1077,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "D44FACB05A7F0CB3CB5F5A31B9B52022",
-                "D44FACB05A7F0CB3CB5F5A31B9B52022"
-#else
-                "D44FACB05A7F0CB3CB5F5A31B9B52022"
-#endif
+                new[]
+                {
+                    "D44FACB05A7F0CB3CB5F5A31B9B52022"
+                }
             },
 
             // Existing tag removal
@@ -1172,12 +1090,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "963D578D818C25DE5FEE6625BE7BFA98",
-                "963D578D818C25DE5FEE6625BE7BFA98"
-#else
-                "963D578D818C25DE5FEE6625BE7BFA98"
-#endif
+                new[]
+                {
+                    "963D578D818C25DE5FEE6625BE7BFA98"
+                }
             },
 
             // Nothing to do
@@ -1187,12 +1103,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "963D578D818C25DE5FEE6625BE7BFA98",
-                "963D578D818C25DE5FEE6625BE7BFA98"
-#else
-                "963D578D818C25DE5FEE6625BE7BFA98"
-#endif
+                new[]
+                {
+                    "963D578D818C25DE5FEE6625BE7BFA98"
+                }
             },
 
             // PNG CoverArt (converted)
@@ -1202,12 +1116,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "PNG 24-bit 1280 x 935.png",
                 new TestSettingDictionary(),
-#if LINUX
-                "1BF5C0A314A84C08A71E620ECFAC27FF",
-                "1BF5C0A314A84C08A71E620ECFAC27FF"
-#else
-                "1BF5C0A314A84C08A71E620ECFAC27FF"
-#endif
+                new[]
+                {
+                    "1BF5C0A314A84C08A71E620ECFAC27FF"
+                }
             },
 
             // JPEG CoverArt
@@ -1217,12 +1129,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "JPEG 24-bit 1280 x 935.jpg",
                 new TestSettingDictionary(),
-#if LINUX
-                "1BF5C0A314A84C08A71E620ECFAC27FF",
-                "1BF5C0A314A84C08A71E620ECFAC27FF"
-#else
-                "1BF5C0A314A84C08A71E620ECFAC27FF"
-#endif
+                new[]
+                {
+                    "1BF5C0A314A84C08A71E620ECFAC27FF"
+                }
             },
 
             #endregion
@@ -1254,14 +1164,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "7DE488CE969207C50F33962EA5A9DDDE",
-                "7DE488CE969207C50F33962EA5A9DDDE"
-#elif OSX
-                "11F166F272E635021ABD6BAF37A3BFA5"
-#else
-                "69A75975D90E906C158C194236FC7125"
-#endif
+                new[]
+                {
+                    "7DE488CE969207C50F33962EA5A9DDDE", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
+                    "11F166F272E635021ABD6BAF37A3BFA5", // Vorbis 1.3.6 (MacOS)
+                    "69A75975D90E906C158C194236FC7125" // Vorbis 1.3.6 AoTuV + Lancer (Windows)
+                }
             },
 
             // Day unset
@@ -1288,14 +1196,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "D9C7D27040EF2ECE830AE4FC9B5BF25E",
-                "D9C7D27040EF2ECE830AE4FC9B5BF25E"
-#elif OSX
-                "63BB3732D651F6D3A8496091FCF14725"
-#else
-                "719EDC12E5D730C0C8EB37C90F63563D"
-#endif
+                new[]
+                {
+                    "D9C7D27040EF2ECE830AE4FC9B5BF25E", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
+                    "63BB3732D651F6D3A8496091FCF14725", // Vorbis 1.3.6 (MacOS)
+                    "719EDC12E5D730C0C8EB37C90F63563D" // Vorbis 1.3.6 AoTuV + Lancer (Windows)
+                }
             },
 
             // Month unset
@@ -1322,14 +1228,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "D9C7D27040EF2ECE830AE4FC9B5BF25E",
-                "D9C7D27040EF2ECE830AE4FC9B5BF25E"
-#elif OSX
-                "63BB3732D651F6D3A8496091FCF14725"
-#else
-                "719EDC12E5D730C0C8EB37C90F63563D"
-#endif
+                new[]
+                {
+                    "D9C7D27040EF2ECE830AE4FC9B5BF25E", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
+                    "63BB3732D651F6D3A8496091FCF14725", // Vorbis 1.3.6 (MacOS)
+                    "719EDC12E5D730C0C8EB37C90F63563D" // Vorbis 1.3.6 AoTuV + Lancer (Windows)
+                }
             },
 
             // TrackNumber unset
@@ -1356,14 +1260,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "39B3BD086D3587C78FB2E76B52BD8F12",
-                "39B3BD086D3587C78FB2E76B52BD8F12"
-#elif OSX
-                "ED7210753CB1A870F74DB01E959D2FFE"
-#else
-                "B49EE9F48912935E98EB5B703A0CFEAE"
-#endif
+                new[]
+                {
+                    "39B3BD086D3587C78FB2E76B52BD8F12", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
+                    "ED7210753CB1A870F74DB01E959D2FFE", // Vorbis 1.3.6 (MacOS)
+                    "B49EE9F48912935E98EB5B703A0CFEAE" // Vorbis 1.3.6 AoTuV + Lancer (Windows)
+                }
             },
 
             // TrackCount unset
@@ -1390,14 +1292,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "9E57B6A4089942A55ABD25FC13F7F749",
-                "9E57B6A4089942A55ABD25FC13F7F749"
-#elif OSX
-                "17F5C68F72027655E21870F0E7F06CB8"
-#else
-                "CE24BB00216950315A1E5964FDDC62DC"
-#endif
+                new[]
+                {
+                    "9E57B6A4089942A55ABD25FC13F7F749", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
+                    "17F5C68F72027655E21870F0E7F06CB8", // Vorbis 1.3.6 (MacOS)
+                    "CE24BB00216950315A1E5964FDDC62DC" // Vorbis 1.3.6 AoTuV + Lancer (Windows)
+                }
             },
 
             // Existing tag
@@ -1425,14 +1325,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "7DE488CE969207C50F33962EA5A9DDDE",
-                "7DE488CE969207C50F33962EA5A9DDDE"
-#elif OSX
-                "11F166F272E635021ABD6BAF37A3BFA5"
-#else
-                "69A75975D90E906C158C194236FC7125"
-#endif
+                new[]
+                {
+                    "7DE488CE969207C50F33962EA5A9DDDE", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
+                    "11F166F272E635021ABD6BAF37A3BFA5", // Vorbis 1.3.6 (MacOS)
+                    "69A75975D90E906C158C194236FC7125" // Vorbis 1.3.6 AoTuV + Lancer (Windows)
+                }
             },
 
             // Existing tag removal
@@ -1442,14 +1340,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "46539B96ACD38AA00671E0D5F82E57B1",
-                "46539B96ACD38AA00671E0D5F82E57B1"
-#elif OSX
-                "873E47897BB3645B63B5B8D8B932198E"
-#else
-                "C4744A0D9349D8423FF188BF79823868"
-#endif
+                new[]
+                {
+                    "46539B96ACD38AA00671E0D5F82E57B1", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
+                    "873E47897BB3645B63B5B8D8B932198E", // Vorbis 1.3.6 (MacOS)
+                    "C4744A0D9349D8423FF188BF79823868" // Vorbis 1.3.6 AoTuV + Lancer (Windows)
+                }
             },
 
             // Nothing to do
@@ -1459,14 +1355,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "46539B96ACD38AA00671E0D5F82E57B1",
-                "46539B96ACD38AA00671E0D5F82E57B1"
-#elif OSX
-                "873E47897BB3645B63B5B8D8B932198E"
-#else
-                "C4744A0D9349D8423FF188BF79823868"
-#endif
+                new[]
+                {
+                    "46539B96ACD38AA00671E0D5F82E57B1", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
+                    "873E47897BB3645B63B5B8D8B932198E", // Vorbis 1.3.6 (MacOS)
+                    "C4744A0D9349D8423FF188BF79823868" // Vorbis 1.3.6 AoTuV + Lancer (Windows)
+                }
             },
 
             // PNG CoverArt (Converted)
@@ -1476,14 +1370,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "PNG 24-bit 1280 x 935.png",
                 new TestSettingDictionary(),
-#if LINUX
-                "FD245B933B515151B8AF17307FF6ECFE",
-                "FD245B933B515151B8AF17307FF6ECFE"
-#elif OSX
-                "2682E9CD4EF8B4FBA041B907FD86614D"
-#else
-                "8C9453958E15AF2EFBE2054C8F07EFAF"
-#endif
+                new[]
+                {
+                    "FD245B933B515151B8AF17307FF6ECFE", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
+                    "2682E9CD4EF8B4FBA041B907FD86614D", // Vorbis 1.3.6 (MacOS)
+                    "8C9453958E15AF2EFBE2054C8F07EFAF" // Vorbis 1.3.6 AoTuV + Lancer (Windows)
+                }
             },
 
             // JPEG CoverArt
@@ -1493,14 +1385,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "JPEG 24-bit 1280 x 935.jpg",
                 new TestSettingDictionary(),
-#if LINUX
-                "FD245B933B515151B8AF17307FF6ECFE",
-                "FD245B933B515151B8AF17307FF6ECFE"
-#elif OSX
-                "2682E9CD4EF8B4FBA041B907FD86614D"
-#else
-                "8C9453958E15AF2EFBE2054C8F07EFAF"
-#endif
+                new[]
+                {
+                    "FD245B933B515151B8AF17307FF6ECFE", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
+                    "2682E9CD4EF8B4FBA041B907FD86614D", // Vorbis 1.3.6 (MacOS)
+                    "8C9453958E15AF2EFBE2054C8F07EFAF" // Vorbis 1.3.6 AoTuV + Lancer (Windows)
+                }
             },
 
             #endregion
@@ -1528,14 +1418,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "9A53EDE65A60F0C1684D16744E33DCFC",
-                "9A53EDE65A60F0C1684D16744E33DCFC"
-#elif OSX
-                "D22BBFDDCB298A427057253C4E833057"
-#else
-                "D22BBFDDCB298A427057253C4E833057"
-#endif
+                new[]
+                {
+                    "9A53EDE65A60F0C1684D16744E33DCFC", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
+                    "D22BBFDDCB298A427057253C4E833057", // Opus 1.3.1 (MacOS and Windows)
+                }
             },
 
             // Day unset
@@ -1558,14 +1445,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "4A397361C11EC1FE03A43E176E673856",
-                "4A397361C11EC1FE03A43E176E673856"
-#elif OSX
-                "B181BB7AF0A3E37C3A262B942FD197FC"
-#else
-                "B181BB7AF0A3E37C3A262B942FD197FC"
-#endif
+                new[]
+                {
+                    "4A397361C11EC1FE03A43E176E673856", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
+                    "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (MacOS and Windows)
+                }
             },
 
             // Month unset
@@ -1588,14 +1472,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "4A397361C11EC1FE03A43E176E673856",
-                "4A397361C11EC1FE03A43E176E673856"
-#elif OSX
-                "B181BB7AF0A3E37C3A262B942FD197FC"
-#else
-                "B181BB7AF0A3E37C3A262B942FD197FC"
-#endif
+                new[]
+                {
+                    "4A397361C11EC1FE03A43E176E673856", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
+                    "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (MacOS and Windows)
+                }
             },
 
             // TrackNumber unset
@@ -1618,14 +1499,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "666B7D0315E667A3D6A943294A32BE1F",
-                "666B7D0315E667A3D6A943294A32BE1F"
-#elif OSX
-                "166F1DD0C71E2CCCF226157A34791E1B"
-#else
-                "166F1DD0C71E2CCCF226157A34791E1B"
-#endif
+                new[]
+                {
+                    "666B7D0315E667A3D6A943294A32BE1F", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
+                    "166F1DD0C71E2CCCF226157A34791E1B", // Opus 1.3.1 (MacOS and Windows)
+                }
             },
 
             // TrackCount unset
@@ -1648,14 +1526,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "910BF18671BC79D50FB8B9EAE8E4F0DA",
-                "910BF18671BC79D50FB8B9EAE8E4F0DA"
-#elif OSX
-                "8EA7FC13A2F214CADF3A1D447EF5CB65"
-#else
-                "8EA7FC13A2F214CADF3A1D447EF5CB65"
-#endif
+                new[]
+                {
+                    "910BF18671BC79D50FB8B9EAE8E4F0DA", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
+                    "8EA7FC13A2F214CADF3A1D447EF5CB65", // Opus 1.3.1 (MacOS and Windows)
+                }
             },
 
             // Existing tag
@@ -1679,14 +1554,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "86AD4DC307C9523B2C1213FE2359FDEA",
-                "86AD4DC307C9523B2C1213FE2359FDEA"
-#elif OSX
-                "BB50765E7DB79BDEADFC81E771101FD7"
-#else
-                "BB50765E7DB79BDEADFC81E771101FD7"
-#endif
+                new[]
+                {
+                    "86AD4DC307C9523B2C1213FE2359FDEA", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
+                    "BB50765E7DB79BDEADFC81E771101FD7", // Opus 1.3.1 (MacOS and Windows)
+                }
             },
 
             // Existing tag removal
@@ -1696,14 +1568,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "C2351EF6BFA1D50983183ADC6136FB9C",
-                "C2351EF6BFA1D50983183ADC6136FB9C"
-#elif OSX
-                "367DB09F8408583579F918061FCB6322"
-#else
-                "367DB09F8408583579F918061FCB6322"
-#endif
+                new[]
+                {
+                    "C2351EF6BFA1D50983183ADC6136FB9C", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
+                    "367DB09F8408583579F918061FCB6322", // Opus 1.3.1 (MacOS and Windows)
+                }
             },
 
             // Nothing to do
@@ -1713,14 +1582,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 string.Empty,
                 new TestSettingDictionary(),
-#if LINUX
-                "CEF9DD8611EBFEF035761B450D816E95",
-                "CEF9DD8611EBFEF035761B450D816E95"
-#elif OSX
-                "22D33DFB735C5B7805AB26C7A04CDA86"
-#else
-                "22D33DFB735C5B7805AB26C7A04CDA86"
-#endif
+                new[]
+                {
+                    "CEF9DD8611EBFEF035761B450D816E95", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
+                    "22D33DFB735C5B7805AB26C7A04CDA86", // Opus 1.3.1 (MacOS and Windows)
+                }
             },
 
             // PNG CoverArt (Converted)
@@ -1730,14 +1596,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "PNG 24-bit 1280 x 935.png",
                 new TestSettingDictionary(),
-#if LINUX
-                "1636B4EF09C4EF2B16135E9C2670473B",
-                "1636B4EF09C4EF2B16135E9C2670473B"
-#elif OSX
-                "CABF32D411EA5FA9458A79B6DC2C2D69"
-#else
-                "CABF32D411EA5FA9458A79B6DC2C2D69"
-#endif
+                new[]
+                {
+                    "1636B4EF09C4EF2B16135E9C2670473B", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
+                    "CABF32D411EA5FA9458A79B6DC2C2D69", // Opus 1.3.1 (MacOS and Windows)
+                }
             },
 
             // JPEG CoverArt
@@ -1747,14 +1610,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "JPEG 24-bit 1280 x 935.jpg",
                 new TestSettingDictionary(),
-#if LINUX
-                "1636B4EF09C4EF2B16135E9C2670473B",
-                "1636B4EF09C4EF2B16135E9C2670473B"
-#elif OSX
-                "CABF32D411EA5FA9458A79B6DC2C2D69"
-#else
-                "CABF32D411EA5FA9458A79B6DC2C2D69"
-#endif
+                new[]
+                {
+                    "1636B4EF09C4EF2B16135E9C2670473B", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
+                    "CABF32D411EA5FA9458A79B6DC2C2D69", // Opus 1.3.1 (MacOS and Windows)
+                }
             }
 
             #endregion
