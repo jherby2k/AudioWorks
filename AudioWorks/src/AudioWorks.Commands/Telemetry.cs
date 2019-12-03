@@ -27,10 +27,27 @@ namespace AudioWorks.Commands
     static class Telemetry
     {
         const string _instrumentationKey = "f36d131d-ef59-4b6a-8788-403d0ef14927";
-        static TelemetryClient? _client;
+        static readonly TelemetryClient _client = InitializeClient();
         static readonly object _syncRoot = new object();
 
-        static Telemetry() => TelemetryConfiguration.Active.InstrumentationKey = _instrumentationKey;
+        static TelemetryClient InitializeClient()
+        {
+            using (var config = new TelemetryConfiguration(_instrumentationKey))
+            {
+                var result = new TelemetryClient(config);
+                result.Context.Device.OperatingSystem = RuntimeInformation.OSDescription;
+                result.Context.Component.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+#if NETSTANDARD2_0
+                result.Context.Properties["Framework"] = RuntimeInformation.FrameworkDescription;
+                result.Context.Properties["Architecture"] = RuntimeInformation.ProcessArchitecture.ToString();
+#else
+                result.Context.GlobalProperties["Framework"] = RuntimeInformation.FrameworkDescription;
+                result.Context.GlobalProperties["Architecture"] = RuntimeInformation.ProcessArchitecture.ToString();
+#endif
+
+                return result;
+            }
+        }
 
         internal static void TrackFirstLaunch()
         {
@@ -47,16 +64,6 @@ namespace AudioWorks.Commands
         static void TrackEvent(string eventName, IDictionary<string, string>? properties = null)
         {
             if (!ConfigurationManager.Configuration.GetValue("EnableTelemetry", true)) return;
-
-            if (_client == null)
-            {
-                _client = new TelemetryClient();
-                _client.Context.Device.OperatingSystem = RuntimeInformation.OSDescription;
-                _client.Context.Component.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-                _client.Context.Properties["Framework"] = RuntimeInformation.FrameworkDescription;
-                _client.Context.Properties["Architecture"] = RuntimeInformation.ProcessArchitecture.ToString();
-            }
-
             _client.TrackEvent(eventName, properties);
         }
     }
