@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.0;net471</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net471</TargetFrameworks>
     <TargetFrameworks Condition="'$(OS)'!='Windows_NT'">netcoreapp3.0</TargetFrameworks>
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
@@ -34,8 +34,8 @@
   </ItemGroup>
 
   <!-- ReSharper disable once UnknownProperty -->
-  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.0'">
-    <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.0.0-preview.4" />
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
+    <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.0.0-preview.6" />
   </ItemGroup>
 
   <!-- ReSharper disable once UnknownProperty -->
