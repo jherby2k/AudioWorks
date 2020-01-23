@@ -20,7 +20,7 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: sdk
-    version: 3.1.100
+    version: 3.1.101
   displayName: 'Upgrade .NET Core SDK'
 
 - script: |
@@ -57,14 +57,12 @@ steps:
 
 - script: |
     reportgenerator -reports:AudioWorks/tests/*/coverage.*.xml -targetdir:Reports/Cobertura -reporttypes:Cobertura
-    reportgenerator -reports:Reports/Cobertura/Cobertura.xml -targetdir:Reports/HTML "-reporttypes:HTMLInline;HTMLChart"
   displayName: 'Generate code coverage results'
 
 - task: PublishCodeCoverageResults@1
   inputs:
     codecoverageTool: cobertura
     summaryFileLocation: $(Build.SourcesDirectory)/Reports/Cobertura/Cobertura.xml
-    reportDirectory: $(Build.SourcesDirectory)/Reports/HTML
   displayName: 'Publish code coverage results'
 
 - task: CopyFiles@2
