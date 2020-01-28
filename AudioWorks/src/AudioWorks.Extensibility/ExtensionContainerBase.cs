@@ -17,6 +17,7 @@ using System;
 using System.Composition.Hosting;
 using System.IO;
 using System.Linq;
+using System.Text;
 using AudioWorks.Common;
 using Microsoft.Extensions.Logging;
 
@@ -32,11 +33,7 @@ namespace AudioWorks.Extensibility
                     Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                     "AudioWorks",
                     "Extensions",
-#if NETSTANDARD2_0
-                    "netstandard2.0"))
-#else
-                    "netstandard2.1"))
-#endif
+                    RuntimeChecker.GetShortFolderName()))
                 .GetDirectories()
                 .SelectMany(extensionDir => extensionDir.GetFiles("AudioWorks.Extensions.*.dll"))
                 .Select(fileInfo => new ExtensionAssemblyResolver(fileInfo.FullName).Assembly)
