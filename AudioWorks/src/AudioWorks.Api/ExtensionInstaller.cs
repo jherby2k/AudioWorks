@@ -107,7 +107,8 @@ namespace AudioWorks.Api
 
         static string[] GetRootAssemblyNames()
         {
-            var rootDirectory = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+            var rootDirectory = new DirectoryInfo(
+                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath));
 
             var result = rootDirectory.GetFiles("*.dll")
                 .Select(file =>

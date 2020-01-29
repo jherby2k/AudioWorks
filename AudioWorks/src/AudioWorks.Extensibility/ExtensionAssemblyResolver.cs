@@ -13,9 +13,7 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-#if NETSTANDARD2_0
 using System;
-#endif
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -52,7 +50,7 @@ namespace AudioWorks.Extensibility
 
             // Resolve dependencies from both the main and extension directories
             var assemblyFiles = Directory.GetFiles(
-                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "*.dll")
+                    Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath), "*.dll")
                 .Concat(Directory.GetFiles(extensionDir, "*.dll"));
 
 #if NETSTANDARD2_0
