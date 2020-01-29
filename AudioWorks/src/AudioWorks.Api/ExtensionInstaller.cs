@@ -41,7 +41,7 @@ namespace AudioWorks.Api
     {
         static readonly NuGetFramework _framework = NuGetFramework.ParseFolder(RuntimeChecker.GetShortFolderName());
 
-        static readonly string _projectRoot = Path.Combine(
+        static readonly string _extensionRoot = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "AudioWorks",
             "Extensions",
@@ -85,7 +85,7 @@ namespace AudioWorks.Api
             {
                 logger.LogInformation("Beginning automatic extension updates.");
 
-                Directory.CreateDirectory(_projectRoot);
+                Directory.CreateDirectory(_extensionRoot);
 
                 using (var tokenSource = new CancellationTokenSource(
                     ConfigurationManager.Configuration.GetValue("AutomaticExtensionDownloadTimeout", 30) * 1000))
@@ -97,6 +97,19 @@ namespace AudioWorks.Api
                     foreach (var packageMetadata in publishedPackages)
                         if (await InstallPackageAsync(packageMetadata, logger, tokenSource.Token).ConfigureAwait(false))
                             packagesInstalled = true;
+
+                    // Remove any extensions that aren't published
+                    if (Directory.Exists(_extensionRoot))
+                        foreach (var obsoleteExtension in new DirectoryInfo(_extensionRoot).GetDirectories()
+                            .Select(dir => dir.Name)
+                            .Except(publishedPackages.Select(package => package.Identity.ToString()),
+                                StringComparer.OrdinalIgnoreCase))
+                        {
+                            Directory.Delete(Path.Combine(_extensionRoot, obsoleteExtension), true);
+
+                            logger.LogDebug("Deleted unlisted or obsolete extension in '{0}'.",
+                                obsoleteExtension);
+                        }
 
                     logger.LogInformation(!packagesInstalled
                         ? "Extensions are already up to date."
@@ -165,7 +178,7 @@ namespace AudioWorks.Api
             CancellationToken cancellationToken)
         {
             var extensionDir =
-                new DirectoryInfo(Path.Combine(_projectRoot, packageMetadata.Identity.ToString()));
+                new DirectoryInfo(Path.Combine(_extensionRoot, packageMetadata.Identity.ToString()));
             if (extensionDir.Exists)
             {
                 logger.LogDebug("'{0}' version {1} is already installed. Skipping.",
