@@ -43,7 +43,7 @@ steps:
 - powershell: |
     $localAppDir = "$([System.Environment]::GetFolderPath(28))\AudioWorks"
     $localFeedDir = (New-Item "$localAppDir\LocalFeed" -ItemType Directory).FullName
-    Get-ChildItem -Path AudioWorks\src\Extensions -Filter *.nupkg -Recurse | Select-Object -ExpandProperty FullName | % { &"$env:USERPROFILE\nuget" add $_ -Source $localFeedDir -NonInteractive }
+    Get-ChildItem -Path AudioWorks\src\Extensions -Filter *.nupkg -Recurse | Select-Object -ExpandProperty FullName | % { &"$env:USERPROFILE\nuget" add $_ -Source $localFeedDir -Expand -NonInteractive }
     $roamingAppDir = "$([System.Environment]::GetFolderPath(26))\AudioWorks"
     New-Item $roamingAppDir -ItemType Directory
     $content = Get-Content AudioWorks\src\AudioWorks.Common\settings.json | ConvertFrom-Json
