@@ -30,10 +30,7 @@ steps:
 - script: |
     sudo curl -o /usr/local/bin/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
     sudo apt-get update
-    sudo apt-get install --yes libflac8
-    sudo apt-get install --yes libmp3lame0
-    sudo apt-get install --yes libopus0
-    sudo apt-get install --yes libebur128-1
+    sudo apt-get install --yes libflac8 libvorbisenc2 libmp3lame0 libopus0 libebur128-1
     sudo updatedb
     dotnet tool install --global dotnet-reportgenerator-globaltool
   displayName: 'Install prerequisites'
@@ -50,7 +47,7 @@ steps:
     $content | ConvertTo-Json | Set-Content "$roamingAppDir/settings.json"
     dotnet test AudioWorks/tests/AudioWorks.Api.Tests --no-build --configuration Release --filter "FullyQualifiedName=AudioWorks.Api.Tests.AudioFileTests.HasExpectedPath"
     $testResult = 0
-    Get-ChildItem -Path AudioWorks/tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$localAppDir/Extensions/netstandard2.1/*%2c$($_.FullName)/bin/$($env:BUILDCONFIGURATION)/netcoreapp3.0/AudioWorks.Commands/netstandard2.1"; if ($LastExitCode -ne 0) { $testResult = $LastExitCode } }
+    Get-ChildItem -Path AudioWorks/tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$localAppDir/Extensions/netstandard2.1/*%2c$($_.FullName)/bin/$($env:BUILDCONFIGURATION)/AudioWorks.Commands/netstandard2.1"; if ($LastExitCode -ne 0) { $testResult = $LastExitCode } }
     exit $testResult
   displayName: 'Run tests'
 
