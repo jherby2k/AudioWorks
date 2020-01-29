@@ -199,9 +199,6 @@ namespace AudioWorks.Api
                 var packagesToInstall = resolver.Resolve(resolverContext, CancellationToken.None)
                     .Select(p => dependencies.Single(x => PackageIdentityComparer.Default.Equals(x, p)));
 
-                extensionDir.Create();
-                var runtime = RuntimeInformation.FrameworkDescription;
-
                 var settings = Settings.LoadDefaultSettings(null);
                 var frameworkReducer = new FrameworkReducer();
 
