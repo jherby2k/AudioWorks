@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using AudioWorks.Common;
+using AudioWorks.Extensibility;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Logging;
@@ -32,7 +33,6 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using AudioWorks.Extensibility;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace AudioWorks.Api
@@ -118,34 +118,6 @@ namespace AudioWorks.Api
             }
         }
 
-        static string[] GetRootAssemblyNames()
-        {
-            var rootDirectory = new DirectoryInfo(
-                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath));
-
-            var result = rootDirectory.GetFiles("*.dll")
-                .Select(file =>
-                {
-                    try
-                    {
-                        return AssemblyName.GetAssemblyName(file.FullName).Name;
-                    }
-                    catch (BadImageFormatException)
-                    {
-                        // The DLL might not be managed
-                        return Path.GetFileNameWithoutExtension(file.Name);
-                    }
-                });
-
-            // .NET Core applications may be loading via a runtime configuration file
-            foreach (var dependenciesFile in rootDirectory.GetFiles("*.deps.json"))
-                using (var stream = dependenciesFile.OpenRead())
-                using (var reader = new DependencyContextJsonReader())
-                    result = result.Union(reader.Read(stream).RuntimeLibraries.Select(library => library.Name));
-
-            return result.ToArray();
-        }
-
         static async Task<IPackageSearchMetadata[]> GetPublishedPackagesAsync(
             ILogger logger,
             CancellationToken cancellationToken)
@@ -192,25 +164,9 @@ namespace AudioWorks.Api
 
             using (var cacheContext = new SourceCacheContext())
             {
-                // Recursively collect all dependencies
-                var dependencies = new HashSet<SourcePackageDependencyInfo>(PackageIdentityComparer.Default);
-                await CollectDependenciesAsync(packageMetadata.Identity, cacheContext, dependencies, cancellationToken)
-                    .ConfigureAwait(false);
-
-                var resolverContext = new PackageResolverContext(
-                    DependencyBehavior.Lowest,
-                    new[] { packageMetadata.Identity.Id },
-                    Enumerable.Empty<string>(),
-                    Enumerable.Empty<PackageReference>(),
-                    Enumerable.Empty<PackageIdentity>(),
-                    dependencies,
-                    new[] { _customRepository.PackageSource, _defaultRepository.PackageSource },
-                    NullLogger.Instance);
-
-                // Resolve the dependency graph
-                var resolver = new PackageResolver();
-                var packagesToInstall = resolver.Resolve(resolverContext, CancellationToken.None)
-                    .Select(p => dependencies.Single(x => PackageIdentityComparer.Default.Equals(x, p)));
+                var packagesToInstall =
+                    await ResolvePackagesAsync(packageMetadata.Identity, cacheContext, cancellationToken)
+                        .ConfigureAwait(false);
 
                 var settings = Settings.LoadDefaultSettings(null);
                 var frameworkReducer = new FrameworkReducer();
@@ -267,6 +223,32 @@ namespace AudioWorks.Api
             }
 
             return true;
+        }
+
+        static async Task<IEnumerable<SourcePackageDependencyInfo>> ResolvePackagesAsync(
+            PackageIdentity packageIdentity,
+            SourceCacheContext cacheContext,
+            CancellationToken cancellationToken)
+        {
+            // Recursively collect all dependencies
+            var dependencies = new HashSet<SourcePackageDependencyInfo>(PackageIdentityComparer.Default);
+            await CollectDependenciesAsync(packageIdentity, cacheContext, dependencies, cancellationToken)
+                .ConfigureAwait(false);
+
+            var resolverContext = new PackageResolverContext(
+                DependencyBehavior.Lowest,
+                new[] { packageIdentity.Id },
+                Enumerable.Empty<string>(),
+                Enumerable.Empty<PackageReference>(),
+                Enumerable.Empty<PackageIdentity>(),
+                dependencies,
+                new[] { _customRepository.PackageSource, _defaultRepository.PackageSource },
+                NullLogger.Instance);
+
+            // Resolve the dependency graph
+            var resolver = new PackageResolver();
+            return resolver.Resolve(resolverContext, CancellationToken.None)
+                .Select(p => dependencies.Single(x => PackageIdentityComparer.Default.Equals(x, p)));
         }
 
         static async Task CollectDependenciesAsync(
@@ -345,6 +327,34 @@ namespace AudioWorks.Api
             logger.LogDebug("Copying '{0}' to '{1}'.", source, destination);
             Directory.CreateDirectory(Path.GetDirectoryName(destination));
             File.Copy(source, destination);
+        }
+
+        static string[] GetRootAssemblyNames()
+        {
+            var rootDirectory = new DirectoryInfo(
+                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath));
+
+            var result = rootDirectory.GetFiles("*.dll")
+                .Select(file =>
+                {
+                    try
+                    {
+                        return AssemblyName.GetAssemblyName(file.FullName).Name;
+                    }
+                    catch (BadImageFormatException)
+                    {
+                        // The DLL might not be managed
+                        return Path.GetFileNameWithoutExtension(file.Name);
+                    }
+                });
+
+            // .NET Core applications may be loading via a runtime configuration file
+            foreach (var dependenciesFile in rootDirectory.GetFiles("*.deps.json"))
+                using (var stream = dependenciesFile.OpenRead())
+                using (var reader = new DependencyContextJsonReader())
+                    result = result.Union(reader.Read(stream).RuntimeLibraries.Select(library => library.Name));
+
+            return result.ToArray();
         }
     }
 }
