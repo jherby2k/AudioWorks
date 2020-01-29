@@ -60,7 +60,7 @@ namespace AudioWorks.Extensions.Opus
 #else // LINUX
             var release = GetRelease();
 
-            if (release.StartsWith("Ubuntu 16.04", StringComparison.OrdinalIgnoreCase))
+            if (release.StartsWith("Ubuntu", StringComparison.OrdinalIgnoreCase))
                 AddUnmanagedLibraryPath(Path.Combine(
                     Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
                     release.StartsWith("Ubuntu 16.04", StringComparison.OrdinalIgnoreCase)
