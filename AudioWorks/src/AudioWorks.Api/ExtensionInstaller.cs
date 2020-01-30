@@ -90,8 +90,10 @@ namespace AudioWorks.Api
                 using (var tokenSource = new CancellationTokenSource(
                     ConfigurationManager.Configuration.GetValue("AutomaticExtensionDownloadTimeout", 30) * 1000))
                 {
-                    var publishedPackages = await GetPublishedPackagesAsync(logger, tokenSource.Token)
-                        .ConfigureAwait(false);
+                    // Hack - do this on the thread pool to avoid deadlocks
+                    var publishedPackages = await Task.Run(() =>
+                        // ReSharper disable once AccessToDisposedClosure
+                        GetPublishedPackagesAsync(logger, tokenSource.Token), tokenSource.Token).ConfigureAwait(false);
 
                     var packagesInstalled = false;
                     foreach (var packageMetadata in publishedPackages)
