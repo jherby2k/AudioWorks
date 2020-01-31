@@ -13,7 +13,9 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+#if NETSTANDARD2_0
 using Microsoft.Win32;
+#endif
 using System;
 using System.Runtime.InteropServices;
 
@@ -47,6 +49,7 @@ namespace AudioWorks.Extensibility
 
         static string GetFrameworkVersion()
         {
+            // ReSharper disable once IdentifierTypo
             const string subkey = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\";
 
             using (var baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
