@@ -56,7 +56,7 @@ namespace AudioWorks.Common
         /// Gets the default file extension (.png for lossless, or .jpg for lossy files).
         /// </summary>
         /// <value>The file extension.</value>
-        string FileExtension { get; set; }
+        string FileExtension { get; }
 
         /// <summary>
         /// Gets the raw image data.

@@ -41,10 +41,10 @@ namespace AudioWorks.Common
         public bool Lossless { get; }
 
         /// <inheritdoc/>
-        public string MimeType { get; set; }
+        public string MimeType { get; }
 
         /// <inheritdoc/>
-        public string FileExtension { get; set; }
+        public string FileExtension { get; }
 
         /// <inheritdoc/>
         public ReadOnlySpan<byte> Data => _data.AsSpan().Slice(0, _dataSize);
