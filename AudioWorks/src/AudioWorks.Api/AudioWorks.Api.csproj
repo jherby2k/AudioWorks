@@ -5,7 +5,7 @@
     <TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
-    <Version>1.0.0-beta7</Version>
+    <Version>1.0.0-beta8</Version>
     <Revision>$(BUILD_BUILDID)</Revision>
     <Revision Condition="'$(Revision)'==''">0</Revision>
     <FileVersion>1.0.0.$(Revision)</FileVersion>
@@ -41,7 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AudioWorks.Extensibility" Version="1.0.0-beta7" />
+    <PackageReference Include="AudioWorks.Extensibility" Version="1.0.0-beta8" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8" PrivateAssets="all" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
     <PackageReference Include="NuGet.Resolver" Version="5.4.0" />
