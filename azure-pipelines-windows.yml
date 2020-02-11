@@ -2,6 +2,7 @@ trigger:
   branches:
     include:
     - master
+    - dev
   paths:
     exclude:
     - .gitignore.txt
@@ -38,6 +39,7 @@ steps:
     configurationToPack: $(buildConfiguration)
     nobuild: true
     buildProperties: 'VersionSuffix="pre.$(Build.BuildId)"'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
   displayName: 'Package pre-release extension packages'
 
 - powershell: |
@@ -94,6 +96,7 @@ steps:
       AudioWorks\src\*\bin\$(buildConfiguration)\*.snupkg
     targetFolder: '$(Build.ArtifactStagingDirectory)\releases\core'
     flattenFolders: true
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   displayName: 'Copy core libraries to artifacts directory'
 
 - task: CopyFiles@2
@@ -101,12 +104,14 @@ steps:
     contents: 'AudioWorks\src\Extensions\**\*.nupkg'
     targetFolder: '$(Build.ArtifactStagingDirectory)\releases\extensions'
     flattenFolders: true
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   displayName: 'Copy extensions to artifacts directory'
 
 - task: CopyFiles@2
   inputs:
     contents: 'AudioWorks\src\AudioWorks.Commands\bin\$(buildConfiguration)\AudioWorks.Commands\**'
     targetFolder: '$(Build.ArtifactStagingDirectory)\releases\module'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   displayName: 'Copy PowerShell module to artifacts directory'
 
 - task: PublishBuildArtifacts@1
