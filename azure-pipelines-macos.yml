@@ -30,8 +30,10 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: pack
-    projects: '**/Extensions/**/*.csproj'
-    arguments: '--configuration Release --version-suffix -pre.$(BUILD_BUILDID)'
+    packagesToPack: '**/Extensions/**/*.csproj'
+    configurationToPack: $(buildConfiguration)
+    nobuild: true
+    buildProperties: 'VersionSuffix=-pre.$(BUILD_BUILDID)'
   displayName: 'Package pre-release extension packages'
 
 - script: |
