@@ -33,7 +33,7 @@ steps:
     packagesToPack: '**/Extensions/**/*.csproj'
     configurationToPack: $(buildConfiguration)
     nobuild: true
-    buildProperties: 'VersionSuffix=-pre.$(BUILD_BUILDID)'
+    buildProperties: 'VersionSuffix="pre.$(Build.BuildId)"'
   displayName: 'Package pre-release extension packages'
 
 - script: |

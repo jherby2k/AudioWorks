@@ -27,6 +27,15 @@ steps:
     dotnet build AudioWorks\AudioWorks.sln --configuration $(buildConfiguration)
   displayName: 'Build $(buildConfiguration) configuration'
 
+- task: DotNetCoreCLI@2
+  inputs:
+    command: pack
+    packagesToPack: '**\Extensions\**\*.csproj'
+    configurationToPack: $(buildConfiguration)
+    nobuild: true
+    buildProperties: 'VersionSuffix="pre.$(Build.BuildId)"'
+  displayName: 'Package pre-release extension packages'
+
 - powershell: |
     Invoke-WebRequest -Uri https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile nuget.exe
     Invoke-WebRequest -Uri https://audioworks.blob.core.windows.net/prerequisites/AppleApplicationSupport.msi -OutFile AppleApplicationSupport.msi
