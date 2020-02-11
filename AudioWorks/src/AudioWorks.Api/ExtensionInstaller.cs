@@ -49,13 +49,9 @@ namespace AudioWorks.Api
 
         static readonly SourceRepository _customRepository = new SourceRepository(
             new PackageSource(
-                ConfigurationManager.Configuration.GetValue("UsePreReleaseExtensions", false)
-                    ? ConfigurationManager.Configuration.GetValue(
-                        "PreReleaseExtensionRepository",
-                        "https://www.myget.org/F/audioworks-extensions-prerelease/api/v3/index.json")
-                    : ConfigurationManager.Configuration.GetValue(
-                        "ExtensionRepository",
-                        "https://www.myget.org/F/audioworks-extensions-v4/api/v3/index.json")),
+                ConfigurationManager.Configuration.GetValue(
+                    "ExtensionRepository",
+                    "https://www.myget.org/F/audioworks-extensions-v5/api/v3/index.json")),
             Repository.Provider.GetCoreV3());
 
         static readonly SourceRepository _defaultRepository = new SourceRepository(
@@ -126,7 +122,8 @@ namespace AudioWorks.Api
         {
             var result = (await _customRepository.GetResource<PackageSearchResource>(cancellationToken)
                     .SearchAsync("AudioWorks.Extensions",
-                        new SearchFilter(false), 0, 100, NullLogger.Instance, cancellationToken).ConfigureAwait(false))
+                        new SearchFilter(ConfigurationManager.Configuration.GetValue<bool>("UsePreReleaseExtensions")),
+                        0, 100, NullLogger.Instance, cancellationToken).ConfigureAwait(false))
 #if NETSTANDARD2_0
                 .Where(package => package.Tags.Contains(GetOSTag()))
 #else
