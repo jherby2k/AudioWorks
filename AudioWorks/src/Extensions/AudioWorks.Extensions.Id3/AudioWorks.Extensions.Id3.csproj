@@ -5,7 +5,7 @@
     <TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
-    <Version>1.3.0$(VersionSuffix)</Version>
+    <VersionSuffix>1.3.0</VersionSuffix>
     <Revision>$(BUILD_BUILDID)</Revision>
     <Revision Condition="'$(Revision)'==''">0</Revision>
     <FileVersion>1.3.0.$(Revision)</FileVersion>
