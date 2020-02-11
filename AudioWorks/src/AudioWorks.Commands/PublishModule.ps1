@@ -36,6 +36,7 @@ Write-Host "Generating help file..."
 # Only do this once, as platyPS can't be loaded if it is already in use.
 if ($Framework -eq "netstandard2.1")
 {
+	Install-PackageProvider -Name NuGet -Scope CurrentUser -Force -ErrorAction SilentlyContinue
 	Install-Module -Name platyPS -Scope CurrentUser -Force -ErrorAction SilentlyContinue
 	Import-Module platyPS -ErrorAction Stop
 	New-ExternalHelp -Path "$ProjectDir\docs" -OutputPath "$outputRoot\en-US" -Force -ErrorAction Stop
