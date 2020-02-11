@@ -23,8 +23,11 @@ steps:
     version: 3.1.101
   displayName: 'Upgrade .NET Core SDK'
 
-- script: |
-    dotnet build AudioWorks\AudioWorks.sln --configuration $(buildConfiguration)
+- task: DotNetCoreCLI@2
+  inputs:
+    command: build
+    projects: 'AudioWorks\AudioWorks.sln'
+    arguments: '--configuration $(buildConfiguration)'
   displayName: 'Build $(buildConfiguration) configuration'
 
 - task: DotNetCoreCLI@2
