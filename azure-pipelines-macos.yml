@@ -27,6 +27,13 @@ steps:
     dotnet build AudioWorks/AudioWorks.sln --configuration $(buildConfiguration)
   displayName: 'Build $(buildConfiguration) configuration'
 
+- task: DotNetCoreCLI@2
+  inputs:
+    command: pack
+    projects: '**/Extensions/**/*.csproj'
+    arguments: '--configuration Release --version-suffix -pre.$(BUILD_BUILDID)'
+  displayName: 'Package pre-release extension packages'
+
 - script: |
     sudo curl -o /usr/local/bin/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
     dotnet tool install --global dotnet-reportgenerator-globaltool
