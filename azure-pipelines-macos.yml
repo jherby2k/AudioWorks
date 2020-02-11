@@ -80,10 +80,10 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    contents: 'AudioWorks/src/Extensions/**/*.MacOS.*.nupkg'
-    targetFolder: '$(Build.ArtifactStagingDirectory)/releases'
+    contents: 'AudioWorks/src/Extensions/**/*.nupkg'
+    targetFolder: '$(Build.ArtifactStagingDirectory)/releases/extensions'
     flattenFolders: true
-  displayName: 'Copy artifacts to staging directory'
+  displayName: 'Copy extensions to artifacts directory'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish artifacts'

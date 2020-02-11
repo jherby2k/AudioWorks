@@ -90,11 +90,24 @@ steps:
 - task: CopyFiles@2
   inputs:
     contents: |
-      AudioWorks\src\**\*.nupkg
-      AudioWorks\src\**\*.snupkg
-      AudioWorks\src\AudioWorks.Commands\bin\$(buildConfiguration)\AudioWorks.Commands\**
-    targetFolder: '$(Build.ArtifactStagingDirectory)\releases'
-  displayName: 'Copy artifacts to staging directory'
+      AudioWorks\src\*\bin\$(buildConfiguration)\*.nupkg
+      AudioWorks\src\*\bin\$(buildConfiguration)\*.snupkg
+    targetFolder: '$(Build.ArtifactStagingDirectory)\releases\core'
+    flattenFolders: true
+  displayName: 'Copy core libraries to artifacts directory'
+
+- task: CopyFiles@2
+  inputs:
+    contents: 'AudioWorks\src\Extensions\**\*.nupkg'
+    targetFolder: '$(Build.ArtifactStagingDirectory)\releases\extensions'
+    flattenFolders: true
+  displayName: 'Copy extensions to artifacts directory'
+
+- task: CopyFiles@2
+  inputs:
+    contents: 'AudioWorks\src\AudioWorks.Commands\bin\$(buildConfiguration)\AudioWorks.Commands\**'
+    targetFolder: '$(Build.ArtifactStagingDirectory)\releases\module'
+  displayName: 'Copy PowerShell module to artifacts directory'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish artifacts'

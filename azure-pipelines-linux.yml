@@ -83,9 +83,10 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    contents: 'AudioWorks/src/Extensions/**/*.Linux.*.nupkg'
-    targetFolder: '$(Build.ArtifactStagingDirectory)/releases'
-  displayName: 'Copy release artifacts to staging directory'
+    contents: 'AudioWorks/src/Extensions/**/*.nupkg'
+    targetFolder: '$(Build.ArtifactStagingDirectory)/releases/extensions'
+    flattenFolders: true
+  displayName: 'Copy extensions to artifacts directory'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish artifacts'
