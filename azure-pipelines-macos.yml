@@ -31,6 +31,7 @@ steps:
   inputs:
     command: pack
     packagesToPack: '**/Extensions/**/*.csproj'
+    packDirectory: '$(Build.ArtifactStagingDirectory)/prereleases'
     configurationToPack: $(buildConfiguration)
     nobuild: true
     buildProperties: 'VersionSuffix="pre.$(Build.BuildId)"'
@@ -77,7 +78,7 @@ steps:
 - task: CopyFiles@2
   inputs:
     contents: 'AudioWorks/src/Extensions/**/*.MacOS.*.nupkg'
-    targetFolder: $(Build.ArtifactStagingDirectory)
+    targetFolder: '$(Build.ArtifactStagingDirectory)/releases'
   displayName: 'Copy artifacts to staging directory'
 
 - task: PublishBuildArtifacts@1
