@@ -34,7 +34,7 @@ steps:
   inputs:
     command: pack
     packagesToPack: '**\Extensions\**\*.csproj'
-    packDirectory: '$(Build.ArtifactStagingDirectory)\prereleases'
+    packDirectory: '$(Build.ArtifactStagingDirectory)\prereleases\extensions'
     configurationToPack: $(buildConfiguration)
     nobuild: true
     buildProperties: 'VersionSuffix="pre.$(Build.BuildId)"'
