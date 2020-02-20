@@ -65,8 +65,8 @@ namespace AudioWorks.Extensions.Apple
 
             logger.LogInformation("Using CoreAudio version {0}.",
                 FileVersionInfo.GetVersionInfo(coreAudioLibrary).ProductVersion);
-#endif
 
+#endif
             return true;
         }
 #if WINDOWS
