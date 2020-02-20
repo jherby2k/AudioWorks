@@ -84,7 +84,7 @@ namespace AudioWorks.Extensions.Vorbis
         }
 
         static void AddUnmanagedLibraryPath(string libPath) =>
-            ((ExtensionLoadContext)AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()))
+            ((ExtensionLoadContext) AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()))
             .AddUnmanagedLibraryPath(libPath);
 #if LINUX
 
@@ -131,8 +131,7 @@ namespace AudioWorks.Extensions.Vorbis
                 return string.Empty;
             }
         }
-#endif
-#if OSX
+#elif OSX
 
         public static string GetOSVersion()
         {
