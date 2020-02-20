@@ -113,11 +113,7 @@ namespace AudioWorks.Extensions.Flac
             return true;
         }
 
-        static void AddUnmanagedLibraryPath(string libPath) =>
-            ((ExtensionLoadContext) AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()))
-            .AddUnmanagedLibraryPath(libPath);
 #if LINUX
-
         static bool VerifyLibrary(string libraryName)
         {
             using (var process = new Process())
@@ -161,7 +157,12 @@ namespace AudioWorks.Extensions.Flac
                 return string.Empty;
             }
         }
-#elif OSX
+#else
+        static void AddUnmanagedLibraryPath(string libPath) =>
+            ((ExtensionLoadContext) AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()))
+            .AddUnmanagedLibraryPath(libPath);
+#endif
+#if OSX
 
         public static string GetOSVersion()
         {
