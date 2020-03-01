@@ -52,7 +52,7 @@ namespace AudioWorks.Api
         }
 
         /// <inheritdoc/>
-        public virtual void Rename(string name, bool replace)
+        public virtual void Rename(string name, bool force)
         {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name), "Value cannot be null or empty.");
@@ -63,7 +63,7 @@ namespace AudioWorks.Api
 
             var newPath = IO.Path.Combine(IO.Path.GetDirectoryName(Path), name + IO.Path.GetExtension(Path));
 
-            if (File.Exists(newPath) && replace)
+            if (File.Exists(newPath) && force)
                 File.Delete(newPath);
             File.Move(Path, newPath);
             Path = newPath;

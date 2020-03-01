@@ -39,10 +39,10 @@ namespace AudioWorks.Common
         /// Renames the audio file.
         /// </summary>
         /// <param name="name">The new file name, not including the extension.</param>
-        /// <param name="replace">if set to <c>true</c> and the new file name already exists, replace it.</param>
+        /// <param name="force">if set to <c>true</c> and the new file name already exists, overwrite it.</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="name" /> is null or empty.</exception>
-        /// <exception cref="IOException">Thrown if the new file already exists, and <paramref name="replace"/> is
+        /// <exception cref="IOException">Thrown if the new file already exists, and <paramref name="force"/> is
         /// <c>false</c>.</exception>
-        void Rename(string name, bool replace);
+        void Rename(string name, bool force);
     }
 }
