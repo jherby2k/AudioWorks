@@ -13,7 +13,7 @@ Renames an audio file.
 ## SYNTAX
 
 ```
-Rename-AudioFile [-Name] <String> [-AudioFile] <ITaggedAudioFile> [-Replace] [-PassThru] [<CommonParameters>]
+Rename-AudioFile [-Name] <String> [-AudioFile] <ITaggedAudioFile> [-Force] [-PassThru] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -64,8 +64,8 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Replace
-Indicates that existing files should be replaced.
+### -Force
+Indicates that existing files should be overwritten.
 
 ```yaml
 Type: SwitchParameter

@@ -142,8 +142,8 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
-        [Fact(DisplayName = "Rename-AudioFile accepts a Replace switch")]
-        public void AcceptsReplaceSwitch()
+        [Fact(DisplayName = "Rename-AudioFile accepts a Force switch")]
+        public void AcceptsForceSwitch()
         {
             using (var ps = PowerShell.Create())
             {
@@ -151,7 +151,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Rename-AudioFile")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object)
                     .AddParameter("Name", "Foo")
-                    .AddParameter("Replace");
+                    .AddParameter("Force");
 
                 ps.Invoke();
 
@@ -208,7 +208,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Rename-AudioFile")
                     .AddParameter("AudioFile", audioFile)
                     .AddParameter("Name", "Foo")
-                    .AddParameter("Replace")
+                    .AddParameter("Force")
                     .AddParameter("PassThru");
 
                 Assert.Equal(audioFile, ps.Invoke()[0].BaseObject);
@@ -230,7 +230,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Rename-AudioFile")
                     .AddParameter("AudioFile", audioFile)
                     .AddParameter("Name", name)
-                    .AddParameter("Replace");
+                    .AddParameter("Force");
 
                 ps.Invoke();
 
