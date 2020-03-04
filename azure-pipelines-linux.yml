@@ -3,8 +3,6 @@ trigger:
     include:
     - master
     - dev
-  pr:
-    - dev
   paths:
     exclude:
     - .gitignore.txt
@@ -12,6 +10,9 @@ trigger:
     - LICENSE
     - azure-pipelines-windows.yml
     - azure-pipelines-macos.yml
+
+pr:
+    - dev
 
 pool:
   vmImage: ubuntu-latest
