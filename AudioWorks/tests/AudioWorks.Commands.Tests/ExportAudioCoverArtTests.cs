@@ -122,7 +122,7 @@ namespace AudioWorks.Commands.Tests
                         new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", sourceFileName)))
                     .AddParameter("Path", Path.Combine("Output", "Export-AudioCoverArt"))
                     .AddParameter("Name", $"{index:000} - {Path.GetFileNameWithoutExtension(sourceFileName)}")
-                    .AddParameter("Force");
+                    .AddParameter("Replace");
 
                 var result = ps.Invoke();
 

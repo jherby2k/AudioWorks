@@ -28,15 +28,14 @@ namespace AudioWorks.Commands
         public ITaggedAudioFile? AudioFile { get; set; }
 
         [Parameter]
-        [Alias("Replace")]
-        public SwitchParameter Force { get; set; }
+        public SwitchParameter Replace { get; set; }
 
         [Parameter]
         public SwitchParameter PassThru { get; set; }
 
         protected override void ProcessRecord()
         {
-            AudioFile!.Rename(Name!, Force);
+            AudioFile!.Rename(Name!, Replace);
 
             ProcessLogMessages();
 

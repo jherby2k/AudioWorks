@@ -14,7 +14,7 @@ Exports an audio file.
 
 ```
 Export-AudioFile [-Encoder] <String> [-Path] <String> [-AudioFile] <ITaggedAudioFile> [-Name <String>]
- [-Force] [-MaxDegreeOfParallelism <Int32>] [<CommonParameters>]
+ [-Replace] [-MaxDegreeOfParallelism <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -31,7 +31,7 @@ Exports test.flac as test.mp3 using default settings, in the current directory.
 
 ### Example 2: Re-encode an audio file in-place
 ```powershell
-PS C:\> Get-AudioFile test.flac | Export-AudioFile FLAC . -Force
+PS C:\> Get-AudioFile test.flac | Export-AudioFile FLAC . -Replace
 ```
 
 Re-encodes test.flac in-place, using default settings.
@@ -111,8 +111,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Force
-Indicates that existing files should be overwritten.
+### -Replace
+Indicates that existing files should be replaced.
 
 ```yaml
 Type: SwitchParameter

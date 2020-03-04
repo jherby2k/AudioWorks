@@ -46,8 +46,7 @@ namespace AudioWorks.Commands
         public string? Name { get; set; }
 
         [Parameter]
-        [Alias("Replace")]
-        public SwitchParameter Force { get; set; }
+        public SwitchParameter Replace { get; set; }
 
         [Parameter, ValidateRange(1, int.MaxValue)]
         public int MaxDegreeOfParallelism { get; set; } = Environment.ProcessorCount;
@@ -62,7 +61,7 @@ namespace AudioWorks.Commands
                 Name,
                 SettingAdapter.ParametersToSettings(_parameters))
             {
-                Overwrite = Force,
+                Overwrite = Replace,
                 MaxDegreeOfParallelism = MaxDegreeOfParallelism
             };
 

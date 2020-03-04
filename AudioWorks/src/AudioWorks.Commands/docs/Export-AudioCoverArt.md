@@ -13,7 +13,7 @@ Exports cover art from an audio file.
 ## SYNTAX
 
 ```
-Export-AudioCoverArt [-Path] <String> [-AudioFile] <ITaggedAudioFile> [-Name <String>] [-Force]
+Export-AudioCoverArt [-Path] <String> [-AudioFile] <ITaggedAudioFile> [-Name <String>] [-Replace]
  [<CommonParameters>]
 ```
 
@@ -89,8 +89,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Force
-Indicates that existing files should be overwritten.
+### -Replace
+Indicates that existing files should be replaced.
 
 ```yaml
 Type: SwitchParameter

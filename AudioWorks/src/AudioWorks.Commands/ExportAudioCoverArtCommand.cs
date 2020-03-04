@@ -35,8 +35,7 @@ namespace AudioWorks.Commands
         public string? Name { get; set; }
 
         [Parameter]
-        [Alias("Replace")]
-        public SwitchParameter Force { get; set; }
+        public SwitchParameter Replace { get; set; }
 
         protected override void BeginProcessing()
         {
@@ -45,7 +44,7 @@ namespace AudioWorks.Commands
             _extractor = new CoverArtExtractor(
                     SessionState.Path.GetUnresolvedProviderPathFromPSPath(Path),
                     Name)
-                { Overwrite = Force };
+                { Overwrite = Replace };
         }
 
         protected override void ProcessRecord()
