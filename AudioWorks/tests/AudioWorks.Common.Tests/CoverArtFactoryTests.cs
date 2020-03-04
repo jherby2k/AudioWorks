@@ -38,7 +38,6 @@ namespace AudioWorks.Common.Tests
         public void CreatePathNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => CoverArtFactory.GetOrCreate((string?) null));
 
-
         [Fact(DisplayName = "CoverArtFactory's Create method throws an exception if the path cannot be found")]
         public void CreatePathNotFoundThrowsException() =>
             Assert.Throws<FileNotFoundException>(() => CoverArtFactory.GetOrCreate("Foo"));
