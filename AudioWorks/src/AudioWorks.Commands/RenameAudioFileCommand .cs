@@ -28,7 +28,6 @@ namespace AudioWorks.Commands
         public ITaggedAudioFile? AudioFile { get; set; }
 
         [Parameter]
-        [Alias("Replace")]
         public SwitchParameter Force { get; set; }
 
         [Parameter]

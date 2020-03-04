@@ -46,7 +46,6 @@ namespace AudioWorks.Commands
         public string? Name { get; set; }
 
         [Parameter]
-        [Alias("Replace")]
         public SwitchParameter Force { get; set; }
 
         [Parameter, ValidateRange(1, int.MaxValue)]
