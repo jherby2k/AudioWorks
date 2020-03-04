@@ -3,6 +3,8 @@ trigger:
     include:
     - master
     - dev
+  pr:
+    - dev
   paths:
     exclude:
     - .gitignore.txt
