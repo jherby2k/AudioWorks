@@ -71,7 +71,7 @@ namespace AudioWorks.Api
 
         static readonly string[] _rootAssemblyNames = GetRootAssemblyNames();
 
-        internal static async Task DownloadAsync()
+        internal static async Task TryDownloadAsync()
         {
             var logger = LoggerManager.LoggerFactory.CreateLogger(typeof(ExtensionInstaller).FullName);
 
@@ -81,38 +81,54 @@ namespace AudioWorks.Api
             {
                 logger.LogInformation("Beginning automatic extension updates.");
 
-                Directory.CreateDirectory(_extensionRoot);
-
-                using (var tokenSource = new CancellationTokenSource(
-                    ConfigurationManager.Configuration.GetValue("AutomaticExtensionDownloadTimeout", 30) * 1000))
+                try
                 {
-                    // Hack - do this on the thread pool to avoid deadlocks
-                    var publishedPackages = await Task.Run(() =>
-                        // ReSharper disable once AccessToDisposedClosure
-                        GetPublishedPackagesAsync(logger, tokenSource.Token), tokenSource.Token).ConfigureAwait(false);
-
-                    var packagesInstalled = false;
-                    foreach (var packageMetadata in publishedPackages)
-                        if (await InstallPackageAsync(packageMetadata, logger, tokenSource.Token).ConfigureAwait(false))
-                            packagesInstalled = true;
-
-                    // Remove any extensions that aren't published
-                    if (Directory.Exists(_extensionRoot))
-                        foreach (var obsoleteExtension in new DirectoryInfo(_extensionRoot).GetDirectories()
-                            .Select(dir => dir.Name)
-                            .Except(publishedPackages.Select(package => package.Identity.ToString()),
-                                StringComparer.OrdinalIgnoreCase))
-                        {
-                            Directory.Delete(Path.Combine(_extensionRoot, obsoleteExtension), true);
-
-                            logger.LogDebug("Deleted unlisted or obsolete extension in '{0}'.",
-                                obsoleteExtension);
-                        }
-
-                    logger.LogInformation(!packagesInstalled
-                        ? "Extensions are already up to date."
-                        : "Extensions successfully updated.");
+                    await DownloadAsync(logger).ConfigureAwait(false);
                 }
+                catch (AggregateException e)
+                {
+                    // Log any connection errors and otherwise fail silently
+                    if (e.InnerException is FatalProtocolException)
+                        logger.LogError(e.InnerException.Message);
+                    else
+                        throw;
+                }
+            }
+        }
+
+        static async Task DownloadAsync(ILogger logger)
+        {
+            Directory.CreateDirectory(_extensionRoot);
+
+            using (var tokenSource = new CancellationTokenSource(
+                ConfigurationManager.Configuration.GetValue("AutomaticExtensionDownloadTimeout", 30) * 1000))
+            {
+                // Hack - do this on the thread pool to avoid deadlocks
+                var publishedPackages = await Task.Run(() =>
+                    // ReSharper disable once AccessToDisposedClosure
+                    GetPublishedPackagesAsync(logger, tokenSource.Token), tokenSource.Token).ConfigureAwait(false);
+
+                var packagesInstalled = false;
+                foreach (var packageMetadata in publishedPackages)
+                    if (await InstallPackageAsync(packageMetadata, logger, tokenSource.Token).ConfigureAwait(false))
+                        packagesInstalled = true;
+
+                // Remove any extensions that aren't published
+                if (Directory.Exists(_extensionRoot))
+                    foreach (var obsoleteExtension in new DirectoryInfo(_extensionRoot).GetDirectories()
+                        .Select(dir => dir.Name)
+                        .Except(publishedPackages.Select(package => package.Identity.ToString()),
+                            StringComparer.OrdinalIgnoreCase))
+                    {
+                        Directory.Delete(Path.Combine(_extensionRoot, obsoleteExtension), true);
+
+                        logger.LogDebug("Deleted unlisted or obsolete extension in '{0}'.",
+                            obsoleteExtension);
+                    }
+
+                logger.LogInformation(!packagesInstalled
+                    ? "Extensions are already up to date."
+                    : "Extensions successfully updated.");
             }
         }
 
