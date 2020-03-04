@@ -11,6 +11,9 @@ trigger:
     - azure-pipelines-windows.yml
     - azure-pipelines-linux.yml
 
+pr:
+    - dev
+
 pool:
   vmImage: macOS-latest
 
