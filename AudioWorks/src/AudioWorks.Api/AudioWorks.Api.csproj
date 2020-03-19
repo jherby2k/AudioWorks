@@ -45,7 +45,7 @@
     <PackageReference Include="AudioWorks.Extensibility" Version="1.0.0-beta8" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8" PrivateAssets="all" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
-    <PackageReference Include="NuGet.Resolver" Version="5.4.0" />
+    <PackageReference Include="NuGet.Resolver" Version="5.5.0" />
   </ItemGroup>
 
   <!-- ReSharper disable once UnknownProperty -->
