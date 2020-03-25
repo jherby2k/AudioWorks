@@ -50,7 +50,7 @@
 
   <!-- ReSharper disable once UnknownProperty -->
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.1'">
-    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="3.1.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="3.1.3" />
     <PackageReference Include="System.Threading.Tasks.Dataflow" Version="4.11.0" />
   </ItemGroup>
 
