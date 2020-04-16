@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using AudioWorks.TestUtilities;
 using Xunit;
 using Xunit.Abstractions;
@@ -27,9 +26,8 @@ namespace AudioWorks.Common.Tests
             LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
 
         [Fact(DisplayName = "ValidateSettings throws an exception if settings is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void ValidateSettingsNullSettingsThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => new SettingInfoDictionary().ValidateSettings(null));
+            Assert.Throws<ArgumentNullException>(() => new SettingInfoDictionary().ValidateSettings(null!));
 
         [Fact(DisplayName = "ValidateSettings throws an exception if a setting is not in the dictionary")]
         public void ValidateSettingsSettingNotInDictionaryThrowsException() =>

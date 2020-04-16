@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using AudioWorks.Api.Tests.DataSources;
@@ -32,9 +31,8 @@ namespace AudioWorks.Api.Tests
             LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
 
         [Fact(DisplayName = "AudioFileAnalyzer's constructor throws an exception if the name is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void ConstructorNameNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => new AudioFileAnalyzer(null));
+            Assert.Throws<ArgumentNullException>(() => new AudioFileAnalyzer(null!));
 
         [Fact(DisplayName = "AudioFileAnalyzer's constructor throws an exception if the name is unsupported")]
         public void ConstructorNameUnsupportedThrowsException() =>
@@ -46,10 +44,9 @@ namespace AudioWorks.Api.Tests
                 new AudioFileAnalyzer("ReplayGain").MaxDegreeOfParallelism = 0);
 
         [Fact(DisplayName = "AudioFileEncoder's Encode method throws an exception if an audio file is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public async void AnalyzeAsyncNullAudioFileThrowsException() =>
             await Assert.ThrowsAsync<ArgumentNullException>(() =>
-                new AudioFileAnalyzer("ReplayGain").AnalyzeAsync(null)).ConfigureAwait(true);
+                new AudioFileAnalyzer("ReplayGain").AnalyzeAsync(null!)).ConfigureAwait(true);
 
         [Theory(DisplayName = "AudioFileAnalyzer's Analyze method creates the expected metadata")]
         [MemberData(nameof(AnalyzeValidFileDataSource.Data), MemberType = typeof(AnalyzeValidFileDataSource))]

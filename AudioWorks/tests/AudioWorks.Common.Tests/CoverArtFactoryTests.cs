@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using AudioWorks.Common.Tests.DataSources;
 using AudioWorks.TestUtilities;
@@ -29,14 +28,12 @@ namespace AudioWorks.Common.Tests
             LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
 
         [Fact(DisplayName = "CoverArtFactory's Create method throws an exception if the path is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void CreateDataNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => CoverArtFactory.GetOrCreate((byte[]?) null));
 
         [Fact(DisplayName = "CoverArtFactory's Create method throws an exception if the path is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void CreatePathNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => CoverArtFactory.GetOrCreate((string?) null));
+            Assert.Throws<ArgumentNullException>(() => CoverArtFactory.GetOrCreate((string?) null!));
 
         [Fact(DisplayName = "CoverArtFactory's Create method throws an exception if the path cannot be found")]
         public void CreatePathNotFoundThrowsException() =>
