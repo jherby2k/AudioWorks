@@ -23,14 +23,6 @@
     <DefineConstants>OSX</DefineConstants>
   </PropertyGroup>
 
-  <!-- Disable shadow copies because NuGet.PackageManagement.dll is public key signed -->
-  <!-- ReSharper disable once UnknownProperty -->
-  <ItemGroup Condition="'$(TargetFramework)'=='net462'">
-    <None Update="xunit.runner.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="coverlet.msbuild" Version="2.8.0" PrivateAssets="all" />
