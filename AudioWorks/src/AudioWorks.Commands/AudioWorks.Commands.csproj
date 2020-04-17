@@ -15,7 +15,6 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <CodeAnalysisRuleSet>CodeAnalysis.ruleset</CodeAnalysisRuleSet>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <DefineConstants>NULLABLE_ATTRIBUTES_EXCLUDE_FROM_CODE_COVERAGE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
