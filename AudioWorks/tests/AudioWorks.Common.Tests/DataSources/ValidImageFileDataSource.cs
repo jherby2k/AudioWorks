@@ -30,7 +30,9 @@ namespace AudioWorks.Common.Tests.DataSources
                 24,
                 true,
                 "image/png",
-#if WINDOWS && !NETFRAMEWORK
+#if WINDOWS && NETCOREAPP2_1
+                "85E02F6C2BCF8112E16E63660CADFE02"
+#elif WINDOWS && NETCOREAPP
                 "368F0A80FDB2080365F923D9CD9BBE5F"
 #else
                 "C7B06AE783981771FA3806BBFF114EFF"

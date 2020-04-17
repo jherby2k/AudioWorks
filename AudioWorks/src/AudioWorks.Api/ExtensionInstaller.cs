@@ -16,7 +16,6 @@ You should have received a copy of the GNU Affero General Public License along w
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Logging;
 using NuGet.Common;
 using NuGet.Configuration;
@@ -69,7 +68,7 @@ namespace AudioWorks.Api
             ".so"
         });
 
-        static readonly string[] _rootAssemblyNames = GetRootAssemblyNames();
+        static readonly string[] _rootAssemblyNames = GetRootAssemblyNames().ToArray();
 
         internal static async Task TryDownloadAsync()
         {
@@ -344,12 +343,10 @@ namespace AudioWorks.Api
             File.Copy(source, destination);
         }
 
-        static string[] GetRootAssemblyNames()
-        {
-            var rootDirectory = new DirectoryInfo(
-                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath));
-
-            var result = rootDirectory.GetFiles("*.dll")
+        static IEnumerable<string> GetRootAssemblyNames() =>
+            new DirectoryInfo(
+                    Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath))
+                .EnumerateFiles("*.dll")
                 .Select(file =>
                 {
                     try
@@ -362,14 +359,5 @@ namespace AudioWorks.Api
                         return Path.GetFileNameWithoutExtension(file.Name);
                     }
                 });
-
-            // .NET Core applications may be loading via a runtime configuration file
-            foreach (var dependenciesFile in rootDirectory.GetFiles("*.deps.json"))
-                using (var stream = dependenciesFile.OpenRead())
-                using (var reader = new DependencyContextJsonReader())
-                    result = result.Union(reader.Read(stream).RuntimeLibraries.Select(library => library.Name));
-
-            return result.ToArray();
-        }
     }
 }

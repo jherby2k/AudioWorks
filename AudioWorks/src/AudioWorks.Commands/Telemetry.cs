@@ -36,8 +36,9 @@ namespace AudioWorks.Commands
             {
                 var result = new TelemetryClient(config);
                 result.Context.Device.OperatingSystem = RuntimeInformation.OSDescription;
-                result.Context.Component.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-#if NETSTANDARD2_0
+                result.Context.Component.Version =
+                    Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? string.Empty;
+#if NETFRAMEWORK || NETCOREAPP2_1
                 result.Context.Properties["Framework"] = RuntimeInformation.FrameworkDescription;
                 result.Context.Properties["Architecture"] = RuntimeInformation.ProcessArchitecture.ToString();
 #else
