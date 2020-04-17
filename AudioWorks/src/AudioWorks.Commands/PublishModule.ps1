@@ -29,7 +29,7 @@ Write-Host "Publishing $Framework PowerShell module to $outputDir..."
 
 dotnet publish "$ProjectDir" --no-build -c $Configuration -o "$outputDir" -f $Framework
 Copy-Item -Path "$outputDir\*" -Destination $outputRoot -Include "*.psd1", "*.psm1", "*.ps1xml", "COPYING" -ErrorAction Stop
-Remove-Item -Path "$outputDir\*" -Recurse -Include "*.psd1", "*.ps1xml", "*.xml", "*.pdb", "*.deps.json", "COPYING", "Icon.png" -ErrorAction Stop
+Remove-Item -Path "$outputDir\*" -Recurse -Include "*.psd1", "*.psm1", "*.ps1xml", "*.xml", "*.pdb", "*.deps.json", "COPYING", "Icon.png" -ErrorAction Stop
 
 Write-Host "Generating help file..."
 
