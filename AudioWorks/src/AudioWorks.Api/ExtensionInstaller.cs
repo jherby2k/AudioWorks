@@ -279,7 +279,7 @@ namespace AudioWorks.Api
                     .ConfigureAwait(false);
                 var dependencyInfo = await dependencyInfoResource.ResolvePackage(
                         packageIdentity,
-                        NuGetFramework.AnyFramework,
+                        _framework,
                         cacheContext,
                         NullLogger.Instance,
                         cancellationToken)
