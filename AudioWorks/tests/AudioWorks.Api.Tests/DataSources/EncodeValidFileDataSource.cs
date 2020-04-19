@@ -1572,7 +1572,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "C4BE1E9B133ECF06E397F812D5AF250E", // Lame 3.99.5 (Ubuntu 16.04)
-                    "AFC1B4A4D1D02944A0902C5FA3A3E7E7", // Lame 3.100 (MacOS and Ubuntu 18.04)
+                    "8EFA63733A5527E08092CAD86E86F76E", // Lame 3.100 (Legacy .NET on MacOS and Ubuntu 18.04)
+                    "AFC1B4A4D1D02944A0902C5FA3A3E7E7", // Lame 3.100 (.NET Core 3.0+ on MacOS and Ubuntu 18.04)
                     "CFEF4A8950ACF179D92DC7930EE738EE", // Lame 3.100 (Legacy .NET on Windows)
                     "00B6F73984EF8978D057D2620D1541C9" // Lame 3.100 (.NET Core 3.0+ on Windows)
                 }
@@ -1590,7 +1591,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "D4757E5D593DCB6C139790DFC4FE0C6D", // Lame 3.99.5 (Ubuntu 16.04)
-                    "A3CEC39BF25ED93F5729BD8179853E2E", // Lame 3.100 (MacOS and Ubuntu 18.04)
+                    "FB96F0590FB1A603C847DEF075D8FC5F", // Lame 3.100 (Legacy .NET on MacOS and Ubuntu 18.04)
+                    "A3CEC39BF25ED93F5729BD8179853E2E", // Lame 3.100 (.NET Core 3.0+ on MacOS and Ubuntu 18.04)
                     "90E64D2E7628FC749E8194011E358854", // Lame 3.100 (Legacy .NET on Windows)
                     "17C5D78EB69791D271DC5FDC47C245BD" // Lame 3.100 (.NET Core 3.0+ on Windows)
                 }
@@ -2006,9 +2008,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "F8D1973844C250D9960695304C5EE217", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
-                    "D21A100762D895FB5338204E81922971", // Vorbis 1.3.6 (MacOS 10.14)
-                    "3C2A22F6F7A95492CC820CE5EA5972DD", // Vorbis 1.3.6 (MacOS 10.15)
+                    "7508A275052C3AD7057208132BE5F233", // Vorbis 1.3.5 (Legacy .NET on Ubuntu 16.04 and 18.04)
+                    "F8D1973844C250D9960695304C5EE217", // Vorbis 1.3.5 (.NET Core 3.0+ on Ubuntu 16.04 and 18.04)
+                    "D21A100762D895FB5338204E81922971", // Vorbis 1.3.6 (.NET Core 3.0+ on MacOS 10.14)
+                    "7DD1CF194ED3CDBF7BD1DB81F4AD24E9", // Vorbis 1.3.6 (Legacy .NET on MacOS 10.15)
+                    "3C2A22F6F7A95492CC820CE5EA5972DD", // Vorbis 1.3.6 (.NET Core 3.0+ on MacOS 10.15)
                     "62D8E5794AFAC335E1D6396D5C9CD2BC", // Vorbis 1.3.6 AoTuV + Lancer (Legacy .NET on Windows / Intel)
                     "5E016C1161A7CFE96C0AADB3375BB5D6", // Vorbis 1.3.6 AoTuV + Lancer (Legacy .NET on Windows / AMD)
                     "B269083AA223F1C43699C181B6B6A987", // Vorbis 1.3.6 AoTuV + Lancer (.NET Core 3.0+ on Windows / Intel)
@@ -2028,9 +2032,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "1A35111ED26A079B6A972992C2E2105B", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
-                    "DFA1457680EC838FBBB6C14CE83760B9", // Vorbis 1.3.6 (MacOS 10.14)
-                    "602CFDE163F7D1F3975FF14196A8A6C7", // Vorbis 1.3.6 (MacOS 10.15)
+                    "1313B8C8D0EE8933D5B518D6F3E933A2", // Vorbis 1.3.5 (Legacy .NET on Ubuntu 16.04 and 18.04)
+                    "1A35111ED26A079B6A972992C2E2105B", // Vorbis 1.3.5 (.NET Core 3.0+ on Ubuntu 16.04 and 18.04)
+                    "DFA1457680EC838FBBB6C14CE83760B9", // Vorbis 1.3.6 (.NET Core 3.0+ on MacOS 10.14)
+                    "AF224D2940F09CCA4B7604EA01516F9C", // Vorbis 1.3.6 (Legacy .NET on MacOS 10.15)
+                    "602CFDE163F7D1F3975FF14196A8A6C7", // Vorbis 1.3.6 (.NET Core 3.0+ on MacOS 10.15)
                     "2D26A6E733CC1788B55463088F8BACAF", // Vorbis 1.3.6 AoTuV + Lancer (Legacy .NET on Windows / Intel)
                     "5878C4C3C57547E1163039D40DD2802D", // Vorbis 1.3.6 AoTuV + Lancer (Legacy .NET on Windows / AMD)
                     "43693924C5126AC180A005E565104637", // Vorbis 1.3.6 AoTuV + Lancer (.NET Core 3.0+ on Windows / Intel)
