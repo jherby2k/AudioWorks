@@ -38,13 +38,8 @@ namespace AudioWorks.Commands
                 result.Context.Device.OperatingSystem = RuntimeInformation.OSDescription;
                 result.Context.Component.Version =
                     Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? string.Empty;
-#if NETFRAMEWORK || NETCOREAPP2_1
-                result.Context.Properties["Framework"] = RuntimeInformation.FrameworkDescription;
-                result.Context.Properties["Architecture"] = RuntimeInformation.ProcessArchitecture.ToString();
-#else
                 result.Context.GlobalProperties["Framework"] = RuntimeInformation.FrameworkDescription;
                 result.Context.GlobalProperties["Architecture"] = RuntimeInformation.ProcessArchitecture.ToString();
-#endif
 
                 return result;
             }
