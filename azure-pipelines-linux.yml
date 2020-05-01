@@ -21,18 +21,6 @@ variables:
   buildConfiguration: Release
 
 steps:
-- task: UseDotNet@2
-  inputs:
-    packageType: sdk
-    version: 2.1.x
-  displayName: 'Install latest .NET Core 2.1 SDK'
-
-- task: UseDotNet@2
-  inputs:
-    packageType: sdk
-    version: 3.1.x
-  displayName: 'Install latest .NET Core 3.1 SDK'
-
 - task: DotNetCoreCLI@2
   inputs:
     command: build
@@ -71,8 +59,8 @@ steps:
     $content | ConvertTo-Json | Set-Content "$roamingAppDir/settings.json"
     dotnet test AudioWorks/tests/AudioWorks.Api.Tests --no-build --configuration Release --filter "FullyQualifiedName=AudioWorks.Api.Tests.AudioFileTests.HasExpectedPath"
     $testResult = 0
-    Get-ChildItem -Path AudioWorks/tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --framework netcoreapp3.1 --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=.\coverage.netcore31.xml /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$localAppDir/Extensions/netcoreapp3.1/*%2c$($_.FullName)/bin/$($env:BUILDCONFIGURATION)/AudioWorks.Commands/netcoreapp3.1"; if ($LastExitCode -ne 0) { $testResult = $LastExitCode } }
-    Get-ChildItem -Path AudioWorks/tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --framework netcoreapp2.1 --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=.\coverage.netcore21.xml /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$localAppDir/Extensions/netcoreapp2.1/*%2c$($_.FullName)/bin/$($env:BUILDCONFIGURATION)/AudioWorks.Commands/netcoreapp2.1"; if ($LastExitCode -ne 0) { $testResult = $LastExitCode } }
+    Get-ChildItem -Path AudioWorks/tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --framework netcoreapp3.1 --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$localAppDir/Extensions/netcoreapp3.1/*%2c$($_.FullName)/bin/$($env:BUILDCONFIGURATION)/AudioWorks.Commands/netcoreapp3.1"; if ($LastExitCode -ne 0) { $testResult = $LastExitCode } }
+    Get-ChildItem -Path AudioWorks/tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --framework netcoreapp2.1 --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$localAppDir/Extensions/netcoreapp2.1/*%2c$($_.FullName)/bin/$($env:BUILDCONFIGURATION)/AudioWorks.Commands/netcoreapp2.1"; if ($LastExitCode -ne 0) { $testResult = $LastExitCode } }
     exit $testResult
   displayName: 'Run tests'
 
