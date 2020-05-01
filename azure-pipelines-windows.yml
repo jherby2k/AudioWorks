@@ -21,18 +21,6 @@ variables:
   buildConfiguration: Release
 
 steps:
-- task: UseDotNet@2
-  inputs:
-    packageType: sdk
-    version: 2.1.x
-  displayName: 'Install latest .NET Core 2.1 SDK'
-
-- task: UseDotNet@2
-  inputs:
-    packageType: sdk
-    version: 3.1.102
-  displayName: 'Install latest .NET Core 3.1 SDK'
-
 - task: DotNetCoreCLI@2
   inputs:
     command: build
