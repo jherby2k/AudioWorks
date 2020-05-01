@@ -33,6 +33,8 @@ namespace AudioWorks.Extensions.Apple
     }
 
     [Flags]
+    [SuppressMessage("Design", "CA1069:Enums values should not be duplicated",
+        Justification = "Defined by external API")]
     enum AudioFormatFlags : uint
     {
         Alac16BitSourceData = 0b00000001,
