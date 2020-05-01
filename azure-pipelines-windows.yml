@@ -21,6 +21,11 @@ variables:
   buildConfiguration: Release
 
 steps:
+- task: VisualStudioTestPlatformInstaller@1
+  inputs:
+    packageFeedSelector: 'nugetOrg'
+    versionSelector: 'latestStable'
+
 - task: DotNetCoreCLI@2
   inputs:
     command: build
