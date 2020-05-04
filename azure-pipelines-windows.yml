@@ -22,9 +22,9 @@ variables:
 
 steps:
 - powershell: |
-    "c:\Program Files (x86)\dotnet\dotnet.exe" --version
-    "c:\Program Files (x86)\dotnet\dotnet.exe" --list-runtimes
-    "c:\Program Files (x86)\dotnet\dotnet.exe" --list-sdks
+    &"c:\Program Files (x86)\dotnet\dotnet.exe" --version
+    &"c:\Program Files (x86)\dotnet\dotnet.exe" --list-runtimes
+    &"c:\Program Files (x86)\dotnet\dotnet.exe" --list-sdks
   displayName: 'Diagnostics'
 
 - task: UseDotNet@2
@@ -40,9 +40,9 @@ steps:
   displayName: 'Install .NET Core 3.1 runtime'
 
 - powershell: |
-    "c:\Program Files (x86)\dotnet\dotnet.exe" --version
-    "c:\Program Files (x86)\dotnet\dotnet.exe" --list-runtimes
-    "c:\Program Files (x86)\dotnet\dotnet.exe" --list-sdks
+    &"c:\Program Files (x86)\dotnet\dotnet.exe" --version
+    &"c:\Program Files (x86)\dotnet\dotnet.exe" --list-runtimes
+    &"c:\Program Files (x86)\dotnet\dotnet.exe" --list-sdks
   displayName: 'Diagnostics'
 
 - task: VisualStudioTestPlatformInstaller@1
