@@ -23,9 +23,9 @@ variables:
 steps:
 - task: UseDotNet@2
   inputs:
-    packageType: runtime
+    packageType: sdk
     version: 2.1.x
-  displayName: 'Install .NET Core 2.1 runtime'
+  displayName: 'Install .NET Core 2.1 SDK'
 
 - task: UseDotNet@2
   inputs:
