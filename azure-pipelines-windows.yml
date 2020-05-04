@@ -22,8 +22,9 @@ variables:
 
 steps:
 - powershell: |
-    dotnet --version
-    dotnet --list-runtimes
+    "c:\Program Files (x86)\dotnet\dotnet.exe" --version
+    "c:\Program Files (x86)\dotnet\dotnet.exe" --list-runtimes
+    "c:\Program Files (x86)\dotnet\dotnet.exe" --list-sdks
   displayName: 'Diagnostics'
 
 - task: UseDotNet@2
@@ -32,9 +33,16 @@ steps:
     version: 2.1.x
   displayName: 'Install .NET Core 2.1 runtime'
 
+- task: UseDotNet@2
+  inputs:
+    packageType: runtime
+    version: 3.1.x
+  displayName: 'Install .NET Core 3.1 runtime'
+
 - powershell: |
-    dotnet --version
-    dotnet --list-runtimes
+    "c:\Program Files (x86)\dotnet\dotnet.exe" --version
+    "c:\Program Files (x86)\dotnet\dotnet.exe" --list-runtimes
+    "c:\Program Files (x86)\dotnet\dotnet.exe" --list-sdks
   displayName: 'Diagnostics'
 
 - task: VisualStudioTestPlatformInstaller@1
@@ -61,6 +69,7 @@ steps:
   displayName: 'Package pre-release extension packages'
 
 - powershell: |
+    $ProgressPreference = 'SilentlyContinue'
     Invoke-WebRequest -Uri https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile nuget.exe
     Invoke-WebRequest -Uri https://audioworks.blob.core.windows.net/prerequisites/AppleApplicationSupport.msi -OutFile AppleApplicationSupport.msi
     Invoke-WebRequest -Uri https://audioworks.blob.core.windows.net/prerequisites/AppleApplicationSupport64.msi -OutFile AppleApplicationSupport64.msi
