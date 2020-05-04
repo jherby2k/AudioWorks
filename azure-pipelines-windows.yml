@@ -21,11 +21,10 @@ variables:
   buildConfiguration: Release
 
 steps:
-- task: UseDotNet@2
-  inputs:
-    packageType: sdk
-    version: 2.1.x
-  displayName: 'Install latest .NET Core 2.1 SDK'
+- powershell: |
+    dotnet --version
+    dotnet --list-sdks
+  displayName: 'Diagnostics'
 
 - task: UseDotNet@2
   inputs:
