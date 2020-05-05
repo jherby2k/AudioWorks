@@ -13,12 +13,12 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-#if NET462
+#if NETFRAMEWORK
 using System;
 using System.IO;
 #endif
 using System.Management.Automation;
-#if NET462
+#if NETFRAMEWORK
 using System.Reflection;
 using System.Runtime.InteropServices;
 #endif
@@ -31,7 +31,7 @@ namespace AudioWorks.Commands
         private protected CmdletLoggerProvider LoggerProvider { get; } =
             LoggerManager.AddSingletonProvider(() => new CmdletLoggerProvider());
 
-#if NET462
+#if NETFRAMEWORK
         static LoggingCmdlet()
         {
             // Workaround for binding issue under Windows PowerShell
@@ -59,7 +59,7 @@ namespace AudioWorks.Commands
                         break;
                 }
         }
-#if NET462
+#if NETFRAMEWORK
 
         static Assembly? AssemblyResolve(object sender, ResolveEventArgs args)
         {

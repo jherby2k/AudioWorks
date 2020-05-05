@@ -15,9 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System.Collections.Generic;
 using System.Linq;
-#if NET462
-using AudioWorks.TestUtilities;
-#endif
 
 namespace AudioWorks.Api.Tests.DataSources
 {
