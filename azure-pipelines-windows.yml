@@ -19,6 +19,7 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  disable.coverage.autogenerate: 'true'
 
 steps:
 - task: DotNetCoreCLI@2
