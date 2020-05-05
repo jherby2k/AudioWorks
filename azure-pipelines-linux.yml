@@ -74,7 +74,7 @@ steps:
   inputs:
     reports: 'AudioWorks/tests/*/coverage.*.xml'
     targetdir: 'reports/coverage'
-    reporttypes: 'HtmlInline_AzurePipelines;Cobertura;Badges'
+    reporttypes: 'HtmlInline_AzurePipelines;Cobertura'
   displayName: 'Generate code coverage results'
 
 - task: PublishCodeCoverageResults@1
