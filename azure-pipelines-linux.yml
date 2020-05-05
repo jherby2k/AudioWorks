@@ -19,6 +19,7 @@ pool:
 
 variables:
   buildConfiguration: Release
+  disable.coverage.autogenerate: 'true'
 
 steps:
 - task: DotNetCoreCLI@2
@@ -43,7 +44,6 @@ steps:
     sudo curl -o /usr/local/bin/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
     sudo apt-get install --yes libflac8 libvorbisenc2 libmp3lame0 libopus0 libebur128-1
     sudo updatedb
-    dotnet tool install dotnet-reportgenerator-globaltool --tool-path tools
   displayName: 'Install prerequisites'
 
 - powershell: |
@@ -70,8 +70,11 @@ steps:
   displayName: 'Publish test results'
   condition: succeededOrFailed()
 
-- script: |
-    tools/reportgenerator -reports:AudioWorks/tests/*/coverage.*.xml -targetdir:Reports/Cobertura -reporttypes:Cobertura
+- task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
+  inputs:
+    reports: 'AudioWorks/tests/*/coverage.*.xml'
+    targetdir: 'reports/coverage'
+    reporttypes: 'HtmlInline_AzurePipelines;Cobertura;Badges'
   displayName: 'Generate code coverage results'
 
 - task: PublishCodeCoverageResults@1
