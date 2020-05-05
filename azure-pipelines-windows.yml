@@ -20,6 +20,7 @@ pool:
 variables:
   buildConfiguration: 'Release'
   disable.coverage.autogenerate: 'true'
+  system.debug: 'true'
 
 steps:
 - task: VisualStudioTestPlatformInstaller@1
