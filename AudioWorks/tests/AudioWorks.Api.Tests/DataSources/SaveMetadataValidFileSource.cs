@@ -17,6 +17,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AudioWorks.Api.Tests.DataTypes;
+#if NET462
+using AudioWorks.TestUtilities;
+#endif
 
 namespace AudioWorks.Api.Tests.DataSources
 {

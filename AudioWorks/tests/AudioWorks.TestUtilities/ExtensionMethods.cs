@@ -1,4 +1,4 @@
-﻿/* Copyright © 2018 Jeremy Herbison
+﻿/* Copyright © 2020 Jeremy Herbison
 
 This file is part of AudioWorks.
 
@@ -14,20 +14,16 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System.Collections.Generic;
-using System.Linq;
-#if NET462
-using AudioWorks.TestUtilities;
-#endif
 
-namespace AudioWorks.Api.Tests.DataSources
+namespace AudioWorks.TestUtilities
 {
-    public static class SaveMetadataUnsupportedFileDataSource
+    public static class ExtensionMethods
     {
-        static readonly List<object[]> _data = new List<object[]>
+        public static IEnumerable<T> Prepend<T>(this IEnumerable<T> sequence, T element)
         {
-            new object[] { "LPCM 16-bit 44100Hz Stereo.wav" }
-        };
-
-        public static IEnumerable<object[]> Data => _data.Select((item, index) => item.Prepend(index).ToArray());
+            // .NET 4.6.2 doesn't include this
+            yield return element;
+            foreach (var item in sequence) yield return item;
+        }
     }
 }
