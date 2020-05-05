@@ -22,6 +22,12 @@ variables:
   disable.coverage.autogenerate: 'true'
 
 steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: sdk
+    version: 2.1.x
+  displayName: 'Install .NET Core 2.1 SDK'
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
