@@ -28,6 +28,12 @@ steps:
     version: 2.1.x
   displayName: 'Install .NET Core 2.1 SDK'
 
+- task: UseDotNet@2
+  inputs:
+    packageType: sdk
+    version: 3.1.x
+  displayName: 'Re-install .NET Core 3.1 SDK'
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
