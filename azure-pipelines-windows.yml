@@ -15,43 +15,26 @@ pr:
     - dev
 
 pool:
-  vmImage: windows-latest
+  vmImage: 'windows-latest'
 
 variables:
-  buildConfiguration: Release
+  buildConfiguration: 'Release'
 
 steps:
-- task: UseDotNet@2
-  inputs:
-    packageType: runtime
-    version: 2.1.x
-  displayName: 'Install .NET Core 2.1 runtime'
-
-- task: UseDotNet@2
-  inputs:
-    packageType: runtime
-    version: 3.1.x
-  displayName: 'Install .NET Core 3.1 runtime'
-
-- task: VisualStudioTestPlatformInstaller@1
-  inputs:
-    packageFeedSelector: 'nugetOrg'
-    versionSelector: 'latestStable'
-
 - task: DotNetCoreCLI@2
   inputs:
-    command: build
+    command: 'build'
     projects: 'AudioWorks\AudioWorks.sln'
     arguments: '--configuration $(buildConfiguration)'
   displayName: 'Build $(buildConfiguration) configuration'
 
 - task: DotNetCoreCLI@2
   inputs:
-    command: pack
+    command: 'pack'
     packagesToPack: '**\Extensions\**\*.csproj'
     packDirectory: '$(Build.ArtifactStagingDirectory)\prereleases\extensions'
     configurationToPack: $(buildConfiguration)
-    nobuild: true
+    nobuild: 'true'
     buildProperties: 'VersionSuffix="pre.$(Build.BuildId)"'
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
   displayName: 'Package pre-release extension packages'
@@ -67,7 +50,6 @@ steps:
     COPY /Y nuget.exe %USERPROFILE%
     msiexec /i AppleApplicationSupport.msi /qb-
     msiexec /i AppleApplicationSupport64.msi /qb-
-    dotnet tool install --global dotnet-reportgenerator-globaltool
   displayName: 'Install prerequisites'
 
 - powershell: |
@@ -80,7 +62,7 @@ steps:
     $content.EnableTelemetry = $false
     $content.ExtensionRepository = $localFeedDir
     $content | ConvertTo-Json | Set-Content "$roamingAppDir\settings.json"
-    dotnet test AudioWorks\tests\AudioWorks.Api.Tests --no-build --configuration Release --filter "FullyQualifiedName=AudioWorks.Api.Tests.AudioFileTests.HasExpectedPath"
+    dotnet test AudioWorks\tests\AudioWorks.Api.Tests --no-build --configuration $env:BUILDCONFIGURATION --filter "FullyQualifiedName=AudioWorks.Api.Tests.AudioFileTests.HasExpectedPath"
     $testResult = 0
     Get-ChildItem -Path AudioWorks\tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --framework netcoreapp3.1 --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$localAppDir\Extensions\netcoreapp3.1\*%2c$($_.FullName)\bin\$($env:BUILDCONFIGURATION)\AudioWorks.Commands\netcoreapp3.1"; if ($LastExitCode -ne 0) { $testResult = $LastExitCode } }
     Get-ChildItem -Path AudioWorks\tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --framework netcoreapp2.1 --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$localAppDir\Extensions\netcoreapp2.1\*%2c$($_.FullName)\bin\$($env:BUILDCONFIGURATION)\AudioWorks.Commands\netcoreapp2.1"; if ($LastExitCode -ne 0) { $testResult = $LastExitCode } }
@@ -90,19 +72,23 @@ steps:
 
 - task: PublishTestResults@2
   inputs:
-    testRunner: VSTest
+    testRunner: 'VSTest'
     testResultsFiles: '**\*.trx'
   displayName: 'Publish test results'
   condition: succeededOrFailed()
 
-- script: |
-    reportgenerator -reports:AudioWorks\tests\*\coverage.*.xml -targetdir:Reports\Cobertura -reporttypes:Cobertura
+- task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
+  inputs:
+    reports: 'AudioWorks\tests\*\coverage.*.xml'
+    targetdir: 'reports\coverage'
+    reporttypes: 'HtmlInline_AzurePipelines;Cobertura'
   displayName: 'Generate code coverage results'
 
 - task: PublishCodeCoverageResults@1
   inputs:
-    codecoverageTool: cobertura
-    summaryFileLocation: $(Build.SourcesDirectory)\Reports\Cobertura\Cobertura.xml
+    codecoverageTool: 'cobertura'
+    summaryFileLocation: '$(Build.SourcesDirectory)\reports\coverage\Cobertura.xml'
+    reportDirectory: '$(Build.SourcesDirectory)\reports\coverage'
   displayName: 'Publish code coverage results'
 
 - task: CopyFiles@2
