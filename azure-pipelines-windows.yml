@@ -24,13 +24,13 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@1
-  displayName: 'Update NuGet'
+  displayName: 'Update NuGet tools'
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
     projects: 'AudioWorks\AudioWorks.sln'
-  displayName: 'Restore NuGet dependencies'
+  displayName: 'Restore dependencies'
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -48,7 +48,7 @@ steps:
     nobuild: 'true'
     buildProperties: 'VersionSuffix="pre.$(Build.BuildId)"'
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
-  displayName: 'Package pre-release extension packages'
+  displayName: 'Package pre-release extensions'
 
 - powershell: |
     $ProgressPreference = 'SilentlyContinue'
@@ -64,7 +64,7 @@ steps:
   displayName: 'Install prerequisites'
 
 - powershell: Write-Host echo "##vso[task.setvariable variable=localAppDataDir]$([System.Environment]::GetFolderPath(28))\AudioWorks"
-  displayName: Set path to Application Directory
+  displayName: Set local application data directory
 
 - powershell: |
     $localFeedDir = (New-Item "$($env:LOCALAPPDATADIR)\LocalFeed" -ItemType Directory).FullName
