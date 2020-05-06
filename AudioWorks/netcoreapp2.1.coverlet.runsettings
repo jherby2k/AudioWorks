@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat code coverage">
+        <Configuration>
+          <IncludeDirectory>%LOCALAPPDATADIR%\Extensions\netcoreapp2.1\*,AudioWorks\src\AudioWorks.Commands\bin\%BUILDCONFIGURATION%\AudioWorks.Commands\netcoreapp2.1"</IncludeDirectory>
+          <UseSourceLink>true</UseSourceLink>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>
