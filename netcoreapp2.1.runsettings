@@ -6,7 +6,6 @@
         <Configuration>
           <Exclude>[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*</Exclude>
           <IncludeDirectory>%LOCALAPPDATADIR%\Extensions\netcoreapp2.1\*,%BUILD_SOURCESDIRECTORY%\AudioWorks\src\AudioWorks.Commands\bin\%BUILDCONFIGURATION%\AudioWorks.Commands\netcoreapp2.1"</IncludeDirectory>
-          <UseSourceLink>true</UseSourceLink>
         </Configuration>
       </DataCollector>
     </DataCollectors>
