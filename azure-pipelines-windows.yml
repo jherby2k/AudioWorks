@@ -20,14 +20,15 @@ pool:
 variables:
   buildConfiguration: 'Release'
   disable.coverage.autogenerate: 'true'
-  system.debug: 'true'
 
 steps:
-- task: VisualStudioTestPlatformInstaller@1
+- task: NuGetToolInstaller@1
+
+- task: DotNetCoreCLI@2
   inputs:
-    packageFeedSelector: 'nugetOrg'
-    versionSelector: 'latestStable'
-  displayName: 'Upgrade the VS test platform (workaround)'
+    command: 'restore'
+    projects: 'AudioWorks\AudioWorks.sln'
+  displayName: 'Restore NuGet dependencies'
 
 - task: DotNetCoreCLI@2
   inputs:
