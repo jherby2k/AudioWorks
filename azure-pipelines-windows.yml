@@ -84,7 +84,7 @@ steps:
     projects: 'AudioWorks\AudioWorks.sln'
     publishTestResults: 'true'
     testRunTitle: '.NET Core 3.1'
-    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings AudioWorks\netcoreapp3.1.coverlet.runsettings'
+    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings netcoreapp3.1.coverlet.runsettings'
   displayName: 'Test on .NET Core 3.1'
 
 - task: DotNetCoreCLI@2
@@ -93,7 +93,7 @@ steps:
     projects: 'AudioWorks\AudioWorks.sln'
     publishTestResults: 'true'
     testRunTitle: '.NET Core 2.1'
-    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings AudioWorks\netcoreapp2.1.coverlet.runsettings'
+    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings netcoreapp2.1.coverlet.runsettings'
   displayName: 'Test on .NET Core 2.1'
 
 - task: DotNetCoreCLI@2
