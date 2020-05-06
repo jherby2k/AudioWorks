@@ -76,7 +76,7 @@ steps:
     $content.ExtensionRepository = $localFeedDir
     $content | ConvertTo-Json | Set-Content "$roamingAppDir\settings.json"
     dotnet test AudioWorks\tests\AudioWorks.Api.Tests --no-build --configuration $env:BUILDCONFIGURATION --filter "FullyQualifiedName=AudioWorks.Api.Tests.AudioFileTests.HasExpectedPath"
-  displayName: 'Set up environment'
+  displayName: 'Install built extensions'
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -84,7 +84,7 @@ steps:
     projects: 'AudioWorks\AudioWorks.sln'
     publishTestResults: 'true'
     testRunTitle: '.NET Core 3.1'
-    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$(localAppDataDir)\Extensions\netcoreapp3.1\*%2c$($_.FullName)\bin\$(buildConfiguration)\AudioWorks.Commands\netcoreapp3.1"'
+    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$(localAppDataDir)\Extensions\netcoreapp3.1\*%2c$($_.FullName)\bin\$(buildConfiguration)\AudioWorks.Commands\netcoreapp3.1"'
   displayName: 'Test on .NET Core 3.1'
 
 - task: DotNetCoreCLI@2
@@ -93,7 +93,7 @@ steps:
     projects: 'AudioWorks\AudioWorks.sln'
     publishTestResults: 'true'
     testRunTitle: '.NET Core 2.1'
-    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$(localAppDataDir)\Extensions\netcoreapp2.1\*%2c$($_.FullName)\bin\$(buildConfiguration)\AudioWorks.Commands\netcoreapp2.1"'
+    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$(localAppDataDir)\Extensions\netcoreapp2.1\*%2c$($_.FullName)\bin\$(buildConfiguration)\AudioWorks.Commands\netcoreapp2.1"'
   displayName: 'Test on .NET Core 2.1'
 
 - task: DotNetCoreCLI@2
@@ -102,7 +102,7 @@ steps:
     projects: 'AudioWorks\AudioWorks.sln'
     publishTestResults: 'true'
     testRunTitle: '.NET Framework 4.8'
-    arguments: '--framework net462 --configuration $(buildConfiguration) --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$(localAppDataDir)\Extensions\net48\*%2c$($_.FullName)\bin\$(buildConfiguration)\AudioWorks.Commands\net462"'
+    arguments: '--framework net462 --configuration $(buildConfiguration) --no-build'
   displayName: 'Test on .NET Framework 4.8'
 
 - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
