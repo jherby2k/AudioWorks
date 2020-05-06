@@ -63,8 +63,7 @@ steps:
   displayName: 'Install prerequisites'
 
 - powershell: |
-    $localAppDir = "$([System.Environment]::GetFolderPath(28))\AudioWorks"
-    $localFeedDir = (New-Item "$localAppDir\LocalFeed" -ItemType Directory).FullName
+    $localFeedDir = (New-Item "$([System.Environment]::GetFolderPath(28))\AudioWorks\LocalFeed" -ItemType Directory).FullName
     Get-ChildItem -Path AudioWorks\src\Extensions -Filter *.nupkg -Recurse | Select-Object -ExpandProperty FullName | % { &"$env:USERPROFILE\nuget" add $_ -Source $localFeedDir -Expand -NonInteractive }
     $roamingAppDir = "$([System.Environment]::GetFolderPath(26))\AudioWorks"
     New-Item $roamingAppDir -ItemType Directory
@@ -73,19 +72,31 @@ steps:
     $content.ExtensionRepository = $localFeedDir
     $content | ConvertTo-Json | Set-Content "$roamingAppDir\settings.json"
     dotnet test AudioWorks\tests\AudioWorks.Api.Tests --no-build --configuration $env:BUILDCONFIGURATION --filter "FullyQualifiedName=AudioWorks.Api.Tests.AudioFileTests.HasExpectedPath"
-    $testResult = 0
-    Get-ChildItem -Path AudioWorks\tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --framework netcoreapp3.1 --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$localAppDir\Extensions\netcoreapp3.1\*%2c$($_.FullName)\bin\$($env:BUILDCONFIGURATION)\AudioWorks.Commands\netcoreapp3.1"; if ($LastExitCode -ne 0) { $testResult = $LastExitCode } }
-    Get-ChildItem -Path AudioWorks\tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --framework netcoreapp2.1 --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$localAppDir\Extensions\netcoreapp2.1\*%2c$($_.FullName)\bin\$($env:BUILDCONFIGURATION)\AudioWorks.Commands\netcoreapp2.1"; if ($LastExitCode -ne 0) { $testResult = $LastExitCode } }
-    Get-ChildItem -Path AudioWorks\tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --framework net462 --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$localAppDir\Extensions\net48\*%2c$($_.FullName)\bin\$($env:BUILDCONFIGURATION)\AudioWorks.Commands\net462"; if ($LastExitCode -ne 0) { $testResult = $LastExitCode } }
-    exit $testResult
-  displayName: 'Run tests'
+  displayName: 'Set up environment'
 
-- task: PublishTestResults@2
+- task: DotNetCoreCLI@2
   inputs:
-    testRunner: 'VSTest'
-    testResultsFiles: '**\*.trx'
-  displayName: 'Publish test results'
-  condition: succeededOrFailed()
+    command: 'test'
+    projects: 'AudioWorks\AudioWorks.sln'
+    publishTestResults: 'true'
+    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$($env:LOCALAPPDATA)\AudioWorks\Extensions\netcoreapp3.1\*%2c$($_.FullName)\bin\$($env:BUILDCONFIGURATION)\AudioWorks.Commands\netcoreapp3.1"'
+  displayName: 'Test on .NET Core 3.1'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'AudioWorks\AudioWorks.sln'
+    publishTestResults: 'true'
+    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$($env:LOCALAPPDATA)\AudioWorks\Extensions\netcoreapp2.1\*%2c$($_.FullName)\bin\$($env:BUILDCONFIGURATION)\AudioWorks.Commands\netcoreapp2.1"'
+  displayName: 'Test on .NET Core 2.1'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'AudioWorks\AudioWorks.sln'
+    publishTestResults: 'true'
+    arguments: '--framework net462 --configuration $(buildConfiguration) --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$($env:LOCALAPPDATA)\AudioWorks\Extensions\net48\*%2c$($_.FullName)\bin\$($env:BUILDCONFIGURATION)\AudioWorks.Commands\net462"'
+  displayName: 'Test on .NET Framework 4.8'
 
 - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
   inputs:
