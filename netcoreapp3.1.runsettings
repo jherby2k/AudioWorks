@@ -2,9 +2,9 @@
 <RunSettings>
   <DataCollectionRunSettings>
     <DataCollectors>
-      <DataCollector friendlyName="XPlat code coverage">
+      <DataCollector friendlyName="XPlat Code Coverage">
         <Configuration>
-          <Exclude>[AudioWorks.*.Tests],[AudioWorks.TestUtilities]</Exclude>
+          <Exclude>[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*</Exclude>
           <IncludeDirectory>%LOCALAPPDATADIR%\Extensions\netcoreapp3.1\*,%BUILD_SOURCESDIRECTORY%\AudioWorks\src\AudioWorks.Commands\bin\%BUILDCONFIGURATION%\AudioWorks.Commands\netcoreapp3.1"</IncludeDirectory>
           <UseSourceLink>true</UseSourceLink>
         </Configuration>
