@@ -24,6 +24,7 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@1
+  displayName: 'Update NuGet'
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -62,8 +63,11 @@ steps:
     msiexec /i AppleApplicationSupport64.msi /qb-
   displayName: 'Install prerequisites'
 
+- powershell: Write-Host echo "##vso[task.setvariable variable=localAppDataDir]$([System.Environment]::GetFolderPath(28))\AudioWorks"
+  displayName: Set path to Application Directory
+
 - powershell: |
-    $localFeedDir = (New-Item "$([System.Environment]::GetFolderPath(28))\AudioWorks\LocalFeed" -ItemType Directory).FullName
+    $localFeedDir = (New-Item "$($env:LOCALAPPDATADIR)\LocalFeed" -ItemType Directory).FullName
     Get-ChildItem -Path AudioWorks\src\Extensions -Filter *.nupkg -Recurse | Select-Object -ExpandProperty FullName | % { &"$env:USERPROFILE\nuget" add $_ -Source $localFeedDir -Expand -NonInteractive }
     $roamingAppDir = "$([System.Environment]::GetFolderPath(26))\AudioWorks"
     New-Item $roamingAppDir -ItemType Directory
@@ -79,7 +83,8 @@ steps:
     command: 'test'
     projects: 'AudioWorks\AudioWorks.sln'
     publishTestResults: 'true'
-    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$($env:LOCALAPPDATA)\AudioWorks\Extensions\netcoreapp3.1\*%2c$($_.FullName)\bin\$($env:BUILDCONFIGURATION)\AudioWorks.Commands\netcoreapp3.1"'
+    testRunTitle: '.NET Core 3.1'
+    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$(localAppDataDir)\Extensions\netcoreapp3.1\*%2c$($_.FullName)\bin\$(buildConfiguration)\AudioWorks.Commands\netcoreapp3.1"'
   displayName: 'Test on .NET Core 3.1'
 
 - task: DotNetCoreCLI@2
@@ -87,7 +92,8 @@ steps:
     command: 'test'
     projects: 'AudioWorks\AudioWorks.sln'
     publishTestResults: 'true'
-    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$($env:LOCALAPPDATA)\AudioWorks\Extensions\netcoreapp2.1\*%2c$($_.FullName)\bin\$($env:BUILDCONFIGURATION)\AudioWorks.Commands\netcoreapp2.1"'
+    testRunTitle: '.NET Core 2.1'
+    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$(localAppDataDir)\Extensions\netcoreapp2.1\*%2c$($_.FullName)\bin\$(buildConfiguration)\AudioWorks.Commands\netcoreapp2.1"'
   displayName: 'Test on .NET Core 2.1'
 
 - task: DotNetCoreCLI@2
@@ -95,7 +101,8 @@ steps:
     command: 'test'
     projects: 'AudioWorks\AudioWorks.sln'
     publishTestResults: 'true'
-    arguments: '--framework net462 --configuration $(buildConfiguration) --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$($env:LOCALAPPDATA)\AudioWorks\Extensions\net48\*%2c$($_.FullName)\bin\$($env:BUILDCONFIGURATION)\AudioWorks.Commands\net462"'
+    testRunTitle: '.NET Framework 4.8'
+    arguments: '--framework net462 --configuration $(buildConfiguration) --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$(localAppDataDir)\Extensions\net48\*%2c$($_.FullName)\bin\$(buildConfiguration)\AudioWorks.Commands\net462"'
   displayName: 'Test on .NET Framework 4.8'
 
 - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
