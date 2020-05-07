@@ -86,7 +86,7 @@ steps:
     projects: 'AudioWorks/AudioWorks.sln'
     publishTestResults: 'true'
     testRunTitle: '.NET Core 3.1'
-    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp3.1.runsettings"'
+    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage"'
   displayName: 'Test on .NET Core 3.1'
 
 - task: DotNetCoreCLI@2
@@ -95,7 +95,7 @@ steps:
     projects: 'AudioWorks/AudioWorks.sln'
     publishTestResults: 'true'
     testRunTitle: '.NET Core 2.1'
-    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp2.1.runsettings"'
+    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage"'
   displayName: 'Test on .NET Core 2.1'
 
 - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
