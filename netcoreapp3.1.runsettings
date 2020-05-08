@@ -5,7 +5,6 @@
       <DataCollector friendlyName="XPlat Code Coverage">
         <Configuration>
           <Exclude>[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*</Exclude>
-          <IncludeDirectory>%LOCALAPPDATADIR%/Extensions/netcoreapp3.1/AudioWorks.Extensions.Wave.1.5.0</IncludeDirectory>
         </Configuration>
       </DataCollector>
     </DataCollectors>
