@@ -22,15 +22,6 @@ variables:
   disable.coverage.autogenerate: 'true'
 
 steps:
-- task: NuGetToolInstaller@1
-  displayName: 'Update NuGet tools'
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'restore'
-    projects: 'AudioWorks\AudioWorks.sln'
-  displayName: 'Restore dependencies'
-
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
