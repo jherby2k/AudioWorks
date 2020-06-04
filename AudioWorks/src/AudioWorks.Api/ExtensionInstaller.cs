@@ -114,15 +114,14 @@ namespace AudioWorks.Api
 
                 // Remove any extensions that aren't published
                 if (Directory.Exists(_extensionRoot))
-                    foreach (var obsoleteExtension in new DirectoryInfo(_extensionRoot).GetDirectories()
+                    foreach (var installedExtension in new DirectoryInfo(_extensionRoot).GetDirectories()
                         .Select(dir => dir.Name)
                         .Except(publishedPackages.Select(package => package.Identity.ToString()),
                             StringComparer.OrdinalIgnoreCase))
                     {
-                        Directory.Delete(Path.Combine(_extensionRoot, obsoleteExtension), true);
+                        Directory.Delete(Path.Combine(_extensionRoot, installedExtension), true);
 
-                        logger.LogDebug("Deleted unlisted or obsolete extension in '{0}'.",
-                            obsoleteExtension);
+                        logger.LogDebug("Deleted unlisted or obsolete extension in '{0}'.", installedExtension);
                     }
 
                 logger.LogInformation(!packagesInstalled
