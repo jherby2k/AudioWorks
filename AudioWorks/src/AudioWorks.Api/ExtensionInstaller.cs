@@ -99,34 +99,48 @@ namespace AudioWorks.Api
         {
             Directory.CreateDirectory(_extensionRoot);
 
-            using (var tokenSource = new CancellationTokenSource(
-                ConfigurationManager.Configuration.GetValue("AutomaticExtensionDownloadTimeout", 30) * 1000))
+            try
             {
-                // Hack - do this on the thread pool to avoid deadlocks
-                var publishedPackages = await Task.Run(() =>
-                    // ReSharper disable once AccessToDisposedClosure
-                    GetPublishedPackagesAsync(logger, tokenSource.Token), tokenSource.Token).ConfigureAwait(false);
+                using (var tokenSource = new CancellationTokenSource(
+                    ConfigurationManager.Configuration.GetValue("AutomaticExtensionDownloadTimeout", 30) * 1000))
+                {
+                    // Hack - do this on the thread pool to avoid deadlocks
+                    var publishedPackages = await Task.Run(() =>
+                        // ReSharper disable once AccessToDisposedClosure
+                        GetPublishedPackagesAsync(logger, tokenSource.Token), tokenSource.Token).ConfigureAwait(false);
 
-                var packagesInstalled = false;
-                foreach (var packageMetadata in publishedPackages)
-                    if (await InstallPackageAsync(packageMetadata, logger, tokenSource.Token).ConfigureAwait(false))
-                        packagesInstalled = true;
+                    var packagesInstalled = false;
+                    foreach (var packageMetadata in publishedPackages)
+                        if (await InstallPackageAsync(packageMetadata, logger, tokenSource.Token).ConfigureAwait(false))
+                            packagesInstalled = true;
 
-                // Remove any extensions that aren't published
-                if (Directory.Exists(_extensionRoot))
-                    foreach (var installedExtension in new DirectoryInfo(_extensionRoot).GetDirectories()
-                        .Select(dir => dir.Name)
-                        .Except(publishedPackages.Select(package => package.Identity.ToString()),
-                            StringComparer.OrdinalIgnoreCase))
-                    {
-                        Directory.Delete(Path.Combine(_extensionRoot, installedExtension), true);
+                    // Remove any extensions that aren't published
+                    if (Directory.Exists(_extensionRoot))
+                        foreach (var installedExtension in new DirectoryInfo(_extensionRoot).GetDirectories()
+                            .Select(dir => dir.Name)
+                            .Except(publishedPackages.Select(package => package.Identity.ToString()),
+                                StringComparer.OrdinalIgnoreCase))
+                        {
+                            Directory.Delete(Path.Combine(_extensionRoot, installedExtension), true);
 
-                        logger.LogDebug("Deleted unlisted or obsolete extension in '{0}'.", installedExtension);
-                    }
+                            logger.LogDebug("Deleted unlisted or obsolete extension in '{0}'.", installedExtension);
+                        }
 
-                logger.LogInformation(!packagesInstalled
-                    ? "Extensions are already up to date."
-                    : "Extensions successfully updated.");
+                    logger.LogInformation(!packagesInstalled
+                        ? "Extensions are already up to date."
+                        : "Extensions successfully updated.");
+                }
+            }
+            catch (FatalProtocolException e)
+            {
+                if (e.InnerException is OperationCanceledException)
+                    logger.LogWarning("Timed out enumerating the published extensions.");
+                else
+                    throw;
+            }
+            catch (OperationCanceledException e)
+            {
+                logger.LogWarning(e.Message);
             }
         }
 
@@ -198,6 +212,8 @@ namespace AudioWorks.Api
                             cancellationToken)
                         .ConfigureAwait(false);
 
+                    if (downloadResult.Status != DownloadResourceResultStatus.Available) continue;
+
                     var libGroups = downloadResult.PackageReader.GetLibItems().ToArray();
                     var nearestLibFramework =
                         frameworkReducer.GetNearest(_framework, libGroups.Select(l => l.TargetFramework));
@@ -206,11 +222,13 @@ namespace AudioWorks.Api
                     foreach (var item in libGroups
                         .First(l => l.TargetFramework.Equals(nearestLibFramework)).Items)
                         CopyLibFiles(
-                            Path.Combine(Path.GetDirectoryName(((FileStream) downloadResult.PackageStream).Name), item),
+                            Path.Combine(Path.GetDirectoryName(((FileStream) downloadResult.PackageStream).Name),
+                                item),
                             Path.Combine(extensionDir.FullName, Path.GetFileName(item)),
                             logger);
 
-                    if (!packageToInstall.Id.StartsWith("AudioWorks.Extensions", StringComparison.OrdinalIgnoreCase))
+                    if (!packageToInstall.Id.StartsWith("AudioWorks.Extensions",
+                        StringComparison.OrdinalIgnoreCase))
                         continue;
 
                     // For AudioWorks extension packages only, copy the native library content files as well
@@ -229,13 +247,17 @@ namespace AudioWorks.Api
                         CopyContentFiles(
                             sourceFileName,
                             Path.Combine(extensionDir.FullName, new DirectoryInfo(sourceFileName).Parent?.Name,
-                            Path.GetFileName(item)),
+                                Path.GetFileName(item)),
                             logger);
                     }
                 }
             }
 
-            return true;
+            if (!cancellationToken.IsCancellationRequested) return true;
+
+            if (extensionDir.Exists)
+                extensionDir.Delete(true);
+            throw new OperationCanceledException($"Timed out while downloading the extension '{packageMetadata.Identity}'.");
         }
 
         static async Task<IEnumerable<SourcePackageDependencyInfo>> ResolvePackagesAsync(
