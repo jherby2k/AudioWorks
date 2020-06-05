@@ -74,7 +74,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
-    projects: 'AudioWorks/AudioWorks.sln'
+    projects: 'AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj'
     publishTestResults: 'true'
     testRunTitle: '.NET Core 3.1'
     arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp3.1.runsettings"'
@@ -83,7 +83,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
-    projects: 'AudioWorks/AudioWorks.sln'
+    projects: 'AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj'
     publishTestResults: 'true'
     testRunTitle: '.NET Core 2.1'
     arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp2.1.runsettings"'
