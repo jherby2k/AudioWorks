@@ -25,8 +25,12 @@ namespace AudioWorks.Extensions.Flac
     {
 #if LINUX
         const string _flacLibrary = "libFLAC.so.8";
+        const string _dlLibrary = "libdl.so.2";
 #else
         const string _flacLibrary = "libFLAC";
+#endif
+#if OSX
+        const string _dlLibrary = "libdl";
 #endif
 #if WINDOWS
         const string _kernelLibrary = "kernel32";
@@ -41,8 +45,6 @@ namespace AudioWorks.Extensions.Flac
         [DllImport(_kernelLibrary, ExactSpelling = true, CharSet = CharSet.Ansi, BestFitMapping = false)]
         internal static extern IntPtr GetProcAddress(IntPtr module, string name);
 #else
-        const string _dlLibrary = "libdl";
-
         [DllImport(_dlLibrary, EntryPoint = "dlopen", CharSet = CharSet.Ansi, BestFitMapping = false)]
         internal static extern IntPtr DlOpen(string filename, int flags);
 
