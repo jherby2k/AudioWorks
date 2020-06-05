@@ -74,20 +74,74 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
-    projects: 'AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj'
+    projects: 'AudioWorks/tests/AudioWorks.Common.Tests/AudioWorks.Common.Tests.csproj'
     publishTestResults: 'true'
-    testRunTitle: '.NET Core 3.1'
+    testRunTitle: 'AudioWorks.Common on .NET Core 3.1'
     arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp3.1.runsettings"'
-  displayName: 'Test on .NET Core 3.1'
+  displayName: 'Test AudioWorks.Common on .NET Core 3.1'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'AudioWorks/tests/AudioWorks.Common.Tests/AudioWorks.Common.Tests.csproj'
+    publishTestResults: 'true'
+    testRunTitle: 'AudioWorks.Common on .NET Core 2.1'
+    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp2.1.runsettings"'
+  displayName: 'Test AudioWorks.Common on .NET Core 2.1'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'AudioWorks/tests/AudioWorks.Extensibility.Tests/AudioWorks.Extensibility.Tests.csproj'
+    publishTestResults: 'true'
+    testRunTitle: 'AudioWorks.Extensibility on .NET Core 3.1'
+    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp3.1.runsettings"'
+  displayName: 'Test AudioWorks.Extensibility on .NET Core 3.1'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'AudioWorks/tests/AudioWorks.Extensibility.Tests/AudioWorks.Extensibility.Tests.csproj'
+    publishTestResults: 'true'
+    testRunTitle: 'AudioWorks.Extensibility on .NET Core 2.1'
+    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp2.1.runsettings"'
+  displayName: 'Test AudioWorks.Extensibility on .NET Core 2.1'
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
     projects: 'AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj'
     publishTestResults: 'true'
-    testRunTitle: '.NET Core 2.1'
+    testRunTitle: 'AudioWorks.Api on .NET Core 3.1'
+    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp3.1.runsettings"'
+  displayName: 'Test AudioWorks.Api on .NET Core 3.1'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj'
+    publishTestResults: 'true'
+    testRunTitle: 'AudioWorks.Api on .NET Core 2.1'
     arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp2.1.runsettings"'
-  displayName: 'Test on .NET Core 2.1'
+  displayName: 'Test AudioWorks.Api on .NET Core 2.1'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj'
+    publishTestResults: 'true'
+    testRunTitle: 'AudioWorks.Commands on .NET Core 3.1'
+    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp3.1.runsettings"'
+  displayName: 'Test AudioWorks.Commands on .NET Core 3.1'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj'
+    publishTestResults: 'true'
+    testRunTitle: 'AudioWorks.Commands on .NET Core 2.1'
+    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp2.1.runsettings"'
+  displayName: 'Test AudioWorks.Commands on .NET Core 2.1'
 
 - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
   inputs:
