@@ -5,7 +5,7 @@
       <DataCollector friendlyName="XPlat Code Coverage">
         <Configuration>
           <Exclude>[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*</Exclude>
-          <IncludeDirectory>%BUILD_SOURCESDIRECTORY%/AudioWorks/tests/AudioWorks.Commands.Tests/bin/%BUILDCONFIGURATION%/netcoreapp2.1/AudioWorks.Commands/netcoreapp2.1,%LOCALAPPDATADIR%/Extensions/netcoreapp2.1/AudioWorks.Extensions.Wave.1.5.0</IncludeDirectory>
+          <IncludeDirectory>%BUILD_SOURCESDIRECTORY%/AudioWorks/tests/AudioWorks.Commands.Tests/bin/%BUILDCONFIGURATION%/netcoreapp2.1/AudioWorks.Commands/netcoreapp2.1,%LOCALAPPDATADIR%/Extensions/netcoreapp2.1/AudioWorks.Extensions.Flac.Linux.1.8.1,%LOCALAPPDATADIR%/Extensions/netcoreapp2.1/AudioWorks.Extensions.Flac.MacOS.1.8.1</IncludeDirectory>
         </Configuration>
       </DataCollector>
     </DataCollectors>
