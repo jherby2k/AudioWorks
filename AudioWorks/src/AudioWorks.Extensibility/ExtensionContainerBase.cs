@@ -66,7 +66,7 @@ namespace AudioWorks.Extensibility
             }
             catch (Exception e)
             {
-                logger.LogWarning(e, "The Prerequisite handler threw an unexpected exception.");
+                logger.LogWarning(e, "The Prerequisite handler threw an unexpected exception: {0}", e.Message);
                 return false;
             }
         }
