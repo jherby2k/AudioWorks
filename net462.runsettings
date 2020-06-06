@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat Code Coverage">
+        <Configuration>
+          <Exclude>[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*</Exclude>
+          <IncludeDirectory>%BUILD_SOURCESDIRECTORY%/AudioWorks/tests/AudioWorks.Commands.Tests/bin/%BUILDCONFIGURATION%/net462/AudioWorks.Commands/net462,%LOCALAPPDATADIR%/Extensions/net48/*</IncludeDirectory>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>

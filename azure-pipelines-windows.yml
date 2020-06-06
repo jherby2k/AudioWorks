@@ -110,7 +110,7 @@ steps:
     projects: 'AudioWorks\tests\AudioWorks.Common.Tests\AudioWorks.Common.Tests.csproj'
     publishTestResults: 'true'
     testRunTitle: 'AudioWorks.Common on .NET Framework 4.8'
-    arguments: '--framework net462 --configuration $(buildConfiguration) --no-build'
+    arguments: '--framework net462 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)\net462.runsettings"'
   displayName: 'Test AudioWorks.Common on .NET Framework 4.8'
 
 - task: DotNetCoreCLI@2
@@ -137,7 +137,7 @@ steps:
     projects: 'AudioWorks\tests\AudioWorks.Extensibility.Tests\AudioWorks.Extensibility.Tests.csproj'
     publishTestResults: 'true'
     testRunTitle: 'AudioWorks.Extensibility on .NET Framework 4.8'
-    arguments: '--framework net462 --configuration $(buildConfiguration) --no-build'
+    arguments: '--framework net462 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)\net462.runsettings"'
   displayName: 'Test AudioWorks.Extensibility on .NET Framework 4.8'
 
 - task: DotNetCoreCLI@2
@@ -164,7 +164,7 @@ steps:
     projects: 'AudioWorks\tests\AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj'
     publishTestResults: 'true'
     testRunTitle: 'AudioWorks.Api on .NET Framework 4.8'
-    arguments: '--framework net462 --configuration $(buildConfiguration) --no-build'
+    arguments: '--framework net462 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)\net462.runsettings"'
   displayName: 'Test AudioWorks.Api on .NET Framework 4.8'
 
 - task: DotNetCoreCLI@2
@@ -191,7 +191,7 @@ steps:
     projects: 'AudioWorks\tests\AudioWorks.Commands.Tests\AudioWorks.Commands.Tests.csproj'
     publishTestResults: 'true'
     testRunTitle: 'AudioWorks.Commands on .NET Framework 4.8'
-    arguments: '--framework net462 --configuration $(buildConfiguration) --no-build'
+    arguments: '--framework net462 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)\net462.runsettings"'
   displayName: 'Test AudioWorks.Commands on .NET Framework 4.8'
 
 - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
