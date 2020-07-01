@@ -42,7 +42,7 @@ steps:
 
 - script: |
     sudo curl -o /usr/local/bin/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
-    sudo apt-get install --yes libflac8 libvorbisenc2 libmp3lame0 libopus0 libebur128-1
+    sudo apt-get install --yes libflac8 libmp3lame0 libopus0 libebur128-1
     sudo updatedb
   displayName: 'Download and install prerequisites'
 
