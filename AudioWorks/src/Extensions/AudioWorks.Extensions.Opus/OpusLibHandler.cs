@@ -61,11 +61,17 @@ namespace AudioWorks.Extensions.Opus
             var release = GetRelease();
 
             if (release.StartsWith("Ubuntu", StringComparison.OrdinalIgnoreCase))
+            {
+                var version = release.Replace("Ubuntu ", string.Empty, StringComparison.OrdinalIgnoreCase);
                 AddUnmanagedLibraryPath(Path.Combine(
                     Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
-                    release.StartsWith("Ubuntu 16.04", StringComparison.OrdinalIgnoreCase)
-                        ? "ubuntu.16.04-x64"
-                        : "ubuntu.18.04-x64"));
+                    version switch
+                    {
+                        "16.04" => "ubuntu.16.04-x64",
+                        "18.04" => "ubuntu.18.04-x64",
+                        _ => "ubuntu.20.04-x64"
+                    }));
+            }
 
             if (!VerifyLibrary("libopus.so.0"))
             {
