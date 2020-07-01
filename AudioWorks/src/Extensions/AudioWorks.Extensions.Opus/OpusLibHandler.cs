@@ -65,7 +65,11 @@ namespace AudioWorks.Extensions.Opus
 
             if (release.StartsWith("Ubuntu", StringComparison.OrdinalIgnoreCase))
             {
+#if NETSTANDARD2_0
+                var version = release.Replace("Ubuntu ", string.Empty);
+#else
                 var version = release.Replace("Ubuntu ", string.Empty, StringComparison.OrdinalIgnoreCase);
+#endif
                 AddUnmanagedLibraryPath(Path.Combine(
                     Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
                     version switch
