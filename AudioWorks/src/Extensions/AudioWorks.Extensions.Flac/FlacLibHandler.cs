@@ -70,9 +70,12 @@ namespace AudioWorks.Extensions.Flac
 
             var libPath = Path.Combine(
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
-                osVersion.StartsWith("10.13", StringComparison.Ordinal) ? "osx.10.13-x64" :
-                osVersion.StartsWith("10.14", StringComparison.Ordinal) ? "osx.10.14-x64" :
-                "osx.10.15-x64");
+                osVersion switch
+                {
+                    "10.13" => "osx.10.13-x64",
+                    "10.14" => "osx.10.14-x64",
+                    _ => "osx.10.15-x64",
+                });
 
             AddUnmanagedLibraryPath(libPath);
 
