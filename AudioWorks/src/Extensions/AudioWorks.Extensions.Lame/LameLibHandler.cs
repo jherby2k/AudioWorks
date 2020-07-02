@@ -14,13 +14,13 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-#if !WINDOWS
+#if OSX
 using System.Diagnostics;
 #endif
-using System.IO;
 #if !LINUX
-using System.Reflection;
+using System.IO;
 #endif
+using System.Reflection;
 using System.Runtime.InteropServices;
 #if !LINUX
 using System.Runtime.Loader;
@@ -55,22 +55,29 @@ namespace AudioWorks.Extensions.Lame
 #endif
 #elif OSX
             var osVersion = GetOSVersion();
-
             AddUnmanagedLibraryPath(Path.Combine(
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
                 osVersion.StartsWith("10.13", StringComparison.Ordinal) ? "osx.10.13-x64" :
                 osVersion.StartsWith("10.14", StringComparison.Ordinal) ? "osx.10.14-x64" :
                 "osx.10.15-x64"));
-#else // LINUX
-            if (!VerifyLibrary("libmp3lame.so.0"))
+#endif
+
+            try
             {
-                logger.LogWarning(
-                    GetDistribution().Equals("Ubuntu", StringComparison.OrdinalIgnoreCase)
-                        ? "Missing libmp3lame.so.0. Run 'sudo apt-get install -y libmp3lame0 && sudo updatedb' then restart AudioWorks."
-                        : "Missing libmp3lame.so.0.");
+                foreach (var methodInfo in typeof(SafeNativeMethods).GetMethods(
+                    BindingFlags.NonPublic | BindingFlags.Static))
+                    Marshal.Prelink(methodInfo);
+            }
+            catch (DllNotFoundException e)
+            {
+                logger.LogWarning(e.Message);
                 return false;
             }
-#endif
+            catch (EntryPointNotFoundException e)
+            {
+                logger.LogWarning(e.Message);
+                return false;
+            }
 
             // ReSharper disable once StringLiteralTypo
             logger.LogInformation("Using libmp3lame version {0}.",
@@ -79,58 +86,14 @@ namespace AudioWorks.Extensions.Lame
             return true;
         }
 
-#if LINUX
-        static bool VerifyLibrary(string libraryName)
-        {
-            using (var process = new Process())
-            {
-                process.StartInfo = new ProcessStartInfo("locate", $"-r {libraryName}$")
-                {
-                    RedirectStandardOutput = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
-
-                process.Start();
-                process.StandardOutput.ReadToEnd();
-                process.WaitForExit();
-                return process.ExitCode == 0;
-            }
-        }
-
-        public static string GetDistribution()
-        {
-            try
-            {
-                using (var process = new Process())
-                {
-                    process.StartInfo = new ProcessStartInfo("lsb_release", "-d -s")
-                    {
-                        RedirectStandardOutput = true,
-                        UseShellExecute = false,
-                        CreateNoWindow = true
-                    };
-
-                    process.Start();
-                    var result = process.StandardOutput.ReadToEnd();
-                    process.WaitForExit();
-                    return result.Trim();
-                }
-            }
-            catch (FileNotFoundException)
-            {
-                // If lsb_release isn't available, the distribution is unknown
-                return string.Empty;
-            }
-        }
-#else
+#if !LINUX
         static void AddUnmanagedLibraryPath(string libPath) =>
             ((ExtensionLoadContext) AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()))
             .AddUnmanagedLibraryPath(libPath);
 #endif
 #if OSX
 
-        public static string GetOSVersion()
+        static string GetOSVersion()
         {
             using (var process = new Process())
             {

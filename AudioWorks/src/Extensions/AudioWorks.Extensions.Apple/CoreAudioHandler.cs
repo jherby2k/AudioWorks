@@ -18,9 +18,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-#if NETSTANDARD2_0
 using System.Runtime.InteropServices;
-#endif
 using System.Runtime.Loader;
 using AudioWorks.Common;
 #endif
@@ -55,16 +53,25 @@ namespace AudioWorks.Extensions.Apple
             AddUnmanagedLibraryPath(libPath);
 #endif
 
-            var coreAudioLibrary = Path.Combine(libPath, "CoreAudioToolbox.dll");
-
-            if (!File.Exists(coreAudioLibrary))
+            try
             {
-                logger.LogWarning("Missing CoreAudioToolbox.dll. Install Apple Application Support (part of iTunes).");
+                foreach (var methodInfo in typeof(SafeNativeMethods).GetMethods(
+                    BindingFlags.NonPublic | BindingFlags.Static))
+                    Marshal.Prelink(methodInfo);
+            }
+            catch (DllNotFoundException e)
+            {
+                logger.LogWarning(e.Message);
+                return false;
+            }
+            catch (EntryPointNotFoundException e)
+            {
+                logger.LogWarning(e.Message);
                 return false;
             }
 
             logger.LogInformation("Using CoreAudio version {0}.",
-                FileVersionInfo.GetVersionInfo(coreAudioLibrary).ProductVersion);
+                FileVersionInfo.GetVersionInfo(Path.Combine(libPath, "CoreAudioToolbox.dll")).ProductVersion);
 
 #endif
             return true;

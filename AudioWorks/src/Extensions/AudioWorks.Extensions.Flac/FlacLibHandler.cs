@@ -21,9 +21,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 #endif
 using System.IO;
-#if !LINUX
 using System.Reflection;
-#endif
 using System.Runtime.InteropServices;
 #if !LINUX
 using System.Runtime.Loader;
@@ -63,11 +61,8 @@ namespace AudioWorks.Extensions.Flac
 #else
             AddUnmanagedLibraryPath(libPath);
 #endif
-
-            var module = SafeNativeMethods.LoadLibrary(Path.Combine(libPath, "libFLAC.dll"));
 #elif OSX
             var osVersion = GetOSVersion();
-
             var libPath = Path.Combine(
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
                 osVersion.StartsWith("10.13", StringComparison.Ordinal) ? "osx.10.13-x64" :
@@ -75,23 +70,35 @@ namespace AudioWorks.Extensions.Flac
                 "osx.10.15-x64");
 
             AddUnmanagedLibraryPath(libPath);
-
-            var module = SafeNativeMethods.DlOpen(Path.Combine(libPath, "libFLAC.dylib"), 2);
-#else // LINUX
-            if (!VerifyLibrary("libFLAC.so.8"))
-            {
-                logger.LogWarning(
-                    GetDistribution().Equals("Ubuntu", StringComparison.OrdinalIgnoreCase)
-                        ? "Missing libFLAC.so.8. Run 'sudo apt-get install -y libflac8 && sudo updatedb' then restart AudioWorks."
-                        : "Missing libFLAC.so.8.");
-                return false;
-            }
-
-            var module = SafeNativeMethods.DlOpen("libFLAC.so.8", 2);
 #endif
 
             try
             {
+                foreach (var methodInfo in typeof(SafeNativeMethods).GetMethods(
+                    BindingFlags.NonPublic | BindingFlags.Static))
+                    Marshal.Prelink(methodInfo);
+            }
+            catch (DllNotFoundException e)
+            {
+                logger.LogWarning(e.Message);
+                return false;
+            }
+            catch (EntryPointNotFoundException e)
+            {
+                logger.LogWarning(e.Message);
+                return false;
+            }
+
+            var module = IntPtr.Zero;
+            try
+            {
+#if WINDOWS
+                module = SafeNativeMethods.LoadLibrary(Path.Combine(libPath, "libFLAC.dll"));
+#elif OSX
+                module = SafeNativeMethods.DlOpen(Path.Combine(libPath, "libFLAC.dylib"), 2);
+#else // LINUX
+                module = SafeNativeMethods.DlOpen("libFLAC.so.8", 2);
+#endif
                 logger.LogInformation("Using libFLAC version {0}.",
                     Marshal.PtrToStringAnsi(
                         Marshal.PtrToStructure<IntPtr>(
@@ -103,68 +110,25 @@ namespace AudioWorks.Extensions.Flac
             }
             finally
             {
+                if (module != IntPtr.Zero)
 #if WINDOWS
-                SafeNativeMethods.FreeLibrary(module);
+                    SafeNativeMethods.FreeLibrary(module);
 #else
-                SafeNativeMethods.DlClose(module);
+                    SafeNativeMethods.DlClose(module);
 #endif
             }
 
             return true;
         }
 
-#if LINUX
-        static bool VerifyLibrary(string libraryName)
-        {
-            using (var process = new Process())
-            {
-                process.StartInfo = new ProcessStartInfo("locate", $"-r {libraryName}$")
-                {
-                    RedirectStandardOutput = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
-
-                process.Start();
-                process.StandardOutput.ReadToEnd();
-                process.WaitForExit();
-                return process.ExitCode == 0;
-            }
-        }
-
-        public static string GetDistribution()
-        {
-            try
-            {
-                using (var process = new Process())
-                {
-                    process.StartInfo = new ProcessStartInfo("lsb_release", "-d -s")
-                    {
-                        RedirectStandardOutput = true,
-                        UseShellExecute = false,
-                        CreateNoWindow = true
-                    };
-
-                    process.Start();
-                    var result = process.StandardOutput.ReadToEnd();
-                    process.WaitForExit();
-                    return result.Trim();
-                }
-            }
-            catch (FileNotFoundException)
-            {
-                // If lsb_release isn't available, the distribution is unknown
-                return string.Empty;
-            }
-        }
-#else
+#if !LINUX
         static void AddUnmanagedLibraryPath(string libPath) =>
             ((ExtensionLoadContext) AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()))
             .AddUnmanagedLibraryPath(libPath);
 #endif
 #if OSX
 
-        public static string GetOSVersion()
+        static string GetOSVersion()
         {
             using (var process = new Process())
             {
