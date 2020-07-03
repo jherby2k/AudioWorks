@@ -55,7 +55,6 @@ steps:
     $roamingAppDir = "$([System.Environment]::GetFolderPath(26))/AudioWorks"
     New-Item $roamingAppDir -ItemType Directory
     $content = Get-Content AudioWorks/src/AudioWorks.Common/settings.json | ConvertFrom-Json
-    $content.EnableTelemetry = $false
     $content.ExtensionRepository = $localFeedDir
     $content | ConvertTo-Json | Set-Content "$roamingAppDir/settings.json"
     dotnet test AudioWorks/tests/AudioWorks.Api.Tests --no-build --configuration $env:BUILDCONFIGURATION --filter "FullyQualifiedName=AudioWorks.Api.Tests.AudioFileTests.HasExpectedPath"
