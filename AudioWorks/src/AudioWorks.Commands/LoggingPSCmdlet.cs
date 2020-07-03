@@ -13,15 +13,7 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-#if NET462
-using System;
-using System.IO;
-#endif
 using System.Management.Automation;
-#if NET462
-using System.Reflection;
-using System.Runtime.InteropServices;
-#endif
 using AudioWorks.Common;
 
 namespace AudioWorks.Commands
@@ -31,16 +23,6 @@ namespace AudioWorks.Commands
         private protected CmdletLoggerProvider LoggerProvider { get; } =
             LoggerManager.AddSingletonProvider(() => new CmdletLoggerProvider());
 
-#if NET462
-        static LoggingPSCmdlet()
-        {
-            // Workaround for binding issue under Windows PowerShell
-            if (RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework",
-                StringComparison.Ordinal))
-                AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
-        }
-
-#endif
         protected override void BeginProcessing() => Telemetry.TrackFirstLaunch();
 
         private protected void ProcessLogMessages()
@@ -59,28 +41,5 @@ namespace AudioWorks.Commands
                         break;
                 }
         }
-#if NET462
-
-        static Assembly? AssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            // Load the available version of Newtonsoft.Json, regardless of the requested version
-            if (args.Name.StartsWith("Newtonsoft.Json", StringComparison.Ordinal))
-            {
-                var jsonAssembly = Path.Combine(
-                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Newtonsoft.Json.dll");
-
-                if (!File.Exists(jsonAssembly)) return null;
-
-                // Make sure the assembly is really Newtonsoft.Json
-                var assemblyName = AssemblyName.GetAssemblyName(jsonAssembly);
-                if (assemblyName.Name.Equals("Newtonsoft.Json", StringComparison.Ordinal) &&
-                    // ReSharper disable once StringLiteralTypo
-                    assemblyName.FullName.EndsWith("PublicKeyToken=30ad4fe6b2a6aeed", StringComparison.Ordinal))
-                    return Assembly.LoadFrom(jsonAssembly);
-            }
-
-            return null;
-        }
-#endif
     }
 }
