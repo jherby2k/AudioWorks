@@ -23,8 +23,6 @@ namespace AudioWorks.Commands
         private protected CmdletLoggerProvider LoggerProvider { get; } =
             LoggerManager.AddSingletonProvider(() => new CmdletLoggerProvider());
 
-        protected override void BeginProcessing() => Telemetry.TrackFirstLaunch();
-
         private protected void ProcessLogMessages()
         {
             while (LoggerProvider.TryDequeueMessage(out var logMessage))
