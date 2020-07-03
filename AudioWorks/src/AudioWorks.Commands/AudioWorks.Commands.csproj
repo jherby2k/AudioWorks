@@ -7,7 +7,7 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <VersionPrefix>1.0.0</VersionPrefix>
-    <VersionSuffix>beta8</VersionSuffix>
+    <VersionSuffix>beta9</VersionSuffix>
     <Revision>$(BUILD_BUILDID)</Revision>
     <Revision Condition="'$(Revision)'==''">0</Revision>
     <FileVersion>1.0.0.$(Revision)</FileVersion>
