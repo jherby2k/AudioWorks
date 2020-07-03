@@ -1635,7 +1635,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "CB5B49E015E1C1C8BD09459E860BBF4E", // Vorbis 1.3.6 (MacOS 10.14)
                     "BB1DAA262A3F9220A348809F26CB9780", // Vorbis 1.3.6 (MacOS 10.15)
                     "D47CCFD390BB1BEBE25D10EFF729D5ED", // Vorbis 1.3.6 AoTuV + Lancer (Windows on Intel)
-                    "CEC2E59B39269B3B2D2718D8CDB60D12", // Vorbis 1.3.6 AoTuV + Lancer (Windows on AMD)
+                    "CEC2E59B39269B3B2D2718D8CDB60D12" // Vorbis 1.3.6 AoTuV + Lancer (Windows on AMD)
                 }
             },
 

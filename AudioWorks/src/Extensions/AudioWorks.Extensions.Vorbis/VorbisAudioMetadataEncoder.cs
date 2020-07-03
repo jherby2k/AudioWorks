@@ -74,10 +74,8 @@ namespace AudioWorks.Extensions.Vorbis
                                 sync.Wrote(bytesRead);
                             }
 
-                            if (inputOggStream == null)
-                                inputOggStream = new OggStream(SafeNativeMethods.OggPageSerialNo(page));
-                            if (outputOggStream == null)
-                                outputOggStream = new OggStream(inputOggStream.SerialNumber);
+                            inputOggStream ??= new OggStream(SafeNativeMethods.OggPageSerialNo(page));
+                            outputOggStream ??= new OggStream(inputOggStream.SerialNumber);
 
                             // Write new header page(s) using a modified comment packet
                             if (!headerWritten)

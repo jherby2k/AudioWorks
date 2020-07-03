@@ -18,7 +18,7 @@ using System.Runtime.InteropServices;
 namespace AudioWorks.Extensibility
 {
     [StructLayout(LayoutKind.Sequential)]
-    struct Int24
+    readonly struct Int24
     {
         readonly byte _byte1;
         readonly byte _byte2;

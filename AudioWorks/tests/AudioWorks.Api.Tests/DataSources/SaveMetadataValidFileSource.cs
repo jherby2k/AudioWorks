@@ -1424,7 +1424,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "9A53EDE65A60F0C1684D16744E33DCFC", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "D22BBFDDCB298A427057253C4E833057", // Opus 1.3.1 (MacOS and Windows)
+                    "D22BBFDDCB298A427057253C4E833057"  // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
                 }
             },
 
@@ -1451,7 +1451,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "4A397361C11EC1FE03A43E176E673856", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (MacOS and Windows)
+                    "B181BB7AF0A3E37C3A262B942FD197FC"  // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
                 }
             },
 
@@ -1478,7 +1478,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "4A397361C11EC1FE03A43E176E673856", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (MacOS and Windows)
+                    "B181BB7AF0A3E37C3A262B942FD197FC"  // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
                 }
             },
 
@@ -1505,7 +1505,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "666B7D0315E667A3D6A943294A32BE1F", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "166F1DD0C71E2CCCF226157A34791E1B", // Opus 1.3.1 (MacOS and Windows)
+                    "166F1DD0C71E2CCCF226157A34791E1B"  // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
                 }
             },
 
@@ -1532,7 +1532,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "910BF18671BC79D50FB8B9EAE8E4F0DA", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "8EA7FC13A2F214CADF3A1D447EF5CB65", // Opus 1.3.1 (MacOS and Windows)
+                    "8EA7FC13A2F214CADF3A1D447EF5CB65"  // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
                 }
             },
 
@@ -1560,7 +1560,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "86AD4DC307C9523B2C1213FE2359FDEA", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "BB50765E7DB79BDEADFC81E771101FD7", // Opus 1.3.1 (MacOS and Windows)
+                    "BB50765E7DB79BDEADFC81E771101FD7"  // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
                 }
             },
 
@@ -1574,7 +1574,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "C2351EF6BFA1D50983183ADC6136FB9C", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "367DB09F8408583579F918061FCB6322", // Opus 1.3.1 (MacOS and Windows)
+                    "367DB09F8408583579F918061FCB6322"  // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
                 }
             },
 
@@ -1588,7 +1588,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "CEF9DD8611EBFEF035761B450D816E95", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "22D33DFB735C5B7805AB26C7A04CDA86", // Opus 1.3.1 (MacOS and Windows)
+                    "22D33DFB735C5B7805AB26C7A04CDA86"  // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
                 }
             },
 
@@ -1602,7 +1602,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "1636B4EF09C4EF2B16135E9C2670473B", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "CABF32D411EA5FA9458A79B6DC2C2D69", // Opus 1.3.1 (MacOS and Windows)
+                    "CABF32D411EA5FA9458A79B6DC2C2D69"  // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
                 }
             },
 
@@ -1616,7 +1616,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "1636B4EF09C4EF2B16135E9C2670473B", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "CABF32D411EA5FA9458A79B6DC2C2D69", // Opus 1.3.1 (MacOS and Windows)
+                    "CABF32D411EA5FA9458A79B6DC2C2D69"  // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
                 }
             }
 
