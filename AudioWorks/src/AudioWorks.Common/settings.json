@@ -1,5 +1,4 @@
 {
-  "EnableTelemetry":  true,
   "AutomaticExtensionDownloads": true,
   "AutomaticExtensionDownloadTimeout": 30,
   "UsePreReleaseExtensions": false,
