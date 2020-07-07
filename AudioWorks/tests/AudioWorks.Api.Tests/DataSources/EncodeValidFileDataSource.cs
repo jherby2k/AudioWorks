@@ -1996,7 +1996,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     "7508A275052C3AD7057208132BE5F233", // Vorbis 1.3.6 AoTuV + Lancer (Legacy .NET on Ubuntu)
                     "F8D1973844C250D9960695304C5EE217", // Vorbis 1.3.6 AoTuV + Lancer (.NET Core 3.0+ on Ubuntu)
-                    "7DD1CF194ED3CDBF7BD1DB81F4AD24E9", // Vorbis 1.3.6 (Legacy .NET on MacOS)
+                    "3DBC6BF05744F40C44AB21C155138EC9", // Vorbis 1.3.7 (Legacy .NET on MacOS)
                     "466D9535B74B53EA088F13FF9720268C", // Vorbis 1.3.7 (.NET Core 3.0+ on MacOS)
                     "942A97B5D0C357E3904252DB5F0BF73A", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on Windows)
                     "C7362E64DB233B532825C17D74DD2165" // Vorbis 1.3.7 AoTuV + Lancer (.NET Core 3.0+ on Windows)
@@ -2019,7 +2019,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "F18ED53089D5D34E8601E686259DEB7A", // Vorbis 1.3.6 AoTuV + Lancer (Legacy .NET on Ubuntu / AMD)
                     "1A35111ED26A079B6A972992C2E2105B", // Vorbis 1.3.6 AoTuV + Lancer (.NET Core 3.0+ on Ubuntu / Intel)
                     "A58E8E2A4AD95BF541E1530BB80E0EB4", // Vorbis 1.3.6 AoTuV + Lancer (.NET Core 3.0+ on Ubuntu / AMD)
-                    "AF224D2940F09CCA4B7604EA01516F9C", // Vorbis 1.3.6 (Legacy .NET on MacOS)
+                    "5CBDD488A7EB6D4C237AFBEFAD89BDFA", // Vorbis 1.3.7 (Legacy .NET on MacOS)
                     "488A2980F20619FE0206CFBB1767CBAC", // Vorbis 1.3.7 (.NET Core 3.0+ on MacOS)
                     "91AD2DCD1A052EAF35093CE8E03176F5", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on Windows)
                     "EE733274DD04CAF61916FC70A593F9C8" // Vorbis 1.3.7 AoTuV + Lancer (.NET Core 3.0+ on Windows)
