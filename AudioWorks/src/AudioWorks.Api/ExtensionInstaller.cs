@@ -216,7 +216,8 @@ namespace AudioWorks.Api
 
                         if (downloadResult.Status != DownloadResourceResultStatus.Available) continue;
 
-                        var libGroups = downloadResult.PackageReader.GetLibItems().ToArray();
+                        var libGroups = (await downloadResult.PackageReader.GetLibItemsAsync(cancellationToken)
+                            .ConfigureAwait(false)).ToArray();
                         var nearestLibFramework =
                             frameworkReducer.GetNearest(_framework, libGroups.Select(l => l.TargetFramework));
 
@@ -234,7 +235,8 @@ namespace AudioWorks.Api
                             continue;
 
                         // For AudioWorks extension packages only, copy the native library content files as well
-                        var contentGroups = downloadResult.PackageReader.GetItems("contentFiles").ToArray();
+                        var contentGroups = (await downloadResult.PackageReader
+                            .GetItemsAsync("contentFiles", cancellationToken).ConfigureAwait(false)).ToArray();
                         if (contentGroups.Length <= 0) continue;
 
                         var nearestContentFramework =

@@ -16,6 +16,7 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 
@@ -88,11 +89,10 @@ namespace AudioWorks.Common
         static void UpgradeRepositoryUrl(string settingsFile)
         {
             var settings = File.ReadAllText(settingsFile);
-            foreach (var oldRepository in _oldRepositories)
 #if NETSTANDARD2_0
-                settings = settings.Replace(oldRepository, _currentRepository);
+            settings = _oldRepositories.Aggregate(settings, (current, oldRepository) => current.Replace(oldRepository, _currentRepository));
 #else
-                settings = settings.Replace(oldRepository, _currentRepository, StringComparison.OrdinalIgnoreCase);
+            settings = _oldRepositories.Aggregate(settings, (current, oldRepository) => current.Replace(oldRepository, _currentRepository, StringComparison.OrdinalIgnoreCase));
 #endif
             File.WriteAllText(settingsFile, settings);
         }

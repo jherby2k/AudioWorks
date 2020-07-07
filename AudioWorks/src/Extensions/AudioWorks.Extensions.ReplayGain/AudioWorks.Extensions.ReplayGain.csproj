@@ -5,10 +5,10 @@
     <TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
-    <VersionPrefix>1.5.1</VersionPrefix>
+    <VersionPrefix>1.5.2</VersionPrefix>
     <Revision>$(BUILD_BUILDID)</Revision>
     <Revision Condition="'$(Revision)'==''">0</Revision>
-    <FileVersion>1.5.1.$(Revision)</FileVersion>
+    <FileVersion>1.5.2.$(Revision)</FileVersion>
     <Authors>Jeremy Herbison</Authors>
     <Company />
     <Product>AudioWorks</Product>

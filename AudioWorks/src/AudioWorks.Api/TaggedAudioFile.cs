@@ -48,8 +48,7 @@ namespace AudioWorks.Api
         /// <inheritdoc/>
         public void SaveMetadata(SettingDictionary? settings = null)
         {
-            if (settings == null)
-                settings = new SettingDictionary();
+            settings ??= new SettingDictionary();
             var extension = IO.Path.GetExtension(Path);
 
             // Make sure the provided settings are clean
@@ -61,8 +60,7 @@ namespace AudioWorks.Api
                     "Extension", extension))
                     using (var export = factory.CreateExport())
                     {
-                        if (_metadata == null)
-                            _metadata = LoadMetadata(fileStream);
+                        _metadata ??= LoadMetadata(fileStream);
 
                         export.Value.WriteMetadata(fileStream, _metadata, settings);
                         return;
