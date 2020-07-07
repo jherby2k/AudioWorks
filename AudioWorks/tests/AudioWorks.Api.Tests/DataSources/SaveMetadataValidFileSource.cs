@@ -1170,7 +1170,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "7DE488CE969207C50F33962EA5A9DDDE", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
-                    "11F166F272E635021ABD6BAF37A3BFA5", // Vorbis 1.3.6 (MacOS)
+                    "4AA6D9C63E0CFD18F450A99819E28811", // Vorbis 1.3.7 (MacOS)
                     "EA128B4FC09190C30D8E45400F525A53" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 }
             },
@@ -1202,7 +1202,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "D9C7D27040EF2ECE830AE4FC9B5BF25E", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
-                    "63BB3732D651F6D3A8496091FCF14725", // Vorbis 1.3.6 (MacOS)
+                    "2CFA7B065217D20087B138681D587899", // Vorbis 1.3.7 (MacOS)
                     "CFE0C01805E6D3334D60283EDBE9D1AF" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 }
             },
@@ -1234,7 +1234,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "D9C7D27040EF2ECE830AE4FC9B5BF25E", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
-                    "63BB3732D651F6D3A8496091FCF14725", // Vorbis 1.3.6 (MacOS)
+                    "2CFA7B065217D20087B138681D587899", // Vorbis 1.3.7 (MacOS)
                     "CFE0C01805E6D3334D60283EDBE9D1AF" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 }
             },
@@ -1266,7 +1266,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "39B3BD086D3587C78FB2E76B52BD8F12", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
-                    "ED7210753CB1A870F74DB01E959D2FFE", // Vorbis 1.3.6 (MacOS)
+                    "D87431EDDF5977239830E5BC9BCF042A", // Vorbis 1.3.7 (MacOS)
                     "57D8E93F74C19E53C17009BC1E1ED200" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 }
             },
@@ -1298,7 +1298,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "9E57B6A4089942A55ABD25FC13F7F749", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
-                    "17F5C68F72027655E21870F0E7F06CB8", // Vorbis 1.3.6 (MacOS)
+                    "C9C6B75D075FA0B9B398FFCB760A002D", // Vorbis 1.3.7 (MacOS)
                     "F44C083D10AE9E3682B609258CF676D6" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 }
             },
@@ -1331,7 +1331,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "7DE488CE969207C50F33962EA5A9DDDE", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
-                    "11F166F272E635021ABD6BAF37A3BFA5", // Vorbis 1.3.6 (MacOS)
+                    "4AA6D9C63E0CFD18F450A99819E28811", // Vorbis 1.3.7 (MacOS)
                     "EA128B4FC09190C30D8E45400F525A53" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 }
             },
@@ -1346,7 +1346,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "46539B96ACD38AA00671E0D5F82E57B1", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
-                    "873E47897BB3645B63B5B8D8B932198E", // Vorbis 1.3.6 (MacOS)
+                    "3FDD942360BA5074F9CF7303E80AA4D0", // Vorbis 1.3.7 (MacOS)
                     "E65B5EBAD605CBACCB4F328175665B9D" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 }
             },
@@ -1361,7 +1361,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "46539B96ACD38AA00671E0D5F82E57B1", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
-                    "873E47897BB3645B63B5B8D8B932198E", // Vorbis 1.3.6 (MacOS)
+                    "3FDD942360BA5074F9CF7303E80AA4D0", // Vorbis 1.3.7 (MacOS)
                     "E65B5EBAD605CBACCB4F328175665B9D" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 }
             },
@@ -1376,7 +1376,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "FD245B933B515151B8AF17307FF6ECFE", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
-                    "2682E9CD4EF8B4FBA041B907FD86614D", // Vorbis 1.3.6 (MacOS)
+                    "36C4695F1C9FBD9E018E98FB4A132D83", // Vorbis 1.3.7 (MacOS)
                     "88B6ECBB029FACC5E1F0506FBAC3EF4D" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 }
             },
@@ -1391,7 +1391,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "FD245B933B515151B8AF17307FF6ECFE", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
-                    "2682E9CD4EF8B4FBA041B907FD86614D", // Vorbis 1.3.6 (MacOS)
+                    "36C4695F1C9FBD9E018E98FB4A132D83", // Vorbis 1.3.7 (MacOS)
                     "88B6ECBB029FACC5E1F0506FBAC3EF4D" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 }
             },
