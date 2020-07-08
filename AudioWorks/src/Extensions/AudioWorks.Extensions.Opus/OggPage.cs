@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 namespace AudioWorks.Extensions.Opus
 {
     [StructLayout(LayoutKind.Sequential)]
-    struct OggPage
+    readonly struct OggPage
     {
         internal readonly IntPtr Header;
 

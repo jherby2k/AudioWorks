@@ -11,22 +11,20 @@ trigger:
     - azure-pipelines-windows.yml
     - azure-pipelines-linux.yml
 
+pr:
+    - dev
+
 pool:
-  vmImage: macOS-latest
+  vmImage: 'macOS-latest'
 
 variables:
-  buildConfiguration: Release
+  buildConfiguration: 'Release'
+  disable.coverage.autogenerate: 'true'
 
 steps:
-- task: UseDotNet@2
-  inputs:
-    packageType: sdk
-    version: 3.1.101
-  displayName: 'Upgrade .NET Core SDK'
-
 - task: DotNetCoreCLI@2
   inputs:
-    command: build
+    command: 'build'
     projects: 'AudioWorks/AudioWorks.sln'
     arguments: '--configuration $(buildConfiguration)'
   displayName: 'Build $(buildConfiguration) configuration'
@@ -37,54 +35,132 @@ steps:
     packagesToPack: '**/Extensions/**/*.csproj'
     packDirectory: '$(Build.ArtifactStagingDirectory)/prereleases/extensions'
     configurationToPack: $(buildConfiguration)
-    nobuild: true
+    nobuild: 'true'
     buildProperties: 'VersionSuffix="pre.$(Build.BuildId)"'
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
-  displayName: 'Package pre-release extension packages'
+  displayName: 'Package extensions'
 
 - script: |
     sudo curl -o /usr/local/bin/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
-    dotnet tool install --global dotnet-reportgenerator-globaltool
-  displayName: 'Install prerequisites'
+  displayName: 'Download and install prerequisites'
+
+- powershell: Write-Host echo "##vso[task.setvariable variable=localAppDataDir]$([System.Environment]::GetFolderPath(28))/AudioWorks"
+  displayName: Set local application data directory
 
 - powershell: |
-    $localAppDir = "$([System.Environment]::GetFolderPath(28))/AudioWorks"
-    $localFeedDir = (New-Item "$localAppDir/LocalFeed" -ItemType Directory).FullName
+    (Get-Content -path netcoreapp3.1.runsettings -Raw) -replace "%LOCALAPPDATADIR%", $env:LOCALAPPDATADIR -replace "%BUILD_SOURCESDIRECTORY%", $env:BUILD_SOURCESDIRECTORY -replace "%BUILDCONFIGURATION%", $env:BUILDCONFIGURATION | Set-Content -Path netcoreapp3.1.runsettings
+    Write-Host "netcoreapp3.1.runsettings:"
+    Get-Content -path netcoreapp3.1.runsettings
+    (Get-Content -path netcoreapp2.1.runsettings -Raw) -replace "%LOCALAPPDATADIR%", $env:LOCALAPPDATADIR -replace "%BUILD_SOURCESDIRECTORY%", $env:BUILD_SOURCESDIRECTORY -replace "%BUILDCONFIGURATION%", $env:BUILDCONFIGURATION | Set-Content -Path netcoreapp2.1.runsettings
+    Write-Host "netcoreapp2.1.runsettings:"
+    Get-Content -path netcoreapp2.1.runsettings
+  displayName: 'Pre-process runsettings for code coverage'
+
+- powershell: |
+    $localFeedDir = (New-Item "$env:LOCALAPPDATADIR/LocalFeed" -ItemType Directory).FullName
     Get-ChildItem -Path AudioWorks/src/Extensions -Filter *.nupkg -Recurse | Select-Object -ExpandProperty FullName | % { mono /usr/local/bin/nuget.exe add $_ -Source $localFeedDir -Expand -NonInteractive }
     $roamingAppDir = "$([System.Environment]::GetFolderPath(26))/AudioWorks"
     New-Item $roamingAppDir -ItemType Directory
     $content = Get-Content AudioWorks/src/AudioWorks.Common/settings.json | ConvertFrom-Json
-    $content.EnableTelemetry = $false
     $content.ExtensionRepository = $localFeedDir
     $content | ConvertTo-Json | Set-Content "$roamingAppDir/settings.json"
-    dotnet test AudioWorks/tests/AudioWorks.Api.Tests --no-build --configuration Release --filter "FullyQualifiedName=AudioWorks.Api.Tests.AudioFileTests.HasExpectedPath"
-    $testResult = 0
-    Get-ChildItem -Path AudioWorks/tests -Filter *.Tests -Directory | % { dotnet test $_.FullName --no-build --logger trx --configuration $env:BUILDCONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*%2c[xunit.*]*" /p:IncludeDirectory="$localAppDir/Extensions/netcoreapp3.1/*%2c$($_.FullName)/bin/$($env:BUILDCONFIGURATION)/AudioWorks.Commands/netstandard2.1"; if ($LastExitCode -ne 0) { $testResult = $LastExitCode } }
-    exit $testResult
-  displayName: 'Run tests'
+    dotnet test AudioWorks/tests/AudioWorks.Api.Tests --configuration $env:BUILDCONFIGURATION --filter "FullyQualifiedName=AudioWorks.Api.Tests.AudioFileTests.HasExpectedPath" --no-build --results-directory $env:AGENT_TEMPDIRECTORY --collect:"XPlat Code Coverage" --settings "$env:BUILD_SOURCESDIRECTORY/install.runsettings"
+    Write-Host
+    Write-Host "Installed files:"
+    Get-ChildItem -File -Recurse $env:LOCALAPPDATADIR/Extensions | Select-Object -ExpandProperty FullName
+  displayName: 'Install extensions'
 
-- task: PublishTestResults@2
+- task: DotNetCoreCLI@2
   inputs:
-    testRunner: VSTest
-    testResultsFiles: '**/*.trx'
-  displayName: 'Publish test results'
-  condition: succeededOrFailed()
+    command: 'test'
+    projects: 'AudioWorks/tests/AudioWorks.Common.Tests/AudioWorks.Common.Tests.csproj'
+    publishTestResults: 'true'
+    testRunTitle: 'AudioWorks.Common on .NET Core 3.1'
+    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp3.1.runsettings"'
+  displayName: 'Test AudioWorks.Common on .NET Core 3.1'
 
-- script: |
-    reportgenerator -reports:AudioWorks/tests/*/coverage.*.xml -targetdir:Reports/Cobertura -reporttypes:Cobertura
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'AudioWorks/tests/AudioWorks.Common.Tests/AudioWorks.Common.Tests.csproj'
+    publishTestResults: 'true'
+    testRunTitle: 'AudioWorks.Common on .NET Core 2.1'
+    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp2.1.runsettings"'
+  displayName: 'Test AudioWorks.Common on .NET Core 2.1'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'AudioWorks/tests/AudioWorks.Extensibility.Tests/AudioWorks.Extensibility.Tests.csproj'
+    publishTestResults: 'true'
+    testRunTitle: 'AudioWorks.Extensibility on .NET Core 3.1'
+    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp3.1.runsettings"'
+  displayName: 'Test AudioWorks.Extensibility on .NET Core 3.1'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'AudioWorks/tests/AudioWorks.Extensibility.Tests/AudioWorks.Extensibility.Tests.csproj'
+    publishTestResults: 'true'
+    testRunTitle: 'AudioWorks.Extensibility on .NET Core 2.1'
+    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp2.1.runsettings"'
+  displayName: 'Test AudioWorks.Extensibility on .NET Core 2.1'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj'
+    publishTestResults: 'true'
+    testRunTitle: 'AudioWorks.Api on .NET Core 3.1'
+    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp3.1.runsettings"'
+  displayName: 'Test AudioWorks.Api on .NET Core 3.1'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj'
+    publishTestResults: 'true'
+    testRunTitle: 'AudioWorks.Api on .NET Core 2.1'
+    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp2.1.runsettings"'
+  displayName: 'Test AudioWorks.Api on .NET Core 2.1'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj'
+    publishTestResults: 'true'
+    testRunTitle: 'AudioWorks.Commands on .NET Core 3.1'
+    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp3.1.runsettings"'
+  displayName: 'Test AudioWorks.Commands on .NET Core 3.1'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj'
+    publishTestResults: 'true'
+    testRunTitle: 'AudioWorks.Commands on .NET Core 2.1'
+    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp2.1.runsettings"'
+  displayName: 'Test AudioWorks.Commands on .NET Core 2.1'
+
+- task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
+  inputs:
+    reports: '$(Agent.TempDirectory)/*/coverage.cobertura.xml'
+    targetdir: 'reports/coverage'
+    reporttypes: 'HtmlInline_AzurePipelines;Cobertura'
   displayName: 'Generate code coverage results'
 
 - task: PublishCodeCoverageResults@1
   inputs:
-    codecoverageTool: cobertura
-    summaryFileLocation: $(Build.SourcesDirectory)/Reports/Cobertura/Cobertura.xml
+    codecoverageTool: 'cobertura'
+    summaryFileLocation: '$(Build.SourcesDirectory)/reports/coverage/Cobertura.xml'
+    reportDirectory: '$(Build.SourcesDirectory)/reports/coverage'
   displayName: 'Publish code coverage results'
 
 - task: CopyFiles@2
   inputs:
     contents: 'AudioWorks/src/Extensions/**/*.nupkg'
     targetFolder: '$(Build.ArtifactStagingDirectory)/releases/extensions'
-    flattenFolders: true
+    flattenFolders: 'true'
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   displayName: 'Copy extensions to artifacts directory'
 

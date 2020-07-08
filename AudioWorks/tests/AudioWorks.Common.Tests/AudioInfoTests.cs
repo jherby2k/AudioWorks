@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using AudioWorks.TestUtilities;
@@ -29,9 +28,8 @@ namespace AudioWorks.Common.Tests
             LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
 
         [Fact(DisplayName = "AudioInfo throws an exception if the Format is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void FormatNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => AudioInfo.CreateForLossless(null, 2, 16, 44100));
+            Assert.Throws<ArgumentNullException>(() => AudioInfo.CreateForLossless(null!, 2, 16, 44100));
 
         [Fact(DisplayName = "AudioInfo's Format property is properly serialized")]
         public void FormatIsSerialized()

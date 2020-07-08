@@ -51,7 +51,6 @@ namespace AudioWorks.Extensions.Opus
 #endif
 #elif OSX
             var osVersion = GetOSVersion();
-
             AddUnmanagedLibraryPath(Path.Combine(
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
                 osVersion.StartsWith("10.13", StringComparison.Ordinal) ? "osx.10.13-x64" :
@@ -59,32 +58,30 @@ namespace AudioWorks.Extensions.Opus
                 "osx.10.15-x64"));
 #else // LINUX
             var release = GetRelease();
-
             if (release.StartsWith("Ubuntu", StringComparison.OrdinalIgnoreCase))
                 AddUnmanagedLibraryPath(Path.Combine(
                     Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
-                    release.StartsWith("Ubuntu 16.04", StringComparison.OrdinalIgnoreCase)
-                        ? "ubuntu.16.04-x64"
-                        : "ubuntu.18.04-x64"));
-
-            if (!VerifyLibrary("libopus.so.0"))
-            {
-                logger.LogWarning(
-                    release.StartsWith("Ubuntu", StringComparison.OrdinalIgnoreCase)
-                        ? "Missing libopus.so.0. Run 'sudo apt-get install -y libopus0 && sudo updatedb' then restart AudioWorks."
-                        : "Missing libopus.so.0.");
-                return false;
-            }
-
-            if (!VerifyLibrary("libogg.so.0"))
-            {
-                logger.LogWarning(
-                    release.StartsWith("Ubuntu", StringComparison.OrdinalIgnoreCase)
-                        ? "Missing libogg.so.0. Run 'sudo apt-get install -y libogg0 && sudo updatedb' then restart AudioWorks."
-                        : "Missing libogg.so.0.");
-                return false;
-            }
+                    release.StartsWith("Ubuntu 16.04", StringComparison.OrdinalIgnoreCase) ? "ubuntu.16.04-x64" :
+                    release.StartsWith("Ubuntu 18.04", StringComparison.OrdinalIgnoreCase) ? "ubuntu.18.04-x64" :
+                    "ubuntu.20.04-x64"));
 #endif
+
+            try
+            {
+                foreach (var methodInfo in typeof(SafeNativeMethods).GetMethods(
+                    BindingFlags.NonPublic | BindingFlags.Static))
+                    Marshal.Prelink(methodInfo);
+            }
+            catch (DllNotFoundException e)
+            {
+                logger.LogWarning(e.Message);
+                return false;
+            }
+            catch (EntryPointNotFoundException e)
+            {
+                logger.LogWarning(e.Message);
+                return false;
+            }
 
             logger.LogInformation("Using libopusenc version {0}.",
                 // ReSharper disable once PossibleNullReferenceException
@@ -112,25 +109,7 @@ namespace AudioWorks.Extensions.Opus
             .AddUnmanagedLibraryPath(libPath);
 #if LINUX
 
-        static bool VerifyLibrary(string libraryName)
-        {
-            using (var process = new Process())
-            {
-                process.StartInfo = new ProcessStartInfo("locate", $"-r {libraryName}$")
-                {
-                    RedirectStandardOutput = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
-
-                process.Start();
-                process.StandardOutput.ReadToEnd();
-                process.WaitForExit();
-                return process.ExitCode == 0;
-            }
-        }
-
-        public static string GetRelease()
+        static string GetRelease()
         {
             try
             {
@@ -157,7 +136,7 @@ namespace AudioWorks.Extensions.Opus
         }
 #elif OSX
 
-        public static string GetOSVersion()
+        static string GetOSVersion()
         {
             using (var process = new Process())
             {

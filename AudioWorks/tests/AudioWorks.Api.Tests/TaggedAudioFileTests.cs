@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using AudioWorks.Api.Tests.DataSources;
@@ -38,9 +37,8 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "TaggedAudioFile's constructor throws an exception if the path is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void ConstructorPathNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => new TaggedAudioFile(null));
+            Assert.Throws<ArgumentNullException>(() => new TaggedAudioFile(null!));
 
         [Fact(DisplayName = "TaggedAudioFile's constructor throws an exception if the path cannot be found")]
         public void ConstructorPathNotFoundThrowsException() =>
@@ -234,7 +232,6 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "TaggedAudioFile's Rename method throws an exception if the name is null")]
         [MemberData(nameof(RenameValidFileDataSource.FileNames), MemberType = typeof(RenameValidFileDataSource))]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void RenameNullNameThrowsException(string fileName)
         {
             var path = Path.Combine("Output", "Rename", fileName);
@@ -242,7 +239,7 @@ namespace AudioWorks.Api.Tests
             File.Copy(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName), path, true);
 
             Assert.Throws<ArgumentNullException>(() =>
-                new TaggedAudioFile(path).Rename(null, true));
+                new TaggedAudioFile(path).Rename(null!, true));
         }
 
         [Theory(DisplayName = "TaggedAudioFile's Rename method renames the file")]

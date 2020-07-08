@@ -29,9 +29,8 @@ namespace AudioWorks.Common.Tests
             LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Title is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void TitleNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => new AudioMetadata{ Title = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata{ Title = null! });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Title")]
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
@@ -69,9 +68,8 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Artist is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void ArtistNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Artist = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Artist = null! });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Artist")]
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
@@ -109,9 +107,8 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Album is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void AlbumNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Album = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Album = null! });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Album")]
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
@@ -149,9 +146,8 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if AlbumArtist is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void AlbumArtistNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { AlbumArtist = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { AlbumArtist = null! });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid AlbumArtist")]
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
@@ -189,9 +185,8 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Composer is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void ComposerNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Composer = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Composer = null! });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Composer")]
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
@@ -229,9 +224,8 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Genre is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void GenreNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Genre = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Genre = null! });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Genre")]
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
@@ -269,9 +263,8 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Comment is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void CommentNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Comment = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Comment = null! });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Comment")]
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
@@ -309,9 +302,8 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Day is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void DayNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Day = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Day = null! });
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Day is zero")]
         public void DayZeroThrowsException() =>
@@ -365,9 +357,8 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Month is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void MonthNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Month = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Month = null! });
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Month is zero")]
         public void MonthZeroThrowsException() =>
@@ -421,9 +412,8 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Year is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void YearNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Year = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Year = null! });
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Year is less than 4 characters")]
         public void YearTooShortThrowsException() =>
@@ -477,9 +467,8 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if TrackNumber is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void TrackNumberNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { TrackNumber = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { TrackNumber = null! });
 
         [Fact(DisplayName = "AudioMetadata throws an exception if TrackNumber is zero")]
         public void TrackNumberZeroThrowsException() =>
@@ -533,9 +522,8 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if TrackCount is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void TrackCountNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { TrackCount = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { TrackCount = null! });
 
         [Fact(DisplayName = "AudioMetadata throws an exception if TrackCount is zero")]
         public void TrackCountZeroThrowsException() =>
@@ -589,9 +577,8 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if TrackPeak is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void TrackPeakNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { TrackPeak = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { TrackPeak = null! });
 
         [Fact(DisplayName = "AudioMetadata throws an exception if TrackPeak is negative")]
         public void TrackPeakNegativeThrowsException() =>
@@ -641,9 +628,8 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if AlbumPeak is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void AlbumPeakNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { AlbumPeak = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { AlbumPeak = null! });
 
         [Fact(DisplayName = "AudioMetadata throws an exception if AlbumPeak is negative")]
         public void AlbumPeakNegativeThrowsException() =>
@@ -693,9 +679,8 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if TrackGain is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void TrackGainNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { TrackGain = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { TrackGain = null! });
 
         [Fact(DisplayName = "AudioMetadata throws an exception if TrackGain isn't numeric")]
         public void TrackGainNotNumericThrowsException() =>
@@ -741,9 +726,8 @@ namespace AudioWorks.Common.Tests
         }
 
         [Fact(DisplayName = "AudioMetadata throws an exception if AlbumGain is null")]
-        [SuppressMessage("Performance", "CS8625:Cannot convert null literal to non-nullable reference type")]
         public void AlbumGainNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { AlbumGain = null });
+            Assert.Throws<ArgumentNullException>(() => new AudioMetadata { AlbumGain = null! });
 
         [Fact(DisplayName = "AudioMetadata throws an exception if AlbumGain isn't numeric")]
         public void AlbumGainNotNumericThrowsException() =>

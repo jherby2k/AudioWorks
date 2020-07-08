@@ -16,7 +16,6 @@ You should have received a copy of the GNU Affero General Public License along w
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Logging;
 using NuGet.Common;
 using NuGet.Configuration;
@@ -69,9 +68,9 @@ namespace AudioWorks.Api
             ".so"
         });
 
-        static readonly string[] _rootAssemblyNames = GetRootAssemblyNames();
+        static readonly string[] _rootAssemblyNames = GetRootAssemblyNames().ToArray();
 
-        internal static async Task DownloadAsync()
+        internal static async Task TryDownloadAsync()
         {
             var logger = LoggerManager.LoggerFactory.CreateLogger(typeof(ExtensionInstaller).FullName);
 
@@ -81,8 +80,27 @@ namespace AudioWorks.Api
             {
                 logger.LogInformation("Beginning automatic extension updates.");
 
-                Directory.CreateDirectory(_extensionRoot);
+                try
+                {
+                    await DownloadAsync(logger).ConfigureAwait(false);
+                }
+                catch (AggregateException e)
+                {
+                    // Log any connection errors and otherwise fail silently
+                    if (e.InnerException is FatalProtocolException)
+                        logger.LogError(e.InnerException.Message);
+                    else
+                        throw;
+                }
+            }
+        }
 
+        static async Task DownloadAsync(ILogger logger)
+        {
+            Directory.CreateDirectory(_extensionRoot);
+
+            try
+            {
                 using (var tokenSource = new CancellationTokenSource(
                     ConfigurationManager.Configuration.GetValue("AutomaticExtensionDownloadTimeout", 30) * 1000))
                 {
@@ -98,21 +116,31 @@ namespace AudioWorks.Api
 
                     // Remove any extensions that aren't published
                     if (Directory.Exists(_extensionRoot))
-                        foreach (var obsoleteExtension in new DirectoryInfo(_extensionRoot).GetDirectories()
+                        foreach (var installedExtension in new DirectoryInfo(_extensionRoot).GetDirectories()
                             .Select(dir => dir.Name)
                             .Except(publishedPackages.Select(package => package.Identity.ToString()),
                                 StringComparer.OrdinalIgnoreCase))
                         {
-                            Directory.Delete(Path.Combine(_extensionRoot, obsoleteExtension), true);
+                            Directory.Delete(Path.Combine(_extensionRoot, installedExtension), true);
 
-                            logger.LogDebug("Deleted unlisted or obsolete extension in '{0}'.",
-                                obsoleteExtension);
+                            logger.LogDebug("Deleted unlisted or obsolete extension in '{0}'.", installedExtension);
                         }
 
                     logger.LogInformation(!packagesInstalled
                         ? "Extensions are already up to date."
                         : "Extensions successfully updated.");
                 }
+            }
+            catch (FatalProtocolException e)
+            {
+                if (e.InnerException is OperationCanceledException)
+                    logger.LogWarning("Timed out enumerating the published extensions.");
+                else
+                    throw;
+            }
+            catch (OperationCanceledException e)
+            {
+                logger.LogWarning(e.Message);
             }
         }
 
@@ -161,64 +189,86 @@ namespace AudioWorks.Api
             logger.LogInformation("Installing '{0}' version {1}.",
                 packageMetadata.Identity.Id, packageMetadata.Identity.Version.ToString());
 
-            using (var cacheContext = new SourceCacheContext())
+            try
             {
-                var packagesToInstall =
-                    await ResolvePackagesAsync(packageMetadata.Identity, cacheContext, cancellationToken)
-                        .ConfigureAwait(false);
-
-                var settings = Settings.LoadDefaultSettings(null);
-                var frameworkReducer = new FrameworkReducer();
-
-                // Download and install the package and its dependencies
-                foreach (var packageToInstall in packagesToInstall)
+                using (var cacheContext = new SourceCacheContext())
                 {
-                    var downloadResource = await packageToInstall.Source
-                        .GetResourceAsync<DownloadResource>(cancellationToken)
-                        .ConfigureAwait(false);
-                    var downloadResult = await downloadResource.GetDownloadResourceResultAsync(
-                            packageToInstall,
-                            new PackageDownloadContext(cacheContext),
-                            SettingsUtility.GetGlobalPackagesFolder(settings),
-                            NullLogger.Instance,
-                            cancellationToken)
-                        .ConfigureAwait(false);
+                    var packagesToInstall =
+                        await ResolvePackagesAsync(packageMetadata.Identity, cacheContext, cancellationToken)
+                            .ConfigureAwait(false);
 
-                    var libGroups = downloadResult.PackageReader.GetLibItems().ToArray();
-                    var nearestLibFramework =
-                        frameworkReducer.GetNearest(_framework, libGroups.Select(l => l.TargetFramework));
+                    var settings = Settings.LoadDefaultSettings(null);
+                    var frameworkReducer = new FrameworkReducer();
 
-                    // Copy the relevant libraries directly from the NuGet cache
-                    foreach (var item in libGroups
-                        .First(l => l.TargetFramework.Equals(nearestLibFramework)).Items)
-                        CopyLibFiles(
-                            Path.Combine(Path.GetDirectoryName(((FileStream) downloadResult.PackageStream).Name), item),
-                            Path.Combine(extensionDir.FullName, Path.GetFileName(item)),
-                            logger);
-
-                    if (!packageToInstall.Id.StartsWith("AudioWorks.Extensions", StringComparison.OrdinalIgnoreCase))
-                        continue;
-
-                    // For AudioWorks extension packages only, copy the native library content files as well
-                    var contentGroups = downloadResult.PackageReader.GetItems("contentFiles").ToArray();
-                    if (contentGroups.Length <= 0) continue;
-
-                    var nearestContentFramework =
-                        frameworkReducer.GetNearest(_framework, contentGroups.Select(c => c.TargetFramework));
-
-                    foreach (var item in contentGroups
-                        .First(c => c.TargetFramework.Equals(nearestContentFramework)).Items)
+                    // Download and install the package and its dependencies
+                    foreach (var packageToInstall in packagesToInstall)
                     {
-                        var sourceFileName = Path.Combine(
-                            Path.GetDirectoryName(((FileStream) downloadResult.PackageStream).Name), item);
+                        var downloadResource = await packageToInstall.Source
+                            .GetResourceAsync<DownloadResource>(cancellationToken)
+                            .ConfigureAwait(false);
+                        var downloadResult = await downloadResource.GetDownloadResourceResultAsync(
+                                packageToInstall,
+                                new PackageDownloadContext(cacheContext),
+                                SettingsUtility.GetGlobalPackagesFolder(settings),
+                                NullLogger.Instance,
+                                cancellationToken)
+                            .ConfigureAwait(false);
 
-                        CopyContentFiles(
-                            sourceFileName,
-                            Path.Combine(extensionDir.FullName, new DirectoryInfo(sourceFileName).Parent?.Name,
-                            Path.GetFileName(item)),
-                            logger);
+                        if (downloadResult.Status != DownloadResourceResultStatus.Available) continue;
+
+                        var libGroups = (await downloadResult.PackageReader.GetLibItemsAsync(cancellationToken)
+                            .ConfigureAwait(false)).ToArray();
+                        var nearestLibFramework =
+                            frameworkReducer.GetNearest(_framework, libGroups.Select(l => l.TargetFramework));
+
+                        // Copy the relevant libraries directly from the NuGet cache
+                        foreach (var item in libGroups
+                            .First(l => l.TargetFramework.Equals(nearestLibFramework)).Items)
+                            CopyLibFiles(
+                                Path.Combine(Path.GetDirectoryName(((FileStream) downloadResult.PackageStream).Name),
+                                    item),
+                                Path.Combine(extensionDir.FullName, Path.GetFileName(item)),
+                                logger);
+
+                        if (!packageToInstall.Id.StartsWith("AudioWorks.Extensions",
+                            StringComparison.OrdinalIgnoreCase))
+                            continue;
+
+                        // For AudioWorks extension packages only, copy the native library content files as well
+                        var contentGroups = (await downloadResult.PackageReader
+                            .GetItemsAsync("contentFiles", cancellationToken).ConfigureAwait(false)).ToArray();
+                        if (contentGroups.Length <= 0) continue;
+
+                        var nearestContentFramework =
+                            frameworkReducer.GetNearest(_framework, contentGroups.Select(c => c.TargetFramework));
+
+                        foreach (var item in contentGroups
+                            .First(c => c.TargetFramework.Equals(nearestContentFramework)).Items)
+                        {
+                            var sourceFileName = Path.Combine(
+                                Path.GetDirectoryName(((FileStream) downloadResult.PackageStream).Name), item);
+
+                            CopyContentFiles(
+                                sourceFileName,
+                                Path.Combine(extensionDir.FullName, new DirectoryInfo(sourceFileName).Parent?.Name,
+                                    Path.GetFileName(item)),
+                                logger);
+                        }
                     }
                 }
+
+                cancellationToken.ThrowIfCancellationRequested();
+            }
+            catch (Exception)
+            {
+                // Clean up a partial installation
+                if (Directory.Exists(extensionDir.FullName))
+                {
+                    logger.LogDebug("Deleting partially-installed extension '{0}'.", extensionDir.Name);
+                    extensionDir.Delete(true);
+                }
+
+                throw;
             }
 
             return true;
@@ -264,7 +314,7 @@ namespace AudioWorks.Api
                     .ConfigureAwait(false);
                 var dependencyInfo = await dependencyInfoResource.ResolvePackage(
                         packageIdentity,
-                        NuGetFramework.AnyFramework,
+                        _framework,
                         cacheContext,
                         NullLogger.Instance,
                         cancellationToken)
@@ -328,12 +378,10 @@ namespace AudioWorks.Api
             File.Copy(source, destination);
         }
 
-        static string[] GetRootAssemblyNames()
-        {
-            var rootDirectory = new DirectoryInfo(
-                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath));
-
-            var result = rootDirectory.GetFiles("*.dll")
+        static IEnumerable<string> GetRootAssemblyNames() =>
+            new DirectoryInfo(
+                    Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath))
+                .EnumerateFiles("*.dll")
                 .Select(file =>
                 {
                     try
@@ -346,14 +394,5 @@ namespace AudioWorks.Api
                         return Path.GetFileNameWithoutExtension(file.Name);
                     }
                 });
-
-            // .NET Core applications may be loading via a runtime configuration file
-            foreach (var dependenciesFile in rootDirectory.GetFiles("*.deps.json"))
-                using (var stream = dependenciesFile.OpenRead())
-                using (var reader = new DependencyContextJsonReader())
-                    result = result.Union(reader.Read(stream).RuntimeLibraries.Select(library => library.Name));
-
-            return result.ToArray();
-        }
     }
 }

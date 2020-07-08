@@ -21,7 +21,7 @@ namespace AudioWorks.Api
 {
     static class ExtensionProviderWrapper
     {
-        static ExtensionProviderWrapper() => ExtensionInstaller.DownloadAsync().Wait();
+        static ExtensionProviderWrapper() => ExtensionInstaller.TryDownloadAsync().Wait();
 
         internal static IEnumerable<ExportFactory<T, IDictionary<string, object>>> GetFactories<T>()
             where T : class =>

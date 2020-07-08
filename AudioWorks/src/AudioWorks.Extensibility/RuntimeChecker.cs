@@ -37,9 +37,9 @@ namespace AudioWorks.Extensibility
                 StringComparison.Ordinal))
                 return $"net{GetFrameworkVersion()}";
 
-            // .NET Core 2.x didn't report the version correctly. Assume they are v2.0
+            // .NET Core 2.x didn't report the version correctly. Assume they are v2.1
             var version = Version.Parse(RuntimeInformation.FrameworkDescription.Substring(RuntimeInformation.FrameworkDescription.LastIndexOf(' ')));
-            return version.Major == 4 ? "netcoreapp2.0" : $"netcoreapp{version.ToString(2)}";
+            return version.Major == 4 ? "netcoreapp2.1" : $"netcoreapp{version.ToString(2)}";
 #else
             var version = Version.Parse(RuntimeInformation.FrameworkDescription.Substring(RuntimeInformation.FrameworkDescription.LastIndexOf(' ')));
             return $"netcoreapp{version.ToString(2)}";

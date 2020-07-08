@@ -17,6 +17,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AudioWorks.Api.Tests.DataTypes;
+#if NET462
+using AudioWorks.TestUtilities;
+#endif
 
 namespace AudioWorks.Api.Tests.DataSources
 {
@@ -1166,9 +1169,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "7DE488CE969207C50F33962EA5A9DDDE", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
-                    "11F166F272E635021ABD6BAF37A3BFA5", // Vorbis 1.3.6 (MacOS)
-                    "69A75975D90E906C158C194236FC7125" // Vorbis 1.3.6 AoTuV + Lancer (Windows)
+                    "BD9FBB0769E89FC46E37BB48A7F8A62F", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
+                    "4AA6D9C63E0CFD18F450A99819E28811" // Vorbis 1.3.7 (MacOS)
                 }
             },
 
@@ -1198,9 +1200,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "D9C7D27040EF2ECE830AE4FC9B5BF25E", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
-                    "63BB3732D651F6D3A8496091FCF14725", // Vorbis 1.3.6 (MacOS)
-                    "719EDC12E5D730C0C8EB37C90F63563D" // Vorbis 1.3.6 AoTuV + Lancer (Windows)
+                    "4BCB964FA118AE894302C5D9318EBB3E", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
+                    "2CFA7B065217D20087B138681D587899" // Vorbis 1.3.7 (MacOS)
                 }
             },
 
@@ -1230,9 +1231,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "D9C7D27040EF2ECE830AE4FC9B5BF25E", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
-                    "63BB3732D651F6D3A8496091FCF14725", // Vorbis 1.3.6 (MacOS)
-                    "719EDC12E5D730C0C8EB37C90F63563D" // Vorbis 1.3.6 AoTuV + Lancer (Windows)
+                    "4BCB964FA118AE894302C5D9318EBB3E", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
+                    "2CFA7B065217D20087B138681D587899" // Vorbis 1.3.7 (MacOS)
                 }
             },
 
@@ -1262,9 +1262,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "39B3BD086D3587C78FB2E76B52BD8F12", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
-                    "ED7210753CB1A870F74DB01E959D2FFE", // Vorbis 1.3.6 (MacOS)
-                    "B49EE9F48912935E98EB5B703A0CFEAE" // Vorbis 1.3.6 AoTuV + Lancer (Windows)
+                    "E84E26FA84319808E2DD078BDE0561CB", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
+                    "D87431EDDF5977239830E5BC9BCF042A" // Vorbis 1.3.7 (MacOS)
                 }
             },
 
@@ -1294,9 +1293,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "9E57B6A4089942A55ABD25FC13F7F749", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
-                    "17F5C68F72027655E21870F0E7F06CB8", // Vorbis 1.3.6 (MacOS)
-                    "CE24BB00216950315A1E5964FDDC62DC" // Vorbis 1.3.6 AoTuV + Lancer (Windows)
+                    "A44D6CC373B6F34D65EADBB32C94C566", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
+                    "C9C6B75D075FA0B9B398FFCB760A002D" // Vorbis 1.3.7 (MacOS)
                 }
             },
 
@@ -1327,9 +1325,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "7DE488CE969207C50F33962EA5A9DDDE", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
-                    "11F166F272E635021ABD6BAF37A3BFA5", // Vorbis 1.3.6 (MacOS)
-                    "69A75975D90E906C158C194236FC7125" // Vorbis 1.3.6 AoTuV + Lancer (Windows)
+                    "BD9FBB0769E89FC46E37BB48A7F8A62F", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
+                    "4AA6D9C63E0CFD18F450A99819E28811" // Vorbis 1.3.7 (MacOS)
                 }
             },
 
@@ -1342,9 +1339,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "46539B96ACD38AA00671E0D5F82E57B1", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
-                    "873E47897BB3645B63B5B8D8B932198E", // Vorbis 1.3.6 (MacOS)
-                    "C4744A0D9349D8423FF188BF79823868" // Vorbis 1.3.6 AoTuV + Lancer (Windows)
+                    "D225108B66480DC5F4368F6CD605AD7C", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
+                    "3FDD942360BA5074F9CF7303E80AA4D0" // Vorbis 1.3.7 (MacOS)
                 }
             },
 
@@ -1357,9 +1353,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "46539B96ACD38AA00671E0D5F82E57B1", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
-                    "873E47897BB3645B63B5B8D8B932198E", // Vorbis 1.3.6 (MacOS)
-                    "C4744A0D9349D8423FF188BF79823868" // Vorbis 1.3.6 AoTuV + Lancer (Windows)
+                    "D225108B66480DC5F4368F6CD605AD7C", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
+                    "3FDD942360BA5074F9CF7303E80AA4D0" // Vorbis 1.3.7 (MacOS)
                 }
             },
 
@@ -1372,9 +1367,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "FD245B933B515151B8AF17307FF6ECFE", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
-                    "2682E9CD4EF8B4FBA041B907FD86614D", // Vorbis 1.3.6 (MacOS)
-                    "8C9453958E15AF2EFBE2054C8F07EFAF" // Vorbis 1.3.6 AoTuV + Lancer (Windows)
+                    "CA3A8F152FFC10FE460E6DBD2DB2F090", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
+                    "36C4695F1C9FBD9E018E98FB4A132D83" // Vorbis 1.3.7 (MacOS)
                 }
             },
 
@@ -1387,9 +1381,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "FD245B933B515151B8AF17307FF6ECFE", // Vorbis 1.3.5 (Ubuntu 16.04 and 18.04)
-                    "2682E9CD4EF8B4FBA041B907FD86614D", // Vorbis 1.3.6 (MacOS)
-                    "8C9453958E15AF2EFBE2054C8F07EFAF" // Vorbis 1.3.6 AoTuV + Lancer (Windows)
+                    "CA3A8F152FFC10FE460E6DBD2DB2F090", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
+                    "36C4695F1C9FBD9E018E98FB4A132D83" // Vorbis 1.3.7 (MacOS)
                 }
             },
 
@@ -1421,7 +1414,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "9A53EDE65A60F0C1684D16744E33DCFC", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "D22BBFDDCB298A427057253C4E833057", // Opus 1.3.1 (MacOS and Windows)
+                    "D22BBFDDCB298A427057253C4E833057"  // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
                 }
             },
 
@@ -1448,7 +1441,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "4A397361C11EC1FE03A43E176E673856", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (MacOS and Windows)
+                    "B181BB7AF0A3E37C3A262B942FD197FC"  // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
                 }
             },
 
@@ -1475,7 +1468,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "4A397361C11EC1FE03A43E176E673856", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (MacOS and Windows)
+                    "B181BB7AF0A3E37C3A262B942FD197FC"  // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
                 }
             },
 
@@ -1502,7 +1495,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "666B7D0315E667A3D6A943294A32BE1F", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "166F1DD0C71E2CCCF226157A34791E1B", // Opus 1.3.1 (MacOS and Windows)
+                    "166F1DD0C71E2CCCF226157A34791E1B"  // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
                 }
             },
 
@@ -1529,7 +1522,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "910BF18671BC79D50FB8B9EAE8E4F0DA", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "8EA7FC13A2F214CADF3A1D447EF5CB65", // Opus 1.3.1 (MacOS and Windows)
+                    "8EA7FC13A2F214CADF3A1D447EF5CB65"  // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
                 }
             },
 
@@ -1557,7 +1550,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "86AD4DC307C9523B2C1213FE2359FDEA", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "BB50765E7DB79BDEADFC81E771101FD7", // Opus 1.3.1 (MacOS and Windows)
+                    "BB50765E7DB79BDEADFC81E771101FD7"  // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
                 }
             },
 
@@ -1571,7 +1564,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "C2351EF6BFA1D50983183ADC6136FB9C", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "367DB09F8408583579F918061FCB6322", // Opus 1.3.1 (MacOS and Windows)
+                    "367DB09F8408583579F918061FCB6322"  // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
                 }
             },
 
@@ -1585,7 +1578,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "CEF9DD8611EBFEF035761B450D816E95", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "22D33DFB735C5B7805AB26C7A04CDA86", // Opus 1.3.1 (MacOS and Windows)
+                    "22D33DFB735C5B7805AB26C7A04CDA86"  // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
                 }
             },
 
@@ -1599,7 +1592,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "1636B4EF09C4EF2B16135E9C2670473B", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "CABF32D411EA5FA9458A79B6DC2C2D69", // Opus 1.3.1 (MacOS and Windows)
+                    "CABF32D411EA5FA9458A79B6DC2C2D69"  // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
                 }
             },
 
@@ -1613,7 +1606,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "1636B4EF09C4EF2B16135E9C2670473B", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "CABF32D411EA5FA9458A79B6DC2C2D69", // Opus 1.3.1 (MacOS and Windows)
+                    "CABF32D411EA5FA9458A79B6DC2C2D69"  // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
                 }
             }
 

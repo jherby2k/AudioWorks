@@ -2,11 +2,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;netcoreapp2.1;net462</TargetFrameworks>
+    <TargetFrameworks Condition="'$(OS)'!='Windows_NT'">netcoreapp3.1;netcoreapp2.1</TargetFrameworks>
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <VersionPrefix>1.0.0</VersionPrefix>
-    <VersionSuffix>beta8</VersionSuffix>
+    <VersionSuffix>beta9</VersionSuffix>
     <Revision>$(BUILD_BUILDID)</Revision>
     <Revision Condition="'$(Revision)'==''">0</Revision>
     <FileVersion>1.0.0.$(Revision)</FileVersion>
@@ -15,7 +16,6 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <CodeAnalysisRuleSet>CodeAnalysis.ruleset</CodeAnalysisRuleSet>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <DefineConstants>NULLABLE_ATTRIBUTES_EXCLUDE_FROM_CODE_COVERAGE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -34,20 +34,24 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
-    <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
+    <PackageReference Include="Nullable" Version="1.2.1" PrivateAssets="all" />
+    <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" PrivateAssets="all" />
+    <PackageReference Include="System.Threading.Tasks.Dataflow" Version="4.11.1" />
   </ItemGroup>
 
   <!-- ReSharper disable once UnknownProperty -->
-  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.1'">
-    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.12.0" />
+  <ItemGroup Condition="'$(TargetFramework)'!='net462'">
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.5" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.5" />
+    <PackageReference Include="Nuget.Resolver" Version="5.6.0" />
   </ItemGroup>
 
   <!-- ReSharper disable once UnknownProperty -->
-  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
-    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.7.2" />
-    <PackageReference Include="Nullable" Version="1.2.0" PrivateAssets="all" />
+  <ItemGroup Condition="'$(TargetFramework)'=='net462'">
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="2.2.4" />
+    <PackageReference Include="System.Memory" Version="4.5.4" />
   </ItemGroup>
 
   <ItemGroup>

@@ -18,7 +18,7 @@ using System.Runtime.InteropServices;
 namespace AudioWorks.Extensions.Apple
 {
     [StructLayout(LayoutKind.Sequential)]
-    struct AudioStreamPacketDescription
+    readonly struct AudioStreamPacketDescription
     {
         readonly long StartOffset;
 
