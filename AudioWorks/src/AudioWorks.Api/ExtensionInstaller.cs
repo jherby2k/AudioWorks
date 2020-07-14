@@ -64,7 +64,6 @@ namespace AudioWorks.Api
         {
             ".dll",
             ".dylib",
-            ".pdb",
             ".so"
         });
 
@@ -339,11 +338,6 @@ namespace AudioWorks.Api
             var extension = Path.GetExtension(source);
 
             if (!_fileTypesToInstall.Contains(extension, StringComparer.OrdinalIgnoreCase))
-                return;
-
-            // Skip any 3rd party symbols
-            if (extension.Equals(".pdb", StringComparison.OrdinalIgnoreCase) &&
-                !Path.GetFileName(source).StartsWith("AudioWorks", StringComparison.OrdinalIgnoreCase))
                 return;
 
             try

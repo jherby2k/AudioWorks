@@ -72,6 +72,23 @@ steps:
     Get-ChildItem -File -Recurse $env:LOCALAPPDATADIR/Extensions | Select-Object -ExpandProperty FullName
   displayName: 'Install extensions'
 
+- powershell: |
+    function Copy-Symbols {
+        param ($source, $destination)
+
+        $extensionDirs = Get-ChildItem -Path $env:LOCALAPPDATADIR/Extensions/$destination/*
+        foreach ($pdb in Get-ChildItem -Path AudioWorks/src/Extensions/*/bin/$env:BUILDCONFIGURATION/$source/* -Filter AudioWorks.Extensions.*.pdb) {
+            $extensionDir = $extensionDirs | Where-Object -Property Name -Like "$($pdb.Name -replace ".pdb").*"
+            Copy-Item -Path $pdb.FullName -Destination $extensionDir -PassThru | % { Write-Host $_.FullName }
+        }
+    }
+
+    Write-Host "Copied symbols:"
+    Copy-Symbols "netstandard2.0" "net48"
+    Copy-Symbols "netstandard2.0" "netcoreapp2.1"
+    Copy-Symbols "netstandard2.1" "netcoreapp3.1"
+  displayName: 'Copy symbols to extension directories'
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
@@ -160,7 +177,9 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    contents: 'AudioWorks/src/Extensions/**/*.nupkg'
+    contents: |
+      AudioWorks/src/Extensions/**/*.nupkg
+      AudioWorks/src/Extensions/**/*.snupkg
     targetFolder: '$(Build.ArtifactStagingDirectory)/releases/extensions'
     flattenFolders: 'true'
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
