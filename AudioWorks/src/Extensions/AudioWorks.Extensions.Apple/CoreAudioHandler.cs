@@ -59,9 +59,14 @@ namespace AudioWorks.Extensions.Apple
                     BindingFlags.NonPublic | BindingFlags.Static))
                     Marshal.Prelink(methodInfo);
             }
-            catch (DllNotFoundException e)
+            catch (DirectoryNotFoundException)
             {
-                logger.LogWarning(e.Message);
+                logger.LogDebug("Apple Application Support is not installed.");
+                return false;
+            }
+            catch (DllNotFoundException)
+            {
+                logger.LogDebug("Apple Application Support is not installed.");
                 return false;
             }
             catch (EntryPointNotFoundException e)
