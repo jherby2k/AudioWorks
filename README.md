@@ -13,7 +13,7 @@ Linux | [![Build Status](https://dev.azure.com/jherby2k/AudioWorks/_apis/build/s
 MacOS | [![Build Status](https://dev.azure.com/jherby2k/AudioWorks/_apis/build/status/AudioWorks%20for%20MacOS?branchName=master)](https://dev.azure.com/jherby2k/AudioWorks/_build?definitionId=4&_a=summary&repositoryFilter=1&branchFilter=3) [![Code Coverage](https://img.shields.io/azure-devops/coverage/jherby2k/AudioWorks/4.svg)](https://dev.azure.com/jherby2k/AudioWorks/_build/latest?definitionId=4?branchName=master) | [![Build Status](https://dev.azure.com/jherby2k/AudioWorks/_apis/build/status/AudioWorks%20for%20MacOS?branchName=dev)](https://dev.azure.com/jherby2k/AudioWorks/_build?definitionId=4&_a=summary&repositoryFilter=1&branchFilter=4) | ![Deployment Status](https://vsrm.dev.azure.com/jherby2k/_apis/public/Release/badge/ce2541e1-667c-4be1-a926-7d44ff89db07/3/3)
 
 ### System Requirements
-AudioWorks runs on Windows 7+, MacOS 10.13+, and Ubuntu 16.04+. Other 64-bit Linux distributions may work, but may require additional dependencies and are currently untested. Currently, most extensions only support the x86 architecture.
+AudioWorks runs on Windows 8.1+, MacOS 10.13+, and Ubuntu 16.04+. Other 64-bit Linux distributions may work, but may require additional dependencies and are currently untested. Currently, most extensions only support the x86 architecture.
 
 #### On Windows:
 * [PowerShell Core 6.2+](https://aka.ms/powershell) (recommended) and/or Windows PowerShell 5.1
@@ -40,8 +40,8 @@ The .NET API is available via [NuGet](https://www.nuget.org/packages/AudioWorks.
 ### Additional Requirements for Building / Testing
 * [.NET Core SDK 2.1](https://dotnet.microsoft.com/download/dotnet-core/2.1)
 * [.NET Core SDK 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
-* [PowerShell Core 6.1+](https://aka.ms/powershell) (recommended) and/or Windows PowerShell 5.1.
-* Windows 7+, MacOS 10.13+, Ubuntu 16.04, 18.04 or 20.04.
+* [PowerShell Core 6.2+](https://aka.ms/powershell) (recommended) and/or Windows PowerShell 5.1.
+* Windows 8.1+, MacOS 10.13+, Ubuntu 16.04, 18.04 or 20.04.
 * [Visual Studio 2019 16.4](https://visualstudio.microsoft.com/downloads) (optional - Windows only)
 * [Visual Studio 2019 for Mac 8.4+](https://visualstudio.microsoft.com/downloads) (optional - Mac only)
 * [Visual Studio Code](https://code.visualstudio.com/) (optional - all platforms)
