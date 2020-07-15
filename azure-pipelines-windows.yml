@@ -32,7 +32,7 @@ steps:
   inputs:
     command: 'build'
     projects: 'AudioWorks\AudioWorks.sln'
-    arguments: '--configuration $(buildConfiguration) /p:ContinuousIntegrationBuild=true'
+    arguments: '--configuration $(buildConfiguration)'
   displayName: 'Build $(buildConfiguration) configuration'
 
 - task: DotNetCoreCLI@2
