@@ -29,6 +29,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="C:\Users\jerem\OneDrive\Desktop\SampleBufferTests.cs" Link="SampleBufferTests.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="1.3.0" PrivateAssets="all" />

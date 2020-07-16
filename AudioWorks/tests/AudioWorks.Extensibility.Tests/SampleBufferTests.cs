@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Linq;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
 using Xunit;
@@ -102,6 +103,19 @@ namespace AudioWorks.Extensibility.Tests
         public void ConstructorPackedIntInterleavedBitsPerSampleTooLowThrowsException() =>
             Assert.Throws<ArgumentOutOfRangeException>(() => new SampleBuffer(new byte[4], 2, 0));
 
+        [Fact(DisplayName = "CopyTo (float, mono) does nothing when the buffer is empty")]
+        public void CopyToFloatMonoDoesNothingWhenEmpty()
+        {
+            var samples = SampleBuffer.Empty;
+            var outSamples = new float[1];
+
+            samples.CopyTo(outSamples);
+
+            Assert.All(outSamples, value =>
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
+                Assert.True(value == 0));
+        }
+
         [Fact(DisplayName = "CopyTo (float, mono) throws an exception when the object has been disposed")]
         public void CopyToFloatMonoThrowsExceptionWhenDisposed()
         {
@@ -121,6 +135,20 @@ namespace AudioWorks.Extensibility.Tests
 
             Assert.Throws<InvalidOperationException>(() =>
                 new SampleBuffer(new float[2], 2).CopyTo(outSamples));
+        }
+
+        [Fact(DisplayName = "CopyTo (float, stereo) does nothing when the buffer is empty")]
+        public void CopyToFloatStereoDoesNothingWhenEmpty()
+        {
+            var samples = SampleBuffer.Empty;
+            var leftOutSamples = new float[1];
+            var rightOutSamples = new float[1];
+
+            samples.CopyTo(leftOutSamples, rightOutSamples);
+
+            Assert.All(leftOutSamples.Concat(rightOutSamples), value =>
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
+                Assert.True(value == 0));
         }
 
         [Fact(DisplayName = "CopyTo (float, stereo) throws an exception when the object has been disposed")]
@@ -157,6 +185,19 @@ namespace AudioWorks.Extensibility.Tests
 
             Assert.All(leftOutSamples, value => Assert.Equal(1f, value));
             Assert.All(rightOutSamples, value => Assert.Equal(2f, value));
+        }
+
+        [Fact(DisplayName = "CopyTo (int, stereo) does nothing when the buffer is empty")]
+        public void CopyToIntStereoDoesNothingWhenEmpty()
+        {
+            var samples = SampleBuffer.Empty;
+            var leftOutSamples = new int[1];
+            var rightOutSamples = new int[1];
+
+            samples.CopyTo(leftOutSamples, rightOutSamples, 16);
+
+            Assert.All(leftOutSamples.Concat(rightOutSamples), value =>
+                Assert.True(value == 0));
         }
 
         [Fact(DisplayName = "CopyTo (int, stereo) throws an exception when the object has been disposed")]
@@ -207,6 +248,19 @@ namespace AudioWorks.Extensibility.Tests
             Assert.All(rightOutSamples, value => Assert.Equal(2, value));
         }
 
+        [Fact(DisplayName = "CopyToInterleaved (float) does nothing when the buffer is empty")]
+        public void CopyToInterleavedFloatDoesNothingWhenEmpty()
+        {
+            var samples = SampleBuffer.Empty;
+            var outSamples = new float[2];
+
+            samples.CopyToInterleaved(outSamples);
+
+            Assert.All(outSamples, value =>
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
+                Assert.True(value == 0));
+        }
+
         [Fact(DisplayName = "CopyToInterleaved (float) throws an exception when the object has been disposed")]
         public void CopyToInterleavedFloatThrowsExceptionWhenDisposed()
         {
@@ -238,6 +292,18 @@ namespace AudioWorks.Extensibility.Tests
                 samples.CopyToInterleaved(outSamples);
 
             Assert.Equal(inSamples, outSamples);
+        }
+
+        [Fact(DisplayName = "CopyToInterleaved (int) does nothing when the buffer is empty")]
+        public void CopyToInterleavedIntDoesNothingWhenEmpty()
+        {
+            var samples = SampleBuffer.Empty;
+            var outSamples = new int[2];
+
+            samples.CopyToInterleaved(outSamples, 16);
+
+            Assert.All(outSamples, value =>
+                Assert.True(value == 0));
         }
 
         [Fact(DisplayName = "CopyToInterleaved (int) throws an exception when the object has been disposed")]
@@ -302,6 +368,18 @@ namespace AudioWorks.Extensibility.Tests
             Assert.Equal(new[] { 1, 2, 1, 2 }, outSamples);
         }
 
+        [Fact(DisplayName = "CopyToInterleaved (packed) does nothing when the buffer is empty")]
+        public void CopyToInterleavedPackedDoesNothingWhenEmpty()
+        {
+            var samples = SampleBuffer.Empty;
+            var outSamples = new byte[4];
+
+            samples.CopyToInterleaved(outSamples, 16);
+
+            Assert.All(outSamples, value =>
+                Assert.True(value == 0));
+        }
+
         [Fact(DisplayName = "CopyToInterleaved (packed) throws an exception when the object has been disposed")]
         public void CopyToInterleavedPackedThrowsExceptionWhenDisposed()
         {
@@ -363,6 +441,114 @@ namespace AudioWorks.Extensibility.Tests
                 samples.CopyToInterleaved(outSamples, 32);
 
             Assert.True(true);
+        }
+
+        [Theory(DisplayName = "CopyTo (float, mono) returns the expected results")]
+        [InlineData(new[] { 0.1f, -0.2f, 0.3f, -0.4f })]
+        public void CopyToFloatMonoReturnsExpectedResults(float[] sampleValues)
+        {
+            var outSamples = new float[sampleValues.Length];
+
+            using (var samples = new SampleBuffer(sampleValues, 1))
+                samples.CopyTo(outSamples);
+
+            for (var i = 0; i < sampleValues.Length; i++)
+                Assert.True(Math.Abs(sampleValues[i] - outSamples[i]) < 0.0001);
+        }
+
+        [Theory(DisplayName = "CopyTo (float, stereo) returns the expected results")]
+        [InlineData(new[] { 0.1f, -0.2f, 0.3f, -0.4f }, new[] { 0.1f, 0.3f }, new[] { -0.2f, -0.4f })]
+        public void CopyToFloatStereoReturnsExpectedResults(
+            float[] sampleValues,
+            float[] leftExpectedValues,
+            float[] rightExpectedValues)
+        {
+            var outLeftSamples = new float[leftExpectedValues.Length];
+            var outRightSamples = new float[rightExpectedValues.Length];
+
+            using (var samples = new SampleBuffer(sampleValues, 2))
+                samples.CopyTo(outLeftSamples, outRightSamples);
+
+            for (var i = 0; i < leftExpectedValues.Length; i++)
+            {
+                Assert.True(Math.Abs(leftExpectedValues[i] - outLeftSamples[i]) < 0.0001);
+                Assert.True(Math.Abs(rightExpectedValues[i] - outRightSamples[i]) < 0.0001);
+            }
+        }
+
+        [Theory(DisplayName = "CopyTo (int, stereo) returns the expected results")]
+        [InlineData(new[] { 0.1f, -0.2f, 0.3f, -0.4f }, new[] { 12, 38 }, new[] { -25, -51 }, 8)]
+        [InlineData(new[] { 0.1f, -0.2f, 0.3f, -0.4f }, new[] { 3276, 9830 }, new[] { -6553, -13_107 }, 16)]
+        [InlineData(new[] { 0.1f, -0.2f, 0.3f, -0.4f }, new[] { 838_860, 2_516_582 }, new[] { -1_677_721, -3_355_443 }, 24)]
+        [InlineData(new[] { 0.1f, -0.2f, 0.3f, -0.4f }, new[] { 214_748_368, 644_245_120 }, new[] { -429_496_736, -858_993_472 }, 32)]
+        public void CopyToIntStereoReturnsExpectedResults(
+            float[] sampleValues,
+            int[] leftExpectedValues,
+            int[] rightExpectedValues,
+            int bitsPerSample)
+        {
+            var outLeftSamples = new int[leftExpectedValues.Length];
+            var outRightSamples = new int[rightExpectedValues.Length];
+
+            using (var samples = new SampleBuffer(sampleValues, 2))
+                samples.CopyTo(outLeftSamples, outRightSamples, bitsPerSample);
+
+            for (var i = 0; i < leftExpectedValues.Length; i++)
+            {
+                Assert.True(outLeftSamples[i] == leftExpectedValues[i]);
+                Assert.True(outRightSamples[i] == rightExpectedValues[i]);
+            }
+        }
+
+        [Theory(DisplayName = "CopyToInterleaved (float) returns the expected results")]
+        [InlineData(new[] { 0.1f, -0.2f, 0.3f, -0.4f })]
+        public void CopyToInterleavedFloatReturnsExpectedResults(float[] sampleValues)
+        {
+            var outSamples = new float[sampleValues.Length];
+
+            using (var samples = new SampleBuffer(sampleValues, 1))
+                samples.CopyToInterleaved(outSamples);
+
+            for (var i = 0; i < sampleValues.Length; i++)
+                Assert.True(Math.Abs(sampleValues[i] - outSamples[i]) < 0.0001);
+        }
+
+        [Theory(DisplayName = "CopyToInterleaved (int) returns the expected results")]
+        [InlineData(new[] { 0.1f, -0.2f, 0.3f, -0.4f }, new[] { 12, -25, 38, -51 }, 8)]
+        [InlineData(new[] { 0.1f, -0.2f, 0.3f, -0.4f }, new[] { 3276, -6553, 9830, -13_107 }, 16)]
+        [InlineData(new[] { 0.1f, -0.2f, 0.3f, -0.4f }, new[] { 838_860, -1_677_721, 2_516_582, -3_355_443 }, 24)]
+        [InlineData(new[] { 0.1f, -0.2f, 0.3f, -0.4f }, new[] { 214_748_368, -429_496_736, 644_245_120, -858_993_472 }, 32)]
+        public void CopyToInterleavedIntReturnsExpectedResults(
+            float[] sampleValues,
+            int[] expectedValues,
+            int bitsPerSample)
+        {
+            var outSamples = new int[expectedValues.Length];
+
+            using (var samples = new SampleBuffer(sampleValues, 2))
+                samples.CopyToInterleaved(outSamples, bitsPerSample);
+
+            for (var i = 0; i < expectedValues.Length; i++)
+                Assert.True(outSamples[i] == expectedValues[i]);
+        }
+
+        [Theory(DisplayName = "CopyToInterleaved (packed) returns the expected results")]
+        [InlineData(new[] { 0.1f, -0.2f, 0.3f, -0.4f }, new byte[] { 141, 103, 167, 77 }, 8)]
+        [InlineData(new[] { 0.1f, -0.2f, 0.3f, -0.4f }, new byte[] { 204, 12, 103, 230, 102, 38, 205, 204 }, 16)]
+        [InlineData(new[] { 0.1f, -0.2f, 0.3f, -0.4f }, new byte[] { 204, 204, 12, 103, 102, 230, 102, 102, 38, 205, 204, 204 }, 24)]
+        [InlineData(new[] { 0.1f, -0.2f, 0.3f, -0.4f }, new byte[] { 208, 204, 204, 12, 96, 102, 102, 230, 128, 102, 102, 38, 192, 204, 204, 204 }, 32)]
+        public void CopyToInterleavedPackedReturnsExpectedResults(
+            float[] sampleValues,
+            byte[] expectedValues,
+            int bitsPerSample)
+        {
+            var outSamples = new byte[expectedValues.Length];
+
+            using (var samples = new SampleBuffer(sampleValues, 2))
+                samples.CopyToInterleaved(outSamples, bitsPerSample);
+
+            for (var i = 0; i < expectedValues.Length; i++)
+                Assert.True(outSamples[i] == expectedValues[i]);
         }
 
         [Theory(DisplayName = "Integers stay in range after conversion to float")]

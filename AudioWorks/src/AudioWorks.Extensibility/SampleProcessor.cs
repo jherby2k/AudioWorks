@@ -117,7 +117,7 @@ namespace AudioWorks.Extensibility
                 for (var sampleIndex = sourceVectors.Length * Vector<float>.Count;
                     sampleIndex < source.Length;
                     sampleIndex++)
-                    destination[sampleIndex] = (short) Math.Min(source[sampleIndex] * multiplier, max);
+                    destination[sampleIndex] = (int) Math.Min(source[sampleIndex] * multiplier, max);
             }
             else
             {
