@@ -13,6 +13,7 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System;
 using AudioWorks.TestUtilities;
 using Xunit;
 using Xunit.Abstractions;
@@ -27,5 +28,21 @@ namespace AudioWorks.Common.Tests
         [Fact(DisplayName = "AudioUnsupportedException is an AudioException")]
         public void IsAudioException() =>
             Assert.IsAssignableFrom<AudioException>(new AudioUnsupportedException());
+
+        [Fact(DisplayName = "AudioUnsupportedException has the expected Message property value")]
+        public void HasExpectedMessage()
+        {
+            var message = "Testing 1-2-3";
+
+            Assert.Equal(message, new AudioUnsupportedException(message).Message);
+        }
+
+        [Fact(DisplayName = "AudioUnsupportedException has the expected InnerException property value")]
+        public void HasExpectedInnerException()
+        {
+            var innerException = new ArgumentException("Inner exception");
+
+            Assert.Equal(innerException, new AudioUnsupportedException("Testing 1-2-3", innerException).InnerException);
+        }
     }
 }
