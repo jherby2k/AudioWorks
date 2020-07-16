@@ -1815,6 +1815,128 @@ namespace AudioWorks.Api.Tests.DataSources
                     Month = "01",
                     Year = "2017"
                 }
+            },
+
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo (Tagged using REPLAYGAIN).opus",
+                new TestAudioInfo
+                {
+                    Format = "Opus",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 124112
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.500000",
+                    AlbumPeak = "0.600000",
+                    TrackGain = "0.70",
+                    AlbumGain = "0.80"
+                }
+            },
+
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo (Tagged using REPLAYGAIN with '+' sign).opus",
+                new TestAudioInfo
+                {
+                    Format = "Opus",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 124112
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.500000",
+                    AlbumPeak = "0.600000",
+                    TrackGain = "0.70",
+                    AlbumGain = "0.80"
+                }
+            },
+
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo (Tagged using REPLAYGAIN with missing 'dB').opus",
+                new TestAudioInfo
+                {
+                    Format = "Opus",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 124112
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.500000",
+                    AlbumPeak = "0.600000",
+                    TrackGain = "0.70",
+                    AlbumGain = "0.80"
+                }
+            },
+
+            new object[]
+            {
+                "Opus VBR 44100Hz Stereo (Tagged using R128).opus",
+                new TestAudioInfo
+                {
+                    Format = "Opus",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 124112
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackGain = "0.70",
+                    AlbumGain = "0.80"
+                }
             }
 
             #endregion

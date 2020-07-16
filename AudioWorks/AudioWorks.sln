@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30309.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Commands", "src\AudioWorks.Commands\AudioWorks.Commands.csproj", "{53605AC7-B464-478F-ABA4-EBE6CB8BC968}"
 EndProject
@@ -105,6 +105,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Valid", "Valid", "{F3EE5042
 		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using invalid DATE).opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using invalid DATE).opus
 		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using invalid TRACKNUMBER).opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using invalid TRACKNUMBER).opus
 		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using mixed-case fields).opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using mixed-case fields).opus
+		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using R128).opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using R128).opus
+		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using REPLAYGAIN with '+' sign).opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using REPLAYGAIN with '+' sign).opus
+		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using REPLAYGAIN with missing 'dB').opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using REPLAYGAIN with missing 'dB').opus
+		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using REPLAYGAIN).opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using REPLAYGAIN).opus
 		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using TOTALTRACKS).opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using TOTALTRACKS).opus
 		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using TRACKCOUNT).opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using TRACKCOUNT).opus
 		tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using TRACKTOTAL).opus = tests\TestFiles\Valid\Opus VBR 44100Hz Stereo (Tagged using TRACKTOTAL).opus
