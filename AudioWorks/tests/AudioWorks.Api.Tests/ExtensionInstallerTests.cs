@@ -33,8 +33,8 @@ namespace AudioWorks.Api.Tests
 
             if (!ExtensionInstaller.LoadComplete && extensionRoot.Exists)
                 extensionRoot.Delete(true);
-
             await ExtensionInstaller.InstallAsync().ConfigureAwait(true);
+            extensionRoot.Refresh();
 
             Assert.True(extensionRoot.Exists);
             Assert.True(extensionRoot.GetDirectories().Length > 0);
