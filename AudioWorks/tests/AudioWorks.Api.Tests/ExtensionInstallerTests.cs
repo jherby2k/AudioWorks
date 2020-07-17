@@ -21,6 +21,7 @@ using Xunit.Abstractions;
 
 namespace AudioWorks.Api.Tests
 {
+    [Collection("Setup Tests")]
     public sealed class ExtensionInstallerTests
     {
         public ExtensionInstallerTests(ITestOutputHelper outputHelper) =>

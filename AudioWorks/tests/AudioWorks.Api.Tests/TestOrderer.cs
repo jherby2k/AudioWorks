@@ -1,4 +1,4 @@
-﻿/* Copyright © 2018 Jeremy Herbison
+﻿/* Copyright © 2020 Jeremy Herbison
 
 This file is part of AudioWorks.
 
@@ -14,7 +14,21 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
+using Xunit.Abstractions;
 
-[assembly: CLSCompliant(false)]
-[assembly: CollectionBehavior(DisableTestParallelization = true)]
+namespace AudioWorks.Api.Tests
+{
+    public class TestOrderer : ITestCollectionOrderer
+    {
+        public IEnumerable<ITestCollection> OrderTestCollections(IEnumerable<ITestCollection> testCollections)
+        {
+            var collections = testCollections.ToArray();
+            return collections.Where(c => c.DisplayName.Equals("Setup Tests", StringComparison.OrdinalIgnoreCase))
+                .Concat(
+                    collections.Where(c => !c.DisplayName.Equals("Setup Tests", StringComparison.OrdinalIgnoreCase)));
+        }
+    }
+}

@@ -17,4 +17,5 @@ using System;
 using Xunit;
 
 [assembly: CLSCompliant(false)]
-[assembly: CollectionBehavior(CollectionBehavior.CollectionPerAssembly)]
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
+[assembly: TestCollectionOrderer("AudioWorks.Api.Tests.TestOrderer", "AudioWorks.Api.Tests")]
