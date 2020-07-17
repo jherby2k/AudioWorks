@@ -36,6 +36,8 @@ namespace AudioWorks.Api
 
                 ExtensionInstaller.InstallAsync().Wait();
             }
+
+            ExtensionInstaller.SetLoadComplete();
         }
 
         internal static IEnumerable<ExportFactory<T, IDictionary<string, object>>> GetFactories<T>()

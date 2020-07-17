@@ -43,17 +43,6 @@ namespace AudioWorks.Api
     {
         static readonly NuGetFramework _framework = NuGetFramework.ParseFolder(RuntimeChecker.GetShortFolderName());
 
-
-        /// <summary>
-        /// Gets the framework-specific extension root directory.
-        /// </summary>
-        /// <value>The extension root.</value>
-        public static string ExtensionRoot { get; } = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "AudioWorks",
-            "Extensions",
-            _framework.GetShortFolderName());
-
         static readonly SourceRepository _customRepository = new SourceRepository(
             new PackageSource(
                 ConfigurationManager.Configuration.GetValue(
@@ -78,11 +67,35 @@ namespace AudioWorks.Api
         static readonly string[] _rootAssemblyNames = GetRootAssemblyNames().ToArray();
 
         /// <summary>
+        /// Gets the framework-specific extension root directory.
+        /// </summary>
+        /// <value>The extension root.</value>
+        public static string ExtensionRoot { get; } = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "AudioWorks",
+            "Extensions",
+            _framework.GetShortFolderName());
+
+        /// <summary>
+        /// Gets a value indicating whether extensions have already been loaded for this session and can no longer be installed.
+        /// </summary>
+        /// <value><c>true</c> if extension loading is already complete; otherwise, <c>false</c>.</value>
+        public static bool LoadComplete { get; private set; }
+
+        internal static void SetLoadComplete() => LoadComplete = true;
+
+        /// <summary>
         /// Downloads and installs all available extensions.
         /// </summary>
         public static async Task InstallAsync()
         {
             var logger = LoggerManager.LoggerFactory.CreateLogger(typeof(ExtensionInstaller).FullName);
+
+            if (LoadComplete)
+            {
+                logger.LogWarning("Extensions have already been loaded for this session.");
+                return;
+            }
 
             try
             {
@@ -90,7 +103,7 @@ namespace AudioWorks.Api
             }
             catch (AggregateException e)
             {
-                // Log any connection errors and otherwise fail silently
+                // Log any connection errors and fail silently
                 if (e.InnerException is FatalProtocolException)
                     logger.LogError(e.InnerException.Message);
                 else
