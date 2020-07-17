@@ -79,7 +79,7 @@ steps:
     $content = Get-Content AudioWorks\src\AudioWorks.Common\settings.json | ConvertFrom-Json
     $content.ExtensionRepository = $localFeedDir
     $content | ConvertTo-Json | Set-Content "$roamingAppDir\settings.json"
-    dotnet test AudioWorks\tests\AudioWorks.Api.Tests --configuration $env:BUILDCONFIGURATION --filter "FullyQualifiedName=AudioWorks.Api.Tests.AudioFileTests.HasExpectedPath" --no-build --results-directory $env:AGENT_TEMPDIRECTORY --collect:"XPlat Code Coverage" --settings "$env:BUILD_SOURCESDIRECTORY\install.runsettings"
+    dotnet test AudioWorks\tests\AudioWorks.Api.Tests --configuration $env:BUILDCONFIGURATION --filter "FullyQualifiedName=AudioWorks.Api.Tests.ExtensionInstallerTests.InstallAsyncInstallsExtensions" --no-build --results-directory $env:AGENT_TEMPDIRECTORY --collect:"XPlat Code Coverage" --settings "$env:BUILD_SOURCESDIRECTORY\install.runsettings"
     Write-Host
     Write-Host "Installed files:"
     Get-ChildItem -File -Recurse $env:LOCALAPPDATADIR\Extensions | Select-Object -ExpandProperty FullName

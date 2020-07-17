@@ -36,7 +36,10 @@ using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace AudioWorks.Api
 {
-    static class ExtensionInstaller
+    /// <summary>
+    /// Responsible for downloading and installing extensions.
+    /// </summary>
+    public static class ExtensionInstaller
     {
         static readonly NuGetFramework _framework = NuGetFramework.ParseFolder(RuntimeChecker.GetShortFolderName());
 
@@ -69,28 +72,24 @@ namespace AudioWorks.Api
 
         static readonly string[] _rootAssemblyNames = GetRootAssemblyNames().ToArray();
 
-        internal static async Task TryDownloadAsync()
+        /// <summary>
+        /// Downloads and installs all available extensions.
+        /// </summary>
+        public static async Task InstallAsync()
         {
             var logger = LoggerManager.LoggerFactory.CreateLogger(typeof(ExtensionInstaller).FullName);
 
-            if (!ConfigurationManager.Configuration.GetValue("AutomaticExtensionDownloads", true))
-                logger.LogInformation("Automatic extension downloads are disabled.");
-            else
+            try
             {
-                logger.LogInformation("Beginning automatic extension updates.");
-
-                try
-                {
-                    await DownloadAsync(logger).ConfigureAwait(false);
-                }
-                catch (AggregateException e)
-                {
-                    // Log any connection errors and otherwise fail silently
-                    if (e.InnerException is FatalProtocolException)
-                        logger.LogError(e.InnerException.Message);
-                    else
-                        throw;
-                }
+                await DownloadAsync(logger).ConfigureAwait(false);
+            }
+            catch (AggregateException e)
+            {
+                // Log any connection errors and otherwise fail silently
+                if (e.InnerException is FatalProtocolException)
+                    logger.LogError(e.InnerException.Message);
+                else
+                    throw;
             }
         }
 
