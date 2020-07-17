@@ -41,5 +41,22 @@ namespace AudioWorks.Api.Tests
             Assert.All(extensionRoot.GetDirectories(), extensionDir =>
                 Assert.True(extensionDir.GetFiles().Length > 0));
         }
+
+        [Fact(DisplayName = "ExtensionInstaller's InstallAsync method removes unpublished extensions")]
+        public async void InstallAsyncRemovesUnpublishedExtensions()
+        {
+            var extensionRoot = new DirectoryInfo(ExtensionInstaller.ExtensionRoot);
+
+            if (!extensionRoot.Exists)
+                extensionRoot.Create();
+            var fakeExtensionDir = extensionRoot.CreateSubdirectory("AudioWorks.Extensions.OldExtension.1.0.0");
+            using (File.Create(Path.Combine(fakeExtensionDir.FullName, "AudioWorks.Extensions.OldExtension.dll")))
+            {
+            }
+            await ExtensionInstaller.InstallAsync().ConfigureAwait(true);
+            fakeExtensionDir.Refresh();
+
+            Assert.False(fakeExtensionDir.Exists);
+        }
     }
 }
