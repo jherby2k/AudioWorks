@@ -31,6 +31,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "FLAC",
                 "Free Lossless Audio Codec"
             },
+#if !LINUX
             new object[]
             {
                 "ALAC",
@@ -41,6 +42,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "AppleAAC",
                 "Apple MPEG-4 Advanced Audio Codec"
             },
+#endif
             new object[]
             {
                 "LameMP3",
