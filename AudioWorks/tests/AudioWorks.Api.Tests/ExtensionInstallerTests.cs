@@ -13,7 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System;
 using System.IO;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
@@ -30,20 +29,17 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "ExtensionInstaller's InstallAsync method installs the available extensions")]
         public async void InstallAsyncInstallsExtensions()
         {
-            var extensionRoot = new DirectoryInfo(Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "AudioWorks",
-                "Extensions"));
+            var extensionRoot = new DirectoryInfo(ExtensionInstaller.ExtensionRoot);
 
             if (extensionRoot.Exists)
                 extensionRoot.Delete(true);
 
             await ExtensionInstaller.InstallAsync().ConfigureAwait(true);
 
-            Assert.True(extensionRoot.GetDirectories().Length == 1);
-            Assert.True(extensionRoot.GetDirectories()[0].GetDirectories().Length > 0);
-            Assert.All(extensionRoot.GetDirectories()[0].GetDirectories(),
-                extensionDir => Assert.True(extensionDir.GetFiles().Length > 0));
+            Assert.True(extensionRoot.Exists);
+            Assert.True(extensionRoot.GetDirectories().Length > 0);
+            Assert.All(extensionRoot.GetDirectories(), extensionDir =>
+                Assert.True(extensionDir.GetFiles().Length > 0));
         }
     }
 }

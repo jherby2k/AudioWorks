@@ -43,7 +43,12 @@ namespace AudioWorks.Api
     {
         static readonly NuGetFramework _framework = NuGetFramework.ParseFolder(RuntimeChecker.GetShortFolderName());
 
-        static readonly string _extensionRoot = Path.Combine(
+
+        /// <summary>
+        /// Gets the framework-specific extension root directory.
+        /// </summary>
+        /// <value>The extension root.</value>
+        public static string ExtensionRoot { get; } = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "AudioWorks",
             "Extensions",
@@ -95,7 +100,7 @@ namespace AudioWorks.Api
 
         static async Task DownloadAsync(ILogger logger)
         {
-            Directory.CreateDirectory(_extensionRoot);
+            Directory.CreateDirectory(ExtensionRoot);
 
             try
             {
@@ -113,13 +118,13 @@ namespace AudioWorks.Api
                             packagesInstalled = true;
 
                     // Remove any extensions that aren't published
-                    if (Directory.Exists(_extensionRoot))
-                        foreach (var installedExtension in new DirectoryInfo(_extensionRoot).GetDirectories()
+                    if (Directory.Exists(ExtensionRoot))
+                        foreach (var installedExtension in new DirectoryInfo(ExtensionRoot).GetDirectories()
                             .Select(dir => dir.Name)
                             .Except(publishedPackages.Select(package => package.Identity.ToString()),
                                 StringComparer.OrdinalIgnoreCase))
                         {
-                            Directory.Delete(Path.Combine(_extensionRoot, installedExtension), true);
+                            Directory.Delete(Path.Combine(ExtensionRoot, installedExtension), true);
 
                             logger.LogDebug("Deleted unlisted or obsolete extension in '{0}'.", installedExtension);
                         }
@@ -175,7 +180,7 @@ namespace AudioWorks.Api
             CancellationToken cancellationToken)
         {
             var extensionDir =
-                new DirectoryInfo(Path.Combine(_extensionRoot, packageMetadata.Identity.ToString()));
+                new DirectoryInfo(Path.Combine(ExtensionRoot, packageMetadata.Identity.ToString()));
             if (extensionDir.Exists)
             {
                 logger.LogDebug("'{0}' version {1} is already installed. Skipping.",
