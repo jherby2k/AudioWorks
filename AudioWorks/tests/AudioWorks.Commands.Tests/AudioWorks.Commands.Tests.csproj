@@ -37,7 +37,7 @@
 
   <!-- ReSharper disable once UnknownProperty -->
   <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
-    <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.0.2" />
+    <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.0.3" />
   </ItemGroup>
 
   <!-- ReSharper disable once UnknownProperty -->
