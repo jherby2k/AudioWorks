@@ -23,33 +23,33 @@ namespace AudioWorks.Api.Tests.DataSources
         {
             new object[]
             {
-                "Waveform Audio",
-                ".wav"
+                ".wav",
+                "Waveform Audio"
             },
             new object[]
             {
-                "FLAC",
-                ".flac"
+                ".flac",
+                "FLAC"
             },
             new object[]
             {
-                "MPEG-4 Audio",
-                ".m4a"
+                ".m4a",
+                "MPEG-4 Audio"
             },
             new object[]
             {
-                "MPEG Audio Layer 3",
-                ".mp3"
+                ".mp3",
+                "MPEG Audio Layer 3"
             },
             new object[]
             {
-                "Ogg Vorbis",
-                ".ogg"
+                ".ogg",
+                "Ogg Vorbis"
             },
             new object[]
             {
-                "Opus",
-                ".opus"
+                ".opus",
+                "Opus"
             }
         };
 

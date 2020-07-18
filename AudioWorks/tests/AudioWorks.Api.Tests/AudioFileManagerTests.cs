@@ -29,9 +29,9 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioFileManager's GetFormatInfo method returns the audio file formats")]
         [MemberData(nameof(AudioFileFormatInfoDataSource.Data), MemberType = typeof(AudioFileFormatInfoDataSource))]
-        public void GetFormatInfoReturnsAudioFileFormats(string expectedFormat, string expectedExtension) =>
-            Assert.Contains(AudioFileManager.GetFormatInfo(), info =>
-                expectedFormat.Equals(info.Format, StringComparison.OrdinalIgnoreCase) &&
-                expectedExtension.Equals(info.Extension, StringComparison.OrdinalIgnoreCase));
+        public void GetFormatInfoReturnsAudioFileFormats(string expectedExtension, string expectedFormat) =>
+            Assert.Contains(AudioFileManager.GetFormatInfo(),
+                info => expectedExtension.Equals(info.Extension, StringComparison.OrdinalIgnoreCase) &&
+                        expectedFormat.Equals(info.Format, StringComparison.OrdinalIgnoreCase));
     }
 }
