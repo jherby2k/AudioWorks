@@ -48,7 +48,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
     <PackageReference Include="Nullable" Version="1.2.1" PrivateAssets="all" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-rc0003" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0" />
   </ItemGroup>
 
   <!-- ReSharper disable once UnknownProperty -->
