@@ -31,9 +31,9 @@ AudioWorks runs on Windows 8.1+, MacOS 10.13+, and Ubuntu 16.04+. Other 64-bit L
   * libebur128-1
 
 ### Installation
-The AudioWorks PowerShell module can found on [the PowerShell Gallery](https://www.powershellgallery.com/packages/AudioWorks.Commands). If you are using Windows PowerShell 5.1, you may need to [update PowerShellGet](https://docs.microsoft.com/en-us/powershell/gallery/installing-psget) to a version that supports pre-release modules.
+The AudioWorks PowerShell module can found on [the PowerShell Gallery](https://www.powershellgallery.com/packages/AudioWorks.Commands).
 
-Keep the module up to date with `Update-Module -Name AudioWorks.Commands -AllowPrerelease`.
+Keep the module up to date with `Update-Module -Name AudioWorks.Commands`.
 
 The .NET API is available via [NuGet](https://www.nuget.org/packages/AudioWorks.Api).
 
