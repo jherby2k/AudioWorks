@@ -29,7 +29,7 @@ namespace AudioWorks.Extensions.Apple
         const string _coreAudioLibrary = "CoreAudioToolbox";
 #endif
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern AudioFileStatus AudioFileOpenWithCallbacks(
             IntPtr userData,
             NativeCallbacks.AudioFileReadCallback readCallback,
@@ -39,7 +39,7 @@ namespace AudioWorks.Extensions.Apple
             AudioFileType fileType,
             out AudioFileHandle handle);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern AudioFileStatus AudioFileInitializeWithCallbacks(
             IntPtr userData,
             NativeCallbacks.AudioFileReadCallback readCallback,
@@ -51,21 +51,21 @@ namespace AudioWorks.Extensions.Apple
             uint flags,
             out AudioFileHandle handle);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern AudioFileStatus AudioFileGetProperty(
             AudioFileHandle handle,
             AudioFilePropertyId id,
             ref uint size,
             [Out] IntPtr data);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern AudioFileStatus AudioFileGetPropertyInfo(
             AudioFileHandle handle,
             AudioFilePropertyId id,
             out uint dataSize,
             out uint isWritable);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern AudioFileStatus AudioFileReadPackets(
             AudioFileHandle handle,
             [MarshalAs(UnmanagedType.Bool)] bool useCache,
@@ -76,49 +76,49 @@ namespace AudioWorks.Extensions.Apple
             IntPtr data);
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern AudioFileStatus AudioFileClose(
             IntPtr handle);
 
         [DllImport(_coreAudioLibrary, EntryPoint = "ExtAudioFileWrapAudioFileID",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ExtendedAudioFileStatus ExtAudioFileWrapAudioFile(
             AudioFileHandle audioFileHandle,
             [MarshalAs(UnmanagedType.Bool)] bool forWriting,
             out ExtendedAudioFileHandle handle);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ExtendedAudioFileStatus ExtAudioFileGetProperty(
             ExtendedAudioFileHandle handle,
             ExtendedAudioFilePropertyId id,
             ref uint size,
             [Out] IntPtr data);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ExtendedAudioFileStatus ExtAudioFileSetProperty(
             ExtendedAudioFileHandle handle,
             ExtendedAudioFilePropertyId id,
             uint size,
             IntPtr data);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ExtendedAudioFileStatus ExtAudioFileWrite(
             ExtendedAudioFileHandle handle,
             uint frames,
             ref AudioBufferList data);
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ExtendedAudioFileStatus ExtAudioFileDispose(
             IntPtr handle);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern AudioConverterStatus AudioConverterNew(
             ref AudioStreamBasicDescription sourceFormat,
             ref AudioStreamBasicDescription destinationFormat,
             out AudioConverterHandle handle);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern AudioConverterStatus AudioConverterFillComplexBuffer(
             AudioConverterHandle handle,
             NativeCallbacks.AudioConverterComplexInputCallback inputCallback,
@@ -127,14 +127,14 @@ namespace AudioWorks.Extensions.Apple
             ref AudioBufferList outputData,
             [In, Out] AudioStreamPacketDescription[]? packetDescriptions);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern AudioConverterStatus AudioConverterSetProperty(
             AudioConverterHandle handle,
             AudioConverterPropertyId id,
             uint size,
             IntPtr data);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern AudioConverterStatus AudioConverterSetProperty(
             IntPtr handle,
             AudioConverterPropertyId id,
@@ -142,7 +142,7 @@ namespace AudioWorks.Extensions.Apple
             IntPtr data);
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern AudioConverterStatus AudioConverterDispose(IntPtr handle);
     }
 }

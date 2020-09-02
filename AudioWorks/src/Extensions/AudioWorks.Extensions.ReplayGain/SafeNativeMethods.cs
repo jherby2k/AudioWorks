@@ -30,7 +30,7 @@ namespace AudioWorks.Extensions.ReplayGain
 #endif
 
         [DllImport(_ebur128Library, EntryPoint = "ebur128_init",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
 #if WINDOWS
         internal static extern StateHandle Init(uint channels, uint sampleRate, Modes modes);
 #else
@@ -39,48 +39,49 @@ namespace AudioWorks.Extensions.ReplayGain
 
 
         [DllImport(_ebur128Library, EntryPoint = "ebur128_get_version",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void GetVersion(
             out int major,
             out int minor,
             out int patch);
 
         [DllImport(_ebur128Library, EntryPoint = "ebur128_add_frames_float",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern Ebur128Error AddFramesFloat(
             StateHandle handle,
             in float source,
             UIntPtr frames);
 
         [DllImport(_ebur128Library, EntryPoint = "ebur128_sample_peak",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern Ebur128Error SamplePeak(
             StateHandle handle,
             uint channel,
             out double result);
 
         [DllImport(_ebur128Library, EntryPoint = "ebur128_true_peak",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern Ebur128Error TruePeak(
             StateHandle handle,
             uint channel,
             out double result);
 
         [DllImport(_ebur128Library, EntryPoint = "ebur128_loudness_global",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern Ebur128Error LoudnessGlobal(
             StateHandle handle,
             out double result);
 
         [DllImport(_ebur128Library, EntryPoint = "ebur128_loudness_global_multiple",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern Ebur128Error LoudnessGlobalMultiple(
             IntPtr[] handles,
             UIntPtr count,
             out double result);
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
-        [DllImport(_ebur128Library, EntryPoint = "ebur128_destroy", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(_ebur128Library, EntryPoint = "ebur128_destroy",
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void Destroy(ref IntPtr handle);
     }
 }

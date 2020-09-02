@@ -29,62 +29,62 @@ namespace AudioWorks.Extensions.Lame
 #endif
 
         [DllImport(_lameLibrary, EntryPoint = "get_lame_version",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern IntPtr GetVersion();
 
         [DllImport(_lameLibrary, EntryPoint = "lame_init",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern EncoderHandle Init();
 
         [DllImport(_lameLibrary, EntryPoint = "lame_set_num_channels",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void SetNumChannels(
             EncoderHandle handle,
             int channels);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_set_in_samplerate",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void SetInSampleRate(
             EncoderHandle handle,
             int sampleRate);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_set_num_samples",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void SetNumSamples(
             EncoderHandle handle,
             uint samples);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_set_brate",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void SetBRate(
             EncoderHandle handle,
             int bitRate);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_set_VBR",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void SetVbr(
             EncoderHandle handle,
             VbrMode vbrMode);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_set_VBR_mean_bitrate_kbps",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void SetVbrMeanBitRateKbps(
             EncoderHandle handle,
             int bitRate);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_set_VBR_quality",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void SetVbrQuality(
             EncoderHandle handle,
             float quality);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_init_params",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern int InitParams(
             EncoderHandle handle);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_encode_buffer_ieee_float",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern int EncodeBufferIeeeFloat(
             EncoderHandle handle,
             in float leftSamples,
@@ -98,7 +98,7 @@ namespace AudioWorks.Extensions.Lame
             int bufferSize);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_encode_buffer_interleaved_ieee_float",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern int EncodeBufferInterleavedIeeeFloat(
             EncoderHandle handle,
             in float samples,
@@ -111,7 +111,7 @@ namespace AudioWorks.Extensions.Lame
             int bufferSize);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_encode_flush",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern int EncodeFlush(
             EncoderHandle handle,
 #if NETSTANDARD2_0
@@ -122,7 +122,7 @@ namespace AudioWorks.Extensions.Lame
             int bufferSize);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_get_lametag_frame",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern UIntPtr GetLameTagFrame(
             EncoderHandle handle,
 #if NETSTANDARD2_0
@@ -133,7 +133,7 @@ namespace AudioWorks.Extensions.Lame
             UIntPtr bufferSize);
 
         [DllImport(_lameLibrary, EntryPoint = "lame_close",
-            CallingConvention = CallingConvention.Cdecl)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void Close(
             IntPtr handle);
     }
