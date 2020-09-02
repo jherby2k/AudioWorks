@@ -79,7 +79,7 @@ namespace AudioWorks.Extensions.Apple
                 Buffers = new AudioBuffer[1]
             };
             bufferList.Buffers[0].NumberChannels = (uint) samples.Channels;
-            bufferList.Buffers[0].DataByteSize = (uint) (buffer.Length * Marshal.SizeOf<int>());
+            bufferList.Buffers[0].DataByteSize = (uint) (buffer.Length * sizeof(int));
             bufferList.Buffers[0].Data = new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)));
 
             var status = _audioFile!.Write(bufferList, (uint) samples.Frames);
@@ -110,9 +110,9 @@ namespace AudioWorks.Extensions.Apple
                 SampleRate = info.SampleRate,
                 AudioFormat = AudioFormat.LinearPcm,
                 Flags = AudioFormatFlags.PcmIsSignedInteger,
-                BytesPerPacket = (uint) (Marshal.SizeOf<int>() * info.Channels),
+                BytesPerPacket = (uint) (sizeof(int) * info.Channels),
                 FramesPerPacket = 1,
-                BytesPerFrame = (uint) (Marshal.SizeOf<int>() * info.Channels),
+                BytesPerFrame = (uint) (sizeof(int) * info.Channels),
                 ChannelsPerFrame = (uint) info.Channels,
                 BitsPerChannel = (uint) info.BitsPerSample
             };

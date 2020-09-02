@@ -46,7 +46,7 @@ namespace AudioWorks.Extensions.Flac
                     for (var commentIndex = 0; commentIndex < vorbisComment.Count; commentIndex++)
                     {
                         var entry = Marshal.PtrToStructure<VorbisCommentEntry>(IntPtr.Add(vorbisComment.Comments,
-                            commentIndex * Marshal.SizeOf<VorbisCommentEntry>()));
+                            commentIndex * sizeof(VorbisCommentEntry)));
 
                         var commentBytes = new Span<byte>(entry.Entry.ToPointer(), (int) entry.Length);
                         var delimiter = commentBytes.IndexOf((byte) 0x3D); // '='

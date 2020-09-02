@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 namespace AudioWorks.Extensions.Vorbis
 {
     [StructLayout(LayoutKind.Sequential)]
-    readonly struct OggStreamState
+    unsafe struct OggStreamState
     {
         readonly IntPtr BodyData;
 
@@ -59,8 +59,7 @@ namespace AudioWorks.Extensions.Vorbis
         readonly long LacingReturned;
 #endif
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 282)]
-        readonly byte[] Header;
+        fixed byte Header[282];
 
         readonly int HeaderFill;
 

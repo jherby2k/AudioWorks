@@ -19,12 +19,12 @@ using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
 {
-    sealed class VorbisEncoder : IDisposable
+    sealed unsafe class VorbisEncoder : IDisposable
     {
-        readonly IntPtr _info = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(VorbisInfo)));
-        readonly IntPtr _block = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(VorbisBlock)));
+        readonly IntPtr _info = Marshal.AllocHGlobal(sizeof(VorbisInfo));
+        readonly IntPtr _block = Marshal.AllocHGlobal(sizeof(VorbisBlock));
 
-        internal IntPtr DspState { get; } = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(VorbisDspState)));
+        internal IntPtr DspState { get; } = Marshal.AllocHGlobal(sizeof(VorbisDspState));
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native methods are always expected to return 0")]

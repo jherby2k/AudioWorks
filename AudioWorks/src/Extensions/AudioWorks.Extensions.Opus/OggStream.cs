@@ -32,12 +32,12 @@ namespace AudioWorks.Extensions.Opus
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
 #if WINDOWS
-        internal OggStream(int serialNumber)
+        internal unsafe OggStream(int serialNumber)
 #else
-        internal OggStream(long serialNumber)
+        internal unsafe OggStream(long serialNumber)
 #endif
         {
-            _state = Marshal.AllocHGlobal(Marshal.SizeOf<OggStreamState>());
+            _state = Marshal.AllocHGlobal(sizeof(OggStreamState));
             SafeNativeMethods.OggStreamInit(_state, serialNumber);
         }
 

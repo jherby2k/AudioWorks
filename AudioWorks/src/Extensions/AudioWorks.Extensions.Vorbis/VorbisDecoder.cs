@@ -19,9 +19,9 @@ using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
 {
-    sealed class VorbisDecoder : IDisposable
+    sealed unsafe class VorbisDecoder : IDisposable
     {
-        readonly IntPtr _info = Marshal.AllocHGlobal(Marshal.SizeOf<VorbisInfo>());
+        readonly IntPtr _info = Marshal.AllocHGlobal(sizeof(VorbisInfo));
 
         internal VorbisDecoder() => SafeNativeMethods.VorbisInfoInit(_info);
 
