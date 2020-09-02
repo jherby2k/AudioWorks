@@ -18,7 +18,7 @@ using System.Runtime.InteropServices;
 namespace AudioWorks.Extensions.Flac
 {
     [StructLayout(LayoutKind.Sequential)]
-    readonly struct StreamInfo
+    unsafe struct StreamInfo
     {
         readonly uint MinBlockSize;
 
@@ -36,6 +36,6 @@ namespace AudioWorks.Extensions.Flac
 
         internal readonly ulong TotalSamples;
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)] readonly byte[] Md5Sum;
+        fixed byte Md5Sum[16];
     }
 }
