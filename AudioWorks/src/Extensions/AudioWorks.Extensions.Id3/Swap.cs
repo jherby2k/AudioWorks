@@ -1,0 +1,41 @@
+﻿/* Copyright © 2020 Jeremy Herbison
+
+This file is part of AudioWorks.
+
+AudioWorks is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public
+License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+AudioWorks is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+details.
+
+You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
+<https://www.gnu.org/licenses/>. */
+
+namespace AudioWorks.Extensions.Id3
+{
+    static class Swap
+    {
+        internal static int Int32(int val)
+        {
+            return (int) UInt32((uint) val);
+        }
+
+        internal static uint UInt32(uint val)
+        {
+            var retval = (val & 0xff) << 24;
+            retval |= (val & 0xff00) << 8;
+            retval |= (val & 0xff0000) >> 8;
+            retval |= (val & 0xff000000) >> 24;
+            return retval;
+        }
+
+        internal static ushort UInt16(ushort val)
+        {
+            var retval = ((uint) val & 0xff) << 8;
+            retval |= ((uint) val & 0xff00) >> 8;
+            return (ushort) retval;
+        }
+    }
+}

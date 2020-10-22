@@ -16,8 +16,6 @@ You should have received a copy of the GNU Affero General Public License along w
 using System.IO;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using Id3Lib;
-using Id3Lib.Exceptions;
 
 namespace AudioWorks.Extensions.Id3
 {
@@ -40,9 +38,9 @@ namespace AudioWorks.Extensions.Id3
                 try
                 {
                     // If no ID3v2 tag was found, check for ID3v1
-                    var v1Tag = new ID3v1();
+                    var v1Tag = new Id3V1();
                     v1Tag.Deserialize(stream);
-                    tagModel = v1Tag.FrameModel;
+                    tagModel = v1Tag.TagModel;
                 }
                 catch (TagNotFoundException e)
                 {

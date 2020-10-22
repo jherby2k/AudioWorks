@@ -15,8 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using AudioWorks.Common;
-using Id3Lib;
-using Id3Lib.Frames;
 
 namespace AudioWorks.Extensions.Id3
 {
@@ -49,7 +47,7 @@ namespace AudioWorks.Extensions.Id3
             var lossyCoverArt = CoverArtFactory.ConvertToLossy(metadata.CoverArt);
             Add(new FramePicture("APIC")
             {
-                PictureType = PictureTypeCode.CoverFront,
+                PictureType = PictureType.CoverFront,
                 Mime = lossyCoverArt.MimeType,
                 PictureData = lossyCoverArt.Data.ToArray()
             });
@@ -61,7 +59,7 @@ namespace AudioWorks.Extensions.Id3
                 Add(new FrameText(frameId)
                 {
                     Text = value,
-                    TextCode = GetTextCode(encoding)
+                    TextType = GetTextType(encoding)
                 });
         }
 
@@ -72,7 +70,7 @@ namespace AudioWorks.Extensions.Id3
                 {
                     Text = value,
                     Language = language,
-                    TextCode = GetTextCode(encoding)
+                    TextType = GetTextType(encoding)
                 });
         }
 
@@ -83,7 +81,7 @@ namespace AudioWorks.Extensions.Id3
                 {
                     Description = description,
                     Text = value,
-                    TextCode = GetTextCode(encoding),
+                    TextType = GetTextType(encoding),
                     FileAlter = fileAlter
                 });
         }
@@ -104,9 +102,9 @@ namespace AudioWorks.Extensions.Id3
                 : $"{metadata.TrackNumber}/{metadata.TrackCount}";
         }
 
-        static TextCode GetTextCode(string encoding) =>
+        static TextType GetTextType(string encoding) =>
             encoding.Equals("Latin1", StringComparison.Ordinal)
-                ? TextCode.Ascii
-                : TextCode.Utf16;
+                ? TextType.Ascii
+                : TextType.Utf16;
     }
 }

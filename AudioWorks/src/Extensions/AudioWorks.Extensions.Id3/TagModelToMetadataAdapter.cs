@@ -15,8 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using AudioWorks.Common;
-using Id3Lib;
-using Id3Lib.Frames;
 
 namespace AudioWorks.Extensions.Id3
 {
