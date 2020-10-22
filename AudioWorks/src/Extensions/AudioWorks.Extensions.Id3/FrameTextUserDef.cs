@@ -19,13 +19,9 @@ using System.Text;
 namespace AudioWorks.Extensions.Id3
 {
     [Frame("TXXX")]
-    class FrameTextUserDef : FrameBase, IFrameDescription
+    class FrameTextUserDef : FrameText, IFrameDescription
 	{
-        internal TextType TextType { get; set; } = TextType.Ascii;
-
-        public string Description { get; set; }
-
-        internal string Text { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         public FrameTextUserDef(string frameId)
 	        : base(frameId)

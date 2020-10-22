@@ -23,7 +23,7 @@ namespace AudioWorks.Extensions.Id3
     {
         internal TextType TextType { get; set; } = TextType.Ascii;
 
-        internal string Text { get; set; }
+        internal string Text { get; set; } = string.Empty;
 
         public FrameText(string frameId)
             : base(frameId)

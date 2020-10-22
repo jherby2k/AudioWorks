@@ -62,7 +62,7 @@ namespace AudioWorks.Extensions.Id3
                                 break;
                         }
                         break;
-                    
+
                     case FrameText frameText:
                         // ReSharper disable once SwitchStatementMissingSomeCases
                         switch (frameText.FrameId)

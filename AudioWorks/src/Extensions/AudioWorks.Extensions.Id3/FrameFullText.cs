@@ -21,7 +21,7 @@ namespace AudioWorks.Extensions.Id3
     [Frame("USLT"), Frame("COMM")]
     sealed class FrameFullText : FrameText, IFrameDescription
     {
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         internal string Language { get; set; } = "eng";
 

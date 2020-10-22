@@ -47,31 +47,19 @@ namespace AudioWorks.Extensions.Id3
             "Christian Rock", "Merengue", "Salsa", "Trash Metal", "Anime", "JPop", "SynthPop"
         };
 
-        internal static uint TagLength => 128;
-
-        byte _track;
-
-        internal string Title { get; private set; }
-
-        internal string Artist { get; private set; }
-
-        internal string Album { get; private set; }
-
-        internal string Year { get; private set; }
-
-        internal string Comment { get; private set; }
-
-        internal byte Track => _track;
-
-        internal byte Genre { get; private set; }
+        string _title = string.Empty;
+        string _artist = string.Empty;
+        string _album = string.Empty;
+        string _year = string.Empty;
+        string _comment = string.Empty;
+        byte _trackNumber;
+        byte _genreIndex = 255;
 
         internal TagModel TagModel
         {
             get => GetTagModel();
             set => SetFrameModel(value);
         }
-
-        internal Id3V1() => Clear();
 
         internal void Deserialize(Stream stream)
         {
@@ -94,32 +82,32 @@ namespace AudioWorks.Extensions.Id3
                 var tag = new byte[30]; // Allocate ID3 tag
 
                 reader.Read(tag, 0, 30);
-                Title = GetString(encoding, tag);
+                _title = GetString(encoding, tag);
 
                 reader.Read(tag, 0, 30);
-                Artist = GetString(encoding, tag);
+                _artist = GetString(encoding, tag);
 
                 reader.Read(tag, 0, 30);
-                Album = GetString(encoding, tag);
+                _album = GetString(encoding, tag);
 
                 reader.Read(tag, 0, 4);
-                Year = tag[0] != 0 && tag[1] != 0 && tag[2] != 0 && tag[3] != 0
+                _year = tag[0] != 0 && tag[1] != 0 && tag[2] != 0 && tag[3] != 0
                     ? encoding.GetString(tag, 0, 4)
                     : string.Empty;
 
                 reader.Read(tag, 0, 30);
                 if (tag[28] == 0) //Track number was stored at position 29 later hack of the original standard.
                 {
-                    _track = tag[29];
-                    Comment = encoding.GetString(tag, 0, Memory.FindByte(tag, 0x00, 0));
+                    _trackNumber = tag[29];
+                    _comment = encoding.GetString(tag, 0, Memory.FindByte(tag, 0x00, 0));
                 }
                 else
                 {
-                    _track = 0;
-                    Comment = GetString(encoding, tag);
+                    _trackNumber = 0;
+                    _comment = GetString(encoding, tag);
                 }
 
-                Genre = reader.ReadByte();
+                _genreIndex = reader.ReadByte();
             }
         }
 
@@ -176,46 +164,46 @@ namespace AudioWorks.Extensions.Id3
 
                 var tag = new byte[30];
 
-                if (Title.Length > 30)
-                    Title = Title.Substring(0, 30);
-                encoding.GetBytes(Title, 0, Title.Length, tag, 0);
+                if (_title.Length > 30)
+                    _title = _title.Substring(0, 30);
+                encoding.GetBytes(_title, 0, _title.Length, tag, 0);
 
                 writer.Write(tag, 0, 30);
 
                 Memory.Clear(tag, 0, 30);
-                if (Artist.Length > 30)
-                    Artist = Artist.Substring(0, 30);
-                encoding.GetBytes(Artist, 0, Artist.Length, tag, 0);
+                if (_artist.Length > 30)
+                    _artist = _artist.Substring(0, 30);
+                encoding.GetBytes(_artist, 0, _artist.Length, tag, 0);
 
                 writer.Write(tag, 0, 30);
 
                 Memory.Clear(tag, 0, 30);
-                if (Album.Length > 30)
-                    Album = Album.Substring(0, 30);
-                encoding.GetBytes(Album, 0, Album.Length, tag, 0);
+                if (_album.Length > 30)
+                    _album = _album.Substring(0, 30);
+                encoding.GetBytes(_album, 0, _album.Length, tag, 0);
 
                 writer.Write(tag, 0, 30);
 
                 Memory.Clear(tag, 0, 30);
-                if (!string.IsNullOrEmpty(Year))
+                if (!string.IsNullOrEmpty(_year))
                 {
-                    if (!ushort.TryParse(Year, out var year) || year > 9999)
-                        Year = "0";
-                    encoding.GetBytes(Year, 0, Year.Length, tag, 0);
+                    if (!ushort.TryParse(_year, out var year) || year > 9999)
+                        _year = "0";
+                    encoding.GetBytes(_year, 0, _year.Length, tag, 0);
                 }
 
                 writer.Write(tag, 0, 4);
 
                 Memory.Clear(tag, 0, 30);
-                if (Comment.Length > 28)
-                    Comment = Comment.Substring(0, 28);
-                encoding.GetBytes(Comment, 0, Comment.Length, tag, 0);
+                if (_comment.Length > 28)
+                    _comment = _comment.Substring(0, 28);
+                encoding.GetBytes(_comment, 0, _comment.Length, tag, 0);
 
                 writer.Write(tag, 0, 28);
 
                 writer.Write((byte) 0);
-                writer.Write(_track);
-                writer.Write(Genre);
+                writer.Write(_trackNumber);
+                writer.Write(_genreIndex);
             }
         }
 
@@ -226,42 +214,42 @@ namespace AudioWorks.Extensions.Id3
                 new FrameText("TIT2")
                 {
                     TextType = TextType.Ascii,
-                    Text = Title
+                    Text = _title
                 },
                 new FrameText("TPE1")
                 {
                     TextType = TextType.Ascii,
-                    Text = Artist
+                    Text = _artist
                 },
                 new FrameText("TALB")
                 {
                     TextType = TextType.Ascii,
-                    Text = Album
+                    Text = _album
                 },
                 new FrameText("TYER")
                 {
                     TextType = TextType.Ascii,
-                    Text = Year
+                    Text = _year
                 },
                 new FrameText("TRCK")
                 {
                     TextType = TextType.Ascii,
-                    Text = _track.ToString(CultureInfo.InvariantCulture)
+                    Text = _trackNumber.ToString(CultureInfo.InvariantCulture)
                 },
                 new FrameFullText("COMM")
                 {
                     TextType = TextType.Ascii,
                     Language = "eng",
                     Description = "",
-                    Text = Comment
+                    Text = _comment
                 }
             };
 
-            if (Genre < _genres.Length)
+            if (_genreIndex < _genres.Length)
                 tagModel.Add(new FrameText("TCON")
                 {
                     TextType = TextType.Ascii,
-                    Text = _genres[Genre]
+                    Text = _genres[_genreIndex]
                 });
 
             //TODO: Fix this code!!!!!!!!
@@ -278,81 +266,69 @@ namespace AudioWorks.Extensions.Id3
 
         void SetFrameModel(TagModel tagModel)
         {
-            Clear();
+            _title = string.Empty;
+            _artist = string.Empty;
+            _album = string.Empty;
+            _year = string.Empty;
+            _comment = string.Empty;
+            _trackNumber = 0;
+            _genreIndex = 255;
 
             foreach (var frame in tagModel)
                 switch (frame.FrameId)
                 {
                     case "TIT2":
-                        Title = GetTagText(frame);
+                        _title = GetTagText(frame);
                         break;
                     case "TPE1":
-                        Artist = GetTagText(frame);
+                        _artist = GetTagText(frame);
                         break;
                     case "TALB":
-                        Album = GetTagText(frame);
+                        _album = GetTagText(frame);
                         break;
                     case "TYER":
-                        Year = GetTagText(frame);
+                        _year = GetTagText(frame);
                         break;
                     case "TRCK":
-                        if (!byte.TryParse(GetTagText(frame), out _track))
-                            _track = 0;
+                        if (!byte.TryParse(GetTagText(frame), out _trackNumber))
+                            _trackNumber = 0;
                         break;
                     case "TCON":
-                        Genre = ParseGenre(GetTagText(frame));
+                        _genreIndex = ParseGenre(GetTagText(frame));
                         break;
                     case "COMM":
-                        Comment = GetTagText(frame);
+                        _comment = GetTagText(frame);
                         break;
                 }
         }
 
-        void Clear()
-        {
-            Title = string.Empty;
-            Artist = string.Empty;
-            Album = string.Empty;
-            Year = string.Empty;
-            Comment = string.Empty;
-            _track = 0;
-            Genre = 255;
-        }
+        static string GetTagText(FrameBase frame) => ((FrameText) frame).Text;
 
-        static string? GetTagText(FrameBase tag)
+        static byte ParseGenre(string genre)
         {
-            switch (tag)
-            {
-                case FrameFullText frameFullText:
-                    return frameFullText.Text;
-                case FrameText frameText:
-                    return frameText.Text;
-                default:
-                    return null;
-            }
-        }
-
-        static byte ParseGenre(string? sGenre)
-        {
-            if (string.IsNullOrEmpty(sGenre)) return 255;
+            if (string.IsNullOrEmpty(genre)) return 255;
 
             // test for a simple number in the field
-            if (byte.TryParse(sGenre, out var nGenre))
-                return nGenre;
+            if (byte.TryParse(genre, out var genreIndex))
+                return genreIndex;
 
             // "References to the ID3v1 genres can be made by, as first byte,
             // enter "(" followed by a number from the genres list (appendix A)
             // and ended with a ")" character."
-            if (sGenre[0] == '(' && sGenre[1] != '(')
+            if (genre[0] == '(' && genre[1] != '(')
             {
-                var close = sGenre.IndexOf(')');
-                if (close != -1 && byte.TryParse(sGenre.Substring(1, close - 1), out nGenre))
-                    return nGenre;
+#if NETSTANDARD2_0
+                var close = genre.IndexOf(')');
+#else
+                var close = genre.IndexOf(')', StringComparison.Ordinal);
+#endif
+                if (close != -1 && byte.TryParse(genre.Substring(1, close - 1), out genreIndex))
+                    return genreIndex;
             }
 
             // not a number, see if it's one of the predefined genre name strings
             for (byte index = 0; index < _genres.Length; index++)
-                if (sGenre.Equals(_genres[index].Trim(), StringComparison.OrdinalIgnoreCase))
+                if (genre.Equals(_genres[index].Trim(), StringComparison.OrdinalIgnoreCase))
                     return index;
 
             return 12; // "Other"

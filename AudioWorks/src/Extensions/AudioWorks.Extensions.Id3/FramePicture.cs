@@ -13,6 +13,7 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System;
 using System.IO;
 using System.Text;
 
@@ -23,13 +24,13 @@ namespace AudioWorks.Extensions.Id3
     {
         internal TextType TextEncoding { get; set; } = TextType.Ascii;
 
-        internal string Mime { get; set; }
+        internal string Mime { get; set; } = string.Empty;
 
         internal PictureType PictureType { get; set; }
 
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
-        internal byte[] PictureData { get; set; }
+        internal byte[] PictureData { get; set; } = Array.Empty<byte>();
 
         public FramePicture(string frameId)
             : base(frameId)
