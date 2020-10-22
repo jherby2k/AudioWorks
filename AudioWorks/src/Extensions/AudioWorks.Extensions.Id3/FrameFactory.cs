@@ -21,31 +21,27 @@ namespace AudioWorks.Extensions.Id3
 {
     static class FrameFactory
     {
-        static readonly Dictionary<string, Type> _frames = new Dictionary<string, Type>();
+        static readonly Dictionary<string, Type> _frameTypes = new Dictionary<string, Type>();
 
         static FrameFactory()
         {
-            // Scan the assembly for frames configured
+            // Search the assembly for defined frame types
             foreach (var type in Assembly.GetExecutingAssembly().GetTypes())
             foreach (var frameAttribute in (FrameAttribute[]) type.GetCustomAttributes<FrameAttribute>(false))
-                _frames.Add(frameAttribute.FrameId, type);
+                _frameTypes.Add(frameAttribute.FrameId, type);
         }
 
         internal static FrameBase Build(string frameId)
         {
-            if (frameId.Length != 4)
-                throw new InvalidTagException($"Invalid frame type: '{frameId}', it must be 4 characters long.");
-
             //Try to find the most specific frame first
-            if (_frames.TryGetValue(frameId, out var type))
+            if (_frameTypes.TryGetValue(frameId, out var type))
                 return (FrameBase) Activator.CreateInstance(type, frameId);
 
-            //Get the T*** or U*** frame, they are all identical except for the user defined frames 'TXXX' and 'WXXX'.
-            if (_frames.TryGetValue(frameId.Substring(0, 1), out type))
+            //Get the T*** frame, they are all identical except for the user defined frames 'TXXX' and 'WXXX'.
+            if (_frameTypes.TryGetValue(frameId.Substring(0, 1), out type))
                 return (FrameBase) Activator.CreateInstance(type, frameId);
 
-            // Unknown tag, used as a container for unknown frames
-            return new FrameUnknown(frameId);
+            throw new ArgumentException($"'{frameId}' is not a supported frame ID.", nameof(frameId));
         }
     }
 }

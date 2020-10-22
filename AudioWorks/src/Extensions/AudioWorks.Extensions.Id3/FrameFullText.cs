@@ -18,7 +18,7 @@ using System.Text;
 
 namespace AudioWorks.Extensions.Id3
 {
-    [Frame("USLT"), Frame("COMM")]
+    [Frame("COMM")]
     sealed class FrameFullText : FrameText, IFrameDescription
     {
         public string Description { get; set; } = string.Empty;

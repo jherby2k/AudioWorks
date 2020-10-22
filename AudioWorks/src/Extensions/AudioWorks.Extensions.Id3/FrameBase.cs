@@ -35,13 +35,7 @@ namespace AudioWorks.Extensions.Id3
 
         internal string FrameId { get; }
 
-        internal FrameBase(string frameId)
-        {
-            if (frameId.Length != 4)
-                throw new InvalidTagException($"Invalid frame type: '{frameId}', it must be 4 characters long.");
-
-            FrameId = frameId;
-        }
+        internal FrameBase(string frameId) => FrameId = frameId;
 
         internal abstract void Parse(byte[] frame);
 
