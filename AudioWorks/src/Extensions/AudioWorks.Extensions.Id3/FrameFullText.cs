@@ -25,8 +25,8 @@ namespace AudioWorks.Extensions.Id3
 
         internal string Language { get; set; } = "eng";
 
-        public FrameFullText(string frameId)
-            : base(frameId)
+        public FrameFullText()
+            : base("COMM")
         {
         }
 

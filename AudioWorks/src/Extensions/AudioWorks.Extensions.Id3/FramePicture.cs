@@ -20,7 +20,7 @@ using System.Text;
 namespace AudioWorks.Extensions.Id3
 {
     [Frame("APIC")]
-    sealed class FramePicture : FrameBase, IFrameDescription
+    class FramePicture : FrameBase, IFrameDescription
     {
         internal TextType TextEncoding { get; set; } = TextType.Ascii;
 
@@ -32,8 +32,8 @@ namespace AudioWorks.Extensions.Id3
 
         internal byte[] PictureData { get; set; } = Array.Empty<byte>();
 
-        public FramePicture(string frameId)
-            : base(frameId)
+        public FramePicture()
+            : base("APIC")
         {
         }
 

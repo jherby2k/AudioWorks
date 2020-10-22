@@ -236,7 +236,7 @@ namespace AudioWorks.Extensions.Id3
                     TextType = TextType.Ascii,
                     Text = _trackNumber.ToString(CultureInfo.InvariantCulture)
                 },
-                new FrameFullText("COMM")
+                new FrameFullText
                 {
                     TextType = TextType.Ascii,
                     Language = "eng",

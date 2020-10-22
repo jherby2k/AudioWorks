@@ -19,12 +19,12 @@ using System.Text;
 namespace AudioWorks.Extensions.Id3
 {
     [Frame("TXXX")]
-    class FrameTextUserDef : FrameText, IFrameDescription
+    sealed class FrameTextUserDef : FrameText, IFrameDescription
 	{
         public string Description { get; set; } = string.Empty;
 
-        public FrameTextUserDef(string frameId)
-	        : base(frameId)
+        public FrameTextUserDef()
+	        : base("TXXX")
 	    {
 	    }
 

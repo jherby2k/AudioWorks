@@ -22,30 +22,31 @@ namespace AudioWorks.Extensions.Id3
     {
         internal MetadataToTagModelAdapter(AudioMetadata metadata, string encoding)
         {
-            AddTextFrame("TIT2", metadata.Title, encoding);
-            AddTextFrame("TPE1", metadata.Artist, encoding);
-            AddTextFrame("TALB", metadata.Album, encoding);
-            AddTextFrame("TPE2", metadata.AlbumArtist, encoding);
-            AddTextFrame("TCOM", metadata.Composer, encoding);
-            AddTextFrame("TCON", metadata.Genre, encoding);
-            AddFullTextFrame("COMM", metadata.Comment, "eng", encoding);
-            AddTextFrame("TDAT", GetDateText(metadata), encoding);
-            AddTextFrame("TYER", metadata.Year, encoding);
-            AddTextFrame("TRCK", GetTrackText(metadata), encoding);
+            var textType = encoding.Equals("Latin1", StringComparison.Ordinal)
+                ? TextType.Ascii
+                : TextType.Utf16;
 
-            // ReplayGain fields are always in Latin-1, encoding as per specification
-            AddUserDefinedFrame("REPLAYGAIN_TRACK_PEAK", metadata.TrackPeak, "Latin1", true);
-            AddUserDefinedFrame("REPLAYGAIN_ALBUM_PEAK", metadata.AlbumPeak, "Latin1", true);
-            if (!string.IsNullOrEmpty(metadata.TrackGain))
-                AddUserDefinedFrame("REPLAYGAIN_TRACK_GAIN", $"{metadata.TrackGain} dB", "Latin1", true);
-            if (!string.IsNullOrEmpty(metadata.AlbumGain))
-                AddUserDefinedFrame("REPLAYGAIN_ALBUM_GAIN", $"{metadata.AlbumGain} dB", "Latin1", true);
+            AddTextFrame("TIT2", metadata.Title, textType);
+            AddTextFrame("TPE1", metadata.Artist, textType);
+            AddTextFrame("TALB", metadata.Album, textType);
+            AddTextFrame("TPE2", metadata.AlbumArtist, textType);
+            AddTextFrame("TCOM", metadata.Composer, textType);
+            AddTextFrame("TCON", metadata.Genre, textType);
+            AddTextFrame("COMM", metadata.Comment, textType);
+            AddTextFrame("TDAT", GetDateText(metadata), textType);
+            AddTextFrame("TYER", metadata.Year, textType);
+            AddTextFrame("TRCK", GetTrackText(metadata), textType);
+
+            AddReplayGainFrame(metadata.TrackPeak, "REPLAYGAIN_TRACK_PEAK");
+            AddReplayGainFrame(metadata.AlbumPeak, "REPLAYGAIN_ALBUM_PEAK");
+            AddReplayGainFormattedFrame(metadata.TrackGain, "REPLAYGAIN_TRACK_GAIN");
+            AddReplayGainFormattedFrame(metadata.AlbumGain, "REPLAYGAIN_ALBUM_GAIN");
 
             if (metadata.CoverArt == null) return;
 
-            // Always store images in JPEG format since MP3 is also lossy
+            // Always store images in JPEG format, since MP3 is also lossy
             var lossyCoverArt = CoverArtFactory.ConvertToLossy(metadata.CoverArt);
-            Add(new FramePicture("APIC")
+            Add(new FramePicture
             {
                 PictureType = PictureType.CoverFront,
                 Mime = lossyCoverArt.MimeType,
@@ -53,37 +54,28 @@ namespace AudioWorks.Extensions.Id3
             });
         }
 
-        void AddTextFrame(string frameId, string value, string encoding)
+        void AddReplayGainFormattedFrame(string value, string description)
         {
             if (!string.IsNullOrEmpty(value))
-                Add(new FrameText(frameId)
-                {
-                    Text = value,
-                    TextType = GetTextType(encoding)
-                });
+                AddReplayGainFrame($"{value} dB", description);
         }
 
-        void AddFullTextFrame(string frameId, string value, string language, string encoding)
-        {
-            if (!string.IsNullOrEmpty(value))
-                Add(new FrameFullText(frameId)
-                {
-                    Text = value,
-                    Language = language,
-                    TextType = GetTextType(encoding)
-                });
-        }
+        void AddReplayGainFrame(string value, string description) => AddTextFrame("TXXX", value, TextType.Ascii, description, true);
 
-        void AddUserDefinedFrame(string description, string value, string encoding, bool fileAlter)
+        void AddTextFrame(string frameId, string value, TextType textType = TextType.Ascii, string? description = null, bool fileAlter = false)
         {
-            if (!string.IsNullOrEmpty(value))
-                Add(new FrameTextUserDef("TXXX")
-                {
-                    Description = description,
-                    Text = value,
-                    TextType = GetTextType(encoding),
-                    FileAlter = fileAlter
-                });
+            if (string.IsNullOrEmpty(value)) return;
+
+            var frame = (FrameText) FrameFactory.Build(frameId);
+            frame.Text = value;
+            frame.TextType = textType;
+            frame.FileAlter = fileAlter;
+
+            if (description != null)
+                if (frame is IFrameDescription frameDescription)
+                    frameDescription.Description = description;
+
+            Add(frame);
         }
 
         static string GetDateText(AudioMetadata metadata)
@@ -101,10 +93,5 @@ namespace AudioWorks.Extensions.Id3
                 ? metadata.TrackNumber
                 : $"{metadata.TrackNumber}/{metadata.TrackCount}";
         }
-
-        static TextType GetTextType(string encoding) =>
-            encoding.Equals("Latin1", StringComparison.Ordinal)
-                ? TextType.Ascii
-                : TextType.Utf16;
     }
 }

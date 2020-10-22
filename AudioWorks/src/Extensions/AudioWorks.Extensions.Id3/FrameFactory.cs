@@ -35,9 +35,9 @@ namespace AudioWorks.Extensions.Id3
         {
             //Try to find the most specific frame first
             if (_frameTypes.TryGetValue(frameId, out var type))
-                return (FrameBase) Activator.CreateInstance(type, frameId);
+                return (FrameBase) Activator.CreateInstance(type);
 
-            //Get the T*** frame, they are all identical except for the user defined frames 'TXXX' and 'WXXX'.
+            //Get the T*** frame
             if (_frameTypes.TryGetValue(frameId.Substring(0, 1), out type))
                 return (FrameBase) Activator.CreateInstance(type, frameId);
 
