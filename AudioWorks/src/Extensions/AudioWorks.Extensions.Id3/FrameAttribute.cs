@@ -22,9 +22,6 @@ namespace AudioWorks.Extensions.Id3
     {
         internal string FrameId { get; }
 
-        internal FrameAttribute(string frameId)
-        {
-            FrameId = frameId;
-        }
+        internal FrameAttribute(string frameId) => FrameId = frameId;
     }
 }

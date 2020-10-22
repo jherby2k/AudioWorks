@@ -26,10 +26,7 @@ namespace AudioWorks.Extensions.Id3
     {
         readonly byte _version;
 
-        internal FrameHelper(TagHeader header)
-        {
-            _version = header.Version;
-        }
+        internal FrameHelper(TagHeader header) => _version = header.Version;
 
         internal FrameBase Build(string frameId, ushort flags, byte[] buffer)
         {

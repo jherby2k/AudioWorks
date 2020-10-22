@@ -19,7 +19,7 @@ using System.Text;
 namespace AudioWorks.Extensions.Id3
 {
     [Frame("T")]
-    internal class FrameText : FrameBase
+    class FrameText : FrameBase
     {
         internal TextType TextType { get; set; } = TextType.Ascii;
 
@@ -46,11 +46,6 @@ namespace AudioWorks.Extensions.Id3
                 writer.Write(TextBuilder.WriteTextEnd(Text, TextType));
                 return buffer.ToArray();
             }
-        }
-
-        public override string ToString()
-        {
-            return Text;
         }
     }
 }

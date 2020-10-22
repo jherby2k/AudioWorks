@@ -27,12 +27,6 @@ namespace AudioWorks.Extensions.Id3
 
         internal TagExtendedHeader ExtendedHeader { get; } = new TagExtendedHeader();
 
-        internal void AddRange(IEnumerable<FrameBase> frames)
-        {
-            foreach (var frame in frames)
-                Add(frame);
-        }
-
         internal void UpdateSize()
         {
             if (!IsValid)

@@ -56,10 +56,5 @@ namespace AudioWorks.Extensions.Id3
 		        return buffer.ToArray();
 		    }
 		}
-
-		public override string ToString()
-		{
-			return Text;
-		}
-	}
+    }
 }

@@ -24,19 +24,8 @@ namespace AudioWorks.Extensions.Id3
         {
         }
 
-        internal override void Parse(byte[] frame)
-        {
-            _data = frame;
-        }
+        internal override void Parse(byte[] frame) => _data = frame;
 
-        internal override byte[] Make()
-        {
-            return _data;
-        }
-
-        public override string ToString()
-        {
-            return "Unknown ID3 frameId";
-        }
+        internal override byte[] Make() => _data;
     }
 }

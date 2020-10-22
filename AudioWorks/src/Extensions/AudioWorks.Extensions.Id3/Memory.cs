@@ -20,10 +20,7 @@ namespace AudioWorks.Extensions.Id3
 {
     static class Memory
     {
-        internal static bool Compare(ReadOnlySpan<byte> b1, ReadOnlySpan<byte> b2)
-        {
-            return b1.SequenceCompareTo(b2) == 0;
-        }
+        internal static bool Compare(ReadOnlySpan<byte> b1, ReadOnlySpan<byte> b2) => b1.SequenceCompareTo(b2) == 0;
 
         internal static byte[] Extract(ReadOnlySpan<byte> src, int srcIndex, int count)
         {
@@ -46,7 +43,7 @@ namespace AudioWorks.Extensions.Id3
 
         internal static int FindShort(ReadOnlySpan<byte> src, short val, int index)
         {
-            int size = src.Length;
+            var size = src.Length;
             if (index > size)
                 throw new InvalidOperationException();
 
@@ -62,19 +59,6 @@ namespace AudioWorks.Extensions.Id3
                 throw new InvalidOperationException();
 
             dst.Slice(begin, end - begin).Clear();
-        }
-
-        internal static ulong ToInt64(ReadOnlySpan<byte> value)
-        {
-            if (value.Length > 8)
-                throw new InvalidOperationException("The count is to large to be stored");
-
-            return BinaryPrimitives.ReadUInt64LittleEndian(value);
-        }
-
-        internal static byte[] GetBytes(ulong value)
-        {
-            return BitConverter.GetBytes(value);
         }
     }
 }

@@ -71,10 +71,7 @@ namespace AudioWorks.Extensions.Id3
             set => SetFrameModel(value);
         }
 
-        internal Id3V1()
-        {
-            Clear();
-        }
+        internal Id3V1() => Clear();
 
         internal void Deserialize(Stream stream)
         {
