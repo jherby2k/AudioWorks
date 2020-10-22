@@ -60,7 +60,7 @@ namespace AudioWorks.Extensions.Id3
 
         internal void Deserialize(Stream stream)
         {
-            using (var reader = new BinaryReader(stream, Encoding.ASCII, true))
+            using (var reader = new BinaryReader(stream, CodePagesEncodingProvider.Instance.GetEncoding(1252), true))
             {
                 reader.BaseStream.Seek(-128, SeekOrigin.End);
 
@@ -95,8 +95,8 @@ namespace AudioWorks.Extensions.Id3
                 Artist = new string(buffer.Slice(0, buffer.IndexOf('\0')));
                 reader.Read(buffer);
                 Album = new string(buffer.Slice(0, buffer.IndexOf('\0')));
-                reader.Read(buffer.Slice(0, Math.Min(4, buffer.IndexOf('\0'))));
-                Year = new string(buffer.Slice(0, 4));
+                reader.Read(buffer.Slice(0, 4));
+                Year = new string(buffer.Slice(0, Math.Min(4, buffer.IndexOf('\0'))));
                 reader.Read(buffer);
                 Comment = new string(buffer.Slice(0, buffer.IndexOf('\0')));
                 if (buffer[28] == 0)
