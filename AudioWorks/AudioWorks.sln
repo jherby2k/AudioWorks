@@ -81,6 +81,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Valid", "Valid", "{F3EE5042
 		tests\TestFiles\Valid\JPEG 24-bit 1280 x 935.jpg = tests\TestFiles\Valid\JPEG 24-bit 1280 x 935.jpg
 		tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (APIC frame - JPEG).mp3 = tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (APIC frame - JPEG).mp3
 		tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (APIC frame - PNG).mp3 = tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (APIC frame - PNG).mp3
+		tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v1 missing values).mp3 = tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v1 missing values).mp3
 		tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v1).mp3 = tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v1).mp3
 		tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3 = tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3
 		tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v2.3 UTF16).mp3 = tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v2.3 UTF16).mp3

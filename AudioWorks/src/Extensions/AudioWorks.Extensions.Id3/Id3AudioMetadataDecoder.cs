@@ -28,10 +28,11 @@ namespace AudioWorks.Extensions.Id3
 
         public AudioMetadata ReadMetadata(Stream stream)
         {
-            TagModel tagModel;
             try
             {
-                tagModel = TagManager.Deserialize(stream);
+                // Check for an ID3v2 tag first
+                var tagModel = TagManager.Deserialize(stream);
+                return new TagModelToMetadataAdapter(tagModel);
             }
             catch (TagNotFoundException)
             {
@@ -40,15 +41,13 @@ namespace AudioWorks.Extensions.Id3
                     // If no ID3v2 tag was found, check for ID3v1
                     var v1Tag = new Id3V1();
                     v1Tag.Deserialize(stream);
-                    tagModel = v1Tag.TagModel;
+                    return new Id3V1ToMetadataAdapter(v1Tag);
                 }
                 catch (TagNotFoundException e)
                 {
                     throw new AudioUnsupportedException(e.Message);
                 }
             }
-
-            return new TagModelToMetadataAdapter(tagModel);
         }
     }
 }

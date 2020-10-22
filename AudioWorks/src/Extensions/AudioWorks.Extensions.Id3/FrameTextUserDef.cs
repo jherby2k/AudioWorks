@@ -31,7 +31,7 @@ namespace AudioWorks.Extensions.Id3
         internal override void Parse(byte[] frame)
 		{
 			var index = 0;
-			TextType = (TextType)frame[index++];
+            TextType = (TextType) frame[index++];
 
             //TODO: Invalid tag, may be legacy.
             if (frame.Length - index < 3)

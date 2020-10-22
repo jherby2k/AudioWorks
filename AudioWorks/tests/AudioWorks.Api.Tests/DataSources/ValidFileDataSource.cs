@@ -945,6 +945,26 @@ namespace AudioWorks.Api.Tests.DataSources
 
             new object[]
             {
+                "Lame CBR 128 44100Hz Stereo (ID3v1 missing values).mp3",
+                new TestAudioInfo
+                {
+                    Format = "MP3",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 125568,
+                    BitRate = 129170
+                },
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    Comment = "Test Comment",
+                }
+            },
+
+            new object[]
+            {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
                 new TestAudioInfo
                 {
