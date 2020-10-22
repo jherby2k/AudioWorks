@@ -31,7 +31,7 @@ namespace AudioWorks.Extensions.Id3
 
         internal byte[] PictureData { get; set; }
 
-        internal FramePicture(string frameId)
+        public FramePicture(string frameId)
             : base(frameId)
         {
         }

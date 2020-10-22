@@ -19,7 +19,7 @@ namespace AudioWorks.Extensions.Id3
     {
         byte[] _data;
 
-        internal FrameUnknown(string frameId)
+        public FrameUnknown(string frameId)
             : base(frameId)
         {
         }

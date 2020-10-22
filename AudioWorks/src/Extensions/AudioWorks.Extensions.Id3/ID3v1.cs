@@ -326,10 +326,10 @@ namespace AudioWorks.Extensions.Id3
         {
             switch (tag)
             {
-                case FrameText frameText:
-                    return frameText.Text;
                 case FrameFullText frameFullText:
                     return frameFullText.Text;
+                case FrameText frameText:
+                    return frameText.Text;
                 default:
                     return null;
             }

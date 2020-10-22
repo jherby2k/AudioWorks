@@ -19,17 +19,13 @@ using System.Text;
 namespace AudioWorks.Extensions.Id3
 {
     [Frame("USLT"), Frame("COMM")]
-    class FrameFullText : FrameBase, IFrameDescription
+    sealed class FrameFullText : FrameText, IFrameDescription
     {
-        internal TextType TextType { get; set; } = TextType.Ascii;
-
         public string Description { get; set; }
-
-        internal string Text { get; set; }
 
         internal string Language { get; set; } = "eng";
 
-        internal FrameFullText(string frameId)
+        public FrameFullText(string frameId)
             : base(frameId)
         {
         }

@@ -25,6 +25,44 @@ namespace AudioWorks.Extensions.Id3
             foreach (var frame in tagModel)
                 switch (frame)
                 {
+                    case FrameFullText frameFullText:
+                        if (frameFullText.FrameId.Equals("COMM", StringComparison.Ordinal) &&
+                            string.IsNullOrEmpty(frameFullText.Description))
+                            Comment = frameFullText.Text;
+                        break;
+
+                    case FrameTextUserDef frameTextUserDef:
+                        // ReSharper disable once SwitchStatementMissingSomeCases
+                        switch (frameTextUserDef.Description)
+                        {
+                            case "REPLAYGAIN_TRACK_PEAK":
+                                TrackPeak = frameTextUserDef.Text;
+                                break;
+
+                            case "REPLAYGAIN_ALBUM_PEAK":
+                                AlbumPeak = frameTextUserDef.Text;
+                                break;
+
+                            case "REPLAYGAIN_TRACK_GAIN":
+#if NETSTANDARD2_0
+                                TrackGain = frameTextUserDef.Text.Replace(" dB", string.Empty);
+#else
+                                TrackGain = frameTextUserDef.Text.Replace(" dB", string.Empty,
+                                    StringComparison.OrdinalIgnoreCase);
+#endif
+                                break;
+
+                            case "REPLAYGAIN_ALBUM_GAIN":
+#if NETSTANDARD2_0
+                                AlbumGain = frameTextUserDef.Text.Replace(" dB", string.Empty);
+#else
+                                AlbumGain = frameTextUserDef.Text.Replace(" dB", string.Empty,
+                                    StringComparison.OrdinalIgnoreCase);
+#endif
+                                break;
+                        }
+                        break;
+                    
                     case FrameText frameText:
                         // ReSharper disable once SwitchStatementMissingSomeCases
                         switch (frameText.FrameId)
@@ -69,44 +107,6 @@ namespace AudioWorks.Extensions.Id3
                                 TrackNumber = segments[0];
                                 if (segments.Length > 1)
                                     TrackCount = segments[1];
-                                break;
-                        }
-                        break;
-
-                    case FrameFullText frameFullText:
-                        if (frameFullText.FrameId.Equals("COMM", StringComparison.Ordinal) &&
-                            string.IsNullOrEmpty(frameFullText.Description))
-                            Comment = frameFullText.Text;
-                        break;
-
-                    case FrameTextUserDef frameTextUserDef:
-                        // ReSharper disable once SwitchStatementMissingSomeCases
-                        switch (frameTextUserDef.Description)
-                        {
-                            case "REPLAYGAIN_TRACK_PEAK":
-                                TrackPeak = frameTextUserDef.Text;
-                                break;
-
-                            case "REPLAYGAIN_ALBUM_PEAK":
-                                AlbumPeak = frameTextUserDef.Text;
-                                break;
-
-                            case "REPLAYGAIN_TRACK_GAIN":
-#if NETSTANDARD2_0
-                                TrackGain = frameTextUserDef.Text.Replace(" dB", string.Empty);
-#else
-                                TrackGain = frameTextUserDef.Text.Replace(" dB", string.Empty,
-                                    StringComparison.OrdinalIgnoreCase);
-#endif
-                                break;
-
-                            case "REPLAYGAIN_ALBUM_GAIN":
-#if NETSTANDARD2_0
-                                AlbumGain = frameTextUserDef.Text.Replace(" dB", string.Empty);
-#else
-                                AlbumGain = frameTextUserDef.Text.Replace(" dB", string.Empty,
-                                    StringComparison.OrdinalIgnoreCase);
-#endif
                                 break;
                         }
                         break;

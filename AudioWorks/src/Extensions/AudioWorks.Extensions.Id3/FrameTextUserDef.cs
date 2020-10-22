@@ -27,7 +27,7 @@ namespace AudioWorks.Extensions.Id3
 
         internal string Text { get; set; }
 
-        internal FrameTextUserDef(string frameId)
+        public FrameTextUserDef(string frameId)
 	        : base(frameId)
 	    {
 	    }
