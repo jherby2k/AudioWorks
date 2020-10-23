@@ -13,6 +13,7 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System;
 using System.IO;
 using System.Text;
 
@@ -249,38 +250,33 @@ namespace AudioWorks.Extensions.Id3
         static byte[] WriteAsciiEnd(string text)
         {
             using (var buffer = new MemoryStream())
-            using (var writer = new BinaryWriter(buffer, Encoding.UTF8, true))
+            using (var writer = new BinaryWriter(buffer, CodePagesEncodingProvider.Instance.GetEncoding(1252), true))
             {
-                if (string.IsNullOrEmpty(text))
-                    return buffer.ToArray();
-
-                writer.Write(CodePagesEncodingProvider.Instance.GetEncoding(1252).GetBytes(text));
+                writer.Write(text.ToCharArray());
                 return buffer.ToArray();
             }
         }
 
         static byte[] WriteUtf16End(string text)
         {
+            var encoding = new UnicodeEncoding(false, true);
             using (var buffer = new MemoryStream(text.Length + 2))
-            using (var writer = new BinaryWriter(buffer, Encoding.UTF8, true))
+            using (var writer = new BinaryWriter(buffer, encoding, true))
             {
-                if (string.IsNullOrEmpty(text)) //Write a null string
-                    return buffer.ToArray();
-                writer.Write((byte) 0xff); // Little endian
-                writer.Write((byte) 0xfe);
-                writer.Write(new UnicodeEncoding(false, false).GetBytes(text));
+                writer.Write(encoding.GetPreamble());
+                writer.Write(text.ToCharArray());
                 return buffer.ToArray();
             }
         }
 
         static byte[] WriteUtf16BigEndianEnd(string text)
         {
-            using (var buffer = new MemoryStream())
-            using (var writer = new BinaryWriter(buffer, Encoding.UTF8, true))
+            var encoding = new UnicodeEncoding(true, true);
+            using (var buffer = new MemoryStream(text.Length + 2))
+            using (var writer = new BinaryWriter(buffer, encoding, true))
             {
-                if (string.IsNullOrEmpty(text)) //Write a null string
-                    return buffer.ToArray();
-                writer.Write(new UnicodeEncoding(true, false).GetBytes(text));
+                writer.Write(encoding.GetPreamble());
+                writer.Write(text.ToCharArray());
                 return buffer.ToArray();
             }
         }
@@ -290,10 +286,7 @@ namespace AudioWorks.Extensions.Id3
             using (var buffer = new MemoryStream())
             using (var writer = new BinaryWriter(buffer, Encoding.UTF8, true))
             {
-                if (string.IsNullOrEmpty(text)) //Write a null string
-                    return buffer.ToArray();
-
-                writer.Write(Encoding.UTF8.GetBytes(text));
+                writer.Write(text);
                 return buffer.ToArray();
             }
         }
