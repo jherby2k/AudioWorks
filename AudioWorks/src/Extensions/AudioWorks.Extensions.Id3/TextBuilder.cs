@@ -20,39 +20,25 @@ namespace AudioWorks.Extensions.Id3
 {
     static class TextBuilder
     {
-        internal static string ReadText(byte[] frame, ref int index, TextType textType)
-        {
-            switch (textType)
+        internal static string ReadText(byte[] frame, ref int index, TextType textType) =>
+            textType switch
             {
-                case TextType.Ascii:
-                    return ReadAscii(frame, ref index);
-                case TextType.Utf16:
-                    return ReadUtf16(frame, ref index);
-                case TextType.Utf16BigEndian:
-                    return ReadUtf16BigEndian(frame, ref index);
-                case TextType.Utf8:
-                    return ReadUtf8(frame, ref index);
-                default:
-                    throw new InvalidFrameException("Invalid text type.");
-            }
-        }
+                TextType.Ascii => ReadAscii(frame, ref index),
+                TextType.Utf16 => ReadUtf16(frame, ref index),
+                TextType.Utf16BigEndian => ReadUtf16BigEndian(frame, ref index),
+                TextType.Utf8 => ReadUtf8(frame, ref index),
+                _ => throw new InvalidFrameException("Invalid text type.")
+            };
 
-        internal static string ReadTextEnd(byte[] frame, int index, TextType textType)
-        {
-            switch (textType)
+        internal static string ReadTextEnd(byte[] frame, int index, TextType textType) =>
+            textType switch
             {
-                case TextType.Ascii:
-                        return ReadAsciiEnd(frame, index);
-                case TextType.Utf16:
-                        return ReadUtf16End(frame, index);
-                case TextType.Utf16BigEndian:
-                        return ReadUtf16BigEndianEnd(frame, index);
-                case TextType.Utf8:
-                        return ReadUtf8End(frame, index);
-                default:
-                        throw new InvalidFrameException("Invalid text type.");
-            }
-        }
+                TextType.Ascii => ReadAsciiEnd(frame, index),
+                TextType.Utf16 => ReadUtf16End(frame, index),
+                TextType.Utf16BigEndian => ReadUtf16BigEndianEnd(frame, index),
+                TextType.Utf8 => ReadUtf8End(frame, index),
+                _ => throw new InvalidFrameException("Invalid text type.")
+            };
 
         internal static string ReadAscii(byte[] frame, ref int index)
         {
@@ -63,8 +49,7 @@ namespace AudioWorks.Extensions.Id3
 
             if (count > 0)
             {
-                var encoding = CodePagesEncodingProvider.Instance.GetEncoding(1252); // Should be ASCII
-                text = encoding.GetString(frame, index, count);
+                text = CodePagesEncodingProvider.Instance.GetEncoding(1252).GetString(frame, index, count);
                 index += count; // add the read bytes
             }
 
@@ -72,39 +57,25 @@ namespace AudioWorks.Extensions.Id3
             return text;
         }
 
-        internal static byte[] WriteText(string text, TextType textType)
-        {
-            switch (textType)
+        internal static byte[] WriteText(string text, TextType textType) =>
+            textType switch
             {
-                case TextType.Ascii:
-                    return WriteAscii(text);
-                case TextType.Utf16:
-                    return WriteUtf16(text);
-                case TextType.Utf16BigEndian:
-                    return WriteUtf16BigEndian(text);
-                case TextType.Utf8:
-                    return WriteUtf8(text);
-                default:
-                    throw new InvalidFrameException("Invalid text type.");
-            }
-        }
+                TextType.Ascii => WriteAscii(text),
+                TextType.Utf16 => WriteUtf16(text),
+                TextType.Utf16BigEndian => WriteUtf16BigEndian(text),
+                TextType.Utf8 => WriteUtf8(text),
+                _ => throw new InvalidFrameException("Invalid text type.")
+            };
 
-        internal static byte[] WriteTextEnd(string text, TextType textType)
-        {
-            switch (textType)
+        internal static byte[] WriteTextEnd(string text, TextType textType) =>
+            textType switch
             {
-                case TextType.Ascii:
-                    return WriteAsciiEnd(text);
-                case TextType.Utf16:
-                    return WriteUtf16End(text);
-                case TextType.Utf16BigEndian:
-                    return WriteUtf16BigEndianEnd(text);
-                case TextType.Utf8:
-                    return WriteUtf8End(text);
-                default:
-                    throw new InvalidFrameException("Invalid text type.");
-            }
-        }
+                TextType.Ascii => WriteAsciiEnd(text),
+                TextType.Utf16 => WriteUtf16End(text),
+                TextType.Utf16BigEndian => WriteUtf16BigEndianEnd(text),
+                TextType.Utf8 => WriteUtf8End(text),
+                _ => throw new InvalidFrameException("Invalid text type.")
+            };
 
         internal static byte[] WriteAscii(string text)
         {
@@ -153,13 +124,12 @@ namespace AudioWorks.Extensions.Id3
 
         static string ReadUtf16BigEndian(byte[] frame, ref int index)
         {
-            var encoding = new UnicodeEncoding(true, false);
             var count = Memory.FindShort(frame, 0, index);
             if (count == -1)
                 throw new InvalidFrameException("Invalid UTF16BE string size");
 
             // we can safely let count==0 fall through
-            var text = encoding.GetString(frame, index, count);
+            var text = new UnicodeEncoding(true, false).GetString(frame, index, count);
             index += count; // add the bytes read
             index += 2; // skip the EOL
             return text;
@@ -167,13 +137,12 @@ namespace AudioWorks.Extensions.Id3
 
         static string ReadUtf16LittleEndian(byte[] frame, ref int index)
         {
-            var encoding = new UnicodeEncoding(false, false);
             var count = Memory.FindShort(frame, 0, index);
             if (count == -1)
                 throw new InvalidFrameException("Invalid UTF16LE string size");
 
             // we can safely let count==0 fall through
-            var text = encoding.GetString(frame, index, count);
+            var text = new UnicodeEncoding(false, false).GetString(frame, index, count);
             index += count; // add the bytes read
             index += 2; // skip the EOL
             return text;
@@ -195,10 +164,8 @@ namespace AudioWorks.Extensions.Id3
             return text;
         }
 
-        static string ReadAsciiEnd(byte[] frame, int index)
-        {
-            return CodePagesEncodingProvider.Instance.GetEncoding(1252).GetString(frame, index, frame.Length - index);
-        }
+        static string ReadAsciiEnd(byte[] frame, int index) => CodePagesEncodingProvider.Instance.GetEncoding(1252)
+            .GetString(frame, index, frame.Length - index - 1);
 
         static string ReadUtf16End(byte[] frame, int index)
         {
@@ -217,20 +184,14 @@ namespace AudioWorks.Extensions.Id3
             throw new InvalidFrameException("Invalid UTF16 string.");
         }
 
-        static string ReadUtf16BigEndianEnd(byte[] frame, int index)
-        {
-            return new UnicodeEncoding(true, false).GetString(frame, index, frame.Length - index);
-        }
+        static string ReadUtf16BigEndianEnd(byte[] frame, int index) => new UnicodeEncoding(true, false)
+            .GetString(frame, index, frame.Length - index - 2);
 
-        static string ReadUtf16LittleEndianEnd(byte[] frame, int index)
-        {
-            return new UnicodeEncoding(false, false).GetString(frame, index, frame.Length - index);
-        }
+        static string ReadUtf16LittleEndianEnd(byte[] frame, int index) => new UnicodeEncoding(false, false)
+            .GetString(frame, index, frame.Length - index - 2);
 
-        static string ReadUtf8End(byte[] frame, int index)
-        {
-            return Encoding.UTF8.GetString(frame, index, frame.Length - index);
-        }
+        static string ReadUtf8End(byte[] frame, int index) => Encoding.UTF8
+                .GetString(frame, index, frame.Length - index - 1);
 
         static byte[] WriteUtf16(string text)
         {
