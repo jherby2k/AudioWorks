@@ -21,96 +21,22 @@ namespace AudioWorks.Extensions.Id3
     sealed class TagHeader
     {
         static readonly byte[] _id3 = { 0x49, 0x44, 0x33 }; //"ID3" tag
-        static readonly byte[] _3di = { 0x33, 0x44, 0x49 }; //"3DI" footer tag
 
-        byte _id3Flags;
-        uint _paddingSize;
+        bool _hasFooter;
 
         internal static uint HeaderSize => 10;
 
         internal byte Version { get; set; } = 4;
 
-        internal byte Revision { get; set; }
-
         internal uint TagSize { get; set; }
 
-        internal uint TagSizeWithHeaderFooter => TagSize + HeaderSize + (Footer ? HeaderSize : 0);
+        internal uint TagSizeWithHeaderFooter => TagSize + HeaderSize + (_hasFooter ? HeaderSize : 0);
 
-        internal bool Unsync
-        {
-            get => (_id3Flags & 0x80) > 0;
-            set
-            {
-                if (value)
-                    _id3Flags |= 0x80;
-                else
-                    unchecked
-                    {
-                        _id3Flags &= (byte) ~0x80;
-                    }
-            }
-        }
+        internal bool Unsync { get; private set; }
 
-        internal bool ExtendedHeader
-        {
-            get => (_id3Flags & 0x40) > 0;
-            set
-            {
-                if (value)
-                    _id3Flags |= 0x40;
-                else
-                    unchecked
-                    {
-                        _id3Flags &= (byte) ~0x40;
-                    }
-            }
-        }
+        internal bool HasExtendedHeader { get; private set; }
 
-        internal bool Experimental
-        {
-            get => (_id3Flags & 0x20) > 0;
-            set
-            {
-                if (value)
-                    _id3Flags |= 0x20;
-                else
-                    unchecked
-                    {
-                        _id3Flags &= (byte) ~0x20;
-                    }
-            }
-        }
-
-        internal bool Footer
-        {
-            get => (_id3Flags & 0x10) > 0;
-            set
-            {
-                if (value)
-                {
-                    _id3Flags |= 0x10;
-                    _paddingSize = 0;
-                }
-                else
-                    unchecked
-                    {
-                        _id3Flags &= (byte) ~0x10;
-                    }
-            }
-        }
-
-        internal bool Padding => _paddingSize > 0;
-
-        internal uint PaddingSize
-        {
-            get => _paddingSize;
-            set
-            {
-                if (value > 0)
-                    Footer = false;
-                _paddingSize = value;
-            }
-        }
+        internal uint PaddingSize { get; set; }
 
         internal void Serialize(Stream stream)
         {
@@ -119,22 +45,9 @@ namespace AudioWorks.Extensions.Id3
                 //TODO: Validate version and revision we support
                 writer.Write(_id3); // ID3v2/file identifier
                 writer.Write(Version); // ID3v2 version, e.g. 3 or 4
-                writer.Write(Revision); // ID3v2 revision, e.g. 0
-                writer.Write(_id3Flags); // ID3v2 flags
-                writer.Write(Swap.UInt32(Sync.Safe(TagSize + _paddingSize)));
-            }
-        }
-
-        internal void SerializeFooter(Stream stream)
-        {
-            using (var writer = new BinaryWriter(stream, Encoding.UTF8, true))
-            {
-                //TODO: Validate version and revision we support
-                writer.Write(_3di); // ID3v2/file footer identifier; ID3 backwards.
-                writer.Write(Version); // ID3v2 version, e.g. 3 or 4
-                writer.Write(Revision); // ID3v2 revision, e.g. 0
-                writer.Write(_id3Flags); // ID3v2 flags
-                writer.Write(Swap.UInt32(Sync.Safe(TagSize)));
+                writer.Write((byte) 0); // ID3v2 revision
+                writer.Write((byte) 0); // ID3v2 flags
+                writer.Write(Swap.UInt32(Sync.Safe(TagSize + PaddingSize)));
             }
         }
 
@@ -155,12 +68,15 @@ namespace AudioWorks.Extensions.Id3
                     throw new InvalidTagException("Corrupt header, invalid ID3v2 version.");
 
                 // Get the id3v2 revision byte
-                Revision = reader.ReadByte();
-                if (Revision == 0xff)
+                if (reader.ReadByte() == 0xff)
                     throw new InvalidTagException("Corrupt header, invalid ID3v2 revision.");
 
-                // Get the id3v2 flag byte, only read what I understand
-                _id3Flags = (byte) (0xf0 & reader.ReadByte());
+                // Parse the flag byte
+                var id3Flags = (byte) (0xf0 & reader.ReadByte());
+                Unsync = (id3Flags & 0x80) > 0;
+                HasExtendedHeader = (id3Flags & 0x40) > 0;
+                _hasFooter = (id3Flags & 0x10) > 0;
+
                 // Get the id3v2 size, swap and un-sync the integer
                 TagSize = Swap.UInt32(Sync.UnsafeBigEndian(reader.ReadUInt32()));
                 if (TagSize == 0)

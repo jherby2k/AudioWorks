@@ -20,38 +20,17 @@ namespace AudioWorks.Extensions.Id3
 {
     sealed class TagExtendedHeader
     {
-        byte[]? _extendedHeader;
-
-        /// <summary>
-        /// Get the size of the extended header
-        /// </summary>
         internal uint Size { get; private set; }
 
-        /// <summary>
-        /// Load the ID3 extended header from a stream
-        /// </summary>
-        /// <param name="stream">Binary stream containing a ID3 extended header</param>
         internal void Deserialize(Stream stream)
         {
             using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
                 Size = Swap.UInt32(Sync.UnsafeBigEndian(reader.ReadUInt32()));
             if (Size < 6)
-                throw new InvalidFrameException("Corrupt id3 extended header.");
+                throw new IOException("Corrupt id3 extended header.");
 
-            // TODO: implement the extended header, copy for now since it's optional
-            _extendedHeader = new byte[Size];
-            stream.Read(_extendedHeader, 0, (int) Size);
-        }
-
-        /// <summary>
-        /// Save the ID3 extended header from a stream
-        /// </summary>
-        /// <param name="stream">Binary stream containing a ID3 extended header</param>
-        internal void Serialize(Stream stream)
-        {
-            using (var writer = new BinaryWriter(stream, Encoding.UTF8, true))
-                // TODO: implement the extended header, for now write the original header
-                writer.Write(_extendedHeader);
+            // Seek past it for now
+            stream.Seek((int) Size, SeekOrigin.Current);
         }
     }
 }

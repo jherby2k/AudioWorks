@@ -13,24 +13,21 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.IO;
 
 namespace AudioWorks.Extensions.Id3
 {
-    class TagModel : Collection<FrameBase>
+    class TagModel
     {
-        internal bool IsValid => Count > 0;
-
         internal TagHeader Header { get; } = new TagHeader();
 
         internal TagExtendedHeader ExtendedHeader { get; } = new TagExtendedHeader();
 
+        internal List<FrameBase> Frames { get; } = new List<FrameBase>();
+
         internal void UpdateSize()
         {
-            if (!IsValid)
-                Header.TagSize = 0; // clear the TagSize stored in the tagModel
-
             // TODO: there must be a better way of obtaining this!!
             using (Stream stream = new MemoryStream())
                 TagManager.Serialize(this, stream);

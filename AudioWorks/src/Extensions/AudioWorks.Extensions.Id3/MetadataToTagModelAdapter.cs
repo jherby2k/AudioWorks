@@ -46,7 +46,7 @@ namespace AudioWorks.Extensions.Id3
 
             // Always store images in JPEG format, since MP3 is also lossy
             var lossyCoverArt = CoverArtFactory.ConvertToLossy(metadata.CoverArt);
-            Add(new FramePicture
+            Frames.Add(new FramePicture
             {
                 PictureType = PictureType.CoverFront,
                 Mime = lossyCoverArt.MimeType,
@@ -75,7 +75,7 @@ namespace AudioWorks.Extensions.Id3
                 if (frame is IFrameDescription frameDescription)
                     frameDescription.Description = description;
 
-            Add(frame);
+            Frames.Add(frame);
         }
 
         static string GetDateText(AudioMetadata metadata)

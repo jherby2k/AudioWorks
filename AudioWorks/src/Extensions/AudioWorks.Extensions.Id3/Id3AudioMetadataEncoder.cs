@@ -43,7 +43,7 @@ namespace AudioWorks.Extensions.Id3
                     ? encoding!
                     : "Latin1");
 
-            if (tagModel.Count > 0)
+            if (tagModel.Frames.Count > 0)
             {
                 // Set the version (default to 3)
                 tagModel.Header.Version = (byte) (
@@ -84,7 +84,7 @@ namespace AudioWorks.Extensions.Id3
             using (var reader = new BinaryReader(stream, Encoding.ASCII, true))
                 if (new string(reader.ReadChars(3)).Equals("TAG", StringComparison.Ordinal))
                     stream.SetLength(stream.Length - 128);
-            stream.Position = tagModel.Count == 0
+            stream.Position = tagModel.Frames.Count == 0
                 ? 0
                 : tagModel.Header.TagSizeWithHeaderFooter + tagModel.Header.PaddingSize;
         }

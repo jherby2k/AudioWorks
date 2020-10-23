@@ -25,8 +25,6 @@ namespace AudioWorks.Extensions.Id3
 
         internal bool Compression { get; set; }
 
-        internal bool Encryption { get; set; }
-
         internal bool Unsynchronisation { get; set; }
 
         internal bool DataLength { get; set; }

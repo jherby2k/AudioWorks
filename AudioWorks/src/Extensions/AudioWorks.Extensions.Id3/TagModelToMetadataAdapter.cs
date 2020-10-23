@@ -22,7 +22,7 @@ namespace AudioWorks.Extensions.Id3
     {
         internal TagModelToMetadataAdapter(TagModel tagModel)
         {
-            foreach (var frame in tagModel)
+            foreach (var frame in tagModel.Frames)
                 switch (frame)
                 {
                     case FrameFullText frameFullText:

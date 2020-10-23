@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using AudioWorks.Common;
 using ICSharpCode.SharpZipLib.Zip.Compression;
 using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 
@@ -66,10 +67,6 @@ namespace AudioWorks.Extensions.Id3
                         stream = new InflaterInputStream(stream);
                         streamsToClose.Add(stream);
                     }
-
-                    if (frame.Encryption)
-                        throw new NotImplementedException(
-                            "Encryption is not implemented, consequently it is not supported.");
 
                     if (frame.Unsynchronisation)
                     {
@@ -141,11 +138,6 @@ namespace AudioWorks.Extensions.Id3
                     else
                         memoryStream.Write(buffer, 0, buffer.Length);
 
-                    //TODO: Encryption
-                    if (frame.Encryption)
-                        throw new NotImplementedException(
-                            "Encryption is not implemented, consequently it is not supported.");
-
                     if (frame.Unsynchronisation)
                     {
                         var synchStream = new MemoryStream();
@@ -170,7 +162,8 @@ namespace AudioWorks.Extensions.Id3
             frame.FileAlter = GetFileAlter(flags);
             frame.ReadOnly = GetReadOnly(flags);
             frame.Compression = GetCompression(flags);
-            frame.Encryption = GetEncryption(flags);
+            if (GetEncryption(flags))
+                throw new AudioUnsupportedException("Encrypted frames are not supported.");
             frame.Unsynchronisation = GetUnsynchronisation(flags);
             frame.DataLength = GetDataLength(flags);
         }
@@ -287,7 +280,6 @@ namespace AudioWorks.Extensions.Id3
             SetReadOnly(frame.ReadOnly, ref flags);
             SetGrouping(frame.Group.HasValue, ref flags);
             SetCompression(frame.Compression, ref flags);
-            SetEncryption(frame.Encryption, ref flags);
             SetUnsynchronisation(frame.Unsynchronisation, ref flags);
             SetDataLength(frame.DataLength, ref flags);
             return flags;
@@ -366,21 +358,6 @@ namespace AudioWorks.Extensions.Id3
                     break;
                 case 4:
                     flags = value ? (ushort) (flags | 0x0008) : (ushort) (flags & unchecked((ushort) ~0x0008));
-                    break;
-                default:
-                    throw new InvalidOperationException($"ID3v2 Version {_version} is not supported.");
-            }
-        }
-
-        void SetEncryption(bool value, ref ushort flags)
-        {
-            switch (_version)
-            {
-                case 3:
-                    flags = value ? (ushort) (flags | 0x0040) : (ushort) (flags & unchecked((ushort) ~0x0040));
-                    break;
-                case 4:
-                    flags = value ? (ushort) (flags | 0x0004) : (ushort) (flags & unchecked((ushort) ~0x0004));
                     break;
                 default:
                     throw new InvalidOperationException($"ID3v2 Version {_version} is not supported.");

@@ -33,10 +33,6 @@ namespace AudioWorks.Extensions.Id3
 			var index = 0;
             TextType = (TextType) frame[index++];
 
-            //TODO: Invalid tag, may be legacy.
-            if (frame.Length - index < 3)
-                return;
-
 			Description = TextBuilder.ReadText(frame, ref index, TextType);
 			Text = TextBuilder.ReadTextEnd(frame, index, TextType);
 		}

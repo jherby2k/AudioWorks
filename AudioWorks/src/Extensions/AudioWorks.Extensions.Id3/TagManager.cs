@@ -44,7 +44,7 @@ namespace AudioWorks.Extensions.Id3
 
                 uint rawSize;
                 // load the extended header
-                if (tagModel.Header.ExtendedHeader)
+                if (tagModel.Header.HasExtendedHeader)
                 {
                     tagModel.ExtendedHeader.Deserialize(stream);
                     rawSize = id3TagSize - tagModel.ExtendedHeader.Size;
@@ -146,7 +146,7 @@ namespace AudioWorks.Extensions.Id3
                         var frameData = new byte[frameSize];
                         reader.Read(frameData, 0, (int) frameSize);
                         index += frameSize; // read more bytes
-                        tagModel.Add(frameHelper.Build(Encoding.UTF8.GetString(frameId, 0, 4), flags, frameData));
+                        tagModel.Frames.Add(frameHelper.Build(Encoding.UTF8.GetString(frameId, 0, 4), flags, frameData));
                     }
                 }
 
@@ -160,7 +160,7 @@ namespace AudioWorks.Extensions.Id3
 
         internal static void Serialize(TagModel tagModel, Stream stream)
         {
-            if (tagModel.Count <= 0)
+            if (tagModel.Frames.Count < 1)
                 throw new InvalidTagException(
                     "Can't serialize a ID3v2 tag without any frames, there must be at least one present.");
 
@@ -170,7 +170,7 @@ namespace AudioWorks.Extensions.Id3
                 var frameHelper = new FrameHelper(tagModel.Header);
 
                 // Write the frames in binary format
-                foreach (var frame in tagModel)
+                foreach (var frame in tagModel.Frames)
                 {
                     //TODO: Do validations on tag name correctness
                     var frameId = new byte[4];
@@ -207,13 +207,9 @@ namespace AudioWorks.Extensions.Id3
                     Math.Min(tagModel.Header.PaddingSize, 0x10000000 - id3TagSize);
 
                 // next write the padding of zeros, if any
-                if (tagModel.Header.Padding)
+                if (tagModel.Header.PaddingSize > 0)
                     for (var i = 0; i < tagModel.Header.PaddingSize; i++)
                         stream.WriteByte(0);
-
-                // next write the footer, if any
-                if (tagModel.Header.Footer)
-                    tagModel.Header.SerializeFooter(stream);
 
                 // Now seek back to the start and write the header
                 var position = stream.Position;
