@@ -13,7 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System;
 using System.IO;
 using System.Text;
 
@@ -166,7 +165,7 @@ namespace AudioWorks.Extensions.Id3
         }
 
         static string ReadAsciiEnd(byte[] frame, int index) => CodePagesEncodingProvider.Instance.GetEncoding(1252)
-            .GetString(frame, index, frame.Length - index - 1);
+            .GetString(frame, index, frame.Length - index).TrimEnd('\0');
 
         static string ReadUtf16End(byte[] frame, int index)
         {
@@ -186,13 +185,13 @@ namespace AudioWorks.Extensions.Id3
         }
 
         static string ReadUtf16BigEndianEnd(byte[] frame, int index) => new UnicodeEncoding(true, false)
-            .GetString(frame, index, frame.Length - index - 2);
+            .GetString(frame, index, frame.Length - index).TrimEnd('\0');
 
         static string ReadUtf16LittleEndianEnd(byte[] frame, int index) => new UnicodeEncoding(false, false)
-            .GetString(frame, index, frame.Length - index - 2);
+            .GetString(frame, index, frame.Length - index).TrimEnd('\0');
 
         static string ReadUtf8End(byte[] frame, int index) => Encoding.UTF8
-                .GetString(frame, index, frame.Length - index - 1);
+                .GetString(frame, index, frame.Length - index).TrimEnd('\0');
 
         static byte[] WriteUtf16(string text)
         {
@@ -253,6 +252,7 @@ namespace AudioWorks.Extensions.Id3
             using (var writer = new BinaryWriter(buffer, CodePagesEncodingProvider.Instance.GetEncoding(1252), true))
             {
                 writer.Write(text.ToCharArray());
+                writer.Write('\0');
                 return buffer.ToArray();
             }
         }
@@ -265,6 +265,7 @@ namespace AudioWorks.Extensions.Id3
             {
                 writer.Write(encoding.GetPreamble());
                 writer.Write(text.ToCharArray());
+                writer.Write('\0');
                 return buffer.ToArray();
             }
         }
@@ -277,6 +278,7 @@ namespace AudioWorks.Extensions.Id3
             {
                 writer.Write(encoding.GetPreamble());
                 writer.Write(text.ToCharArray());
+                writer.Write('\0');
                 return buffer.ToArray();
             }
         }
@@ -287,6 +289,7 @@ namespace AudioWorks.Extensions.Id3
             using (var writer = new BinaryWriter(buffer, Encoding.UTF8, true))
             {
                 writer.Write(text);
+                writer.Write('\0');
                 return buffer.ToArray();
             }
         }

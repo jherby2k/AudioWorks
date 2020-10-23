@@ -730,7 +730,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "D44FACB05A7F0CB3CB5F5A31B9B52022"
+                    "23C89D97086DD52D0B12AF0D215CB204"
                 }
             },
 
@@ -760,7 +760,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "C64330448267EA7595D19378766B38C5"
+                    "63C6147CC1AEDC8C79CEA3A64A4D1D70"
                 }
             },
 
@@ -790,7 +790,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "C64330448267EA7595D19378766B38C5"
+                    "63C6147CC1AEDC8C79CEA3A64A4D1D70"
                 }
             },
 
@@ -820,7 +820,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "8E71F084665F7763560EAEF79292B1ED"
+                    "436A20F9A295581E7ADA1124C4DDC457"
                 }
             },
 
@@ -850,7 +850,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "B4BAD75711B480844A735B8EF169F82A"
+                    "A6AA8BE5A043577E1DEA4607343E4625"
                 }
             },
 
@@ -881,7 +881,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "076B838A43E883DCC9F0D0ABE8A263D6"
+                    "0D9A59483C9788FD755DD1AAEFDB754F"
                 }
             },
 
@@ -915,7 +915,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "E00628B6DA2A93F2832EAC420B2D8DF0"
+                    "B5378873C0F17D03293DF58FF1C3CCE7"
                 }
             },
 
@@ -949,7 +949,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "476D2A59E830366CBFF9F0AE0305B8E2"
+                    "67216BD8D319D952EB7D06FE463B09C0"
                 }
             },
 
@@ -983,7 +983,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "D44FACB05A7F0CB3CB5F5A31B9B52022"
+                    "23C89D97086DD52D0B12AF0D215CB204"
                 }
             },
 
@@ -1017,7 +1017,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "076B838A43E883DCC9F0D0ABE8A263D6"
+                    "A477DAEDA5B65A77443433E50525AC5C"
                 }
             },
 
@@ -1051,7 +1051,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "189A55453749DA1FFAFFEAC6A06DF99B"
+                    "5B6CB7B9912D212ACD37BEE11BA34AC5"
                 }
             },
 
@@ -1082,7 +1082,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "D44FACB05A7F0CB3CB5F5A31B9B52022"
+                    "23C89D97086DD52D0B12AF0D215CB204"
                 }
             },
 
