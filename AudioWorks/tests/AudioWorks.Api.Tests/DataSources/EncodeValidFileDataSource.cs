@@ -1170,7 +1170,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "EED1BD58A65E3CA92EEC176F156DEF24", // Lame 3.99.5 (Ubuntu 16.04)
-                    "32EEC2B69A048975FB3BD034E8B392A4", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
+                    "F737A24D4F60E5B3229689CC15FF10EE", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
                     "EA2FE7549FB7A1971265FA27B88D0285" // Lame 3.100 (Windows)
                 }
             },
@@ -1213,7 +1213,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "EED1BD58A65E3CA92EEC176F156DEF24", // Lame 3.99.5 (Ubuntu 16.04)
-                    "32EEC2B69A048975FB3BD034E8B392A4", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
+                    "F737A24D4F60E5B3229689CC15FF10EE", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
                     "EA2FE7549FB7A1971265FA27B88D0285" // Lame 3.100 (Windows)
                 }
             },
@@ -1230,7 +1230,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "8EEAF387756C09E867E45CAEF8649C53", // Lame 3.99.5 (Ubuntu 16.04)
-                    "24F1B744BDA5C6A94B9FE6136DEC4614", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
+                    "798ADCCFB3FB8B46310219E6E3EA6E53", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
                     "D993A1EB0FCD7C8D068CDA983CDE75E7" // Lame 3.100 (Windows)
                 }
             },
@@ -1247,7 +1247,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "EED1BD58A65E3CA92EEC176F156DEF24", // Lame 3.99.5 (Ubuntu 16.04)
-                    "32EEC2B69A048975FB3BD034E8B392A4", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
+                    "F737A24D4F60E5B3229689CC15FF10EE", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
                     "EA2FE7549FB7A1971265FA27B88D0285" // Lame 3.100 (Windows)
                 }
             },
@@ -1264,7 +1264,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "A7C95E4A6B3071F8C9498D4A705E2685", // Lame 3.99.5 (Ubuntu 16.04)
-                    "1B5C266B6D799765BA1272BE28A7C435", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
+                    "DD5085A69968D039A9A7B69EDA361E94", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
                     "3A2073040B3DDA778FA88A790B883AD4" // Lame 3.100 (Windows)
                 }
             },
@@ -1281,7 +1281,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "EED1BD58A65E3CA92EEC176F156DEF24", // Lame 3.99.5 (Ubuntu 16.04)
-                    "32EEC2B69A048975FB3BD034E8B392A4", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
+                    "F737A24D4F60E5B3229689CC15FF10EE", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
                     "EA2FE7549FB7A1971265FA27B88D0285" // Lame 3.100 (Windows)
                 }
             },
@@ -1298,7 +1298,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "2773A9EAC3A6E07FA1C71DD5FC730267", // Lame 3.99.5 (Ubuntu 16.04)
-                    "5737ED221E55314FD5B9FA167C1C1651", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
+                    "ED3A9531742553641B112C0D0A41F099", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
                     "ADA8A213D1219A92937453878EEA3D18" // Lame 3.100 (Windows)
                 }
             },
@@ -1315,7 +1315,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "D05EA326944389E530612EAF314BB588", // Lame 3.99.5 (Ubuntu 16.04)
-                    "D270226F14E850B208624CD2AC59512D", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
+                    "6645726904A761FDF324711CFD21D477", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
                     "47A50D9D488F78F43577BB5BBA0BD783" // Lame 3.100 (Windows)
                 }
             },
@@ -1574,7 +1574,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     "C4BE1E9B133ECF06E397F812D5AF250E", // Lame 3.99.5 (Ubuntu 16.04)
                     "8EFA63733A5527E08092CAD86E86F76E", // Lame 3.100 (Legacy .NET on Ubuntu 18.04 / 20.04 and MacOS)
-                    "AFC1B4A4D1D02944A0902C5FA3A3E7E7", // Lame 3.100 (.NET Core 3.0+ on Ubuntu 18.04 / 20.04 and MacOS)
+                    "49CB061F4DE93D7F88D3B656458C7003", // Lame 3.100 (.NET Core 3.0+ on Ubuntu 18.04 / 20.04 and MacOS)
                     "3AE3B2DA82CE86ABDA69CFBB06EBDB6E", // Lame 3.100 (Legacy .NET on Windows)
                     "F3F89801873BDC7D9E403C160051B457" // Lame 3.100 (.NET Core 3.0+ on Windows)
                 }
@@ -1593,7 +1593,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     "D4757E5D593DCB6C139790DFC4FE0C6D", // Lame 3.99.5 (Ubuntu 16.04)
                     "FB96F0590FB1A603C847DEF075D8FC5F", // Lame 3.100 (Legacy .NET on Ubuntu 18.04 / 20.04 and MacOS)
-                    "A3CEC39BF25ED93F5729BD8179853E2E", // Lame 3.100 (.NET Core 3.0+ on Ubuntu 18.04 / 20.04 and MacOS)
+                    "E804988EFC1EA58704E6C78B42CE1DF6", // Lame 3.100 (.NET Core 3.0+ on Ubuntu 18.04 / 20.04 and MacOS)
                     "85C1262D46F863436B5C55B71C8C0B31", // Lame 3.100 (Legacy .NET on Windows)
                     "026C2587049104F0FFF72EB8E49F87AB" // Lame 3.100 (.NET Core 3.0+ on Windows)
                 }
