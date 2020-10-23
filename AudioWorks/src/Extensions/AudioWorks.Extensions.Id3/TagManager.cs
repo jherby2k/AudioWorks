@@ -69,51 +69,11 @@ namespace AudioWorks.Extensions.Id3
                 {
                     var frameId = new byte[4];
                     stream.Read(frameId, 0, 1);
+
+                    // We reached the padding
                     if (frameId[0] == 0)
                     {
-                        // We reached the padding area between the frames and the end of the tag,
-                        // signified by a zero byte where the frame name should be.
-
-                        // we could double check we actually know what's going on
-                        // and check the padding goes exactly to the end of the id3 tag
-                        // but in fact it doesn't give us any benefit.
-                        //
-                        // one of the following cases must apply:
-                        //
-                        // 1) if the id3 tag specifies more bytes than the frames use up,
-                        //    and that space is exactly filled with zeros to the first audio frame,
-                        //    it complies with the standard and everything is happy.
-                        //
-                        // 2) if the id3 tag specifies more bytes than the frames use up,
-                        //    and that space isn't completely filled with zeros,
-                        //    we assume the software that generated the tag
-                        //    forgot to zero-fill it properly.
-                        //
-                        // 3) if the zero padding extends past the start of the id3 tag,
-                        //    we assume the audio payload starts with skippable stuff too.
-                        //
-                        // 4) if the audio payload doesn't start with a valid mpeg audio frame header,
-                        //    (VBR headers have valid mpeg audio frame headers)
-                        //    we assume there's a tag in a format we don't recognise.
-                        //    It still has to comply with the mpeg sync rules,
-                        //    so we will have to use that to find the start of the audio.
-                        // 
-                        // in all cases, we read the specified length of the id3 tag
-                        // and let the higher-level processing inspect the audio payload
-                        // to decide what is audio, what is extra padding,
-                        // and what is unrecognised (non-id3) tags.
-
-                        // how much does the tag size say should be left?
                         tagModel.Header.PaddingSize = rawSize - index;
-
-                        //// advance the stream past any zero bytes,
-                        //// and verify the real measured size against that specified in the tag
-                        //uint observed = SeekEndOfPadding(src) + 1;
-                        //if( tagModel.Header.PaddingSize != observed )
-                        //    throw new InvalidPaddingException(observed, tagModel.Header.PaddingSize);
-
-                        // advance the stream to the specified end of the tag
-                        // this skips any non-zero rubbish in the padding without looking at it.
                         stream.Seek(tagModel.Header.PaddingSize - 1, SeekOrigin.Current);
 
                         break;
@@ -160,10 +120,6 @@ namespace AudioWorks.Extensions.Id3
 
         internal static void Serialize(TagModel tagModel, Stream stream)
         {
-            if (tagModel.Frames.Count < 1)
-                throw new InvalidTagException(
-                    "Can't serialize a ID3v2 tag without any frames, there must be at least one present.");
-
             using (var memory = new MemoryStream())
             using (var writer = new BinaryWriter(memory, Encoding.UTF8, true))
             {
