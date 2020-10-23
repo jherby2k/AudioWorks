@@ -1573,7 +1573,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "C4BE1E9B133ECF06E397F812D5AF250E", // Lame 3.99.5 (Ubuntu 16.04)
-                    "8EFA63733A5527E08092CAD86E86F76E", // Lame 3.100 (Legacy .NET on Ubuntu 18.04 / 20.04 and MacOS)
+                    "8D5A9BA2D974BCDEFB50A3DA7E134335", // Lame 3.100 (Legacy .NET on Ubuntu 18.04 / 20.04 and MacOS)
                     "49CB061F4DE93D7F88D3B656458C7003", // Lame 3.100 (.NET Core 3.0+ on Ubuntu 18.04 / 20.04 and MacOS)
                     "3AE3B2DA82CE86ABDA69CFBB06EBDB6E", // Lame 3.100 (Legacy .NET on Windows)
                     "F3F89801873BDC7D9E403C160051B457" // Lame 3.100 (.NET Core 3.0+ on Windows)
@@ -1592,7 +1592,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "D4757E5D593DCB6C139790DFC4FE0C6D", // Lame 3.99.5 (Ubuntu 16.04)
-                    "FB96F0590FB1A603C847DEF075D8FC5F", // Lame 3.100 (Legacy .NET on Ubuntu 18.04 / 20.04 and MacOS)
+                    "94E8EF913253B83D35E760A8C81C18BA", // Lame 3.100 (Legacy .NET on Ubuntu 18.04 / 20.04 and MacOS)
                     "E804988EFC1EA58704E6C78B42CE1DF6", // Lame 3.100 (.NET Core 3.0+ on Ubuntu 18.04 / 20.04 and MacOS)
                     "85C1262D46F863436B5C55B71C8C0B31", // Lame 3.100 (Legacy .NET on Windows)
                     "026C2587049104F0FFF72EB8E49F87AB" // Lame 3.100 (.NET Core 3.0+ on Windows)
