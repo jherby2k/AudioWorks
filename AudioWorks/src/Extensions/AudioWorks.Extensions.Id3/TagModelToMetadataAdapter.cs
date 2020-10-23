@@ -26,14 +26,14 @@ namespace AudioWorks.Extensions.Id3
                 switch (frame)
                 {
                     case FrameFullText frameFullText:
-                        if (frameFullText.FrameId.Equals("COMM", StringComparison.Ordinal) &&
+                        if (frameFullText.FrameId.Equals("COMM", StringComparison.OrdinalIgnoreCase) &&
                             string.IsNullOrEmpty(frameFullText.Description))
                             Comment = frameFullText.Text;
                         break;
 
                     case FrameTextUserDef frameTextUserDef:
                         // ReSharper disable once SwitchStatementMissingSomeCases
-                        switch (frameTextUserDef.Description)
+                        switch (frameTextUserDef.Description.ToUpperInvariant())
                         {
                             case "REPLAYGAIN_TRACK_PEAK":
                                 TrackPeak = frameTextUserDef.Text;
@@ -65,7 +65,7 @@ namespace AudioWorks.Extensions.Id3
 
                     case FrameText frameText:
                         // ReSharper disable once SwitchStatementMissingSomeCases
-                        switch (frameText.FrameId)
+                        switch (frameText.FrameId.ToUpperInvariant())
                         {
                             case "TIT2":
                                 Title = frameText.Text;
