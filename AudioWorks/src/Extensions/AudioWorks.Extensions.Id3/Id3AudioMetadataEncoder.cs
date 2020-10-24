@@ -19,6 +19,7 @@ using System.IO;
 using System.Text;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
+using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensions.Id3
 {
@@ -30,7 +31,7 @@ namespace AudioWorks.Extensions.Id3
         public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
         {
             ["TagVersion"] = new StringSettingInfo("2.3", "2.4"),
-            ["TagEncoding"] = new StringSettingInfo("Latin1", "UTF16"),
+            ["TagEncoding"] = new StringSettingInfo("Latin1", "UTF16", "UTF8"),
             ["TagPadding"] = new IntSettingInfo(0, 16_777_216)
         };
 
@@ -38,19 +39,29 @@ namespace AudioWorks.Extensions.Id3
         {
             var existingTagLength = GetExistingTagLength(stream);
 
-            var tagModel = new MetadataToTagModelAdapter(metadata,
-                settings.TryGetValue("TagEncoding", out string? encoding)
-                    ? encoding!
-                    : "Latin1");
+            string encoding = "Latin1";
+            if (settings.TryGetValue("TagEncoding", out string? encodingValue))
+                encoding = encodingValue!;
 
+            var tagModel = new MetadataToTagModelAdapter(metadata, encoding);
             if (tagModel.Frames.Count > 0)
             {
-                // Set the version (default to 3)
-                tagModel.Header.Version = (byte) (
-                    settings.TryGetValue("TagVersion", out string? version) &&
-                    version!.Equals("2.4", StringComparison.Ordinal)
-                        ? 4
-                        : 3);
+                if (settings.TryGetValue("TagVersion", out string? version))
+                {
+                    if (version!.Equals("2.3", StringComparison.Ordinal) &&
+                        encoding.Equals("UTF8", StringComparison.Ordinal))
+                    {
+                        var logger = LoggerManager.LoggerFactory.CreateLogger<Id3AudioMetadataEncoder>();
+                        logger.LogWarning("ID3 version 2.3 tags don't support UTF-8. Using version 2.4.");
+                    }
+
+                    if (version!.Equals("2.4", StringComparison.Ordinal))
+                        tagModel.Header.Version = 4;
+                }
+
+                // Force version 2.4 when UTF-8 is requested
+                if (encoding.Equals("UTF8", StringComparison.Ordinal))
+                    tagModel.Header.Version = 4;
 
                 // Set the padding (default to 2048)
                 if (settings.TryGetValue("TagPadding", out int padding))

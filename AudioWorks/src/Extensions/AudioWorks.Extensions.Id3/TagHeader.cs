@@ -26,7 +26,7 @@ namespace AudioWorks.Extensions.Id3
 
         internal static uint HeaderSize => 10;
 
-        internal byte Version { get; set; } = 4;
+        internal byte Version { get; set; } = 3;
 
         internal uint TagSize { get; set; }
 

@@ -22,9 +22,12 @@ namespace AudioWorks.Extensions.Id3
     {
         internal MetadataToTagModelAdapter(AudioMetadata metadata, string encoding)
         {
-            var textType = encoding.Equals("Latin1", StringComparison.Ordinal)
-                ? TextType.Ascii
-                : TextType.Utf16;
+            var textType = encoding switch
+            {
+                "UTF16" => TextType.Utf16,
+                "UTF8" => TextType.Utf8,
+                _ => TextType.Ascii
+            };
 
             AddTextFrame("TIT2", metadata.Title, textType);
             AddTextFrame("TPE1", metadata.Artist, textType);

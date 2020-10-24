@@ -1275,6 +1275,59 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LameMP3",
                 new TestSettingDictionary
                 {
+                    // UTF-8 tag encoding
+                    ["TagEncoding"] = "UTF8"
+                },
+                new[]
+                {
+                    "253C48D62B54BC702FD8D9F1FF749E5D", // Lame 3.99.5 (Ubuntu 16.04)
+                    "DD5085A69968D039A9A7B69EDA361E94", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
+                    "A6D49A24F6E49544F540BA8BC406D40F" // Lame 3.100 (Windows)
+                }
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "LameMP3",
+                new TestSettingDictionary
+                {
+                    // UTF-8 tag encoding, overridden with tag version 2.4
+                    ["TagVersion"] = "2.3",
+                    ["TagEncoding"] = "UTF8"
+                },
+                new[]
+                {
+                    "253C48D62B54BC702FD8D9F1FF749E5D", // Lame 3.99.5 (Ubuntu 16.04)
+                    "DD5085A69968D039A9A7B69EDA361E94", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
+                    "A6D49A24F6E49544F540BA8BC406D40F" // Lame 3.100 (Windows)
+                }
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "LameMP3",
+                new TestSettingDictionary
+                {
+                    // UTF-8 tag encoding, implicit tag version 2.4
+                    ["TagVersion"] = "2.4",
+                    ["TagEncoding"] = "UTF8"
+                },
+                new[]
+                {
+                    "253C48D62B54BC702FD8D9F1FF749E5D", // Lame 3.99.5 (Ubuntu 16.04)
+                    "DD5085A69968D039A9A7B69EDA361E94", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
+                    "A6D49A24F6E49544F540BA8BC406D40F" // Lame 3.100 (Windows)
+                }
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "LameMP3",
+                new TestSettingDictionary
+                {
                     // Default tag padding (explicit)
                     ["TagPadding"] = 2048
                 },
