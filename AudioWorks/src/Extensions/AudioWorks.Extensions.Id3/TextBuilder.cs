@@ -248,8 +248,9 @@ namespace AudioWorks.Extensions.Id3
 
         static byte[] WriteAsciiEnd(string text)
         {
-            using (var buffer = new MemoryStream())
-            using (var writer = new BinaryWriter(buffer, CodePagesEncodingProvider.Instance.GetEncoding(1252), true))
+            var encoding = CodePagesEncodingProvider.Instance.GetEncoding(1252);
+            using (var buffer = new MemoryStream(encoding.GetMaxByteCount(text.Length)))
+            using (var writer = new BinaryWriter(buffer, encoding, true))
             {
                 writer.Write(text.ToCharArray());
                 writer.Write('\0');
@@ -259,8 +260,8 @@ namespace AudioWorks.Extensions.Id3
 
         static byte[] WriteUtf16End(string text)
         {
-            var encoding = new UnicodeEncoding(false, true);
-            using (var buffer = new MemoryStream(text.Length + 2))
+            var encoding = Encoding.Unicode;
+            using (var buffer = new MemoryStream(encoding.GetMaxByteCount(text.Length)))
             using (var writer = new BinaryWriter(buffer, encoding, true))
             {
                 writer.Write(encoding.GetPreamble());
@@ -272,11 +273,10 @@ namespace AudioWorks.Extensions.Id3
 
         static byte[] WriteUtf16BigEndianEnd(string text)
         {
-            var encoding = new UnicodeEncoding(true, true);
-            using (var buffer = new MemoryStream(text.Length + 2))
+            var encoding = Encoding.BigEndianUnicode;
+            using (var buffer = new MemoryStream(encoding.GetMaxByteCount(text.Length)))
             using (var writer = new BinaryWriter(buffer, encoding, true))
             {
-                writer.Write(encoding.GetPreamble());
                 writer.Write(text.ToCharArray());
                 writer.Write('\0');
                 return buffer.ToArray();
@@ -285,8 +285,9 @@ namespace AudioWorks.Extensions.Id3
 
         static byte[] WriteUtf8End(string text)
         {
-            using (var buffer = new MemoryStream())
-            using (var writer = new BinaryWriter(buffer, Encoding.UTF8, true))
+            var encoding = Encoding.UTF8;
+            using (var buffer = new MemoryStream(encoding.GetMaxByteCount(text.Length)))
+            using (var writer = new BinaryWriter(buffer, encoding, true))
             {
                 writer.Write(text);
                 writer.Write('\0');
