@@ -1263,44 +1263,9 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "253C48D62B54BC702FD8D9F1FF749E5D", // Lame 3.99.5 (Ubuntu 16.04)
-                    "DD5085A69968D039A9A7B69EDA361E94", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
-                    "B0AC00BF6DFDA60BAD712FD3F9DFED21" // Lame 3.100 (Windows)
-                }
-            },
-
-            new object[]
-            {
-                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
-                "LameMP3",
-                new TestSettingDictionary
-                {
-                    // UTF-8 tag encoding
-                    ["TagEncoding"] = "UTF8"
-                },
-                new[]
-                {
-                    "253C48D62B54BC702FD8D9F1FF749E5D", // Lame 3.99.5 (Ubuntu 16.04)
-                    "DD5085A69968D039A9A7B69EDA361E94", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
-                    "B0AC00BF6DFDA60BAD712FD3F9DFED21" // Lame 3.100 (Windows)
-                }
-            },
-
-            new object[]
-            {
-                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
-                "LameMP3",
-                new TestSettingDictionary
-                {
-                    // UTF-8 tag encoding, overridden with tag version 2.4
-                    ["TagVersion"] = "2.3",
-                    ["TagEncoding"] = "UTF8"
-                },
-                new[]
-                {
-                    "253C48D62B54BC702FD8D9F1FF749E5D", // Lame 3.99.5 (Ubuntu 16.04)
-                    "DD5085A69968D039A9A7B69EDA361E94", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
-                    "B0AC00BF6DFDA60BAD712FD3F9DFED21" // Lame 3.100 (Windows)
+                    "x53C48D62B54BC702FD8D9F1FF749E5D", // Lame 3.99.5 (Ubuntu 16.04)
+                    "xD5085A69968D039A9A7B69EDA361E94", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
+                    "3A2073040B3DDA778FA88A790B883AD4" // Lame 3.100 (Windows)
                 }
             },
 
@@ -1311,7 +1276,42 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary
                 {
                     // UTF-8 tag encoding, implicit tag version 2.4
+                    ["TagEncoding"] = "UTF8"
+                },
+                new[]
+                {
+                    "253C48D62B54BC702FD8D9F1FF749E5D", // Lame 3.99.5 (Ubuntu 16.04)
+                    "DD5085A69968D039A9A7B69EDA361E94", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
+                    "B0AC00BF6DFDA60BAD712FD3F9DFED21" // Lame 3.100 (Windows)
+                }
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "LameMP3",
+                new TestSettingDictionary
+                {
+                    // UTF-8 tag encoding, explicit tag version 2.4
                     ["TagVersion"] = "2.4",
+                    ["TagEncoding"] = "UTF8"
+                },
+                new[]
+                {
+                    "253C48D62B54BC702FD8D9F1FF749E5D", // Lame 3.99.5 (Ubuntu 16.04)
+                    "DD5085A69968D039A9A7B69EDA361E94", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
+                    "B0AC00BF6DFDA60BAD712FD3F9DFED21" // Lame 3.100 (Windows)
+                }
+            },
+
+            new object[]
+            {
+                "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
+                "LameMP3",
+                new TestSettingDictionary
+                {
+                    // UTF-8 tag encoding, ignored tag version 2.3
+                    ["TagVersion"] = "2.3",
                     ["TagEncoding"] = "UTF8"
                 },
                 new[]
