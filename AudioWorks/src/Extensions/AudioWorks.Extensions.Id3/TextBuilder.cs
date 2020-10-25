@@ -289,7 +289,7 @@ namespace AudioWorks.Extensions.Id3
             using (var buffer = new MemoryStream(encoding.GetMaxByteCount(text.Length)))
             using (var writer = new BinaryWriter(buffer, encoding, true))
             {
-                writer.Write(text);
+                writer.Write(text.ToCharArray());
                 writer.Write('\0');
                 return buffer.ToArray();
             }
