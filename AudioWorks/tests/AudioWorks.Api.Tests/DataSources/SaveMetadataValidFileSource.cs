@@ -881,7 +881,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "0D9A59483C9788FD755DD1AAEFDB754F"
+                    "D6DD2CD807464AF13F672C58533BF7E8"
                 }
             },
 
@@ -915,7 +915,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "B5378873C0F17D03293DF58FF1C3CCE7"
+                    "4E76656E1CF33B1D92C6C52637531B87"
                 }
             },
 
@@ -1095,7 +1095,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "963D578D818C25DE5FEE6625BE7BFA98"
+                    "AAE7CB7E1E4EAAF5ED19F8B986647298"
                 }
             },
 
@@ -1108,7 +1108,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "963D578D818C25DE5FEE6625BE7BFA98"
+                    "AAE7CB7E1E4EAAF5ED19F8B986647298"
                 }
             },
 
