@@ -43,26 +43,27 @@ namespace AudioWorks.Extensions.Id3
             if (settings.TryGetValue("TagEncoding", out string? encodingValue))
                 encoding = encodingValue!;
 
-            var tagModel = new MetadataToTagModelAdapter(metadata, encoding);
-            if (tagModel.Frames.Count > 0)
+            int version = 3;
+            if (settings.TryGetValue("TagVersion", out string? versionValue))
             {
-                if (settings.TryGetValue("TagVersion", out string? version))
+                if (versionValue!.Equals("2.3", StringComparison.Ordinal) &&
+                    encoding.Equals("UTF8", StringComparison.Ordinal))
                 {
-                    if (version!.Equals("2.3", StringComparison.Ordinal) &&
-                        encoding.Equals("UTF8", StringComparison.Ordinal))
-                    {
-                        var logger = LoggerManager.LoggerFactory.CreateLogger<Id3AudioMetadataEncoder>();
-                        logger.LogWarning("ID3 version 2.3 tags don't support UTF-8. Using version 2.4.");
-                    }
-
-                    if (version!.Equals("2.4", StringComparison.Ordinal))
-                        tagModel.Header.Version = 4;
+                    var logger = LoggerManager.LoggerFactory.CreateLogger<Id3AudioMetadataEncoder>();
+                    logger.LogWarning("ID3 version 2.3 tags don't support UTF-8. Using version 2.4.");
                 }
 
-                // Force version 2.4 when UTF-8 is requested
-                if (encoding.Equals("UTF8", StringComparison.Ordinal))
-                    tagModel.Header.Version = 4;
+                if (versionValue!.Equals("2.4", StringComparison.Ordinal))
+                    version = 4;
+            }
 
+            // Force version 2.4 when UTF-8 is requested
+            if (encoding.Equals("UTF8", StringComparison.Ordinal))
+                version = 4;
+
+            var tagModel = new MetadataToTagModelAdapter(metadata, version, encoding);
+            if (tagModel.Frames.Count > 0)
+            {
                 // Set the padding (default to 2048)
                 if (settings.TryGetValue("TagPadding", out int padding))
                     tagModel.Header.PaddingSize = (uint) padding;

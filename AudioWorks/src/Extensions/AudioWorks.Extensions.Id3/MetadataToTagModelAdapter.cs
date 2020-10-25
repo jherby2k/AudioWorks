@@ -20,8 +20,10 @@ namespace AudioWorks.Extensions.Id3
 {
     sealed class MetadataToTagModelAdapter : TagModel
     {
-        internal MetadataToTagModelAdapter(AudioMetadata metadata, string encoding)
+        internal MetadataToTagModelAdapter(AudioMetadata metadata, int version, string encoding)
         {
+            Header.Version = (byte) version;
+
             var textType = encoding switch
             {
                 "UTF16" => TextType.Utf16,
@@ -36,8 +38,15 @@ namespace AudioWorks.Extensions.Id3
             AddTextFrame("TCOM", metadata.Composer, textType);
             AddTextFrame("TCON", metadata.Genre, textType);
             AddTextFrame("COMM", metadata.Comment, textType);
-            AddTextFrame("TDAT", GetDateText(metadata), textType);
-            AddTextFrame("TYER", metadata.Year, textType);
+
+            if (version == 3)
+            {
+                AddTextFrame("TDAT", GetDateText(metadata), textType);
+                AddTextFrame("TYER", metadata.Year, textType);
+            }
+            else
+                AddTextFrame("TDRC", GetTimeStamp(metadata), textType);
+
             AddTextFrame("TRCK", GetTrackText(metadata), textType);
 
             AddReplayGainFrame(metadata.TrackPeak, "REPLAYGAIN_TRACK_PEAK");
@@ -86,6 +95,17 @@ namespace AudioWorks.Extensions.Id3
             if (string.IsNullOrEmpty(metadata.Day) || string.IsNullOrEmpty(metadata.Month))
                 return string.Empty;
             return metadata.Day + metadata.Month;
+        }
+
+        static string GetTimeStamp(AudioMetadata metadata)
+        {
+            if (string.IsNullOrEmpty(metadata.Year)) return string.Empty;
+
+            if (string.IsNullOrEmpty(metadata.Month)) return metadata.Year;
+
+            return string.IsNullOrEmpty(metadata.Day)
+                ? $"{metadata.Year}-{metadata.Month}"
+                : $"{metadata.Year}-{metadata.Month}-{metadata.Day}";
         }
 
         static string GetTrackText(AudioMetadata metadata)
