@@ -101,12 +101,25 @@ namespace AudioWorks.Extensions.Id3
                                 Year = frameText.Text;
                                 break;
 
+                            // The TDRC frame can contain just the year, the year and month, or the year month and day
+                            case "TDRC":
+                                var splitRecordingTime = frameText.Text.Split('-');
+                                Year = splitRecordingTime[0];
+                                if (splitRecordingTime.Length > 1)
+                                {
+                                    Month = splitRecordingTime[1];
+                                    if (splitRecordingTime.Length > 2)
+                                        Day = splitRecordingTime[2].Substring(0, 2);
+                                }
+
+                                break;
+
                             // The TRCK frame contains the track number and (optionally) the track count
                             case "TRCK":
-                                var segments = frameText.Text.Split('/');
-                                TrackNumber = segments[0];
-                                if (segments.Length > 1)
-                                    TrackCount = segments[1];
+                                var splitTrackNumber = frameText.Text.Split('/');
+                                TrackNumber = splitTrackNumber[0];
+                                if (splitTrackNumber.Length > 1)
+                                    TrackCount = splitTrackNumber[1];
                                 break;
                         }
                         break;
