@@ -1108,7 +1108,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "AAE7CB7E1E4EAAF5ED19F8B986647298"
+                    "963D578D818C25DE5FEE6625BE7BFA98"
                 }
             },
 

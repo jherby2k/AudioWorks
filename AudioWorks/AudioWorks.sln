@@ -85,6 +85,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Valid", "Valid", "{F3EE5042
 		tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v1).mp3 = tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v1).mp3
 		tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3 = tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3
 		tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v2.3 UTF16).mp3 = tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v2.3 UTF16).mp3
+		tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v2.4 UTF16 Big Endian).mp3 = tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v2.4 UTF16 Big Endian).mp3
 		tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v2.4 UTF8).mp3 = tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (ID3v2.4 UTF8).mp3
 		tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (no header).mp3 = tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo (no header).mp3
 		tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo.mp3 = tests\TestFiles\Valid\Lame CBR 128 44100Hz Stereo.mp3
