@@ -37,7 +37,7 @@ namespace AudioWorks.Extensions.Id3
         {
         }
 
-        internal override void Parse(byte[] frame)
+        internal override void Parse(Span<byte> frame)
         {
             var index = 0;
             TextType = (TextType) frame[index++];

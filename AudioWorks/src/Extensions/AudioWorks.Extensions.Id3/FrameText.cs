@@ -13,6 +13,7 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System;
 using System.IO;
 using System.Text;
 
@@ -30,11 +31,11 @@ namespace AudioWorks.Extensions.Id3
         {
         }
 
-        internal override void Parse(byte[] frame)
+        internal override void Parse(Span<byte> frame)
         {
             var index = 0;
             TextType = (TextType) frame[index++];
-            Text = TextBuilder.ReadTextEnd(frame, index, TextType);
+            Text = TextBuilder.ReadTextEnd(frame.Slice(index), TextType);
         }
 
         internal override void Write(Stream output)

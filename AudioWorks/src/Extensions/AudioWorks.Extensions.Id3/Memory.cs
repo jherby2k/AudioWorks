@@ -52,13 +52,5 @@ namespace AudioWorks.Extensions.Id3
                     return n - index;
             return -1;
         }
-
-        internal static void Clear(Span<byte> dst, int begin, int end)
-        {
-            if (begin > end || begin > dst.Length || end > dst.Length)
-                throw new InvalidOperationException();
-
-            dst.Slice(begin, end - begin).Clear();
-        }
     }
 }
