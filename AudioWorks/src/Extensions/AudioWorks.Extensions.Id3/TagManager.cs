@@ -120,61 +120,52 @@ namespace AudioWorks.Extensions.Id3
 
         internal static void Serialize(TagModel tagModel, Stream stream)
         {
-            using (var memory = new MemoryStream())
-            using (var writer = new BinaryWriter(memory, Encoding.UTF8, true))
-            {
-                var frameHelper = new FrameHelper(tagModel.Header);
+            // Skip the header 10 bytes for now, we will come back and write the Header
+            // with the correct size once have the tag size + padding
+            stream.Seek(10, SeekOrigin.Begin);
 
-                // Write the frames in binary format
+            // Write the frames in binary format
+            using (var writer = new BinaryWriter(stream, Encoding.ASCII, true))
                 foreach (var frame in tagModel.Frames)
                 {
-                    //TODO: Do validations on tag name correctness
-                    var frameId = new byte[4];
-                    Encoding.UTF8.GetBytes(frame.FrameId, 0, 4, frameId, 0);
-                    writer.Write(frameId); // Write the 4 byte text tag
-                    var buffer = frameHelper.Make(frame, out var flags);
-                    var frameSize = (uint) buffer.Length;
+#if NETSTANDARD2_0
+                    writer.Write(frame.FrameId.ToCharArray());
+#else
+                    writer.Write(frame.FrameId.AsSpan());
+#endif
 
+                    // Skip the size bytes for now
+                    var sizeIndex = stream.Position;
+                    stream.Seek(4, SeekOrigin.Current);
+
+                    // Set the FileAlter flag, if requested
+                    writer.Write((short) (frame.FileAlter ? tagModel.Header.Version == 4 ? 0x20 : 0x40 : 0));
+
+                    frame.Write(stream);
+                    var frameSize = (uint) (stream.Position - sizeIndex - 6);
                     if (tagModel.Header.Version == 4)
                         frameSize = Sync.Safe(frameSize);
 
+                    // Now update the size
+                    stream.Seek(sizeIndex, SeekOrigin.Begin);
                     writer.Write(Swap.UInt32(frameSize));
-                    writer.Write(Swap.UInt16(flags));
-                    writer.Write(buffer);
+                    stream.Seek(2 + frameSize, SeekOrigin.Current);
                 }
 
-                var id3TagSize = (uint) memory.Position;
+            // update the TagSize stored in the tagModel
+            var id3TagSize = (uint) stream.Position - 10;
+            tagModel.Header.TagSize = id3TagSize;
 
-                // Skip the header 10 bytes for now, we will come back and write the Header
-                // with the correct size once have the tag size + padding
-                stream.Seek(10, SeekOrigin.Begin);
+            // Write the padding
+            for (var i = 0; i < tagModel.Header.PaddingSize; i++)
+                stream.WriteByte(0);
 
-                // TODO: Add extended header handling
-                if (tagModel.Header.Unsync)
-                    id3TagSize += Sync.Safe(memory, stream, id3TagSize);
-                else
-                    memory.WriteTo(stream);
+            // Now seek back to the start and write the header
+            var position = stream.Position;
+            stream.Seek(0, SeekOrigin.Begin);
+            tagModel.Header.Serialize(stream);
 
-                // update the TagSize stored in the tagModel
-                tagModel.Header.TagSize = id3TagSize;
-
-                // If padding + tag size is too big, shrink the padding (rather than throwing an exception)
-                tagModel.Header.PaddingSize =
-                    Math.Min(tagModel.Header.PaddingSize, 0x10000000 - id3TagSize);
-
-                // next write the padding of zeros, if any
-                if (tagModel.Header.PaddingSize > 0)
-                    for (var i = 0; i < tagModel.Header.PaddingSize; i++)
-                        stream.WriteByte(0);
-
-                // Now seek back to the start and write the header
-                var position = stream.Position;
-                stream.Seek(0, SeekOrigin.Begin);
-                tagModel.Header.Serialize(stream);
-
-                // reset position to the end of the tag
-                stream.Position = position;
-            }
+            stream.Position = position;
         }
     }
 }

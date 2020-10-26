@@ -13,6 +13,8 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -20,6 +22,13 @@ namespace AudioWorks.Extensions.Id3
 {
     static class TextBuilder
     {
+        static Dictionary<TextType, Encoding> _encodings = new Dictionary<TextType, Encoding>
+        {
+            [TextType.Ascii] = CodePagesEncodingProvider.Instance.GetEncoding(1252),
+            [TextType.Utf16] = Encoding.Unicode,
+            [TextType.Utf8] = new UTF8Encoding(false)
+        };
+
         internal static string ReadText(byte[] frame, ref int index, TextType textType) =>
             textType switch
             {
@@ -156,49 +165,20 @@ namespace AudioWorks.Extensions.Id3
         static string ReadUtf8End(byte[] frame, int index) => Encoding.UTF8
                 .GetString(frame, index, frame.Length - index).TrimEnd('\0');
 
-        internal static byte[] WriteText(string text, TextType textType) =>
-            textType switch
-            {
-                TextType.Ascii => WriteAscii(text),
-                TextType.Utf16 => WriteUtf16(text),
-                TextType.Utf8 => WriteUtf8(text),
-                _ => throw new InvalidFrameException("Invalid text type.")
-            };
-
-        internal static byte[] WriteAscii(string text)
+        internal static void WriteText(Stream stream, string text, TextType textType, bool nullTerminate = true)
         {
-            var encoding = CodePagesEncodingProvider.Instance.GetEncoding(1252);
-            using (var buffer = new MemoryStream(encoding.GetMaxByteCount(text.Length)))
-            using (var writer = new BinaryWriter(buffer, encoding, true))
+            var encoding = _encodings[textType];
+            using (var writer = new BinaryWriter(stream, encoding, true))
             {
-                writer.Write(text.ToCharArray());
-                writer.Write('\0');
-                return buffer.ToArray();
-            }
-        }
-
-        static byte[] WriteUtf16(string text)
-        {
-            var encoding = Encoding.Unicode;
-            using (var buffer = new MemoryStream(encoding.GetMaxByteCount(text.Length)))
-            using (var writer = new BinaryWriter(buffer, encoding, true))
-            {
+#if NETSTANDARD2_0
                 writer.Write(encoding.GetPreamble());
                 writer.Write(text.ToCharArray());
-                writer.Write('\0');
-                return buffer.ToArray();
-            }
-        }
-
-        static byte[] WriteUtf8(string text)
-        {
-            var encoding = Encoding.UTF8;
-            using (var buffer = new MemoryStream(encoding.GetMaxByteCount(text.Length)))
-            using (var writer = new BinaryWriter(buffer, encoding, true))
-            {
-                writer.Write(text.ToCharArray());
-                writer.Write('\0');
-                return buffer.ToArray();
+#else
+                writer.Write(encoding.Preamble);
+                writer.Write(text.AsSpan());
+#endif
+                if (nullTerminate)
+                    writer.Write('\0');
             }
         }
     }

@@ -13,6 +13,8 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System.IO;
+
 namespace AudioWorks.Extensions.Id3
 {
     abstract class FrameBase
@@ -37,6 +39,6 @@ namespace AudioWorks.Extensions.Id3
 
         internal abstract void Parse(byte[] frame);
 
-        internal abstract byte[] Make();
+        internal abstract void Write(Stream output);
     }
 }

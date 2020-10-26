@@ -47,18 +47,13 @@ namespace AudioWorks.Extensions.Id3
             PictureData = Memory.Extract(frame, index, frame.Length - index);
         }
 
-        internal override byte[] Make()
+        internal override void Write(Stream output)
         {
-            using (var buffer = new MemoryStream())
-            using (var writer = new BinaryWriter(buffer, Encoding.UTF8, true))
-            {
-                writer.Write((byte) TextType);
-                writer.Write(TextBuilder.WriteAscii(Mime));
-                writer.Write((byte) PictureType);
-                writer.Write(TextBuilder.WriteText(Description, TextType));
-                writer.Write(PictureData);
-                return buffer.ToArray();
-            }
+            output.WriteByte((byte) TextType);
+            TextBuilder.WriteText(output, Mime, TextType.Ascii);
+            output.WriteByte((byte) PictureType);
+            TextBuilder.WriteText(output, Description, TextType);
+            output.Write(PictureData, 0, PictureData.Length);
         }
     }
 }

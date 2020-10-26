@@ -50,17 +50,12 @@ namespace AudioWorks.Extensions.Id3
             Text = TextBuilder.ReadTextEnd(frame, index, TextType);
         }
 
-        internal override byte[] Make()
+        internal override void Write(Stream output)
         {
-            using (var buffer = new MemoryStream())
-            using (var writer = new BinaryWriter(buffer, Encoding.UTF8, true))
-            {
-                writer.Write((byte) TextType);
-                writer.Write(TextBuilder.WriteAscii(Language), 0, 3);
-                writer.Write(TextBuilder.WriteText(Description, TextType));
-                writer.Write(TextBuilder.WriteText(Text, TextType));
-                return buffer.ToArray();
-            }
+            output.WriteByte((byte) TextType);
+            TextBuilder.WriteText(output, Language, TextType.Ascii, false);
+            TextBuilder.WriteText(output, Description, TextType);
+            TextBuilder.WriteText(output, Text, TextType);
         }
     }
 }
