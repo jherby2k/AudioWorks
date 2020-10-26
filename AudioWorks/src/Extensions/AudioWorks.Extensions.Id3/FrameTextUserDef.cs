@@ -44,7 +44,7 @@ namespace AudioWorks.Extensions.Id3
 		    {
 		        writer.Write((byte) TextType);
 		        writer.Write(TextBuilder.WriteText(Description, TextType));
-		        writer.Write(TextBuilder.WriteTextEnd(Text, TextType));
+		        writer.Write(TextBuilder.WriteText(Text, TextType));
 		        return buffer.ToArray();
 		    }
 		}

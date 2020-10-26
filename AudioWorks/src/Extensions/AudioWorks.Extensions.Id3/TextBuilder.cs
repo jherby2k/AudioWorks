@@ -57,41 +57,6 @@ namespace AudioWorks.Extensions.Id3
             return text;
         }
 
-        internal static byte[] WriteText(string text, TextType textType) =>
-            textType switch
-            {
-                TextType.Ascii => WriteAscii(text),
-                TextType.Utf16 => WriteUtf16(text),
-                TextType.Utf8 => WriteUtf8(text),
-                _ => throw new InvalidFrameException("Invalid text type.")
-            };
-
-        internal static byte[] WriteTextEnd(string text, TextType textType) =>
-            textType switch
-            {
-                TextType.Ascii => WriteAsciiEnd(text),
-                TextType.Utf16 => WriteUtf16End(text),
-                TextType.Utf8 => WriteUtf8End(text),
-                _ => throw new InvalidFrameException("Invalid text type.")
-            };
-
-        internal static byte[] WriteAscii(string text)
-        {
-            using (var buffer = new MemoryStream())
-            using (var writer = new BinaryWriter(buffer, Encoding.UTF8, true))
-            {
-                if (string.IsNullOrEmpty(text)) //Write a null string
-                {
-                    writer.Write((byte) 0);
-                    return buffer.ToArray();
-                }
-
-                writer.Write(CodePagesEncodingProvider.Instance.GetEncoding(1252).GetBytes(text));
-                writer.Write((byte) 0); //EOL
-                return buffer.ToArray();
-            }
-        }
-
         static string ReadUtf16(byte[] frame, ref int index)
         {
             // check for empty string first, and throw a useful exception
@@ -191,43 +156,16 @@ namespace AudioWorks.Extensions.Id3
         static string ReadUtf8End(byte[] frame, int index) => Encoding.UTF8
                 .GetString(frame, index, frame.Length - index).TrimEnd('\0');
 
-        static byte[] WriteUtf16(string text)
-        {
-            using (var buffer = new MemoryStream())
-            using (var writer = new BinaryWriter(buffer, Encoding.UTF8, true))
+        internal static byte[] WriteText(string text, TextType textType) =>
+            textType switch
             {
-                if (string.IsNullOrEmpty(text)) //Write a null string
-                {
-                    writer.Write((ushort) 0);
-                    return buffer.ToArray();
-                }
+                TextType.Ascii => WriteAscii(text),
+                TextType.Utf16 => WriteUtf16(text),
+                TextType.Utf8 => WriteUtf8(text),
+                _ => throw new InvalidFrameException("Invalid text type.")
+            };
 
-                writer.Write((byte) 0xff); //Little endian, we have UTF16BE for big endian
-                writer.Write((byte) 0xfe);
-                writer.Write(new UnicodeEncoding(false, false).GetBytes(text));
-                writer.Write((ushort) 0);
-                return buffer.ToArray();
-            }
-        }
-
-        static byte[] WriteUtf8(string text)
-        {
-            using (var buffer = new MemoryStream())
-            using (var writer = new BinaryWriter(buffer, Encoding.UTF8, true))
-            {
-                if (string.IsNullOrEmpty(text)) //Write a null string
-                {
-                    writer.Write((byte) 0);
-                    return buffer.ToArray();
-                }
-
-                writer.Write(Encoding.UTF8.GetBytes(text));
-                writer.Write((byte) 0);
-                return buffer.ToArray();
-            }
-        }
-
-        static byte[] WriteAsciiEnd(string text)
+        internal static byte[] WriteAscii(string text)
         {
             var encoding = CodePagesEncodingProvider.Instance.GetEncoding(1252);
             using (var buffer = new MemoryStream(encoding.GetMaxByteCount(text.Length)))
@@ -239,7 +177,7 @@ namespace AudioWorks.Extensions.Id3
             }
         }
 
-        static byte[] WriteUtf16End(string text)
+        static byte[] WriteUtf16(string text)
         {
             var encoding = Encoding.Unicode;
             using (var buffer = new MemoryStream(encoding.GetMaxByteCount(text.Length)))
@@ -252,7 +190,7 @@ namespace AudioWorks.Extensions.Id3
             }
         }
 
-        static byte[] WriteUtf8End(string text)
+        static byte[] WriteUtf8(string text)
         {
             var encoding = Encoding.UTF8;
             using (var buffer = new MemoryStream(encoding.GetMaxByteCount(text.Length)))

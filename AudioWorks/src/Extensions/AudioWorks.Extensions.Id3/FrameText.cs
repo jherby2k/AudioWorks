@@ -43,7 +43,7 @@ namespace AudioWorks.Extensions.Id3
             using (var writer = new BinaryWriter(buffer, Encoding.UTF8, true))
             {
                 writer.Write((byte) TextType);
-                writer.Write(TextBuilder.WriteTextEnd(Text, TextType));
+                writer.Write(TextBuilder.WriteText(Text, TextType));
                 return buffer.ToArray();
             }
         }
