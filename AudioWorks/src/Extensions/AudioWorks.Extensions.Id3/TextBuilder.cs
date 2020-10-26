@@ -62,7 +62,6 @@ namespace AudioWorks.Extensions.Id3
             {
                 TextType.Ascii => WriteAscii(text),
                 TextType.Utf16 => WriteUtf16(text),
-                TextType.Utf16BigEndian => WriteUtf16BigEndian(text),
                 TextType.Utf8 => WriteUtf8(text),
                 _ => throw new InvalidFrameException("Invalid text type.")
             };
@@ -72,7 +71,6 @@ namespace AudioWorks.Extensions.Id3
             {
                 TextType.Ascii => WriteAsciiEnd(text),
                 TextType.Utf16 => WriteUtf16End(text),
-                TextType.Utf16BigEndian => WriteUtf16BigEndianEnd(text),
                 TextType.Utf8 => WriteUtf8End(text),
                 _ => throw new InvalidFrameException("Invalid text type.")
             };
@@ -212,23 +210,6 @@ namespace AudioWorks.Extensions.Id3
             }
         }
 
-        static byte[] WriteUtf16BigEndian(string text)
-        {
-            using (var buffer = new MemoryStream())
-            using (var writer = new BinaryWriter(buffer, Encoding.UTF8, true))
-            {
-                if (string.IsNullOrEmpty(text)) //Write a null string
-                {
-                    writer.Write((ushort) 0);
-                    return buffer.ToArray();
-                }
-
-                writer.Write(new UnicodeEncoding(true, false).GetBytes(text));
-                writer.Write((ushort) 0);
-                return buffer.ToArray();
-            }
-        }
-
         static byte[] WriteUtf8(string text)
         {
             using (var buffer = new MemoryStream())
@@ -265,18 +246,6 @@ namespace AudioWorks.Extensions.Id3
             using (var writer = new BinaryWriter(buffer, encoding, true))
             {
                 writer.Write(encoding.GetPreamble());
-                writer.Write(text.ToCharArray());
-                writer.Write('\0');
-                return buffer.ToArray();
-            }
-        }
-
-        static byte[] WriteUtf16BigEndianEnd(string text)
-        {
-            var encoding = Encoding.BigEndianUnicode;
-            using (var buffer = new MemoryStream(encoding.GetMaxByteCount(text.Length)))
-            using (var writer = new BinaryWriter(buffer, encoding, true))
-            {
                 writer.Write(text.ToCharArray());
                 writer.Write('\0');
                 return buffer.ToArray();
