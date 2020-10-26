@@ -953,6 +953,40 @@ namespace AudioWorks.Api.Tests.DataSources
                 }
             },
 
+            // UTF-8 encoding
+            new object[]
+            {
+                "Lame CBR 128 44100Hz Stereo.mp3",
+                new TestAudioMetadata
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
+                },
+                string.Empty,
+                new TestSettingDictionary
+                {
+                    ["TagEncoding"] = "UTF8"
+                },
+                new[]
+                {
+                    "1431406FBB1BB1E8442304A8D5C00B72"
+                }
+            },
+
             // Default padding (explicit)
             new object[]
             {
