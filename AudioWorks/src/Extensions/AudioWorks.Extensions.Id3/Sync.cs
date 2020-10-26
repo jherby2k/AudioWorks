@@ -97,37 +97,5 @@ namespace AudioWorks.Extensions.Id3
                 return syncs; //bytes removed from stream
             }
         }
-
-        internal static uint Safe(Stream src, Stream dst, uint count)
-        {
-            using (var writer = new BinaryWriter(dst, Encoding.UTF8, true))
-            using (var reader = new BinaryReader(src, Encoding.UTF8, true))
-            {
-                byte last = 0;
-                uint syncs = 0;
-
-                while (count > 0)
-                {
-                    var val = reader.ReadByte();
-                    if (last == 0xFF && (val == 0x00 || val >= 0xE0))
-                    {
-                        writer.Write((byte) 0x00);
-                        syncs++;
-                    }
-
-                    last = val;
-                    writer.Write(val);
-                    count--;
-                }
-
-                if (last == 0xFF)
-                {
-                    writer.Write((byte) 0x00);
-                    syncs++;
-                }
-
-                return syncs; // bytes added to the stream
-            }
-        }
     }
 }

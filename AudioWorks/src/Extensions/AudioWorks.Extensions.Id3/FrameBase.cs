@@ -19,19 +19,7 @@ namespace AudioWorks.Extensions.Id3
 {
     abstract class FrameBase
     {
-        internal bool TagAlter { get; set; }
-
         internal bool FileAlter { get; set; }
-
-        internal bool ReadOnly { get; set; }
-
-        internal bool Compression { get; set; }
-
-        internal bool Unsynchronisation { get; set; }
-
-        internal bool DataLength { get; set; }
-
-        internal byte? Group { get; set; }
 
         internal string FrameId { get; }
 

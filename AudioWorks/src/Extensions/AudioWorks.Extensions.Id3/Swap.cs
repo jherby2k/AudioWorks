@@ -17,8 +17,6 @@ namespace AudioWorks.Extensions.Id3
 {
     static class Swap
     {
-        internal static int Int32(int val) => (int) UInt32((uint) val);
-
         internal static uint UInt32(uint val)
         {
             var result = (val & 0xff) << 24;

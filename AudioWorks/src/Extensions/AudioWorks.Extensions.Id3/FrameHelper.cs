@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using AudioWorks.Common;
+using ICSharpCode.SharpZipLib.Zip.Compression;
 using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 
 namespace AudioWorks.Extensions.Id3
@@ -32,7 +33,6 @@ namespace AudioWorks.Extensions.Id3
         {
             // Build a frame
             var frame = FrameFactory.Build(frameId);
-            SetFlags(frame, flags);
 
             var index = 0;
             var size = (uint) buffer.Length;
@@ -44,11 +44,12 @@ namespace AudioWorks.Extensions.Id3
                 {
                     if (GetGrouping(flags))
                     {
-                        frame.Group = reader.ReadByte();
+                        // Skip the group byte
+                        reader.ReadByte();
                         index++;
                     }
 
-                    if (frame.Compression)
+                    if (GetCompression(flags))
                     {
                         switch (_version)
                         {
@@ -67,7 +68,7 @@ namespace AudioWorks.Extensions.Id3
                         streamsToClose.Add(stream);
                     }
 
-                    if (frame.Unsynchronisation)
+                    if (GetUnsynchronisation(flags))
                     {
                         var memoryStream = new MemoryStream();
                         streamsToClose.Add(memoryStream);
@@ -87,57 +88,6 @@ namespace AudioWorks.Extensions.Id3
             {
                 foreach (var streamToClose in streamsToClose)
                     streamToClose.Close();
-            }
-        }
-
-        void SetFlags(FrameBase frame, ushort flags)
-        {
-            frame.TagAlter = GetTagAlter(flags);
-            frame.FileAlter = GetFileAlter(flags);
-            frame.ReadOnly = GetReadOnly(flags);
-            frame.Compression = GetCompression(flags);
-            if (GetEncryption(flags))
-                throw new AudioUnsupportedException("Encrypted frames are not supported.");
-            frame.Unsynchronisation = GetUnsynchronisation(flags);
-            frame.DataLength = GetDataLength(flags);
-        }
-
-        bool GetTagAlter(ushort flags)
-        {
-            switch (_version)
-            {
-                case 3:
-                    return (flags & 0x8000) > 0;
-                case 4:
-                    return (flags & 0x4000) > 0;
-                default:
-                    throw new InvalidOperationException($"ID3v2 Version {_version} is not supported.");
-            }
-        }
-
-        bool GetFileAlter(ushort flags)
-        {
-            switch (_version)
-            {
-                case 3:
-                    return (flags & 0x4000) > 0;
-                case 4:
-                    return (flags & 0x2000) > 0;
-                default:
-                    throw new InvalidOperationException($"ID3v2 Version {_version} is not supported.");
-            }
-        }
-
-        bool GetReadOnly(ushort flags)
-        {
-            switch (_version)
-            {
-                case 3:
-                    return (flags & 0x2000) > 0;
-                case 4:
-                    return (flags & 0x1000) > 0;
-                default:
-                    throw new InvalidOperationException($"ID3v2 Version {_version} is not supported.");
             }
         }
 
@@ -167,19 +117,6 @@ namespace AudioWorks.Extensions.Id3
             }
         }
 
-        bool GetEncryption(ushort flags)
-        {
-            switch (_version)
-            {
-                case 3:
-                    return (flags & 0x0040) > 0;
-                case 4:
-                    return (flags & 0x0004) > 0;
-                default:
-                    throw new InvalidOperationException($"ID3v2 Version {_version} is not supported.");
-            }
-        }
-
         bool GetUnsynchronisation(ushort flags)
         {
             switch (_version)
@@ -188,19 +125,6 @@ namespace AudioWorks.Extensions.Id3
                     return false;
                 case 4:
                     return (flags & 0x0002) > 0;
-                default:
-                    throw new InvalidOperationException($"ID3v2 Version {_version} is not supported.");
-            }
-        }
-
-        bool GetDataLength(ushort flags)
-        {
-            switch (_version)
-            {
-                case 3:
-                    return false;
-                case 4:
-                    return (flags & 0x0001) > 0;
                 default:
                     throw new InvalidOperationException($"ID3v2 Version {_version} is not supported.");
             }
