@@ -1263,7 +1263,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "253C48D62B54BC702FD8D9F1FF749E5D", // Lame 3.99.5 (Ubuntu 16.04)
+                    "B3402C50D24A82004D50DC0172E81BC1", // Lame 3.99.5 (Ubuntu 16.04)
                     "DD5085A69968D039A9A7B69EDA361E94", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
                     "3A2073040B3DDA778FA88A790B883AD4" // Lame 3.100 (Windows)
                 }
