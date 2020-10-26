@@ -22,7 +22,7 @@ namespace AudioWorks.Extensions.Id3
     [Frame("APIC")]
     class FramePicture : FrameBase, IFrameDescription
     {
-        internal TextType TextEncoding { get; set; } = TextType.Ascii;
+        internal TextType TextType { get; set; } = TextType.Ascii;
 
         internal string Mime { get; set; } = string.Empty;
 
@@ -40,10 +40,10 @@ namespace AudioWorks.Extensions.Id3
         internal override void Parse(byte[] frame)
         {
             var index = 0;
-            TextEncoding = (TextType) frame[index++];
+            TextType = (TextType) frame[index++];
             Mime = TextBuilder.ReadAscii(frame, ref index);
             PictureType = (PictureType) frame[index++];
-            Description = TextBuilder.ReadText(frame, ref index, TextEncoding);
+            Description = TextBuilder.ReadText(frame, ref index, TextType);
             PictureData = Memory.Extract(frame, index, frame.Length - index);
         }
 
@@ -52,10 +52,10 @@ namespace AudioWorks.Extensions.Id3
             using (var buffer = new MemoryStream())
             using (var writer = new BinaryWriter(buffer, Encoding.UTF8, true))
             {
-                writer.Write((byte) TextEncoding);
+                writer.Write((byte) TextType);
                 writer.Write(TextBuilder.WriteAscii(Mime));
                 writer.Write((byte) PictureType);
-                writer.Write(TextBuilder.WriteText(Description, TextEncoding));
+                writer.Write(TextBuilder.WriteText(Description, TextType));
                 writer.Write(PictureData);
                 return buffer.ToArray();
             }
