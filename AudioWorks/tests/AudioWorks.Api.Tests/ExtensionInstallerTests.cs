@@ -51,7 +51,7 @@ namespace AudioWorks.Api.Tests
             if (!extensionRoot.Exists)
                 extensionRoot.Create();
             var fakeExtensionDir = extensionRoot.CreateSubdirectory("AudioWorks.Extensions.OldExtension.1.0.0");
-            await using (File.Create(Path.Combine(fakeExtensionDir.FullName, "AudioWorks.Extensions.OldExtension.dll")))
+            using (File.Create(Path.Combine(fakeExtensionDir.FullName, "AudioWorks.Extensions.OldExtension.dll")))
             {
             }
             await ExtensionInstaller.InstallAsync().ConfigureAwait(true);
