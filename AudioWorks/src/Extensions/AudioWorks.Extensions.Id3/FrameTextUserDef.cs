@@ -15,11 +15,11 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.IO;
-using System.Text;
 
 namespace AudioWorks.Extensions.Id3
 {
     [Frame("TXXX")]
+    // ReSharper disable once ClassNeverInstantiated.Global
     sealed class FrameTextUserDef : FrameText, IFrameDescription
 	{
         public string Description { get; set; } = string.Empty;

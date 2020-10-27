@@ -17,8 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using AudioWorks.Common;
-using ICSharpCode.SharpZipLib.Zip.Compression;
 using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 
 namespace AudioWorks.Extensions.Id3

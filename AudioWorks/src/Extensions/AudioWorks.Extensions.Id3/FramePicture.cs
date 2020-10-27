@@ -15,12 +15,11 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.IO;
-using System.Text;
 
 namespace AudioWorks.Extensions.Id3
 {
     [Frame("APIC")]
-    class FramePicture : FrameBase, IFrameDescription
+    sealed class FramePicture : FrameBase, IFrameDescription
     {
         internal TextType TextType { get; set; } = TextType.Ascii;
 
@@ -41,7 +40,7 @@ namespace AudioWorks.Extensions.Id3
         {
             var index = 0;
             TextType = (TextType) frame[index++];
-            Mime = TextBuilder.ReadAscii(frame, ref index);
+            Mime = TextBuilder.ReadText(frame, ref index, TextType.Ascii);
             PictureType = (PictureType) frame[index++];
             Description = TextBuilder.ReadText(frame, ref index, TextType);
 

@@ -16,42 +16,53 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Collections.Generic;
 using System.IO;
+#if NETSTANDARD2_0
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+#endif
 using System.Text;
 
 namespace AudioWorks.Extensions.Id3
 {
     static class TextBuilder
     {
-        static Dictionary<TextType, Encoding> _encodings = new Dictionary<TextType, Encoding>
+        static readonly Dictionary<TextType, Encoding> _encodings = new Dictionary<TextType, Encoding>
         {
             [TextType.Ascii] = CodePagesEncodingProvider.Instance.GetEncoding(1252),
             [TextType.Utf16] = Encoding.Unicode,
+            [TextType.Utf16BigEndian] = Encoding.BigEndianUnicode,
             [TextType.Utf8] = new UTF8Encoding(false)
+        };
+
+        static readonly Dictionary<TextType, int> _nullCharacterLengths = new Dictionary<TextType, int>
+        {
+            [TextType.Ascii] = 1,
+            [TextType.Utf16] = 2,
+            [TextType.Utf16BigEndian] = 2,
+            [TextType.Utf8] = 1
         };
 
         internal static string ReadText(Span<byte> frame, ref int index, TextType textType) =>
             textType switch
             {
-                TextType.Ascii => ReadAscii(frame, ref index),
                 TextType.Utf16 => ReadUtf16(frame, ref index),
-                TextType.Utf16BigEndian => ReadUtf16BigEndian(frame, ref index),
-                TextType.Utf8 => ReadUtf8(frame, ref index),
+                var t when Enum.IsDefined(typeof(TextType), t) => ReadTextNoPreamble(frame, ref index, textType),
                 _ => throw new InvalidFrameException("Invalid text type.")
             };
 
         internal static string ReadTextEnd(Span<byte> frame, TextType textType) =>
             textType switch
             {
-                TextType.Ascii => ReadAsciiEnd(frame),
                 TextType.Utf16 => ReadUtf16End(frame),
-                TextType.Utf16BigEndian => ReadUtf16BigEndianEnd(frame),
-                TextType.Utf8 => ReadUtf8End(frame),
+                var t when Enum.IsDefined(typeof(TextType), t) => ReadTextEndNoPreamble(frame, textType),
                 _ => throw new InvalidFrameException("Invalid text type.")
             };
 
-        internal static unsafe string ReadAscii(Span<byte> frame, ref int index)
+#if NETSTANDARD2_0
+        internal static unsafe string ReadTextNoPreamble(Span<byte> frame, ref int index, TextType textType)
+#else
+        internal static string ReadTextNoPreamble(Span<byte> frame, ref int index, TextType textType)
+#endif
         {
             var text = string.Empty;
             var count = frame.Slice(index).IndexOf((byte) 0);
@@ -61,15 +72,15 @@ namespace AudioWorks.Extensions.Id3
             if (count > 0)
             {
 #if NETSTANDARD2_0
-                text = CodePagesEncodingProvider.Instance.GetEncoding(1252).GetString(
+                text = _encodings[textType].GetString(
                     (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(frame.Slice(index))), count);
 #else
-                text = CodePagesEncodingProvider.Instance.GetEncoding(1252).GetString(frame.Slice(index, count));
+                text = _encodings[textType].GetString(frame.Slice(index, count));
 #endif
-                index += count; // add the read bytes
+                index += count;
             }
 
-            index++; // jump an end of line byte
+            index += _nullCharacterLengths[textType];
             return text;
         }
 
@@ -83,13 +94,13 @@ namespace AudioWorks.Extensions.Id3
             if (frame[index] == 0xfe && frame[index + 1] == 0xff) // Big Endian
             {
                 index += 2;
-                return ReadUtf16BigEndian(frame, ref index);
+                return ReadTextNoPreamble(frame, ref index, TextType.Utf16BigEndian);
             }
 
             if (frame[index] == 0xff && frame[index + 1] == 0xfe) // Little Endian
             {
                 index += 2;
-                return ReadUtf16LittleEndian(frame, ref index);
+                return ReadTextNoPreamble(frame, ref index, TextType.Utf16);
             }
 
             if (frame[index] == 0x00 && frame[index + 1] == 0x00) // empty string
@@ -101,113 +112,23 @@ namespace AudioWorks.Extensions.Id3
             throw new InvalidFrameException("Invalid UTF16 string.");
         }
 
-        static unsafe string ReadUtf16BigEndian(Span<byte> frame, ref int index)
-        {
-            
-            var count = MemoryMarshal.Cast<byte, short>(frame.Slice(index)).IndexOf((short) 0);
-            if (count == -1)
-                throw new InvalidFrameException("Invalid UTF16BE string size");
-
-            // we can safely let count==0 fall through
 #if NETSTANDARD2_0
-            var text = new UnicodeEncoding(true, false).GetString(
-                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(frame.Slice(index))), count);
+        static unsafe string ReadTextEndNoPreamble(Span<byte> frame, TextType textType) => _encodings[textType]
+            .GetString((byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(frame)), frame.Length).TrimEnd('\0');
 #else
-            var text = new UnicodeEncoding(true, false).GetString(frame.Slice(index, count));
+        static string ReadTextEndNoPreamble(Span<byte> frame, TextType textType) =>
+            _encodings[textType].GetString(frame).TrimEnd('\0');
 #endif
-            index += count; // add the bytes read
-            index += 2; // skip the EOL
-            return text;
-        }
-
-        static unsafe string ReadUtf16LittleEndian(Span<byte> frame, ref int index)
-        {
-            var count = MemoryMarshal.Cast<byte, short>(frame.Slice(index)).IndexOf((short) 0);
-            if (count == -1)
-                throw new InvalidFrameException("Invalid UTF16LE string size");
-
-            // we can safely let count==0 fall through
-#if NETSTANDARD2_0
-            var text = new UnicodeEncoding(true, false).GetString(
-                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(frame.Slice(index))), count);
-#else
-            var text = new UnicodeEncoding(false, false).GetString(frame.Slice(index, count));
-#endif
-            index += count; // add the bytes read
-            index += 2; // skip the EOL
-            return text;
-        }
-
-        static unsafe string ReadUtf8(Span<byte> frame, ref int index)
-        {
-            string text = string.Empty;
-            var count = frame.Slice(index).IndexOf((byte) 0);
-            if (count == -1)
-                throw new InvalidFrameException("Invalid UTF8 string size");
-            if (count > 0)
-            {
-#if NETSTANDARD2_0
-                text = Encoding.UTF8.GetString(
-                    (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(frame.Slice(index))), count);
-#else
-                text = Encoding.UTF8.GetString(frame.Slice(index, count));
-#endif
-                index += count; // add the read bytes
-            }
-
-            index++; // jump an end of line byte
-            return text;
-        }
-
-        static unsafe string ReadAsciiEnd(Span<byte> frame)
-        {
-#if NETSTANDARD2_0
-            return CodePagesEncodingProvider.Instance.GetEncoding(1252).GetString(
-                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(frame)), frame.Length).TrimEnd('\0');
-#else
-            return CodePagesEncodingProvider.Instance.GetEncoding(1252).GetString(frame).TrimEnd('\0');
-#endif
-        }
 
         static string ReadUtf16End(Span<byte> frame)
         {
             if (frame[0] == 0xFE && frame[1] == 0xFF)
-                return ReadUtf16BigEndianEnd(frame.Slice(2));
+                return ReadTextEndNoPreamble(frame.Slice(2), TextType.Utf16BigEndian);
 
             if (frame[0] == 0xFF && frame[1] == 0xFE)
-                return ReadUtf16LittleEndianEnd(frame.Slice(2));
+                return ReadTextEndNoPreamble(frame.Slice(2), TextType.Utf16);
 
             throw new InvalidFrameException("Invalid UTF16 string.");
-        }
-
-        static unsafe string ReadUtf16BigEndianEnd(Span<byte> frame)
-        {
-#if NETSTANDARD2_0
-            return new UnicodeEncoding(true, false).GetString(
-                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(frame)), frame.Length).TrimEnd('\0');
-#else
-            return new UnicodeEncoding(true, false).GetString(frame).TrimEnd('\0');
-#endif
-        }
-
-        static unsafe string ReadUtf16LittleEndianEnd(Span<byte> frame)
-        {
-#if NETSTANDARD2_0
-            return new UnicodeEncoding(false, false).GetString(
-                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(frame)), frame.Length).TrimEnd('\0');
-#else
-            return new UnicodeEncoding(false, false).GetString(frame).TrimEnd('\0');
-#endif
-        }
-
-        static unsafe string ReadUtf8End(Span<byte> frame)
-        {
-#if NETSTANDARD2_0
-            return Encoding.UTF8.GetString(
-                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(frame)), frame.Length).TrimEnd('\0');
-#else
-            return Encoding.UTF8.GetString(frame).TrimEnd('\0');
-#endif
         }
 
         internal static void WriteText(Stream stream, string text, TextType textType, bool nullTerminate = true)

@@ -15,13 +15,16 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.IO;
+#if NETSTANDARD2_0
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+#endif
 using System.Text;
 
 namespace AudioWorks.Extensions.Id3
 {
     [Frame("COMM")]
+    // ReSharper disable once ClassNeverInstantiated.Global
     sealed class FrameFullText : FrameText, IFrameDescription
     {
         public string Description { get; set; } = string.Empty;
@@ -33,7 +36,11 @@ namespace AudioWorks.Extensions.Id3
         {
         }
 
+#if NETSTANDARD2_0
         internal override unsafe void Parse(Span<byte> frame)
+#else
+        internal override void Parse(Span<byte> frame)
+#endif
         {
             var index = 0;
             TextType = (TextType) frame[index];
