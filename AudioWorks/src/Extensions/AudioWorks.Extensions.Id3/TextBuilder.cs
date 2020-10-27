@@ -104,13 +104,11 @@ namespace AudioWorks.Extensions.Id3
                 return ReadTextNoPreamble(frame, ref index, TextType.Utf16);
             }
 
-            if (frame[index] == 0x00 && frame[index + 1] == 0x00) // empty string
-            {
-                index += 2;
-                return string.Empty;
-            }
+            if (frame[index] != 0x00 || frame[index + 1] != 0x00)
+                throw new AudioInvalidException("Invalid UTF16 string.");
 
-            throw new AudioInvalidException("Invalid UTF16 string.");
+            index += 2;
+            return string.Empty;
         }
 
 #if NETSTANDARD2_0

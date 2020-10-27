@@ -277,7 +277,7 @@ namespace AudioWorks.Api
             }
             catch (Exception)
             {
-                // Clean up a partial installation
+                // ReSharper disable once InvertIf
                 if (Directory.Exists(extensionDir.FullName))
                 {
                     logger.LogDebug("Deleting partially-installed extension '{0}'.", extensionDir.Name);

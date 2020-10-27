@@ -34,7 +34,7 @@ namespace AudioWorks.Extensions.Id3
 
         internal uint TagSizeWithHeaderFooter => TagSize + HeaderSize + (_hasFooter ? HeaderSize : 0);
 
-        internal bool Unsync { get; private set; }
+        internal bool Unsynchronisation { get; private set; }
 
         internal bool HasExtendedHeader { get; private set; }
 
@@ -78,7 +78,7 @@ namespace AudioWorks.Extensions.Id3
 
                 // Parse the flag byte
                 var id3Flags = (byte) (0xf0 & reader.ReadByte());
-                Unsync = (id3Flags & 0x80) > 0;
+                Unsynchronisation = (id3Flags & 0x80) > 0;
                 HasExtendedHeader = (id3Flags & 0x40) > 0;
                 _hasFooter = (id3Flags & 0x10) > 0;
 

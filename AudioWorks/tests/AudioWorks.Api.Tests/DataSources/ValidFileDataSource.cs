@@ -959,7 +959,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     Title = "Test Title",
                     Artist = "Test Artist",
                     Album = "Test Album",
-                    Comment = "Test Comment",
+                    Comment = "Test Comment"
                 }
             },
 

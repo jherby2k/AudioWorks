@@ -89,6 +89,7 @@ namespace AudioWorks.Extensions.Apple
 
         static AudioStreamBasicDescription GetOutputDescription(AudioStreamBasicDescription inputDescription)
         {
+            // ReSharper disable once SwitchExpressionHandlesSomeKnownEnumValuesWithExceptionInDefault
             var bitsPerSample = inputDescription.Flags switch
             {
                 AudioFormatFlags.Alac16BitSourceData => 16u,

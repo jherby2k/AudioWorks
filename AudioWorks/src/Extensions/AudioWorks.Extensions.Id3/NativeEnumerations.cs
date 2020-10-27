@@ -49,6 +49,6 @@ namespace AudioWorks.Extensions.Id3
         Fish = 0x11,
         Illustration = 0x12,
         BandLogo = 0x13,
-        StudioLogo = 0x14,
+        StudioLogo = 0x14
     }
 }

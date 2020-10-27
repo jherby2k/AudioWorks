@@ -32,7 +32,7 @@ namespace AudioWorks.Common.Tests
         [Fact(DisplayName = "AudioUnsupportedException has the expected Message property value")]
         public void HasExpectedMessage()
         {
-            var message = "Testing 1-2-3";
+            const string message = "Testing 1-2-3";
 
             Assert.Equal(message, new AudioUnsupportedException(message).Message);
         }

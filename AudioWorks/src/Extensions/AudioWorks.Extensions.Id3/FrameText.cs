@@ -25,6 +25,7 @@ namespace AudioWorks.Extensions.Id3
 
         internal string Text { get; set; } = string.Empty;
 
+        // ReSharper disable once MemberCanBeProtected.Global
         public FrameText(string frameId)
             : base(frameId)
         {
