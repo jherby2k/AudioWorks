@@ -17,6 +17,7 @@ using System;
 using System.Buffers.Binary;
 using System.IO;
 using System.Text;
+using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Id3
 {
@@ -27,7 +28,7 @@ namespace AudioWorks.Extensions.Id3
             Span<byte> value = stackalloc byte[4];
             BinaryPrimitives.WriteUInt32LittleEndian(value, val);
             if (value[0] > 0x7f || value[1] > 0x7f || value[2] > 0x7f || value[3] > 0x7f)
-                throw new InvalidTagException("Sync-safe value corrupted");
+                throw new AudioInvalidException("Sync-safe value corrupted.");
 
             Span<byte> sync = stackalloc byte[4];
             sync[0] = (byte) (((value[0] >> 0) & 0x7f) | ((value[1] & 0x01) << 7));
@@ -40,7 +41,7 @@ namespace AudioWorks.Extensions.Id3
         internal static uint Safe(uint val)
         {
             if (val > 0x10000000)
-                throw new OverflowException("value is too large for a sync-safe integer");
+                throw new AudioInvalidException("Value is too large for a sync-safe integer.");
 
             Span<byte> value = stackalloc byte[4];
             BinaryPrimitives.WriteUInt32LittleEndian(value, val);
@@ -58,7 +59,7 @@ namespace AudioWorks.Extensions.Id3
             Span<byte> value = stackalloc byte[4];
             BinaryPrimitives.WriteUInt32LittleEndian(value, val);
             if (value[0] > 0x7f || value[1] > 0x7f || value[2] > 0x7f || value[3] > 0x7f)
-                throw new InvalidTagException("Sync-safe value corrupted");
+                throw new AudioInvalidException("Invalid sync-safe integer.");
 
             Span<byte> sync = stackalloc byte[4];
             sync[3] = (byte) (((value[3] >> 0) & 0x7f) | ((value[2] & 0x01) << 7));

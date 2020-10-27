@@ -21,6 +21,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 #endif
 using System.Text;
+using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Id3
 {
@@ -47,7 +48,7 @@ namespace AudioWorks.Extensions.Id3
             {
                 TextType.Utf16 => ReadUtf16(frame, ref index),
                 var t when Enum.IsDefined(typeof(TextType), t) => ReadTextNoPreamble(frame, ref index, textType),
-                _ => throw new InvalidFrameException("Invalid text type.")
+                _ => throw new AudioInvalidException("Invalid text type.")
             };
 
         internal static string ReadTextEnd(Span<byte> frame, TextType textType) =>
@@ -55,7 +56,7 @@ namespace AudioWorks.Extensions.Id3
             {
                 TextType.Utf16 => ReadUtf16End(frame),
                 var t when Enum.IsDefined(typeof(TextType), t) => ReadTextEndNoPreamble(frame, textType),
-                _ => throw new InvalidFrameException("Invalid text type.")
+                _ => throw new AudioInvalidException("Invalid text type.")
             };
 
 #if NETSTANDARD2_0
@@ -67,7 +68,7 @@ namespace AudioWorks.Extensions.Id3
             var text = string.Empty;
             var count = frame.Slice(index).IndexOf((byte) 0);
             if (count == -1)
-                throw new InvalidFrameException("Invalid ASCII string size");
+                throw new AudioInvalidException("Invalid ASCII string size.");
 
             if (count > 0)
             {
@@ -89,7 +90,7 @@ namespace AudioWorks.Extensions.Id3
             // check for empty string first, and throw a useful exception
             // otherwise we'll get an out-of-range exception when we look for the BOM
             if (index >= frame.Length - 2)
-                throw new InvalidFrameException("ReadUTF16: string must be terminated");
+                throw new AudioInvalidException("UTF16 string is not terminated.");
 
             if (frame[index] == 0xfe && frame[index + 1] == 0xff) // Big Endian
             {
@@ -109,7 +110,7 @@ namespace AudioWorks.Extensions.Id3
                 return string.Empty;
             }
 
-            throw new InvalidFrameException("Invalid UTF16 string.");
+            throw new AudioInvalidException("Invalid UTF16 string.");
         }
 
 #if NETSTANDARD2_0
@@ -128,7 +129,7 @@ namespace AudioWorks.Extensions.Id3
             if (frame[0] == 0xFF && frame[1] == 0xFE)
                 return ReadTextEndNoPreamble(frame.Slice(2), TextType.Utf16);
 
-            throw new InvalidFrameException("Invalid UTF16 string.");
+            throw new AudioInvalidException("Invalid UTF16 string.");
         }
 
         internal static void WriteText(Stream stream, string text, TextType textType, bool nullTerminate = true)

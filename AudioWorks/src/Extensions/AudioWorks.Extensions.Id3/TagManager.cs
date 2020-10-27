@@ -13,9 +13,9 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System;
 using System.IO;
 using System.Text;
+using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Id3
 {
@@ -26,7 +26,7 @@ namespace AudioWorks.Extensions.Id3
             var tagModel = new TagModel();
             tagModel.Header.Deserialize(stream); // load the ID3v2 header
             if (tagModel.Header.Version != 3 & tagModel.Header.Version != 4)
-                throw new NotImplementedException("ID3v2 Version " + tagModel.Header.Version + " is not supported.");
+                throw new AudioUnsupportedException("ID3v2 Version " + tagModel.Header.Version + " is not supported.");
 
             var id3TagSize = tagModel.Header.TagSize;
 
@@ -39,7 +39,7 @@ namespace AudioWorks.Extensions.Id3
                     id3TagSize -= Sync.Unsafe(stream, memory, id3TagSize);
                     stream = memory; // This is now the stream
                     if (id3TagSize <= 0)
-                        throw new InvalidTagException("Data is missing after the header.");
+                        throw new AudioInvalidException("Data is missing after the header.");
                 }
 
                 uint rawSize;
@@ -49,15 +49,14 @@ namespace AudioWorks.Extensions.Id3
                     tagModel.ExtendedHeader.Deserialize(stream);
                     rawSize = id3TagSize - tagModel.ExtendedHeader.Size;
                     if (id3TagSize <= 0)
-                        throw new InvalidTagException("Data is missing after the extended header.");
+                        throw new AudioInvalidException("Data is missing after the extended header.");
                 }
                 else
                     rawSize = id3TagSize;
 
                 // Read the frames
                 if (rawSize <= 0)
-                    throw new InvalidTagException(
-                        "No frames are present in the Tag, there must be at least one present.");
+                    throw new AudioInvalidException("No frames are present in the tag.");
 
                 // Load the tag frames
                 uint index = 0;
@@ -82,7 +81,7 @@ namespace AudioWorks.Extensions.Id3
                     // 10 is the minimum size of a valid frame;
                     // we read one already, if less than 9 chars left it's an error.
                     if (index + 10 > rawSize)
-                        throw new InvalidTagException("Tag is corrupt, must be formed of complete frames.");
+                        throw new AudioInvalidException("Tag is corrupt: must be formed of complete frames.");
 
                     // read another 3 chars
                     stream.Read(frameId, 1, 3);
@@ -98,8 +97,8 @@ namespace AudioWorks.Extensions.Id3
 
                         // The size of the frame can't be larger than the available space
                         if (frameSize > rawSize - index)
-                            throw new InvalidFrameException(
-                                "A frame is corrupt, it can't be larger than the available space remaining.");
+                            throw new AudioInvalidException(
+                                "A frame is corrupt: can't be larger than the available space remaining.");
 
                         var flags = Swap.UInt16(reader.ReadUInt16());
                         index += 2; // read 2 bytes

@@ -16,6 +16,7 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.IO;
 using System.Text;
+using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Id3
 {
@@ -64,16 +65,16 @@ namespace AudioWorks.Extensions.Id3
                 reader.Read(idTag);
 #endif
                 if (_id3.AsSpan().SequenceCompareTo(idTag) != 0)
-                    throw new TagNotFoundException("ID3v2 tag identifier was not found");
+                    throw new TagNotFoundException("ID3v2 tag identifier was not found.");
 
                 // Get the id3v2 version byte
                 Version = reader.ReadByte();
                 if (Version == 0xFF)
-                    throw new InvalidTagException("Corrupt header, invalid ID3v2 version.");
+                    throw new AudioInvalidException("Corrupt header: invalid ID3v2 version.");
 
                 // Get the id3v2 revision byte
                 if (reader.ReadByte() == 0xFF)
-                    throw new InvalidTagException("Corrupt header, invalid ID3v2 revision.");
+                    throw new AudioInvalidException("Corrupt header: invalid ID3v2 revision.");
 
                 // Parse the flag byte
                 var id3Flags = (byte) (0xf0 & reader.ReadByte());
@@ -84,7 +85,7 @@ namespace AudioWorks.Extensions.Id3
                 // Get the id3v2 size, swap and un-sync the integer
                 TagSize = Swap.UInt32(Sync.UnsafeBigEndian(reader.ReadUInt32()));
                 if (TagSize == 0)
-                    throw new InvalidTagException("Corrupt header, tag size can't be zero.");
+                    throw new AudioInvalidException("Corrupt header: tag size can't be zero.");
             }
         }
     }

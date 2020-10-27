@@ -13,7 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -49,17 +48,9 @@ namespace AudioWorks.Extensions.Id3
 
                     if (GetCompression(flags))
                     {
-                        switch (_version)
-                        {
-                            case 3:
-                                size = Swap.UInt32(reader.ReadUInt32());
-                                break;
-                            case 4:
-                                size = Swap.UInt32(Sync.UnsafeBigEndian(reader.ReadUInt32()));
-                                break;
-                            default:
-                                throw new NotImplementedException($"ID3v2 Version {_version} is not supported.");
-                        }
+                        size = Swap.UInt32(_version == 4
+                            ? Sync.UnsafeBigEndian(reader.ReadUInt32())
+                            : reader.ReadUInt32());
 
                         index = 0;
                         stream = new InflaterInputStream(stream);
@@ -89,43 +80,10 @@ namespace AudioWorks.Extensions.Id3
             }
         }
 
-        bool GetGrouping(ushort flags)
-        {
-            switch (_version)
-            {
-                case 3:
-                    return (flags & 0x0020) > 0;
-                case 4:
-                    return (flags & 0x0040) > 0;
-                default:
-                    throw new InvalidOperationException($"ID3v2 Version {_version} is not supported.");
-            }
-        }
+        bool GetGrouping(ushort flags) => _version == 4 ? (flags & 0x0040) > 0 : (flags & 0x0020) > 0;
 
-        bool GetCompression(ushort flags)
-        {
-            switch (_version)
-            {
-                case 3:
-                    return (flags & 0x0080) > 0;
-                case 4:
-                    return (flags & 0x0008) > 0;
-                default:
-                    throw new InvalidOperationException($"ID3v2 Version {_version} is not supported.");
-            }
-        }
+        bool GetCompression(ushort flags) => _version == 4 ? (flags & 0x0008) > 0 : (flags & 0x0080) > 0;
 
-        bool GetUnsynchronisation(ushort flags)
-        {
-            switch (_version)
-            {
-                case 3:
-                    return false;
-                case 4:
-                    return (flags & 0x0002) > 0;
-                default:
-                    throw new InvalidOperationException($"ID3v2 Version {_version} is not supported.");
-            }
-        }
+        bool GetUnsynchronisation(ushort flags) => _version == 4 && (flags & 0x0002) > 0;
     }
 }

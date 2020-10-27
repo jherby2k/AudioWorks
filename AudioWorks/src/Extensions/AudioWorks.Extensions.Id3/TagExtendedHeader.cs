@@ -15,6 +15,7 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System.IO;
 using System.Text;
+using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Id3
 {
@@ -27,7 +28,7 @@ namespace AudioWorks.Extensions.Id3
             using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
                 Size = Swap.UInt32(Sync.UnsafeBigEndian(reader.ReadUInt32()));
             if (Size < 6)
-                throw new IOException("Corrupt id3 extended header.");
+                throw new AudioInvalidException("Corrupt id3 extended header.");
 
             // Seek past it for now
             stream.Seek((int) Size, SeekOrigin.Current);
