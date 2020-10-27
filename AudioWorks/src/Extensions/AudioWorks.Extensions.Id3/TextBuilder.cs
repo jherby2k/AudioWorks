@@ -54,7 +54,7 @@ namespace AudioWorks.Extensions.Id3
         internal static unsafe string ReadAscii(Span<byte> frame, ref int index)
         {
             var text = string.Empty;
-            var count = Memory.FindByte(frame, 0, index);
+            var count = Memory.FindNullByte(frame, index);
             if (count == -1)
                 throw new InvalidFrameException("Invalid ASCII string size");
 
@@ -103,7 +103,7 @@ namespace AudioWorks.Extensions.Id3
 
         static unsafe string ReadUtf16BigEndian(Span<byte> frame, ref int index)
         {
-            var count = Memory.FindShort(frame, 0, index);
+            var count = Memory.FindNullShort(frame, index);
             if (count == -1)
                 throw new InvalidFrameException("Invalid UTF16BE string size");
 
@@ -121,7 +121,7 @@ namespace AudioWorks.Extensions.Id3
 
         static unsafe string ReadUtf16LittleEndian(Span<byte> frame, ref int index)
         {
-            var count = Memory.FindShort(frame, 0, index);
+            var count = Memory.FindNullShort(frame, index);
             if (count == -1)
                 throw new InvalidFrameException("Invalid UTF16LE string size");
 
@@ -140,7 +140,7 @@ namespace AudioWorks.Extensions.Id3
         static unsafe string ReadUtf8(Span<byte> frame, ref int index)
         {
             string text = string.Empty;
-            var count = Memory.FindByte(frame, 0, index);
+            var count = Memory.FindNullByte(frame, index);
             if (count == -1)
                 throw new InvalidFrameException("Invalid UTF8 string size");
             if (count > 0)

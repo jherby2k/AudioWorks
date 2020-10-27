@@ -15,6 +15,7 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Buffers.Binary;
+using System.Text;
 
 namespace AudioWorks.Extensions.Id3
 {
@@ -33,22 +34,22 @@ namespace AudioWorks.Extensions.Id3
             return src.Slice(srcIndex, count).ToArray();
         }
 
-        internal static int FindByte(ReadOnlySpan<byte> src, byte val, int index)
+        internal static int FindNullByte(ReadOnlySpan<byte> src, int index)
         {
             if (index > src.Length)
                 throw new InvalidOperationException();
 
-            return src.Slice(index).IndexOf(val);
+            return src.Slice(index).IndexOf((byte) 0);
         }
 
-        internal static int FindShort(ReadOnlySpan<byte> src, short val, int index)
+        internal static int FindNullShort(ReadOnlySpan<byte> src, int index)
         {
             var size = src.Length;
             if (index > size)
                 throw new InvalidOperationException();
 
             for (var n = index; n < size; n += 2)
-                if (BinaryPrimitives.ReadInt16LittleEndian(src.Slice(n)) == val)
+                if (BinaryPrimitives.ReadInt16LittleEndian(src.Slice(n)) == 0)
                     return n - index;
             return -1;
         }
