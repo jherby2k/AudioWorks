@@ -13,6 +13,7 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System;
 using System.IO;
 using System.Text;
 
@@ -59,16 +60,16 @@ namespace AudioWorks.Extensions.Id3
 
                 // Read the tag identifier
                 reader.Read(idTag, 0, 3);
-                if (!Memory.Compare(_id3, idTag))
+                if (_id3.AsSpan().SequenceCompareTo(idTag) != 0)
                     throw new TagNotFoundException("ID3v2 tag identifier was not found");
 
                 // Get the id3v2 version byte
                 Version = reader.ReadByte();
-                if (Version == 0xff)
+                if (Version == 0xFF)
                     throw new InvalidTagException("Corrupt header, invalid ID3v2 version.");
 
                 // Get the id3v2 revision byte
-                if (reader.ReadByte() == 0xff)
+                if (reader.ReadByte() == 0xFF)
                     throw new InvalidTagException("Corrupt header, invalid ID3v2 revision.");
 
                 // Parse the flag byte

@@ -44,7 +44,9 @@ namespace AudioWorks.Extensions.Id3
             Mime = TextBuilder.ReadAscii(frame, ref index);
             PictureType = (PictureType) frame[index++];
             Description = TextBuilder.ReadText(frame, ref index, TextType);
-            PictureData = Memory.Extract(frame, index, frame.Length - index);
+
+            PictureData = new byte[frame.Length - index];
+            frame.Slice(index, frame.Length - index).CopyTo(PictureData);
         }
 
         internal override void Write(Stream output)
