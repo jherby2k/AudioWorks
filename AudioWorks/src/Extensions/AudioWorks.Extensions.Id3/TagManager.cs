@@ -46,11 +46,12 @@ namespace AudioWorks.Extensions.Id3
                 }
 
                 uint rawSize;
-                // load the extended header
+
+                // Seek past the extended header
                 if (tagModel.Header.HasExtendedHeader)
                 {
                     tagModel.ExtendedHeader.Deserialize(stream);
-                    rawSize = id3TagSize - tagModel.ExtendedHeader.Size;
+                    rawSize = id3TagSize - 4 - tagModel.ExtendedHeader.Size;
                     if (id3TagSize <= 0)
                         throw new AudioInvalidException("Data is missing after the extended header.");
                 }
