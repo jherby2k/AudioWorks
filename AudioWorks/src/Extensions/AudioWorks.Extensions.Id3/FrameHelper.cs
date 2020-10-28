@@ -13,8 +13,11 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 
@@ -26,14 +29,15 @@ namespace AudioWorks.Extensions.Id3
 
         internal FrameHelper(TagHeader header) => _version = header.Version;
 
-        internal FrameBase Build(string frameId, ushort flags, byte[] buffer)
+        internal unsafe FrameBase Build(string frameId, ushort flags, Span<byte> buffer)
         {
             // Build a frame
             var frame = FrameFactory.Build(frameId);
 
             var index = 0;
             var size = (uint) buffer.Length;
-            Stream stream = new MemoryStream(buffer, false);
+
+            Stream stream = new UnmanagedMemoryStream((byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)), buffer.Length);
             var streamsToClose = new List<Stream>(3) { stream };
             try
             {

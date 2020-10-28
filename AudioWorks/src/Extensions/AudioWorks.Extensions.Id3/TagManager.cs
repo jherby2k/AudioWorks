@@ -27,7 +27,7 @@ namespace AudioWorks.Extensions.Id3
         internal static TagModel Deserialize(Stream stream)
         {
             var tagModel = new TagModel();
-            tagModel.Header.Deserialize(stream); // load the ID3v2 header
+            tagModel.Header.Deserialize(stream);
             if (tagModel.Header.Version != 3 & tagModel.Header.Version != 4)
                 throw new AudioUnsupportedException("ID3v2 Version " + tagModel.Header.Version + " is not supported.");
 
@@ -40,7 +40,7 @@ namespace AudioWorks.Extensions.Id3
                 {
                     memory = new MemoryStream();
                     id3TagSize -= Sync.Unsafe(stream, memory, id3TagSize);
-                    stream = memory; // This is now the stream
+                    stream = memory;
                     if (id3TagSize <= 0)
                         throw new AudioInvalidException("Data is missing after the header.");
                 }
@@ -58,23 +58,29 @@ namespace AudioWorks.Extensions.Id3
                 else
                     rawSize = id3TagSize;
 
-                // Read the frames
+                // Tags should have at least one frame
                 if (rawSize <= 0)
                     throw new AudioInvalidException("No frames are present in the tag.");
 
-                // Load the tag frames
                 uint index = 0;
                 var frameHelper = new FrameHelper(tagModel.Header);
-                // repeat while there is at least one complete frame available, 10 is the minimum size of a valid frame
-                // but what happens when there's only, say, 5 bytes of padding?
-                // we need to read a single byte to inspect for padding, then if not, read a whole tag.
+#if NETSTANDARD2_0
+                var frameIdBuffer = new byte[4];
+#else
+                Span<byte> frameIdBuffer = stackalloc byte[4];
+#endif
+
                 while (index < rawSize)
                 {
-                    var frameId = new byte[4];
-                    stream.Read(frameId, 0, 1);
+                    // Read one byte first, looking for padding
+#if NETSTANDARD2_0
+                    stream.Read(frameIdBuffer, 0, 1);
+#else
+                    stream.Read(frameIdBuffer.Slice(0, 1));
+#endif
 
                     // We reached the padding
-                    if (frameId[0] == 0)
+                    if (frameIdBuffer[0] == 0)
                     {
                         tagModel.Header.PaddingSize = rawSize - index;
                         stream.Seek(tagModel.Header.PaddingSize - 1, SeekOrigin.Current);
@@ -82,22 +88,24 @@ namespace AudioWorks.Extensions.Id3
                         break;
                     }
 
-                    // 10 is the minimum size of a valid frame;
-                    // we read one already, if less than 9 chars left it's an error.
+                    // 10 is the minimum size of a valid frame
                     if (index + 10 > rawSize)
-                        throw new AudioInvalidException("Tag is corrupt: must be formed of complete frames.");
+                        throw new AudioInvalidException("Tag is corrupt: incomplete frame.");
 
-                    // read another 3 chars
-                    stream.Read(frameId, 1, 3);
-                    index += 4; // have read 4 bytes
-                    //TODO: Validate key valid ranges
-                    using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
+                    // Read the rest of the frame ID
+#if NETSTANDARD2_0
+                    stream.Read(frameIdBuffer, 1, 3);
+#else
+                    stream.Read(frameIdBuffer.Slice(1, 3));
+#endif
+                    index += 4;
+
+                    using (var reader = new BinaryReader(stream, Encoding.ASCII, true))
                     {
                         var frameSize = Swap.UInt32(reader.ReadUInt32());
-                        index += 4; // have read 4 bytes
-                        // ID3v2.4 now has sync-safe sizes
                         if (tagModel.Header.Version == 4)
                             frameSize = Sync.Unsafe(frameSize);
+                        index += 4;
 
                         // The size of the frame can't be larger than the available space
                         if (frameSize > rawSize - index)
@@ -105,11 +113,16 @@ namespace AudioWorks.Extensions.Id3
                                 "A frame is corrupt: can't be larger than the available space remaining.");
 
                         var flags = Swap.UInt16(reader.ReadUInt16());
-                        index += 2; // read 2 bytes
-                        var frameData = new byte[frameSize];
-                        reader.Read(frameData, 0, (int) frameSize);
-                        index += frameSize; // read more bytes
-                        tagModel.Frames.Add(frameHelper.Build(Encoding.UTF8.GetString(frameId, 0, 4), flags, frameData));
+                        index += 2;
+
+                        tagModel.Frames.Add(ReadFrame(reader, frameHelper,
+#if NETSTANDARD2_0
+                            Encoding.ASCII.GetString(frameIdBuffer, 0, 4), flags, frameSize));
+#else
+                            Encoding.ASCII.GetString(frameIdBuffer), flags, frameSize));
+#endif
+
+                        index += frameSize;
                     }
                 }
 
@@ -119,6 +132,20 @@ namespace AudioWorks.Extensions.Id3
             {
                 memory?.Close();
             }
+        }
+
+        static FrameBase ReadFrame(BinaryReader reader, FrameHelper frameHelper, string frameId, ushort flags, uint frameSize)
+        {
+#if NETSTANDARD2_0
+            var frameDataBuffer = reader.ReadBytes((int) frameSize);
+#else
+            // Use heap allocations for frames > 256kB (usually pictures)
+            Span<byte> frameDataBuffer = frameSize < 0x40000
+                ? stackalloc byte[(int) frameSize]
+                : new byte[(int) frameSize];
+            reader.Read(frameDataBuffer);
+#endif
+            return frameHelper.Build(frameId, flags, frameDataBuffer);
         }
 
         internal static void Serialize(TagModel tagModel, Stream stream)
