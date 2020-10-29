@@ -19,7 +19,7 @@ using System.IO;
 namespace AudioWorks.Extensions.Id3
 {
     [Frame("T")]
-    class FrameText : FrameBase
+    public class FrameText : FrameBase
     {
         internal TextType TextType { get; set; } = TextType.Ascii;
 

@@ -19,7 +19,7 @@ using System.IO;
 namespace AudioWorks.Extensions.Id3
 {
     [Frame("APIC")]
-    sealed class FramePicture : FrameBase, IFrameDescription
+    public sealed class FramePicture : FrameBase, IFrameDescription
     {
         internal TextType TextType { get; set; } = TextType.Ascii;
 

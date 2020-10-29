@@ -25,7 +25,7 @@ namespace AudioWorks.Extensions.Id3
 {
     [Frame("COMM")]
     // ReSharper disable once ClassNeverInstantiated.Global
-    sealed class FrameFullText : FrameText, IFrameDescription
+    public sealed class FrameFullText : FrameText, IFrameDescription
     {
         public string Description { get; set; } = string.Empty;
 

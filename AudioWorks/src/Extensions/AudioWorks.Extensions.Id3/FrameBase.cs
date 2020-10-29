@@ -18,7 +18,7 @@ using System.IO;
 
 namespace AudioWorks.Extensions.Id3
 {
-    abstract class FrameBase
+    public abstract class FrameBase
     {
         internal bool FileAlter { get; set; }
 
