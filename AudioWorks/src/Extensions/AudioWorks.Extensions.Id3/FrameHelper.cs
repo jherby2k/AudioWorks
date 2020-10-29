@@ -65,7 +65,7 @@ namespace AudioWorks.Extensions.Id3
                     {
                         var memoryStream = new MemoryStream();
                         streamsToClose.Add(memoryStream);
-                        size = Sync.Unsafe(stream, memoryStream, size);
+                        size -= Sync.Unsafe(stream, memoryStream, size);
                         index = 0;
                         memoryStream.Seek(0, SeekOrigin.Begin);
                         stream = memoryStream;
