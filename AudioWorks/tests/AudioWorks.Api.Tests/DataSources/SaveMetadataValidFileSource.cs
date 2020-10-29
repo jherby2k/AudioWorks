@@ -881,7 +881,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "D6DD2CD807464AF13F672C58533BF7E8"
+                    "FF55C184441BFF19D872D0B7767AC981"
                 }
             },
 
@@ -1129,7 +1129,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "AAE7CB7E1E4EAAF5ED19F8B986647298"
+                    "3EA0A7381A4AD97A317205F1026AC938"
                 }
             },
 

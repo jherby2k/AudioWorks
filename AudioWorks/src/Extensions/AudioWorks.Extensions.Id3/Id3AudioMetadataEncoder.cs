@@ -106,7 +106,7 @@ namespace AudioWorks.Extensions.Id3
             try
             {
                 var existingTag = TagManager.Deserialize(stream);
-                return existingTag.Header.TagSizeWithHeaderFooter + existingTag.Header.PaddingSize;
+                return existingTag.Header.TagSizeWithHeaderFooter - existingTag.Header.PaddingSize;
             }
             catch (TagNotFoundException)
             {
