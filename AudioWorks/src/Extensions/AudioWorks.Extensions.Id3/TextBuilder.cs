@@ -92,13 +92,13 @@ namespace AudioWorks.Extensions.Id3
             if (index >= frame.Length - 2)
                 throw new AudioInvalidException("UTF16 string is not terminated.");
 
-            if (frame[index] == 0xfe && frame[index + 1] == 0xff) // Big Endian
+            if (frame[index] == 0xFE && frame[index + 1] == 0xFF) // Big Endian
             {
                 index += 2;
                 return ReadTextNoPreamble(frame, ref index, TextType.Utf16BigEndian);
             }
 
-            if (frame[index] == 0xff && frame[index + 1] == 0xfe) // Little Endian
+            if (frame[index] == 0xFF && frame[index + 1] == 0xFE) // Little Endian
             {
                 index += 2;
                 return ReadTextNoPreamble(frame, ref index, TextType.Utf16);
