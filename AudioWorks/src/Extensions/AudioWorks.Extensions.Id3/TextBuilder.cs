@@ -59,10 +59,27 @@ namespace AudioWorks.Extensions.Id3
                 _ => throw new AudioInvalidException("Invalid text type.")
             };
 
+        internal static void WriteText(Stream stream, string text, TextType textType, bool nullTerminate = true)
+        {
+            var encoding = _encodings[textType];
+            using (var writer = new BinaryWriter(stream, encoding, true))
+            {
 #if NETSTANDARD2_0
-        internal static unsafe string ReadTextNoPreamble(Span<byte> frame, ref int index, TextType textType)
+                writer.Write(encoding.GetPreamble());
+                writer.Write(text.ToCharArray());
 #else
-        internal static string ReadTextNoPreamble(Span<byte> frame, ref int index, TextType textType)
+                writer.Write(encoding.Preamble);
+                writer.Write(text.AsSpan());
+#endif
+                if (nullTerminate)
+                    writer.Write('\0');
+            }
+        }
+
+#if NETSTANDARD2_0
+        static unsafe string ReadTextNoPreamble(Span<byte> frame, ref int index, TextType textType)
+#else
+        static string ReadTextNoPreamble(Span<byte> frame, ref int index, TextType textType)
 #endif
         {
             var text = string.Empty;
@@ -118,23 +135,6 @@ namespace AudioWorks.Extensions.Id3
                 return ReadTextEndNoPreamble(frame.Slice(2), TextType.Utf16);
 
             throw new AudioInvalidException("Invalid UTF16 string.");
-        }
-
-        internal static void WriteText(Stream stream, string text, TextType textType, bool nullTerminate = true)
-        {
-            var encoding = _encodings[textType];
-            using (var writer = new BinaryWriter(stream, encoding, true))
-            {
-#if NETSTANDARD2_0
-                writer.Write(encoding.GetPreamble());
-                writer.Write(text.ToCharArray());
-#else
-                writer.Write(encoding.Preamble);
-                writer.Write(text.AsSpan());
-#endif
-                if (nullTerminate)
-                    writer.Write('\0');
-            }
         }
     }
 }
