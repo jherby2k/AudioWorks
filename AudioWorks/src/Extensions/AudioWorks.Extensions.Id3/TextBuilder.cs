@@ -87,28 +87,18 @@ namespace AudioWorks.Extensions.Id3
 
         static string ReadUtf16(Span<byte> frame, ref int index)
         {
-            // check for empty string first, and throw a useful exception
-            // otherwise we'll get an out-of-range exception when we look for the BOM
             if (index >= frame.Length - 2)
                 throw new AudioInvalidException("UTF16 string is not terminated.");
 
-            if (frame[index] == 0xFE && frame[index + 1] == 0xFF) // Big Endian
-            {
-                index += 2;
-                return ReadTextNoPreamble(frame, ref index, TextType.Utf16BigEndian);
-            }
-
-            if (frame[index] == 0xFF && frame[index + 1] == 0xFE) // Little Endian
-            {
-                index += 2;
-                return ReadTextNoPreamble(frame, ref index, TextType.Utf16);
-            }
-
-            if (frame[index] != 0x00 || frame[index + 1] != 0x00)
-                throw new AudioInvalidException("Invalid UTF16 string.");
-
             index += 2;
-            return string.Empty;
+
+            if (frame[index] == 0xFE && frame[index + 1] == 0xFF)
+                return ReadTextNoPreamble(frame, ref index, TextType.Utf16BigEndian);
+
+            if (frame[index] == 0xFF && frame[index + 1] == 0xFE)
+                return ReadTextNoPreamble(frame, ref index, TextType.Utf16);
+
+            throw new AudioInvalidException("Invalid UTF16 string.");
         }
 
 #if NETSTANDARD2_0
