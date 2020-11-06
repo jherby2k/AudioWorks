@@ -107,13 +107,17 @@ namespace AudioWorks.Extensions.Id3
             if (index >= frame.Length - 2)
                 throw new AudioInvalidException("UTF16 string is not terminated.");
 
-            index += 2;
-
             if (frame[index] == 0xFE && frame[index + 1] == 0xFF)
+            {
+                index += 2;
                 return ReadTextNoPreamble(frame, ref index, TextType.Utf16BigEndian);
+            }
 
             if (frame[index] == 0xFF && frame[index + 1] == 0xFE)
+            {
+                index += 2;
                 return ReadTextNoPreamble(frame, ref index, TextType.Utf16);
+            }
 
             throw new AudioInvalidException("Invalid UTF16 string.");
         }
@@ -128,7 +132,7 @@ namespace AudioWorks.Extensions.Id3
 
         static string ReadUtf16End(Span<byte> frame)
         {
-            if (frame[0] == 0xFE && frame[1] == 0xFF)
+             if (frame[0] == 0xFE && frame[1] == 0xFF)
                 return ReadTextEndNoPreamble(frame.Slice(2), TextType.Utf16BigEndian);
 
             if (frame[0] == 0xFF && frame[1] == 0xFE)
