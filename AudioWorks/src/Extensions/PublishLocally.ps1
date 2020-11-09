@@ -30,13 +30,12 @@ if (-not $IsWindows -and -not (Test-Path /usr/local/bin/nuget)) {
 }
 
 $localFeedDir = "$([System.Environment]::GetFolderPath(28))\AudioWorks\LocalFeed"
+if (-not (Test-Path $localFeedDir)) {
+    New-Item -Path $localFeedDir -ItemType Directory | Out-Null
+}
 
 Get-ChildItem -Path $localFeedDir -Filter "*$ProjectName*" -Directory | Remove-Item  -Recurse
 Get-ChildItem -Path "$([System.Environment]::GetFolderPath(28))\AudioWorks\Extensions" -Recurse -Directory -Filter "*$ProjectName*" | Remove-Item -Recurse
-
-if (-not (Test-Path $localFeedDir)) {
-    New-Item -Path $localFeedDir -ItemType Directory -Force
-}
 
 if ($IsWindows) {
     Get-ChildItem -Path "$PSScriptRoot\$ProjectName\bin\$Configuration" -Filter *.nupkg | Select-Object -ExpandProperty FullName | % { &"$env:TEMP\nuget" add $_ -Source $localFeedDir -Expand -NonInteractive }
