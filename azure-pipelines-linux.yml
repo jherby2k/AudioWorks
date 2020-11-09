@@ -41,7 +41,7 @@ steps:
   displayName: 'Package extensions'
 
 - script: |
-    sudo apt-get install --yes libflac8 libmp3lame0 libopus0 libebur128-1
+    sudo apt-get install --yes nuget libflac8 libmp3lame0 libopus0 libebur128-1
   displayName: 'Download and install prerequisites'
 
 - powershell: Write-Host echo "##vso[task.setvariable variable=localAppDataDir]$([System.Environment]::GetFolderPath(28))/AudioWorks"

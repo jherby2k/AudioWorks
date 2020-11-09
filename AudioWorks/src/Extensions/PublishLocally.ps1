@@ -25,9 +25,11 @@ if ($PSEdition -eq "Desktop") {
     $IsWindows = $true
 }
 
-$nugetPath = Join-Path -Path $([System.IO.Path]::GetTempPath()) -ChildPath nuget.exe
-if (-not (Test-Path $nugetPath)) {
-    Invoke-WebRequest -Uri https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile $nugetPath
+if (-not $IsLinux) {
+    $nugetPath = Join-Path -Path $([System.IO.Path]::GetTempPath()) -ChildPath nuget.exe
+    if (-not (Test-Path $nugetPath)) {
+        Invoke-WebRequest -Uri https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile $nugetPath
+    }
 }
 
 $localAppDataDir = Join-Path -Path $([System.Environment]::GetFolderPath(28)) -ChildPath AudioWorks
@@ -42,5 +44,6 @@ Get-ChildItem -Path $(Join-Path -Path $localAppDataDir -ChildPath Extensions) -F
 
 foreach ($package in Get-ChildItem -Path $(Join-Path -Path $PSScriptRoot -ChildPath $ProjectName | Join-Path -ChildPath bin | Join-Path -ChildPath $Configuration) -Filter *.nupkg | Select-Object -ExpandProperty FullName) {
     if ($IsWindows) { &$nugetPath add $package -Source $localFeedDir -Expand -NonInteractive }
+    elseif ($IsLinux) { nuget add $package -Source $localFeedDir -Expand -NonInteractive }
     else { mono $nugetPath add $package -Source $localFeedDir -Expand -NonInteractive }
 }
