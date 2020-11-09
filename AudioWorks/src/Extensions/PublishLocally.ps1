@@ -21,7 +21,7 @@ param(
     [string] $Configuration)
 
 # For Windows PowerShell compatibility
-if ($PSEdition -eq 'Desktop') {
+if ($PSEdition -eq "Desktop") {
     $IsWindows = $true
 }
 
@@ -37,8 +37,8 @@ if (-not (Test-Path $localFeedDir)) {
     New-Item -Path $localFeedDir -ItemType Directory | Out-Null
 }
 
-Get-ChildItem -Path $localFeedDir -Filter "*$ProjectName*" -Directory | Remove-Item  -Recurse
-Get-ChildItem -Path $(Join-Path -Path $localAppDataDir -ChildPath Extensions) -Recurse -Directory -Filter "*$ProjectName*" | Remove-Item -Recurse
+Get-ChildItem -Path $localFeedDir -Filter $ProjectName* -Directory | Remove-Item  -Recurse
+Get-ChildItem -Path $(Join-Path -Path $localAppDataDir -ChildPath Extensions) -Filter $ProjectName* -Directory -Recurse | Remove-Item -Recurse
 
 foreach ($package in Get-ChildItem -Path $(Join-Path -Path $PSScriptRoot -ChildPath $ProjectName | Join-Path -ChildPath bin | Join-Path -ChildPath $Configuration) -Filter *.nupkg | Select-Object -ExpandProperty FullName) {
     if ($IsWindows) { &$nugetPath add $package -Source $localFeedDir -Expand -NonInteractive }
