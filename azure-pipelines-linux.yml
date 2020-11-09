@@ -57,7 +57,7 @@ steps:
   displayName: 'Pre-process runsettings for code coverage'
 
 - powershell: |
-    $localFeedDir = (New-Item "$($env:LOCALAPPDATADIR)/LocalFeed" -ItemType Directory).FullName
+    $localFeedDir = "$env:LOCALAPPDATADIR/LocalFeed"
     $roamingAppDir = "$([System.Environment]::GetFolderPath(26))/AudioWorks"
     New-Item $roamingAppDir -ItemType Directory
     $content = Get-Content AudioWorks/src/AudioWorks.Common/settings.json | ConvertFrom-Json
