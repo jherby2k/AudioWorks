@@ -14,7 +14,10 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. #>
 
 param(
+    [Parameter(Mandatory)]
     [string] $ProjectName,
+    [Parameter(Mandatory)]
+    [ValidateSet("Debug", "Release")]
     [string] $Configuration)
 
 # For Windows PowerShell compatibility

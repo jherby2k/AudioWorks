@@ -14,8 +14,12 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. #>
 
 param(
+    [Parameter(Mandatory)]
     [string] $ProjectDir,
+    [Parameter(Mandatory)]
+    [ValidateSet("Debug", "Release")]
     [string] $Configuration,
+    [Parameter(Mandatory)]
     [string] $Framework)
 
 $outputRoot = "$($ProjectDir)bin\$Configuration\AudioWorks.Commands"
