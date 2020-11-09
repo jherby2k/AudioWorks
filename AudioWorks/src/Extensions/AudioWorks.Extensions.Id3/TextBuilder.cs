@@ -135,10 +135,10 @@ namespace AudioWorks.Extensions.Id3
              if (frame[0] == 0xFE && frame[1] == 0xFF)
                 return ReadTextEndNoPreamble(frame.Slice(2), TextType.Utf16BigEndian);
 
-            if (frame[0] == 0xFF && frame[1] == 0xFE)
+             if (frame[0] == 0xFF && frame[1] == 0xFE)
                 return ReadTextEndNoPreamble(frame.Slice(2), TextType.Utf16);
 
-            throw new AudioInvalidException("Invalid UTF16 string.");
+             throw new AudioInvalidException("Invalid UTF16 string.");
         }
     }
 }
