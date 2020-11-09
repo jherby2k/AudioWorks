@@ -25,11 +25,9 @@ if ($PSEdition -eq 'Desktop') {
     $IsWindows = $true
 }
 
-if ($IsWindows -and -not (Test-Path $env:TEMP\nuget.exe)) {
-    Invoke-WebRequest -Uri https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile $env:TEMP\nuget.exe
-}
-if (-not $IsWindows -and -not (Test-Path /usr/local/bin/nuget)) {
-    Invoke-WebRequest -Uri https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile /usr/local/bin/nuget
+$nugetPath = Join-Path -Path $([System.IO.Path]::GetTempPath()) -ChildPath nuget.exe
+if (-not (Test-Path $nugetPath)) {
+    Invoke-WebRequest -Uri https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile $nugetPath
 }
 
 $localFeedDir = "$([System.Environment]::GetFolderPath(28))\AudioWorks\LocalFeed"
@@ -40,9 +38,7 @@ if (-not (Test-Path $localFeedDir)) {
 Get-ChildItem -Path $localFeedDir -Filter "*$ProjectName*" -Directory | Remove-Item  -Recurse
 Get-ChildItem -Path "$([System.Environment]::GetFolderPath(28))\AudioWorks\Extensions" -Recurse -Directory -Filter "*$ProjectName*" | Remove-Item -Recurse
 
-if ($IsWindows) {
-    Get-ChildItem -Path "$PSScriptRoot\$ProjectName\bin\$Configuration" -Filter *.nupkg | Select-Object -ExpandProperty FullName | % { &"$env:TEMP\nuget" add $_ -Source $localFeedDir -Expand -NonInteractive }
-}
-else {
-    Get-ChildItem -Path "$PSScriptRoot/$ProjectName/bin/$Configuration" -Filter *.nupkg | Select-Object -ExpandProperty FullName | % { mono /user/local/bin/nuget add $_ -Source $localFeedDir -Expand -NonInteractive }
+foreach ($package in Get-ChildItem -Path "$PSScriptRoot\$ProjectName\bin\$Configuration" -Filter *.nupkg | Select-Object -ExpandProperty FullName) {
+    if ($IsWindows) { &$nugetPath add $package -Source $localFeedDir -Expand -NonInteractive }
+    else { mono $nugetPath add $package -Source $localFeedDir -Expand -NonInteractive }
 }
