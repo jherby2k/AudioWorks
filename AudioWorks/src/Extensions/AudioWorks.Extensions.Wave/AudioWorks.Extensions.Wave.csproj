@@ -36,9 +36,9 @@
     <ProjectReference Include="..\..\AudioWorks.Extensibility\AudioWorks.Extensibility.csproj" PrivateAssets="all" />
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Condition="'$(OS)'=='Windows_NT'" Command="powershell -ExecutionPolicy Bypass -File &quot;$(ProjectDir)..\PublishLocally.ps1&quot; -ProjectName $(ProjectName) -Configuration $(Configuration)" />
-    <Exec Condition="'$(OS)'!='Windows_NT'" Command="pwsh -File &quot;$(ProjectDir)../PublishLocally.ps1&quot; -ProjectName $(ProjectName) -Configuration $(Configuration)" />
+  <Target Name="PublishLocally" AfterTargets="Pack">
+    <Exec Condition="'$(OS)'=='Windows_NT'" Command="powershell -ExecutionPolicy Bypass -File &quot;..\PublishLocally.ps1&quot; -ProjectName AudioWorks.Extensions.Wave -Configuration $(Configuration)" />
+    <Exec Condition="'$(OS)'!='Windows_NT'" Command="pwsh -File &quot;../PublishLocally.ps1&quot; -ProjectName AudioWorks.Extensions.Wave -Configuration $(Configuration)" />
   </Target>
 
 </Project>
