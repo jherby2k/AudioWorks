@@ -30,15 +30,17 @@ if (-not (Test-Path $nugetPath)) {
     Invoke-WebRequest -Uri https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile $nugetPath
 }
 
-$localFeedDir = "$([System.Environment]::GetFolderPath(28))\AudioWorks\LocalFeed"
+$localAppDataDir = Join-Path -Path $([System.Environment]::GetFolderPath(28)) -ChildPath AudioWorks
+
+$localFeedDir = Join-Path -Path $localAppDataDir -ChildPath LocalFeed
 if (-not (Test-Path $localFeedDir)) {
     New-Item -Path $localFeedDir -ItemType Directory | Out-Null
 }
 
 Get-ChildItem -Path $localFeedDir -Filter "*$ProjectName*" -Directory | Remove-Item  -Recurse
-Get-ChildItem -Path "$([System.Environment]::GetFolderPath(28))\AudioWorks\Extensions" -Recurse -Directory -Filter "*$ProjectName*" | Remove-Item -Recurse
+Get-ChildItem -Path $(Join-Path -Path $localAppDataDir -ChildPath Extensions) -Recurse -Directory -Filter "*$ProjectName*" | Remove-Item -Recurse
 
-foreach ($package in Get-ChildItem -Path "$PSScriptRoot\$ProjectName\bin\$Configuration" -Filter *.nupkg | Select-Object -ExpandProperty FullName) {
+foreach ($package in Get-ChildItem -Path $(Join-Path -Path $PSScriptRoot -ChildPath $ProjectName | Join-Path -ChildPath bin | Join-Path -ChildPath $Configuration) -Filter *.nupkg | Select-Object -ExpandProperty FullName) {
     if ($IsWindows) { &$nugetPath add $package -Source $localFeedDir -Expand -NonInteractive }
     else { mono $nugetPath add $package -Source $localFeedDir -Expand -NonInteractive }
 }

@@ -30,8 +30,8 @@ Write-Host "Copying module from $ModuleProjectRoot to $OutputRoot."
 $outputDir = Join-Path $OutputRoot -ChildPath $moduleName
 if (Test-Path $outputDir) { Remove-Item -Path $outputDir -Recurse -ErrorAction Stop }
 
-$projectOutputDir = $ModuleProjectRoot | Get-ChildItem -Filter bin | Get-ChildItem -Filter $Configuration | Get-ChildItem -Filter $moduleName
-Copy-Item -Path $projectOutputDir.FullName -Destination $OutputRoot -Recurse
+$projectOutputDir = Join-Path -Path $ModuleProjectRoot -ChildPath bin | Join-Path -ChildPath $Configuration | Join-Path -ChildPath $moduleName
+Copy-Item -Path $projectOutputDir -Destination $OutputRoot -Recurse
 
 Write-Host "Copying debugging symbols from $ModuleProjectRoot to $OutputRoot."
-$ModuleProjectRoot | Get-ChildItem -Filter bin | Get-ChildItem -Filter $Configuration | Get-ChildItem -Filter *.pdb -Recurse | % { Copy-Item $_.FullName -Destination $(Join-Path $outputDir -ChildPath $_.Directory.Name) }
+Join-Path -Path $ModuleProjectRoot -ChildPath bin | Join-Path -ChildPath $Configuration | Get-ChildItem -Filter *.pdb -Recurse | % { Copy-Item $_.FullName -Destination $(Join-Path $outputDir -ChildPath $_.Directory.Name) }
