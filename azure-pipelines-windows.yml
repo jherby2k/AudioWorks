@@ -24,12 +24,6 @@ variables:
 steps:
 - task: DotNetCoreCLI@2
   inputs:
-    command: 'restore'
-    projects: 'AudioWorks\AudioWorks.sln'
-  displayName: 'Restore dependencies'
-
-- task: DotNetCoreCLI@2
-  inputs:
     command: 'build'
     projects: 'AudioWorks\AudioWorks.sln'
     arguments: '--configuration $(buildConfiguration)'
