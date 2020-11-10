@@ -40,11 +40,6 @@ steps:
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
   displayName: 'Package extensions'
 
-- powershell: |
-        $localFeedDir = "$([System.Environment]::GetFolderPath(28))/AudioWorks/LocalFeed"
-        Get-ChildItem -File -Recurse $localFeedDir | Select-Object -ExpandProperty FullName
-  displayName: 'Testing 123'
-
 - script: |
     sudo apt-get install --yes libflac8 libmp3lame0 libopus0 libebur128-1
   displayName: 'Download and install prerequisites'
