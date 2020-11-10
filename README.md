@@ -42,7 +42,7 @@ The .NET API is available via [NuGet](https://www.nuget.org/packages/AudioWorks.
 * [.NET Core SDK 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
 * [PowerShell Core 6.2+](https://aka.ms/powershell) (recommended) and/or Windows PowerShell 5.1.
 * Windows 8.1+, MacOS 10.13+, Ubuntu 16.04, 18.04 or 20.04.
-* [Nuget client tools](https://docs.microsoft.com/en-us/nuget/install-nuget-client-tools#nugetexe-cli) (for building extensions on MacOS and Linux)
+* [NuGet client tools](https://docs.microsoft.com/en-us/nuget/install-nuget-client-tools#nugetexe-cli) (for building extensions on MacOS and Linux)
 * [Visual Studio 2019 16.4](https://visualstudio.microsoft.com/downloads) (optional - Windows only)
 * [Visual Studio 2019 for Mac 8.4+](https://visualstudio.microsoft.com/downloads) (optional - Mac only)
 * [Visual Studio Code](https://code.visualstudio.com/) (optional - all platforms)
