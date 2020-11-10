@@ -29,6 +29,11 @@ steps:
     arguments: '--configuration $(buildConfiguration)'
   displayName: 'Build $(buildConfiguration) configuration'
 
+- powershell: |
+	$localFeedDir = "$([System.Environment]::GetFolderPath(28))/AudioWorks/LocalFeed"
+    	Get-ChildItem -File -Recurse $localFeedDir | Select-Object -ExpandProperty FullName
+  displayName: 'Testing 123'
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'pack'
@@ -65,6 +70,8 @@ steps:
     $content.AutomaticExtensionDownloads = $false
     $content.UsePreReleaseExtensions = $true
     $content | ConvertTo-Json | Set-Content "$roamingAppDir/settings.json"
+	$content
+    	Get-ChildItem -File -Recurse $localFeedDir | Select-Object -ExpandProperty FullName
     dotnet test AudioWorks/tests/AudioWorks.Api.Tests --configuration $env:BUILDCONFIGURATION --filter "FullyQualifiedName=AudioWorks.Api.Tests.ExtensionInstallerTests.InstallAsyncInstallsExtensions" --no-build  --no-build --results-directory $env:AGENT_TEMPDIRECTORY --collect:"XPlat Code Coverage" --settings "$env:BUILD_SOURCESDIRECTORY/install.runsettings"
     Write-Host
     Write-Host "Installed files:"
