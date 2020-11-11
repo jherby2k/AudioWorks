@@ -72,7 +72,7 @@ steps:
     $content | ConvertTo-Json | Set-Content "$roamingAppDir/settings.json"
     dotnet test AudioWorks/tests/AudioWorks.Api.Tests --configuration $env:BUILDCONFIGURATION --filter "FullyQualifiedName=AudioWorks.Api.Tests.ExtensionInstallerTests.InstallAsyncInstallsExtensions" --no-build --results-directory $env:AGENT_TEMPDIRECTORY --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*
     Write-Host
-    Write-Host "Installed files:"
+    Write-Host 'Installed files:'
     Get-ChildItem -File -Recurse $env:LOCALAPPDATADIR/Extensions | Select-Object -ExpandProperty FullName
   displayName: 'Install extensions'
 
@@ -82,15 +82,15 @@ steps:
 
         $extensionDirs = Get-ChildItem -Path $env:LOCALAPPDATADIR/Extensions/$destination/*
         foreach ($pdb in Get-ChildItem -Path AudioWorks/src/Extensions/*/bin/$env:BUILDCONFIGURATION/$source/* -Filter AudioWorks.Extensions.*.pdb) {
-            $extensionDir = $extensionDirs | Where-Object -Property Name -Like "$($pdb.Name -replace ".pdb").*"
+            $extensionDir = $extensionDirs | Where-Object -Property Name -Like "$($pdb.Name -replace '.pdb').*"
             Copy-Item -Path $pdb.FullName -Destination $extensionDir -PassThru | % { Write-Host $_.FullName }
         }
     }
 
-    Write-Host "Copied symbols:"
-    Copy-Symbols "netstandard2.0" "netcoreapp2.1"
-    Copy-Symbols "netstandard2.1" "netcoreapp3.1"
-    Copy-Symbols "netstandard2.1" "net5.0"
+    Write-Host 'Copied symbols:'
+    Copy-Symbols netstandard2.1 net5.0
+    Copy-Symbols netstandard2.1 netcoreapp3.1
+    Copy-Symbols netstandard2.0 netcoreapp2.1
   displayName: 'Copy symbols to extension directories'
 
 - task: DotNetCoreCLI@2
