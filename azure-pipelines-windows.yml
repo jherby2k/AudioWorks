@@ -227,7 +227,7 @@ steps:
     projects: 'AudioWorks\tests\AudioWorks.Commands.Tests\AudioWorks.Commands.Tests.csproj'
     publishTestResults: 'true'
     testRunTitle: 'AudioWorks.Commands on .NET Framework 4.8'
-    arguments: '--framework net462 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(Build.SourcesDirectory)\AudioWorks\tests\AudioWorks.Commands.Tests\bin\$(buildConfiguration)\net462\AudioWorks.Commands\net462'
+    arguments: '--framework net462 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(Build.SourcesDirectory)\AudioWorks\tests\AudioWorks.Commands.Tests\bin\$(buildConfiguration)\net462\AudioWorks.Commands\net462'
   displayName: 'Test AudioWorks.Commands on .NET Framework 4.8'
 
 - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
