@@ -25,7 +25,8 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: sdk
-    version: 5.0.x
+    version: 5.0.*
+    performMultiLevelLookup: true
   displayName: 'Use .NET 5.0 SDK'
 
 - task: DotNetCoreCLI@2
