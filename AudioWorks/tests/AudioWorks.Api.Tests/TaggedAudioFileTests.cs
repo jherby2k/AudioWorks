@@ -235,7 +235,7 @@ namespace AudioWorks.Api.Tests
         public void RenameNullNameThrowsException(string fileName)
         {
             var path = Path.Combine("Output", "Rename", fileName);
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
             File.Copy(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName), path, true);
 
             Assert.Throws<ArgumentNullException>(() =>
@@ -247,7 +247,7 @@ namespace AudioWorks.Api.Tests
         public void RenameRenamesFile(string fileName, TestAudioMetadata metadata, string name, string expectedFileName)
         {
             var path = Path.Combine("Output", "Rename", fileName);
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
             File.Copy(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName), path, true);
             var audioFile = new TaggedAudioFile(path);
             _mapper.Map(metadata, audioFile.Metadata);
@@ -282,7 +282,7 @@ namespace AudioWorks.Api.Tests
         {
             var sourceDirectory = Path.Combine(PathUtility.GetTestFileRoot(), "Valid");
             var path = Path.Combine("Output", "SaveMetadata", "Valid", $"{index:000} - {fileName}");
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
             File.Copy(Path.Combine(sourceDirectory, fileName), path, true);
             var audioFile = new TaggedAudioFile(path);
             _mapper.Map(metadata, audioFile.Metadata);
@@ -299,7 +299,7 @@ namespace AudioWorks.Api.Tests
         public void SaveMetadataUnsupportedFileThrowsException(int index, string fileName)
         {
             var path = Path.Combine("Output", "SaveMetadata", "Unsupported", $"{index:000} - {fileName}");
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
             File.Copy(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName), path, true);
             var audioFile = new TaggedAudioFile(path);
 

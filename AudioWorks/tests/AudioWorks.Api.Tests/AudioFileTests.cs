@@ -153,7 +153,7 @@ namespace AudioWorks.Api.Tests
         public void RenameNullNameThrowsException(string fileName)
         {
             var path = Path.Combine("Output", "Rename", fileName);
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
             File.Copy(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName), path, true);
 
             Assert.Throws<ArgumentNullException>(() =>
