@@ -218,6 +218,33 @@ steps:
     arguments: '--framework net462 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)\net462.runsettings"'
   displayName: 'Test AudioWorks.Api on .NET Framework 4.8'
 
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'AudioWorks\tests\AudioWorks.Commands.Tests\AudioWorks.Commands.Tests.csproj'
+    publishTestResults: 'true'
+    testRunTitle: 'AudioWorks.Commands on .NET 5.0'
+    arguments: '--framework net5.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)\net5.0.runsettings"'
+  displayName: 'Test AudioWorks.Commands on .NET 5.0'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'AudioWorks\tests\AudioWorks.Commands.Tests\AudioWorks.Commands.Tests.csproj'
+    publishTestResults: 'true'
+    testRunTitle: 'AudioWorks.Commands on .NET Core 3.1'
+    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)\netcoreapp3.1.runsettings"'
+  displayName: 'Test AudioWorks.Commands on .NET Core 3.1'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'AudioWorks\tests\AudioWorks.Commands.Tests\AudioWorks.Commands.Tests.csproj'
+    publishTestResults: 'true'
+    testRunTitle: 'AudioWorks.Commands on .NET Framework 4.8'
+    arguments: '--framework net462 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)\net462.runsettings"'
+  displayName: 'Test AudioWorks.Commands on .NET Framework 4.8'
+
 - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
   inputs:
     reports: '$(Agent.TempDirectory)\*\coverage.cobertura.xml'
