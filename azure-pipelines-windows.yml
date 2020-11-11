@@ -71,6 +71,9 @@ steps:
     (Get-Content -path netcoreapp2.1.runsettings -Raw) -replace "%LOCALAPPDATADIR%", $env:LOCALAPPDATADIR -replace "%BUILD_SOURCESDIRECTORY%", $env:BUILD_SOURCESDIRECTORY -replace "%BUILDCONFIGURATION%", $env:BUILDCONFIGURATION | Set-Content -Path netcoreapp2.1.runsettings
     Write-Host "netcoreapp2.1.runsettings:"
     Get-Content -path netcoreapp2.1.runsettings
+    (Get-Content -path net462.runsettings -Raw) -replace "%LOCALAPPDATADIR%", $env:LOCALAPPDATADIR -replace "%BUILD_SOURCESDIRECTORY%", $env:BUILD_SOURCESDIRECTORY -replace "%BUILDCONFIGURATION%", $env:BUILDCONFIGURATION | Set-Content -Path net462.runsettings
+    Write-Host "net462.runsettings:"
+    Get-Content -path net462.runsettings
   displayName: 'Pre-process runsettings for code coverage'
 
 - powershell: |
