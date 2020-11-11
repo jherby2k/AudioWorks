@@ -41,8 +41,10 @@ namespace AudioWorks.Extensibility
             var version = Version.Parse(RuntimeInformation.FrameworkDescription.Substring(RuntimeInformation.FrameworkDescription.LastIndexOf(' ')));
             return version.Major == 4 ? "netcoreapp2.1" : $"netcoreapp{version.ToString(2)}";
 #else
-            var version = Version.Parse(RuntimeInformation.FrameworkDescription.Substring(RuntimeInformation.FrameworkDescription.LastIndexOf(' ')));
-            return $"netcoreapp{version.ToString(2)}";
+            var version = Version.Parse(RuntimeInformation.FrameworkDescription
+                .Substring(RuntimeInformation.FrameworkDescription.LastIndexOf(' ')).Split('-')[0]);
+
+            return version.Major >= 5 ? $"net{version.ToString(2)}" : $"netcoreapp{version.ToString(2)}";
 #endif
         }
 #if NETSTANDARD2_0
