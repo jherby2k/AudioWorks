@@ -115,6 +115,15 @@ steps:
     command: 'test'
     projects: 'AudioWorks\tests\AudioWorks.Common.Tests\AudioWorks.Common.Tests.csproj'
     publishTestResults: 'true'
+    testRunTitle: 'AudioWorks.Common on .NET 5.0'
+    arguments: '--framework net5.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)\net5.0.runsettings"'
+  displayName: 'Test AudioWorks.Common on .NET 5.0'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'AudioWorks\tests\AudioWorks.Common.Tests\AudioWorks.Common.Tests.csproj'
+    publishTestResults: 'true'
     testRunTitle: 'AudioWorks.Common on .NET Core 3.1'
     arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)\netcoreapp3.1.runsettings"'
   displayName: 'Test AudioWorks.Common on .NET Core 3.1'
@@ -142,6 +151,15 @@ steps:
     command: 'test'
     projects: 'AudioWorks\tests\AudioWorks.Extensibility.Tests\AudioWorks.Extensibility.Tests.csproj'
     publishTestResults: 'true'
+    testRunTitle: 'AudioWorks.Extensibility on .NET 5.0'
+    arguments: '--framework net5.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)\net5.0.runsettings"'
+  displayName: 'Test AudioWorks.Extensibility on .NET 5.0'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'AudioWorks\tests\AudioWorks.Extensibility.Tests\AudioWorks.Extensibility.Tests.csproj'
+    publishTestResults: 'true'
     testRunTitle: 'AudioWorks.Extensibility on .NET Core 3.1'
     arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)\netcoreapp3.1.runsettings"'
   displayName: 'Test AudioWorks.Extensibility on .NET Core 3.1'
@@ -163,6 +181,15 @@ steps:
     testRunTitle: 'AudioWorks.Extensibility on .NET Framework 4.8'
     arguments: '--framework net462 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)\net462.runsettings"'
   displayName: 'Test AudioWorks.Extensibility on .NET Framework 4.8'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'AudioWorks\tests\AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj'
+    publishTestResults: 'true'
+    testRunTitle: 'AudioWorks.Api on .NET 5.0'
+    arguments: '--framework net5.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)\net5.0.runsettings"'
+  displayName: 'Test AudioWorks.Api on .NET 5.0'
 
 - task: DotNetCoreCLI@2
   inputs:
