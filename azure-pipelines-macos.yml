@@ -62,20 +62,6 @@ steps:
   displayName: Set local application data directory
 
 - powershell: |
-    function Replace-Variables {
-        param ($file)
-
-        (Get-Content -path $file -Raw) -replace "%LOCALAPPDATADIR%", $env:LOCALAPPDATADIR -replace "%BUILD_SOURCESDIRECTORY%", $env:BUILD_SOURCESDIRECTORY -replace "%BUILDCONFIGURATION%", $env:BUILDCONFIGURATION | Set-Content -Path $file
-        Write-Host ${file}:
-        Get-Content -path $file
-    }
-
-    Replace-Variables "net5.0.runsettings"
-    Replace-Variables "netcoreapp3.1.runsettings"
-    Replace-Variables "netcoreapp2.1.runsettings"
-  displayName: 'Pre-process runsettings for code coverage'
-
-- powershell: |
     $localFeedDir = "$env:LOCALAPPDATADIR/LocalFeed"
     $roamingAppDir = "$([System.Environment]::GetFolderPath(26))/AudioWorks"
     New-Item $roamingAppDir -ItemType Directory
@@ -113,7 +99,7 @@ steps:
     projects: 'AudioWorks/tests/AudioWorks.Common.Tests/AudioWorks.Common.Tests.csproj'
     publishTestResults: 'true'
     testRunTitle: 'AudioWorks.Common on .NET Core 5.0'
-    arguments: '--framework net5.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/net5.0.runsettings"'
+    arguments: '--framework net5.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(localAppDataDir)/Extensions/net5.0/*'
   displayName: 'Test AudioWorks.Common on .NET 5.0'
 
 - task: DotNetCoreCLI@2
@@ -122,7 +108,7 @@ steps:
     projects: 'AudioWorks/tests/AudioWorks.Common.Tests/AudioWorks.Common.Tests.csproj'
     publishTestResults: 'true'
     testRunTitle: 'AudioWorks.Common on .NET Core 3.1'
-    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp3.1.runsettings"'
+    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(localAppDataDir)/Extensions/netcoreapp3.1/*'
   displayName: 'Test AudioWorks.Common on .NET Core 3.1'
 
 - task: DotNetCoreCLI@2
@@ -131,7 +117,7 @@ steps:
     projects: 'AudioWorks/tests/AudioWorks.Common.Tests/AudioWorks.Common.Tests.csproj'
     publishTestResults: 'true'
     testRunTitle: 'AudioWorks.Common on .NET Core 2.1'
-    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp2.1.runsettings"'
+    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(localAppDataDir)/Extensions/netcoreapp2.1/*'
   displayName: 'Test AudioWorks.Common on .NET Core 2.1'
 
 - task: DotNetCoreCLI@2
@@ -140,7 +126,7 @@ steps:
     projects: 'AudioWorks/tests/AudioWorks.Extensibility.Tests/AudioWorks.Extensibility.Tests.csproj'
     publishTestResults: 'true'
     testRunTitle: 'AudioWorks.Extensibility on .NET 5.0'
-    arguments: '--framework net5.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/net5.0.runsettings"'
+    arguments: '--framework net5.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(localAppDataDir)/Extensions/net5.0/*'
   displayName: 'Test AudioWorks.Extensibility on .NET 5.0'
 
 - task: DotNetCoreCLI@2
@@ -149,7 +135,7 @@ steps:
     projects: 'AudioWorks/tests/AudioWorks.Extensibility.Tests/AudioWorks.Extensibility.Tests.csproj'
     publishTestResults: 'true'
     testRunTitle: 'AudioWorks.Extensibility on .NET Core 3.1'
-    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp3.1.runsettings"'
+    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(localAppDataDir)/Extensions/netcoreapp3.1/*'
   displayName: 'Test AudioWorks.Extensibility on .NET Core 3.1'
 
 - task: DotNetCoreCLI@2
@@ -158,7 +144,7 @@ steps:
     projects: 'AudioWorks/tests/AudioWorks.Extensibility.Tests/AudioWorks.Extensibility.Tests.csproj'
     publishTestResults: 'true'
     testRunTitle: 'AudioWorks.Extensibility on .NET Core 2.1'
-    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp2.1.runsettings"'
+    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(localAppDataDir)/Extensions/netcoreapp2.1/*'
   displayName: 'Test AudioWorks.Extensibility on .NET Core 2.1'
 
 - task: DotNetCoreCLI@2
@@ -167,7 +153,7 @@ steps:
     projects: 'AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj'
     publishTestResults: 'true'
     testRunTitle: 'AudioWorks.Api on .NET 5.0'
-    arguments: '--framework net5.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/net5.0.runsettings"'
+    arguments: '--framework net5.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(localAppDataDir)/Extensions/net5.0/*'
   displayName: 'Test AudioWorks.Api on .NET 5.0'
 
 - task: DotNetCoreCLI@2
@@ -176,7 +162,7 @@ steps:
     projects: 'AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj'
     publishTestResults: 'true'
     testRunTitle: 'AudioWorks.Api on .NET Core 3.1'
-    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp3.1.runsettings"'
+    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(localAppDataDir)/Extensions/netcoreapp3.1/*'
   displayName: 'Test AudioWorks.Api on .NET Core 3.1'
 
 - task: DotNetCoreCLI@2
@@ -185,7 +171,7 @@ steps:
     projects: 'AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj'
     publishTestResults: 'true'
     testRunTitle: 'AudioWorks.Api on .NET Core 2.1'
-    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp2.1.runsettings"'
+    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(localAppDataDir)/Extensions/netcoreapp2.1/*'
   displayName: 'Test AudioWorks.Api on .NET Core 2.1'
 
 - task: DotNetCoreCLI@2
@@ -194,7 +180,7 @@ steps:
     projects: 'AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj'
     publishTestResults: 'true'
     testRunTitle: 'AudioWorks.Commands on .NET 5.0'
-    arguments: '--framework net5.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/net5.0.runsettings"'
+    arguments: '--framework net5.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(Build.SourcesDirectory)/AudioWorks/tests/AudioWorks.Commands.Tests/bin/$(buildConfiguration)/net5.0/AudioWorks.Commands/netcoreapp3.1,$(localAppDataDir)/Extensions/net5.0/*'
   displayName: 'Test AudioWorks.Commands on .NET 5.0'
 
 - task: DotNetCoreCLI@2
@@ -203,7 +189,7 @@ steps:
     projects: 'AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj'
     publishTestResults: 'true'
     testRunTitle: 'AudioWorks.Commands on .NET Core 3.1'
-    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)/netcoreapp3.1.runsettings"'
+    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(Build.SourcesDirectory)/AudioWorks/tests/AudioWorks.Commands.Tests/bin/$(buildConfiguration)/netcoreapp3.1/AudioWorks.Commands/netcoreapp3.1,$(localAppDataDir)/Extensions/netcoreapp3.1/*'
   displayName: 'Test AudioWorks.Commands on .NET Core 3.1'
 
 - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
