@@ -22,6 +22,12 @@ variables:
   disable.coverage.autogenerate: 'true'
 
 steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: sdk
+    version: 5.0.*
+  displayName: 'Use .NET 5.0 SDK'
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
@@ -56,6 +62,9 @@ steps:
   displayName: Set local application data directory
 
 - powershell: |
+    (Get-Content -path net5.0.runsettings -Raw) -replace "%LOCALAPPDATADIR%", $env:LOCALAPPDATADIR -replace "%BUILD_SOURCESDIRECTORY%", $env:BUILD_SOURCESDIRECTORY -replace "%BUILDCONFIGURATION%", $env:BUILDCONFIGURATION | Set-Content -Path net5.0.runsettings
+    Write-Host "net5.0.runsettings:"
+    Get-Content -path net5.0.runsettings
     (Get-Content -path netcoreapp3.1.runsettings -Raw) -replace "%LOCALAPPDATADIR%", $env:LOCALAPPDATADIR -replace "%BUILD_SOURCESDIRECTORY%", $env:BUILD_SOURCESDIRECTORY -replace "%BUILDCONFIGURATION%", $env:BUILDCONFIGURATION | Set-Content -Path netcoreapp3.1.runsettings
     Write-Host "netcoreapp3.1.runsettings:"
     Get-Content -path netcoreapp3.1.runsettings
@@ -94,6 +103,7 @@ steps:
     Copy-Symbols "netstandard2.0" "net48"
     Copy-Symbols "netstandard2.0" "netcoreapp2.1"
     Copy-Symbols "netstandard2.1" "netcoreapp3.1"
+    Copy-Symbols "netstandard2.1" "net5.0"
   displayName: 'Copy symbols to extension directories'
 
 - task: DotNetCoreCLI@2
@@ -182,18 +192,18 @@ steps:
     command: 'test'
     projects: 'AudioWorks\tests\AudioWorks.Commands.Tests\AudioWorks.Commands.Tests.csproj'
     publishTestResults: 'true'
-    testRunTitle: 'AudioWorks.Commands on .NET Core 3.1'
-    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)\netcoreapp3.1.runsettings"'
-  displayName: 'Test AudioWorks.Commands on .NET Core 3.1'
+    testRunTitle: 'AudioWorks.Commands on .NET 5.0'
+    arguments: '--framework net5.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)\net5.0.runsettings"'
+  displayName: 'Test AudioWorks.Commands on .NET 5.0'
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
     projects: 'AudioWorks\tests\AudioWorks.Commands.Tests\AudioWorks.Commands.Tests.csproj'
     publishTestResults: 'true'
-    testRunTitle: 'AudioWorks.Commands on .NET Core 2.1'
-    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)\netcoreapp2.1.runsettings"'
-  displayName: 'Test AudioWorks.Commands on .NET Core 2.1'
+    testRunTitle: 'AudioWorks.Commands on .NET Core 3.1'
+    arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --settings "$(Build.SourcesDirectory)\netcoreapp3.1.runsettings"'
+  displayName: 'Test AudioWorks.Commands on .NET Core 3.1'
 
 - task: DotNetCoreCLI@2
   inputs:
