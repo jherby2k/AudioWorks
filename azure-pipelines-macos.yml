@@ -62,15 +62,17 @@ steps:
   displayName: Set local application data directory
 
 - powershell: |
-    (Get-Content -path net5.0.runsettings -Raw) -replace "%LOCALAPPDATADIR%", $env:LOCALAPPDATADIR -replace "%BUILD_SOURCESDIRECTORY%", $env:BUILD_SOURCESDIRECTORY -replace "%BUILDCONFIGURATION%", $env:BUILDCONFIGURATION | Set-Content -Path net5.0.runsettings
-    Write-Host "net5.0.runsettings:"
-    Get-Content -path net5.0.runsettings
-    (Get-Content -path netcoreapp3.1.runsettings -Raw) -replace "%LOCALAPPDATADIR%", $env:LOCALAPPDATADIR -replace "%BUILD_SOURCESDIRECTORY%", $env:BUILD_SOURCESDIRECTORY -replace "%BUILDCONFIGURATION%", $env:BUILDCONFIGURATION | Set-Content -Path netcoreapp3.1.runsettings
-    Write-Host "netcoreapp3.1.runsettings:"
-    Get-Content -path netcoreapp3.1.runsettings
-    (Get-Content -path netcoreapp2.1.runsettings -Raw) -replace "%LOCALAPPDATADIR%", $env:LOCALAPPDATADIR -replace "%BUILD_SOURCESDIRECTORY%", $env:BUILD_SOURCESDIRECTORY -replace "%BUILDCONFIGURATION%", $env:BUILDCONFIGURATION | Set-Content -Path netcoreapp2.1.runsettings
-    Write-Host "netcoreapp2.1.runsettings:"
-    Get-Content -path netcoreapp2.1.runsettings
+    function Replace-Variables {
+        param ($file)
+
+        (Get-Content -path $file -Raw) -replace "%LOCALAPPDATADIR%", $env:LOCALAPPDATADIR -replace "%BUILD_SOURCESDIRECTORY%", $env:BUILD_SOURCESDIRECTORY -replace "%BUILDCONFIGURATION%", $env:BUILDCONFIGURATION | Set-Content -Path $file
+        Write-Host "$file:"
+        Get-Content -path $file
+    }
+
+    Replace-Variables "net5.0.runsettings"
+    Replace-Variables "netcoreapp3.1.runsettings"
+    Replace-Variables "netcoreapp2.1.runsettings"
   displayName: 'Pre-process runsettings for code coverage'
 
 - powershell: |
