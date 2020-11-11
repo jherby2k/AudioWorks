@@ -67,7 +67,7 @@ steps:
         param ($file)
 
         (Get-Content -path $file -Raw) -replace "%LOCALAPPDATADIR%", $env:LOCALAPPDATADIR -replace "%BUILD_SOURCESDIRECTORY%", $env:BUILD_SOURCESDIRECTORY -replace "%BUILDCONFIGURATION%", $env:BUILDCONFIGURATION | Set-Content -Path $file
-        Write-Host "$file:"
+        Write-Host ${file}:
         Get-Content -path $file
     }
 
