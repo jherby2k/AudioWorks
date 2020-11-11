@@ -4,7 +4,7 @@ A cross-platform, multi-format audio conversion and tagging suite for .NET and P
 
 A full user interface (Windows only) is in development.
 
-This project supplants [PowerShell Audio](https://github.com/jherby2k/PowerShellAudio) by targetting both Windows PowerShell and PowerShell Core (Windows, Linux and MacOS).
+This project supplants [PowerShell Audio](https://github.com/jherby2k/PowerShellAudio) by targetting PowerShell cross-platform (Windows, Linux and MacOS).
 
 Platform | Build Status (master) | Build Status (dev) | Deployment Status
 -- | -- | -- | --
@@ -16,7 +16,7 @@ MacOS | [![Build Status](https://dev.azure.com/jherby2k/AudioWorks/_apis/build/s
 AudioWorks runs on Windows 8.1+, MacOS 10.13+, and Ubuntu 16.04+. Other 64-bit Linux distributions may work, but may require additional dependencies and are currently untested. Currently, most extensions only support the x86 architecture.
 
 #### On Windows:
-* [PowerShell Core 6.2+](https://aka.ms/powershell) (recommended) and/or Windows PowerShell 5.1
+* [PowerShell 7+](https://aka.ms/powershell) (recommended) and/or Windows PowerShell 5.1
 * [.NET Framework 4.6.2+](https://dotnet.microsoft.com/download/dotnet-framework/net462) (if using Windows PowerShell)
 * [iTunes](https://www.apple.com/itunes) (optional, for AAC and ALAC support. Requires the classic installer, not the Windows Store version. Technically only the Apple Application support packages are required)
 #### On Ubuntu 20.04 or 18.04:
@@ -40,7 +40,7 @@ The .NET API is available via [NuGet](https://www.nuget.org/packages/AudioWorks.
 ### Additional Requirements for Building / Testing
 * [.NET Core SDK 2.1](https://dotnet.microsoft.com/download/dotnet-core/2.1)
 * [.NET Core SDK 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
-* [PowerShell Core 6.2+](https://aka.ms/powershell) (recommended) and/or Windows PowerShell 5.1.
+* [PowerShell 7+](https://aka.ms/powershell) (recommended) and/or Windows PowerShell 5.1.
 * Windows 8.1+, MacOS 10.13+, Ubuntu 16.04, 18.04 or 20.04.
 * [NuGet client tools](https://docs.microsoft.com/en-us/nuget/install-nuget-client-tools#nugetexe-cli) (for building extensions on MacOS and Linux)
 * [Visual Studio 2019 16.4](https://visualstudio.microsoft.com/downloads) (optional - Windows only)
