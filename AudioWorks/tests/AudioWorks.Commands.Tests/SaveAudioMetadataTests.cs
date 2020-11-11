@@ -200,7 +200,7 @@ namespace AudioWorks.Commands.Tests
         {
             var sourceDirectory = Path.Combine(PathUtility.GetTestFileRoot(), "Valid");
             var path = Path.Combine("Output", "Save-AudioMetadata", "Valid", $"{index:000} - {fileName}");
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
             File.Copy(Path.Combine(sourceDirectory, fileName), path, true);
             var audioFile = new TaggedAudioFile(path);
             _mapper.Map(metadata, audioFile.Metadata);
@@ -231,7 +231,7 @@ namespace AudioWorks.Commands.Tests
         public void UnsupportedFileReturnsError(int index, string fileName)
         {
             var path = Path.Combine("Output", "Save-AudioMetadata", "Unsupported", $"{index:000} - {fileName}");
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
             File.Copy(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName), path, true);
             using (var ps = PowerShell.Create())
             {

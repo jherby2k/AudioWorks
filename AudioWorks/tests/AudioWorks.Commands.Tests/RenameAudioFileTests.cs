@@ -198,8 +198,7 @@ namespace AudioWorks.Commands.Tests
         public void PassThruSwitchReturnsAudioFile(string fileName)
         {
             var path = Path.Combine("Output", "Rename-AudioFile", fileName);
-            // ReSharper disable once AssignNullToNotNullAttribute
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
             File.Copy(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName), path, true);
             var audioFile = new TaggedAudioFile(path);
             using (var ps = PowerShell.Create())
@@ -220,7 +219,7 @@ namespace AudioWorks.Commands.Tests
         public void RenamesFile(string fileName, TestAudioMetadata metadata, string name, string expectedFileName)
         {
             var path = Path.Combine("Output", "Rename-AudioFile", fileName);
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
             File.Copy(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName), path, true);
             var audioFile = new TaggedAudioFile(path);
             _mapper.Map(metadata, audioFile.Metadata);
