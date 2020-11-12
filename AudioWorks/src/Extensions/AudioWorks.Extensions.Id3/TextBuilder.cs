@@ -83,7 +83,11 @@ namespace AudioWorks.Extensions.Id3
 #endif
         {
             var text = string.Empty;
+#if NETSTANDARD2_0
             var count = frame.Slice(index).IndexOf((byte) 0);
+#else
+            var count = frame[index..].IndexOf((byte) 0);
+#endif
             if (count == -1)
                 throw new AudioInvalidException("Invalid ASCII string size.");
 
@@ -132,11 +136,19 @@ namespace AudioWorks.Extensions.Id3
 
         static string ReadUtf16End(Span<byte> frame)
         {
-             if (frame[0] == 0xFE && frame[1] == 0xFF)
+            if (frame[0] == 0xFE && frame[1] == 0xFF)
+#if NETSTANDARD2_0
                 return ReadTextEndNoPreamble(frame.Slice(2), TextType.Utf16BigEndian);
+#else
+                return ReadTextEndNoPreamble(frame[2..], TextType.Utf16BigEndian);
+#endif
 
-             if (frame[0] == 0xFF && frame[1] == 0xFE)
+            if (frame[0] == 0xFF && frame[1] == 0xFE)
+#if NETSTANDARD2_0
                 return ReadTextEndNoPreamble(frame.Slice(2), TextType.Utf16);
+#else
+                return ReadTextEndNoPreamble(frame[2..], TextType.Utf16);
+#endif
 
              throw new AudioInvalidException("Invalid UTF16 string.");
         }

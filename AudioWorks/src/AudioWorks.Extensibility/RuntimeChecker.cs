@@ -41,8 +41,8 @@ namespace AudioWorks.Extensibility
             var version = Version.Parse(RuntimeInformation.FrameworkDescription.Substring(RuntimeInformation.FrameworkDescription.LastIndexOf(' ')));
             return version.Major == 4 ? "netcoreapp2.1" : $"netcoreapp{version.ToString(2)}";
 #else
-            var version = Version.Parse(RuntimeInformation.FrameworkDescription
-                .Substring(RuntimeInformation.FrameworkDescription.LastIndexOf(' ')).Split('-')[0]);
+            var version = Version.Parse(
+                RuntimeInformation.FrameworkDescription[RuntimeInformation.FrameworkDescription.LastIndexOf(' ')..].Split('-')[0]);
 
             return version.Major >= 5 ? $"net{version.ToString(2)}" : $"netcoreapp{version.ToString(2)}";
 #endif
@@ -51,11 +51,8 @@ namespace AudioWorks.Extensibility
 
         static string GetFrameworkVersion()
         {
-            // ReSharper disable once IdentifierTypo
-            const string subkey = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\";
-
-            using (var baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
-            using (var ndpKey = baseKey.OpenSubKey(subkey))
+            using var baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+            using (var ndpKey = baseKey.OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\"))
             {
                 var release = (int) ndpKey.GetValue("Release", 0);
 
@@ -65,9 +62,7 @@ namespace AudioWorks.Extensibility
                     return "472";
                 if (release >= 461308)
                     return "471";
-                if (release >= 460798)
-                    return "47";
-                return "462";
+                return release >= 460798 ? "47" : "462";
             }
         }
 #endif

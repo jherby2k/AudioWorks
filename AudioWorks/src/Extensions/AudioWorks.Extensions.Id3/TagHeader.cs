@@ -44,11 +44,10 @@ namespace AudioWorks.Extensions.Id3
         {
             using (var writer = new BinaryWriter(stream, Encoding.UTF8, true))
             {
-                //TODO: Validate version and revision we support
-                writer.Write(_id3); // ID3v2/file identifier
-                writer.Write(Version); // ID3v2 version, e.g. 3 or 4
-                writer.Write((byte) 0); // ID3v2 revision
-                writer.Write((byte) 0); // ID3v2 flags
+                writer.Write(_id3);
+                writer.Write(Version);
+                writer.Write((byte) 0);
+                writer.Write((byte) 0);
                 writer.Write(Swap.UInt32(Sync.Safe(TagSize + PaddingSize)));
             }
         }
@@ -77,7 +76,7 @@ namespace AudioWorks.Extensions.Id3
                     throw new AudioInvalidException("Corrupt header: invalid ID3v2 revision.");
 
                 // Parse the flag byte
-                var id3Flags = (byte) (0xf0 & reader.ReadByte());
+                var id3Flags = (byte) (0xF0 & reader.ReadByte());
                 Unsynchronisation = (id3Flags & 0x80) > 0;
                 HasExtendedHeader = (id3Flags & 0x40) > 0;
                 _hasFooter = (id3Flags & 0x10) > 0;
