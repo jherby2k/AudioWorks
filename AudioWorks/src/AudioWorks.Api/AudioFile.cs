@@ -61,7 +61,7 @@ namespace AudioWorks.Api
             if (name.Equals(IO.Path.GetFileNameWithoutExtension(Path), StringComparison.OrdinalIgnoreCase))
                 return;
 
-            var newPath = IO.Path.Combine(IO.Path.GetDirectoryName(Path), name + IO.Path.GetExtension(Path));
+            var newPath = IO.Path.Combine(IO.Path.GetDirectoryName(Path)!, name + IO.Path.GetExtension(Path));
 
             if (File.Exists(newPath) && replace)
                 File.Delete(newPath);

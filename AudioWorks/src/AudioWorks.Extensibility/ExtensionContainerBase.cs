@@ -51,7 +51,7 @@ namespace AudioWorks.Extensibility
                             validatorAssembly.FullName);
 
                         assemblies.RemoveAll(assembly =>
-                            assembly.CodeBase.Equals(validatorAssembly.CodeBase, StringComparison.OrdinalIgnoreCase));
+                            assembly.Location.Equals(validatorAssembly.Location, StringComparison.OrdinalIgnoreCase));
                     }
 
             CompositionHost = new ContainerConfiguration()

@@ -188,7 +188,7 @@ namespace AudioWorks.Api
                 message =>
                 {
                     var tempOutputPath = Path.Combine(
-                        Path.GetDirectoryName(message.outputPath),
+                        Path.GetDirectoryName(message.outputPath)!,
                         Path.GetRandomFileName());
 
                     try
@@ -264,7 +264,7 @@ namespace AudioWorks.Api
             {
                 var outputPath = GetUniquePath(Path.Combine(
                     Directory.CreateDirectory(_encodedDirectoryName?.ReplaceWith(audioFile.Metadata) ??
-                                              Path.GetDirectoryName(audioFile.Path)).FullName,
+                                              Path.GetDirectoryName(audioFile.Path)!).FullName,
                     (_encodedFileName?.ReplaceWith(audioFile.Metadata) ??
                      Path.GetFileNameWithoutExtension(audioFile.Path)) + outputExtension), uniqueOutputPaths);
 

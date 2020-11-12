@@ -43,7 +43,7 @@ namespace AudioWorks.Api
                     nameof(encoded));
 
             _encoded = encoded;
-        }
+        } 
 
         internal string ReplaceWith(AudioMetadata metadata)
         {
@@ -54,8 +54,7 @@ namespace AudioWorks.Api
 #else
                 var propertyName = match.Value[1..^1];
 #endif
-                // ReSharper disable once PossibleNullReferenceException
-                var propertyValue = (string) typeof(AudioMetadata).GetProperty(propertyName).GetValue(metadata);
+                var propertyValue = (string) typeof(AudioMetadata).GetProperty(propertyName)!.GetValue(metadata)!;
 
                 if (string.IsNullOrEmpty(propertyValue))
                     return $"Unknown {propertyName}";

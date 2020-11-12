@@ -46,11 +46,11 @@ namespace AudioWorks.Extensibility
             Assembly = LoadWithLoader(path);
 #endif
 
-            var extensionDir = Path.GetDirectoryName(path);
+            var extensionDir = Path.GetDirectoryName(path)!;
 
             // Resolve dependencies from both the main and extension directories
             var assemblyFiles = Directory.GetFiles(
-                    Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath), "*.dll")
+                    Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!, "*.dll")
                 .Concat(Directory.GetFiles(extensionDir, "*.dll"));
 
 #if NETSTANDARD2_0
@@ -84,12 +84,14 @@ namespace AudioWorks.Extensibility
         }
 #endif
 
-        static Assembly LoadWithLoader(string? path) =>
+        static Assembly LoadWithLoader(string path) =>
             new ExtensionLoadContext().LoadFromAssemblyPath(path);
 
         void ResolveWithLoader(IEnumerable<string> assemblyFiles) =>
             AssemblyLoadContext.Default.Resolving += (context, assemblyName) =>
             {
+                if (assemblyName.Name == null) return null;
+
                 _logger.LogTrace("Attempting to resolve a dependency on '{1}'.", assemblyName.Name);
 
                 var matchingAssemblyName = assemblyFiles

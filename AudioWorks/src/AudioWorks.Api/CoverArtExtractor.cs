@@ -63,7 +63,7 @@ namespace AudioWorks.Api
 
             // The output directory defaults to the AudioFile's current directory
             var outputDirectory = _encodedDirectoryName?.ReplaceWith(audioFile.Metadata) ??
-                                  Path.GetDirectoryName(audioFile.Path);
+                                  Path.GetDirectoryName(audioFile.Path)!;
 
             var outputDirectoryInfo = Directory.CreateDirectory(outputDirectory);
 

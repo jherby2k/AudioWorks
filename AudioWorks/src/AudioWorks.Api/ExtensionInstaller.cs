@@ -230,7 +230,10 @@ namespace AudioWorks.Api
                                 cancellationToken)
                             .ConfigureAwait(false);
 
-                        if (downloadResult.Status != DownloadResourceResultStatus.Available) continue;
+                        if (downloadResult.Status != DownloadResourceResultStatus.Available ||
+                            downloadResult.PackageReader == null ||
+                            !(downloadResult.PackageStream is FileStream packageStream))
+                            continue;
 
                         var libGroups = (await downloadResult.PackageReader.GetLibItemsAsync(cancellationToken)
                             .ConfigureAwait(false)).ToArray();
@@ -241,7 +244,7 @@ namespace AudioWorks.Api
                         foreach (var item in libGroups
                             .First(l => l.TargetFramework.Equals(nearestLibFramework)).Items)
                             CopyLibFiles(
-                                Path.Combine(Path.GetDirectoryName(((FileStream) downloadResult.PackageStream).Name),
+                                Path.Combine(Path.GetDirectoryName(packageStream.Name)!,
                                     item),
                                 Path.Combine(extensionDir.FullName, Path.GetFileName(item)),
                                 logger);
@@ -262,11 +265,11 @@ namespace AudioWorks.Api
                             .First(c => c.TargetFramework.Equals(nearestContentFramework)).Items)
                         {
                             var sourceFileName = Path.Combine(
-                                Path.GetDirectoryName(((FileStream) downloadResult.PackageStream).Name), item);
+                                Path.GetDirectoryName(packageStream.Name)!, item);
 
                             CopyContentFiles(
                                 sourceFileName,
-                                Path.Combine(extensionDir.FullName, new DirectoryInfo(sourceFileName).Parent?.Name,
+                                Path.Combine(extensionDir.FullName, new DirectoryInfo(sourceFileName)!.Parent!.Name,
                                     Path.GetFileName(item)),
                                 logger);
                         }
@@ -372,7 +375,7 @@ namespace AudioWorks.Api
 
             if (File.Exists(destination)) return;
             logger.LogDebug("Copying '{0}' to '{1}'.", source, destination);
-            Directory.CreateDirectory(Path.GetDirectoryName(destination));
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
             File.Copy(source, destination);
         }
 
@@ -385,19 +388,19 @@ namespace AudioWorks.Api
 
             if (File.Exists(destination)) return;
             logger.LogDebug("Copying '{0}' to '{1}'.", source, destination);
-            Directory.CreateDirectory(Path.GetDirectoryName(destination));
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
             File.Copy(source, destination);
         }
 
         static IEnumerable<string> GetRootAssemblyNames() =>
             new DirectoryInfo(
-                    Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath))
+                    Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!)
                 .EnumerateFiles("*.dll")
                 .Select(file =>
                 {
                     try
                     {
-                        return AssemblyName.GetAssemblyName(file.FullName).Name;
+                        return AssemblyName.GetAssemblyName(file.FullName).Name ?? string.Empty;
                     }
                     catch (BadImageFormatException)
                     {
