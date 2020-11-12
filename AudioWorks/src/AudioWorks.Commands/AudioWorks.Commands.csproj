@@ -2,8 +2,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;netcoreapp2.1;net462</TargetFrameworks>
-    <TargetFrameworks Condition="'$(OS)'!='Windows_NT'">netcoreapp3.1;netcoreapp2.1</TargetFrameworks>
+    <TargetFrameworks>net5.0;netcoreapp3.1;net462</TargetFrameworks>
+    <TargetFrameworks Condition="'$(OS)'!='Windows_NT'">net5.0;netcoreapp3.1</TargetFrameworks>
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <VersionPrefix>1.0.0</VersionPrefix>
@@ -42,7 +42,14 @@
   </ItemGroup>
 
   <!-- ReSharper disable once UnknownProperty -->
-  <ItemGroup Condition="'$(TargetFramework)'!='net462'">
+  <ItemGroup Condition="'$(TargetFramework)'=='net5.0'">
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
+    <PackageReference Include="Nuget.Resolver" Version="5.8.0" />
+  </ItemGroup>
+
+  <!-- ReSharper disable once UnknownProperty -->
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.9" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.9" />
     <PackageReference Include="Nuget.Resolver" Version="5.8.0" />
