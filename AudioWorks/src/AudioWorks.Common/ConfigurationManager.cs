@@ -63,7 +63,7 @@ namespace AudioWorks.Common
                 Directory.CreateDirectory(settingsPath);
                 File.Copy(
                     Path.Combine(
-                        Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
+                        Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
                         settingsFileName),
                     settingsFile);
             }

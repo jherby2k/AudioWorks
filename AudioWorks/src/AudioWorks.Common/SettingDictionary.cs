@@ -88,7 +88,7 @@ namespace AudioWorks.Common
         public bool Remove(string key) => _dictionary.Remove(key);
 
         /// <inheritdoc/>
-        public bool TryGetValue(string key, out object value) => _dictionary.TryGetValue(key, out value);
+        public bool TryGetValue(string key, out object value) => _dictionary.TryGetValue(key, out value!);
 
         /// <inheritdoc/>
         public virtual object this[string key]

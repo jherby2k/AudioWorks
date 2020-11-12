@@ -43,7 +43,7 @@ namespace AudioWorks.Api
                     nameof(encoded));
 
             _encoded = encoded;
-        } 
+        }
 
         internal string ReplaceWith(AudioMetadata metadata)
         {
