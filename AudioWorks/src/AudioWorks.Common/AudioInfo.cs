@@ -43,10 +43,8 @@ namespace AudioWorks.Common
             int sampleRate,
             long frameCount = 0)
         {
-            if (bitsPerSample < 1)
-                throw new AudioInvalidException($"{bitsPerSample} is not a valid # of bits per sample.");
-            if (bitsPerSample > 32)
-                throw new AudioUnsupportedException($"{bitsPerSample} is not a supported # of bits per sample.");
+            if (bitsPerSample == 0)
+                throw new AudioInvalidException($"{bitsPerSample} cannot be 0 for a lossless file.");
 
             return new AudioInfo(
                 format,
@@ -75,19 +73,14 @@ namespace AudioWorks.Common
             int channels,
             int sampleRate,
             long frameCount = 0,
-            int bitRate = 0)
-        {
-            if (bitRate < 0)
-                throw new AudioInvalidException($"{bitRate} is not a valid bitrate.");
-
-            return new AudioInfo(
+            int bitRate = 0) =>
+            new AudioInfo(
                 format,
                 channels,
                 0,
                 sampleRate,
                 bitRate,
                 frameCount);
-        }
 
         /// <summary>
         /// Gets the format.
@@ -134,7 +127,22 @@ namespace AudioWorks.Common
                 ? TimeSpan.Zero
                 : new TimeSpan(0, 0, (int) Math.Round(FrameCount / (double) SampleRate));
 
-        AudioInfo(
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AudioInfo"/> class. You should normally use the
+        /// <see cref="CreateForLossy"/> and <see cref="CreateForLossless"/> static helper methods for creating new
+        /// instances.
+        /// </summary>
+        /// <param name="format"></param>
+        /// <param name="channels"></param>
+        /// <param name="bitsPerSample"></param>
+        /// <param name="sampleRate"></param>
+        /// <param name="bitRate"></param>
+        /// <param name="frameCount"></param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="format"/> is null or empty.</exception>
+        /// <exception cref="AudioInvalidException">Thrown if one or more parameters is out of valid range.</exception>
+        /// <exception cref="AudioUnsupportedException">Thrown if one or more parameters is out of the range supported
+        /// by AudioWorks.</exception>
+        public AudioInfo(
             string format,
             int channels,
             int bitsPerSample,
@@ -148,8 +156,14 @@ namespace AudioWorks.Common
                 throw new AudioInvalidException($"{channels} is not a valid channel count.");
             if (channels > 2)
                 throw new AudioUnsupportedException($"{channels} is not a supported channel count.");
+            if (bitsPerSample < 0)
+                throw new AudioInvalidException($"{bitsPerSample} is not a valid # of bits per sample.");
+            if (bitsPerSample > 32)
+                throw new AudioUnsupportedException($"{bitsPerSample} is not a supported # of bits per sample.");
             if (sampleRate < 1)
                 throw new AudioInvalidException($"{sampleRate} is not a valid sample rate.");
+            if (bitRate < 0)
+                throw new AudioInvalidException($"{bitRate} is not a valid bitrate.");
             if (frameCount < 0)
                 throw new AudioInvalidException($"{frameCount} is not a valid frame count.");
 
