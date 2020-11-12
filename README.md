@@ -38,15 +38,15 @@ Keep the module up to date with `Update-Module -Name AudioWorks.Commands`.
 The .NET API is available via [NuGet](https://www.nuget.org/packages/AudioWorks.Api).
 
 ### Additional Requirements for Building / Testing
-* [.NET Core SDK 2.1](https://dotnet.microsoft.com/download/dotnet-core/2.1)
-* [.NET Core SDK 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
+* [.NET 5.0 SDK](https://dotnet.microsoft.com/download/dotnet/5.0)
+* [.NET Core 2.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/2.1)
 * [PowerShell 7+](https://aka.ms/powershell) (recommended) and/or Windows PowerShell 5.1.
 * Windows 8.1+, MacOS 10.13+, Ubuntu 16.04, 18.04 or 20.04.
 * [NuGet client tools](https://docs.microsoft.com/en-us/nuget/install-nuget-client-tools#nugetexe-cli) (for building extensions on MacOS and Linux)
-* [Visual Studio 2019 16.4](https://visualstudio.microsoft.com/downloads) (optional - Windows only)
-* [Visual Studio 2019 for Mac 8.4+](https://visualstudio.microsoft.com/downloads) (optional - Mac only)
+* [Visual Studio 2019 16.8+](https://visualstudio.microsoft.com/downloads) (optional - Windows only)
+* [Visual Studio 2019 for Mac 8.8+](https://visualstudio.microsoft.com/downloads) (optional - Mac only)
 * [Visual Studio Code](https://code.visualstudio.com/) (optional - all platforms)
-* [ReSharper 2019.3+](https://www.jetbrains.com/resharper) (optional - Windows only)
+* [ReSharper 2020.3+](https://www.jetbrains.com/resharper) (optional - Windows only)
 
 ### Special Thanks
 This project wouldn't be possible without the work of these other fine projects and organizations:
