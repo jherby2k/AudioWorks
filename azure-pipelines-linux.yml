@@ -92,8 +92,8 @@ steps:
     }
 
     Write-Host 'Copied symbols:'
-    Copy-Symbols netstandard2.1 net5.0
-    Copy-Symbols netstandard2.1 netcoreapp3.1
+    Copy-Symbols net5.0 net5.0
+    Copy-Symbols netstandard2.0 netcoreapp3.1
     Copy-Symbols netstandard2.0 netcoreapp2.1
   displayName: 'Copy symbols to extension directories'
 
