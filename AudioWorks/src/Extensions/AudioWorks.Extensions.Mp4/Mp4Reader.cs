@@ -30,7 +30,7 @@ namespace AudioWorks.Extensions.Mp4
 
 #endif
         internal Mp4Reader(Stream input)
-            : base(input, CodePagesEncodingProvider.Instance.GetEncoding(1252), true)
+            : base(input, CodePagesEncodingProvider.Instance.GetEncoding(1252) ?? Encoding.ASCII, true)
         {
         }
 

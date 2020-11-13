@@ -13,7 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System.Runtime.ConstrainedExecution;
 using Microsoft.Win32.SafeHandles;
 
 namespace AudioWorks.Extensions.Apple
@@ -26,7 +25,6 @@ namespace AudioWorks.Extensions.Apple
         {
         }
 
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         protected override bool ReleaseHandle()
         {
             SafeNativeMethods.AudioConverterDispose(handle);

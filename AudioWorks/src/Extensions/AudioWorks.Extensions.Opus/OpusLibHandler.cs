@@ -36,7 +36,7 @@ namespace AudioWorks.Extensions.Opus
 
 #if WINDOWS
             var libPath = Path.Combine(
-                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
+                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
                 Environment.Is64BitProcess ? "win-x64" : "win-x86");
 
 #if NETSTANDARD2_0
@@ -84,8 +84,7 @@ namespace AudioWorks.Extensions.Opus
             }
 
             logger.LogInformation("Using libopusenc version {0}.",
-                // ReSharper disable once PossibleNullReferenceException
-                Marshal.PtrToStringAnsi(SafeNativeMethods.OpusEncoderGetVersion())
+                (Marshal.PtrToStringAnsi(SafeNativeMethods.OpusEncoderGetVersion()) ?? "<unknown>")
 #if NETSTANDARD2_0
                     .Replace("libopusenc ", string.Empty));
 #else
@@ -93,8 +92,7 @@ namespace AudioWorks.Extensions.Opus
 #endif
 
             logger.LogInformation("Using libopus version {0}.",
-                // ReSharper disable once PossibleNullReferenceException
-                Marshal.PtrToStringAnsi(SafeNativeMethods.OpusGetVersion())
+                (Marshal.PtrToStringAnsi(SafeNativeMethods.OpusGetVersion()) ?? "<unknown>")
 #if NETSTANDARD2_0
                     .Replace("libopus ", string.Empty));
 #else
@@ -105,7 +103,7 @@ namespace AudioWorks.Extensions.Opus
         }
 
         static void AddUnmanagedLibraryPath(string libPath) =>
-            ((ExtensionLoadContext) AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()))
+            (AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()) as ExtensionLoadContext)?
             .AddUnmanagedLibraryPath(libPath);
 #if LINUX
 

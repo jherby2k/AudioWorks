@@ -40,7 +40,7 @@ namespace AudioWorks.Extensions.ReplayGain
 
 #if WINDOWS
             var libPath = Path.Combine(
-                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
+                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
                 Environment.Is64BitProcess ? "win-x64" : "win-x86");
 
 #if NETSTANDARD2_0
@@ -88,7 +88,7 @@ namespace AudioWorks.Extensions.ReplayGain
 
 #if !LINUX
         static void AddUnmanagedLibraryPath(string libPath) =>
-            ((ExtensionLoadContext) AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()))
+            (AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()) as ExtensionLoadContext)?
             .AddUnmanagedLibraryPath(libPath);
 #endif
 #if OSX

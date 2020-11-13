@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -75,7 +74,6 @@ namespace AudioWorks.Extensions.Apple
             ref uint packets,
             IntPtr data);
 
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern AudioFileStatus AudioFileClose(
             IntPtr handle);
@@ -107,7 +105,6 @@ namespace AudioWorks.Extensions.Apple
             uint frames,
             ref AudioBufferList data);
 
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ExtendedAudioFileStatus ExtAudioFileDispose(
             IntPtr handle);
@@ -141,7 +138,6 @@ namespace AudioWorks.Extensions.Apple
             uint size,
             IntPtr data);
 
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern AudioConverterStatus AudioConverterDispose(IntPtr handle);
     }

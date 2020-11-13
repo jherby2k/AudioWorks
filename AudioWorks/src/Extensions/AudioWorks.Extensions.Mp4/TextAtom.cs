@@ -33,7 +33,7 @@ namespace AudioWorks.Extensions.Mp4
             Value = new string(Encoding.UTF8.GetChars(data.Slice(24).ToArray()));
 #else
             Span<char> fourCcBuffer = stackalloc char[4];
-            CodePagesEncodingProvider.Instance.GetEncoding(1252)
+            (CodePagesEncodingProvider.Instance.GetEncoding(1252) ?? Encoding.ASCII)
                 .GetChars(data.Slice(0, 4), fourCcBuffer);
             _fourCc = new string(fourCcBuffer);
 
@@ -61,7 +61,7 @@ namespace AudioWorks.Extensions.Mp4
                 writer.Write(CodePagesEncodingProvider.Instance.GetEncoding(1252).GetBytes(_fourCc));
 #else
                 Span<byte> fourCcBuffer = stackalloc byte[4];
-                CodePagesEncodingProvider.Instance.GetEncoding(1252).GetBytes(_fourCc, fourCcBuffer);
+                (CodePagesEncodingProvider.Instance.GetEncoding(1252) ?? Encoding.ASCII).GetBytes(_fourCc, fourCcBuffer);
                 writer.Write(fourCcBuffer);
 #endif
 

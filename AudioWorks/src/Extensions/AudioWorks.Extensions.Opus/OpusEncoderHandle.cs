@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.ConstrainedExecution;
 using Microsoft.Win32.SafeHandles;
 
 namespace AudioWorks.Extensions.Opus
@@ -27,7 +26,6 @@ namespace AudioWorks.Extensions.Opus
         {
         }
 
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         protected override bool ReleaseHandle()
         {
             SafeNativeMethods.OpusEncoderDestroy(handle);

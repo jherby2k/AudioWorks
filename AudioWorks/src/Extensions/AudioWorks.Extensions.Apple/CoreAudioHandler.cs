@@ -38,7 +38,7 @@ namespace AudioWorks.Extensions.Apple
             var logger = LoggerManager.LoggerFactory.CreateLogger<CoreAudioHandler>();
 
             var libPath = Path.Combine(
-                Environment.GetEnvironmentVariable("CommonProgramFiles"),
+                Environment.GetEnvironmentVariable("CommonProgramFiles") ?? string.Empty,
                 "Apple",
                 "Apple Application Support");
 
@@ -84,7 +84,7 @@ namespace AudioWorks.Extensions.Apple
 #if WINDOWS
 
         static void AddUnmanagedLibraryPath(string libPath) =>
-            ((ExtensionLoadContext) AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()))
+            (AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()) as ExtensionLoadContext)?
             .AddUnmanagedLibraryPath(libPath);
 #endif
     }

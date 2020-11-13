@@ -34,12 +34,12 @@ namespace AudioWorks.Extensions.Id3
         internal static FrameBase Build(string frameId)
         {
             //Try to find the most specific frame first
-            if (_frameTypes.TryGetValue(frameId, out var type))
-                return (FrameBase) Activator.CreateInstance(type);
+            if (_frameTypes.TryGetValue(frameId, out var type) && Activator.CreateInstance(type) is FrameBase newFrame)
+                return newFrame;
 
             //Get the T*** frame
-            if (_frameTypes.TryGetValue(frameId.Substring(0, 1), out type))
-                return (FrameBase) Activator.CreateInstance(type, frameId);
+            if (_frameTypes.TryGetValue(frameId.Substring(0, 1), out type) && Activator.CreateInstance(type, frameId) is FrameBase txxxFrame)
+                return txxxFrame;
 
             throw new ArgumentException($"'{frameId}' is not a supported frame ID.", nameof(frameId));
         }

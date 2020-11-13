@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -79,7 +78,6 @@ namespace AudioWorks.Extensions.ReplayGain
             UIntPtr count,
             out double result);
 
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         [DllImport(_ebur128Library, EntryPoint = "ebur128_destroy",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void Destroy(ref IntPtr handle);

@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -158,7 +157,6 @@ namespace AudioWorks.Extensions.Opus
             int pictureType,
             IntPtr description);
 
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         [DllImport(_opusEncLibrary, EntryPoint = "ope_comments_destroy",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void OpusEncoderCommentsDestroy(
@@ -206,7 +204,6 @@ namespace AudioWorks.Extensions.Opus
             EncoderControlRequest request,
             int argument);
 
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_destroy",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void OpusEncoderDestroy(

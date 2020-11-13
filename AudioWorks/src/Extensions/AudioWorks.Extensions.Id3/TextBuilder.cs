@@ -29,7 +29,7 @@ namespace AudioWorks.Extensions.Id3
     {
         static readonly Dictionary<TextType, Encoding> _encodings = new Dictionary<TextType, Encoding>
         {
-            [TextType.Ascii] = CodePagesEncodingProvider.Instance.GetEncoding(1252),
+            [TextType.Ascii] = CodePagesEncodingProvider.Instance.GetEncoding(1252) ?? Encoding.ASCII,
             [TextType.Utf16] = Encoding.Unicode,
             [TextType.Utf16BigEndian] = Encoding.BigEndianUnicode,
             [TextType.Utf8] = new UTF8Encoding(false)

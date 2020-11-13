@@ -29,7 +29,7 @@ namespace AudioWorks.Extensions.Mp4
         readonly byte[] _data;
 
 #if NETSTANDARD2_0
-        internal string Name => new string(CodePagesEncodingProvider.Instance.GetEncoding(1252)
+        internal string Name => new string((CodePagesEncodingProvider.Instance.GetEncoding(1252) ?? Encoding.ASCII)
             .GetChars(_data.Skip(48).Take(8).ToArray()));
 #else
         internal string Name
@@ -37,7 +37,7 @@ namespace AudioWorks.Extensions.Mp4
             get
             {
                 Span<char> charBuffer = stackalloc char[8];
-                CodePagesEncodingProvider.Instance.GetEncoding(1252)
+                (CodePagesEncodingProvider.Instance.GetEncoding(1252) ?? Encoding.ASCII)
                     .GetChars(_data.AsSpan().Slice(48, 8), charBuffer);
                 return new string(charBuffer);
             }

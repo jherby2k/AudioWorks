@@ -65,7 +65,8 @@ namespace AudioWorks.Extensions.Id3
 
         internal void Deserialize(Stream stream)
         {
-            using (var reader = new BinaryReader(stream, CodePagesEncodingProvider.Instance.GetEncoding(1252), true))
+            using (var reader = new BinaryReader(stream,
+                CodePagesEncodingProvider.Instance.GetEncoding(1252) ?? Encoding.ASCII, true))
             {
                 reader.BaseStream.Seek(-128, SeekOrigin.End);
 

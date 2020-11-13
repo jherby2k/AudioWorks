@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -103,7 +102,6 @@ namespace AudioWorks.Extensions.Flac
         internal static extern bool StreamDecoderFinish(
             StreamDecoderHandle handle);
 
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_delete",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void StreamDecoderDelete(
@@ -208,7 +206,6 @@ namespace AudioWorks.Extensions.Flac
         internal static extern EncoderState StreamEncoderGetState(
             StreamEncoderHandle handle);
 
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_delete",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void StreamEncoderDelete(
@@ -259,7 +256,6 @@ namespace AudioWorks.Extensions.Flac
             uint length,
             [MarshalAs(UnmanagedType.Bool)] bool copy);
 
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_object_delete",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void MetadataObjectDelete(
@@ -303,7 +299,6 @@ namespace AudioWorks.Extensions.Flac
             IntPtr tempIoHandle,
             IoCallbacks tempCallbacks);
 
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_chain_delete",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void MetadataChainDelete(
@@ -344,7 +339,6 @@ namespace AudioWorks.Extensions.Flac
             MetadataIteratorHandle handle,
             [MarshalAs(UnmanagedType.Bool)] bool replaceWithPadding);
 
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_iterator_delete",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void MetadataIteratorDelete(
