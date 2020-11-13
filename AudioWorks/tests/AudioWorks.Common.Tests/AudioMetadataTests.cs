@@ -15,8 +15,7 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Text.Json;
 using AudioWorks.TestUtilities;
 using Xunit;
 using Xunit.Abstractions;
@@ -55,17 +54,9 @@ namespace AudioWorks.Common.Tests
             Assert.Equal(string.Empty, new AudioMetadata().Title);
 
         [Fact(DisplayName = "AudioMetadata's Title is properly serialized")]
-        public void TitleIsSerialized()
-        {
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, new AudioMetadata { Title = "Test Title" });
-                stream.Position = 0;
-
-                Assert.Equal("Test Title", ((AudioMetadata) formatter.Deserialize(stream)).Title);
-            }
-        }
+        public void TitleIsSerialized() =>
+            Assert.Equal("Test Title", JsonSerializer.Deserialize<AudioMetadata>(JsonSerializer.Serialize(
+                new AudioMetadata { Title = "Test Title" }))?.Title);
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Artist is null")]
         public void ArtistNullThrowsException() =>
@@ -94,17 +85,9 @@ namespace AudioWorks.Common.Tests
             Assert.Equal(string.Empty, new AudioMetadata().Artist);
 
         [Fact(DisplayName = "AudioMetadata's Artist is properly serialized")]
-        public void ArtistIsSerialized()
-        {
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, new AudioMetadata { Artist = "Test Artist" });
-                stream.Position = 0;
-
-                Assert.Equal("Test Artist", ((AudioMetadata) formatter.Deserialize(stream)).Artist);
-            }
-        }
+        public void ArtistIsSerialized() =>
+            Assert.Equal("Test Artist", JsonSerializer.Deserialize<AudioMetadata>(JsonSerializer.Serialize(
+                new AudioMetadata { Artist = "Test Artist" }))?.Artist);
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Album is null")]
         public void AlbumNullThrowsException() =>
@@ -133,17 +116,9 @@ namespace AudioWorks.Common.Tests
             Assert.Equal(string.Empty, new AudioMetadata().Album);
 
         [Fact(DisplayName = "AudioMetadata's Album is properly serialized")]
-        public void AlbumIsSerialized()
-        {
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, new AudioMetadata { Album = "Test Album" });
-                stream.Position = 0;
-
-                Assert.Equal("Test Album", ((AudioMetadata) formatter.Deserialize(stream)).Album);
-            }
-        }
+        public void AlbumIsSerialized() =>
+            Assert.Equal("Test Album", JsonSerializer.Deserialize<AudioMetadata>(JsonSerializer.Serialize(
+                new AudioMetadata { Album = "Test Album" }))?.Album);
 
         [Fact(DisplayName = "AudioMetadata throws an exception if AlbumArtist is null")]
         public void AlbumArtistNullThrowsException() =>
@@ -172,17 +147,9 @@ namespace AudioWorks.Common.Tests
             Assert.Equal(string.Empty, new AudioMetadata().AlbumArtist);
 
         [Fact(DisplayName = "AudioMetadata's AlbumArtist is properly serialized")]
-        public void AlbumArtistIsSerialized()
-        {
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, new AudioMetadata { AlbumArtist = "Test Album Artist" });
-                stream.Position = 0;
-
-                Assert.Equal("Test Album Artist", ((AudioMetadata)formatter.Deserialize(stream)).AlbumArtist);
-            }
-        }
+        public void AlbumArtistIsSerialized() =>
+            Assert.Equal("Test Album Artist", JsonSerializer.Deserialize<AudioMetadata>(JsonSerializer.Serialize(
+                new AudioMetadata { AlbumArtist = "Test Album Artist" }))?.AlbumArtist);
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Composer is null")]
         public void ComposerNullThrowsException() =>
@@ -211,17 +178,9 @@ namespace AudioWorks.Common.Tests
             Assert.Equal(string.Empty, new AudioMetadata().Composer);
 
         [Fact(DisplayName = "AudioMetadata's Composer is properly serialized")]
-        public void ComposerIsSerialized()
-        {
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, new AudioMetadata { Composer = "Test Composer" });
-                stream.Position = 0;
-
-                Assert.Equal("Test Composer", ((AudioMetadata)formatter.Deserialize(stream)).Composer);
-            }
-        }
+        public void ComposerIsSerialized() =>
+            Assert.Equal("Test Composer", JsonSerializer.Deserialize<AudioMetadata>(JsonSerializer.Serialize(
+                new AudioMetadata { Composer = "Test Composer" }))?.Composer);
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Genre is null")]
         public void GenreNullThrowsException() =>
@@ -250,17 +209,9 @@ namespace AudioWorks.Common.Tests
             Assert.Equal(string.Empty, new AudioMetadata().Genre);
 
         [Fact(DisplayName = "AudioMetadata's Genre is properly serialized")]
-        public void GenreIsSerialized()
-        {
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, new AudioMetadata { Genre = "Test Genre" });
-                stream.Position = 0;
-
-                Assert.Equal("Test Genre", ((AudioMetadata) formatter.Deserialize(stream)).Genre);
-            }
-        }
+        public void GenreIsSerialized() =>
+            Assert.Equal("Test Genre", JsonSerializer.Deserialize<AudioMetadata>(JsonSerializer.Serialize(
+                new AudioMetadata { Genre = "Test Genre" }))?.Genre);
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Comment is null")]
         public void CommentNullThrowsException() =>
@@ -289,17 +240,9 @@ namespace AudioWorks.Common.Tests
             Assert.Equal(string.Empty, new AudioMetadata().Comment);
 
         [Fact(DisplayName = "AudioMetadata's Comment is properly serialized")]
-        public void CommentIsSerialized()
-        {
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, new AudioMetadata { Comment = "Test Comment" });
-                stream.Position = 0;
-
-                Assert.Equal("Test Comment", ((AudioMetadata) formatter.Deserialize(stream)).Comment);
-            }
-        }
+        public void CommentIsSerialized() =>
+            Assert.Equal("Test Comment", JsonSerializer.Deserialize<AudioMetadata>(JsonSerializer.Serialize(
+                new AudioMetadata { Comment = "Test Comment" }))?.Comment);
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Day is null")]
         public void DayNullThrowsException() =>
@@ -344,17 +287,9 @@ namespace AudioWorks.Common.Tests
             Assert.Equal("01", new AudioMetadata { Day = "1" }.Day);
 
         [Fact(DisplayName = "AudioMetadata's Day is properly serialized")]
-        public void DayIsSerialized()
-        {
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, new AudioMetadata { Day = "31" });
-                stream.Position = 0;
-
-                Assert.Equal("31", ((AudioMetadata) formatter.Deserialize(stream)).Day);
-            }
-        }
+        public void DayIsSerialized() =>
+            Assert.Equal("31", JsonSerializer.Deserialize<AudioMetadata>(JsonSerializer.Serialize(
+                new AudioMetadata { Day = "31" }))?.Day);
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Month is null")]
         public void MonthNullThrowsException() =>
@@ -399,17 +334,9 @@ namespace AudioWorks.Common.Tests
             Assert.Equal("01", new AudioMetadata { Month = "1" }.Month);
 
         [Fact(DisplayName = "AudioMetadata's Month is properly serialized")]
-        public void MonthIsSerialized()
-        {
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, new AudioMetadata { Month = "01" });
-                stream.Position = 0;
-
-                Assert.Equal("01", ((AudioMetadata) formatter.Deserialize(stream)).Month);
-            }
-        }
+        public void MonthIsSerialized() =>
+            Assert.Equal("01", JsonSerializer.Deserialize<AudioMetadata>(JsonSerializer.Serialize(
+                new AudioMetadata { Month = "01" }))?.Month);
 
         [Fact(DisplayName = "AudioMetadata throws an exception if Year is null")]
         public void YearNullThrowsException() =>
@@ -454,17 +381,9 @@ namespace AudioWorks.Common.Tests
             Assert.Equal(string.Empty, new AudioMetadata().Year);
 
         [Fact(DisplayName = "AudioMetadata's Year is properly serialized")]
-        public void YearIsSerialized()
-        {
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, new AudioMetadata { Year = "2017" });
-                stream.Position = 0;
-
-                Assert.Equal("2017", ((AudioMetadata) formatter.Deserialize(stream)).Year);
-            }
-        }
+        public void YearIsSerialized() =>
+            Assert.Equal("2017", JsonSerializer.Deserialize<AudioMetadata>(JsonSerializer.Serialize(
+                new AudioMetadata { Year = "2017" }))?.Year);
 
         [Fact(DisplayName = "AudioMetadata throws an exception if TrackNumber is null")]
         public void TrackNumberNullThrowsException() =>
@@ -509,17 +428,9 @@ namespace AudioWorks.Common.Tests
             Assert.Equal(string.Empty, new AudioMetadata().TrackNumber);
 
         [Fact(DisplayName = "AudioMetadata's TrackNumber is properly serialized")]
-        public void TrackNumberIsSerialized()
-        {
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, new AudioMetadata { TrackNumber = "01" });
-                stream.Position = 0;
-
-                Assert.Equal("01", ((AudioMetadata)formatter.Deserialize(stream)).TrackNumber);
-            }
-        }
+        public void TrackNumberIsSerialized() =>
+            Assert.Equal("01", JsonSerializer.Deserialize<AudioMetadata>(JsonSerializer.Serialize(
+                new AudioMetadata { TrackNumber = "01" }))?.TrackNumber);
 
         [Fact(DisplayName = "AudioMetadata throws an exception if TrackCount is null")]
         public void TrackCountNullThrowsException() =>
@@ -564,17 +475,9 @@ namespace AudioWorks.Common.Tests
             Assert.Equal(string.Empty, new AudioMetadata().TrackCount);
 
         [Fact(DisplayName = "AudioMetadata's TrackCount is properly serialized")]
-        public void TrackCountIsSerialized()
-        {
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, new AudioMetadata { TrackCount = "12" });
-                stream.Position = 0;
-
-                Assert.Equal("12", ((AudioMetadata) formatter.Deserialize(stream)).TrackCount);
-            }
-        }
+        public void TrackCountIsSerialized() =>
+            Assert.Equal("12", JsonSerializer.Deserialize<AudioMetadata>(JsonSerializer.Serialize(
+                new AudioMetadata { TrackCount = "12" }))?.TrackCount);
 
         [Fact(DisplayName = "AudioMetadata throws an exception if TrackPeak is null")]
         public void TrackPeakNullThrowsException() =>
@@ -615,17 +518,9 @@ namespace AudioWorks.Common.Tests
             Assert.Equal(string.Empty, new AudioMetadata().TrackPeak);
 
         [Fact(DisplayName = "AudioMetadata's TrackPeak is properly serialized")]
-        public void TrackPeakIsSerialized()
-        {
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, new AudioMetadata { TrackPeak = "0.500000" });
-                stream.Position = 0;
-
-                Assert.Equal("0.500000", ((AudioMetadata)formatter.Deserialize(stream)).TrackPeak);
-            }
-        }
+        public void TrackPeakIsSerialized() =>
+            Assert.Equal("0.500000", JsonSerializer.Deserialize<AudioMetadata>(JsonSerializer.Serialize(
+                new AudioMetadata { TrackPeak = "0.500000" }))?.TrackPeak);
 
         [Fact(DisplayName = "AudioMetadata throws an exception if AlbumPeak is null")]
         public void AlbumPeakNullThrowsException() =>
@@ -666,17 +561,9 @@ namespace AudioWorks.Common.Tests
             Assert.Equal(string.Empty, new AudioMetadata().AlbumPeak);
 
         [Fact(DisplayName = "AudioMetadata's AlbumPeak is properly serialized")]
-        public void AlbumPeakIsSerialized()
-        {
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, new AudioMetadata { AlbumPeak = "0.600000" });
-                stream.Position = 0;
-
-                Assert.Equal("0.600000", ((AudioMetadata)formatter.Deserialize(stream)).AlbumPeak);
-            }
-        }
+        public void AlbumPeakIsSerialized() =>
+            Assert.Equal("0.600000", JsonSerializer.Deserialize<AudioMetadata>(JsonSerializer.Serialize(
+                new AudioMetadata { AlbumPeak = "0.600000" }))?.AlbumPeak);
 
         [Fact(DisplayName = "AudioMetadata throws an exception if TrackGain is null")]
         public void TrackGainNullThrowsException() =>
@@ -713,17 +600,9 @@ namespace AudioWorks.Common.Tests
             Assert.Equal(string.Empty, new AudioMetadata().TrackGain);
 
         [Fact(DisplayName = "AudioMetadata's TrackGain is properly serialized")]
-        public void TrackGainIsSerialized()
-        {
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, new AudioMetadata { TrackGain = "0.70" });
-                stream.Position = 0;
-
-                Assert.Equal("0.70", ((AudioMetadata)formatter.Deserialize(stream)).TrackGain);
-            }
-        }
+        public void TrackGainIsSerialized() =>
+            Assert.Equal("0.70", JsonSerializer.Deserialize<AudioMetadata>(JsonSerializer.Serialize(
+                new AudioMetadata { TrackGain = "0.70" }))?.TrackGain);
 
         [Fact(DisplayName = "AudioMetadata throws an exception if AlbumGain is null")]
         public void AlbumGainNullThrowsException() =>
@@ -760,16 +639,8 @@ namespace AudioWorks.Common.Tests
             Assert.Equal(string.Empty, new AudioMetadata().AlbumGain);
 
         [Fact(DisplayName = "AudioMetadata's AlbumGain is properly serialized")]
-        public void AlbumGainIsSerialized()
-        {
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, new AudioMetadata { AlbumGain = "0.80" });
-                stream.Position = 0;
-
-                Assert.Equal("0.80", ((AudioMetadata) formatter.Deserialize(stream)).AlbumGain);
-            }
-        }
+        public void AlbumGainIsSerialized() =>
+            Assert.Equal("0.80", JsonSerializer.Deserialize<AudioMetadata>(JsonSerializer.Serialize(
+                new AudioMetadata { AlbumGain = "0.80" }))?.AlbumGain);
     }
 }

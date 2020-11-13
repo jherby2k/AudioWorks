@@ -15,7 +15,7 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Text.Json;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
@@ -318,16 +318,10 @@ namespace AudioWorks.Api.Tests
         public void MetadataIsSerialized(string fileName)
         {
             var audioFile = new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, audioFile);
-                stream.Position = 0;
 
-                Assert.True(new MetadataComparer().Equals(
-                    audioFile.Metadata,
-                    ((TaggedAudioFile) formatter.Deserialize(stream)).Metadata));
-            }
+            Assert.True(new MetadataComparer().Equals(
+                audioFile.Metadata,
+                JsonSerializer.Deserialize<TaggedAudioFile>(JsonSerializer.Serialize(audioFile))?.Metadata));
         }
     }
 }

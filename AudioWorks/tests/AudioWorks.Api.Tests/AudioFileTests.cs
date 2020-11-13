@@ -15,7 +15,7 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Text.Json;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
@@ -69,14 +69,9 @@ namespace AudioWorks.Api.Tests
         public void PathIsSerialized(string fileName)
         {
             var audioFile = new AudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, audioFile);
-                stream.Position = 0;
 
-                Assert.Equal(audioFile.Path, ((AudioFile) formatter.Deserialize(stream)).Path);
-            }
+            Assert.Equal(audioFile.Path,
+                JsonSerializer.Deserialize<AudioFile>(JsonSerializer.Serialize(audioFile))?.Path);
         }
 
         [Theory(DisplayName = "AudioFile's Info property is properly serialized")]
@@ -84,16 +79,10 @@ namespace AudioWorks.Api.Tests
         public void InfoIsSerialized(string fileName)
         {
             var audioFile = new AudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, audioFile);
-                stream.Position = 0;
 
-                Assert.True(new AudioInfoComparer().Equals(
-                    audioFile.Info,
-                    ((AudioFile) formatter.Deserialize(stream)).Info));
-            }
+            Assert.True(new AudioInfoComparer().Equals(
+                audioFile.Info,
+                JsonSerializer.Deserialize<AudioFile>(JsonSerializer.Serialize(audioFile))?.Info));
         }
 
         [Theory(DisplayName = "AudioFile's Info property has the expected Format")]
