@@ -4,7 +4,7 @@
   <PropertyGroup>
     <TargetFrameworks>net5.0;netcoreapp3.1;net462</TargetFrameworks>
     <TargetFrameworks Condition="'$(OS)'!='Windows_NT'">net5.0;netcoreapp3.1</TargetFrameworks>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <VersionPrefix>1.1.0</VersionPrefix>
     <Revision>$(BUILD_BUILDID)</Revision>
