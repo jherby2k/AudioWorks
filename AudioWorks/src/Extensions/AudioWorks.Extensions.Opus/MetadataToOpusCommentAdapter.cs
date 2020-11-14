@@ -101,7 +101,7 @@ namespace AudioWorks.Extensions.Opus
                     keyAddress, key.Length,
                     (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)), keyBytes.Length);
 #else
-            Encoding.ASCII.GetBytes(key, keyBytes);
+            var keyLength = Encoding.ASCII.GetBytes(key, keyBytes);
 #endif
 
             // Use heap allocations for comments > 256kB (usually pictures)
@@ -114,7 +114,11 @@ namespace AudioWorks.Extensions.Opus
             fixed (byte* valueBytesAddress = valueBytes)
                 Encoding.UTF8.GetBytes(valueAddress, value.Length, valueBytesAddress, valueMaxByteCount);
 #else
-            Encoding.ASCII.GetBytes(value, valueBytes);
+            var valueLength = Encoding.ASCII.GetBytes(value, valueBytes);
+
+            // Since SkipLocalsInit is set, make sure the strings are null-terminated
+            keyBytes[keyLength] = 0;
+            valueBytes[valueLength] = 0;
 #endif
 
             fixed (byte* valueBytesAddress = valueBytes)

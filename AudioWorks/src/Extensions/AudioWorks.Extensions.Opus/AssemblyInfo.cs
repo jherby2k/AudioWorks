@@ -14,5 +14,12 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+#if !NETSTANDARD2_0
+using System.Runtime.CompilerServices;
+#endif
 
 [assembly: CLSCompliant(true)]
+#if !NETSTANDARD2_0
+
+[module: SkipLocalsInit]
+#endif

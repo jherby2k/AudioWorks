@@ -33,26 +33,30 @@ namespace AudioWorks.Extensions.Flac
             Span<byte> valueBytes = stackalloc byte[Encoding.UTF8.GetMaxByteCount(value.Length) + 1];
 
 #if NETSTANDARD2_0
-            var keyByteCount = 1;
+            int keyLength;
             fixed (char* keyAddress = key)
-                keyByteCount += Encoding.ASCII.GetBytes(
+                keyLength = Encoding.ASCII.GetBytes(
                     keyAddress, key.Length,
                     (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)), keyBytes.Length);
 
-            var valueByteCount = 1;
+            int valueLength;
             fixed (char* valueAddress = value)
-                valueByteCount += Encoding.UTF8.GetBytes(
+                valueLength = Encoding.UTF8.GetBytes(
                     valueAddress, value.Length,
                     (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes)), valueBytes.Length);
 #else
-            var keyByteCount = Encoding.ASCII.GetBytes(key, keyBytes) + 1;
-            var valueByteCount = Encoding.UTF8.GetBytes(value, valueBytes) + 1;
+            var keyLength = Encoding.ASCII.GetBytes(key, keyBytes);
+            var valueLength = Encoding.UTF8.GetBytes(value, valueBytes);
+
+            // Since SkipLocalsInit is set, make sure the strings are null-terminated
+            keyBytes[keyLength] = 0;
+            valueBytes[valueLength] = 0;
 #endif
 
             SafeNativeMethods.MetadataObjectVorbisCommentEntryFromNameValuePair(
                 out var entry,
-                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes.Slice(0, keyByteCount)))),
-                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes.Slice(0, valueByteCount)))));
+                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes.Slice(0, keyLength + 1)))),
+                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes.Slice(0, valueLength + 1)))));
 
             // The comment takes ownership of the new entry if 'copy' is false
             SafeNativeMethods.MetadataObjectVorbisCommentAppendComment(Handle, entry, false);
