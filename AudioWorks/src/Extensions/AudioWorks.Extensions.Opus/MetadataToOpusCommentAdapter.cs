@@ -114,7 +114,7 @@ namespace AudioWorks.Extensions.Opus
             fixed (byte* valueBytesAddress = valueBytes)
                 Encoding.UTF8.GetBytes(valueAddress, value.Length, valueBytesAddress, valueMaxByteCount);
 #else
-            var valueLength = Encoding.ASCII.GetBytes(value, valueBytes);
+            var valueLength = Encoding.UTF8.GetBytes(value, valueBytes);
 
             // Since SkipLocalsInit is set, make sure the strings are null-terminated
             keyBytes[keyLength] = 0;
