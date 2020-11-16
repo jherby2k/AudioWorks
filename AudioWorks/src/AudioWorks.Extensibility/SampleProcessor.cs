@@ -33,26 +33,26 @@ namespace AudioWorks.Extensibility
             // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
             if (Vector.IsHardwareAccelerated)
             {
-                var adjustmentVector = new Vector<int>(adjustment);
+                var adjVector = new Vector<int>(adjustment);
                 var maxVector = new Vector<int>(max);
-                var sourceVectors = MemoryMarshal.Cast<float, Vector<float>>(source);
-                sourceVectors = sourceVectors.Slice(0, sourceVectors.Length - sourceVectors.Length % 4);
-                var destinationVectors = MemoryMarshal.Cast<byte, Vector<byte>>(destination);
+                var srcVectors = MemoryMarshal.Cast<float, Vector<float>>(source);
+                srcVectors = srcVectors.Slice(0, srcVectors.Length - srcVectors.Length % 4);
+                var destVectors = MemoryMarshal.Cast<byte, Vector<byte>>(destination);
 
-                for (int sourceIndex = 0, destinationIndex = 0; sourceIndex < sourceVectors.Length; destinationIndex++)
-                    destinationVectors[destinationIndex] = Vector.Narrow(
+                for (int srcIndex = 0, destIndex = 0; srcIndex < srcVectors.Length; destIndex++)
+                    destVectors[destIndex] = Vector.Narrow(
                         Vector.Narrow(
-                            (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * adjustment),
-                                                maxVector) - adjustmentVector),
-                            (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * adjustment),
-                                                maxVector) - adjustmentVector)),
+                            (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(srcVectors[srcIndex++] * adjustment),
+                                                maxVector) - adjVector),
+                            (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(srcVectors[srcIndex++] * adjustment),
+                                                maxVector) - adjVector)),
                         Vector.Narrow(
-                            (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * adjustment),
-                                                maxVector) - adjustmentVector),
-                            (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * adjustment),
-                                                maxVector) - adjustmentVector)));
+                            (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(srcVectors[srcIndex++] * adjustment),
+                                                maxVector) - adjVector),
+                            (Vector<uint>) (Vector.Min(Vector.ConvertToInt32(srcVectors[srcIndex++] * adjustment),
+                                                maxVector) - adjVector)));
 
-                for (var sampleIndex = sourceVectors.Length * Vector<float>.Count;
+                for (var sampleIndex = srcVectors.Length * Vector<float>.Count;
                     sampleIndex < source.Length;
                     sampleIndex++)
                     destination[sampleIndex] = (byte) Math.Min(source[sampleIndex] * adjustment - adjustment, max);
@@ -73,19 +73,16 @@ namespace AudioWorks.Extensibility
             if (Vector.IsHardwareAccelerated)
             {
                 var maxVector = new Vector<int>(max);
-                var sourceVectors = MemoryMarshal.Cast<float, Vector<float>>(source);
-                sourceVectors = sourceVectors.Slice(0, sourceVectors.Length - sourceVectors.Length % 2);
-                var destinationVectors = MemoryMarshal.Cast<short, Vector<short>>(destination);
+                var srcVectors = MemoryMarshal.Cast<float, Vector<float>>(source);
+                srcVectors = srcVectors.Slice(0, srcVectors.Length - srcVectors.Length % 2);
+                var destVectors = MemoryMarshal.Cast<short, Vector<short>>(destination);
 
-                for (int sourceIndex = 0, destinationIndex = 0; sourceIndex < sourceVectors.Length; destinationIndex++)
-                    destinationVectors[destinationIndex] = Vector.Narrow(
-                        Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier),
-                            maxVector),
-                        Vector.Min(Vector.ConvertToInt32(sourceVectors[sourceIndex++] * multiplier),
-                            maxVector));
+                for (int srcIndex = 0, destIndex = 0; srcIndex < srcVectors.Length; destIndex++)
+                    destVectors[destIndex] = Vector.Narrow(
+                        Vector.Min(Vector.ConvertToInt32(srcVectors[srcIndex++] * multiplier), maxVector),
+                        Vector.Min(Vector.ConvertToInt32(srcVectors[srcIndex++] * multiplier), maxVector));
 
-                for (var sampleIndex = sourceVectors.Length * Vector<float>.Count;
-                    sampleIndex < source.Length;
+                for (var sampleIndex = srcVectors.Length * Vector<float>.Count; sampleIndex < source.Length;
                     sampleIndex++)
                     destination[sampleIndex] = (short) Math.Min(source[sampleIndex] * multiplier, max);
             }
@@ -111,15 +108,14 @@ namespace AudioWorks.Extensibility
                 var multiplier = (int) GetAbsoluteQuantizationLevels(bitsPerSample);
                 var max = multiplier - 1;
                 var maxVector = new Vector<int>(max);
-                var sourceVectors = MemoryMarshal.Cast<float, Vector<float>>(source);
-                var destinationVectors = MemoryMarshal.Cast<int, Vector<int>>(destination);
+                var srcVectors = MemoryMarshal.Cast<float, Vector<float>>(source);
+                var destVectors = MemoryMarshal.Cast<int, Vector<int>>(destination);
 
-                for (var vectorIndex = 0; vectorIndex < sourceVectors.Length; vectorIndex++)
-                    destinationVectors[vectorIndex] =
-                        Vector.Min(Vector.ConvertToInt32(sourceVectors[vectorIndex] * multiplier), maxVector);
+                for (var vectorIndex = 0; vectorIndex < srcVectors.Length; vectorIndex++)
+                    destVectors[vectorIndex] =
+                        Vector.Min(Vector.ConvertToInt32(srcVectors[vectorIndex] * multiplier), maxVector);
 
-                for (var sampleIndex = sourceVectors.Length * Vector<float>.Count;
-                    sampleIndex < source.Length;
+                for (var sampleIndex = srcVectors.Length * Vector<float>.Count; sampleIndex < source.Length;
                     sampleIndex++)
                     destination[sampleIndex] = (int) Math.Min(source[sampleIndex] * multiplier, max);
             }
@@ -150,26 +146,22 @@ namespace AudioWorks.Extensibility
             if (Vector.IsHardwareAccelerated)
             {
                 var adjustmentVector = new Vector<float>(adjustment);
-                var sourceVectors = MemoryMarshal.Cast<byte, Vector<byte>>(source);
-                var destinationVectors = MemoryMarshal.Cast<float, Vector<float>>(destination);
+                var srcVectors = MemoryMarshal.Cast<byte, Vector<byte>>(source);
+                var destVectors = MemoryMarshal.Cast<float, Vector<float>>(destination);
 
-                for (int sourceIndex = 0, destinationIndex = 0; sourceIndex < sourceVectors.Length; sourceIndex++)
+                for (int srcIndex = 0, destIndex = 0; srcIndex < srcVectors.Length; srcIndex++)
                 {
-                    Vector.Widen(sourceVectors[sourceIndex], out var shortVector1, out var shortVector2);
+                    Vector.Widen(srcVectors[srcIndex], out var shortVector1, out var shortVector2);
                     Vector.Widen(shortVector1, out var intVector1, out var intVector2);
                     Vector.Widen(shortVector2, out var intVector3, out var intVector4);
 
-                    destinationVectors[destinationIndex++] =
-                        (Vector.ConvertToSingle(intVector1) - adjustmentVector) * multiplier;
-                    destinationVectors[destinationIndex++] =
-                        (Vector.ConvertToSingle(intVector2) - adjustmentVector) * multiplier;
-                    destinationVectors[destinationIndex++] =
-                        (Vector.ConvertToSingle(intVector3) - adjustmentVector) * multiplier;
-                    destinationVectors[destinationIndex++] =
-                        (Vector.ConvertToSingle(intVector4) - adjustmentVector) * multiplier;
+                    destVectors[destIndex++] = (Vector.ConvertToSingle(intVector1) - adjustmentVector) * multiplier;
+                    destVectors[destIndex++] = (Vector.ConvertToSingle(intVector2) - adjustmentVector) * multiplier;
+                    destVectors[destIndex++] = (Vector.ConvertToSingle(intVector3) - adjustmentVector) * multiplier;
+                    destVectors[destIndex++] = (Vector.ConvertToSingle(intVector4) - adjustmentVector) * multiplier;
                 }
 
-                for (var sampleIndex = sourceVectors.Length * Vector<byte>.Count;
+                for (var sampleIndex = srcVectors.Length * Vector<byte>.Count;
                     sampleIndex < source.Length;
                     sampleIndex++)
                     destination[sampleIndex] = (source[sampleIndex] - adjustment) * multiplier;
@@ -186,18 +178,18 @@ namespace AudioWorks.Extensibility
             // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
             if (Vector.IsHardwareAccelerated)
             {
-                var sourceVectors = MemoryMarshal.Cast<short, Vector<short>>(source);
-                var destinationVectors = MemoryMarshal.Cast<float, Vector<float>>(destination);
+                var srcVectors = MemoryMarshal.Cast<short, Vector<short>>(source);
+                var destVectors = MemoryMarshal.Cast<float, Vector<float>>(destination);
 
-                for (int sourceIndex = 0, destinationIndex = 0; sourceIndex < sourceVectors.Length; sourceIndex++)
+                for (int srcIndex = 0, destIndex = 0; srcIndex < srcVectors.Length; srcIndex++)
                 {
-                    Vector.Widen(sourceVectors[sourceIndex], out var destinationVector1, out var destinationVector2);
+                    Vector.Widen(srcVectors[srcIndex], out var destVector1, out var destVector2);
 
-                    destinationVectors[destinationIndex++] = Vector.ConvertToSingle(destinationVector1) * multiplier;
-                    destinationVectors[destinationIndex++] = Vector.ConvertToSingle(destinationVector2) * multiplier;
+                    destVectors[destIndex++] = Vector.ConvertToSingle(destVector1) * multiplier;
+                    destVectors[destIndex++] = Vector.ConvertToSingle(destVector2) * multiplier;
                 }
 
-                for (var sampleIndex = sourceVectors.Length * Vector<short>.Count;
+                for (var sampleIndex = srcVectors.Length * Vector<short>.Count;
                     sampleIndex < source.Length;
                     sampleIndex++)
                     destination[sampleIndex] = source[sampleIndex] * multiplier;
@@ -222,14 +214,13 @@ namespace AudioWorks.Extensibility
             // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
             if (Vector.IsHardwareAccelerated)
             {
-                var sourceVectors = MemoryMarshal.Cast<int, Vector<int>>(source);
-                var destinationVectors = MemoryMarshal.Cast<float, Vector<float>>(destination);
+                var srcVectors = MemoryMarshal.Cast<int, Vector<int>>(source);
+                var destVectors = MemoryMarshal.Cast<float, Vector<float>>(destination);
 
-                for (var vectorIndex = 0; vectorIndex < sourceVectors.Length; vectorIndex++)
-                    destinationVectors[vectorIndex] = Vector.ConvertToSingle(sourceVectors[vectorIndex]) * multiplier;
+                for (var vectorIndex = 0; vectorIndex < srcVectors.Length; vectorIndex++)
+                    destVectors[vectorIndex] = Vector.ConvertToSingle(srcVectors[vectorIndex]) * multiplier;
 
-                for (var sampleIndex = sourceVectors.Length * Vector<int>.Count;
-                    sampleIndex < source.Length;
+                for (var sampleIndex = srcVectors.Length * Vector<int>.Count; sampleIndex < source.Length;
                     sampleIndex++)
                     destination[sampleIndex] = source[sampleIndex] * multiplier;
             }
@@ -244,53 +235,49 @@ namespace AudioWorks.Extensibility
             Span<float> destination)
         {
 #if NETSTANDARD2_0
-            for (int frameIndex = 0, destinationIndex = 0; frameIndex < leftSource.Length; frameIndex++)
+            for (int frameIndex = 0, destIndex = 0; frameIndex < leftSource.Length; frameIndex++)
             {
-                destination[destinationIndex++] = leftSource[frameIndex];
-                destination[destinationIndex++] = rightSource[frameIndex];
+                destination[destIndex++] = leftSource[frameIndex];
+                destination[destIndex++] = rightSource[frameIndex];
             }
 #else
+            // Optimization - Vectorized implementation is about 3x faster with AVX2
             if (Avx2.IsSupported)
             {
-                var leftSourceVectors = MemoryMarshal.Cast<float, Vector256<float>>(leftSource);
-                var rightSourceVectors = MemoryMarshal.Cast<float, Vector256<float>>(rightSource);
-                var destinationVectors = MemoryMarshal.Cast<float, Vector256<float>>(destination);
+                var controlVector = Vector256.Create(0, 2, 1, 3, 4, 6, 5, 7);
+                var leftSrcVectors = MemoryMarshal.Cast<float, Vector256<float>>(leftSource);
+                var rightSrcVectors = MemoryMarshal.Cast<float, Vector256<float>>(rightSource);
+                var destVectors = MemoryMarshal.Cast<float, Vector256<float>>(destination);
 
-                var destinationVectorIndex = 0;
-                for (var sourceVectorIndex = 0; sourceVectorIndex < leftSourceVectors.Length; sourceVectorIndex++)
+                var destVectorIndex = 0;
+                for (var srcVectorIndex = 0; srcVectorIndex < leftSrcVectors.Length; srcVectorIndex++)
                 {
                     // This is more complicated than it should be because AVX uses 128-bit lanes for shuffles
-                    var shuffled1 = Avx.Shuffle(
-                        leftSourceVectors[sourceVectorIndex],
-                        rightSourceVectors[sourceVectorIndex],
+                    var shuffled1 = Avx.Shuffle(leftSrcVectors[srcVectorIndex], rightSrcVectors[srcVectorIndex],
                         0b01000100);
-                    var shuffled2 = Avx.Shuffle(
-                        leftSourceVectors[sourceVectorIndex],
-                        rightSourceVectors[sourceVectorIndex],
+                    var shuffled2 = Avx.Shuffle(leftSrcVectors[srcVectorIndex], rightSrcVectors[srcVectorIndex],
                         0b11101110);
-                    var aligned1 = Vector256.Create(shuffled1.GetLower(), shuffled2.GetLower());
-                    var aligned2 = Vector256.Create(shuffled1.GetUpper(), shuffled2.GetUpper());
-                    destinationVectors[destinationVectorIndex++] =
-                        Avx2.PermuteVar8x32(aligned1, Vector256.Create(0, 2, 1, 3, 4, 6, 5, 7));
-                    destinationVectors[destinationVectorIndex++] =
-                        Avx2.PermuteVar8x32(aligned2, Vector256.Create(0, 2, 1, 3, 4, 6, 5, 7));
+                    destVectors[destVectorIndex++] = Avx2.PermuteVar8x32(
+                        Vector256.Create(shuffled1.GetLower(), shuffled2.GetLower()), controlVector);
+                    destVectors[destVectorIndex++] = Avx2.PermuteVar8x32(
+                        Vector256.Create(shuffled1.GetUpper(), shuffled2.GetUpper()), controlVector);
                 }
 
-                for (int frameIndex = leftSourceVectors.Length * Vector256<float>.Count,
-                    destinationIndex = destinationVectorIndex * Vector256<float>.Count;
+                for (int frameIndex = leftSrcVectors.Length * Vector256<float>.Count,
+                    destIndex = destVectorIndex * Vector256<float>.Count;
                     frameIndex < leftSource.Length;
                     frameIndex++)
                 {
-                    destination[destinationIndex++] = leftSource[frameIndex];
-                    destination[destinationIndex++] = rightSource[frameIndex];
+                    destination[destIndex++] = leftSource[frameIndex];
+                    destination[destIndex++] = rightSource[frameIndex];
                 }
             }
             else
             {
-                for (int frameIndex = 0, destinationIndex = 0; frameIndex < leftSource.Length; frameIndex++)
+                for (int frameIndex = 0, destIndex = 0; frameIndex < leftSource.Length; frameIndex++)
                 {
-                    destination[destinationIndex++] = leftSource[frameIndex];
-                    destination[destinationIndex++] = rightSource[frameIndex];
+                    destination[destIndex++] = leftSource[frameIndex];
+                    destination[destIndex++] = rightSource[frameIndex];
                 }
             }
 #endif
@@ -302,43 +289,44 @@ namespace AudioWorks.Extensibility
             Span<float> rightDestination)
         {
 #if NETSTANDARD2_0
-            for (int destinationIndex = 0, sourceIndex = 0; destinationIndex < leftDestination.Length; destinationIndex++)
+            for (int destIndex = 0, srcIndex = 0; destIndex < leftDestination.Length; destIndex++)
             {
-                leftDestination[destinationIndex] = source[sourceIndex++];
-                rightDestination[destinationIndex] = source[sourceIndex++];
+                leftDestination[destIndex] = source[srcIndex++];
+                rightDestination[destIndex] = source[srcIndex++];
             }
 #else
+            // Optimization - Vectorized implementation is about 3x faster with AVX2
             if (Avx2.IsSupported)
             {
-                var sourceVectors = MemoryMarshal.Cast<float, Vector256<float>>(source);
-                var leftDestinationVectors = MemoryMarshal.Cast<float, Vector256<float>>(leftDestination);
-                var rightDestinationVectors = MemoryMarshal.Cast<float, Vector256<float>>(rightDestination);
+                var controlVector = Vector256.Create(0, 2, 4, 6, 1, 3, 5, 7);
+                var srcVectors = MemoryMarshal.Cast<float, Vector256<float>>(source);
+                var leftDestVectors = MemoryMarshal.Cast<float, Vector256<float>>(leftDestination);
+                var rightDestVectors = MemoryMarshal.Cast<float, Vector256<float>>(rightDestination);
 
-                var sourceVectorIndex = 0;
-                for (var destinationVectorIndex = 0; destinationVectorIndex < leftDestinationVectors.Length; destinationVectorIndex++)
+                var srcVectorIndex = 0;
+                for (var destVectorIndex = 0; destVectorIndex < leftDestVectors.Length; destVectorIndex++)
                 {
-                    var permuted1 =
-                        Avx2.PermuteVar8x32(sourceVectors[sourceVectorIndex++], Vector256.Create(0, 2, 4, 6, 1, 3, 5, 7));
-                    var permuted2 =
-                        Avx2.PermuteVar8x32(sourceVectors[sourceVectorIndex++], Vector256.Create(0, 2, 4, 6, 1, 3, 5, 7));
-                    leftDestinationVectors[destinationVectorIndex] = Vector256.Create(permuted1.GetLower(), permuted2.GetLower());
-                    rightDestinationVectors[destinationVectorIndex] = Vector256.Create(permuted1.GetUpper(), permuted2.GetUpper());
+                    var permuted1 = Avx2.PermuteVar8x32(srcVectors[srcVectorIndex++], controlVector);
+                    var permuted2 = Avx2.PermuteVar8x32(srcVectors[srcVectorIndex++], controlVector);
+                    leftDestVectors[destVectorIndex] = Vector256.Create(permuted1.GetLower(), permuted2.GetLower());
+                    rightDestVectors[destVectorIndex] = Vector256.Create(permuted1.GetUpper(), permuted2.GetUpper());
                 }
 
-                for (int destinationIndex = leftDestinationVectors.Length * Vector256<float>.Count, sourceIndex = sourceVectorIndex * Vector256<float>.Count;
-                    destinationIndex < leftDestination.Length;
-                    destinationIndex++)
+                for (int destIndex = leftDestVectors.Length * Vector256<float>.Count,
+                    srcIndex = srcVectorIndex * Vector256<float>.Count;
+                    destIndex < leftDestination.Length;
+                    destIndex++)
                 {
-                    leftDestination[destinationIndex] = source[sourceIndex++];
-                    rightDestination[destinationIndex] = source[sourceIndex++];
+                    leftDestination[destIndex] = source[srcIndex++];
+                    rightDestination[destIndex] = source[srcIndex++];
                 }
             }
             else
             {
-                for (int destinationIndex = 0, sourceIndex = 0; destinationIndex < leftDestination.Length; destinationIndex++)
+                for (int destIndex = 0, sourceIndex = 0; destIndex < leftDestination.Length; destIndex++)
                 {
-                    leftDestination[destinationIndex] = source[sourceIndex++];
-                    rightDestination[destinationIndex] = source[sourceIndex++];
+                    leftDestination[destIndex] = source[sourceIndex++];
+                    rightDestination[destIndex] = source[sourceIndex++];
                 }
             }
 #endif
