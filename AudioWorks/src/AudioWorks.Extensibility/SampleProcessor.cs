@@ -16,6 +16,10 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
+#if !NETSTANDARD2_0
+using System.Runtime.Intrinsics;
+using System.Runtime.Intrinsics.X86;
+#endif
 
 namespace AudioWorks.Extensibility
 {
@@ -234,40 +238,110 @@ namespace AudioWorks.Extensibility
                     destination[sampleIndex] = source[sampleIndex] * multiplier;
         }
 
-        internal static unsafe void Interleave(
+        internal static void Interleave(
             ReadOnlySpan<float> leftSource,
             ReadOnlySpan<float> rightSource,
             Span<float> destination)
         {
-            // Optimization - Unsafe implementation is faster
-            fixed (float* destinationAddress = destination)
+#if NETSTANDARD2_0
+            for (int frameIndex = 0, destinationIndex = 0; frameIndex < leftSource.Length; frameIndex++)
             {
-                var destinationPointer = destinationAddress;
+                destination[destinationIndex++] = leftSource[frameIndex];
+                destination[destinationIndex++] = rightSource[frameIndex];
+            }
+#else
+            if (Avx2.IsSupported)
+            {
+                var leftSourceVectors = MemoryMarshal.Cast<float, Vector256<float>>(leftSource);
+                var rightSourceVectors = MemoryMarshal.Cast<float, Vector256<float>>(rightSource);
+                var destinationVectors = MemoryMarshal.Cast<float, Vector256<float>>(destination);
 
-                for (var frameIndex = 0; frameIndex < leftSource.Length; frameIndex++)
+                var destinationVectorIndex = 0;
+                for (var sourceVectorIndex = 0; sourceVectorIndex < leftSourceVectors.Length; sourceVectorIndex++)
                 {
-                    *destinationPointer++ = leftSource[frameIndex];
-                    *destinationPointer++ = rightSource[frameIndex];
+                    // This is more complicated than it should be because AVX uses 128-bit lanes for shuffles
+                    var shuffled1 = Avx.Shuffle(
+                        leftSourceVectors[sourceVectorIndex],
+                        rightSourceVectors[sourceVectorIndex],
+                        0b01000100);
+                    var shuffled2 = Avx.Shuffle(
+                        leftSourceVectors[sourceVectorIndex],
+                        rightSourceVectors[sourceVectorIndex],
+                        0b11101110);
+                    var aligned1 = Vector256.Create(shuffled1.GetLower(), shuffled2.GetLower());
+                    var aligned2 = Vector256.Create(shuffled1.GetUpper(), shuffled2.GetUpper());
+                    destinationVectors[destinationVectorIndex++] =
+                        Avx2.PermuteVar8x32(aligned1, Vector256.Create(0, 2, 1, 3, 4, 6, 5, 7));
+                    destinationVectors[destinationVectorIndex++] =
+                        Avx2.PermuteVar8x32(aligned2, Vector256.Create(0, 2, 1, 3, 4, 6, 5, 7));
+                }
+
+                for (int frameIndex = leftSourceVectors.Length * Vector256<float>.Count,
+                    destinationIndex = destinationVectorIndex * Vector256<float>.Count;
+                    frameIndex < leftSource.Length;
+                    frameIndex++)
+                {
+                    destination[destinationIndex++] = leftSource[frameIndex];
+                    destination[destinationIndex++] = rightSource[frameIndex];
                 }
             }
+            else
+            {
+                for (int frameIndex = 0, destinationIndex = 0; frameIndex < leftSource.Length; frameIndex++)
+                {
+                    destination[destinationIndex++] = leftSource[frameIndex];
+                    destination[destinationIndex++] = rightSource[frameIndex];
+                }
+            }
+#endif
         }
 
-        internal static unsafe void DeInterleave(
+        internal static void DeInterleave(
             ReadOnlySpan<float> source,
             Span<float> leftDestination,
             Span<float> rightDestination)
         {
-            // Optimization - Unsafe implementation is faster
-            fixed (float* sourceAddress = source)
+#if NETSTANDARD2_0
+            for (int destinationIndex = 0, sourceIndex = 0; destinationIndex < leftDestination.Length; destinationIndex++)
             {
-                var sourcePointer = sourceAddress;
+                leftDestination[destinationIndex] = source[sourceIndex++];
+                rightDestination[destinationIndex] = source[sourceIndex++];
+            }
+#else
+            if (Avx2.IsSupported)
+            {
+                var sourceVectors = MemoryMarshal.Cast<float, Vector256<float>>(source);
+                var leftDestinationVectors = MemoryMarshal.Cast<float, Vector256<float>>(leftDestination);
+                var rightDestinationVectors = MemoryMarshal.Cast<float, Vector256<float>>(rightDestination);
 
-                for (var frameIndex = 0; frameIndex < source.Length / 2; frameIndex++)
+                var sourceVectorIndex = 0;
+                for (var destinationVectorIndex = 0; destinationVectorIndex < leftDestinationVectors.Length; destinationVectorIndex++)
                 {
-                    leftDestination[frameIndex] = *sourcePointer++;
-                    rightDestination[frameIndex] = *sourcePointer++;
+                    var permuted1 =
+                        Avx2.PermuteVar8x32(sourceVectors[sourceVectorIndex++], Vector256.Create(0, 2, 4, 6, 1, 3, 5, 7));
+                    var permuted2 =
+                        Avx2.PermuteVar8x32(sourceVectors[sourceVectorIndex++], Vector256.Create(0, 2, 4, 6, 1, 3, 5, 7));
+                    leftDestinationVectors[destinationVectorIndex] = Vector256.Create(permuted1.GetLower(), permuted2.GetLower());
+                    rightDestinationVectors[destinationVectorIndex] = Vector256.Create(permuted1.GetUpper(), permuted2.GetUpper());
+                }
+
+                for (int destinationIndex = leftDestinationVectors.Length * Vector256<float>.Count, sourceIndex = sourceVectorIndex * Vector256<float>.Count;
+                    destinationIndex < leftDestination.Length;
+                    destinationIndex++)
+                {
+                    leftDestination[destinationIndex] = source[sourceIndex++];
+                    rightDestination[destinationIndex] = source[sourceIndex++];
                 }
             }
+            else
+            {
+                for (int destinationIndex = 0, sourceIndex = 0; destinationIndex < leftDestination.Length; destinationIndex++)
+                {
+                    leftDestination[destinationIndex] = source[sourceIndex++];
+                    rightDestination[destinationIndex] = source[sourceIndex++];
+                }
+            }
+#endif
         }
 
         static uint GetAbsoluteQuantizationLevels(int bitsPerSample) => 1u << (bitsPerSample - 1);
