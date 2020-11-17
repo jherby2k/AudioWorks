@@ -64,7 +64,7 @@ namespace AudioWorks.Extensions.Flac
 #elif OSX
             var osVersion = GetOSVersion();
             var libPath = Path.Combine(
-                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
+                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
                 osVersion.StartsWith("10.13", StringComparison.Ordinal) ? "osx.10.13-x64" :
                 osVersion.StartsWith("10.14", StringComparison.Ordinal) ? "osx.10.14-x64" :
                 "osx.10.15-x64");
