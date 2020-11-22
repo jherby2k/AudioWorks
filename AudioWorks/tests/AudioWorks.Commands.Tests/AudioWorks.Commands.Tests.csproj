@@ -10,7 +10,6 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <Copyright>© 2018 Jeremy Herbison</Copyright>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <CodeAnalysisRuleSet>CodeAnalysis.ruleset</CodeAnalysisRuleSet>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AddSyntheticProjectReferencesForSolutionDependencies>false</AddSyntheticProjectReferencesForSolutionDependencies>
   </PropertyGroup>

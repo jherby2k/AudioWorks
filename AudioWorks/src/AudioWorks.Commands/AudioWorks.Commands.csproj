@@ -14,7 +14,6 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <CodeAnalysisRuleSet>CodeAnalysis.ruleset</CodeAnalysisRuleSet>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <ContinuousIntegrationBuild Condition="'$(BUILD_BUILDID)'!=''">true</ContinuousIntegrationBuild>
   </PropertyGroup>

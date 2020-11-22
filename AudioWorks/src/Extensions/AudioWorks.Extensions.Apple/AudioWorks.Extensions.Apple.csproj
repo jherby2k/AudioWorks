@@ -23,7 +23,6 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <NeutralLanguage>en-US</NeutralLanguage>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <CodeAnalysisRuleSet>CodeAnalysis.ruleset</CodeAnalysisRuleSet>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ContinuousIntegrationBuild Condition="'$(BUILD_BUILDID)'!=''">true</ContinuousIntegrationBuild>
   </PropertyGroup>
