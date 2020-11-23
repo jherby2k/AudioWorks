@@ -38,7 +38,7 @@ namespace AudioWorks.Extensions.Id3
             var frameSize = (uint) buffer.Length;
 
             Stream stream = new UnmanagedMemoryStream((byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)), buffer.Length);
-            var streamsToClose = new List<Stream>(3) { stream };
+            var streamsToClose = new List<Stream>(2) { stream };
             try
             {
                 using (var reader = new BinaryReader(stream, Encoding.UTF8, false))
@@ -52,8 +52,15 @@ namespace AudioWorks.Extensions.Id3
                     if (GetGrouping(flags))
                     {
                         // Skip the group byte
-                        reader.ReadByte();
+                        stream.Seek(1, SeekOrigin.Current);
                         extendedHeaderBytes++;
+                    }
+
+                    if (GetDataLengthIndicator(flags))
+                    {
+                        // Skip the data length
+                        stream.Seek(4, SeekOrigin.Current);
+                        extendedHeaderBytes += 4;
                     }
 
                     if (GetUnsynchronisation(flags))
@@ -78,12 +85,14 @@ namespace AudioWorks.Extensions.Id3
             }
         }
 
-        bool GetCompression(ushort flags) => _version == 4 ? (flags & 0x0008) > 0 : (flags & 0x0080) > 0;
+        bool GetCompression(ushort flags) => _version == 4 ? (flags & 0b0000_1000) > 0 : (flags & 0b1000_0000) > 0;
 
-        bool GetEncryption(ushort flags) => _version == 4 ? (flags & 0x0004) > 0 : (flags & 0x0040) > 0;
+        bool GetEncryption(ushort flags) => _version == 4 ? (flags & 0b0000_0100) > 0 : (flags & 0b0100_0000) > 0;
 
-        bool GetGrouping(ushort flags) => _version == 4 ? (flags & 0x0040) > 0 : (flags & 0x0020) > 0;
+        bool GetGrouping(ushort flags) => _version == 4 ? (flags & 0b0100_0000) > 0 : (flags & 0b0010_0000) > 0;
 
-        bool GetUnsynchronisation(ushort flags) => _version == 4 && (flags & 0x0002) > 0;
+        bool GetUnsynchronisation(ushort flags) => _version == 4 && (flags & 0b0000_0010) > 0;
+
+        bool GetDataLengthIndicator(ushort flags) => _version == 4 && (flags & 0b0000_0001) > 0;
     }
 }
