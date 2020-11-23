@@ -27,14 +27,14 @@ namespace AudioWorks.Extensions.Id3
         {
             Span<byte> value = stackalloc byte[4];
             BinaryPrimitives.WriteUInt32LittleEndian(value, val);
-            if (value[0] > 0x7f || value[1] > 0x7f || value[2] > 0x7f || value[3] > 0x7f)
+            if (value[0] > 0x7F || value[1] > 0x7F || value[2] > 0x7F || value[3] > 0x7F)
                 throw new AudioInvalidException("Sync-safe value corrupted.");
 
             Span<byte> sync = stackalloc byte[4];
-            sync[0] = (byte) (((value[0] >> 0) & 0x7f) | ((value[1] & 0x01) << 7));
-            sync[1] = (byte) (((value[1] >> 1) & 0x3f) | ((value[2] & 0x03) << 6));
-            sync[2] = (byte) (((value[2] >> 2) & 0x1f) | ((value[3] & 0x07) << 5));
-            sync[3] = (byte) ((value[3] >> 3) & 0x0f);
+            sync[0] = (byte) (((value[0] >> 0) & 0x7F) | ((value[1] & 0x01) << 7));
+            sync[1] = (byte) (((value[1] >> 1) & 0x3F) | ((value[2] & 0x03) << 6));
+            sync[2] = (byte) (((value[2] >> 2) & 0x1F) | ((value[3] & 0x07) << 5));
+            sync[3] = (byte) ((value[3] >> 3) & 0x0F);
             return BinaryPrimitives.ReadUInt32LittleEndian(sync);
         }
 
@@ -47,10 +47,10 @@ namespace AudioWorks.Extensions.Id3
             BinaryPrimitives.WriteUInt32LittleEndian(value, val);
 
             Span<byte> sync = stackalloc byte[4];
-            sync[0] = (byte) ((value[0] >> 0) & 0x7f);
-            sync[1] = (byte) (((value[0] >> 7) & 0x01) | (value[1] << 1) & 0x7f);
-            sync[2] = (byte) (((value[1] >> 6) & 0x03) | (value[2] << 2) & 0x7f);
-            sync[3] = (byte) (((value[2] >> 5) & 0x07) | (value[3] << 3) & 0x7f);
+            sync[0] = (byte) ((value[0] >> 0) & 0x7F);
+            sync[1] = (byte) (((value[0] >> 7) & 0x01) | (value[1] << 1) & 0x7F);
+            sync[2] = (byte) (((value[1] >> 6) & 0x03) | (value[2] << 2) & 0x7F);
+            sync[3] = (byte) (((value[2] >> 5) & 0x07) | (value[3] << 3) & 0x7F);
             return BinaryPrimitives.ReadUInt32LittleEndian(sync);
         }
 
@@ -58,14 +58,14 @@ namespace AudioWorks.Extensions.Id3
         {
             Span<byte> value = stackalloc byte[4];
             BinaryPrimitives.WriteUInt32LittleEndian(value, val);
-            if (value[0] > 0x7f || value[1] > 0x7f || value[2] > 0x7f || value[3] > 0x7f)
+            if (value[0] > 0x7F || value[1] > 0x7F || value[2] > 0x7F || value[3] > 0x7F)
                 throw new AudioInvalidException("Invalid sync-safe integer.");
 
             Span<byte> sync = stackalloc byte[4];
-            sync[3] = (byte) (((value[3] >> 0) & 0x7f) | ((value[2] & 0x01) << 7));
-            sync[2] = (byte) (((value[2] >> 1) & 0x3f) | ((value[1] & 0x03) << 6));
-            sync[1] = (byte) (((value[1] >> 2) & 0x1f) | ((value[0] & 0x07) << 5));
-            sync[0] = (byte) ((value[0] >> 3) & 0x0f);
+            sync[3] = (byte) (((value[3] >> 0) & 0x7F) | ((value[2] & 0x01) << 7));
+            sync[2] = (byte) (((value[2] >> 1) & 0x3F) | ((value[1] & 0x03) << 6));
+            sync[1] = (byte) (((value[1] >> 2) & 0x1F) | ((value[0] & 0x07) << 5));
+            sync[0] = (byte) ((value[0] >> 3) & 0x0F);
             return BinaryPrimitives.ReadUInt32LittleEndian(sync);
         }
 

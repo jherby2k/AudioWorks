@@ -19,17 +19,17 @@ namespace AudioWorks.Extensions.Id3
     {
         internal static uint UInt32(uint val)
         {
-            var result = (val & 0xff) << 24;
-            result |= (val & 0xff00) << 8;
-            result |= (val & 0xff0000) >> 8;
-            result |= (val & 0xff000000) >> 24;
+            var result = (val & 0xFF) << 24;
+            result |= (val & 0xFF00) << 8;
+            result |= (val & 0xFF0000) >> 8;
+            result |= (val & 0xFF000000) >> 24;
             return result;
         }
 
         internal static ushort UInt16(ushort val)
         {
-            var result = ((uint) val & 0xff) << 8;
-            result |= ((uint) val & 0xff00) >> 8;
+            var result = ((uint) val & 0xFF) << 8;
+            result |= ((uint) val & 0xFF00) >> 8;
             return (ushort) result;
         }
     }

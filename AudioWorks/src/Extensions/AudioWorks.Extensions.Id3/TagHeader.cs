@@ -77,9 +77,9 @@ namespace AudioWorks.Extensions.Id3
 
                 // Parse the flag byte
                 var id3Flags = (byte) (0xF0 & reader.ReadByte());
-                Unsynchronisation = (id3Flags & 0x80) > 0;
-                HasExtendedHeader = (id3Flags & 0x40) > 0;
-                _hasFooter = (id3Flags & 0x10) > 0;
+                Unsynchronisation = (id3Flags & 0b1000_0000) > 0;
+                HasExtendedHeader = (id3Flags & 0b0100_0000) > 0;
+                _hasFooter = (id3Flags & 0b0001_0000) > 0;
 
                 // Get the id3v2 size, swap and un-sync the integer
                 TagSize = Swap.UInt32(Sync.UnsafeBigEndian(reader.ReadUInt32()));

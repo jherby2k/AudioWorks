@@ -17,34 +17,34 @@ namespace AudioWorks.Extensions.Id3
 {
     enum TextType : byte
     {
-        Ascii = 0x00,
-        Utf16 = 0x01,
-        Utf16BigEndian = 0x02,
-        Utf8 = 0x03
+        Ascii,
+        Utf16,
+        Utf16BigEndian,
+        Utf8
     }
 
     enum PictureType : byte
     {
-        Other = 0x00,
-        Icon = 0x01,
-        OtherIcon = 0x02,
-        CoverFront = 0x03,
-        CoverBack = 0x04,
-        Leaflet = 0x05,
-        Media = 0x06,
-        LeadArtist = 0x07,
-        Artist = 0x08,
-        Conductor = 0x09,
-        Orchestra = 0x0A,
-        Composer = 0x0B,
-        Lyricist = 0x0C,
-        Location = 0x0D,
-        Recording = 0x0E,
-        Performance = 0x0F,
-        Movie = 0x10,
-        Fish = 0x11,
-        Illustration = 0x12,
-        BandLogo = 0x13,
-        StudioLogo = 0x14
+        Other,
+        Icon,
+        OtherIcon,
+        CoverFront,
+        CoverBack,
+        Leaflet,
+        Media,
+        LeadArtist,
+        Artist,
+        Conductor,
+        Orchestra,
+        Composer,
+        Lyricist,
+        Location,
+        Recording,
+        Performance ,
+        Movie,
+        Fish,
+        Illustration,
+        BandLogo,
+        StudioLogo
     }
 }

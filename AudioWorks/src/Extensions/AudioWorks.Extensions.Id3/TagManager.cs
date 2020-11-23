@@ -169,7 +169,8 @@ namespace AudioWorks.Extensions.Id3
                     stream.Seek(4, SeekOrigin.Current);
 
                     // Set the FileAlter flag, if requested
-                    writer.Write((short) (frame.FileAlter ? tagModel.Header.Version == 4 ? 0x20 : 0x40 : 0));
+                    writer.Write(
+                        (short) (frame.FileAlter ? tagModel.Header.Version == 4 ? 0b0010_0000 : 0b0100_0000 : 0));
 
                     frame.Write(stream);
                     var frameSize = (uint) (stream.Position - sizeIndex - 6);
