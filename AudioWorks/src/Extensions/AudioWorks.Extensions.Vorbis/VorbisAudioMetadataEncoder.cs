@@ -18,12 +18,15 @@ using System;
 using System.Buffers;
 #endif
 using System.Buffers.Binary;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.Vorbis
 {
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
+        "Instances are created via MEF.")]
     [AudioMetadataEncoderExport(".ogg", "Vorbis", "Vorbis Comments")]
     sealed class VorbisAudioMetadataEncoder : IAudioMetadataEncoder
     {

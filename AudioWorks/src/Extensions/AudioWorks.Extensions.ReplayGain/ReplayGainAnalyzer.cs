@@ -21,6 +21,8 @@ using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.ReplayGain
 {
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
+        "Instances are created via MEF.")]
     [AudioAnalyzerExport("ReplayGain", "ReplayGain 2.0")]
     sealed class ReplayGainAnalyzer : IAudioAnalyzer
     {

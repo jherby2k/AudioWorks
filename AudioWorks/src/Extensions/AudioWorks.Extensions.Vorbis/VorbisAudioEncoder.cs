@@ -18,6 +18,7 @@ using System;
 using System.Buffers;
 #endif
 using System.Composition;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using AudioWorks.Common;
@@ -25,6 +26,8 @@ using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.Vorbis
 {
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
+        "Instances are created via MEF.")]
     [AudioEncoderExport("Vorbis", "Ogg Vorbis")]
     sealed class VorbisAudioEncoder : IAudioEncoder, IDisposable
     {

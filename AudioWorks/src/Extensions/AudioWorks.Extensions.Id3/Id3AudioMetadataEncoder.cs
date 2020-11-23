@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using AudioWorks.Common;
@@ -22,6 +23,8 @@ using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensions.Id3
 {
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
+        "Instances are created via MEF.")]
     [AudioMetadataEncoderExport(".mp3", "ID3", "ID3 version 2.x")]
     sealed class Id3AudioMetadataEncoder : IAudioMetadataEncoder
     {

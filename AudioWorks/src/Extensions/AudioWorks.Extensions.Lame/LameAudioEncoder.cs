@@ -15,6 +15,7 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Composition;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using AudioWorks.Common;
@@ -22,6 +23,8 @@ using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.Lame
 {
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
+        "Instances are created via MEF.")]
     [AudioEncoderExport("LameMP3", "Lame MPEG Audio Layer 3")]
     sealed class LameAudioEncoder : IAudioEncoder, IDisposable
     {

@@ -13,6 +13,7 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
 using AudioWorks.Common;
@@ -20,6 +21,8 @@ using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.Flac
 {
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
+        "Instances are created via MEF.")]
     [AudioMetadataEncoderExport(".flac", "FLAC", "FLAC")]
     sealed class FlacAudioMetadataEncoder : IAudioMetadataEncoder
     {
