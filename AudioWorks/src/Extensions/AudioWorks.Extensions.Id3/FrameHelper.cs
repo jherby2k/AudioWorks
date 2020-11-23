@@ -19,7 +19,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
+using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Id3
 {
@@ -29,13 +29,13 @@ namespace AudioWorks.Extensions.Id3
 
         internal FrameHelper(TagHeader header) => _version = header.Version;
 
-        internal unsafe FrameBase Build(string frameId, ushort flags, Span<byte> buffer)
+        internal unsafe FrameBase Build(string frameId, ushort flags, ReadOnlySpan<byte> buffer)
         {
             // Build a frame
             var frame = FrameFactory.Build(frameId);
 
-            var index = 0;
-            var size = (uint) buffer.Length;
+            var extendedHeaderBytes = 0;
+            var frameSize = (uint) buffer.Length;
 
             Stream stream = new UnmanagedMemoryStream((byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)), buffer.Length);
             var streamsToClose = new List<Stream>(3) { stream };
@@ -43,36 +43,30 @@ namespace AudioWorks.Extensions.Id3
             {
                 using (var reader = new BinaryReader(stream, Encoding.UTF8, false))
                 {
+                    if (GetCompression(flags))
+                        throw new AudioUnsupportedException("Compressed ID3v2 frames are not supported.");
+
+                    if (GetEncryption(flags))
+                        throw new AudioUnsupportedException("Encrypted ID3v2 frames are not supported.");
+
                     if (GetGrouping(flags))
                     {
                         // Skip the group byte
                         reader.ReadByte();
-                        index++;
-                    }
-
-                    if (GetCompression(flags))
-                    {
-                        size = Swap.UInt32(_version == 4
-                            ? Sync.UnsafeBigEndian(reader.ReadUInt32())
-                            : reader.ReadUInt32());
-
-                        index = 0;
-                        stream = new InflaterInputStream(stream);
-                        streamsToClose.Add(stream);
+                        extendedHeaderBytes++;
                     }
 
                     if (GetUnsynchronisation(flags))
                     {
                         var memoryStream = new MemoryStream();
                         streamsToClose.Add(memoryStream);
-                        size -= Sync.Unsafe(stream, memoryStream, size);
-                        index = 0;
+                        frameSize -= Sync.Unsafe(stream, memoryStream, frameSize);
                         memoryStream.Seek(0, SeekOrigin.Begin);
                         stream = memoryStream;
                     }
 
-                    var frameBuffer = new byte[size - index];
-                    stream.Read(frameBuffer, 0, (int) (size - index));
+                    var frameBuffer = new byte[frameSize - extendedHeaderBytes];
+                    stream.Read(frameBuffer, 0, (int) (frameSize - extendedHeaderBytes));
                     frame.Parse(frameBuffer);
                     return frame;
                 }
@@ -84,9 +78,11 @@ namespace AudioWorks.Extensions.Id3
             }
         }
 
-        bool GetGrouping(ushort flags) => _version == 4 ? (flags & 0x0040) > 0 : (flags & 0x0020) > 0;
-
         bool GetCompression(ushort flags) => _version == 4 ? (flags & 0x0008) > 0 : (flags & 0x0080) > 0;
+
+        bool GetEncryption(ushort flags) => _version == 4 ? (flags & 0x0004) > 0 : (flags & 0x0040) > 0;
+
+        bool GetGrouping(ushort flags) => _version == 4 ? (flags & 0x0040) > 0 : (flags & 0x0020) > 0;
 
         bool GetUnsynchronisation(ushort flags) => _version == 4 && (flags & 0x0002) > 0;
     }
