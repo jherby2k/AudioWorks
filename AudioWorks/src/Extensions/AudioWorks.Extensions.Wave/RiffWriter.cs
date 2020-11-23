@@ -21,8 +21,7 @@ namespace AudioWorks.Extensions.Wave
 {
     sealed class RiffWriter : BinaryWriter
     {
-        readonly Stack<(bool sizeUpdated, uint position)> _chunkSizePositions =
-            new Stack<(bool sizeUpdated, uint position)>();
+        readonly Stack<(bool sizeUpdated, uint position)> _chunkSizePositions = new();
 
         internal RiffWriter(Stream output)
             : base(output, Encoding.ASCII, true)

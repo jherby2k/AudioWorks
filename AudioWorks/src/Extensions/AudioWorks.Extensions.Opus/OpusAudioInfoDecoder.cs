@@ -15,7 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Buffers.Binary;
-using System.Diagnostics.CodeAnalysis;
 #if NETSTANDARD2_0
 using System.Buffers;
 #endif
@@ -30,8 +29,6 @@ using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.Opus
 {
-    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
-        "Instances are created via MEF.")]
     [AudioInfoDecoderExport(".opus", "Opus")]
     sealed class OpusAudioInfoDecoder : IAudioInfoDecoder
     {
@@ -118,7 +115,11 @@ namespace AudioWorks.Extensions.Opus
                 .Equals("OpusHead", StringComparison.Ordinal))
                 throw new AudioUnsupportedException("Not an Opus stream.");
 
+#if NETSTANDARD2_0
             var sampleRate = BinaryPrimitives.ReadUInt32LittleEndian(headerBytes.Slice(12));
+#else
+            var sampleRate = BinaryPrimitives.ReadUInt32LittleEndian(headerBytes[12..]);
+#endif
 
             return AudioInfo.CreateForLossy(
                 "Opus",
@@ -126,8 +127,12 @@ namespace AudioWorks.Extensions.Opus
                 (int) sampleRate,
                 (long) Math.Max(
                     (GetFinalGranulePosition(serialNumber, stream) -
+#if NETSTANDARD2_0
                      BinaryPrimitives.ReadUInt16LittleEndian(headerBytes.Slice(10))) / (double) 48000 * sampleRate,
-                    0.0));
+#else
+                     BinaryPrimitives.ReadUInt16LittleEndian(headerBytes[10..])) / (double) 48000 * sampleRate,
+#endif
+                     0.0));
         }
 
         static long GetFinalGranulePosition(int serialNumber, Stream stream)

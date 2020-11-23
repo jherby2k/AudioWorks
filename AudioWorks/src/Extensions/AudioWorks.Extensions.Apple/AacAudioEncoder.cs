@@ -15,7 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Composition;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -26,8 +25,6 @@ using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensions.Apple
 {
-    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
-        "Instances are created via MEF.")]
     [AudioEncoderExport("AppleAAC", "Apple MPEG-4 Advanced Audio Codec")]
     sealed class AacAudioEncoder : IAudioEncoder, IDisposable
     {
@@ -178,18 +175,17 @@ namespace AudioWorks.Extensions.Apple
             _replayGainExport?.Dispose();
         }
 
-        static AudioStreamBasicDescription GetInputDescription(AudioInfo info) =>
-            new AudioStreamBasicDescription
-            {
-                SampleRate = info.SampleRate,
-                AudioFormat = AudioFormat.LinearPcm,
-                Flags = AudioFormatFlags.PcmIsFloat,
-                BytesPerPacket = (uint) (sizeof(float) * info.Channels),
-                FramesPerPacket = 1,
-                BytesPerFrame = (uint) (sizeof(float) * info.Channels),
-                ChannelsPerFrame = (uint) info.Channels,
-                BitsPerChannel = 32
-            };
+        static AudioStreamBasicDescription GetInputDescription(AudioInfo info) => new()
+        {
+            SampleRate = info.SampleRate,
+            AudioFormat = AudioFormat.LinearPcm,
+            Flags = AudioFormatFlags.PcmIsFloat,
+            BytesPerPacket = (uint) (sizeof(float) * info.Channels),
+            FramesPerPacket = 1,
+            BytesPerFrame = (uint) (sizeof(float) * info.Channels),
+            ChannelsPerFrame = (uint) info.Channels,
+            BitsPerChannel = 32
+        };
 
         static AudioStreamBasicDescription GetOutputDescription(AudioStreamBasicDescription inputDescription)
         {

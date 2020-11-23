@@ -119,9 +119,9 @@ namespace AudioWorks.Extensions.Mp3
             return mpegVersion == MpegVersion.One ? 32 : 17;
         }
 
-        [SuppressMessage("ReSharper", "UnusedMember.Local")]
         enum MpegVersion
         {
+            // ReSharper disable once UnusedMember.Local
             TwoPointFive = 0b00000000,
             Two = 0b00000010,
             One = 0b00000011

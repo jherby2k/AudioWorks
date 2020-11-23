@@ -36,14 +36,23 @@ namespace AudioWorks.Extensions.Opus
             var offset = 4;
 
             // Seek past the mime type and description
+#if NETSTANDARD2_0
             offset += (int) BinaryPrimitives.ReadUInt32BigEndian(decodedValue.Slice(offset)) + 4;
             offset += (int) BinaryPrimitives.ReadUInt32BigEndian(decodedValue.Slice(offset)) + 4;
+#else
+            offset += (int) BinaryPrimitives.ReadUInt32BigEndian(decodedValue[offset..]) + 4;
+            offset += (int) BinaryPrimitives.ReadUInt32BigEndian(decodedValue[offset..]) + 4;
+#endif
 
             // Seek past the width, height, color depth and type
             offset += 16;
 
             return CoverArtFactory.GetOrCreate(
+#if NETSTANDARD2_0
                 decodedValue.Slice(offset + 4, (int) BinaryPrimitives.ReadUInt32BigEndian(decodedValue.Slice(offset))));
+#else
+                decodedValue.Slice(offset + 4, (int) BinaryPrimitives.ReadUInt32BigEndian(decodedValue[offset..])));
+#endif
         }
     }
 }

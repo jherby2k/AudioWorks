@@ -59,8 +59,6 @@ namespace AudioWorks.Extensions.Flac
         internal void SetCompressionLevel(uint compressionLevel) =>
             SafeNativeMethods.StreamEncoderSetCompressionLevel(_handle, compressionLevel);
 
-        [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods",
-            Justification = "Can't pass an array of SafeHandles")]
         internal void SetMetadata(IEnumerable<MetadataBlock> metadataBlocks)
         {
             var blockPointers = metadataBlocks.Select(block => block.Handle.DangerousGetHandle()).ToArray();

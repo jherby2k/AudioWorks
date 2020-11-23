@@ -21,8 +21,6 @@ using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.ReplayGain
 {
-    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
-        "Instances are created via MEF.")]
     [AudioAnalyzerExport("ReplayGain", "ReplayGain 2.0")]
     sealed class ReplayGainAnalyzer : IAudioAnalyzer
     {
@@ -31,7 +29,7 @@ namespace AudioWorks.Extensions.ReplayGain
         R128Analyzer? _analyzer;
         GroupState? _groupState;
 
-        public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
+        public SettingInfoDictionary SettingInfo { get; } = new()
         {
             ["PeakAnalysis"] = new StringSettingInfo("Simple", "Interpolated")
         };
@@ -62,20 +60,18 @@ namespace AudioWorks.Extensions.ReplayGain
             var peak = _analyzer!.GetPeak();
             _groupState!.AddPeak(peak);
 
-            return new AudioMetadata
+            return new()
             {
                 TrackPeak = peak.ToString(CultureInfo.InvariantCulture),
-                TrackGain = (_referenceLevel - _analyzer.GetLoudness())
-                    .ToString(CultureInfo.InvariantCulture)
+                TrackGain = (_referenceLevel - _analyzer.GetLoudness()).ToString(CultureInfo.InvariantCulture)
             };
         }
 
-        public AudioMetadata GetGroupResult() =>
-            new AudioMetadata
-            {
-                AlbumPeak = _groupState!.GroupPeak.ToString(CultureInfo.InvariantCulture),
-                AlbumGain = (_referenceLevel - R128Analyzer.GetLoudnessMultiple(_groupState.Handles.ToArray()))
-                    .ToString(CultureInfo.InvariantCulture)
-            };
+        public AudioMetadata GetGroupResult() => new()
+        {
+            AlbumPeak = _groupState!.GroupPeak.ToString(CultureInfo.InvariantCulture),
+            AlbumGain = (_referenceLevel - R128Analyzer.GetLoudnessMultiple(_groupState.Handles.ToArray()))
+                .ToString(CultureInfo.InvariantCulture)
+        };
     }
 }

@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
 using System.Runtime.InteropServices;
@@ -23,14 +22,12 @@ using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.ReplayGain
 {
-    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
-        "Instances are created via MEF.")]
     [AudioFilterExport("ReplayGain")]
     sealed class ReplayGainFilter : IAudioFilter
     {
         float _scale = 1;
 
-        public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
+        public SettingInfoDictionary SettingInfo { get; } = new()
         {
             ["ApplyGain"] = new StringSettingInfo("Track", "Album")
         };

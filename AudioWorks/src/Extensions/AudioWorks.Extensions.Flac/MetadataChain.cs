@@ -44,55 +44,59 @@ namespace AudioWorks.Extensions.Flac
                 IntPtr.Zero,
                 InitializeCallbacks(tempStream));
 
-        internal MetadataIterator GetIterator() => new MetadataIterator(_handle);
+        internal MetadataIterator GetIterator() => new(_handle);
 
         public void Dispose() => _handle.Dispose();
 
-        static IoCallbacks InitializeCallbacks(Stream stream) =>
-            new IoCallbacks
+        static IoCallbacks InitializeCallbacks(Stream stream) => new()
+        {
+            // ReSharper disable once UnusedParameter.Local
+            Read = (readBuffer, bufferSize, numberOfRecords, handle) =>
             {
-                Read = (readBuffer, bufferSize, numberOfRecords, handle) =>
+                var totalBufferSize = bufferSize.ToInt32() * numberOfRecords.ToInt32();
+                var buffer = ArrayPool<byte>.Shared.Rent(totalBufferSize);
+                try
                 {
-                    var totalBufferSize = bufferSize.ToInt32() * numberOfRecords.ToInt32();
-                    var buffer = ArrayPool<byte>.Shared.Rent(totalBufferSize);
-                    try
-                    {
-                        var bytesRead = stream.Read(buffer, 0, totalBufferSize);
-                        Marshal.Copy(buffer, 0, readBuffer, totalBufferSize);
-                        return new IntPtr(bytesRead);
-                    }
-                    finally
-                    {
-                        ArrayPool<byte>.Shared.Return(buffer);
-                    }
-                },
-
-                Write = (writeBuffer, bufferSize, numberOfRecords, handle) =>
+                    var bytesRead = stream.Read(buffer, 0, totalBufferSize);
+                    Marshal.Copy(buffer, 0, readBuffer, totalBufferSize);
+                    return new IntPtr(bytesRead);
+                }
+                finally
                 {
-                    var castNumberOfRecords = numberOfRecords.ToInt32();
-                    var totalBufferSize = bufferSize.ToInt32() * castNumberOfRecords;
-                    var buffer = ArrayPool<byte>.Shared.Rent(totalBufferSize);
-                    try
-                    {
-                        Marshal.Copy(writeBuffer, buffer, 0, totalBufferSize);
-                        stream.Write(buffer, 0, totalBufferSize);
-                        return new IntPtr(castNumberOfRecords);
-                    }
-                    finally
-                    {
-                        ArrayPool<byte>.Shared.Return(buffer);
-                    }
-                },
+                    ArrayPool<byte>.Shared.Return(buffer);
+                }
+            },
 
-                Seek = (handle, offset, whence) =>
+            // ReSharper disable once UnusedParameter.Local
+            Write = (writeBuffer, bufferSize, numberOfRecords, handle) =>
+            {
+                var castNumberOfRecords = numberOfRecords.ToInt32();
+                var totalBufferSize = bufferSize.ToInt32() * castNumberOfRecords;
+                var buffer = ArrayPool<byte>.Shared.Rent(totalBufferSize);
+                try
                 {
-                    stream.Seek(offset, whence);
-                    return 0;
-                },
+                    Marshal.Copy(writeBuffer, buffer, 0, totalBufferSize);
+                    stream.Write(buffer, 0, totalBufferSize);
+                    return new IntPtr(castNumberOfRecords);
+                }
+                finally
+                {
+                    ArrayPool<byte>.Shared.Return(buffer);
+                }
+            },
 
-                Tell = handle => stream.Position,
+            // ReSharper disable once UnusedParameter.Local
+            Seek = (handle, offset, whence) =>
+            {
+                stream.Seek(offset, whence);
+                return 0;
+            },
 
-                Eof = handle => stream.Position < stream.Length ? 0 : 1
-            };
+            // ReSharper disable once UnusedParameter.Local
+            Tell = handle => stream.Position,
+
+            // ReSharper disable once UnusedParameter.Local
+            Eof = handle => stream.Position < stream.Length ? 0 : 1
+        };
     }
 }

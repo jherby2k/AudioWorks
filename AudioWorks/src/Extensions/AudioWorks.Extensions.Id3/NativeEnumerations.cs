@@ -13,11 +13,8 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System.Diagnostics.CodeAnalysis;
-
 namespace AudioWorks.Extensions.Id3
 {
-    [SuppressMessage("Design", "CA1028:Enum Storage should be Int32")]
     enum TextType : byte
     {
         Ascii = 0x00,
@@ -26,7 +23,6 @@ namespace AudioWorks.Extensions.Id3
         Utf8 = 0x03
     }
 
-    [SuppressMessage("Design", "CA1028:Enum Storage should be Int32")]
     enum PictureType : byte
     {
         Other = 0x00,

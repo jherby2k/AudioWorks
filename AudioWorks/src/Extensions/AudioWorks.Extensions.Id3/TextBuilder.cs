@@ -27,7 +27,7 @@ namespace AudioWorks.Extensions.Id3
 {
     static class TextBuilder
     {
-        static readonly Dictionary<TextType, Encoding> _encodings = new Dictionary<TextType, Encoding>
+        static readonly Dictionary<TextType, Encoding> _encodings = new()
         {
             [TextType.Ascii] = CodePagesEncodingProvider.Instance.GetEncoding(1252) ?? Encoding.ASCII,
             [TextType.Utf16] = Encoding.Unicode,
@@ -35,7 +35,7 @@ namespace AudioWorks.Extensions.Id3
             [TextType.Utf8] = new UTF8Encoding(false)
         };
 
-        static readonly Dictionary<TextType, int> _nullCharacterLengths = new Dictionary<TextType, int>
+        static readonly Dictionary<TextType, int> _nullCharacterLengths = new()
         {
             [TextType.Ascii] = 1,
             [TextType.Utf16] = 2,

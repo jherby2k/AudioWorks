@@ -62,7 +62,7 @@ namespace AudioWorks.Extensibility
         }
 
         void ResolveFullFramework(IEnumerable<string> assemblyFiles) =>
-            AppDomain.CurrentDomain.AssemblyResolve += (context, args) =>
+            AppDomain.CurrentDomain.AssemblyResolve += (_, args) =>
             {
                 _logger.LogTrace("Attempting to resolve a dependency on '{1}'.", args.Name);
 
@@ -88,7 +88,7 @@ namespace AudioWorks.Extensibility
             new ExtensionLoadContext().LoadFromAssemblyPath(path);
 
         void ResolveWithLoader(IEnumerable<string> assemblyFiles) =>
-            AssemblyLoadContext.Default.Resolving += (context, assemblyName) =>
+            AssemblyLoadContext.Default.Resolving += (_, assemblyName) =>
             {
                 if (assemblyName.Name == null) return null;
 

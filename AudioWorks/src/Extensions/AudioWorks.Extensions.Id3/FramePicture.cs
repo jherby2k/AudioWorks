@@ -45,7 +45,11 @@ namespace AudioWorks.Extensions.Id3
             Description = TextBuilder.ReadText(frame, ref index, TextType);
 
             PictureData = new byte[frame.Length - index];
+#if NETSTANDARD2_0
             frame.Slice(index, frame.Length - index).CopyTo(PictureData);
+#else
+            frame[index..].CopyTo(PictureData);
+#endif
         }
 
         internal override void Write(Stream output)

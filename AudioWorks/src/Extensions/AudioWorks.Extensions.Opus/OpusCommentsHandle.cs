@@ -13,12 +13,10 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.Win32.SafeHandles;
 
 namespace AudioWorks.Extensions.Opus
 {
-    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     sealed class OpusCommentsHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
         internal OpusCommentsHandle()

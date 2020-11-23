@@ -143,18 +143,19 @@ namespace AudioWorks.Extensions.Opus
             _handle.Dispose();
         }
 
-        OpusEncoderCallbacks InitializeCallbacks() =>
-            new OpusEncoderCallbacks
+        OpusEncoderCallbacks InitializeCallbacks() => new()
+        {
+            // ReSharper disable once UnusedParameter.Local
+            Write = (userData, buffer, length) =>
             {
-                Write = (userData, buffer, length) =>
-                {
-                    _outputStream.Write(buffer, 0, length);
-                    return 0;
-                },
+                _outputStream.Write(buffer, 0, length);
+                return 0;
+            },
 
-                // Leave the stream open
-                Close = userData => 0
-            };
+            // Leave the stream open
+            // ReSharper disable once UnusedParameter.Local
+            Close = userData => 0
+        };
 
         void FlushHeaders()
         {

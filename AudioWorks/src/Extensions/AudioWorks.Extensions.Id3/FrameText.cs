@@ -35,7 +35,11 @@ namespace AudioWorks.Extensions.Id3
         {
             var index = 0;
             TextType = (TextType) frame[index++];
+#if NETSTANDARD2_0
             Text = TextBuilder.ReadTextEnd(frame.Slice(index), TextType);
+#else
+            Text = TextBuilder.ReadTextEnd(frame[index..], TextType);
+#endif
         }
 
         internal override void Write(Stream output)

@@ -63,7 +63,7 @@ namespace AudioWorks.Extensions.Flac
 #else
                         AudioMetadata.Set(
                             Encoding.ASCII.GetString(commentBytes.Slice(0, delimiter)),
-                            Encoding.UTF8.GetString(commentBytes.Slice(delimiter + 1)));
+                            Encoding.UTF8.GetString(commentBytes[(delimiter + 1)..]));
 #endif
                     }
 

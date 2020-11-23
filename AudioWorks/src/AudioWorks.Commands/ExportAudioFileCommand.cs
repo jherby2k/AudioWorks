@@ -99,7 +99,7 @@ namespace AudioWorks.Commands
 
                 var encodeTask = encoder.EncodeAsync(_sourceAudioFiles, _cancellationSource.Token, progress);
                 // ReSharper disable once AccessToDisposedClosure
-                encodeTask.ContinueWith(task => messageQueue.CompleteAdding(), TaskScheduler.Current);
+                encodeTask.ContinueWith(_ => messageQueue.CompleteAdding(), TaskScheduler.Current);
 
                 this.OutputMessages(messageQueue, _cancellationSource.Token);
 

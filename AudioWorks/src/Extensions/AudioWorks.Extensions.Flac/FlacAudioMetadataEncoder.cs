@@ -13,7 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
 using AudioWorks.Common;
@@ -21,12 +20,10 @@ using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.Flac
 {
-    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
-        "Instances are created via MEF.")]
     [AudioMetadataEncoderExport(".flac", "FLAC", "FLAC")]
     sealed class FlacAudioMetadataEncoder : IAudioMetadataEncoder
     {
-        public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
+        public SettingInfoDictionary SettingInfo { get; } = new()
         {
             ["Padding"] = new IntSettingInfo(0, 16_777_216)
         };
@@ -46,7 +43,7 @@ namespace AudioWorks.Extensions.Flac
                         pictureBlock = new CoverArtToPictureBlockAdapter(metadata.CoverArt);
 
                     var padding = GetPadding(settings);
-                    if (padding.HasValue && padding.Value > 0)
+                    if (padding > 0)
                         paddingBlock = new PaddingBlock(padding.Value);
 
                     // Iterate over the existing blocks, replacing and deleting as needed

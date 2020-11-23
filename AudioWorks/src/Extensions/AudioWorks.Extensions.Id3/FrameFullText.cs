@@ -46,7 +46,7 @@ namespace AudioWorks.Extensions.Id3
             TextType = (TextType) frame[index];
             index++;
 
-            //TODO: Invalid tag, may be legacy.
+            // Invalid frame
             if (frame.Length - index < 3)
                 return;
 
@@ -62,7 +62,11 @@ namespace AudioWorks.Extensions.Id3
                 return;
 
             Description = TextBuilder.ReadText(frame, ref index, TextType);
+#if NETSTANDARD2_0
             Text = TextBuilder.ReadTextEnd(frame.Slice(index), TextType);
+#else
+            Text = TextBuilder.ReadTextEnd(frame[index..], TextType);
+#endif
         }
 
         internal override void Write(Stream output)

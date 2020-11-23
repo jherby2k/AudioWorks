@@ -17,7 +17,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 
 // ReSharper disable CommentTypo
-
 namespace AudioWorks.Extensions.Apple
 {
     enum AudioFileType : uint
@@ -70,7 +69,6 @@ namespace AudioWorks.Extensions.Apple
         Variable = 3
     }
 
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     enum AudioFileStatus
     {
         Ok = 0,
@@ -99,7 +97,6 @@ namespace AudioWorks.Extensions.Apple
         ConverterConfig = 0x61636366 // 'accf'
     }
 
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     enum ExtendedAudioFileStatus
     {
         Ok = 0,
@@ -115,7 +112,6 @@ namespace AudioWorks.Extensions.Apple
         AsyncWriteBufferOverflow = -66570
     }
 
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     enum AudioConverterStatus
     {
         Ok = 0,

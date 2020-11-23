@@ -13,11 +13,8 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System.Diagnostics.CodeAnalysis;
-
 namespace AudioWorks.Extensions.Flac
 {
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     enum MetadataType
     {
         StreamInfo,
@@ -29,7 +26,6 @@ namespace AudioWorks.Extensions.Flac
         Picture
     }
 
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     enum PictureType : uint
     {
         Other,
@@ -55,7 +51,6 @@ namespace AudioWorks.Extensions.Flac
         PublisherLogo
     }
 
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     enum DecoderState
     {
         SearchForMetadata,
@@ -96,7 +91,6 @@ namespace AudioWorks.Extensions.Flac
         Continue
     }
 
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     enum DecoderErrorStatus
     {
         LostSync,
@@ -120,7 +114,6 @@ namespace AudioWorks.Extensions.Flac
         Ok
     }
 
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     enum EncoderState
     {
         Ok,

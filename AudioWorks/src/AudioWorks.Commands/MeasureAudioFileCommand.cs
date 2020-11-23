@@ -86,7 +86,7 @@ namespace AudioWorks.Commands
 
                 var analyzeTask = analyzer.AnalyzeAsync(_audioFiles, _cancellationSource.Token, progress);
                 // ReSharper disable once AccessToDisposedClosure
-                analyzeTask.ContinueWith(task => messageQueue.CompleteAdding(), TaskScheduler.Current);
+                analyzeTask.ContinueWith(_ => messageQueue.CompleteAdding(), TaskScheduler.Current);
 
                 this.OutputMessages(messageQueue, _cancellationSource.Token);
 

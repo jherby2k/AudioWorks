@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using AudioWorks.Common;
@@ -22,15 +21,13 @@ using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.Opus
 {
-    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
-        "Instances are created via MEF.")]
     [AudioEncoderExport("Opus", "Opus")]
     sealed class OpusAudioEncoder : IAudioEncoder, IDisposable
     {
         MetadataToOpusCommentAdapter? _comments;
         Encoder? _encoder;
 
-        public SettingInfoDictionary SettingInfo => new SettingInfoDictionary
+        public SettingInfoDictionary SettingInfo => new()
         {
             ["ApplyGain"] = new StringSettingInfo("Track", "Album"),
             ["BitRate"] = new IntSettingInfo(5, 512),

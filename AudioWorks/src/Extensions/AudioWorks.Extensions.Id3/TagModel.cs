@@ -22,9 +22,9 @@ namespace AudioWorks.Extensions.Id3
     {
         internal TagHeader Header { get; } = new TagHeader();
 
-        internal TagExtendedHeader ExtendedHeader { get; } = new TagExtendedHeader();
+        internal TagExtendedHeader ExtendedHeader { get; } = new();
 
-        internal List<FrameBase> Frames { get; } = new List<FrameBase>();
+        internal List<FrameBase> Frames { get; } = new();
 
         internal void UpdateSize()
         {

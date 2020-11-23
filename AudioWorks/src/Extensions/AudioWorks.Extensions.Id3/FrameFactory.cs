@@ -21,7 +21,7 @@ namespace AudioWorks.Extensions.Id3
 {
     static class FrameFactory
     {
-        static readonly Dictionary<string, Type> _frameTypes = new Dictionary<string, Type>();
+        static readonly Dictionary<string, Type> _frameTypes = new();
 
         static FrameFactory()
         {

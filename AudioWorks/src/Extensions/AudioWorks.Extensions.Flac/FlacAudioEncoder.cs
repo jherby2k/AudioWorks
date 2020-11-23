@@ -15,23 +15,20 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.Flac
 {
-    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
-        "Instances are created via MEF.")]
     [AudioEncoderExport("FLAC", "Free Lossless Audio Codec")]
     sealed class FlacAudioEncoder : IAudioEncoder, IDisposable
     {
-        readonly List<MetadataBlock> _metadataBlocks = new List<MetadataBlock>(4);
+        readonly List<MetadataBlock> _metadataBlocks = new(4);
         StreamEncoder? _encoder;
         int _bitsPerSample;
 
-        public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
+        public SettingInfoDictionary SettingInfo { get; } = new()
         {
             ["CompressionLevel"] = new IntSettingInfo(0, 8),
             ["SeekPointInterval"] = new IntSettingInfo(0, 600),

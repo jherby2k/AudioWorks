@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -24,8 +23,6 @@ using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.Apple
 {
-    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
-        "Instances are created via MEF.")]
     [AudioEncoderExport("ALAC", "Apple Lossless Audio Codec")]
     sealed class AlacAudioEncoder : IAudioEncoder, IDisposable
     {
@@ -104,18 +101,17 @@ namespace AudioWorks.Extensions.Apple
 
         public void Dispose() => _audioFile?.Dispose();
 
-        static AudioStreamBasicDescription GetInputDescription(AudioInfo info) =>
-            new AudioStreamBasicDescription
-            {
-                SampleRate = info.SampleRate,
-                AudioFormat = AudioFormat.LinearPcm,
-                Flags = AudioFormatFlags.PcmIsSignedInteger,
-                BytesPerPacket = (uint) (sizeof(int) * info.Channels),
-                FramesPerPacket = 1,
-                BytesPerFrame = (uint) (sizeof(int) * info.Channels),
-                ChannelsPerFrame = (uint) info.Channels,
-                BitsPerChannel = (uint) info.BitsPerSample
-            };
+        static AudioStreamBasicDescription GetInputDescription(AudioInfo info) => new()
+        {
+            SampleRate = info.SampleRate,
+            AudioFormat = AudioFormat.LinearPcm,
+            Flags = AudioFormatFlags.PcmIsSignedInteger,
+            BytesPerPacket = (uint) (sizeof(int) * info.Channels),
+            FramesPerPacket = 1,
+            BytesPerFrame = (uint) (sizeof(int) * info.Channels),
+            ChannelsPerFrame = (uint) info.Channels,
+            BitsPerChannel = (uint) info.BitsPerSample
+        };
 
         static AudioStreamBasicDescription GetOutputDescription(AudioStreamBasicDescription inputDescription)
         {

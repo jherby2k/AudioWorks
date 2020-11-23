@@ -15,7 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Buffers;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Apple
@@ -61,8 +60,6 @@ namespace AudioWorks.Extensions.Apple
                 _descriptionsHandle.Free();
         }
 
-        [SuppressMessage("Performance", "CA1801:Review unused parameters",
-            Justification = "Part of native API")]
         unsafe AudioConverterStatus InputCallback(
             IntPtr handle,
             ref uint numberPackets,

@@ -14,11 +14,9 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace AudioWorks.Extensions.ReplayGain
 {
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     enum Ebur128Error
     {
         Success

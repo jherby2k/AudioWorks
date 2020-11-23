@@ -60,7 +60,7 @@ namespace AudioWorks.Extensions.Vorbis
             var release = GetRelease();
             if (release.StartsWith("Ubuntu", StringComparison.OrdinalIgnoreCase))
                 AddUnmanagedLibraryPath(Path.Combine(
-                    Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
+                    Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
                     release.StartsWith("Ubuntu 16.04", StringComparison.OrdinalIgnoreCase) ? "ubuntu.16.04-x64" :
                     release.StartsWith("Ubuntu 18.04", StringComparison.OrdinalIgnoreCase) ? "ubuntu.18.04-x64" :
                     "ubuntu.20.04-x64"));

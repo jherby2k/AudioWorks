@@ -38,7 +38,7 @@ namespace AudioWorks.Extensions.Mp4
             _fourCc = new string(fourCcBuffer);
 
             Span<char> charBuffer = stackalloc char[Encoding.UTF8.GetMaxCharCount(data.Length - 24)];
-            var charCount = Encoding.UTF8.GetChars(data.Slice(24), charBuffer);
+            var charCount = Encoding.UTF8.GetChars(data[24..], charBuffer);
             Value = new string(charBuffer.Slice(0, charCount));
 #endif
         }

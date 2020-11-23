@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
 
@@ -109,8 +108,6 @@ namespace AudioWorks.Extensions.Apple
 
         public void Dispose() => Dispose(true);
 
-        [SuppressMessage("Performance", "CA1801:Review unused parameters",
-            Justification = "Part of native API")]
         AudioFileStatus ReadCallback(IntPtr userData, long position, uint requestCount, byte[] buffer, out uint actualCount)
         {
             _stream.Position = position;
@@ -118,8 +115,6 @@ namespace AudioWorks.Extensions.Apple
             return actualCount == 0 ? AudioFileStatus.EndOfFileError : AudioFileStatus.Ok;
         }
 
-        [SuppressMessage("Performance", "CA1801:Review unused parameters",
-            Justification = "Part of native API")]
         long GetSizeCallback(IntPtr userData) => _endOfData;
 
         AudioFileStatus WriteCallback(IntPtr userData, long position, uint requestCount, byte[] buffer, out uint actualCount)

@@ -41,23 +41,24 @@ namespace AudioWorks.Extensions.Vorbis
                 var key = Encoding.ASCII.GetString(
                     (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)),
                     keyBytes.Length);
-#else
-                var key = Encoding.ASCII.GetString(commentBytes.Slice(0, delimiter));
-#endif
 
                 if (key.Equals("METADATA_BLOCK_PICTURE", StringComparison.OrdinalIgnoreCase))
                     CoverArt = CoverArtAdapter.FromBase64(commentBytes.Slice(delimiter + 1));
                 else
                 {
-#if NETSTANDARD2_0
                     var valueBytes = commentBytes.Slice(delimiter + 1);
                     SetText(key, Encoding.UTF8.GetString(
                         (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes)),
                         valueBytes.Length));
-#else
-                    SetText(key, Encoding.UTF8.GetString(commentBytes.Slice(delimiter + 1)));
-#endif
                 }
+#else
+                var key = Encoding.ASCII.GetString(commentBytes.Slice(0, delimiter));
+
+                if (key.Equals("METADATA_BLOCK_PICTURE", StringComparison.OrdinalIgnoreCase))
+                    CoverArt = CoverArtAdapter.FromBase64(commentBytes[(delimiter + 1)..]);
+                else
+                    SetText(key, Encoding.UTF8.GetString(commentBytes[(delimiter + 1)..]));
+#endif
             }
         }
 

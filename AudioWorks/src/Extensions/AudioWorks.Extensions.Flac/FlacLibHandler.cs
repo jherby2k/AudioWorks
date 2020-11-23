@@ -14,13 +14,15 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-#if !WINDOWS
+#if OSX
 using System.Diagnostics;
 #endif
 #if !WINDOWS
 using System.Diagnostics.CodeAnalysis;
 #endif
+#if !LINUX
 using System.IO;
+#endif
 using System.Reflection;
 using System.Runtime.InteropServices;
 #if !LINUX

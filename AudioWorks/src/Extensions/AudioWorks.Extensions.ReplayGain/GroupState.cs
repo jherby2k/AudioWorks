@@ -20,11 +20,11 @@ namespace AudioWorks.Extensions.ReplayGain
 {
     sealed class GroupState : IDisposable
     {
-        readonly object _syncRoot = new object();
+        readonly object _syncRoot = new();
 
         internal double GroupPeak { get; private set; }
 
-        internal ConcurrentQueue<StateHandle> Handles { get; } = new ConcurrentQueue<StateHandle>();
+        internal ConcurrentQueue<StateHandle> Handles { get; } = new();
 
         internal void AddPeak(double peak)
         {
