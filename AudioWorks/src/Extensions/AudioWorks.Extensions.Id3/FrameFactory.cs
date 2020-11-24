@@ -81,7 +81,7 @@ namespace AudioWorks.Extensions.Id3
 
                 if (flags.Unsynchronisation)
                 {
-                    var memoryStream = new MemoryStream();
+                    var memoryStream = new MemoryStream(new byte[stream.Length]);
                     streamsToClose.Add(memoryStream);
                     frameSize -= Sync.Unsafe(stream, memoryStream, frameSize);
                     memoryStream.Seek(0, SeekOrigin.Begin);

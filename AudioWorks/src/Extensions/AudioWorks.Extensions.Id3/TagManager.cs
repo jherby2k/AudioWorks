@@ -38,7 +38,7 @@ namespace AudioWorks.Extensions.Id3
             {
                 if (tagModel.Header.Unsynchronisation)
                 {
-                    memory = new MemoryStream();
+                    memory = new MemoryStream(new byte[stream.Length]);
                     id3TagSize -= Sync.Unsafe(stream, memory, id3TagSize);
                     stream = memory;
                     if (id3TagSize <= 0)
