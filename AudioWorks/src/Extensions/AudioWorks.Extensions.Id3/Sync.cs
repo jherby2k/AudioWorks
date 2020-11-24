@@ -13,62 +13,13 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System;
-using System.Buffers.Binary;
 using System.IO;
 using System.Text;
-using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Id3
 {
     static class Sync
     {
-        internal static uint Unsafe(uint val)
-        {
-            Span<byte> value = stackalloc byte[4];
-            BinaryPrimitives.WriteUInt32LittleEndian(value, val);
-            if (value[0] > 0x7F || value[1] > 0x7F || value[2] > 0x7F || value[3] > 0x7F)
-                throw new AudioInvalidException("Sync-safe value corrupted.");
-
-            Span<byte> sync = stackalloc byte[4];
-            sync[0] = (byte) (((value[0] >> 0) & 0x7F) | ((value[1] & 0x01) << 7));
-            sync[1] = (byte) (((value[1] >> 1) & 0x3F) | ((value[2] & 0x03) << 6));
-            sync[2] = (byte) (((value[2] >> 2) & 0x1F) | ((value[3] & 0x07) << 5));
-            sync[3] = (byte) ((value[3] >> 3) & 0x0F);
-            return BinaryPrimitives.ReadUInt32LittleEndian(sync);
-        }
-
-        internal static uint Safe(uint val)
-        {
-            if (val > 0x10000000)
-                throw new AudioInvalidException("Value is too large for a sync-safe integer.");
-
-            Span<byte> value = stackalloc byte[4];
-            BinaryPrimitives.WriteUInt32LittleEndian(value, val);
-
-            Span<byte> sync = stackalloc byte[4];
-            sync[0] = (byte) ((value[0] >> 0) & 0x7F);
-            sync[1] = (byte) (((value[0] >> 7) & 0x01) | (value[1] << 1) & 0x7F);
-            sync[2] = (byte) (((value[1] >> 6) & 0x03) | (value[2] << 2) & 0x7F);
-            sync[3] = (byte) (((value[2] >> 5) & 0x07) | (value[3] << 3) & 0x7F);
-            return BinaryPrimitives.ReadUInt32LittleEndian(sync);
-        }
-
-        internal static uint UnsafeBigEndian(uint val)
-        {
-            Span<byte> value = stackalloc byte[4];
-            BinaryPrimitives.WriteUInt32LittleEndian(value, val);
-            if (value[0] > 0x7F || value[1] > 0x7F || value[2] > 0x7F || value[3] > 0x7F)
-                throw new AudioInvalidException("Invalid sync-safe integer.");
-
-            Span<byte> sync = stackalloc byte[4];
-            sync[3] = (byte) (((value[3] >> 0) & 0x7F) | ((value[2] & 0x01) << 7));
-            sync[2] = (byte) (((value[2] >> 1) & 0x3F) | ((value[1] & 0x03) << 6));
-            sync[1] = (byte) (((value[1] >> 2) & 0x1F) | ((value[0] & 0x07) << 5));
-            sync[0] = (byte) ((value[0] >> 3) & 0x0F);
-            return BinaryPrimitives.ReadUInt32LittleEndian(sync);
-        }
-
         internal static uint Unsafe(Stream src, Stream dst, uint size)
         {
             using (var writer = new BinaryWriter(dst, Encoding.UTF8, true))

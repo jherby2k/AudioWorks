@@ -15,7 +15,11 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Id3
 {
@@ -42,6 +46,58 @@ namespace AudioWorks.Extensions.Id3
                 return txxxFrame;
 
             throw new ArgumentException($"'{frameId}' is not a supported frame ID.", nameof(frameId));
+        }
+
+        internal static unsafe FrameBase Build(string frameId, FrameFlags flags, ReadOnlySpan<byte> buffer)
+        {
+            var frame = Build(frameId);
+
+            var extendedHeaderBytes = 0;
+            var frameSize = (uint) buffer.Length;
+
+            Stream stream = new UnmanagedMemoryStream((byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)), buffer.Length);
+            var streamsToClose = new List<Stream>(2) { stream };
+            try
+            {
+                if (flags.Compression)
+                    throw new AudioUnsupportedException("Compressed ID3v2 frames are not supported.");
+
+                if (flags.Encryption)
+                    throw new AudioUnsupportedException("Encrypted ID3v2 frames are not supported.");
+
+                if (flags.Grouping)
+                {
+                    // Skip the group byte
+                    stream.Seek(1, SeekOrigin.Current);
+                    extendedHeaderBytes++;
+                }
+
+                if (flags.DataLengthIndicator)
+                {
+                    // Skip the data length
+                    stream.Seek(4, SeekOrigin.Current);
+                    extendedHeaderBytes += 4;
+                }
+
+                if (flags.Unsynchronisation)
+                {
+                    var memoryStream = new MemoryStream();
+                    streamsToClose.Add(memoryStream);
+                    frameSize -= Sync.Unsafe(stream, memoryStream, frameSize);
+                    memoryStream.Seek(0, SeekOrigin.Begin);
+                    stream = memoryStream;
+                }
+
+                var frameBuffer = new byte[frameSize - extendedHeaderBytes];
+                stream.Read(frameBuffer, 0, (int) (frameSize - extendedHeaderBytes));
+                frame.Parse(frameBuffer);
+                return frame;
+            }
+            finally
+            {
+                foreach (var streamToClose in streamsToClose)
+                    streamToClose.Close();
+            }
         }
     }
 }

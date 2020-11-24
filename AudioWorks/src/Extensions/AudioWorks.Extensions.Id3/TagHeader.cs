@@ -42,19 +42,19 @@ namespace AudioWorks.Extensions.Id3
 
         internal void Serialize(Stream stream)
         {
-            using (var writer = new BinaryWriter(stream, Encoding.UTF8, true))
+            using (var writer = new TagWriter(stream))
             {
                 writer.Write(_id3);
                 writer.Write(Version);
                 writer.Write((byte) 0);
                 writer.Write((byte) 0);
-                writer.Write(Swap.UInt32(Sync.Safe(TagSize + PaddingSize)));
+                writer.WriteSyncSafe(TagSize + PaddingSize);
             }
         }
 
         internal void Deserialize(Stream stream)
         {
-            using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
+            using (var reader = new TagReader(stream))
             {
                 // Read the tag identifier
 #if NETSTANDARD2_0
@@ -82,7 +82,7 @@ namespace AudioWorks.Extensions.Id3
                 _hasFooter = (id3Flags & 0b0001_0000) > 0;
 
                 // Get the id3v2 size, swap and un-sync the integer
-                TagSize = Swap.UInt32(Sync.UnsafeBigEndian(reader.ReadUInt32()));
+                TagSize = reader.ReadUInt32SyncSafe();
                 if (TagSize == 0)
                     throw new AudioInvalidException("Corrupt header: tag size can't be zero.");
             }

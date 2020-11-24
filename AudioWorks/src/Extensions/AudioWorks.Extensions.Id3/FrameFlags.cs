@@ -15,22 +15,25 @@ You should have received a copy of the GNU Affero General Public License along w
 
 namespace AudioWorks.Extensions.Id3
 {
-    static class Swap
+    sealed class FrameFlags
     {
-        internal static uint UInt32(uint val)
-        {
-            var result = (val & 0xFF) << 24;
-            result |= (val & 0xFF00) << 8;
-            result |= (val & 0xFF0000) >> 8;
-            result |= (val & 0xFF000000) >> 24;
-            return result;
-        }
+        internal bool Compression  { get; }
 
-        internal static ushort UInt16(ushort val)
+        internal bool Encryption  { get; }
+
+        internal bool Grouping  { get; }
+
+        internal bool Unsynchronisation  { get; }
+
+        internal bool DataLengthIndicator { get; }
+
+        internal FrameFlags(ushort data, int version)
         {
-            var result = ((uint) val & 0xFF) << 8;
-            result |= ((uint) val & 0xFF00) >> 8;
-            return (ushort) result;
+            Compression = version == 4 ? (data & 0b0000_1000) > 0 : (data & 0b1000_0000) > 0;
+            Encryption = version == 4 ? (data & 0b0000_0100) > 0 : (data & 0b0100_0000) > 0;
+            Grouping = version == 4 ? (data & 0b0100_0000) > 0 : (data & 0b0010_0000) > 0;
+            Unsynchronisation = version == 4 && (data & 0b0000_0010) > 0;
+            DataLengthIndicator = version == 4 && (data & 0b0000_0001) > 0;
         }
     }
 }

@@ -63,7 +63,6 @@ namespace AudioWorks.Extensions.Id3
                     throw new AudioInvalidException("No frames are present in the tag.");
 
                 uint index = 0;
-                var frameHelper = new FrameHelper(tagModel.Header);
 #if NETSTANDARD2_0
                 var frameIdBuffer = new byte[4];
 #else
@@ -100,11 +99,11 @@ namespace AudioWorks.Extensions.Id3
 #endif
                     index += 4;
 
-                    using (var reader = new BinaryReader(stream, Encoding.ASCII, true))
+                    using (var reader = new TagReader(stream))
                     {
-                        var frameSize = Swap.UInt32(reader.ReadUInt32());
-                        if (tagModel.Header.Version == 4)
-                            frameSize = Sync.Unsafe(frameSize);
+                        var frameSize = tagModel.Header.Version == 4
+                            ? reader.ReadUInt32SyncSafe()
+                            : reader.ReadUInt32BigEndian();
                         index += 4;
 
                         // The size of the frame can't be larger than the available space
@@ -112,10 +111,10 @@ namespace AudioWorks.Extensions.Id3
                             throw new AudioInvalidException(
                                 "A frame is corrupt: can't be larger than the available space remaining.");
 
-                        var flags = Swap.UInt16(reader.ReadUInt16());
+                        var flags = new FrameFlags(reader.ReadUInt16BigEndian(), tagModel.Header.Version);
                         index += 2;
 
-                        tagModel.Frames.Add(ReadFrame(reader, frameHelper,
+                        tagModel.Frames.Add(ReadFrame(reader,
 #if NETSTANDARD2_0
                             Encoding.ASCII.GetString(frameIdBuffer, 0, 4), flags, frameSize));
 #else
@@ -134,7 +133,7 @@ namespace AudioWorks.Extensions.Id3
             }
         }
 
-        static FrameBase ReadFrame(BinaryReader reader, FrameHelper frameHelper, string frameId, ushort flags, uint frameSize)
+        static FrameBase ReadFrame(BinaryReader reader, string frameId, FrameFlags flags, uint frameSize)
         {
 #if NETSTANDARD2_0
             var frameDataBuffer = reader.ReadBytes((int) frameSize);
@@ -145,7 +144,7 @@ namespace AudioWorks.Extensions.Id3
                 : new byte[(int) frameSize];
             reader.Read(frameDataBuffer);
 #endif
-            return frameHelper.Build(frameId, flags, frameDataBuffer);
+            return FrameFactory.Build(frameId, flags, frameDataBuffer);
         }
 
         internal static void Serialize(TagModel tagModel, Stream stream)
@@ -155,7 +154,7 @@ namespace AudioWorks.Extensions.Id3
             stream.Seek(10, SeekOrigin.Begin);
 
             // Write the frames in binary format
-            using (var writer = new BinaryWriter(stream, Encoding.ASCII, true))
+            using (var writer = new TagWriter(stream))
                 foreach (var frame in tagModel.Frames)
                 {
 #if NETSTANDARD2_0
@@ -169,17 +168,17 @@ namespace AudioWorks.Extensions.Id3
                     stream.Seek(4, SeekOrigin.Current);
 
                     // Set the FileAlter flag, if requested
-                    writer.Write(
-                        (short) (frame.FileAlter ? tagModel.Header.Version == 4 ? 0b0010_0000 : 0b0100_0000 : 0));
+                    writer.Write((short) (frame.FileAlter ? tagModel.Header.Version == 4 ? 0b0010_0000 : 0b0100_0000 : 0));
 
                     frame.Write(stream);
                     var frameSize = (uint) (stream.Position - sizeIndex - 6);
-                    if (tagModel.Header.Version == 4)
-                        frameSize = Sync.Safe(frameSize);
 
                     // Now update the size
                     stream.Seek(sizeIndex, SeekOrigin.Begin);
-                    writer.Write(Swap.UInt32(frameSize));
+                    if (tagModel.Header.Version == 4)
+                        writer.WriteSyncSafe(frameSize);
+                    else
+                        writer.WriteBigEndian(frameSize);
                     stream.Seek(2 + frameSize, SeekOrigin.Current);
                 }
 
