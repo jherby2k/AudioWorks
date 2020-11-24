@@ -20,10 +20,10 @@ namespace AudioWorks.Extensions.Id3
 {
     static class Sync
     {
-        internal static uint Unsafe(Stream src, Stream dst, uint size)
+        internal static uint Unsafe(Stream source, Stream destination, uint size)
         {
-            using (var writer = new BinaryWriter(dst, Encoding.UTF8, true))
-            using (var reader = new BinaryReader(src, Encoding.UTF8, true))
+            using (var writer = new BinaryWriter(destination, Encoding.UTF8, true))
+            using (var reader = new BinaryReader(source, Encoding.UTF8, true))
             {
                 byte last = 0;
                 uint syncs = 0, count = 0;
@@ -32,7 +32,7 @@ namespace AudioWorks.Extensions.Id3
                 {
                     var val = reader.ReadByte();
                     if (last == 0xFF && val == 0x00)
-                        syncs++; // skip the sync byte
+                        syncs++;
                     else
                         writer.Write(val);
                     last = val;
@@ -45,8 +45,8 @@ namespace AudioWorks.Extensions.Id3
                     syncs++;
                 }
 
-                dst.Position = 0;
-                return syncs; //bytes removed from stream
+                destination.Position = 0;
+                return syncs;
             }
         }
     }
