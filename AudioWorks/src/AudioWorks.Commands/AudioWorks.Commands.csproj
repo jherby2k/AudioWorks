@@ -16,6 +16,8 @@
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <ContinuousIntegrationBuild Condition="'$(BUILD_BUILDID)'!=''">true</ContinuousIntegrationBuild>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <RestoreLockedMode>true</RestoreLockedMode>
   </PropertyGroup>
 
   <ItemGroup>

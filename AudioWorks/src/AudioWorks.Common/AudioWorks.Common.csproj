@@ -26,6 +26,8 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>StrongName.snk</AssemblyOriginatorKeyFile>
     <ContinuousIntegrationBuild Condition="'$(BUILD_BUILDID)'!=''">true</ContinuousIntegrationBuild>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <RestoreLockedMode>true</RestoreLockedMode>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">

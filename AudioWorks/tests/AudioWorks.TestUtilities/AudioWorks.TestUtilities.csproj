@@ -8,6 +8,8 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <Copyright>© 2018 Jeremy Herbison</Copyright>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <RestoreLockedMode>true</RestoreLockedMode>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(OS)'=='Windows_NT'">
