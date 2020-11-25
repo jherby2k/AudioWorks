@@ -41,32 +41,62 @@ namespace AudioWorks.Extensions.Opus
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_page_serialno",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern int OggPageSerialNo(
             in OggPage page);
 
         [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport(_oggLibrary, EntryPoint = "ogg_page_eos",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern bool OggPageEos(
             in OggPage page);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_page_checksum_set",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern void OggPageChecksumSet(
             ref OggPage page);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_sync_init",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern int OggSyncInit(
             IntPtr syncState);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_sync_pageout",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern int OggSyncPageOut(IntPtr syncState,
             out OggPage page);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_sync_buffer",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern IntPtr OggSyncBuffer(
             IntPtr syncState,
 #if WINDOWS
@@ -77,6 +107,11 @@ namespace AudioWorks.Extensions.Opus
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_sync_wrote",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern int OggSyncWrote(
             IntPtr syncState,
 #if WINDOWS
@@ -87,11 +122,21 @@ namespace AudioWorks.Extensions.Opus
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_sync_clear",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern int OggSyncClear(
             IntPtr syncState);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_stream_init",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern int OggStreamInit(
             IntPtr streamState,
 #if WINDOWS
@@ -102,47 +147,92 @@ namespace AudioWorks.Extensions.Opus
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_stream_pagein",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern int OggStreamPageIn(
             IntPtr streamState,
             in OggPage page);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_stream_packetin",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern int OggStreamPacketIn(
             IntPtr streamState,
             in OggPacket packet);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_stream_packetout",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern int OggStreamPacketOut(
             IntPtr streamState,
             out OggPacket packet);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_stream_flush",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern int OggStreamFlush(
             IntPtr streamState,
             out OggPage page);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_stream_clear",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern void OggStreamClear(
             IntPtr streamState);
 
         [DllImport(_opusLibrary, EntryPoint = "opus_get_version_string",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern IntPtr OpusGetVersion();
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_get_version_string",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern IntPtr OpusEncoderGetVersion();
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_comments_create",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern OpusCommentsHandle OpusEncoderCommentsCreate();
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_comments_add",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern unsafe int OpusEncoderCommentsAdd(
             OpusCommentsHandle handle,
             ref byte tag,
@@ -150,6 +240,11 @@ namespace AudioWorks.Extensions.Opus
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_comments_add_picture_from_memory",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern unsafe int OpusEncoderCommentsAddPictureFromMemory(
             OpusCommentsHandle handle,
             byte* data,
@@ -159,11 +254,21 @@ namespace AudioWorks.Extensions.Opus
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_comments_destroy",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern void OpusEncoderCommentsDestroy(
             IntPtr handle);
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_create_callbacks",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern OpusEncoderHandle OpusEncoderCreateCallbacks(
             ref OpusEncoderCallbacks callbacks,
             IntPtr userData,
@@ -175,11 +280,21 @@ namespace AudioWorks.Extensions.Opus
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_flush_header",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern int OpusEncoderFlushHeader(
             OpusEncoderHandle handle);
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_write_float",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern int OpusEncoderWriteFloat(
             OpusEncoderHandle handle,
             in float pcm,
@@ -187,11 +302,21 @@ namespace AudioWorks.Extensions.Opus
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_drain",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern int OpusEncoderDrain(
             OpusEncoderHandle handle);
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_ctl",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern int OpusEncoderControl(
             OpusEncoderHandle handle,
             EncoderControlRequest request,
@@ -199,6 +324,11 @@ namespace AudioWorks.Extensions.Opus
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_ctl",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern int OpusEncoderControl(
             OpusEncoderHandle handle,
             EncoderControlRequest request,
@@ -206,6 +336,11 @@ namespace AudioWorks.Extensions.Opus
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_destroy",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
         internal static extern void OpusEncoderDestroy(
             IntPtr handle);
     }
