@@ -10,7 +10,6 @@
     <Copyright>© 2018 Jeremy Herbison</Copyright>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(OS)'=='Windows_NT'">

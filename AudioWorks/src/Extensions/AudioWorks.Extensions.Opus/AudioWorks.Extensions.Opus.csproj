@@ -26,7 +26,6 @@
     <NoWarn>NU5100</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ContinuousIntegrationBuild Condition="'$(BUILD_BUILDID)'!=''">true</ContinuousIntegrationBuild>
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(OS)'=='Windows_NT'">

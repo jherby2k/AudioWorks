@@ -12,7 +12,6 @@
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AddSyntheticProjectReferencesForSolutionDependencies>false</AddSyntheticProjectReferencesForSolutionDependencies>
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(OS)'=='Windows_NT'">
