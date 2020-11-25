@@ -21,6 +21,7 @@ using System.Composition;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
 
@@ -69,9 +70,19 @@ namespace AudioWorks.Extensions.Vorbis
         {
             InitializeReplayGainFilter(info, metadata, settings);
 
-            _oggStream = new OggStream(settings.TryGetValue("SerialNumber", out int serialNumber)
-                ? serialNumber
-                : new Random().Next());
+            if (!settings.TryGetValue("SerialNumber", out int serialNumber))
+#if NETSTANDARD2_0
+                using (var random = RandomNumberGenerator.Create())
+                {
+                    var buffer = new byte[sizeof(int)];
+                    random.GetNonZeroBytes(buffer);
+                    serialNumber = BitConverter.ToInt32(buffer, 0);
+                }
+#else
+                serialNumber = RandomNumberGenerator.GetInt32(int.MaxValue);
+#endif
+
+            _oggStream = new OggStream(serialNumber);
 
             // Default to a quality setting of 5
             if (settings.TryGetValue("BitRate", out int bitRate))

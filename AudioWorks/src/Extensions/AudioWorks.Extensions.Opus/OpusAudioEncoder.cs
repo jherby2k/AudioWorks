@@ -17,6 +17,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
+using System.Security.Cryptography;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
 
@@ -67,7 +68,16 @@ namespace AudioWorks.Extensions.Opus
             _encoder.SetHeaderGain(gain);
 
             if (!settings.TryGetValue("SerialNumber", out int serialNumber))
-                serialNumber = new Random().Next();
+#if NETSTANDARD2_0
+                using (var random = RandomNumberGenerator.Create())
+                {
+                    var buffer = new byte[sizeof(int)];
+                    random.GetNonZeroBytes(buffer);
+                    serialNumber = BitConverter.ToInt32(buffer, 0);
+                }
+#else
+                serialNumber = RandomNumberGenerator.GetInt32(int.MaxValue);
+#endif
             _encoder.SetSerialNumber(serialNumber);
 
             // Default to full VBR
