@@ -22,18 +22,18 @@ namespace AudioWorks.Extensions.Flac
     [SuppressUnmanagedCodeSecurity]
     static class SafeNativeMethods
     {
-#if LINUX
+#if WINDOWS
+        const string _flacLibrary = "FLAC";
+        const string _kernelLibrary = "kernel32";
+#elif LINUX
         const string _flacLibrary = "libFLAC.so.8";
         const string _dlLibrary = "libdl.so.2";
 #else
         const string _flacLibrary = "libFLAC";
-#endif
-#if OSX
         const string _dlLibrary = "libdl";
 #endif
-#if WINDOWS
-        const string _kernelLibrary = "kernel32";
 
+#if WINDOWS
         [DllImport(_kernelLibrary, CharSet = CharSet.Unicode)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
         internal static extern IntPtr LoadLibrary(string dllToLoad);

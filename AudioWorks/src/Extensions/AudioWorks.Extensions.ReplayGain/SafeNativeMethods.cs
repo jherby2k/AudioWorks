@@ -22,7 +22,9 @@ namespace AudioWorks.Extensions.ReplayGain
     [SuppressUnmanagedCodeSecurity]
     static class SafeNativeMethods
     {
-#if LINUX
+#if WINDOWS
+        const string _ebur128Library = "ebur128";
+#elif LINUX
         const string _ebur128Library = "libebur128.so.1";
 #else
         const string _ebur128Library = "libebur128";

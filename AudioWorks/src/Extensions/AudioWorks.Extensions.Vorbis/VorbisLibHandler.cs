@@ -83,7 +83,7 @@ namespace AudioWorks.Extensions.Vorbis
                 return false;
             }
 
-            logger.LogInformation("Using libvorbis version {0}.",
+            logger.LogInformation("Using Vorbis version {0}.",
                 Marshal.PtrToStringAnsi(SafeNativeMethods.VorbisVersion()));
 
             return true;

@@ -22,7 +22,9 @@ namespace AudioWorks.Extensions.Lame
     [SuppressUnmanagedCodeSecurity]
     static class SafeNativeMethods
     {
-#if LINUX
+#if WINDOWS
+        const string _lameLibrary = "lame";
+#elif LINUX
         const string _lameLibrary = "libmp3lame.so.0";
 #else
         const string _lameLibrary = "libmp3lame";

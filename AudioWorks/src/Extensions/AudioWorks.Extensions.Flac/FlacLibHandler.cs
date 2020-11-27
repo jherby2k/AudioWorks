@@ -95,13 +95,13 @@ namespace AudioWorks.Extensions.Flac
             try
             {
 #if WINDOWS
-                module = SafeNativeMethods.LoadLibrary(Path.Combine(libPath, "libFLAC.dll"));
+                module = SafeNativeMethods.LoadLibrary(Path.Combine(libPath, "FLAC.dll"));
 #elif OSX
                 module = SafeNativeMethods.DlOpen(Path.Combine(libPath, "libFLAC.dylib"), 2);
 #else // LINUX
                 module = SafeNativeMethods.DlOpen("libFLAC.so.8", 2);
 #endif
-                logger.LogInformation("Using libFLAC version {0}.",
+                logger.LogInformation("Using FLAC version {0}.",
                     Marshal.PtrToStringAnsi(
                         Marshal.PtrToStructure<IntPtr>(
 #if WINDOWS

@@ -83,15 +83,7 @@ namespace AudioWorks.Extensions.Opus
                 return false;
             }
 
-            logger.LogInformation("Using libopusenc version {0}.",
-                (Marshal.PtrToStringAnsi(SafeNativeMethods.OpusEncoderGetVersion()) ?? "<unknown>")
-#if NETSTANDARD2_0
-                    .Replace("libopusenc ", string.Empty));
-#else
-                    .Replace("libopusenc ", string.Empty, StringComparison.Ordinal));
-#endif
-
-            logger.LogInformation("Using libopus version {0}.",
+            logger.LogInformation("Using Opus version {0}.",
                 (Marshal.PtrToStringAnsi(SafeNativeMethods.OpusGetVersion()) ?? "<unknown>")
 #if NETSTANDARD2_0
                     .Replace("libopus ", string.Empty));
