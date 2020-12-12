@@ -60,7 +60,7 @@ namespace AudioWorks.Extensions.ReplayGain
                 osVersion.StartsWith("10.13", StringComparison.Ordinal) ? "osx.10.13-x64" :
                 osVersion.StartsWith("10.14", StringComparison.Ordinal) ? "osx.10.14-x64" :
                 osVersion.StartsWith("10.15", StringComparison.Ordinal) ? "osx.10.15-x64" :
-                "osx.11");
+                "osx.11"));
 #endif
 
             try
