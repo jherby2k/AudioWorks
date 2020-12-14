@@ -11,11 +11,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(OS)'=='Windows_NT'">
-    <PackageId>AudioWorks.Extensions.Apple.Windows</PackageId>
+    <PackageId>$(AssemblyName).Windows</PackageId>
     <PackageTags>Windows</PackageTags>
   </PropertyGroup>
   <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('OSX'))">
-    <PackageId>AudioWorks.Extensions.Apple.MacOS</PackageId>
+    <PackageId>$(AssemblyName).MacOS</PackageId>
     <PackageTags>MacOS</PackageTags>
   </PropertyGroup>
 

@@ -12,15 +12,15 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(OS)'=='Windows_NT'">
-    <PackageId>AudioWorks.Extensions.Lame.Windows</PackageId>
+    <PackageId>$(AssemblyName).Windows</PackageId>
     <PackageTags>Windows</PackageTags>
   </PropertyGroup>
   <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
-    <PackageId>AudioWorks.Extensions.Lame.Linux</PackageId>
+    <PackageId>$(AssemblyName).Linux</PackageId>
     <PackageTags>Linux</PackageTags>
   </PropertyGroup>
   <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('OSX'))">
-    <PackageId>AudioWorks.Extensions.Lame.MacOS</PackageId>
+    <PackageId>$(AssemblyName).MacOS</PackageId>
     <PackageTags>MacOS</PackageTags>
   </PropertyGroup>
 
