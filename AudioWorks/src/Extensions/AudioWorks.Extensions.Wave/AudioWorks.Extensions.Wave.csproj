@@ -2,30 +2,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net5.0;netstandard2.0</TargetFrameworks>
-    <LangVersion>9.0</LangVersion>
-    <Nullable>enable</Nullable>
     <VersionPrefix>1.7.0</VersionPrefix>
-    <Revision>$(BUILD_BUILDID)</Revision>
-    <Revision Condition="'$(Revision)'==''">0</Revision>
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
-    <Authors>Jeremy Herbison</Authors>
-    <Company />
-    <Product>AudioWorks</Product>
     <Description>The Waveform Audio File Format (WAVE) extension for AudioWorks. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
-    <Copyright>© 2018 Jeremy Herbison</Copyright>
-    <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/jherby2k/AudioWorks</PackageProjectUrl>
     <PackageReleaseNotes>https://github.com/jherby2k/AudioWorks/wiki/Wave-Extension#release-notes</PackageReleaseNotes>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageTags>Windows, MacOS, Linux</PackageTags>
-    <NeutralLanguage>en-US</NeutralLanguage>
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <ContinuousIntegrationBuild Condition="'$(BUILD_BUILDID)'!=''">true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
   <ItemGroup>

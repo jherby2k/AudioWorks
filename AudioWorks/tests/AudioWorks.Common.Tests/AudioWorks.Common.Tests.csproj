@@ -3,13 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net5.0;netcoreapp3.1;netcoreapp2.1;net462</TargetFrameworks>
     <TargetFrameworks Condition="'$(OS)'!='Windows_NT'">net5.0;netcoreapp3.1;netcoreapp2.1</TargetFrameworks>
-    <LangVersion>9.0</LangVersion>
-    <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
-    <Product>AudioWorks</Product>
-    <NeutralLanguage>en-US</NeutralLanguage>
-    <Copyright>© 2018 Jeremy Herbison</Copyright>
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 

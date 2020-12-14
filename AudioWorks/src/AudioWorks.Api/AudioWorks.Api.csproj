@@ -2,32 +2,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net5.0;netstandard2.0</TargetFrameworks>
-    <LangVersion>9.0</LangVersion>
-    <Nullable>enable</Nullable>
     <VersionPrefix>1.1.0</VersionPrefix>
-    <Revision>$(BUILD_BUILDID)</Revision>
-    <Revision Condition="'$(Revision)'==''">0</Revision>
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <Authors>Jeremy Herbison</Authors>
-    <Company />
-    <Product>AudioWorks</Product>
     <Description>The primary AudioWorks API. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
-    <Copyright>© 2018 Jeremy Herbison</Copyright>
-    <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/jherby2k/AudioWorks</PackageProjectUrl>
     <PackageIcon>Icon.png</PackageIcon>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageTags>music encode decode convert export tag cover art FLAC MP3 ID3 Lame MP4 AAC Apple ALAC Ogg Vorbis Opus ReplayGain EBUR128</PackageTags>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <NeutralLanguage>en-US</NeutralLanguage>
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>StrongName.snk</AssemblyOriginatorKeyFile>
-    <ContinuousIntegrationBuild Condition="'$(BUILD_BUILDID)'!=''">true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
