@@ -20,7 +20,7 @@ namespace AudioWorks.Extensions.Id3
 {
     class TagModel
     {
-        internal TagHeader Header { get; } = new TagHeader();
+        internal TagHeader Header { get; } = new();
 
         internal TagExtendedHeader ExtendedHeader { get; } = new();
 

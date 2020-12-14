@@ -17,6 +17,7 @@ using Microsoft.Win32.SafeHandles;
 
 namespace AudioWorks.Extensions.Opus
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     sealed class OpusCommentsHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
         internal OpusCommentsHandle()

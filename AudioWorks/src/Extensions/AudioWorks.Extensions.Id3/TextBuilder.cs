@@ -88,18 +88,19 @@ namespace AudioWorks.Extensions.Id3
 #else
             var count = frame[index..].IndexOf((byte) 0);
 #endif
-            if (count == -1)
-                throw new AudioInvalidException("Invalid ASCII string size.");
-
-            if (count > 0)
+            switch (count)
             {
+                case -1:
+                    throw new AudioInvalidException("Invalid ASCII string size.");
+                case > 0:
 #if NETSTANDARD2_0
-                text = _encodings[textType].GetString(
-                    (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(frame.Slice(index))), count);
+                    text = _encodings[textType].GetString(
+                        (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(frame.Slice(index))), count);
 #else
-                text = _encodings[textType].GetString(frame.Slice(index, count));
+                    text = _encodings[textType].GetString(frame.Slice(index, count));
 #endif
-                index += count;
+                    index += count;
+                    break;
             }
 
             index += _nullCharacterLengths[textType];
@@ -117,6 +118,7 @@ namespace AudioWorks.Extensions.Id3
                 return ReadTextNoPreamble(frame, ref index, TextType.Utf16BigEndian);
             }
 
+            // ReSharper disable once InvertIf
             if (frame[index] == 0xFF && frame[index + 1] == 0xFE)
             {
                 index += 2;

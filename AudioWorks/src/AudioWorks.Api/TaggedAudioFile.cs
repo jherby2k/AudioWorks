@@ -48,7 +48,7 @@ namespace AudioWorks.Api
         /// <inheritdoc/>
         public void SaveMetadata(SettingDictionary? settings = null)
         {
-            settings ??= new SettingDictionary();
+            settings ??= new();
             var extension = IO.Path.GetExtension(Path);
 
             // Make sure the provided settings are clean
@@ -115,7 +115,7 @@ namespace AudioWorks.Api
                 }
 
                 logger.LogDebug("Unable to read any metadata from '{0}'.", stream.Name);
-                return new AudioMetadata();
+                return new();
             }
             finally
             {

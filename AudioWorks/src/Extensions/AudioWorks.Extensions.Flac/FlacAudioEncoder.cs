@@ -42,7 +42,7 @@ namespace AudioWorks.Extensions.Flac
 
         public void Initialize(Stream stream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
-            _encoder = new StreamEncoder(stream);
+            _encoder = new(stream);
             _encoder.SetChannels((uint) info.Channels);
             _encoder.SetBitsPerSample((uint) info.BitsPerSample);
             _encoder.SetSampleRate((uint) info.SampleRate);

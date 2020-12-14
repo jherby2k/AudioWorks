@@ -21,7 +21,7 @@ namespace AudioWorks.Api.Tests.DataSources
 {
     public static class ValidFileDataSource
     {
-        static readonly List<object[]> _data = new List<object[]>
+        static readonly List<object[]> _data = new()
         {
             #region Wave
 

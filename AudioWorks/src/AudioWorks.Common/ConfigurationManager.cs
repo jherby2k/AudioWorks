@@ -29,7 +29,7 @@ namespace AudioWorks.Common
     {
         const string _currentRepository = "https://www.myget.org/F/audioworks-extensions-v5/api/v3/index.json";
 
-        static readonly List<string> _oldRepositories = new List<string>(new[]
+        static readonly List<string> _oldRepositories = new(new[]
         {
             "https://www.myget.org/F/audioworks-extensions/api/v3/index.json",
             "https://www.myget.org/F/audioworks-extensions-v1/api/v3/index.json",

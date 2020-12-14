@@ -13,7 +13,9 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+#if !NETSTANDARD2_0
 using System;
+#endif
 using System.Buffers.Binary;
 using System.IO;
 using System.Text;

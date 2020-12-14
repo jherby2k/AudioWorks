@@ -22,7 +22,7 @@ namespace AudioWorks.Extensibility
     /// </summary>
     public sealed class GroupToken : IDisposable
     {
-        readonly object _syncRoot = new object();
+        readonly object _syncRoot = new();
         object? _groupState;
 
         /// <summary>

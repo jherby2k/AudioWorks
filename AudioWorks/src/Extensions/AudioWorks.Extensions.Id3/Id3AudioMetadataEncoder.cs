@@ -39,7 +39,7 @@ namespace AudioWorks.Extensions.Id3
         {
             var existingTagLength = GetExistingTagLength(stream);
 
-            string encoding = "Latin1";
+            var encoding = "Latin1";
             if (settings.TryGetValue("TagEncoding", out string? encodingValue))
                 encoding = encodingValue!;
 

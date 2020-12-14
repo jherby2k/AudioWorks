@@ -40,7 +40,7 @@ namespace AudioWorks.Extensions.ReplayGain
             "GroupState is disposed by the GroupToken, outside this method.")]
         public void Initialize(AudioInfo info, SettingDictionary settings, GroupToken groupToken)
         {
-            _analyzer = new R128Analyzer((uint) info.Channels, (uint) info.SampleRate,
+            _analyzer = new((uint) info.Channels, (uint) info.SampleRate,
                 settings.TryGetValue("PeakAnalysis", out string? peakAnalysis) &&
                 peakAnalysis!.Equals("Interpolated", StringComparison.Ordinal));
 

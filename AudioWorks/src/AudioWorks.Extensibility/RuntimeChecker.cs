@@ -56,13 +56,13 @@ namespace AudioWorks.Extensibility
             {
                 var release = (int) ndpKey.GetValue("Release", 0);
 
-                if (release >= 528040)
-                    return "48";
-                if (release >= 461808)
-                    return "472";
-                if (release >= 461308)
-                    return "471";
-                return release >= 460798 ? "47" : "462";
+                return release switch
+                {
+                    >= 528040 => "48",
+                    >= 461808 => "472",
+                    >= 461308 => "471",
+                    _ => release >= 460798 ? "47" : "462"
+                };
             }
         }
 #endif

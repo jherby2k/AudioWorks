@@ -13,7 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Flac
@@ -22,6 +21,6 @@ namespace AudioWorks.Extensions.Flac
     {
         internal PaddingBlock(int length)
             : base(MetadataType.Padding) =>
-            Marshal.WriteIntPtr(Handle.DangerousGetHandle(), 8, new IntPtr(length));
+            Marshal.WriteIntPtr(Handle.DangerousGetHandle(), 8, new(length));
     }
 }

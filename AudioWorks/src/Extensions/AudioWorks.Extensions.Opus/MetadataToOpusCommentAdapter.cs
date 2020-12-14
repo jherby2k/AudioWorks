@@ -73,7 +73,7 @@ namespace AudioWorks.Extensions.Opus
                 var error = SafeNativeMethods.OpusEncoderCommentsAddPictureFromMemory(
                     Handle,
                     coverArtAddress,
-                    new IntPtr(coverArt.Data.Length),
+                    new(coverArt.Data.Length),
                     -1,
                     IntPtr.Zero);
                 if (error != 0)
@@ -82,7 +82,7 @@ namespace AudioWorks.Extensions.Opus
         }
 
         internal unsafe void HeaderOut(out OggPacket packet) =>
-            packet = new OggPacket
+            packet = new()
             {
                 Packet = Marshal.ReadIntPtr(Handle.DangerousGetHandle()),
                 Bytes = Marshal.ReadInt32(IntPtr.Add(Handle.DangerousGetHandle(), sizeof(IntPtr))),

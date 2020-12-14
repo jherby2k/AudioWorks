@@ -32,7 +32,7 @@ namespace AudioWorks.Extensibility
     /// <seealso cref="AssemblyLoadContext"/>
     public sealed class ExtensionLoadContext : AssemblyLoadContext
     {
-        readonly List<string> _unmanagedLibraryPaths = new List<string>();
+        readonly List<string> _unmanagedLibraryPaths = new();
 
         /// <summary>
         /// Adds a path that contains unmanaged libraries. When an unmanaged method is called via

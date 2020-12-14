@@ -46,7 +46,7 @@ namespace AudioWorks.Api.Tests
         [Fact(DisplayName = "AudioFileEncoder's constructor throws an exception if an unexpected setting is provided")]
         public void ConstructorUnexpectedSettingThrowsException() =>
             Assert.Throws<ArgumentException>(() =>
-                new AudioFileEncoder("Wave", null, null, new SettingDictionary { ["Foo"] = "Bar" }));
+                new AudioFileEncoder("Wave", null, null, new() { ["Foo"] = "Bar" }));
 
         [Fact(DisplayName = "AudioFileEncoder's MaxDegreeOfParallelism property throws an exception if it is less than 1")]
         public void MaxDegreeOfParallelismTooLowThrowsException() =>

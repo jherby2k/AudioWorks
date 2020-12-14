@@ -24,7 +24,7 @@ namespace AudioWorks.Api
 {
     sealed class EncodedPath
     {
-        static readonly Regex _replacer = new Regex(@"\{[^{]+\}");
+        static readonly Regex _replacer = new(@"\{[^{]+\}");
         static readonly char[] _invalidChars = Path.GetInvalidFileNameChars();
         readonly string _encoded;
 

@@ -74,7 +74,7 @@ namespace AudioWorks.Extensions.ReplayGain
                 for (var sampleIndex = 0; sampleIndex < buffer.Length; sampleIndex++)
                     buffer[sampleIndex] *= _scale;
 
-            return new SampleBuffer(buffer, samples.Channels);
+            return new(buffer, samples.Channels);
         }
 
         static float CalculateScale(string? gain, string? peak) =>

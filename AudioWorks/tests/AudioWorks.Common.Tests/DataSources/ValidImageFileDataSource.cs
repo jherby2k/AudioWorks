@@ -20,7 +20,7 @@ namespace AudioWorks.Common.Tests.DataSources
 {
     public static class ValidImageFileDataSource
     {
-        static readonly List<object[]> _data = new List<object[]>
+        static readonly List<object[]> _data = new()
         {
             new object[]
             {

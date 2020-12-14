@@ -45,7 +45,7 @@ namespace AudioWorks.Extensions.Mp4
 #endif
                 throw new AudioInvalidException("Stream is unexpectedly truncated.");
 
-            return new string(buffer);
+            return new(buffer);
         }
 
         internal uint ReadUInt32BigEndian()

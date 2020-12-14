@@ -24,8 +24,7 @@ namespace AudioWorks.Extensibility
 {
     sealed class ExtensionContainer<T> : ExtensionContainerBase
     {
-        static readonly Lazy<ExtensionContainer<T>> _lazyInstance =
-            new Lazy<ExtensionContainer<T>>(() => new ExtensionContainer<T>());
+        static readonly Lazy<ExtensionContainer<T>> _lazyInstance = new(() => new());
 
         internal static ExtensionContainer<T> Instance => _lazyInstance.Value;
 

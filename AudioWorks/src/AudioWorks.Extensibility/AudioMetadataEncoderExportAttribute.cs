@@ -64,6 +64,7 @@ namespace AudioWorks.Extensibility
             if (string.IsNullOrEmpty(extension)) throw new ArgumentNullException(nameof(extension));
             if (!extension.StartsWith(".", StringComparison.OrdinalIgnoreCase)
                 || extension.Any(char.IsWhiteSpace)
+                // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
                 || extension.Any(character => Path.GetInvalidFileNameChars().Contains(character)))
                 throw new ArgumentException($"'{extension}' is not a valid file extension.", nameof(extension));
             if (string.IsNullOrEmpty(format)) throw new ArgumentNullException(nameof(format));

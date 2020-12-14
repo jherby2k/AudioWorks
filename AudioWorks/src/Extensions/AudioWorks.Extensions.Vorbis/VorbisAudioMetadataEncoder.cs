@@ -74,8 +74,8 @@ namespace AudioWorks.Extensions.Vorbis
                                 sync.Wrote(bytesRead);
                             }
 
-                            inputOggStream ??= new OggStream(SafeNativeMethods.OggPageSerialNo(page));
-                            outputOggStream ??= new OggStream(inputOggStream.SerialNumber);
+                            inputOggStream ??= new(SafeNativeMethods.OggPageSerialNo(page));
+                            outputOggStream ??= new(inputOggStream.SerialNumber);
 
                             // Write new header page(s) using a modified comment packet
                             if (!headerWritten)
@@ -154,9 +154,9 @@ namespace AudioWorks.Extensions.Vorbis
 #endif
         }
 
+#if NETSTANDARD2_0
         static unsafe void WriteFromUnmanaged(IntPtr location, int length, Stream stream)
         {
-#if NETSTANDARD2_0
             var buffer = ArrayPool<byte>.Shared.Rent(4096);
             try
             {
@@ -175,12 +175,13 @@ namespace AudioWorks.Extensions.Vorbis
             {
                 ArrayPool<byte>.Shared.Return(buffer);
             }
+        }
 #else
+        static unsafe void WriteFromUnmanaged(IntPtr location, int length, Stream stream) =>
             stream.Write(new Span<byte>(location.ToPointer(), length));
 #endif
-        }
 
-        static unsafe void UpdateSequenceNumber(ref OggPage page, uint sequenceNumber)
+            static unsafe void UpdateSequenceNumber(ref OggPage page, uint sequenceNumber)
         {
 #if WINDOWS
             var sequenceNumberSpan = new Span<byte>(page.Header.ToPointer(), page.HeaderLength).Slice(18, 4);

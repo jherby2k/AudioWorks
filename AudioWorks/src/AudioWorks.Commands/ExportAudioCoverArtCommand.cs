@@ -41,10 +41,7 @@ namespace AudioWorks.Commands
         {
             base.BeginProcessing();
 
-            _extractor = new CoverArtExtractor(
-                    SessionState.Path.GetUnresolvedProviderPathFromPSPath(Path),
-                    Name)
-                { Overwrite = Force };
+            _extractor = new(SessionState.Path.GetUnresolvedProviderPathFromPSPath(Path), Name) { Overwrite = Force };
         }
 
         protected override void ProcessRecord()

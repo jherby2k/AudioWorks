@@ -98,7 +98,7 @@ namespace AudioWorks.Extensions.Mp3
 #endif
                 throw new AudioInvalidException("Stream is unexpectedly truncated.");
 
-            return new string(buffer);
+            return new(buffer);
         }
     }
 }

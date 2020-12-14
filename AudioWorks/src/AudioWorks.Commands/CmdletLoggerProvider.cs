@@ -21,7 +21,7 @@ namespace AudioWorks.Commands
 {
     sealed class CmdletLoggerProvider : ILoggerProvider
     {
-        readonly ConcurrentQueue<object> _messageQueue = new ConcurrentQueue<object>();
+        readonly ConcurrentQueue<object> _messageQueue = new();
 
         public ILogger CreateLogger(string? categoryName) => new CmdletLogger(_messageQueue);
 

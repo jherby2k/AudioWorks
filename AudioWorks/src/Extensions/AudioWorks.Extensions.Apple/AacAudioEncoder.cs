@@ -82,7 +82,7 @@ namespace AudioWorks.Extensions.Apple
             InitializeReplayGainFilter(info, metadata, settings);
 
             var inputDescription = GetInputDescription(info);
-            _audioFile = new ExtendedAudioFile(GetOutputDescription(inputDescription), AudioFileType.M4A, stream);
+            _audioFile = new(GetOutputDescription(inputDescription), AudioFileType.M4A, stream);
             _audioFile.SetProperty(ExtendedAudioFilePropertyId.ClientDataFormat, inputDescription);
 
             var converter = _audioFile.GetProperty<IntPtr>(ExtendedAudioFilePropertyId.AudioConverter);
@@ -94,15 +94,16 @@ namespace AudioWorks.Extensions.Apple
 
             if (settings.TryGetValue("BitRate", out int bitRate))
             {
-                if (bitRate > 256 && info.Channels == 1)
+                switch (bitRate)
                 {
-                    logger.LogWarning("The maximum bitrate for 1-channel audio is 256 kbps.");
-                    bitRate = 256;
-                }
-                else if (bitRate < 64 && info.Channels == 2)
-                {
-                    logger.LogWarning("The minimum bitrate for 2-channel audio is 64 kbps.");
-                    bitRate = 64;
+                    case > 256 when info.Channels == 1:
+                        logger.LogWarning("The maximum bitrate for 1-channel audio is 256 kbps.");
+                        bitRate = 256;
+                        break;
+                    case < 64 when info.Channels == 2:
+                        logger.LogWarning("The minimum bitrate for 2-channel audio is 64 kbps.");
+                        bitRate = 64;
+                        break;
                 }
 
                 SetConverterProperty(converter, AudioConverterPropertyId.BitRate, bitRate * 1000);
@@ -150,7 +151,7 @@ namespace AudioWorks.Extensions.Apple
             };
             bufferList.Buffers[0].NumberChannels = (uint) samples.Channels;
             bufferList.Buffers[0].DataByteSize = (uint) (buffer.Length * sizeof(float));
-            bufferList.Buffers[0].Data = new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)));
+            bufferList.Buffers[0].Data = new(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)));
 
             var status = _audioFile!.Write(bufferList, (uint)samples.Frames);
             if (status != ExtendedAudioFileStatus.Ok)

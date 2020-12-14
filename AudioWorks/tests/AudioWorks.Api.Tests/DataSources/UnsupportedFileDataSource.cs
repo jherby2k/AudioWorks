@@ -19,7 +19,7 @@ namespace AudioWorks.Api.Tests.DataSources
 {
     public static class UnsupportedFileDataSource
     {
-        static readonly List<object[]> _data = new List<object[]>
+        static readonly List<object[]> _data = new()
         {
             new object[] { "Text.txt" },
             new object[] { "MS ADPCM.wav" },

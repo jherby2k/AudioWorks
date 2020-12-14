@@ -28,7 +28,7 @@ namespace AudioWorks.Extensibility
         /// Gets a <see cref="SampleBuffer"/> with 0 frames.
         /// </summary>
         /// <value>An empty <see cref="SampleBuffer"/>.</value>
-        public static SampleBuffer Empty { get; } = new SampleBuffer();
+        public static SampleBuffer Empty { get; } = new();
 
         readonly IMemoryOwner<float>? _buffer;
         bool _isDisposed;
@@ -83,7 +83,6 @@ namespace AudioWorks.Extensibility
             if (channels > 1)
                 IsInterleaved = true;
 
-            // ReSharper disable once PossibleNullReferenceException
             interleavedSamples.CopyTo(_buffer.Memory.Span);
         }
 
@@ -105,7 +104,6 @@ namespace AudioWorks.Extensibility
             Frames = monoSamples.Length;
             _buffer = MemoryPool<float>.Shared.Rent(Frames);
 
-            // ReSharper disable once PossibleNullReferenceException
             SampleProcessor.Convert(monoSamples, _buffer.Memory.Span, bitsPerSample);
         }
 
@@ -132,9 +130,12 @@ namespace AudioWorks.Extensibility
             Frames = leftSamples.Length;
             _buffer = MemoryPool<float>.Shared.Rent(Frames * 2);
 
-            // ReSharper disable once PossibleNullReferenceException
             SampleProcessor.Convert(leftSamples, _buffer.Memory.Span.Slice(0, Frames), bitsPerSample);
+#if NETSTANDARD2_0
             SampleProcessor.Convert(rightSamples, _buffer.Memory.Span.Slice(Frames), bitsPerSample);
+#else
+            SampleProcessor.Convert(rightSamples, _buffer.Memory.Span[Frames..], bitsPerSample);
+#endif
         }
 
         /// <summary>
@@ -165,7 +166,6 @@ namespace AudioWorks.Extensibility
             if (channels > 1)
                 IsInterleaved = true;
 
-            // ReSharper disable once PossibleNullReferenceException
             SampleProcessor.Convert(interleavedSamples, _buffer.Memory.Span, bitsPerSample);
         }
 

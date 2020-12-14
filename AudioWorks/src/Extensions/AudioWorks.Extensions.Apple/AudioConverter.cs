@@ -79,12 +79,12 @@ namespace AudioWorks.Extensions.Apple
 
             var inputDescriptions = new AudioStreamPacketDescription[numberPackets];
             _audioFile.ReadPackets(out var numBytes, inputDescriptions, _packetIndex, ref numberPackets,
-                new IntPtr(_bufferHandle.Pointer));
+                new(_bufferHandle.Pointer));
 
             _packetIndex += numberPackets;
 
             data.Buffers[0].DataByteSize = numBytes;
-            data.Buffers[0].Data = new IntPtr(_bufferHandle.Pointer);
+            data.Buffers[0].Data = new(_bufferHandle.Pointer);
 
             // If this conversion requires packet descriptions, provide them
             // ReSharper disable once InvertIf

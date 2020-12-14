@@ -35,7 +35,7 @@ namespace AudioWorks.Extensions.ReplayGain
         }
 
         internal void AddFrames(Span<float> samples, uint frames) =>
-            SafeNativeMethods.AddFramesFloat(Handle, MemoryMarshal.GetReference(samples), new UIntPtr(frames));
+            SafeNativeMethods.AddFramesFloat(Handle, MemoryMarshal.GetReference(samples), new(frames));
 
         internal double GetPeak()
         {
@@ -64,7 +64,7 @@ namespace AudioWorks.Extensions.ReplayGain
         {
             SafeNativeMethods.LoudnessGlobalMultiple(
                 handles.Select(handle => handle.DangerousGetHandle()).ToArray(),
-                new UIntPtr((uint) handles.Length),
+                new((uint) handles.Length),
                 out var loudness);
             return loudness;
         }

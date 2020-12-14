@@ -89,7 +89,7 @@ namespace AudioWorks.Extensions.Lame
                     tempStream.WriteTo(stream);
                 }
 
-            _encoder = new Encoder(stream);
+            _encoder = new(stream);
             _encoder.SetChannels(info.Channels);
             _encoder.SetSampleRate(info.SampleRate);
             if (info.FrameCount > 0)

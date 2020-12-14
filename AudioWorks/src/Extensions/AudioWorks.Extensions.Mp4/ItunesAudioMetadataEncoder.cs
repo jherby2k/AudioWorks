@@ -27,7 +27,7 @@ namespace AudioWorks.Extensions.Mp4
     [AudioMetadataEncoderExport(".m4a", "iTunes", "iTunes-compatible MPEG-4")]
     sealed class ItunesAudioMetadataEncoder : IAudioMetadataEncoder
     {
-        public SettingInfoDictionary SettingInfo { get; } = new SettingInfoDictionary
+        public SettingInfoDictionary SettingInfo { get; } = new()
         {
             ["CreationTime"] = new DateTimeSettingInfo(),
             ["ModificationTime"] = new DateTimeSettingInfo(),

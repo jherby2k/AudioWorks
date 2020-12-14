@@ -47,7 +47,7 @@ namespace AudioWorks.Extensions.Flac
 
                     var padding = GetPadding(settings);
                     if (padding > 0)
-                        paddingBlock = new PaddingBlock(padding.Value);
+                        paddingBlock = new(padding.Value);
 
                     // Iterate over the existing blocks, replacing and deleting as needed
                     using (var iterator = chain.GetIterator())

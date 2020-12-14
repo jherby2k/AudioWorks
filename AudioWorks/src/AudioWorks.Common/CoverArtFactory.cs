@@ -29,8 +29,7 @@ namespace AudioWorks.Common
     public static class CoverArtFactory
     {
         static readonly string[] _acceptedExtensions = { ".bmp", ".png", ".jpg", ".jpeg" };
-        static readonly Dictionary<string, WeakReference<CoverArt>> _internedCovers =
-            new Dictionary<string, WeakReference<CoverArt>>();
+        static readonly Dictionary<string, WeakReference<CoverArt>> _internedCovers = new();
 
         /// <summary>
         /// Returns an <see cref="ICoverArt"/> object from a byte array.
@@ -118,7 +117,7 @@ namespace AudioWorks.Common
 
                 // Intern the cover
                 var result = new CoverArt(stream);
-                _internedCovers.Add(hash, new WeakReference<CoverArt>(result));
+                _internedCovers.Add(hash, new(result));
                 return result;
             }
         }

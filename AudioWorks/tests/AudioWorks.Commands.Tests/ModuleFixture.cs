@@ -14,14 +14,12 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 
 namespace AudioWorks.Commands.Tests
 {
-    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+    // ReSharper disable once ClassNeverInstantiated.Global
     public sealed class ModuleFixture : IDisposable
     {
         const string _moduleProject = "AudioWorks.Commands";
@@ -33,7 +31,7 @@ namespace AudioWorks.Commands.Tests
             var state = InitialSessionState.CreateDefault();
 
             // This bypasses the execution policy (InitialSessionState.ExecutionPolicy isn't available with PowerShell 5)
-            state.AuthorizationManager = new AuthorizationManager("Microsoft.PowerShell");
+            state.AuthorizationManager = new("Microsoft.PowerShell");
 
             // ReSharper disable once RedundantExplicitParamsArrayCreation
             state.ImportPSModule(new[]

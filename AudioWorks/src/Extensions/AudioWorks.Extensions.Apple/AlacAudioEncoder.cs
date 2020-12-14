@@ -42,7 +42,7 @@ namespace AudioWorks.Extensions.Apple
                 // Use the external MP4 encoder's SettingInfo
                 var metadataEncoderFactory =
                     ExtensionProvider.GetFactories<IAudioMetadataEncoder>("Extension", FileExtension).FirstOrDefault();
-                if (metadataEncoderFactory == null) return new SettingInfoDictionary();
+                if (metadataEncoderFactory == null) return new();
                 using (var export = metadataEncoderFactory.CreateExport())
                     return export.Value.SettingInfo;
             }
@@ -62,7 +62,7 @@ namespace AudioWorks.Extensions.Apple
                              + (metadata.CoverArt?.Data.Length ?? 0));
 
             var inputDescription = GetInputDescription(info);
-            _audioFile = new ExtendedAudioFile(GetOutputDescription(inputDescription), AudioFileType.M4A, stream);
+            _audioFile = new(GetOutputDescription(inputDescription), AudioFileType.M4A, stream);
             _audioFile.SetProperty(ExtendedAudioFilePropertyId.ClientDataFormat, inputDescription);
         }
 
@@ -80,7 +80,7 @@ namespace AudioWorks.Extensions.Apple
             };
             bufferList.Buffers[0].NumberChannels = (uint) samples.Channels;
             bufferList.Buffers[0].DataByteSize = (uint) (buffer.Length * sizeof(int));
-            bufferList.Buffers[0].Data = new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)));
+            bufferList.Buffers[0].Data = new(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)));
 
             var status = _audioFile!.Write(bufferList, (uint) samples.Frames);
             if (status != ExtendedAudioFileStatus.Ok)

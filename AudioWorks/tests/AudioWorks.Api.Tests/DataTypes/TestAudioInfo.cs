@@ -19,6 +19,7 @@ namespace AudioWorks.Api.Tests.DataTypes
 {
     public sealed class TestAudioInfo : IXunitSerializable
     {
+#if NET462 || NETCOREAPP2_1 || NETCOREAPP3_1
         public string Format { get; set; } = string.Empty;
 
         public int Channels { get; set; }
@@ -30,6 +31,19 @@ namespace AudioWorks.Api.Tests.DataTypes
         public int BitRate { get; set; }
 
         public long SampleCount { get; set; }
+#else
+        public string Format { get; init; } = string.Empty;
+
+        public int Channels { get; init; }
+
+        public int BitsPerSample { get; init; }
+
+        public int SampleRate { get; init; }
+
+        public int BitRate { get; init; }
+
+        public long SampleCount { get; init; }
+#endif
 
         public void Deserialize(IXunitSerializationInfo info)
         {

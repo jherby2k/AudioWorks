@@ -41,6 +41,7 @@ namespace AudioWorks.Api
         /// Gets or sets a value indicating whether existing files should be overwritten.
         /// </summary>
         /// <value><c>true</c> if files should be overwritten; otherwise, <c>false</c>.</value>
+        // ReSharper disable once PropertyCanBeMadeInitOnly.Global
         public bool Overwrite { get; set; }
 
         /// <summary>
@@ -90,9 +91,9 @@ namespace AudioWorks.Api
                               throw new ArgumentException($"No '{name}' encoder is available.", nameof(name));
 
             if (encodedDirectoryName != null)
-                _encodedDirectoryName = new EncodedPath(encodedDirectoryName);
+                _encodedDirectoryName = new(encodedDirectoryName);
             if (encodedFileName != null)
-                _encodedFileName = new EncodedPath(encodedFileName);
+                _encodedFileName = new(encodedFileName);
 
             using (var export = _encoderFactory.CreateExport())
                 Settings = new ValidatingSettingDictionary(export.Value.SettingInfo, settings);
@@ -171,14 +172,11 @@ namespace AudioWorks.Api
             params ITaggedAudioFile[] audioFiles)
         {
             if (audioFiles == null) throw new ArgumentNullException(nameof(audioFiles));
+            // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
             if (audioFiles.Any(audioFile => audioFile == null))
                 throw new ArgumentException("One or more audio files are null.", nameof(audioFiles));
 
-            progress?.Report(new ProgressToken
-            {
-                AudioFilesCompleted = 0,
-                FramesCompleted = 0
-            });
+            progress?.Report(new() { AudioFilesCompleted = 0, FramesCompleted = 0 });
 
             var audioFilesCompleted = 0;
             var totalFramesCompleted = 0L;
@@ -204,14 +202,14 @@ namespace AudioWorks.Api
                             encoderExport.Value.Initialize(
                                 outputStream,
                                 message.audioFile.Info,
-                                new AudioMetadata(message.audioFile.Metadata),
+                                new(message.audioFile.Metadata),
                                 Settings);
 
                             encoderExport.Value.ProcessSamples(
                                 message.audioFile.Path,
                                 progress == null
                                     ? null
-                                    : new SimpleProgress<int>(framesCompleted => progress.Report(new ProgressToken
+                                    : new SimpleProgress<int>(framesCompleted => progress.Report(new()
                                     {
                                         // ReSharper disable once AccessToModifiedClosure
                                         AudioFilesCompleted = audioFilesCompleted,
@@ -244,7 +242,7 @@ namespace AudioWorks.Api
 
                     return new TaggedAudioFile(message.outputPath);
                 },
-                new ExecutionDataflowBlockOptions
+                new()
                 {
                     MaxDegreeOfParallelism = MaxDegreeOfParallelism,
                     SingleProducerConstrained = true,
@@ -252,7 +250,7 @@ namespace AudioWorks.Api
                 });
 
             var batchBlock = new BatchBlock<ITaggedAudioFile>(audioFiles.Length);
-            encodeBlock.LinkTo(batchBlock, new DataflowLinkOptions { PropagateCompletion = true });
+            encodeBlock.LinkTo(batchBlock, new() { PropagateCompletion = true });
 
             string outputExtension;
             using (var export = _encoderFactory.CreateExport())
@@ -278,7 +276,7 @@ namespace AudioWorks.Api
             {
                 var result = await batchBlock.ReceiveAsync(cancellationToken).ConfigureAwait(false);
 
-                progress?.Report(new ProgressToken
+                progress?.Report(new()
                 {
                     AudioFilesCompleted = audioFilesCompleted,
                     FramesCompleted = totalFramesCompleted

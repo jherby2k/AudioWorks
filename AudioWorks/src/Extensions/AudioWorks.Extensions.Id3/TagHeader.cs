@@ -15,7 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.IO;
-using System.Text;
 using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Id3

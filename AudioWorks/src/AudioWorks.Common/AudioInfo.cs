@@ -46,7 +46,7 @@ namespace AudioWorks.Common
             if (bitsPerSample == 0)
                 throw new AudioInvalidException($"{bitsPerSample} cannot be 0 for a lossless file.");
 
-            return new AudioInfo(
+            return new(
                 format,
                 channels,
                 bitsPerSample,
@@ -74,7 +74,7 @@ namespace AudioWorks.Common
             int sampleRate,
             long frameCount = 0,
             int bitRate = 0) =>
-            new AudioInfo(
+            new(
                 format,
                 channels,
                 0,
@@ -125,7 +125,7 @@ namespace AudioWorks.Common
         public TimeSpan PlayLength =>
             FrameCount == 0
                 ? TimeSpan.Zero
-                : new TimeSpan(0, 0, (int) Math.Round(FrameCount / (double) SampleRate));
+                : new(0, 0, (int) Math.Round(FrameCount / (double) SampleRate));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioInfo"/> class. You should normally use the
@@ -152,14 +152,20 @@ namespace AudioWorks.Common
         {
             if (string.IsNullOrEmpty(format))
                 throw new ArgumentNullException(nameof(format), "The format cannot be null or empty.");
-            if (channels < 1)
-                throw new AudioInvalidException($"{channels} is not a valid channel count.");
-            if (channels > 2)
-                throw new AudioUnsupportedException($"{channels} is not a supported channel count.");
-            if (bitsPerSample < 0)
-                throw new AudioInvalidException($"{bitsPerSample} is not a valid # of bits per sample.");
-            if (bitsPerSample > 32)
-                throw new AudioUnsupportedException($"{bitsPerSample} is not a supported # of bits per sample.");
+            switch (channels)
+            {
+                case < 1:
+                    throw new AudioInvalidException($"{channels} is not a valid channel count.");
+                case > 2:
+                    throw new AudioUnsupportedException($"{channels} is not a supported channel count.");
+            }
+            switch (bitsPerSample)
+            {
+                case < 0:
+                    throw new AudioInvalidException($"{bitsPerSample} is not a valid # of bits per sample.");
+                case > 32:
+                    throw new AudioUnsupportedException($"{bitsPerSample} is not a supported # of bits per sample.");
+            }
             if (sampleRate < 1)
                 throw new AudioInvalidException($"{sampleRate} is not a valid sample rate.");
             if (bitRate < 0)

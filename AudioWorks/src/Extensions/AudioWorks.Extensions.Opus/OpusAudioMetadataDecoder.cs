@@ -70,7 +70,7 @@ namespace AudioWorks.Extensions.Opus
                             sync.Wrote(bytesRead);
                         }
 
-                        oggStream ??= new OggStream(SafeNativeMethods.OggPageSerialNo(page));
+                        oggStream ??= new(SafeNativeMethods.OggPageSerialNo(page));
                         oggStream.PageIn(page);
 
                         while (oggStream.PacketOut(out var packet))

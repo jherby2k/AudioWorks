@@ -28,8 +28,8 @@ namespace AudioWorks.Commands
     [Cmdlet(VerbsDiagnostic.Measure, "AudioFile"), OutputType(typeof(ITaggedAudioFile))]
     public sealed class MeasureAudioFileCommand : LoggingCmdlet, IDynamicParameters, IDisposable
     {
-        readonly CancellationTokenSource _cancellationSource = new CancellationTokenSource();
-        readonly List<ITaggedAudioFile> _audioFiles = new List<ITaggedAudioFile>();
+        readonly CancellationTokenSource _cancellationSource = new();
+        readonly List<ITaggedAudioFile> _audioFiles = new();
         RuntimeDefinedParameterDictionary? _parameters;
 
         [Parameter(Mandatory = true, Position = 0)]

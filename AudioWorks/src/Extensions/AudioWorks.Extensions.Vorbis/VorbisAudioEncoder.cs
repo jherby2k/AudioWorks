@@ -82,23 +82,19 @@ namespace AudioWorks.Extensions.Vorbis
                 serialNumber = RandomNumberGenerator.GetInt32(int.MaxValue);
 #endif
 
-            _oggStream = new OggStream(serialNumber);
+            _oggStream = new(serialNumber);
 
             // Default to a quality setting of 5
             if (settings.TryGetValue("BitRate", out int bitRate))
             {
                 if (settings.TryGetValue("ForceCBR", out bool cbr) && cbr)
-                    _encoder = new VorbisEncoder(info.Channels, info.SampleRate,
-                        bitRate * 1000, bitRate * 1000, bitRate * 1000);
+                    _encoder = new(info.Channels, info.SampleRate, bitRate * 1000, bitRate * 1000, bitRate * 1000);
                 else
-                    _encoder = new VorbisEncoder(info.Channels, info.SampleRate,
-                        -1, bitRate * 1000, -1);
+                    _encoder = new(info.Channels, info.SampleRate, -1, bitRate * 1000, -1);
             }
             else
-                _encoder = new VorbisEncoder(info.Channels, info.SampleRate,
-                    settings.TryGetValue("Quality", out int quality)
-                        ? quality / 10f
-                        : 0.5f);
+                _encoder = new(info.Channels, info.SampleRate,
+                    settings.TryGetValue("Quality", out int quality) ? quality / 10f : 0.5f);
 
             // Generate the header
             using (var comment = new MetadataToVorbisCommentAdapter(metadata))
@@ -206,9 +202,10 @@ namespace AudioWorks.Extensions.Vorbis
 #endif
         }
 
+
+#if NETSTANDARD2_0
         unsafe void WriteFromUnmanaged(IntPtr location, int length)
         {
-#if NETSTANDARD2_0
             var buffer = ArrayPool<byte>.Shared.Rent(4096);
             try
             {
@@ -227,9 +224,10 @@ namespace AudioWorks.Extensions.Vorbis
             {
                 ArrayPool<byte>.Shared.Return(buffer);
             }
+        }
 #else
+        unsafe void WriteFromUnmanaged(IntPtr location, int length) =>
             _outputStream!.Write(new Span<byte>(location.ToPointer(), length));
 #endif
-        }
     }
 }

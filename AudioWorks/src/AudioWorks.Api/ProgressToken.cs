@@ -22,18 +22,30 @@ namespace AudioWorks.Api
     /// </summary>
     [SuppressMessage("Performance", "CA1815:Override equals and operator equals on value types",
         Justification = "Instances will not be compared.")]
+#if NETSTANDARD2_0
     public struct ProgressToken
+#else
+    public readonly struct ProgressToken
+#endif
     {
         /// <summary>
         /// Gets the total # of audio files completed since the activity started.
         /// </summary>
         /// <value>The # of audio files completed.</value>
+#if NETSTANDARD2_0
         public int AudioFilesCompleted { get; internal set; }
+#else
+        public int AudioFilesCompleted { get; internal init; }
+#endif
 
         /// <summary>
         /// Gets the total # of frames completed since the activity started.
         /// </summary>
         /// <value>The # of frames completed.</value>
+#if NETSTANDARD2_0
         public long FramesCompleted { get; internal set; }
+#else
+        public long FramesCompleted { get; internal init; }
+#endif
     }
 }

@@ -68,7 +68,7 @@ namespace AudioWorks.Common
                     // Only create an alpha channel if necessary
                     using (var image = Image.Load(stream))
                         if (ColorDepth <= 24)
-                            image.SaveAsPng(pngStream, new PngEncoder { ColorType = PngColorType.Rgb });
+                            image.SaveAsPng(pngStream, new() { ColorType = PngColorType.Rgb });
                         else
                             image.SaveAsPng(pngStream);
 

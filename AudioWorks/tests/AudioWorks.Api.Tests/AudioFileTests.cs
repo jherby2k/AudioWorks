@@ -133,7 +133,7 @@ namespace AudioWorks.Api.Tests
             Assert.Equal(
                 expectedAudioInfo.SampleCount == 0
                     ? TimeSpan.Zero
-                    : new TimeSpan(0, 0,
+                    : new(0, 0,
                         (int) Math.Round(expectedAudioInfo.SampleCount / (double) expectedAudioInfo.SampleRate)),
                 new AudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Info.PlayLength);
 

@@ -21,7 +21,7 @@ namespace AudioWorks.Extensions.Mp4
 {
     sealed class MetadataToIlstAtomAdapter
     {
-        readonly List<WritableAtom> _atoms = new List<WritableAtom>();
+        readonly List<WritableAtom> _atoms = new();
 
         internal MetadataToIlstAtomAdapter(AudioMetadata metadata, bool compressCoverArt)
         {

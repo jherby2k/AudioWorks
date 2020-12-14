@@ -99,7 +99,7 @@ namespace AudioWorks.Commands
             }
             catch (AudioMetadataInvalidException e)
             {
-                WriteError(new ErrorRecord(e, e.GetType().Name, ErrorCategory.InvalidData, AudioFile));
+                WriteError(new(e, e.GetType().Name, ErrorCategory.InvalidData, AudioFile));
             }
 
             ProcessLogMessages();

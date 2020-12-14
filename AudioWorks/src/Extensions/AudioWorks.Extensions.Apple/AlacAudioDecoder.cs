@@ -39,7 +39,7 @@ namespace AudioWorks.Extensions.Apple
 
         public void Initialize(Stream stream)
         {
-            _audioFile = new AudioFile(AudioFileType.M4A, stream);
+            _audioFile = new(AudioFileType.M4A, stream);
 
             var inputDescription = _audioFile.GetProperty<AudioStreamBasicDescription>(AudioFilePropertyId.DataFormat);
             if (inputDescription.AudioFormat != AudioFormat.AppleLossless)
@@ -47,7 +47,7 @@ namespace AudioWorks.Extensions.Apple
 
             _outputDescription = GetOutputDescription(inputDescription);
 
-            _converter = new AudioConverter(ref inputDescription, ref _outputDescription, _audioFile);
+            _converter = new(ref inputDescription, ref _outputDescription, _audioFile);
             _magicCookie = GetMagicCookie(_audioFile, _converter);
         }
 
@@ -62,7 +62,7 @@ namespace AudioWorks.Extensions.Apple
             };
             bufferList.Buffers[0].NumberChannels = _outputDescription.ChannelsPerFrame;
             bufferList.Buffers[0].DataByteSize = (uint) (buffer.Length * sizeof(int));
-            bufferList.Buffers[0].Data = new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)));
+            bufferList.Buffers[0].Data = new(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)));
 
             var frameCount = _defaultFrameCount;
             _converter!.FillBuffer(ref frameCount, ref bufferList, null);
@@ -99,7 +99,7 @@ namespace AudioWorks.Extensions.Apple
                 _ => throw new AudioUnsupportedException("Unknown audio format.")
             };
 
-            return new AudioStreamBasicDescription
+            return new()
             {
                 AudioFormat = AudioFormat.LinearPcm,
                 Flags = AudioFormatFlags.PcmIsSignedInteger | AudioFormatFlags.PcmIsAlignedHigh,

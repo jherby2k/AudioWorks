@@ -35,11 +35,11 @@ namespace AudioWorks.Extensions.Mp4
             Span<char> fourCcBuffer = stackalloc char[4];
             (CodePagesEncodingProvider.Instance.GetEncoding(1252) ?? Encoding.ASCII)
                 .GetChars(data.Slice(0, 4), fourCcBuffer);
-            _fourCc = new string(fourCcBuffer);
+            _fourCc = new(fourCcBuffer);
 
             Span<char> charBuffer = stackalloc char[Encoding.UTF8.GetMaxCharCount(data.Length - 24)];
             var charCount = Encoding.UTF8.GetChars(data[24..], charBuffer);
-            Value = new string(charBuffer.Slice(0, charCount));
+            Value = new(charBuffer.Slice(0, charCount));
 #endif
         }
 

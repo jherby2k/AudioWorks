@@ -26,7 +26,7 @@ namespace AudioWorks.Extensions.Flac
 {
     sealed class MetadataStreamDecoder : StreamDecoder
     {
-        internal VorbisCommentToMetadataAdapter AudioMetadata { get; } = new VorbisCommentToMetadataAdapter();
+        internal VorbisCommentToMetadataAdapter AudioMetadata { get; } = new();
 
         internal MetadataStreamDecoder(Stream stream)
             : base(stream)

@@ -21,7 +21,7 @@ namespace AudioWorks.Api.Tests.DataSources
 {
     public static class AnalyzeValidFileDataSource
     {
-        static readonly List<object[]> _data = new List<object[]>
+        static readonly List<object[]> _data = new()
         {
             // 8000Hz Stereo, default (simple) peaks
             new object[]

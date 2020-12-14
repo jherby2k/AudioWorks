@@ -311,7 +311,7 @@ namespace AudioWorks.Api.Tests
         public void SaveMetadataUnexpectedSettingThrowsException(string fileName) =>
             Assert.Throws<ArgumentException>(() =>
                 new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName))
-                    .SaveMetadata(new SettingDictionary { ["Foo"] = "Bar" }));
+                    .SaveMetadata(new() { ["Foo"] = "Bar" }));
 
         [Theory(DisplayName = "TaggedAudioFile's Metadata property is properly serialized")]
         [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]

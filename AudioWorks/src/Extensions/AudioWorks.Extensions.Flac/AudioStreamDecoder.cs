@@ -35,13 +35,13 @@ namespace AudioWorks.Extensions.Flac
             IntPtr userData)
         {
             if (frame.Header.Channels == 1)
-                Samples = new SampleBuffer(
+                Samples = new(
                     new Span<int>(
                         Marshal.ReadIntPtr(buffer).ToPointer(),
                         (int) frame.Header.BlockSize),
                     (int) frame.Header.BitsPerSample);
             else
-                Samples = new SampleBuffer(
+                Samples = new(
                     new Span<int>(
                         Marshal.ReadIntPtr(buffer).ToPointer(),
                         (int) frame.Header.BlockSize),

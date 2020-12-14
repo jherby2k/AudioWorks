@@ -23,7 +23,7 @@ namespace AudioWorks.Extensions.Mp4
     sealed class Mp4Model
     {
         readonly Stream _stream;
-        readonly Stack<AtomInfo> _atomInfoStack = new Stack<AtomInfo>();
+        readonly Stack<AtomInfo> _atomInfoStack = new();
 
         internal AtomInfo CurrentAtom => _atomInfoStack.Peek();
 

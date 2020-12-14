@@ -31,6 +31,7 @@ namespace AudioWorks.Api
         /// Gets or sets a value indicating whether existing files should be overwritten.
         /// </summary>
         /// <value><c>true</c> if files should be overwritten; otherwise, <c>false</c>.</value>
+        // ReSharper disable once PropertyCanBeMadeInitOnly.Global
         public bool Overwrite { get; set; }
 
         /// <summary>
@@ -41,9 +42,9 @@ namespace AudioWorks.Api
         public CoverArtExtractor(string? encodedDirectoryName = null, string? encodedFileName = null)
         {
             if (encodedDirectoryName != null)
-                _encodedDirectoryName = new EncodedPath(encodedDirectoryName);
+                _encodedDirectoryName = new(encodedDirectoryName);
             if (encodedFileName != null)
-                _encodedFileName = new EncodedPath(encodedFileName);
+                _encodedFileName = new(encodedFileName);
         }
 
         /// <summary>

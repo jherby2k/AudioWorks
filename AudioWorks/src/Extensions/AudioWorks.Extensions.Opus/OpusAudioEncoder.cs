@@ -58,8 +58,8 @@ namespace AudioWorks.Extensions.Opus
                 gain = (int) Math.Round(Math.Log10(scale) * 5120);
             }
 
-            _comments = new MetadataToOpusCommentAdapter(metadata);
-            _encoder = new Encoder(stream, info.SampleRate, info.Channels, (int) info.PlayLength.TotalSeconds,
+            _comments = new(metadata);
+            _encoder = new(stream, info.SampleRate, info.Channels, (int) info.PlayLength.TotalSeconds,
                 _comments.Handle);
 
             if (info.BitsPerSample > 0)

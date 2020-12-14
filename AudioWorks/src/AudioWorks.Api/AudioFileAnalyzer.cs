@@ -145,14 +145,11 @@ namespace AudioWorks.Api
             params ITaggedAudioFile[] audioFiles)
         {
             if (audioFiles == null) throw new ArgumentNullException(nameof(audioFiles));
+            // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
             if (audioFiles.Any(audioFile => audioFile == null))
                 throw new ArgumentException("One or more audio files are null.", nameof(audioFiles));
 
-            progress?.Report(new ProgressToken
-            {
-                AudioFilesCompleted = 0,
-                FramesCompleted = 0
-            });
+            progress?.Report(new() { AudioFilesCompleted = 0, FramesCompleted = 0 });
 
             var audioFilesCompleted = 0;
             var totalFramesCompleted = 0L;
@@ -172,7 +169,7 @@ namespace AudioWorks.Api
                         analyzerExport.Value.Initialize(audioFile.Info, Settings, groupToken);
                         return (audioFile, analyzerExport.Value);
                     },
-                    new ExecutionDataflowBlockOptions
+                    new()
                     {
                         SingleProducerConstrained = true,
                         CancellationToken = cancellationToken
@@ -187,7 +184,7 @@ namespace AudioWorks.Api
                             message.audioFile.Path,
                             progress == null
                                 ? null
-                                : new SimpleProgress<int>(framesCompleted => progress.Report(new ProgressToken
+                                : new SimpleProgress<int>(framesCompleted => progress.Report(new()
                                 {
                                     // ReSharper disable once AccessToModifiedClosure
                                     AudioFilesCompleted = audioFilesCompleted,
@@ -201,7 +198,7 @@ namespace AudioWorks.Api
 
                         return message;
                     },
-                    new ExecutionDataflowBlockOptions
+                    new()
                     {
                         MaxDegreeOfParallelism = MaxDegreeOfParallelism,
                         SingleProducerConstrained = true
@@ -216,7 +213,7 @@ namespace AudioWorks.Api
                         foreach (var (audioFile, analyzer) in group)
                             CopyStringProperties(analyzer.GetGroupResult(), audioFile.Metadata);
                     },
-                    new ExecutionDataflowBlockOptions { SingleProducerConstrained = true });
+                    new() { SingleProducerConstrained = true });
                 batchBlock.LinkTo(groupResultBlock, linkOptions);
 
                 try
@@ -238,7 +235,7 @@ namespace AudioWorks.Api
                 }
             }
 
-            progress?.Report(new ProgressToken
+            progress?.Report(new()
             {
                 AudioFilesCompleted = audioFilesCompleted,
                 FramesCompleted = totalFramesCompleted

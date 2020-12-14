@@ -43,21 +43,19 @@ namespace AudioWorks.Api
     {
         static readonly NuGetFramework _framework = NuGetFramework.ParseFolder(RuntimeChecker.GetShortFolderName());
 
-        static readonly SourceRepository _customRepository = new SourceRepository(
-            new PackageSource(
+        static readonly SourceRepository _customRepository = new(new(
                 ConfigurationManager.Configuration.GetValue(
                     "ExtensionRepository",
                     "https://www.myget.org/F/audioworks-extensions-v5/api/v3/index.json")),
             Repository.Provider.GetCoreV3());
 
-        static readonly SourceRepository _defaultRepository = new SourceRepository(
-            new PackageSource(
+        static readonly SourceRepository _defaultRepository = new(new(
                 ConfigurationManager.Configuration.GetValue(
                     "DefaultRepository",
                     "https://api.nuget.org/v3/index.json")),
             Repository.Provider.GetCoreV3());
 
-        static readonly List<string> _fileTypesToInstall = new List<string>(new[]
+        static readonly List<string> _fileTypesToInstall = new(new[]
         {
             ".dll",
             ".dylib",
@@ -166,7 +164,7 @@ namespace AudioWorks.Api
         {
             var result = (await _customRepository.GetResource<PackageSearchResource>(cancellationToken)
                     .SearchAsync("AudioWorks.Extensions",
-                        new SearchFilter(ConfigurationManager.Configuration.GetValue<bool>("UsePreReleaseExtensions")),
+                        new(ConfigurationManager.Configuration.GetValue<bool>("UsePreReleaseExtensions")),
                         0, 100, NullLogger.Instance, cancellationToken).ConfigureAwait(false))
 #if NETSTANDARD2_0
                 .Where(package => package.Tags.Contains(GetOSTag()))
@@ -224,7 +222,7 @@ namespace AudioWorks.Api
                             .ConfigureAwait(false);
                         var downloadResult = await downloadResource.GetDownloadResourceResultAsync(
                                 packageToInstall,
-                                new PackageDownloadContext(cacheContext),
+                                new(cacheContext),
                                 SettingsUtility.GetGlobalPackagesFolder(settings),
                                 NullLogger.Instance,
                                 cancellationToken)
@@ -232,7 +230,9 @@ namespace AudioWorks.Api
 
                         if (downloadResult.Status != DownloadResourceResultStatus.Available ||
                             downloadResult.PackageReader == null ||
+#pragma warning disable IDE0083 // Use pattern matching
                             !(downloadResult.PackageStream is FileStream packageStream))
+#pragma warning restore IDE0083 // Use pattern matching
                             continue;
 
                         var libGroups = (await downloadResult.PackageReader.GetLibItemsAsync(cancellationToken)
@@ -345,7 +345,7 @@ namespace AudioWorks.Api
 
                 foreach (var dependency in dependencyInfo.Dependencies)
                     await CollectDependenciesAsync(
-                            new PackageIdentity(dependency.Id, dependency.VersionRange.MinVersion),
+                            new(dependency.Id, dependency.VersionRange.MinVersion),
                             cacheContext,
                             dependencies,
                             cancellationToken)

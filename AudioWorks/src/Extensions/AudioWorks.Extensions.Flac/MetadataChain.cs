@@ -59,7 +59,7 @@ namespace AudioWorks.Extensions.Flac
                 {
                     var bytesRead = stream.Read(buffer, 0, totalBufferSize);
                     Marshal.Copy(buffer, 0, readBuffer, totalBufferSize);
-                    return new IntPtr(bytesRead);
+                    return new(bytesRead);
                 }
                 finally
                 {
@@ -77,7 +77,7 @@ namespace AudioWorks.Extensions.Flac
                 {
                     Marshal.Copy(writeBuffer, buffer, 0, totalBufferSize);
                     stream.Write(buffer, 0, totalBufferSize);
-                    return new IntPtr(castNumberOfRecords);
+                    return new(castNumberOfRecords);
                 }
                 finally
                 {

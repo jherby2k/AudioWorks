@@ -75,7 +75,7 @@ namespace AudioWorks.Extensions.Mp3
 
                 try
                 {
-                    result = new FrameHeader(buffer);
+                    result = new(buffer);
                 }
                 catch (AudioException)
                 {

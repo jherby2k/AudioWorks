@@ -43,7 +43,7 @@ namespace AudioWorks.Commands
             }
             catch (ItemNotFoundException e)
             {
-                WriteError(new ErrorRecord(e, nameof(ItemNotFoundException), ErrorCategory.ObjectNotFound, Path));
+                WriteError(new(e, nameof(ItemNotFoundException), ErrorCategory.ObjectNotFound, Path));
             }
         }
 
@@ -66,7 +66,7 @@ namespace AudioWorks.Commands
             }
             catch (AudioException e)
             {
-                WriteError(new ErrorRecord(e, e.GetType().Name, ErrorCategory.InvalidData, Path));
+                WriteError(new(e, e.GetType().Name, ErrorCategory.InvalidData, Path));
             }
         }
     }

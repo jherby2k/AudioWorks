@@ -38,7 +38,7 @@ namespace AudioWorks.Extensions.Id3
             {
                 if (tagModel.Header.Unsynchronisation)
                 {
-                    memory = new MemoryStream(new byte[stream.Length]);
+                    memory = new(new byte[stream.Length]);
                     id3TagSize -= Sync.Unsafe(stream, memory, id3TagSize);
                     stream = memory;
                     if (id3TagSize <= 0)
@@ -139,7 +139,7 @@ namespace AudioWorks.Extensions.Id3
             var frameDataBuffer = reader.ReadBytes((int) frameSize);
 #else
             // Use heap allocations for frames > 256kB (usually pictures)
-            Span<byte> frameDataBuffer = frameSize < 0x40000
+            var frameDataBuffer = frameSize < 0x40000
                 ? stackalloc byte[(int) frameSize]
                 : new byte[(int) frameSize];
             reader.Read(frameDataBuffer);

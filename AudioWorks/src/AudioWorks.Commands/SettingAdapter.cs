@@ -45,8 +45,8 @@ namespace AudioWorks.Commands
                 switch (item.Value)
                 {
                     // Boolean settings are converted to switch parameters
-                    case BoolSettingInfo _:
-                        result.Add(item.Key, new RuntimeDefinedParameter(item.Key, typeof(SwitchParameter), attributes));
+                    case BoolSettingInfo:
+                        result.Add(item.Key, new(item.Key, typeof(SwitchParameter), attributes));
                         break;
 
                     // Integer settings have range validation
@@ -60,7 +60,7 @@ namespace AudioWorks.Commands
                         goto default;
 
                     default:
-                        result.Add(item.Key, new RuntimeDefinedParameter(item.Key, item.Value.ValueType, attributes));
+                        result.Add(item.Key, new(item.Key, item.Value.ValueType, attributes));
                         break;
                 }
             }

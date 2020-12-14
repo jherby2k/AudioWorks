@@ -41,7 +41,7 @@ namespace AudioWorks.Extensions.Wave
         {
             _bitsPerSample = info.BitsPerSample;
             _bytesPerSample = (int) Math.Ceiling(info.BitsPerSample / 8.0);
-            _writer = new RiffWriter(stream);
+            _writer = new(stream);
 
             // Pre-allocate the entire stream to avoid fragmentation
             var estimatedSize = 44 + info.FrameCount * info.Channels * _bytesPerSample;

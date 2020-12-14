@@ -50,10 +50,9 @@ namespace AudioWorks.Commands
             if (_expectedExtension != null)
             {
                 var fileExtension = Path.GetExtension(AudioFile!.Path);
-                // ReSharper disable once PossibleNullReferenceException
                 if (!fileExtension.Equals(_expectedExtension, StringComparison.OrdinalIgnoreCase))
                 {
-                    WriteError(new ErrorRecord(new ArgumentException(
+                    WriteError(new(new ArgumentException(
                             $"The '{Format}' metadata encoder cannot be used with '{fileExtension}' files."),
                         nameof(ArgumentException), ErrorCategory.InvalidArgument, AudioFile));
                     return;
@@ -70,7 +69,7 @@ namespace AudioWorks.Commands
             }
             catch (AudioUnsupportedException e)
             {
-                WriteError(new ErrorRecord(e, e.GetType().Name, ErrorCategory.InvalidData, AudioFile));
+                WriteError(new(e, e.GetType().Name, ErrorCategory.InvalidData, AudioFile));
             }
 
             if (PassThru)

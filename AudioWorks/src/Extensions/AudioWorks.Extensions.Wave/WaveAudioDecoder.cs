@@ -42,7 +42,7 @@ namespace AudioWorks.Extensions.Wave
         public void Initialize(Stream stream)
         {
             _audioInfo = new WaveAudioInfoDecoder().ReadAudioInfo(stream);
-            _reader = new RiffReader(stream);
+            _reader = new(stream);
             _bitsPerSample = _audioInfo.BitsPerSample;
             _bytesPerSample = (int) Math.Ceiling(_audioInfo.BitsPerSample / 8.0);
             _framesRemaining = _audioInfo.FrameCount;

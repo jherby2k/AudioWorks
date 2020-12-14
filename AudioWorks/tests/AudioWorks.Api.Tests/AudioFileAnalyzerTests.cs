@@ -79,6 +79,7 @@ namespace AudioWorks.Api.Tests
 
             var i = 0;
             var comparer = new MetadataComparer();
+            // ReSharper disable twice ParameterOnlyUsedForPreconditionCheck.Local
             Assert.All(audioFiles, audioFile =>
             {
                 Assert.Contains(audioFile.Metadata, validMetadata.Select(group => group[i]), comparer);

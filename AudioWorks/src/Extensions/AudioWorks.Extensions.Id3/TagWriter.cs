@@ -17,7 +17,6 @@ using System;
 using System.Buffers.Binary;
 using System.IO;
 using System.Text;
-using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Id3
 {

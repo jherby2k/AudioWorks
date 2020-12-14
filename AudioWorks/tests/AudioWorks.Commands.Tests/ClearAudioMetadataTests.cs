@@ -26,7 +26,7 @@ namespace AudioWorks.Commands.Tests
     public sealed class ClearAudioMetadataTests : IClassFixture<ModuleFixture>
     {
         readonly ModuleFixture _moduleFixture;
-        readonly AudioMetadata _testMetadata = new AudioMetadata
+        readonly AudioMetadata _testMetadata = new()
         {
             Title = "Test Title",
             Artist = "Test Artist",
@@ -155,7 +155,7 @@ namespace AudioWorks.Commands.Tests
                 ps.Invoke();
             }
 
-            new Comparer().Compare(new AudioMetadata(), mock.Object.Metadata, out var differences);
+            new Comparer().Compare(new(), mock.Object.Metadata, out var differences);
             Assert.Empty(differences);
         }
 

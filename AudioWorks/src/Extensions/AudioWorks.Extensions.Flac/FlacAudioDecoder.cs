@@ -32,7 +32,7 @@ namespace AudioWorks.Extensions.Flac
 
         public void Initialize(Stream stream)
         {
-            _decoder = new AudioStreamDecoder(stream);
+            _decoder = new(stream);
             _decoder.Initialize();
         }
 
