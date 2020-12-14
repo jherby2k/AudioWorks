@@ -12,17 +12,14 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(OS)'=='Windows_NT'">
-    <DefineConstants>WINDOWS</DefineConstants>
     <PackageId>AudioWorks.Extensions.ReplayGain.Windows</PackageId>
     <PackageTags>Windows</PackageTags>
   </PropertyGroup>
-  <PropertyGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))'">
-    <DefineConstants>LINUX</DefineConstants>
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
     <PackageId>AudioWorks.Extensions.ReplayGain.Linux</PackageId>
     <PackageTags>Linux</PackageTags>
   </PropertyGroup>
-  <PropertyGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))'">
-    <DefineConstants>OSX</DefineConstants>
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('OSX'))">
     <PackageId>AudioWorks.Extensions.ReplayGain.MacOS</PackageId>
     <PackageTags>MacOS</PackageTags>
   </PropertyGroup>
@@ -35,7 +32,7 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))'">
+  <ItemGroup Condition="$([MSBuild]::IsOSPlatform('OSX'))">
     <None Include="osx.*\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Pack>true</Pack>

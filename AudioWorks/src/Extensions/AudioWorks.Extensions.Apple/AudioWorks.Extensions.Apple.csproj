@@ -11,12 +11,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(OS)'=='Windows_NT'">
-    <DefineConstants>WINDOWS</DefineConstants>
     <PackageId>AudioWorks.Extensions.Apple.Windows</PackageId>
     <PackageTags>Windows</PackageTags>
   </PropertyGroup>
-  <PropertyGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))'">
-    <DefineConstants>OSX</DefineConstants>
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('OSX'))">
     <PackageId>AudioWorks.Extensions.Apple.MacOS</PackageId>
     <PackageTags>MacOS</PackageTags>
   </PropertyGroup>
