@@ -2,7 +2,7 @@
 
 A cross-platform, multi-format audio conversion and tagging suite for .NET and PowerShell. Formats currently supported are MP3, MP4 AAC, FLAC, Apple Lossless (ALAC), Opus, Ogg Vorbis and Wave.
 
-A full user interface (Windows only) is in development.
+A full user interface (Windows only) [is in development](https://github.com/jherby2k/AudioWorks.UI)
 
 This project supplants [PowerShell Audio](https://github.com/jherby2k/PowerShellAudio) by targetting PowerShell cross-platform (Windows, Linux and MacOS).
 
@@ -13,7 +13,7 @@ Linux | [![Build Status](https://dev.azure.com/jherby2k/AudioWorks/_apis/build/s
 MacOS | [![Build Status](https://dev.azure.com/jherby2k/AudioWorks/_apis/build/status/AudioWorks%20for%20MacOS?branchName=master)](https://dev.azure.com/jherby2k/AudioWorks/_build?definitionId=4&_a=summary&repositoryFilter=1&branchFilter=3) [![Code Coverage](https://img.shields.io/azure-devops/coverage/jherby2k/AudioWorks/4/master)](https://dev.azure.com/jherby2k/AudioWorks/_build?definitionId=4&_a=summary&repositoryFilter=1&branchFilter=3) | [![Build Status](https://dev.azure.com/jherby2k/AudioWorks/_apis/build/status/AudioWorks%20for%20MacOS?branchName=dev)](https://dev.azure.com/jherby2k/AudioWorks/_build?definitionId=4&_a=summary&repositoryFilter=1&branchFilter=4) [![Code Coverage](https://img.shields.io/azure-devops/coverage/jherby2k/AudioWorks/4/dev)](https://dev.azure.com/jherby2k/AudioWorks/_build?definitionId=4&_a=summary&repositoryFilter=1&branchFilter=4) | ![Deployment Status](https://vsrm.dev.azure.com/jherby2k/_apis/public/Release/badge/ce2541e1-667c-4be1-a926-7d44ff89db07/3/3)
 
 ### System Requirements
-AudioWorks runs on Windows 8.1+, MacOS 10.13+, and Ubuntu 16.04+. Other 64-bit Linux distributions may work, but may require additional dependencies and are currently untested. Currently, most extensions only support the x86 architecture.
+AudioWorks runs on Windows 8.1+, MacOS 10.13+, and Ubuntu 16.04+. Other 64-bit Linux distributions may work, but may require additional dependencies and are currently untested. Currently, most extensions only support the Intel (x86) architecture. Apple M1 support will follow once .NET supports it.
 
 #### On Windows:
 * [PowerShell 7+](https://aka.ms/powershell) (recommended) and/or Windows PowerShell 5.1
