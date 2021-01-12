@@ -22,12 +22,11 @@ variables:
   disable.coverage.autogenerate: 'true'
 
 steps:
-- task: UseDotNet@2
+- task: DotNetCoreCLI@2
   inputs:
-    packageType: sdk
-    version: 5.0.x
-    performMultiLevelLookup: true
-  displayName: 'Use .NET 5.0 SDK'
+    command: 'restore'
+    projects: 'AudioWorks\AudioWorks.sln'
+  displayName: 'Restore dependencies'
 
 - task: DotNetCoreCLI@2
   inputs:
