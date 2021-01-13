@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Buffers.Binary;
 using System.IO;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
@@ -23,6 +24,10 @@ namespace AudioWorks.Extensions.Wave
     [AudioInfoDecoderExport(".wav", "Waveform Audio")]
     sealed class WaveAudioInfoDecoder : IAudioInfoDecoder
     {
+        static readonly Guid _lpcmGuid = new("00000001-0000-0010-8000-00aa00389b71");
+        static readonly Guid _aLawGuid = new("00000006-0000-0010-8000-00aa00389b71");
+        static readonly Guid _µLawGuid = new("00000007-0000-0010-8000-00aa00389b71");
+
         const string _format = "Waveform Audio File Format (WAVE)";
 
         public string Format => _format;
@@ -45,46 +50,83 @@ namespace AudioWorks.Extensions.Wave
                     if (fmtChunkSize == 0)
                         throw new AudioInvalidException("Missing 'fmt' chunk.");
 
-                    var isExtensible = false;
-                    switch (reader.ReadUInt16())
+#if NETSTANDARD2_0
+                    Span<byte> fmtData = reader.ReadBytes((int) fmtChunkSize);
+#else
+                    Span<byte> fmtData = stackalloc byte[(int) fmtChunkSize];
+                    reader.Read(fmtData);
+#endif
+
+                    var dataSize = reader.SeekToChunk("data");
+
+                    switch (BinaryPrimitives.ReadUInt16LittleEndian(fmtData))
                     {
-                        // WAVE_FORMAT_PCM
                         case 1:
-                            break;
+                            return ParseLpcm(fmtData, dataSize);
+
+                        case 6:
+                            return ParseG711("A-law", fmtData, dataSize);
+
+                        case 7:
+                            return ParseG711("µ-law", fmtData, dataSize);
 
                         // WAVE_FORMAT_EXTENSIBLE
                         case 0xFFFE:
-                            isExtensible = true;
-                            break;
+#if NETSTANDARD2_0
+                            var guid = new Guid(fmtData.Slice(24, 16).ToArray());
+#else
+                            var guid = new Guid(fmtData.Slice(24, 16));
+#endif
+                            if (guid == _lpcmGuid) return ParseLpcm(fmtData, dataSize);
+                            if (guid == _aLawGuid) return ParseG711("A-law", fmtData, dataSize);
+                            if (guid == _µLawGuid) return ParseG711("µ-law", fmtData, dataSize);
+                            throw new AudioUnsupportedException("Only PCM, A-law and µ-law streams are currently supported.");
 
                         default:
-                            throw new AudioUnsupportedException("Only PCM wave streams are supported.");
+                            throw new AudioUnsupportedException("Only PCM, A-law and µ-law streams are currently supported.");
                     }
-
-                    var channels = reader.ReadUInt16();
-                    var sampleRate = reader.ReadUInt32();
-
-                    // Ignore nAvgBytesPerSec
-                    stream.Seek(4, SeekOrigin.Current);
-
-                    var blockAlign = reader.ReadUInt16();
-
-                    // Use wValidBitsPerSample if this is WAVE_FORMAT_EXTENSIBLE
-                    if (isExtensible)
-                        stream.Seek(4, SeekOrigin.Current);
-
-                    return AudioInfo.CreateForLossless(
-                        "LPCM",
-                        channels,
-                        reader.ReadUInt16(),
-                        (int) sampleRate,
-                        reader.SeekToChunk("data") / blockAlign);
                 }
                 catch (EndOfStreamException e)
                 {
                     // The end of the stream was unexpectedly reached
                     throw new AudioInvalidException(e.Message);
                 }
+        }
+
+        static AudioInfo ParseLpcm(ReadOnlySpan<byte> fmtData, uint dataSize) =>
+            AudioInfo.CreateForLossless(
+                "LPCM",
+#if NETSTANDARD2_0
+                BinaryPrimitives.ReadUInt16LittleEndian(fmtData.Slice(2)),
+                BinaryPrimitives.ReadUInt16LittleEndian(fmtData.Slice(14)),
+                (int) BinaryPrimitives.ReadUInt32LittleEndian(fmtData.Slice(4)),
+                dataSize / BinaryPrimitives.ReadUInt16LittleEndian(fmtData.Slice(12)));
+#else
+                BinaryPrimitives.ReadUInt16LittleEndian(fmtData[2..]),
+                BinaryPrimitives.ReadUInt16LittleEndian(fmtData[14..]),
+                (int) BinaryPrimitives.ReadUInt32LittleEndian(fmtData[4..]),
+                dataSize / BinaryPrimitives.ReadUInt16LittleEndian(fmtData[12..]));
+#endif
+
+        static AudioInfo ParseG711(string format, ReadOnlySpan<byte> fmtData, uint dataSize)
+        {
+#if NETSTANDARD2_0
+            var sampleRate = (int) BinaryPrimitives.ReadUInt32LittleEndian(fmtData.Slice(4));
+            var blockSize = BinaryPrimitives.ReadUInt16LittleEndian(fmtData.Slice(12));
+            return AudioInfo.CreateForLossy(format,
+                BinaryPrimitives.ReadUInt16LittleEndian(fmtData.Slice(2)),
+                sampleRate,
+                dataSize / blockSize,
+                blockSize * 8 * sampleRate);
+#else
+            var sampleRate = (int) BinaryPrimitives.ReadUInt32LittleEndian(fmtData[4..]);
+            var blockSize = BinaryPrimitives.ReadUInt16LittleEndian(fmtData[12..]);
+            return AudioInfo.CreateForLossy(format,
+                BinaryPrimitives.ReadUInt16LittleEndian(fmtData[2..]),
+                sampleRate,
+                dataSize / blockSize,
+                blockSize * 8 * sampleRate);
+#endif
         }
     }
 }

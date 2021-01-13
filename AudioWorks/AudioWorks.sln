@@ -47,6 +47,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Extensions.Wave"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Valid", "Valid", "{F3EE5042-D0AB-4B5C-8255-4A1D87A8C4A1}"
 	ProjectSection(SolutionItems) = preProject
+		tests\TestFiles\Valid\A-law 44100Hz Stereo.wav = tests\TestFiles\Valid\A-law 44100Hz Stereo.wav
 		tests\TestFiles\Valid\ALAC 16-bit 44100Hz Mono.m4a = tests\TestFiles\Valid\ALAC 16-bit 44100Hz Mono.m4a
 		tests\TestFiles\Valid\ALAC 16-bit 44100Hz Stereo (Covr atom - JPEG).m4a = tests\TestFiles\Valid\ALAC 16-bit 44100Hz Stereo (Covr atom - JPEG).m4a
 		tests\TestFiles\Valid\ALAC 16-bit 44100Hz Stereo (Covr atom - PNG).m4a = tests\TestFiles\Valid\ALAC 16-bit 44100Hz Stereo (Covr atom - PNG).m4a
@@ -165,6 +166,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Valid", "Valid", "{F3EE5042
 		tests\TestFiles\Valid\Vorbis Quality 3 48000Hz Stereo.ogg = tests\TestFiles\Valid\Vorbis Quality 3 48000Hz Stereo.ogg
 		tests\TestFiles\Valid\Vorbis Quality 3 8000Hz Stereo.ogg = tests\TestFiles\Valid\Vorbis Quality 3 8000Hz Stereo.ogg
 		tests\TestFiles\Valid\Vorbis Quality 3 96000Hz Stereo.ogg = tests\TestFiles\Valid\Vorbis Quality 3 96000Hz Stereo.ogg
+		tests\TestFiles\Valid\µ-law 44100Hz Stereo.wav = tests\TestFiles\Valid\µ-law 44100Hz Stereo.wav
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioWorks.Api.Tests", "tests\AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj", "{83565750-78B5-4481-AAF6-C2732E3CE040}"

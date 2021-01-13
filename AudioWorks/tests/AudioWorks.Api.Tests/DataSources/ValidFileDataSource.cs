@@ -115,6 +115,34 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata()
             },
 
+            new object[]
+            {
+                "A-law 44100Hz Stereo.wav",
+                new TestAudioInfo
+                {
+                    Format = "A-law",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 124112,
+                    BitRate = 705600
+                },
+                new TestAudioMetadata()
+            },
+
+            new object[]
+            {
+                "µ-law 44100Hz Stereo.wav",
+                new TestAudioInfo
+                {
+                    Format = "µ-law",
+                    Channels = 2,
+                    SampleRate = 44100,
+                    SampleCount = 124112,
+                    BitRate = 705600
+                },
+                new TestAudioMetadata()
+            },
+
             #endregion
 
             #region FLAC
