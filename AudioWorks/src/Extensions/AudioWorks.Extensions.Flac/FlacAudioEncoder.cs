@@ -19,6 +19,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
+using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensions.Flac
 {
@@ -42,9 +43,19 @@ namespace AudioWorks.Extensions.Flac
 
         public void Initialize(Stream stream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
+            if (info.BitsPerSample == 0)
+            {
+                var logger = LoggerManager.LoggerFactory.CreateLogger<FlacAudioEncoder>();
+                logger.LogWarning("Transcoding from a lossy to a lossless format.");
+
+                _bitsPerSample = 16;
+            }
+            else
+                _bitsPerSample = info.BitsPerSample;
+
             _encoder = new(stream);
             _encoder.SetChannels((uint) info.Channels);
-            _encoder.SetBitsPerSample((uint) info.BitsPerSample);
+            _encoder.SetBitsPerSample((uint) _bitsPerSample);
             _encoder.SetSampleRate((uint) info.SampleRate);
             _encoder.SetTotalSamplesEstimate((ulong) info.FrameCount);
 
@@ -73,8 +84,6 @@ namespace AudioWorks.Extensions.Flac
 
             _encoder.SetMetadata(_metadataBlocks);
             _encoder.Initialize();
-
-            _bitsPerSample = info.BitsPerSample;
         }
 
         public void Submit(SampleBuffer samples)

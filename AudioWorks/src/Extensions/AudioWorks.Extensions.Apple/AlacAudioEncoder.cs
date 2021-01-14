@@ -21,6 +21,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
+using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensions.Apple
 {
@@ -55,10 +56,19 @@ namespace AudioWorks.Extensions.Apple
             _stream = stream;
             _metadata = metadata;
             _settings = settings;
-            _bitsPerSample = info.BitsPerSample;
+
+            if (info.BitsPerSample == 0)
+            {
+                var logger = LoggerManager.LoggerFactory.CreateLogger<AlacAudioEncoder>();
+                logger.LogWarning("Transcoding from a lossy to a lossless format.");
+
+                _bitsPerSample = 16;
+            }
+            else
+                _bitsPerSample = info.BitsPerSample;
 
             // Pre-allocate the whole stream (estimate worst case compression, plus cover art)
-            stream.SetLength(info.FrameCount * info.Channels * (long) Math.Ceiling(info.BitsPerSample / 8.0)
+            stream.SetLength(info.FrameCount * info.Channels * (long) Math.Ceiling(_bitsPerSample / 8.0)
                              + (metadata.CoverArt?.Data.Length ?? 0));
 
             var inputDescription = GetInputDescription(info);
@@ -113,7 +123,7 @@ namespace AudioWorks.Extensions.Apple
             FramesPerPacket = 1,
             BytesPerFrame = (uint) (sizeof(int) * info.Channels),
             ChannelsPerFrame = (uint) info.Channels,
-            BitsPerChannel = (uint) info.BitsPerSample
+            BitsPerChannel = (uint) (info.BitsPerSample > 0 ? info.BitsPerSample : 16)
         };
 
         static AudioStreamBasicDescription GetOutputDescription(AudioStreamBasicDescription inputDescription)

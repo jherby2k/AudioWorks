@@ -21,6 +21,7 @@ using System.Buffers;
 using System.IO;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
+using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensions.Wave
 {
@@ -39,8 +40,17 @@ namespace AudioWorks.Extensions.Wave
 
         public void Initialize(Stream stream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
-            _bitsPerSample = info.BitsPerSample;
-            _bytesPerSample = (int) Math.Ceiling(info.BitsPerSample / 8.0);
+            if (info.BitsPerSample == 0)
+            {
+                var logger = LoggerManager.LoggerFactory.CreateLogger<WaveAudioEncoder>();
+                logger.LogWarning("Transcoding from a lossy to a lossless format.");
+
+                _bitsPerSample = 16;
+            }
+            else
+                _bitsPerSample = info.BitsPerSample;
+
+            _bytesPerSample = (int) Math.Ceiling(_bitsPerSample / 8.0);
             _writer = new(stream);
 
             // Pre-allocate the entire stream to avoid fragmentation
@@ -97,7 +107,7 @@ namespace AudioWorks.Extensions.Wave
             _writer.Write((uint) audioInfo.SampleRate);
             _writer.Write((uint) (_bytesPerSample * audioInfo.Channels * audioInfo.SampleRate));
             _writer.Write((ushort) (_bytesPerSample * audioInfo.Channels));
-            _writer.Write((ushort) audioInfo.BitsPerSample);
+            _writer.Write((ushort) _bitsPerSample);
             _writer.FinishChunk();
         }
     }
