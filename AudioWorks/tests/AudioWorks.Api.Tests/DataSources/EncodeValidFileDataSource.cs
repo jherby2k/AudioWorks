@@ -88,12 +88,23 @@ namespace AudioWorks.Api.Tests.DataSources
 
             new object[]
             {
-                "FLAC Level 5 8-bit 8000Hz Stereo.flac",
+                "A-law 44100Hz Stereo.wav",
                 "Wave",
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "818EE6CBF16F76F923D33650E7A52708"
+                    "47B031C7D8246F557E0CB37E4DB3F528"
+                }
+            },
+
+            new object[]
+            {
+                "µ-law 44100Hz Stereo.wav",
+                "Wave",
+                new TestSettingDictionary(),
+                new[]
+                {
+                    "FCA4C53C5F98B061CE9C9186A303D816"
                 }
             },
 
@@ -253,6 +264,32 @@ namespace AudioWorks.Api.Tests.DataSources
                     "20A6542862C62E47F75FA91CA3863F21", // FLAC 1.3.1 (Ubuntu 16.04)
                     "4A4DE0494E31D82F446421C876FB10EA", // FLAC 1.3.2 (Ubuntu 18.04)
                     "D3A7B834DCE97F0709AEFCA45A24F5B6" // FLAC 1.3.3
+                }
+            },
+
+            new object[]
+            {
+                "A-law 44100Hz Stereo.wav",
+                "FLAC",
+                new TestSettingDictionary(),
+                new[]
+                {
+                    "not20A6542862C62E47F75FA91CA3863F21", // FLAC 1.3.1 (Ubuntu 16.04)
+                    "not4A4DE0494E31D82F446421C876FB10EA", // FLAC 1.3.2 (Ubuntu 18.04)
+                    "10F6AC75659ECFE81D3C07D8D3074538" // FLAC 1.3.3
+                }
+            },
+
+            new object[]
+            {
+                "µ-law 44100Hz Stereo.wav",
+                "FLAC",
+                new TestSettingDictionary(),
+                new[]
+                {
+                    "not20A6542862C62E47F75FA91CA3863F21", // FLAC 1.3.1 (Ubuntu 16.04)
+                    "not4A4DE0494E31D82F446421C876FB10EA", // FLAC 1.3.2 (Ubuntu 18.04)
+                    "FCBAB8A8C261456CF6F87E603B237426" // FLAC 1.3.3
                 }
             },
 
@@ -516,6 +553,36 @@ namespace AudioWorks.Api.Tests.DataSources
 
             new object[]
             {
+                "A-law 44100Hz Stereo.wav",
+                "ALAC",
+                new TestSettingDictionary
+                {
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                new[]
+                {
+                    "40626FB4389C8CF567C0BF74621036BD"
+                }
+            },
+
+            new object[]
+            {
+                "µ-law 44100Hz Stereo.wav",
+                "ALAC",
+                new TestSettingDictionary
+                {
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                new[]
+                {
+                    "26B6F5A519F858AB695C5090E7B98451"
+                }
+            },
+
+            new object[]
+            {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "ALAC",
                 new TestSettingDictionary
@@ -723,6 +790,46 @@ namespace AudioWorks.Api.Tests.DataSources
                     "06469BD31CF3F0B799D9E52BBEA00C72", // 32-bit Windows on AMD
                     "ED307F76DD052720321284BAD8876AB2", // 64-bit Windows on Intel
                     "16AB3A070CCD2BE26A821EDFCCB1DB8A" // 64-bit Windows on AMD
+                }
+            },
+
+            new object[]
+            {
+                "A-law 44100Hz Stereo.wav",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                new[]
+                {
+                    "not8CA08D60F2A8FD8E9E966FB86C56246B", // MacOS 10.14
+                    "notD8CFD4140F419E15B4227A3E079F0A8D", // MacOS 10.15
+                    "notE0C34EA1479C8979D3AF3A2C98D4E699", // 32-bit Windows on Intel
+                    "194D40FBCAE58B4A01095DD89CE70A2D", // 32-bit Windows on AMD
+                    "notED307F76DD052720321284BAD8876AB2", // 64-bit Windows on Intel
+                    "B90925A2DA13F80969FB7E6FEF7E81E0" // 64-bit Windows on AMD
+                }
+            },
+
+            new object[]
+            {
+                "µ-law 44100Hz Stereo.wav",
+                "AppleAAC",
+                new TestSettingDictionary
+                {
+                    ["CreationTime"] = new DateTime(2017, 1, 31),
+                    ["ModificationTime"] = new DateTime(2017, 1, 31)
+                },
+                new[]
+                {
+                    "not8CA08D60F2A8FD8E9E966FB86C56246B", // MacOS 10.14
+                    "notD8CFD4140F419E15B4227A3E079F0A8D", // MacOS 10.15
+                    "notE0C34EA1479C8979D3AF3A2C98D4E699", // 32-bit Windows on Intel
+                    "C7FD479EFD340F30F3DE645205FA3BC5", // 32-bit Windows on AMD
+                    "notED307F76DD052720321284BAD8876AB2", // 64-bit Windows on Intel
+                    "B575737F74EFCF9F208BCAC93E325ABA" // 64-bit Windows on AMD
                 }
             },
 
@@ -1159,6 +1266,32 @@ namespace AudioWorks.Api.Tests.DataSources
                     "BFF278600EB87215603D727BAA7905BD", // Lame 3.99.5 (Ubuntu 16.04)
                     "AD56C3A1ACD627DBDA4B5A28AFE0355D", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
                     "5BCC0ED414809596507ECFEDEBD4454D" // Lame 3.100 (Windows)
+                }
+            },
+
+            new object[]
+            {
+                "A-law 44100Hz Stereo.wav",
+                "LameMP3",
+                new TestSettingDictionary(),
+                new[]
+                {
+                    "notBFF278600EB87215603D727BAA7905BD", // Lame 3.99.5 (Ubuntu 16.04)
+                    "notAD56C3A1ACD627DBDA4B5A28AFE0355D", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
+                    "C43AEE67905D09300EE49323D6330426" // Lame 3.100 (Windows)
+                }
+            },
+
+            new object[]
+            {
+                "µ-law 44100Hz Stereo.wav",
+                "LameMP3",
+                new TestSettingDictionary(),
+                new[]
+                {
+                    "notBFF278600EB87215603D727BAA7905BD", // Lame 3.99.5 (Ubuntu 16.04)
+                    "notAD56C3A1ACD627DBDA4B5A28AFE0355D", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
+                    "CC60AD39342F059B4F590988F192FE8D" // Lame 3.100 (Windows)
                 }
             },
 
@@ -1745,6 +1878,40 @@ namespace AudioWorks.Api.Tests.DataSources
 
             new object[]
             {
+                "A-law 44100Hz Stereo.wav",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    ["SerialNumber"] = 1
+                },
+                new[]
+                {
+                    "not5C6A8AC9FE704864E8ABC4F1654F65D7", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
+                    "notF796497F75425D1928C66B88F3F24232", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
+                    "not239E03B5B24AA65E6335303DF50FB3A2", // Vorbis 1.3.7 (MacOS)
+                    "DB770934E3E57E832BFFA1C1C85E065F" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
+                }
+            },
+
+            new object[]
+            {
+                "µ-law 44100Hz Stereo.wav",
+                "Vorbis",
+                new TestSettingDictionary
+                {
+                    ["SerialNumber"] = 1
+                },
+                new[]
+                {
+                    "not5C6A8AC9FE704864E8ABC4F1654F65D7", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
+                    "notF796497F75425D1928C66B88F3F24232", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
+                    "not239E03B5B24AA65E6335303DF50FB3A2", // Vorbis 1.3.7 (MacOS)
+                    "38EB06F6C7055EC41221129C2440E823" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
+                }
+            },
+
+            new object[]
+            {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "Vorbis",
                 new TestSettingDictionary
@@ -2193,6 +2360,46 @@ namespace AudioWorks.Api.Tests.DataSources
                     "6D4CD77579FC6041A28997D9A409DCB4", // Opus 1.3.1 (32-bit Windows on AMD)
                     "D0FC8A33EE164AC29D79435A4ED779B1", // Opus 1.3.1 (64-bit Windows on Intel)
                     "EF01321114364EB70260DA0AC94553DB" // Opus 1.3.1 (64-bit Windows on AMD)
+                }
+            },
+
+            new object[]
+            {
+                "A-law 44100Hz Stereo.wav",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    ["SerialNumber"] = 1
+                },
+                new[]
+                {
+                    "not22AA639A1AA309F9C343F8D8EBDB1B6D", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
+                    "notF7CB34EAF50E121D9474AE51E43BBB5B", // Opus 1.3.1 (Ubuntu 20.04)
+                    "not8A8FA9C452D9EBBCF8554EE3E270A538", // Opus 1.3.1 (MacOS)
+                    "not9E31F9F58A41EA377740E7AC43E57939", // Opus 1.3.1 (32-bit Windows on Intel)
+                    "B540644D968E93C4EF7BA2BE7C84A5AA", // Opus 1.3.1 (32-bit Windows on AMD)
+                    "notD0FC8A33EE164AC29D79435A4ED779B1", // Opus 1.3.1 (64-bit Windows on Intel)
+                    "29E4A664D34C52A907E85C52D485FEAB" // Opus 1.3.1 (64-bit Windows on AMD)
+                }
+            },
+
+            new object[]
+            {
+                "µ-law 44100Hz Stereo.wav",
+                "Opus",
+                new TestSettingDictionary
+                {
+                    ["SerialNumber"] = 1
+                },
+                new[]
+                {
+                    "not22AA639A1AA309F9C343F8D8EBDB1B6D", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
+                    "notF7CB34EAF50E121D9474AE51E43BBB5B", // Opus 1.3.1 (Ubuntu 20.04)
+                    "not8A8FA9C452D9EBBCF8554EE3E270A538", // Opus 1.3.1 (MacOS)
+                    "not9E31F9F58A41EA377740E7AC43E57939", // Opus 1.3.1 (32-bit Windows on Intel)
+                    "84171D7E57590C886785D15C4E89D14E", // Opus 1.3.1 (32-bit Windows on AMD)
+                    "notD0FC8A33EE164AC29D79435A4ED779B1", // Opus 1.3.1 (64-bit Windows on Intel)
+                    "73888454CF0F7F104EF389C6A603973A" // Opus 1.3.1 (64-bit Windows on AMD)
                 }
             },
 
