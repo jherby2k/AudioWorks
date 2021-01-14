@@ -931,7 +931,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "924AD280AF0C8E068F2CA14211631527", // MacOS 10.14
                     "86088ED15687B386696E2A86CB26B90B", // MacOS 10.15
                     "93D67A9C673E7ABE3929846DBE5DBF97", // Windows on Intel
-                    "78299761793D1A6EC79CBB9233156FD8", // 32-bit Windows on AMD
+                    "E53BA332FDCFBE927A81040DB480688B", // 32-bit Windows on AMD
                     "FC6792AF620BF4CFB49222B1747B4859" // 64-bit Windows on AMD
                 }
             },
