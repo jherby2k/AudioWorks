@@ -22,6 +22,24 @@ variables:
   disable.coverage.autogenerate: 'true'
 
 steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: sdk
+    version: 2.1.x
+  displayName: 'Use .NET 2.1 SDK'
+
+- task: UseDotNet@2
+  inputs:
+    packageType: sdk
+    version: 3.1.x
+  displayName: 'Use .NET 3.1 SDK'
+
+- task: UseDotNet@2
+  inputs:
+    packageType: sdk
+    version: 5.0.x
+  displayName: 'Use .NET 5.0 SDK'
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
