@@ -15,7 +15,7 @@ pr:
     - dev
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-16.04'
 
 variables:
   buildConfiguration: 'Release'

@@ -15,7 +15,7 @@ pr:
     - dev
 
 pool:
-  vmImage: 'macOS-latest'
+  vmImage: 'macOS-10.14'
 
 variables:
   buildConfiguration: 'Release'
