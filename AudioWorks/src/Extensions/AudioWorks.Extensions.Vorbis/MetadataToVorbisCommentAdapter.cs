@@ -107,7 +107,7 @@ namespace AudioWorks.Extensions.Vorbis
             var keyLength = Encoding.ASCII.GetBytes(key, keyBytes);
 #endif
 
-            // Use heap allocations for comments > 256kB (usually pictures)
+            // Use heap allocations for comments > 256kB
             var valueMaxByteCount = Encoding.UTF8.GetMaxByteCount(value.Length) + 1;
             var valueBytes = valueMaxByteCount < 0x40000
                 ? stackalloc byte[valueMaxByteCount]
@@ -141,7 +141,10 @@ namespace AudioWorks.Extensions.Vorbis
                     keyAddress, key.Length,
                     (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)), keyBytes.Length);
 #else
-            Encoding.ASCII.GetBytes(key, keyBytes);
+            var keyLength = Encoding.ASCII.GetBytes(key, keyBytes);
+
+            // Since SkipLocalsInit is set, make sure the key is null-terminated
+            keyBytes[keyLength] = 0;
 #endif
 
             fixed (byte* valueAddress = value)

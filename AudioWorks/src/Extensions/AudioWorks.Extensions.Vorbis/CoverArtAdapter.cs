@@ -96,7 +96,10 @@ namespace AudioWorks.Extensions.Vorbis
 
             Base64.EncodeToUtf8InPlace(buffer, dataLength, out var bytesWritten);
 
-            return buffer.Slice(0, bytesWritten + 1);
+            // Since SkipLocalsInit is set, make sure the buffer is null-terminated
+            buffer[bytesWritten++] = 0;
+
+            return buffer.Slice(0, bytesWritten);
         }
     }
 }
