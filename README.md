@@ -18,7 +18,7 @@ AudioWorks runs on Windows 8.1+, MacOS 10.13+, and Ubuntu 16.04+. Other 64-bit L
 #### On Windows:
 * [PowerShell 7+](https://aka.ms/powershell) (recommended) and/or Windows PowerShell 5.1
 * [.NET Framework 4.6.2+](https://dotnet.microsoft.com/download/dotnet-framework/net462) (if using Windows PowerShell)
-* [iTunes](https://www.apple.com/itunes) (optional, for AAC and ALAC support. Requires the classic installer, not the Windows Store version. Technically only the Apple Application support packages are required)
+* [iTunes](https://www.apple.com/itunes) (optional, for AAC and ALAC support. Requires the classic installer, not the Windows Store version)
 #### On Ubuntu 20.04 or 18.04:
 * Via `apt-get install`:
   * libebur128-1
