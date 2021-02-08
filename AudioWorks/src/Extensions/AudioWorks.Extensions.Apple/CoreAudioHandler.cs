@@ -42,6 +42,10 @@ namespace AudioWorks.Extensions.Apple
                 "Apple",
                 "Apple Application Support");
 
+            // As of iTunes 12.10.9.3 the library is found inside the iTunes directory
+            if (!Directory.Exists(libPath))
+                libPath = Path.Combine(Environment.GetEnvironmentVariable("ProgramFiles") ?? string.Empty, "iTunes");
+
 #if NETSTANDARD2_0
             // On Full Framework, AssemblyLoadContext isn't available, so we add the directory to PATH
             if (RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework", StringComparison.Ordinal))
@@ -61,12 +65,12 @@ namespace AudioWorks.Extensions.Apple
             }
             catch (DirectoryNotFoundException)
             {
-                logger.LogDebug("Apple Application Support is not installed.");
+                logger.LogDebug("CoreAudioToolbox.dll could not be located.");
                 return false;
             }
             catch (DllNotFoundException)
             {
-                logger.LogDebug("Apple Application Support is not installed.");
+                logger.LogDebug("CoreAudioToolbox.dll could not be located.");
                 return false;
             }
             catch (EntryPointNotFoundException e)
