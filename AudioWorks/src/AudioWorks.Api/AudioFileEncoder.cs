@@ -172,7 +172,7 @@ namespace AudioWorks.Api
             params ITaggedAudioFile[] audioFiles)
         {
             if (audioFiles == null) throw new ArgumentNullException(nameof(audioFiles));
-            // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
             if (audioFiles.Any(audioFile => audioFile == null))
                 throw new ArgumentException("One or more audio files are null.", nameof(audioFiles));
 
