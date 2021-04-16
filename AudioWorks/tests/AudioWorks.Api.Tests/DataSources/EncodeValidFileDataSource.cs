@@ -1319,7 +1319,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "E73399A30F5497FD72E1AEE0A3E76EAF", // Lame 3.99.5 (Ubuntu 16.04)
-                    "FB1B7DECB2C2A2C9CAA1FBB917A81472", // Lame 3.100 (Ubuntu 18.04 / 20.04 and MacOS)
+                    "FB1B7DECB2C2A2C9CAA1FBB917A81472", // Lame 3.100 (MacOS, Ubuntu 18.04 and Legacy .NET on Ubuntu 20.04)
+                    "C50EBCF351F8931F36802CF099BFF826", // Lame 3.100 (.NET Core 3.0+ on Ubuntu 20.04)
                     "A4306E31052226EFD081D5D5FA80F62B", // Lame 3.100 (Legacy .NET on Windows)
                     "6B4C5AF12696064CB7FFC96CEE942994" // Lame 3.100 (.NET Core 3.0+ on Windows)
                 }
@@ -1943,7 +1944,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "0AA286B6A6896263E9182853FFA2DD52", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
-                    "8A4B07CF14C30DF85BCBDCD91A597424", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
+                    "8A4B07CF14C30DF85BCBDCD91A597424", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on Ubuntu / AMD)
+                    "67F854EBB448041C99902D721EB029C0", // Vorbis 1.3.7 AoTuV + Lancer (.NET Core 3.0+ on Ubuntu / AMD)
                     "AD172F94045E0970A71F8C439EEEA6C9", // Vorbis 1.3.7 (MacOS)
                     "F25060DBEAB99B219CDB5EC54D37AD1C", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on Windows)
                     "CCC19FAB9648FAF81A46A0A55C0E0F1D" // Vorbis 1.3.7 AoTuV + Lancer (.NET Core 3.0+ on Windows)
@@ -2438,7 +2440,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "476D30594189602BF6E4755E990D0615", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "E170CC2F31A402071E26892426AEC65B", // Opus 1.3.1 (Ubuntu 20.04)
+                    "E170CC2F31A402071E26892426AEC65B", // Opus 1.3.1 (Legacy .NET on Ubuntu 20.04)
+                    "F11DE8AF370B04150CBF6E08FA1E2045", // Opus 1.3.1 (.NET Core 3.0+ on Ubuntu 20.04)
                     "0ADBC105EA51C62CB1ED53B978B33415", // Opus 1.3.1 (MacOS)
                     "17D464F4D94C17DD99AC0017BAB9228F", // Opus 1.3.1 (32-bit Windows on Intel)
                     "37FAD87A9C5A0E42FEEBE2B5CC5547DF", // Opus 1.3.1 (Legacy .NET on 32-bit Windows / AMD)
