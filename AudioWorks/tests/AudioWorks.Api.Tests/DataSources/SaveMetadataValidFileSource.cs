@@ -682,7 +682,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "679251C0E61FC8EB10286525FE64F60F"
+                    "679251C0E61FC8EB10286525FE64F60F", // Legacy .NET
+                    "D0FF67DA066EAEABBF8182052A1375AE" // .NET Core 3.0+
                 }
             },
 
@@ -1155,7 +1156,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "1BF5C0A314A84C08A71E620ECFAC27FF"
+                    "1BF5C0A314A84C08A71E620ECFAC27FF", // Legacy .NET
+                    "10BE511C440AC14D8613B8A37E75882A" // .NET Core 3.0+
                 }
             },
 
@@ -1401,7 +1403,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "CA3A8F152FFC10FE460E6DBD2DB2F090", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
+                    "CA3A8F152FFC10FE460E6DBD2DB2F090", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on Windows and Ubuntu)
+                    "426B4231FC7600779D8FE877B15D54CB", // Vorbis 1.3.7 AoTuV + Lancer (.NET Core 3.0+ on Windows and Ubuntu)
                     "36C4695F1C9FBD9E018E98FB4A132D83" // Vorbis 1.3.7 (MacOS)
                 }
             },
@@ -1626,7 +1629,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "1636B4EF09C4EF2B16135E9C2670473B", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "CABF32D411EA5FA9458A79B6DC2C2D69"  // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
+                    "CABF32D411EA5FA9458A79B6DC2C2D69",  // Opus 1.3.1 (MacOS and legacy .NET on Ubuntu 20.04, Windows)
+                    "EC76B2A5E0B74A2E142BFD255C52F13E"  // Opus 1.3.1 (.NET Core 3.0+ on Ubuntu 20.04 and Windows)
                 }
             },
 
