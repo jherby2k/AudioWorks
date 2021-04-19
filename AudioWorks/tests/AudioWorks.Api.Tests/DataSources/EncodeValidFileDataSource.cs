@@ -869,7 +869,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     "9AC3DEF9B464D0E1AB2D4F91C1A08B83", // 32-bit Windows on Intel
                     "4BB812252790CAEDE8CE8547E7BD546A", // Legacy .NET on 32-bit Windows / AMD
                     "CA76E6BF627014C55077F133C4E2E405", // .NET Core 3.0+ on 32-bit Windows / AMD
-                    "2863A63E2060267B6A6151CA90239BC6", // 64-bit Windows on Intel
+                    "2863A63E2060267B6A6151CA90239BC6", // Legacy .NET on 64-bit Windows / Intel
+                    "940C0D0056C23E7F8DCDCC09C51E1475", // .NET Core 3.0+ on 64-bit Windows / Intel
                     "AFBA08886BCC7401D3BD2915E5083A9B", // Legacy .NET on 64-bit Windows / AMD
                     "BD90F67F68BEDEAB116241A3B0B79CDB" // .NET Core 3.0+ on 64-bit Windows / AMD
                 }
@@ -2446,7 +2447,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     "17D464F4D94C17DD99AC0017BAB9228F", // Opus 1.3.1 (32-bit Windows on Intel)
                     "37FAD87A9C5A0E42FEEBE2B5CC5547DF", // Opus 1.3.1 (Legacy .NET on 32-bit Windows / AMD)
                     "B6CB931B6AE4304D77B9D327A330EF68", // Opus 1.3.1 (.NET Core 3.0+ on 32-bit Windows / AMD)
-                    "B52AE38B2D30A7ADE63492CCB2F000EC", // Opus 1.3.1 (64-bit Windows on Intel)
+                    "B52AE38B2D30A7ADE63492CCB2F000EC", // Opus 1.3.1 (Legacy .NET on 64-bit Windows / Intel)
+                    "58FBBA36C5E504D4BD93C427C369DB0A", // Opus 1.3.1 (.NET Core 3.0+ on 64-bit Windows / Intel)
                     "285F9F24FA0B405F86C61AC20BE81333", // Opus 1.3.1 (Legacy .NET on 64-bit Windows / AMD)
                     "634496B42A479B6EA9CDD37D2EC96823" // Opus 1.3.1 (.NET Core 3.0+ on 64-bit Windows / AMD)
                 }
