@@ -1628,7 +1628,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "1636B4EF09C4EF2B16135E9C2670473B", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
+                    "1636B4EF09C4EF2B16135E9C2670473B", // Opus 1.1.2 (Legacy .NET on Ubuntu 18.04)
+                    "F4AFFDC5F5050965D5C62BB2C7F3D346", // Opus 1.1.2 (.NET Core 3.0+ on Ubuntu 18.04)
                     "CABF32D411EA5FA9458A79B6DC2C2D69",  // Opus 1.3.1 (MacOS and legacy .NET on Ubuntu 20.04, Windows)
                     "EC76B2A5E0B74A2E142BFD255C52F13E"  // Opus 1.3.1 (.NET Core 3.0+ on Ubuntu 20.04 and Windows)
                 }

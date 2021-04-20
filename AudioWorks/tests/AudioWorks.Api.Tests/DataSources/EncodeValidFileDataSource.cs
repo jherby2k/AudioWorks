@@ -2442,7 +2442,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "476D30594189602BF6E4755E990D0615", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
+                    "476D30594189602BF6E4755E990D0615", // Opus 1.1.2 (Legacy .NET on Ubuntu 18.04)
+                    "E497EF951D153E53CD3B2C3D84E5851C", // Opus 1.1.2 (.NET Core 3.0+ on Ubuntu 18.04)
                     "E170CC2F31A402071E26892426AEC65B", // Opus 1.3.1 (Legacy .NET on Ubuntu 20.04)
                     "F11DE8AF370B04150CBF6E08FA1E2045", // Opus 1.3.1 (.NET Core 3.0+ on Ubuntu 20.04 / Intel)
                     "AFE05CB9E10ECE0CE4A267B01E91AA7C", // Opus 1.3.1 (.NET Core 3.0+ on Ubuntu 20.04 / AMD)
