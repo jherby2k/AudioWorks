@@ -1946,7 +1946,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     "0AA286B6A6896263E9182853FFA2DD52", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
                     "8A4B07CF14C30DF85BCBDCD91A597424", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on Ubuntu / AMD)
-                    "67F854EBB448041C99902D721EB029C0", // Vorbis 1.3.7 AoTuV + Lancer (.NET Core 3.0+ on Ubuntu / AMD)
+                    "BD1777F28C923D15E00840C2725EB14A", // Vorbis 1.3.7 AoTuV + Lancer (.NET Core 3.0+ on Ubuntu / AMD)
                     "AD172F94045E0970A71F8C439EEEA6C9", // Vorbis 1.3.7 (MacOS)
                     "F25060DBEAB99B219CDB5EC54D37AD1C", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on Windows)
                     "CCC19FAB9648FAF81A46A0A55C0E0F1D" // Vorbis 1.3.7 AoTuV + Lancer (.NET Core 3.0+ on Windows)
@@ -2383,7 +2383,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "64C832F3C0D8A175084FB138D0A3525D", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "CD27FFC8398F52FB2F5984085D2215AC", // Opus 1.3.1 (Ubuntu 20.04 and MacOS)
+                    "CD27FFC8398F52FB2F5984085D2215AC", // Opus 1.3.1 (Ubuntu 20.04 and MacOS on Intel)
+                    "2018DEFDE09A503E0734CD57B0E19FC4", // Opus 1.3.1 (Ubuntu 20.04 on AMD)
                     "F06773DFABF471946AF2B3D55E881795", // Opus 1.3.1 (32-bit Windows on Intel)
                     "B540644D968E93C4EF7BA2BE7C84A5AA", // Opus 1.3.1 (32-bit Windows on AMD)
                     "AA2881B010E43964FC90B6DB03BCA969", // Opus 1.3.1 (64-bit Windows on Intel)
@@ -2402,7 +2403,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "852C615283FA436C87460A6DD0A5ABE5", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
-                    "9ED53495B32D47496C1C88B75D2FEF5F", // Opus 1.3.1 (Ubuntu 20.04 and MacOS)
+                    "9ED53495B32D47496C1C88B75D2FEF5F", // Opus 1.3.1 (Ubuntu 20.04 and MacOS on Intel)
+                    "EF85B330CBC8A8931C2827A81F2E1532", // Opus 1.3.1 (Ubuntu 20.04 on AMD)
                     "86E35D927296E4954BAE384D4B28F247", // Opus 1.3.1 (32-bit Windows on Intel)
                     "84171D7E57590C886785D15C4E89D14E", // Opus 1.3.1 (32-bit Windows on AMD)
                     "143CFA3D5684C47EC62A5BEE19B59493", // Opus 1.3.1 (64-bit Windows on Intel)
@@ -2442,7 +2444,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     "476D30594189602BF6E4755E990D0615", // Opus 1.1.2 (Ubuntu 16.04 and 18.04)
                     "E170CC2F31A402071E26892426AEC65B", // Opus 1.3.1 (Legacy .NET on Ubuntu 20.04)
-                    "F11DE8AF370B04150CBF6E08FA1E2045", // Opus 1.3.1 (.NET Core 3.0+ on Ubuntu 20.04)
+                    "F11DE8AF370B04150CBF6E08FA1E2045", // Opus 1.3.1 (.NET Core 3.0+ on Ubuntu 20.04 / Intel)
+                    "AFE05CB9E10ECE0CE4A267B01E91AA7C", // Opus 1.3.1 (.NET Core 3.0+ on Ubuntu 20.04 / AMD)
                     "0ADBC105EA51C62CB1ED53B978B33415", // Opus 1.3.1 (MacOS)
                     "17D464F4D94C17DD99AC0017BAB9228F", // Opus 1.3.1 (32-bit Windows on Intel)
                     "37FAD87A9C5A0E42FEEBE2B5CC5547DF", // Opus 1.3.1 (Legacy .NET on 32-bit Windows / AMD)
