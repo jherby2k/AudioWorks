@@ -30,7 +30,7 @@
   <ItemGroup>
     <PackageReference Include="AudioWorks.Extensibility" Version="1.1.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
-    <PackageReference Include="NuGet.Resolver" Version="5.9.0" />
+    <PackageReference Include="NuGet.Resolver" Version="5.8.0" />
     <PackageReference Include="System.Threading.Tasks.Dataflow" Version="4.8.0" />
   </ItemGroup>
 
