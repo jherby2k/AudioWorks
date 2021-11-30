@@ -30,24 +30,11 @@ namespace AudioWorks.Extensibility
         /// Returns the NuGet framework short folder name for the current runtime.
         /// </summary>
         /// <returns>The NuGet short folder name.</returns>
-        public static string GetShortFolderName()
-        {
 #if NETSTANDARD2_0
-            if (RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework",
-                StringComparison.Ordinal))
-                return $"net{GetFrameworkVersion()}";
-
-            // .NET Core 2.x didn't report the version correctly. Assume they are v2.1
-            var version = Version.Parse(RuntimeInformation.FrameworkDescription.Substring(RuntimeInformation.FrameworkDescription.LastIndexOf(' ')));
-            return version.Major == 4 ? "netcoreapp2.1" : $"netcoreapp{version.ToString(2)}";
-#else
-            var version = Version.Parse(
-                RuntimeInformation.FrameworkDescription[RuntimeInformation.FrameworkDescription.LastIndexOf(' ')..].Split('-')[0]);
-
-            return version.Major >= 5 ? $"net{version.ToString(2)}" : $"netcoreapp{version.ToString(2)}";
-#endif
-        }
-#if NETSTANDARD2_0
+        public static string GetShortFolderName() =>
+            RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework", StringComparison.Ordinal)
+                ? $"net{GetFrameworkVersion()}"
+                : $"netcoreapp{Version.Parse(RuntimeInformation.FrameworkDescription.Substring(RuntimeInformation.FrameworkDescription.LastIndexOf(' '))).ToString(2)}";
 
         static string GetFrameworkVersion()
         {
@@ -64,6 +51,15 @@ namespace AudioWorks.Extensibility
                     _ => release >= 460798 ? "47" : "462"
                 };
             }
+        }
+#else
+        public static string GetShortFolderName()
+        {
+            var version = Version.Parse(
+                RuntimeInformation.FrameworkDescription[RuntimeInformation.FrameworkDescription.LastIndexOf(' ')..]
+                    .Split('-')[0]);
+
+            return version.Major >= 5 ? $"net{version.ToString(2)}" : $"netcoreapp{version.ToString(2)}";
         }
 #endif
     }

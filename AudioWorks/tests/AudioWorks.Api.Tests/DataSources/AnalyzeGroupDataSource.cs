@@ -39,7 +39,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     {
                         new TestAudioMetadata
                         {
-#if NET462 || NETCOREAPP2_1
+#if NET462
                             TrackPeak = "0.820313",
 #else
                             TrackPeak = "0.820312",

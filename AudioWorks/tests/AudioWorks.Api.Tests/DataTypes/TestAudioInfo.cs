@@ -19,7 +19,7 @@ namespace AudioWorks.Api.Tests.DataTypes
 {
     public sealed class TestAudioInfo : IXunitSerializable
     {
-#if NET462 || NETCOREAPP2_1 || NETCOREAPP3_1
+#if NET462 || NETCOREAPP3_1
         public string Format { get; set; } = string.Empty;
 
         public int Channels { get; set; }
