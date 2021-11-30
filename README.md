@@ -31,8 +31,7 @@ Keep the module up to date with `Update-Module -Name AudioWorks.Commands`.
 The .NET API is available via [NuGet](https://www.nuget.org/packages/AudioWorks.Api).
 
 ### Additional Requirements for Building / Testing
-* [.NET 5.0 SDK](https://dotnet.microsoft.com/download/dotnet/5.0)
-* [.NET Core 2.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/2.1)
+* [.NET 6.0 SDK](https://dotnet.microsoft.com/download/dotnet/6.0)
 * [NuGet client tools](https://docs.microsoft.com/en-us/nuget/install-nuget-client-tools#nugetexe-cli) (for building extensions on MacOS and Linux)
 * [Visual Studio 2019 16.8+](https://visualstudio.microsoft.com/downloads) (optional - Windows only)
 * [Visual Studio 2019 for Mac 8.8+](https://visualstudio.microsoft.com/downloads) (optional - Mac only)
