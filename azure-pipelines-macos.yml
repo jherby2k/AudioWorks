@@ -146,12 +146,12 @@ steps:
     arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(Build.SourcesDirectory)/AudioWorks/tests/AudioWorks.Commands.Tests/bin/$(buildConfiguration)/netcoreapp3.1/AudioWorks.Commands/netcoreapp3.1'
   displayName: 'Test AudioWorks.Commands on .NET Core 3.1'
 
-- task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
+- task: reportgenerator@5
   inputs:
     reports: '$(Agent.TempDirectory)/*/coverage.cobertura.xml'
     targetdir: 'reports/coverage'
-    reporttypes: 'HtmlInline_AzurePipelines;Cobertura'
-  displayName: 'Generate code coverage results'
+    reporttypes: 'HtmlInline_AzurePipelines;Cobertura;Badges'
+  displayName: 'Generate code coverage report'
 
 - task: PublishCodeCoverageResults@1
   inputs:
