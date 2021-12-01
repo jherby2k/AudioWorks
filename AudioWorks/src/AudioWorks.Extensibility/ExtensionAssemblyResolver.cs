@@ -68,7 +68,7 @@ namespace AudioWorks.Extensibility
 
                 var matchingAssemblyName = assemblyFiles
                     .FirstOrDefault(assemblyFile => AssemblyName.ReferenceMatchesDefinition(
-                        AssemblyName.GetAssemblyName(assemblyFile), new AssemblyName(args.Name)));
+                        AssemblyName.GetAssemblyName(assemblyFile), new(args.Name)));
                 if (matchingAssemblyName == null)
                 {
                     _logger.LogTrace("Did not locate dependency '{0}'.", args.Name);
