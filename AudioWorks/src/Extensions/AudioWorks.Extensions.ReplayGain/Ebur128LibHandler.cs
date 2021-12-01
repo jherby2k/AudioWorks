@@ -57,10 +57,9 @@ namespace AudioWorks.Extensions.ReplayGain
             var osVersion = GetOSVersion();
             AddUnmanagedLibraryPath(Path.Combine(
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
-                osVersion.StartsWith("10.13", StringComparison.Ordinal) ? "macos.10.13-x64" :
-                osVersion.StartsWith("10.14", StringComparison.Ordinal) ? "macos.10.14-x64" :
                 osVersion.StartsWith("10.15", StringComparison.Ordinal) ? "macos.10.15-x64" :
-                "macos.11-x64"));
+                osVersion.StartsWith("11", StringComparison.Ordinal) ? "macos.11-x64" :
+                "macos.12-x64"));
 #endif
 
             try
