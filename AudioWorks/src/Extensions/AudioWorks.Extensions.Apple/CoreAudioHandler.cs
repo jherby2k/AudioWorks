@@ -20,8 +20,8 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
-using AudioWorks.Common;
 #endif
+using AudioWorks.Common;
 using AudioWorks.Extensibility;
 using Microsoft.Extensions.Logging;
 
