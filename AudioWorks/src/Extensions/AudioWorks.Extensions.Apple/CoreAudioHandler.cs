@@ -82,7 +82,10 @@ namespace AudioWorks.Extensions.Apple
             logger.LogInformation("Using CoreAudio version {0}.",
                 FileVersionInfo.GetVersionInfo(Path.Combine(libPath, "CoreAudioToolbox.dll")).ProductVersion);
 #else
-            SafeNativeMethods.DlOpen("/System/Library/Frameworks/CoreAudio.framework/CoreAudio", 2);
+            var result = SafeNativeMethods.DlOpen("/System/Library/Frameworks/CoreAudio.framework/CoreAudio", 2);
+
+            var logger = LoggerManager.LoggerFactory.CreateLogger<CoreAudioHandler>();
+            logger.LogInformation($"loaded with handle {0}.", result.ToInt64());
 #endif
 
             return true;
