@@ -23,9 +23,7 @@ using System.Runtime.Loader;
 using AudioWorks.Common;
 #endif
 using AudioWorks.Extensibility;
-#if WINDOWS
 using Microsoft.Extensions.Logging;
-#endif
 
 namespace AudioWorks.Extensions.Apple
 {
