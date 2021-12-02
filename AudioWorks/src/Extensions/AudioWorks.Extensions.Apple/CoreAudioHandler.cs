@@ -55,8 +55,8 @@ namespace AudioWorks.Extensions.Apple
                 AddUnmanagedLibraryPath(libPath);
 #else
             AddUnmanagedLibraryPath(libPath);
-#endif
 
+#endif
             try
             {
                 foreach (var methodInfo in typeof(SafeNativeMethods).GetMethods(
@@ -81,8 +81,10 @@ namespace AudioWorks.Extensions.Apple
 
             logger.LogInformation("Using CoreAudio version {0}.",
                 FileVersionInfo.GetVersionInfo(Path.Combine(libPath, "CoreAudioToolbox.dll")).ProductVersion);
-
+#else
+            SafeNativeMethods.DlOpen("/System/Library/Frameworks/CoreAudio.framework/CoreAudio", 2);
 #endif
+
             return true;
         }
 #if WINDOWS
