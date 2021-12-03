@@ -53,9 +53,14 @@ namespace AudioWorks.Extensions.Vorbis
             var osVersion = GetOSVersion();
             AddUnmanagedLibraryPath(Path.Combine(
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
-                osVersion.StartsWith("10.15", StringComparison.Ordinal) ? "macos.10.15-x64" :
-                osVersion.StartsWith("11", StringComparison.Ordinal) ? "macos.11-x64" :
-                "macos.12-x64"));
+                osVersion.StartsWith("10.15", StringComparison.Ordinal)
+                    ? "macos.10.15-x64" :
+                osVersion.StartsWith("11", StringComparison.Ordinal) ? RuntimeInformation.ProcessArchitecture == Architecture.Arm64
+                    ? "macos.11-arm64"
+                    : "macos.11-x64" :
+                RuntimeInformation.ProcessArchitecture == Architecture.Arm64
+                    ? "macos.11-arm64"
+                    : "macos.12-x64"));
 #else // LINUX
             var release = GetRelease();
             if (release.StartsWith("Ubuntu", StringComparison.OrdinalIgnoreCase))
