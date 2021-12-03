@@ -92,12 +92,12 @@ namespace AudioWorks.Extensions.Apple
             SafeNativeMethods.AudioFileGetPropertyInfo(Handle, id, out dataSize, out isWritable);
 
         internal void ReadPackets(
-            out uint numBytes,
+            ref uint numBytes,
             AudioStreamPacketDescription[] packetDescriptions,
             long startingPacket,
             ref uint packets,
             IntPtr data) =>
-            SafeNativeMethods.AudioFileReadPackets(Handle, false, out numBytes, packetDescriptions,
+            SafeNativeMethods.AudioFileReadPacketData(Handle, false, ref numBytes, packetDescriptions,
                 startingPacket, ref packets, data);
 
         protected virtual void Dispose(bool disposing)
