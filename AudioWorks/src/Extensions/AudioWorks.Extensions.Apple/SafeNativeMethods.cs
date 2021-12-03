@@ -23,7 +23,7 @@ namespace AudioWorks.Extensions.Apple
     static class SafeNativeMethods
     {
 #if OSX
-        const string _coreAudioLibrary = "/System/Library/Frameworks/CoreAudio.framework/CoreAudio";
+        const string _coreAudioLibrary = "/System/Library/Frameworks/AudioToolbox.framework/AudioToolbox";
 #else
         const string _coreAudioLibrary = "CoreAudioToolbox";
 #endif
