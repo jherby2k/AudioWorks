@@ -32,7 +32,7 @@ namespace AudioWorks.Extensions.Apple
 #if NETSTANDARD2_0
         [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
 #else
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
         internal static extern AudioFileStatus AudioFileOpenWithCallbacks(
             IntPtr userData,
@@ -47,7 +47,7 @@ namespace AudioWorks.Extensions.Apple
 #if NETSTANDARD2_0
         [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
 #else
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
         internal static extern AudioFileStatus AudioFileInitializeWithCallbacks(
             IntPtr userData,
@@ -64,7 +64,7 @@ namespace AudioWorks.Extensions.Apple
 #if NETSTANDARD2_0
         [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
 #else
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
         internal static extern AudioFileStatus AudioFileGetProperty(
             AudioFileHandle handle,
@@ -76,7 +76,7 @@ namespace AudioWorks.Extensions.Apple
 #if NETSTANDARD2_0
         [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
 #else
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
         internal static extern AudioFileStatus AudioFileGetPropertyInfo(
             AudioFileHandle handle,
@@ -88,7 +88,7 @@ namespace AudioWorks.Extensions.Apple
 #if NETSTANDARD2_0
         [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
 #else
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
         internal static extern AudioFileStatus AudioFileReadPackets(
             AudioFileHandle handle,
@@ -103,7 +103,7 @@ namespace AudioWorks.Extensions.Apple
 #if NETSTANDARD2_0
         [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
 #else
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
         internal static extern AudioFileStatus AudioFileClose(
             IntPtr handle);
@@ -113,7 +113,7 @@ namespace AudioWorks.Extensions.Apple
 #if NETSTANDARD2_0
         [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
 #else
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
         internal static extern ExtendedAudioFileStatus ExtAudioFileWrapAudioFile(
             AudioFileHandle audioFileHandle,
@@ -124,7 +124,7 @@ namespace AudioWorks.Extensions.Apple
 #if NETSTANDARD2_0
         [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
 #else
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
         internal static extern ExtendedAudioFileStatus ExtAudioFileGetProperty(
             ExtendedAudioFileHandle handle,
@@ -136,7 +136,7 @@ namespace AudioWorks.Extensions.Apple
 #if NETSTANDARD2_0
         [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
 #else
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
         internal static extern ExtendedAudioFileStatus ExtAudioFileSetProperty(
             ExtendedAudioFileHandle handle,
@@ -148,7 +148,7 @@ namespace AudioWorks.Extensions.Apple
 #if NETSTANDARD2_0
         [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
 #else
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
         internal static extern ExtendedAudioFileStatus ExtAudioFileWrite(
             ExtendedAudioFileHandle handle,
@@ -159,7 +159,7 @@ namespace AudioWorks.Extensions.Apple
 #if NETSTANDARD2_0
         [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
 #else
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
         internal static extern ExtendedAudioFileStatus ExtAudioFileDispose(
             IntPtr handle);
@@ -168,7 +168,7 @@ namespace AudioWorks.Extensions.Apple
 #if NETSTANDARD2_0
         [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
 #else
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
         internal static extern AudioConverterStatus AudioConverterNew(
             ref AudioStreamBasicDescription sourceFormat,
@@ -179,7 +179,7 @@ namespace AudioWorks.Extensions.Apple
 #if NETSTANDARD2_0
         [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
 #else
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
         internal static extern AudioConverterStatus AudioConverterFillComplexBuffer(
             AudioConverterHandle handle,
@@ -193,7 +193,7 @@ namespace AudioWorks.Extensions.Apple
 #if NETSTANDARD2_0
         [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
 #else
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
         internal static extern AudioConverterStatus AudioConverterSetProperty(
             AudioConverterHandle handle,
@@ -205,7 +205,7 @@ namespace AudioWorks.Extensions.Apple
 #if NETSTANDARD2_0
         [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
 #else
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
         internal static extern AudioConverterStatus AudioConverterSetProperty(
             IntPtr handle,
@@ -217,7 +217,7 @@ namespace AudioWorks.Extensions.Apple
 #if NETSTANDARD2_0
         [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
 #else
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
         internal static extern AudioConverterStatus AudioConverterDispose(IntPtr handle);
     }

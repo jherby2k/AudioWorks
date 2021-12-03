@@ -43,9 +43,6 @@ steps:
 - powershell: Write-Host echo "##vso[task.setvariable variable=localAppDataDir]$([System.Environment]::GetFolderPath(28))/AudioWorks"
   displayName: Set local application data directory
 
-- powershell: Write-Host echo "##vso[task.setvariable variable=DYLD_PRINT_LIBRARIES]1"
-  displayName: Print libraries for debugging
-
 - powershell: |
     $localFeedDir = "$env:LOCALAPPDATADIR/LocalFeed"
     $roamingAppDir = "$([System.Environment]::GetFolderPath(26))/AudioWorks"
