@@ -22,14 +22,10 @@ namespace AudioWorks.Extensions.Apple
     [SuppressUnmanagedCodeSecurity]
     static class SafeNativeMethods
     {
-#if WINDOWS
-        const string _coreAudioLibrary = "CoreAudioToolbox";
-#else
+#if OSX
         const string _coreAudioLibrary = "/System/Library/Frameworks/CoreAudio.framework/CoreAudio";
-
-        [DllImport("libdl", EntryPoint = "dlopen", CharSet = CharSet.Ansi, BestFitMapping = false)]
-        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
-        internal static extern IntPtr DlOpen(string filename, int flags);
+#else
+        const string _coreAudioLibrary = "CoreAudioToolbox";
 #endif
 
         [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
