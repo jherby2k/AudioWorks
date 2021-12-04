@@ -27,8 +27,8 @@ namespace AudioWorks.Extensibility
         internal Int24(float value)
         {
             _byte1 = (byte) value;
-            _byte2 = (byte) (((uint) value >> 8) & 0xFF);
-            _byte3 = (byte) (((uint) value >> 16) & 0xFF);
+            _byte2 = (byte) (((int) value >> 8) & 0xFF);
+            _byte3 = (byte) (((int) value >> 16) & 0xFF);
         }
 
         public static implicit operator int(Int24 value) =>
