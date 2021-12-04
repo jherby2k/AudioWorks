@@ -24,11 +24,11 @@ namespace AudioWorks.Extensibility
         readonly byte _byte2;
         readonly byte _byte3;
 
-        internal Int24(float value)
+        internal Int24(int value)
         {
             _byte1 = (byte) value;
-            _byte2 = (byte) (((int) value >> 8) & 0xFF);
-            _byte3 = (byte) (((int) value >> 16) & 0xFF);
+            _byte2 = (byte) ((value >> 8) & 0xFF);
+            _byte3 = (byte) ((value >> 16) & 0xFF);
         }
 
         public static implicit operator int(Int24 value) =>

@@ -97,7 +97,7 @@ namespace AudioWorks.Extensibility
             var max = multiplier - 1;
 
             for (var sampleIndex = 0; sampleIndex < source.Length; sampleIndex++)
-                destination[sampleIndex] = new(Math.Min(source[sampleIndex] * multiplier, max));
+                destination[sampleIndex] = new((int) Math.Min(source[sampleIndex] * multiplier, max));
         }
 
         internal static void Convert(ReadOnlySpan<float> source, Span<int> destination, int bitsPerSample)
