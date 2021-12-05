@@ -38,7 +38,7 @@ Remove-Item -Path $(Join-Path -Path $outputDir -ChildPath *) -Recurse -Include "
 Write-Host "Generating help file..."
 
 # Only do this once, as platyPS can't be loaded if it is already in use.
-if ($Framework -eq "net5.0")
+if ($Framework -eq "net6.0")
 {
 	Install-PackageProvider -Name NuGet -Scope CurrentUser -Force -ErrorAction SilentlyContinue
 	Install-Module -Name platyPS -Scope CurrentUser -Force -ErrorAction SilentlyContinue

@@ -13,11 +13,11 @@ $binaryModuleRoot = $PSModuleRoot
 if ($PSEdition -eq 'Desktop') {
     $binaryModuleRoot = Join-Path -Path $PSModuleRoot -ChildPath 'net462'
 }
-elseif ($PSVersionTable.PSVersion.Major -eq 7 -and $PSVersionTable.PSVersion.Minor -eq 0) {
+elseif ($PSVersionTable.PSVersion.Major -eq 7 -and $PSVersionTable.PSVersion.Minor -lt 2) {
     $binaryModuleRoot = Join-Path -Path $PSModuleRoot -ChildPath 'netcoreapp3.1'
 }
 else {
-    $binaryModuleRoot = Join-Path -Path $PSModuleRoot -ChildPath 'net5.0'
+    $binaryModuleRoot = Join-Path -Path $PSModuleRoot -ChildPath 'net6.0'
 }
 
 $binaryModulePath = Join-Path -Path $binaryModuleRoot -ChildPath 'AudioWorks.Commands.dll'
