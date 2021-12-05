@@ -483,6 +483,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
+                    "24C88B615C59F3054FF0A44C677987FA", // MacOS 11
                     "50F7F27DBCCE5874118C3DE9B0F0306D"
                 }
             },
@@ -498,6 +499,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
+                    "04244493BA087CD69BAD989927BD1595", // MacOS 11
                     "4A2E22037B18F3318920EA47BA76825C"
                 }
             },
@@ -513,6 +515,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
+                    "8522CA9ADFA8E200FDF5936AEF62EA43", // MacOS 11
                     "C299C20C8EF4ED5B6B5664E6B81C3244"
                 }
             },
@@ -528,6 +531,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
+                    "1BB62FEE2C66905CFBB6FEC048BF9772", // MacOS 11
                     "26442948986C55394D8AE960E66101C3"
                 }
             },
@@ -543,6 +547,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
+                    "B55FDF0750DE71AA26781CA565222D05", // MacOS 11
                     "40626FB4389C8CF567C0BF74621036BD"
                 }
             },
@@ -558,6 +563,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
+                    "8D7D0F67E43BECA4B9EE8AC0D552C01F", // MacOS 11
                     "26B6F5A519F858AB695C5090E7B98451"
                 }
             },
@@ -573,6 +579,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
+                    "C88E17FEC4F9AE6C0F8ED21E423E60D3", // MacOS 11
                     "C8E2DD6861F837C845A52A4C34523C85"
                 }
             },
@@ -588,6 +595,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
+                    "826418694704C310B1FFFDE1D1874839", // MacOS 11
                     "FAF8B7679D0B2446D83BA248CB491410"
                 }
             },
@@ -603,6 +611,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
+                    "E170FAAB89D07557FC15F472715168A0", // MacOS 11
                     "38406F719F6EF9E5F5D4E7862AA5C351"
                 }
             },
@@ -619,6 +628,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
+                    "B9F0B2D3BCB6FD612829084D8C42C2AA", // MacOS 11
                     "2F72E377036957C669D858AEA26DF62F"
                 }
             },
@@ -635,6 +645,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
+                    "EF39C30FA5D1106F655DC55806D8CB44", // MacOS 11
                     "F57326FFFD308ED69B83F7F451938D55"
                 }
             },
@@ -652,6 +663,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
+                    "04244493BA087CD69BAD989927BD1595", // MacOS 11
                     "4A2E22037B18F3318920EA47BA76825C"
                 }
             },
@@ -669,6 +681,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
+                    "771DAECD27700570C845116672E7DACC", // MacOS 11
                     "03305CCE91A686386908415EF35BDE0D"
                 }
             },
@@ -686,6 +699,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
+                    "DF3747EF579BFC71DC15CC0399E8F347", // MacOS 11
                     "815E83D61745D4E117E12D31543C47BF"
                 }
             },
@@ -705,8 +719,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "A4A51635A3E24D6AD0C377C918FBE7B6", // MacOS 10.14
                     "F62EB3988683FAFF83599C61A18E4BB5", // MacOS 10.15
+                    "1E20EEB7DE9491EFC9B946EE9947A437", // MacOS 11
                     "09CD8B8C8E9D8BC09121D8C9F871F9B7", // 32-bit Windows on Intel
                     "CF5AD69DADDCCE22612CD6FA8FB21897", // 32-bit Windows on AMD
                     "75D127D9FCD7720CBE92C0670A93A880", // 64-bit Windows on Intel
@@ -725,8 +739,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "336CE3C01C6F9D430E6FC947B93820F7", // MacOS 10.14
                     "EAD8D0B06C252C21C49920DCF360CAAF", // MacOS 10.15
+                    "A1FE40A8416A31D87160E49797AAF469", // MacOS 11
                     "9A0F6E1984B428F236E1209C13AED4D1", // 32-bit Windows on Intel
                     "7FABBF9DDF1A16701E57C6DD190485E0", // 32-bit Windows on AMD
                     "1D0F379EC9C47267569F88729569D407", // 64-bit Windows on Intel
@@ -745,8 +759,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "6C9073E678B05536C0B6AE3BF98691DD", // MacOS 10.14
                     "F1DD4F4527CCD1F347EEE1008EA2CC92", // MacOS 10.15
+                    "16D9FC9ACF0A6F1CE04BACE0368C297C", // MacOS 11
                     "CB39DFBF414790022574435C2D30297D", // 32-bit Windows on Intel
                     "EB0DA4A098888A34C2F77A2A65D2E337", // 32-bit Windows on AMD
                     "E0A80A6B32CD5A8FA5C62B44F28C4A87", // 64-bit Windows on Intel
@@ -765,8 +779,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "8CA08D60F2A8FD8E9E966FB86C56246B", // MacOS 10.14
                     "D8CFD4140F419E15B4227A3E079F0A8D", // MacOS 10.15
+                    "9EEEFD7C9BD1965C842964F88243E361", // MacOS 11
                     "E0C34EA1479C8979D3AF3A2C98D4E699", // 32-bit Windows on Intel
                     "06469BD31CF3F0B799D9E52BBEA00C72", // 32-bit Windows on AMD
                     "ED307F76DD052720321284BAD8876AB2", // 64-bit Windows on Intel
@@ -785,8 +799,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "A947F12FF7966ABAD94A102E3E26735F", // MacOS 10.14
                     "E75BB5AB85B9091CF800762611718B5E", // MacOS 10.15
+                    "DF9FAF5172A3A2B98A40A45AE96AE020", // MacOS 11
                     "6E08F885FEC4094041F6A0B4A02F10AB", // 32-bit Windows on Intel
                     "194D40FBCAE58B4A01095DD89CE70A2D", // 32-bit Windows on AMD
                     "369DAA1350BB9C45BAF84F7769221F00", // 64-bit Windows on Intel
@@ -805,8 +819,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "A856507F3B0F038F436AAB49B4CB111C", // MacOS 10.14
                     "D44290597054C7643B8A492DA3F0F97F", // MacOS 10.15
+                    "0885887CE776F7DF0B62938F0B1B5A37", // MacOS 11
                     "D41235E8E642C5773C499DCE06A72CC8", // 32-bit Windows on Intel
                     "C7FD479EFD340F30F3DE645205FA3BC5", // 32-bit Windows on AMD
                     "A86E9A3D4A9479A44F852FA42BA0C9C2", // 64-bit Windows on Intel
@@ -825,8 +839,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "0F0823DFE0AC879E021E881F70AF5775", // MacOS 10.14
                     "C57AA6ADEDD247E629980DC8E78610A8", // MacOS 10.15
+                    "C06FCDFF1A3A1D4FCD4ACAB7AA962957", // MacOS 11
                     "7BAD797AA7C5F71C7168C24077271029", // 32-bit Windows on Intel
                     "01DF45A55B786EBDEFCFFFFFD58187DF", // 32-bit Windows on AMD
                     "102A8F21E39D364419B9CF5BFB386631", // 64-bit Windows on Intel
@@ -845,8 +859,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "7F43E990D02B3D55798A69F675362138", // MacOS 10.14
                     "0E0C4050A3325A97DCC8782850A085C1", // MacOS 10.15
+                    "B3E88B401D50081F75096694932AFA63", // MacOS 11
                     "9AC3DEF9B464D0E1AB2D4F91C1A08B83", // 32-bit Windows on Intel
                     "4BB812252790CAEDE8CE8547E7BD546A", // Legacy .NET on 32-bit Windows / AMD
                     "CA76E6BF627014C55077F133C4E2E405", // .NET Core 3.0+ on 32-bit Windows / AMD
@@ -868,8 +882,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "7F43E990D02B3D55798A69F675362138", // MacOS 10.14
                     "0E0C4050A3325A97DCC8782850A085C1", // MacOS 10.15
+                    "B3E88B401D50081F75096694932AFA63", // MacOS 11
                     "9AC3DEF9B464D0E1AB2D4F91C1A08B83", // 32-bit Windows on Intel
                     "4BB812252790CAEDE8CE8547E7BD546A", // 32-bit Windows on AMD
                     "2863A63E2060267B6A6151CA90239BC6", // 64-bit Windows on Intel
@@ -890,8 +904,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "336CE3C01C6F9D430E6FC947B93820F7", // MacOS 10.14
                     "EAD8D0B06C252C21C49920DCF360CAAF", // MacOS 10.15
+                    "A1FE40A8416A31D87160E49797AAF469", // MacOS 11
                     "9A0F6E1984B428F236E1209C13AED4D1", // 32-bit Windows on Intel
                     "7FABBF9DDF1A16701E57C6DD190485E0", // 32-bit Windows on AMD
                     "1D0F379EC9C47267569F88729569D407", // 64-bit Windows on Intel
@@ -912,8 +926,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "924AD280AF0C8E068F2CA14211631527", // MacOS 10.14
                     "86088ED15687B386696E2A86CB26B90B", // MacOS 10.15
+                    "EA0A363DB54E3435F680C2308EF2A3D9", // MacOS 11
                     "78299761793D1A6EC79CBB9233156FD8", // 32-bit Windows on Intel
                     "E53BA332FDCFBE927A81040DB480688B", // 32-bit Windows on AMD
                     "93D67A9C673E7ABE3929846DBE5DBF97", // 64-bit Windows on Intel
@@ -934,8 +948,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "B26CC58D8473661388019F210607C1B7", // MacOS 10.14
                     "3ED7A24F4D3C2337506DDE23FAFFF996", // MacOS 10.15
+                    "A2061435078552AF063273BF4498D456", // MacOS 11
                     "7EDD94F25082AEEE82B2AA87E795AB6D", // 32-bit Windows on Intel
                     "9EFB3B60246E65F1C90A0880CF8905D9", // 32-bit Windows on AMD
                     "A1CD6AC102BA40A728B2C7E00B1E786D", // 64-bit Windows on Intel
@@ -956,8 +970,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "31E4469B7D826DF20C38EC8EC80C0D16", // MacOS 10.14
                     "090AD76F6A073DB5A6FCB206FE76B3B3", // MacOS 10.15
+                    "A8FB56E50B8131AD68A311FFCEE0F6FB", // MacOS 11
                     "0177BB1DEB19854CA8495C4CBBB25366", // 32-bit Windows on Intel
                     "4EE479F602DD0FB162B19540B683B2BF", // 32-bit Windows on AMD
                     "38D28BD3802566CB30D3B824D7FF593F", // 64-bit Windows on Intel
@@ -978,8 +992,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "2321A80FDC5F36A1860523948548F8E5", // MacOS 10.14
                     "7DA8554E0BC588114FC632ACF751039D", // MacOS 10.15
+                    "C9B699DB0247E0F95DE4C3A39582C4D0", // MacOS 11
                     "9E77C0824474E3600F1A919715609A1B", // 32-bit Windows
                     "2321A80FDC5F36A1860523948548F8E5" // 64-bit Windows
                 }
@@ -998,8 +1012,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "E36539ED8969070A53809CECCD0B422A", // MacOS 10.14
                     "13D8C2E82652D483B473B373FC56C753", // MacOS 10.15
+                    "391A6E071EE1085676EDB8BAC8888937", // MacOS 11
                     "EBD496E30A953A8D0FE11C2609EFABC3", // 32-bit Windows on Intel
                     "AFEC3388275B59A08EFD11A9B32904FD", // 32-bit Windows on AMD
                     "2AD5FC82A78732A66B8F04387D7D412B", // 64-bit Windows on Intel
@@ -1020,8 +1034,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "9116562A92B3F1FA983A180972CE670E", // MacOS 10.14
                     "CACCC7C8EFADCEA67B61FBD88040CEF2", // MacOS 10.15
+                    "63FF38E19B0CAEAD684B9F03E9126D11", // MacOS 11
                     "DE5F94EC1EACB75A3D049AE9960A7ACB", // 32-bit Windows on Intel
                     "C3A45A0F87C7E3A8BDAD6526CFA00ABF", // 32-bit Windows on AMD
                     "298A2B946AA53102FD025DDD9D273B21", // 64-bit Windows on Intel
@@ -1042,8 +1056,9 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "503F9957F1FE77F23189507AFC641297", // MacOS 10.14
+
                     "2192CBAE8336E9611C536D086A1DB531", // MacOS 10.15
+                    "35BDD732D1DEAF05CDAA969A37758E09", // MacOS 11
                     "B26C14FD53A4027C26FA3A57CB96AF4C", // 32-bit Windows
                     "96E46C6CF7126E26E58224D5F55850F2", // 64-bit Windows on Intel
                     "31A39465557533AA9D2E6F4985AFF237" // 64-bit Windows on AMD
@@ -1064,8 +1079,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "503F9957F1FE77F23189507AFC641297", // MacOS 10.14
                     "2192CBAE8336E9611C536D086A1DB531", // MacOS 10.15
+                    "35BDD732D1DEAF05CDAA969A37758E09", // MacOS 11
                     "B26C14FD53A4027C26FA3A57CB96AF4C", // 32-bit Windows
                     "96E46C6CF7126E26E58224D5F55850F2", // 64-bit Windows on Intel
                     "31A39465557533AA9D2E6F4985AFF237" // 64-bit Windows on AMD
@@ -1086,8 +1101,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "31FCA720DAD2B27CCFD20D52F8E32B2D", // MacOS 10.14
                     "2EE6CD80BF1B68CE6C7F3C22FC96DB6B", // MacOS 10.15
+                    "2689DD85934B68279881E8CA660419CC", // MacOS 11
                     "B65D496ADABF3DBCDB24136A9655C295", // 32-bit Windows
                     "D4A9A3FFC75AC0383B68BADA43E23C3D", // 64-bit Windows on Intel
                     "EBDEAB5BAC8FBA910667D3664192EA07" // 64-bit Windows on AMD
@@ -1108,8 +1123,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "1D7F6BDC889271BEA523A07DD29BDD37", // MacOS 10.14
                     "66F3C02A4A016EDB29216A1917D6E54A", // MacOS 10.15
+                    "1A4D28ABAD6B47007B7FB06B526DDCAB", // MacOS 11
                     "365D7E965534C8690B4694B27D0CF1C9", // 32-bit Windows on Intel
                     "BCA45E90590A453EF4DBDCE3950C9CC4", // 32-bit Windows on AMD
                     "08686D04EFF88BC663C469F2DD224020", // 64-bit Windows on Intel
@@ -1130,8 +1145,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "336CE3C01C6F9D430E6FC947B93820F7", // MacOS 10.14
                     "EAD8D0B06C252C21C49920DCF360CAAF", // MacOS 10.15
+                    "A1FE40A8416A31D87160E49797AAF469", // MacOS 11
                     "9A0F6E1984B428F236E1209C13AED4D1", // 32-bit Windows on Intel
                     "7FABBF9DDF1A16701E57C6DD190485E0", // 32-bit Windows on AMD
                     "1D0F379EC9C47267569F88729569D407", // 64-bit Windows on Intel
@@ -1152,8 +1167,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "6F97B672D446B19B9370EE3FF4A5DCB5", // MacOS 10.14
                     "32C00BC525D1101491AE423027AFF09B", // MacOS 10.15
+                    "248F69EF80DD2185FD4953BA8FC564C3", // MacOS 11
                     "DDA8DBB070EA36F77455A41A2628B6AA", // 32-bit Windows on Intel
                     "9EBD64EEF7F1CB540012892515A3B0F5", // 32-bit Windows on AMD
                     "B49EC8F6428A1CDEBA4F0728FC1BF8E5", // 64-bit Windows on Intel
@@ -1174,8 +1189,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "FD0ADBEFE09CE73D7A71768366A029A4", // MacOS 10.14
                     "B60568438DAB722DF989DA528B5461AC", // MacOS 10.15
+                    "56419864ABD22CED84B79209BEFED0E6", // MacOS 11
                     "5502D724D98AA24FE49FA8AFB0FC63A6", // 32-bit Windows on Intel
                     "838B5CABD1F8E0077559E4DF504842DC", // 32-bit Windows on AMD
                     "19940A1BA1D575D9E165584C24A955F4", // 64-bit Windows on Intel
