@@ -13,7 +13,7 @@ Linux | [![Build Status](https://dev.azure.com/jherby2k/AudioWorks/_apis/build/s
 MacOS | [![Build Status](https://dev.azure.com/jherby2k/AudioWorks/_apis/build/status/AudioWorks%20for%20MacOS?branchName=main)](https://dev.azure.com/jherby2k/AudioWorks/_build?definitionId=4&_a=summary&repositoryFilter=1&branchFilter=3) [![Code Coverage](https://img.shields.io/azure-devops/coverage/jherby2k/AudioWorks/4/main)](https://dev.azure.com/jherby2k/AudioWorks/_build?definitionId=4&_a=summary&repositoryFilter=1&branchFilter=3) | [![Build Status](https://dev.azure.com/jherby2k/AudioWorks/_apis/build/status/AudioWorks%20for%20MacOS?branchName=dev)](https://dev.azure.com/jherby2k/AudioWorks/_build?definitionId=4&_a=summary&repositoryFilter=1&branchFilter=4) [![Code Coverage](https://img.shields.io/azure-devops/coverage/jherby2k/AudioWorks/4/dev)](https://dev.azure.com/jherby2k/AudioWorks/_build?definitionId=4&_a=summary&repositoryFilter=1&branchFilter=4) | ![Deployment Status](https://vsrm.dev.azure.com/jherby2k/_apis/public/Release/badge/ce2541e1-667c-4be1-a926-7d44ff89db07/3/3)
 
 ### System Requirements
-AudioWorks runs on Windows 8.1+, MacOS 10.13+, and Ubuntu 18.04+. Other 64-bit Linux distributions may work, but may require additional dependencies and are currently untested. Currently, most extensions only support the Intel (x86) architecture. Apple M1 support will follow once .NET supports it.
+AudioWorks runs on Windows 8.1+, MacOS 10.15+, and Ubuntu 18.04+. Other 64-bit Linux distributions may work, but may require additional dependencies and are currently untested.
 
 #### On Windows:
 * [PowerShell 7+](https://aka.ms/powershell) (recommended) and/or Windows PowerShell 5.1
@@ -32,11 +32,9 @@ The .NET API is available via [NuGet](https://www.nuget.org/packages/AudioWorks.
 
 ### Additional Requirements for Building / Testing
 * [.NET 6.0 SDK](https://dotnet.microsoft.com/download/dotnet/6.0)
-* [NuGet client tools](https://docs.microsoft.com/en-us/nuget/install-nuget-client-tools#nugetexe-cli) (for building extensions on MacOS and Linux)
-* [Visual Studio 2019 16.8+](https://visualstudio.microsoft.com/downloads) (optional - Windows only)
-* [Visual Studio 2019 for Mac 8.8+](https://visualstudio.microsoft.com/downloads) (optional - Mac only)
+* [Visual Studio 2022](https://visualstudio.microsoft.com/downloads) (optional - Windows or Mac)
 * [Visual Studio Code](https://code.visualstudio.com/) (optional - all platforms)
-* [ReSharper 2020.3+](https://www.jetbrains.com/resharper) (optional - Windows only)
+* [ReSharper 2021.3+](https://www.jetbrains.com/resharper) (optional - Windows only)
 
 ### Special Thanks
 This project wouldn't be possible without the work of these other fine projects and organizations:
