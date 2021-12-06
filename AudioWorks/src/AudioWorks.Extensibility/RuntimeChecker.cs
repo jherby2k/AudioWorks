@@ -40,17 +40,14 @@ namespace AudioWorks.Extensibility
         {
             using var baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
             using (var ndpKey = baseKey.OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\"))
-            {
-                var release = (int) ndpKey.GetValue("Release", 0);
-
-                return release switch
+                return (int?) ndpKey?.GetValue("Release", 0) switch
                 {
                     >= 528040 => "48",
                     >= 461808 => "472",
                     >= 461308 => "471",
-                    _ => release >= 460798 ? "47" : "462"
+                    >= 460798 => "47",
+                    _ => "462"
                 };
-            }
         }
 #else
         public static string GetShortFolderName()
