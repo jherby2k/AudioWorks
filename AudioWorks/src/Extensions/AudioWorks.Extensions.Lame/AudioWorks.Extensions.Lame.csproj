@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>1.8.2</VersionPrefix>
+    <VersionPrefix>1.9.0</VersionPrefix>
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
     <Description>The Lame MP3 encoding extension for AudioWorks. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
     <PackageReleaseNotes>https://github.com/jherby2k/AudioWorks/wiki/Lame-Extension#release-notes</PackageReleaseNotes>

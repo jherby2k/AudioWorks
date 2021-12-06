@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>1.6.0</VersionPrefix>
+    <VersionPrefix>1.7.0</VersionPrefix>
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
     <Description>The MPEG Audio Layer 3 (MP3) extension for AudioWorks. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
     <PackageReleaseNotes>https://github.com/jherby2k/AudioWorks/wiki/MP3-Extension#release-notes</PackageReleaseNotes>

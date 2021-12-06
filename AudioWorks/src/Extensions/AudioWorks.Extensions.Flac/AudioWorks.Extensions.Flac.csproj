@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>1.12.0</VersionPrefix>
+    <VersionPrefix>1.13.0</VersionPrefix>
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
     <Description>The Free Lossless Audio Codec (FLAC) extension for AudioWorks. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
     <PackageReleaseNotes>https://github.com/jherby2k/AudioWorks/wiki/FLAC-Extension#release-notes</PackageReleaseNotes>

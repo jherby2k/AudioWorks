@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>1.1.0</VersionPrefix>
+    <VersionPrefix>1.2.0</VersionPrefix>
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <Description>The primary AudioWorks API. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AudioWorks.Extensibility" Version="1.1.0" />
+    <PackageReference Include="AudioWorks.Extensibility" Version="1.2.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="all" />
     <!-- Held back for PowerShell 5.1 compatibility -->
     <PackageReference Include="NuGet.Resolver" Version="5.8.0" />
