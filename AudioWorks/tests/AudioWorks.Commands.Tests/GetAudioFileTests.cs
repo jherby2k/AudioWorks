@@ -40,7 +40,7 @@ namespace AudioWorks.Commands.Tests
                 {
                     ps.Invoke();
                 }
-                catch (Exception e) when (!(e is CommandNotFoundException))
+                catch (Exception e) when (e is not CommandNotFoundException)
                 {
                     // CommandNotFoundException is the only type we are testing for
                 }

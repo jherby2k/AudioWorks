@@ -71,7 +71,7 @@ namespace AudioWorks.Extensions.Apple
             }
         }
 
-        public string FileExtension { get; } = ".m4a";
+        public string FileExtension => ".m4a";
 
         public void Initialize(Stream stream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {

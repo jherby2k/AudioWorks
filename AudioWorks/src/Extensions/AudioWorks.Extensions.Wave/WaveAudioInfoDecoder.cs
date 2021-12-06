@@ -96,29 +96,13 @@ namespace AudioWorks.Extensions.Wave
         static AudioInfo ParseLpcm(ReadOnlySpan<byte> fmtData, uint dataSize) =>
             AudioInfo.CreateForLossless(
                 "LPCM",
-#if NETSTANDARD2_0
-                BinaryPrimitives.ReadUInt16LittleEndian(fmtData.Slice(2)),
-                BinaryPrimitives.ReadUInt16LittleEndian(fmtData.Slice(14)),
-                (int) BinaryPrimitives.ReadUInt32LittleEndian(fmtData.Slice(4)),
-                dataSize / BinaryPrimitives.ReadUInt16LittleEndian(fmtData.Slice(12)));
-#else
                 BinaryPrimitives.ReadUInt16LittleEndian(fmtData[2..]),
                 BinaryPrimitives.ReadUInt16LittleEndian(fmtData[14..]),
                 (int) BinaryPrimitives.ReadUInt32LittleEndian(fmtData[4..]),
                 dataSize / BinaryPrimitives.ReadUInt16LittleEndian(fmtData[12..]));
-#endif
 
         static AudioInfo ParseG711(string format, ReadOnlySpan<byte> fmtData, uint dataSize)
         {
-#if NETSTANDARD2_0
-            var sampleRate = (int) BinaryPrimitives.ReadUInt32LittleEndian(fmtData.Slice(4));
-            var blockSize = BinaryPrimitives.ReadUInt16LittleEndian(fmtData.Slice(12));
-            return AudioInfo.CreateForLossy(format,
-                BinaryPrimitives.ReadUInt16LittleEndian(fmtData.Slice(2)),
-                sampleRate,
-                dataSize / blockSize,
-                blockSize * 8 * sampleRate);
-#else
             var sampleRate = (int) BinaryPrimitives.ReadUInt32LittleEndian(fmtData[4..]);
             var blockSize = BinaryPrimitives.ReadUInt16LittleEndian(fmtData[12..]);
             return AudioInfo.CreateForLossy(format,
@@ -126,7 +110,6 @@ namespace AudioWorks.Extensions.Wave
                 sampleRate,
                 dataSize / blockSize,
                 blockSize * 8 * sampleRate);
-#endif
         }
     }
 }

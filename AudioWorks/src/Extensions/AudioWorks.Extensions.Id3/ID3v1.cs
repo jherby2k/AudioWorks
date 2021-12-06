@@ -96,15 +96,15 @@ namespace AudioWorks.Extensions.Id3
                 buffer = stackalloc char[30];
 
                 reader.Read(buffer);
-                Title = new(buffer.Slice(0, buffer.IndexOf('\0')));
+                Title = new(buffer[..buffer.IndexOf('\0')]);
                 reader.Read(buffer);
-                Artist = new(buffer.Slice(0, buffer.IndexOf('\0')));
+                Artist = new(buffer[..buffer.IndexOf('\0')]);
                 reader.Read(buffer);
-                Album = new(buffer.Slice(0, buffer.IndexOf('\0')));
-                reader.Read(buffer.Slice(0, 4));
-                Year = new(buffer.Slice(0, Math.Min(4, buffer.IndexOf('\0'))));
+                Album = new(buffer[..buffer.IndexOf('\0')]);
+                reader.Read(buffer[..4]);
+                Year = new(buffer[..Math.Min(4, buffer.IndexOf('\0'))]);
                 reader.Read(buffer);
-                Comment = new(buffer.Slice(0, buffer.IndexOf('\0')));
+                Comment = new(buffer[..buffer.IndexOf('\0')]);
                 if (buffer[28] == 0)
                     TrackNumber = buffer[29];
 #endif

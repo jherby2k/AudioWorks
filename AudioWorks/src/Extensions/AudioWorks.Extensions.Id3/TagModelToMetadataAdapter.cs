@@ -93,12 +93,8 @@ namespace AudioWorks.Extensions.Id3
 
                             // The TDAT frame contains the day and the month
                             case "TDAT":
-                                Day = frameText.Text.Substring(0, 2);
-#if NETSTANDARD2_0
-                                Month = frameText.Text.Substring(2);
-#else
+                                Day = frameText.Text[..2];
                                 Month = frameText.Text[2..];
-#endif
                                 break;
 
                             case "TYER":
@@ -113,7 +109,7 @@ namespace AudioWorks.Extensions.Id3
                                 {
                                     Month = splitRecordingTime[1];
                                     if (splitRecordingTime.Length > 2)
-                                        Day = splitRecordingTime[2].Substring(0, 2);
+                                        Day = splitRecordingTime[2][..2];
                                 }
 
                                 break;

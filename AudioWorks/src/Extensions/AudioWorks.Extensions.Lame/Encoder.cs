@@ -93,7 +93,7 @@ namespace AudioWorks.Extensions.Lame
             if (bytesEncoded < 0)
                 throw new AudioEncodingException($"Lame encountered error '{bytesEncoded}' while encoding.");
 
-            _stream.Write(buffer.Slice(0, bytesEncoded));
+            _stream.Write(buffer[..bytesEncoded]);
 #endif
         }
 
@@ -132,7 +132,7 @@ namespace AudioWorks.Extensions.Lame
             if (bytesEncoded < 0)
                 throw new AudioEncodingException($"Lame encountered error '{bytesEncoded}' while encoding.");
 
-            _stream.Write(buffer.Slice(0, bytesEncoded));
+            _stream.Write(buffer[..bytesEncoded]);
 #endif
         }
 
@@ -155,7 +155,7 @@ namespace AudioWorks.Extensions.Lame
                 _handle,
                 ref MemoryMarshal.GetReference(buffer),
                 buffer.Length);
-            _stream.Write(buffer.Slice(0, bytesFlushed));
+            _stream.Write(buffer[..bytesFlushed]);
 #endif
         }
 
@@ -179,10 +179,10 @@ namespace AudioWorks.Extensions.Lame
             byte empty = 0;
             var bufferSize = SafeNativeMethods.GetLameTagFrame(_handle, ref empty, UIntPtr.Zero);
             Span<byte> buffer = stackalloc byte[(int) bufferSize.ToUInt32()];
-            _stream.Write(buffer.Slice(0, (int) SafeNativeMethods.GetLameTagFrame(
+            _stream.Write(buffer[..(int) SafeNativeMethods.GetLameTagFrame(
                 _handle,
                 ref MemoryMarshal.GetReference(buffer),
-                bufferSize).ToUInt32()));
+                bufferSize).ToUInt32()]);
 #endif
 
             _stream.Position = endOfData;

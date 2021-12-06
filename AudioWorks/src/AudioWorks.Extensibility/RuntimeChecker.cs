@@ -34,7 +34,7 @@ namespace AudioWorks.Extensibility
         public static string GetShortFolderName() =>
             RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework", StringComparison.Ordinal)
                 ? $"net{GetFrameworkVersion()}"
-                : $"netcoreapp{Version.Parse(RuntimeInformation.FrameworkDescription.Substring(RuntimeInformation.FrameworkDescription.LastIndexOf(' '))).ToString(2)}";
+                : $"netcoreapp{Version.Parse(RuntimeInformation.FrameworkDescription[RuntimeInformation.FrameworkDescription.LastIndexOf(' ')..]).ToString(2)}";
 
         static string GetFrameworkVersion()
         {

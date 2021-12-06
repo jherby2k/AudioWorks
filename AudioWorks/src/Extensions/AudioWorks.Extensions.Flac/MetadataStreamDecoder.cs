@@ -51,8 +51,8 @@ namespace AudioWorks.Extensions.Flac
                         var commentBytes = new Span<byte>(entry.Entry.ToPointer(), (int) entry.Length);
                         var delimiter = commentBytes.IndexOf((byte) 0x3D); // '='
 #if NETSTANDARD2_0
-                        var keyBytes = commentBytes.Slice(0, delimiter);
-                        var valueBytes = commentBytes.Slice(delimiter + 1);
+                        var keyBytes = commentBytes[..delimiter];
+                        var valueBytes = commentBytes[(delimiter + 1)..];
                         AudioMetadata.Set(
                             Encoding.ASCII.GetString(
                                 (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)),
@@ -62,7 +62,7 @@ namespace AudioWorks.Extensions.Flac
                                 valueBytes.Length));
 #else
                         AudioMetadata.Set(
-                            Encoding.ASCII.GetString(commentBytes.Slice(0, delimiter)),
+                            Encoding.ASCII.GetString(commentBytes[..delimiter]),
                             Encoding.UTF8.GetString(commentBytes[(delimiter + 1)..]));
 #endif
                     }
@@ -71,7 +71,7 @@ namespace AudioWorks.Extensions.Flac
 
                 case MetadataType.Picture:
                     var picture = Marshal.PtrToStructure<PictureMetadataBlock>(metadataBlock).Picture;
-                    if (picture.Type == PictureType.CoverFront || picture.Type == PictureType.Other)
+                    if (picture.Type is PictureType.CoverFront or PictureType.Other)
                         AudioMetadata.CoverArt = CoverArtFactory.GetOrCreate(
                             new Span<byte>(picture.Data.ToPointer(), (int) picture.DataLength));
                     break;

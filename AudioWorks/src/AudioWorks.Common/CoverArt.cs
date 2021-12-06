@@ -47,7 +47,7 @@ namespace AudioWorks.Common
         public string FileExtension { get; }
 
         /// <inheritdoc/>
-        public ReadOnlySpan<byte> Data => _data.AsSpan().Slice(0, _dataSize);
+        public ReadOnlySpan<byte> Data => _data.AsSpan()[.._dataSize];
 
         internal CoverArt(Stream stream)
         {

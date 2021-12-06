@@ -30,11 +30,7 @@ namespace AudioWorks.Extensions.Mp4
         {
             BitsPerSample = data[53];
             Channels = data[57];
-#if NETSTANDARD2_0
-            SampleRate = BinaryPrimitives.ReadUInt32BigEndian(data.Slice(68));
-#else
             SampleRate = BinaryPrimitives.ReadUInt32BigEndian(data[68..]);
-#endif
         }
     }
 }

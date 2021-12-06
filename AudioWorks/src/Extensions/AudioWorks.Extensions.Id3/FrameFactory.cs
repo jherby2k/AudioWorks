@@ -42,7 +42,7 @@ namespace AudioWorks.Extensions.Id3
                 return newFrame;
 
             //Get the T*** frame
-            if (_frameTypes.TryGetValue(frameId.Substring(0, 1), out type) && Activator.CreateInstance(type, frameId) is FrameBase txxxFrame)
+            if (_frameTypes.TryGetValue(frameId[..1], out type) && Activator.CreateInstance(type, frameId) is FrameBase txxxFrame)
                 return txxxFrame;
 
             throw new ArgumentException($"'{frameId}' is not a supported frame ID.", nameof(frameId));

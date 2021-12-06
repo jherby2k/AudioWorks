@@ -36,7 +36,7 @@ namespace AudioWorks.Extensions.Wave
 
         public SettingInfoDictionary SettingInfo { get; } = new();
 
-        public string FileExtension { get; } = ".wav";
+        public string FileExtension => ".wav";
 
         public void Initialize(Stream stream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {

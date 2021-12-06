@@ -37,22 +37,22 @@ namespace AudioWorks.Extensions.Vorbis
                 var delimiter = commentBytes.IndexOf((byte) 0x3D); // '='
 
 #if NETSTANDARD2_0
-                var keyBytes = commentBytes.Slice(0, delimiter);
+                var keyBytes = commentBytes[..delimiter];
                 var key = Encoding.ASCII.GetString(
                     (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)),
                     keyBytes.Length);
 
                 if (key.Equals("METADATA_BLOCK_PICTURE", StringComparison.OrdinalIgnoreCase))
-                    CoverArt = CoverArtAdapter.FromBase64(commentBytes.Slice(delimiter + 1));
+                    CoverArt = CoverArtAdapter.FromBase64(commentBytes[(delimiter + 1)..]);
                 else
                 {
-                    var valueBytes = commentBytes.Slice(delimiter + 1);
+                    var valueBytes = commentBytes[(delimiter + 1)..];
                     SetText(key, Encoding.UTF8.GetString(
                         (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes)),
                         valueBytes.Length));
                 }
 #else
-                var key = Encoding.ASCII.GetString(commentBytes.Slice(0, delimiter));
+                var key = Encoding.ASCII.GetString(commentBytes[..delimiter]);
 
                 if (key.Equals("METADATA_BLOCK_PICTURE", StringComparison.OrdinalIgnoreCase))
                     CoverArt = CoverArtAdapter.FromBase64(commentBytes[(delimiter + 1)..]);
