@@ -60,39 +60,35 @@ namespace AudioWorks.Extensions.Opus
 
         internal void SetSerialNumber(int serialNumber)
         {
-            var error = SafeNativeMethods.OpusEncoderControl(_handle,
-                EncoderControlRequest.SetSerialNumber, serialNumber);
+            var error = OpusEncoderControlSet(EncoderControlRequest.SetSerialNumber, serialNumber);
             if (error != 0)
                 throw new AudioEncodingException($"Opus encountered error '{error}' setting the serial number.");
         }
 
         internal void SetHeaderGain(int gain)
         {
-            var error = SafeNativeMethods.OpusEncoderControl(_handle,
-                EncoderControlRequest.SetHeaderGain, gain);
+            var error = OpusEncoderControlSet(EncoderControlRequest.SetHeaderGain, gain);
             if (error != 0)
                 throw new AudioEncodingException($"Opus encountered error '{error}' setting the gain.");
         }
 
         internal void SetLsbDepth(int depth)
         {
-            var error = SafeNativeMethods.OpusEncoderControl(_handle,
-                EncoderControlRequest.SetLsbDepth, depth);
+            var error = OpusEncoderControlSet(EncoderControlRequest.SetLsbDepth, depth);
             if (error != 0)
                 throw new AudioEncodingException($"Opus encountered error '{error}' setting the LSB depth.");
         }
 
         internal void SetVbrConstraint(bool enabled)
         {
-            var error = SafeNativeMethods.OpusEncoderControl(_handle, EncoderControlRequest.SetVbrConstraint,
-                enabled ? 1 : 0);
+            var error = OpusEncoderControlSet(EncoderControlRequest.SetVbrConstraint, enabled ? 1 : 0);
             if (error != 0)
                 throw new AudioEncodingException($"Opus encountered error '{error}' setting VBR constraint.");
         }
 
         internal void SetVbr(bool enabled)
         {
-            var error = SafeNativeMethods.OpusEncoderControl(_handle, EncoderControlRequest.SetVbr, enabled ? 1 : 0);
+            var error = OpusEncoderControlSet(EncoderControlRequest.SetVbr, enabled ? 1 : 0);
             if (error != 0)
                 throw new AudioEncodingException($"Opus encountered error '{error}' setting VBR.");
         }
@@ -102,14 +98,14 @@ namespace AudioWorks.Extensions.Opus
             // Cache this value for determining pre-allocation
             _requestedBitRate = bitRate * 1000;
 
-            var error = SafeNativeMethods.OpusEncoderControl(_handle, EncoderControlRequest.SetBitRate, _requestedBitRate);
+            var error = OpusEncoderControlSet(EncoderControlRequest.SetBitRate, _requestedBitRate);
             if (error != 0)
                 throw new AudioEncodingException($"Opus encountered error '{error}' setting the bit rate.");
         }
 
         internal void SetSignal(SignalType signal)
         {
-            var error = SafeNativeMethods.OpusEncoderControl(_handle, EncoderControlRequest.SetSignal, (int) signal);
+            var error = OpusEncoderControlSet(EncoderControlRequest.SetSignal, (int) signal);
             if (error != 0)
                 throw new AudioEncodingException($"Opus encountered error '{error}' setting the complexity.");
         }
@@ -166,7 +162,7 @@ namespace AudioWorks.Extensions.Opus
             if (_requestedBitRate == 0)
             {
                 // If the bit rate isn't explicit, get the automatic value
-                error = SafeNativeMethods.OpusEncoderControl(_handle, EncoderControlRequest.GetBitRate, out _requestedBitRate);
+                error = OpusEncoderControlGet(EncoderControlRequest.GetBitRate, out _requestedBitRate);
                 if (error != 0)
                     throw new AudioEncodingException($"Opus encountered error '{error}' getting the bit rate.");
             }
@@ -182,5 +178,25 @@ namespace AudioWorks.Extensions.Opus
 
             _headersFlushed = true;
         }
+
+        int OpusEncoderControlGet(EncoderControlRequest request, out int value) =>
+#if MACOS
+            // HACK ope_encoder_ctl needs the variadic argument pushed to the stack on ARM64
+            RuntimeInformation.ProcessArchitecture == Architecture.Arm64
+                ? SafeNativeMethods.OpusEncoderControlGetArm64(_handle, request, 0, 0, 0, 0, 0, out value)
+                : SafeNativeMethods.OpusEncoderControlGet(_handle, request, out value);
+#else
+            SafeNativeMethods.OpusEncoderControlGet(_handle, request, out value);
+#endif
+
+        int OpusEncoderControlSet(EncoderControlRequest request, int argument) =>
+#if MACOS
+            // HACK ope_encoder_ctl needs the variadic argument pushed to the stack on ARM64
+            RuntimeInformation.ProcessArchitecture == Architecture.Arm64
+                ? SafeNativeMethods.OpusEncoderControlSetArm64(_handle, request, 0, 0, 0, 0, 0, argument)
+                : SafeNativeMethods.OpusEncoderControlSet(_handle, request, argument);
+#else
+            SafeNativeMethods.OpusEncoderControlSet(_handle, request, argument);
+#endif
     }
 }

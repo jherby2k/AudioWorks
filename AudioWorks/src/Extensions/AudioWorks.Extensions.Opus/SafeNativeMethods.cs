@@ -315,10 +315,11 @@ namespace AudioWorks.Extensions.Opus
 #else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
-        internal static extern int OpusEncoderControl(
+        internal static extern int OpusEncoderControlGet(
             OpusEncoderHandle handle,
             EncoderControlRequest request,
             out int value);
+#if MACOS
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_ctl",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -327,10 +328,39 @@ namespace AudioWorks.Extensions.Opus
 #else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
-        internal static extern int OpusEncoderControl(
+        internal static extern int OpusEncoderControlGetArm64(
+            OpusEncoderHandle handle,
+            EncoderControlRequest request,
+            ulong register2, ulong register3, ulong register4, ulong register5, ulong register6,
+            out int value);
+#endif
+
+        [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_ctl",
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
+        internal static extern int OpusEncoderControlSet(
             OpusEncoderHandle handle,
             EncoderControlRequest request,
             int argument);
+#if MACOS
+
+        [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_ctl",
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
+        internal static extern int OpusEncoderControlSetArm64(
+            OpusEncoderHandle handle,
+            EncoderControlRequest request,
+            ulong register2, ulong register3, ulong register4, ulong register5, ulong register6,
+            int argument);
+#endif
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_destroy",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
