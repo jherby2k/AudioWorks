@@ -180,20 +180,22 @@ namespace AudioWorks.Extensions.Opus
         }
 
         int OpusEncoderControlGet(EncoderControlRequest request, out int value) =>
-#if MACOS
+#if OSX
             // HACK ope_encoder_ctl needs the variadic argument pushed to the stack on ARM64
             RuntimeInformation.ProcessArchitecture == Architecture.Arm64
-                ? SafeNativeMethods.OpusEncoderControlGetArm64(_handle, request, 0, 0, 0, 0, 0, out value)
+                ? SafeNativeMethods.OpusEncoderControlGetArm64(_handle, request,
+                    IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, out value)
                 : SafeNativeMethods.OpusEncoderControlGet(_handle, request, out value);
 #else
             SafeNativeMethods.OpusEncoderControlGet(_handle, request, out value);
 #endif
 
         int OpusEncoderControlSet(EncoderControlRequest request, int argument) =>
-#if MACOS
+#if OSX
             // HACK ope_encoder_ctl needs the variadic argument pushed to the stack on ARM64
             RuntimeInformation.ProcessArchitecture == Architecture.Arm64
-                ? SafeNativeMethods.OpusEncoderControlSetArm64(_handle, request, 0, 0, 0, 0, 0, argument)
+                ? SafeNativeMethods.OpusEncoderControlSetArm64(_handle, request,
+                    IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, argument)
                 : SafeNativeMethods.OpusEncoderControlSet(_handle, request, argument);
 #else
             SafeNativeMethods.OpusEncoderControlSet(_handle, request, argument);

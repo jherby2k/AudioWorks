@@ -319,10 +319,9 @@ namespace AudioWorks.Extensions.Opus
             OpusEncoderHandle handle,
             EncoderControlRequest request,
             out int value);
-#if MACOS
+#if OSX
 
-        [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_ctl",
-            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_ctl", ExactSpelling = true)]
 #if NETSTANDARD2_0
         [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
 #else
@@ -331,7 +330,7 @@ namespace AudioWorks.Extensions.Opus
         internal static extern int OpusEncoderControlGetArm64(
             OpusEncoderHandle handle,
             EncoderControlRequest request,
-            ulong register2, ulong register3, ulong register4, ulong register5, ulong register6,
+            IntPtr register2, IntPtr register3, IntPtr register4, IntPtr register5, IntPtr register6, IntPtr register7,
             out int value);
 #endif
 
@@ -346,10 +345,9 @@ namespace AudioWorks.Extensions.Opus
             OpusEncoderHandle handle,
             EncoderControlRequest request,
             int argument);
-#if MACOS
+#if OSX
 
-        [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_ctl",
-            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_ctl", ExactSpelling = true)]
 #if NETSTANDARD2_0
         [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
 #else
@@ -358,7 +356,7 @@ namespace AudioWorks.Extensions.Opus
         internal static extern int OpusEncoderControlSetArm64(
             OpusEncoderHandle handle,
             EncoderControlRequest request,
-            ulong register2, ulong register3, ulong register4, ulong register5, ulong register6,
+            IntPtr register2, IntPtr register3, IntPtr register4, IntPtr register5, IntPtr register6, IntPtr register7,
             int argument);
 #endif
 
