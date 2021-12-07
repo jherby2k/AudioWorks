@@ -73,7 +73,7 @@ namespace AudioWorks.Extensions.Flac
                     ? "macos.11-arm64"
                     : "macos.11-x64" :
                 RuntimeInformation.ProcessArchitecture == Architecture.Arm64
-                    ? "macos.11-arm64"
+                    ? "macos.12-arm64"
                     : "macos.12-x64");
 
             AddUnmanagedLibraryPath(libPath);

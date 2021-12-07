@@ -59,7 +59,7 @@ namespace AudioWorks.Extensions.Opus
                     ? "macos.11-arm64"
                     : "macos.11-x64" :
                 RuntimeInformation.ProcessArchitecture == Architecture.Arm64
-                    ? "macos.11-arm64"
+                    ? "macos.12-arm64"
                     : "macos.12-x64"));
 #else // LINUX
             var release = GetRelease();
