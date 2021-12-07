@@ -55,8 +55,8 @@ namespace AudioWorks.Extensions.Flac
 
             SafeNativeMethods.MetadataObjectVorbisCommentEntryFromNameValuePair(
                 out var entry,
-                new(Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes.Slice(0, keyLength + 1)))),
-                new(Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes.Slice(0, valueLength + 1)))));
+                new(Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes[..(keyLength + 1)]))),
+                new(Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes[..(valueLength + 1)]))));
 
             // The comment takes ownership of the new entry if 'copy' is false
             SafeNativeMethods.MetadataObjectVorbisCommentAppendComment(Handle, entry, false);

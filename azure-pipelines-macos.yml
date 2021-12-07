@@ -22,6 +22,18 @@ variables:
   disable.coverage.autogenerate: 'true'
 
 steps:
+- task: UseDotNet@2
+  displayName: 'Install .NET Core 3.1 SDK'
+  inputs:
+    packageType: sdk
+    version: 3.1.x
+
+- task: UseDotNet@2
+  displayName: 'Install .NET Core 6.0 SDK'
+  inputs:
+    packageType: sdk
+    version: 6.0.x
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
@@ -70,9 +82,8 @@ steps:
     }
 
     Write-Host 'Copied symbols:'
-    Copy-Symbols net5.0 net5.0
+    Copy-Symbols net6.0 net6.0
     Copy-Symbols netstandard2.0 netcoreapp3.1
-    Copy-Symbols netstandard2.0 netcoreapp2.1
   displayName: 'Copy symbols to extension directories'
 
 - task: DotNetCoreCLI@2
@@ -80,9 +91,9 @@ steps:
     command: 'test'
     projects: 'AudioWorks/tests/AudioWorks.Common.Tests/AudioWorks.Common.Tests.csproj'
     publishTestResults: 'true'
-    testRunTitle: 'AudioWorks.Common on .NET Core 5.0'
-    arguments: '--framework net5.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*'
-  displayName: 'Test AudioWorks.Common on .NET 5.0'
+    testRunTitle: 'AudioWorks.Common on .NET Core 6.0'
+    arguments: '--framework net6.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*'
+  displayName: 'Test AudioWorks.Common on .NET 6.0'
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -96,20 +107,11 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
-    projects: 'AudioWorks/tests/AudioWorks.Common.Tests/AudioWorks.Common.Tests.csproj'
-    publishTestResults: 'true'
-    testRunTitle: 'AudioWorks.Common on .NET Core 2.1'
-    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*'
-  displayName: 'Test AudioWorks.Common on .NET Core 2.1'
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'test'
     projects: 'AudioWorks/tests/AudioWorks.Extensibility.Tests/AudioWorks.Extensibility.Tests.csproj'
     publishTestResults: 'true'
-    testRunTitle: 'AudioWorks.Extensibility on .NET 5.0'
-    arguments: '--framework net5.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*'
-  displayName: 'Test AudioWorks.Extensibility on .NET 5.0'
+    testRunTitle: 'AudioWorks.Extensibility on .NET 6.0'
+    arguments: '--framework net6.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*'
+  displayName: 'Test AudioWorks.Extensibility on .NET 6.0'
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -123,20 +125,11 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
-    projects: 'AudioWorks/tests/AudioWorks.Extensibility.Tests/AudioWorks.Extensibility.Tests.csproj'
-    publishTestResults: 'true'
-    testRunTitle: 'AudioWorks.Extensibility on .NET Core 2.1'
-    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*'
-  displayName: 'Test AudioWorks.Extensibility on .NET Core 2.1'
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'test'
     projects: 'AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj'
     publishTestResults: 'true'
-    testRunTitle: 'AudioWorks.Api on .NET 5.0'
-    arguments: '--framework net5.0 --configuration $(buildConfiguration) --filter "FullyQualifiedName!~AudioWorks.Api.Tests.ExtensionInstallerTests" --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(localAppDataDir)/Extensions/net5.0/*'
-  displayName: 'Test AudioWorks.Api on .NET 5.0'
+    testRunTitle: 'AudioWorks.Api on .NET 6.0'
+    arguments: '--framework net6.0 --configuration $(buildConfiguration) --filter "FullyQualifiedName!~AudioWorks.Api.Tests.ExtensionInstallerTests" --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(localAppDataDir)/Extensions/net6.0/*'
+  displayName: 'Test AudioWorks.Api on .NET 6.0'
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -150,20 +143,11 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
-    projects: 'AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj'
-    publishTestResults: 'true'
-    testRunTitle: 'AudioWorks.Api on .NET Core 2.1'
-    arguments: '--framework netcoreapp2.1 --configuration $(buildConfiguration) --filter "FullyQualifiedName!~AudioWorks.Api.Tests.ExtensionInstallerTests" --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(localAppDataDir)/Extensions/netcoreapp2.1/*'
-  displayName: 'Test AudioWorks.Api on .NET Core 2.1'
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'test'
     projects: 'AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj'
     publishTestResults: 'true'
-    testRunTitle: 'AudioWorks.Commands on .NET 5.0'
-    arguments: '--framework net5.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(Build.SourcesDirectory)/AudioWorks/tests/AudioWorks.Commands.Tests/bin/$(buildConfiguration)/net5.0/AudioWorks.Commands/net5.0'
-  displayName: 'Test AudioWorks.Commands on .NET 5.0'
+    testRunTitle: 'AudioWorks.Commands on .NET 6.0'
+    arguments: '--framework net6.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(Build.SourcesDirectory)/AudioWorks/tests/AudioWorks.Commands.Tests/bin/$(buildConfiguration)/net6.0/AudioWorks.Commands/net6.0'
+  displayName: 'Test AudioWorks.Commands on .NET 6.0'
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -174,12 +158,12 @@ steps:
     arguments: '--framework netcoreapp3.1 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(Build.SourcesDirectory)/AudioWorks/tests/AudioWorks.Commands.Tests/bin/$(buildConfiguration)/netcoreapp3.1/AudioWorks.Commands/netcoreapp3.1'
   displayName: 'Test AudioWorks.Commands on .NET Core 3.1'
 
-- task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
+- task: reportgenerator@5
   inputs:
     reports: '$(Agent.TempDirectory)/*/coverage.cobertura.xml'
     targetdir: 'reports/coverage'
-    reporttypes: 'HtmlInline_AzurePipelines;Cobertura'
-  displayName: 'Generate code coverage results'
+    reporttypes: 'HtmlInline_AzurePipelines;Cobertura;Badges'
+  displayName: 'Generate code coverage report'
 
 - task: PublishCodeCoverageResults@1
   inputs:

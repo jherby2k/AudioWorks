@@ -69,9 +69,9 @@ namespace AudioWorks.Extensions.Opus
 
                             var nativeBuffer = new Span<byte>(sync.Buffer(bytesRead).ToPointer(), bytesRead);
 #if NETSTANDARD2_0
-                            buffer.AsSpan().Slice(0, bytesRead).CopyTo(nativeBuffer);
+                            buffer.AsSpan()[..bytesRead].CopyTo(nativeBuffer);
 #else
-                            buffer.Slice(0, bytesRead).CopyTo(nativeBuffer);
+                            buffer[..bytesRead].CopyTo(nativeBuffer);
 #endif
                             sync.Wrote(bytesRead);
                         }
@@ -113,16 +113,12 @@ namespace AudioWorks.Extensions.Opus
 #if NETSTANDARD2_0
             if (!Encoding.ASCII.GetString((byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(headerBytes)), 8)
 #else
-            if (!Encoding.ASCII.GetString(headerBytes.Slice(0, 8))
+            if (!Encoding.ASCII.GetString(headerBytes[..8])
 #endif
                 .Equals("OpusHead", StringComparison.Ordinal))
                 throw new AudioUnsupportedException("Not an Opus stream.");
 
-#if NETSTANDARD2_0
-            var sampleRate = BinaryPrimitives.ReadUInt32LittleEndian(headerBytes.Slice(12));
-#else
             var sampleRate = BinaryPrimitives.ReadUInt32LittleEndian(headerBytes[12..]);
-#endif
 
             return AudioInfo.CreateForLossy(
                 "Opus",
@@ -130,12 +126,8 @@ namespace AudioWorks.Extensions.Opus
                 (int) sampleRate,
                 (long) Math.Max(
                     (GetFinalGranulePosition(serialNumber, stream) -
-#if NETSTANDARD2_0
-                     BinaryPrimitives.ReadUInt16LittleEndian(headerBytes.Slice(10))) / (double) 48000 * sampleRate,
-#else
                      BinaryPrimitives.ReadUInt16LittleEndian(headerBytes[10..])) / (double) 48000 * sampleRate,
-#endif
-                     0.0));
+                    0.0));
         }
 
         static long GetFinalGranulePosition(int serialNumber, Stream stream)

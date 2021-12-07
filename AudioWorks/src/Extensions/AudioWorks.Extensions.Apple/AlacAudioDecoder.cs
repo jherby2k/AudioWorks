@@ -71,7 +71,7 @@ namespace AudioWorks.Extensions.Apple
                 Finished = true;
 
             var result = new SampleBuffer(
-                buffer.Slice(0, (int) (frameCount * _outputDescription.ChannelsPerFrame)),
+                buffer[..(int) (frameCount * _outputDescription.ChannelsPerFrame)],
                 (int) _outputDescription.ChannelsPerFrame, 32);
 
             return result;

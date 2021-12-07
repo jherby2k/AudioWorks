@@ -13,8 +13,8 @@ Exports an audio file.
 ## SYNTAX
 
 ```
-Export-AudioFile [-Encoder] <String> [-Path] <String> [-AudioFile] <ITaggedAudioFile> [-Name <String>]
- [-Force] [-MaxDegreeOfParallelism <Int32>] [<CommonParameters>]
+Export-AudioFile [-Encoder] <String> [-Path] <String> [-AudioFile] <ITaggedAudioFile> [-Name <String>] [-Force]
+ [-MaxDegreeOfParallelism <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION

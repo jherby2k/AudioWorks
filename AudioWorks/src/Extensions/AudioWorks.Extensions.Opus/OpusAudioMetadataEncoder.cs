@@ -67,9 +67,9 @@ namespace AudioWorks.Extensions.Opus
 
                                 var nativeBuffer = new Span<byte>(sync.Buffer(bytesRead).ToPointer(), bytesRead);
 #if NETSTANDARD2_0
-                                buffer.AsSpan().Slice(0, bytesRead).CopyTo(nativeBuffer);
+                                buffer.AsSpan()[..bytesRead].CopyTo(nativeBuffer);
 #else
-                                buffer.Slice(0, bytesRead).CopyTo(nativeBuffer);
+                                buffer[..bytesRead].CopyTo(nativeBuffer);
 #endif
                                 sync.Wrote(bytesRead);
                             }

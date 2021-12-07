@@ -36,7 +36,7 @@ namespace AudioWorks.Extensibility
                 var adjVector = new Vector<int>(adjustment);
                 var maxVector = new Vector<int>(max);
                 var srcVectors = MemoryMarshal.Cast<float, Vector<float>>(source);
-                srcVectors = srcVectors.Slice(0, srcVectors.Length - srcVectors.Length % 4);
+                srcVectors = srcVectors[..^(srcVectors.Length % 4)];
                 var destVectors = MemoryMarshal.Cast<byte, Vector<byte>>(destination);
 
                 for (int srcIndex = 0, destIndex = 0; srcIndex < srcVectors.Length; destIndex++)
@@ -74,7 +74,7 @@ namespace AudioWorks.Extensibility
             {
                 var maxVector = new Vector<int>(max);
                 var srcVectors = MemoryMarshal.Cast<float, Vector<float>>(source);
-                srcVectors = srcVectors.Slice(0, srcVectors.Length - srcVectors.Length % 2);
+                srcVectors = srcVectors[..^(srcVectors.Length % 2)];
                 var destVectors = MemoryMarshal.Cast<short, Vector<short>>(destination);
 
                 for (int srcIndex = 0, destIndex = 0; srcIndex < srcVectors.Length; destIndex++)
@@ -97,7 +97,7 @@ namespace AudioWorks.Extensibility
             var max = multiplier - 1;
 
             for (var sampleIndex = 0; sampleIndex < source.Length; sampleIndex++)
-                destination[sampleIndex] = new(Math.Min(source[sampleIndex] * multiplier, max));
+                destination[sampleIndex] = new((int) Math.Min(source[sampleIndex] * multiplier, max));
         }
 
         internal static void Convert(ReadOnlySpan<float> source, Span<int> destination, int bitsPerSample)

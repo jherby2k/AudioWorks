@@ -44,37 +44,37 @@ namespace AudioWorks.Extensions.Opus
                 throw new AudioMetadataInvalidException("Invalid Opus comment header.");
             var headerPosition = 8;
 
-            var vendorLength = (int) BinaryPrimitives.ReadUInt32LittleEndian(headerBytes.Slice(8));
+            var vendorLength = (int) BinaryPrimitives.ReadUInt32LittleEndian(headerBytes[8..]);
             headerPosition += 4 + vendorLength;
 
-            var commentCount = BinaryPrimitives.ReadUInt32LittleEndian(headerBytes.Slice(headerPosition));
+            var commentCount = BinaryPrimitives.ReadUInt32LittleEndian(headerBytes[headerPosition..]);
             headerPosition += 4;
 
             while (commentCount > 0)
             {
-                var length = (int) BinaryPrimitives.ReadUInt32LittleEndian(headerBytes.Slice(headerPosition));
+                var length = (int) BinaryPrimitives.ReadUInt32LittleEndian(headerBytes[headerPosition..]);
                 headerPosition += 4;
 
                 var commentBytes = headerBytes.Slice(headerPosition, length);
                 headerPosition += length;
 
                 var delimiter = commentBytes.IndexOf((byte) 0x3D); // '='
-                var keyBytes = commentBytes.Slice(0, delimiter);
+                var keyBytes = commentBytes[..delimiter];
                 var key = Encoding.ASCII.GetString(
                     (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)),
                     keyBytes.Length);
 
                 if (key.Equals("METADATA_BLOCK_PICTURE", StringComparison.OrdinalIgnoreCase))
-                    CoverArt = CoverArtAdapter.FromBase64(commentBytes.Slice(delimiter + 1));
+                    CoverArt = CoverArtAdapter.FromBase64(commentBytes[(delimiter + 1)..]);
                 else
                 {
-                    var valueBytes = commentBytes.Slice(delimiter + 1);
+                    var valueBytes = commentBytes[(delimiter + 1)..];
                     SetText(key, Encoding.UTF8.GetString(
                         (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes)),
                         valueBytes.Length));
                 }
 #else
-            if (!Encoding.ASCII.GetString(headerBytes.Slice(0, 8))
+            if (!Encoding.ASCII.GetString(headerBytes[..8])
                 .Equals("OpusTags", StringComparison.Ordinal))
                 throw new AudioMetadataInvalidException("Invalid Opus comment header.");
             var headerPosition = 8;
@@ -94,7 +94,7 @@ namespace AudioWorks.Extensions.Opus
                 headerPosition += length;
 
                 var delimiter = commentBytes.IndexOf((byte) 0x3D); // '='
-                var key = Encoding.ASCII.GetString(commentBytes.Slice(0, delimiter));
+                var key = Encoding.ASCII.GetString(commentBytes[..delimiter]);
 
                 if (key.Equals("METADATA_BLOCK_PICTURE", StringComparison.OrdinalIgnoreCase))
                     CoverArt = CoverArtAdapter.FromBase64(commentBytes[(delimiter + 1)..]);

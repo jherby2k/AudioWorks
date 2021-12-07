@@ -64,7 +64,7 @@ namespace AudioWorks.Extensions.Vorbis
             }
         }
 
-        public string FileExtension { get; } = ".ogg";
+        public string FileExtension => ".ogg";
 
         public void Initialize(Stream stream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {

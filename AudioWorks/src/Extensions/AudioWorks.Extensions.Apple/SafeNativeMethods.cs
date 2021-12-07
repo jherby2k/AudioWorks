@@ -23,7 +23,7 @@ namespace AudioWorks.Extensions.Apple
     static class SafeNativeMethods
     {
 #if OSX
-        const string _coreAudioLibrary = "/System/Library/Frameworks/CoreAudio.framework/Versions/A/CoreAudio";
+        const string _coreAudioLibrary = "/System/Library/Frameworks/AudioToolbox.framework/AudioToolbox";
 #else
         const string _coreAudioLibrary = "CoreAudioToolbox";
 #endif
@@ -90,10 +90,10 @@ namespace AudioWorks.Extensions.Apple
 #else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
-        internal static extern AudioFileStatus AudioFileReadPackets(
+        internal static extern AudioFileStatus AudioFileReadPacketData(
             AudioFileHandle handle,
             [MarshalAs(UnmanagedType.Bool)] bool useCache,
-            out uint numBytes,
+            ref uint numBytes,
             [In, Out] AudioStreamPacketDescription[] packetDescriptions,
             long startingPacket,
             ref uint packets,

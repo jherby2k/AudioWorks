@@ -315,10 +315,24 @@ namespace AudioWorks.Extensions.Opus
 #else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
-        internal static extern int OpusEncoderControl(
+        internal static extern int OpusEncoderControlGet(
             OpusEncoderHandle handle,
             EncoderControlRequest request,
             out int value);
+#if OSX
+
+        [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_ctl", ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
+        internal static extern int OpusEncoderControlGetArm64(
+            OpusEncoderHandle handle,
+            EncoderControlRequest request,
+            IntPtr register2, IntPtr register3, IntPtr register4, IntPtr register5, IntPtr register6, IntPtr register7,
+            out int value);
+#endif
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_ctl",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -327,10 +341,24 @@ namespace AudioWorks.Extensions.Opus
 #else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
-        internal static extern int OpusEncoderControl(
+        internal static extern int OpusEncoderControlSet(
             OpusEncoderHandle handle,
             EncoderControlRequest request,
             int argument);
+#if OSX
+
+        [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_ctl", ExactSpelling = true)]
+#if NETSTANDARD2_0
+        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
+#else
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+#endif
+        internal static extern int OpusEncoderControlSetArm64(
+            OpusEncoderHandle handle,
+            EncoderControlRequest request,
+            IntPtr register2, IntPtr register3, IntPtr register4, IntPtr register5, IntPtr register6, IntPtr register7,
+            int argument);
+#endif
 
         [DllImport(_opusEncLibrary, EntryPoint = "ope_encoder_destroy",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]

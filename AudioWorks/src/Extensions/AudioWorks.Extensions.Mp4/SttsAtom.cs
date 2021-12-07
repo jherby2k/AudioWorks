@@ -26,14 +26,8 @@ namespace AudioWorks.Extensions.Mp4
 
         internal SttsAtom(ReadOnlySpan<byte> data)
         {
-#if NETSTANDARD2_0
-            PacketCount = BinaryPrimitives.ReadUInt32BigEndian(data.Slice(16));
-            PacketSize = BinaryPrimitives.ReadUInt32BigEndian(data.Slice(20));
-#else
             PacketCount = BinaryPrimitives.ReadUInt32BigEndian(data[16..]);
             PacketSize = BinaryPrimitives.ReadUInt32BigEndian(data[20..]);
-#endif
-
         }
     }
 }

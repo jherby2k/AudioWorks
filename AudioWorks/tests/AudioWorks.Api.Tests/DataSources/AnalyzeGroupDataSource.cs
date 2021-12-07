@@ -35,39 +35,11 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    new[] // libebur128 1.1.0 (Ubuntu 16.04)
+                    new[]
                     {
                         new TestAudioMetadata
                         {
-#if NETCOREAPP2_1
-                            TrackPeak = "0.820313",
-#else
-                            TrackPeak = "0.820312",
-#endif
-                            AlbumPeak = "1.000000",
-                            TrackGain = "-1.36",
-                            AlbumGain = "-6.11"
-                        },
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "1.000000",
-                            AlbumPeak = "1.000000",
-                            TrackGain = "-6.49",
-                            AlbumGain = "-6.11"
-                        },
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "1.000000",
-                            AlbumPeak = "1.000000",
-                            TrackGain = "-7.22",
-                            AlbumGain = "-6.11"
-                        }
-                    },
-                    new[] // libebur128 1.2.4
-                    {
-                        new TestAudioMetadata
-                        {
-#if NET462 || NETCOREAPP2_1
+#if NET462
                             TrackPeak = "0.820313",
 #else
                             TrackPeak = "0.820312",
@@ -110,31 +82,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    new[] // libebur128 1.1.0 (Ubuntu 16.04)
-                    {
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.820708",
-                            AlbumPeak = "1.001060",
-                            TrackGain = "-1.36",
-                            AlbumGain = "-6.11"
-                        },
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "1.001060",
-                            AlbumPeak = "1.001060",
-                            TrackGain = "-6.49",
-                            AlbumGain = "-6.11"
-                        },
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "1.001014",
-                            AlbumPeak = "1.001060",
-                            TrackGain = "-7.22",
-                            AlbumGain = "-6.11"
-                        }
-                    },
-                    new[] // libebur128 1.2.4
+                    new[]
                     {
                         new TestAudioMetadata
                         {
@@ -174,31 +122,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    new[] // libebur128 1.1.0 (Ubuntu 16.04)
-                    {
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.590515",
-                            AlbumPeak = "0.965790",
-                            TrackGain = "4.24",
-                            AlbumGain = "-2.11"
-                        },
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.914001",
-                            AlbumPeak = "0.965790",
-                            TrackGain = "-2.03",
-                            AlbumGain = "-2.11"
-                        },
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.965790",
-                            AlbumPeak = "0.965790",
-                            TrackGain = "-3.84",
-                            AlbumGain = "-2.11"
-                        }
-                    },
-                    new[] // libebur128 1.2.4
+                    new[]
                     {
                         new TestAudioMetadata
                         {
@@ -241,31 +165,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    new[] // libebur128 1.1.0 (Ubuntu 16.04)
-                    {
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.590625",
-                            AlbumPeak = "0.965800",
-                            TrackGain = "4.24",
-                            AlbumGain = "-2.11"
-                        },
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.914001",
-                            AlbumPeak = "0.965800",
-                            TrackGain = "-2.03",
-                            AlbumGain = "-2.11"
-                        },
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.965800",
-                            AlbumPeak = "0.965800",
-                            TrackGain = "-3.84",
-                            AlbumGain = "-2.11"
-                        }
-                    },
-                    new[] // libebur128 1.2.4
+                    new[]
                     {
                         new TestAudioMetadata
                         {
@@ -305,31 +205,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    new[] // libebur128 1.1.0 (Ubuntu 16.04)
-                    {
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.813904",
-                            AlbumPeak = "0.999664",
-                            TrackGain = "-1.15",
-                            AlbumGain = "-5.91"
-                        },
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.997620",
-                            AlbumPeak = "0.999664",
-                            TrackGain = "-6.28",
-                            AlbumGain = "-5.91"
-                        },
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.999664",
-                            AlbumPeak = "0.999664",
-                            TrackGain = "-7.03",
-                            AlbumGain = "-5.91"
-                        }
-                    },
-                    new[] // libebur128 1.2.4
+                    new[]
                     {
                         new TestAudioMetadata
                         {
@@ -372,31 +248,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    new[] // libebur128 1.1.0 (Ubuntu 16.04)
-                    {
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.814064",
-                            AlbumPeak = "0.999686",
-                            TrackGain = "-1.15",
-                            AlbumGain = "-5.91"
-                        },
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.997620",
-                            AlbumPeak = "0.999686",
-                            TrackGain = "-6.28",
-                            AlbumGain = "-5.91"
-                        },
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.999686",
-                            AlbumPeak = "0.999686",
-                            TrackGain = "-7.03",
-                            AlbumGain = "-5.91"
-                        }
-                    },
-                    new[] // libebur128 1.2.4
+                    new[]
                     {
                         new TestAudioMetadata
                         {
@@ -436,31 +288,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    new[] // libebur128 1.1.0 (Ubuntu 16.04)
-                    {
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.814056",
-                            AlbumPeak = "0.999634",
-                            TrackGain = "-1.15",
-                            AlbumGain = "-5.91"
-                        },
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.997467",
-                            AlbumPeak = "0.999634",
-                            TrackGain = "-6.28",
-                            AlbumGain = "-5.91"
-                        },
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.999634",
-                            AlbumPeak = "0.999634",
-                            TrackGain = "-7.02",
-                            AlbumGain = "-5.91"
-                        }
-                    },
-                    new[] // libebur128 1.2.4
+                    new[]
                     {
                         new TestAudioMetadata
                         {
@@ -503,31 +331,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    new[] // libebur128 1.1.0 (Ubuntu 16.04)
-                    {
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.814071",
-                            AlbumPeak = "0.999712",
-                            TrackGain = "-1.15",
-                            AlbumGain = "-5.91"
-                        },
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.997490",
-                            AlbumPeak = "0.999712",
-                            TrackGain = "-6.28",
-                            AlbumGain = "-5.91"
-                        },
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.999712",
-                            AlbumPeak = "0.999712",
-                            TrackGain = "-7.02",
-                            AlbumGain = "-5.91"
-                        }
-                    },
-                    new[] // libebur128 1.2.4
+                    new[]
                     {
                         new TestAudioMetadata
                         {
@@ -567,31 +371,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    new[] // libebur128 1.1.0 (Ubuntu 16.04)
-                    {
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.814049",
-                            AlbumPeak = "0.999651",
-                            TrackGain = "-1.13",
-                            AlbumGain = "-5.89"
-                        },
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.997602",
-                            AlbumPeak = "0.999651",
-                            TrackGain = "-6.26",
-                            AlbumGain = "-5.89"
-                        },
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.999651",
-                            AlbumPeak = "0.999651",
-                            TrackGain = "-7.00",
-                            AlbumGain = "-5.89"
-                        }
-                    },
-                    new[] // libebur128 1.2.4
+                    new[]
                     {
                         new TestAudioMetadata
                         {
@@ -634,31 +414,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    new[] // libebur128 1.1.0 (Ubuntu 16.04)
-                    {
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.814095",
-                            AlbumPeak = "0.999651",
-                            TrackGain = "-1.13",
-                            AlbumGain = "-5.89"
-                        },
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.997607",
-                            AlbumPeak = "0.999651",
-                            TrackGain = "-6.26",
-                            AlbumGain = "-5.89"
-                        },
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.999651",
-                            AlbumPeak = "0.999651",
-                            TrackGain = "-7.00",
-                            AlbumGain = "-5.89"
-                        }
-                    },
-                    new[] // libebur128 1.2.4
+                    new[]
                     {
                         new TestAudioMetadata
                         {
@@ -701,31 +457,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    new[] // libebur128 1.1.0 (Ubuntu 16.04)
-                    {
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.813904",
-                            AlbumPeak = "0.999664",
-                            TrackGain = "-1.15",
-                            AlbumGain = "-5.91"
-                        },
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.997620",
-                            AlbumPeak = "0.999664",
-                            TrackGain = "-6.28",
-                            AlbumGain = "-5.91"
-                        },
-                        new TestAudioMetadata
-                        {
-                            TrackPeak = "0.999664",
-                            AlbumPeak = "0.999664",
-                            TrackGain = "-7.03",
-                            AlbumGain = "-5.91"
-                        }
-                    },
-                    new[] // libebur128 1.2.4
+                    new[]
                     {
                         new TestAudioMetadata
                         {

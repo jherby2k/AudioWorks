@@ -150,7 +150,7 @@ namespace AudioWorks.Extensions.Wave
                     throw new AudioInvalidException("Stream is unexpectedly truncated.");
 
                 if (_format == DataFormat.Lpcm)
-                    result = new(buffer.AsSpan().Slice(0, length), _audioInfo.Channels, _bitsPerSample);
+                    result = new(buffer.AsSpan()[..length], _audioInfo.Channels, _bitsPerSample);
                 else
                 {
                     var lpcmBuffer = ArrayPool<short>.Shared.Rent(length);
@@ -164,7 +164,7 @@ namespace AudioWorks.Extensions.Wave
                                 lpcmBuffer[sampleIndex] = _µLawDecodeValues[buffer[sampleIndex]];
 
                         // TODO SampleBuffer should probably accept 16-bit buffers directly
-                        result = new(MemoryMarshal.Cast<short, byte>(lpcmBuffer.AsSpan().Slice(0, length)),
+                        result = new(MemoryMarshal.Cast<short, byte>(lpcmBuffer.AsSpan()[..length]),
                             _audioInfo.Channels, 16);
                     }
                     finally

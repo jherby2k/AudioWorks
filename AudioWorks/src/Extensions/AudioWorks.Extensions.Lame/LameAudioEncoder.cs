@@ -64,7 +64,7 @@ namespace AudioWorks.Extensions.Lame
             }
         }
 
-        public string FileExtension { get; } = ".mp3";
+        public string FileExtension => ".mp3";
 
         public void Initialize(Stream stream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {

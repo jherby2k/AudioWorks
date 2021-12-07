@@ -39,7 +39,7 @@ namespace AudioWorks.Extensions.Flac
             ["Padding"] = new IntSettingInfo(0, 16_775_369)
         };
 
-        public string FileExtension { get; } = ".flac";
+        public string FileExtension => ".flac";
 
         public void Initialize(Stream stream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {

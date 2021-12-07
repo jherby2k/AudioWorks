@@ -52,7 +52,7 @@ namespace AudioWorks.Extensions.Id3
 
 #if NETSTANDARD2_0
             Language = Encoding.ASCII.GetString(
-                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(frame.Slice(index))), 3);
+                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(frame[index..])), 3);
 #else
             Language = Encoding.ASCII.GetString(frame.Slice(index, 3));
 #endif
@@ -62,11 +62,7 @@ namespace AudioWorks.Extensions.Id3
                 return;
 
             Description = TextBuilder.ReadText(frame, ref index, TextType);
-#if NETSTANDARD2_0
-            Text = TextBuilder.ReadTextEnd(frame.Slice(index), TextType);
-#else
             Text = TextBuilder.ReadTextEnd(frame[index..], TextType);
-#endif
         }
 
         internal override void Write(Stream output)

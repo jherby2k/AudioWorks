@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>1.8.1</VersionPrefix>
+    <VersionPrefix>1.9.0</VersionPrefix>
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
     <Description>The Apple lossless and AAC format extension for AudioWorks. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
     <PackageReleaseNotes>https://github.com/jherby2k/AudioWorks/wiki/Apple-Extension#release-notes</PackageReleaseNotes>
@@ -20,7 +20,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- ReSharper disable once UnknownProperty -->
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
+    <PackageReference Include="IndexRange" Version="1.0.0" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>

@@ -20,12 +20,10 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
+#endif
 using AudioWorks.Common;
-#endif
 using AudioWorks.Extensibility;
-#if WINDOWS
 using Microsoft.Extensions.Logging;
-#endif
 
 namespace AudioWorks.Extensions.Apple
 {

@@ -230,9 +230,7 @@ namespace AudioWorks.Api
 
                         if (downloadResult.Status != DownloadResourceResultStatus.Available ||
                             downloadResult.PackageReader == null ||
-#pragma warning disable IDE0083 // Use pattern matching
-                            !(downloadResult.PackageStream is FileStream packageStream))
-#pragma warning restore IDE0083 // Use pattern matching
+                            downloadResult.PackageStream is not FileStream packageStream)
                             continue;
 
                         var libGroups = (await downloadResult.PackageReader.GetLibItemsAsync(cancellationToken)
@@ -269,7 +267,7 @@ namespace AudioWorks.Api
 
                             CopyContentFiles(
                                 sourceFileName,
-                                Path.Combine(extensionDir.FullName, new DirectoryInfo(sourceFileName)!.Parent!.Name,
+                                Path.Combine(extensionDir.FullName, new DirectoryInfo(sourceFileName).Parent!.Name,
                                     Path.GetFileName(item)),
                                 logger);
                         }

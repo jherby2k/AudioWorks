@@ -78,7 +78,8 @@ namespace AudioWorks.Extensions.Apple
                 _descriptionsHandle.Free();
 
             var inputDescriptions = new AudioStreamPacketDescription[numberPackets];
-            _audioFile.ReadPackets(out var numBytes, inputDescriptions, _packetIndex, ref numberPackets,
+            var numBytes = (uint) _buffer.Memory.Length;
+            _audioFile.ReadPackets(ref numBytes, inputDescriptions, _packetIndex, ref numberPackets,
                 new(_bufferHandle.Pointer));
 
             _packetIndex += numberPackets;

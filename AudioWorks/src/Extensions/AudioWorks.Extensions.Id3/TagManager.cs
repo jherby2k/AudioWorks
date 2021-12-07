@@ -75,7 +75,7 @@ namespace AudioWorks.Extensions.Id3
 #if NETSTANDARD2_0
                     stream.Read(frameIdBuffer, 0, 1);
 #else
-                    stream.Read(frameIdBuffer.Slice(0, 1));
+                    stream.Read(frameIdBuffer[..1]);
 #endif
 
                     // We reached the padding

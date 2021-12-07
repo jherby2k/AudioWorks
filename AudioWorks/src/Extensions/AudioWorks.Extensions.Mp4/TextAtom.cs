@@ -28,18 +28,18 @@ namespace AudioWorks.Extensions.Mp4
         internal TextAtom(ReadOnlySpan<byte> data)
         {
 #if NETSTANDARD2_0
-            _fourCc = new string(CodePagesEncodingProvider.Instance.GetEncoding(1252)
-                .GetChars(data.Slice(0, 4).ToArray()));
-            Value = new string(Encoding.UTF8.GetChars(data.Slice(24).ToArray()));
+            _fourCc = new(CodePagesEncodingProvider.Instance.GetEncoding(1252)
+                .GetChars(data[..4].ToArray()));
+            Value = new(Encoding.UTF8.GetChars(data[24..].ToArray()));
 #else
             Span<char> fourCcBuffer = stackalloc char[4];
             (CodePagesEncodingProvider.Instance.GetEncoding(1252) ?? Encoding.ASCII)
-                .GetChars(data.Slice(0, 4), fourCcBuffer);
+                .GetChars(data[..4], fourCcBuffer);
             _fourCc = new(fourCcBuffer);
 
             Span<char> charBuffer = stackalloc char[Encoding.UTF8.GetMaxCharCount(data.Length - 24)];
             var charCount = Encoding.UTF8.GetChars(data[24..], charBuffer);
-            Value = new(charBuffer.Slice(0, charCount));
+            Value = new(charBuffer[..charCount]);
 #endif
         }
 

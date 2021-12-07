@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>1.1.0</VersionPrefix>
+    <VersionPrefix>1.2.0</VersionPrefix>
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <Description>Public types used by the AudioWorks API. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
@@ -25,16 +25,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Held back for PowerShell 5.1 compatibility -->
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
+    <!-- Held back for PowerShell 5.1 compatibility -->
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="all" />
     <PackageReference Include="Nullable" Version="1.3.0" PrivateAssets="all" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.2" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.4" />
   </ItemGroup>
 
   <!-- ReSharper disable once UnknownProperty -->
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
-    <PackageReference Include="System.Memory" Version="4.5.4" />
+    <PackageReference Include="IndexRange" Version="1.0.0" PrivateAssets="all" />
   </ItemGroup>
 
 </Project>

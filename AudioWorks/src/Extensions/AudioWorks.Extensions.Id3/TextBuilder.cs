@@ -83,11 +83,7 @@ namespace AudioWorks.Extensions.Id3
 #endif
         {
             var text = string.Empty;
-#if NETSTANDARD2_0
-            var count = frame.Slice(index).IndexOf((byte) 0);
-#else
             var count = frame[index..].IndexOf((byte) 0);
-#endif
             switch (count)
             {
                 case -1:
@@ -95,7 +91,7 @@ namespace AudioWorks.Extensions.Id3
                 case > 0:
 #if NETSTANDARD2_0
                     text = _encodings[textType].GetString(
-                        (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(frame.Slice(index))), count);
+                        (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(frame[index..])), count);
 #else
                     text = _encodings[textType].GetString(frame.Slice(index, count));
 #endif
@@ -139,20 +135,12 @@ namespace AudioWorks.Extensions.Id3
         static string ReadUtf16End(Span<byte> frame)
         {
             if (frame[0] == 0xFE && frame[1] == 0xFF)
-#if NETSTANDARD2_0
-                return ReadTextEndNoPreamble(frame.Slice(2), TextType.Utf16BigEndian);
-#else
                 return ReadTextEndNoPreamble(frame[2..], TextType.Utf16BigEndian);
-#endif
 
             if (frame[0] == 0xFF && frame[1] == 0xFE)
-#if NETSTANDARD2_0
-                return ReadTextEndNoPreamble(frame.Slice(2), TextType.Utf16);
-#else
                 return ReadTextEndNoPreamble(frame[2..], TextType.Utf16);
-#endif
 
-             throw new AudioInvalidException("Invalid UTF16 string.");
+            throw new AudioInvalidException("Invalid UTF16 string.");
         }
     }
 }

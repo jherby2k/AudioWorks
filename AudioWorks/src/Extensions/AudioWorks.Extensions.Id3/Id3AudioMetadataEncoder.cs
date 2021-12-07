@@ -53,7 +53,7 @@ namespace AudioWorks.Extensions.Id3
                     logger.LogWarning("ID3 version 2.3 tags don't support UTF-8. Using version 2.4.");
                 }
 
-                if (versionValue!.Equals("2.4", StringComparison.Ordinal))
+                if (versionValue.Equals("2.4", StringComparison.Ordinal))
                     version = 4;
             }
 

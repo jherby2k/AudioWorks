@@ -40,7 +40,7 @@ namespace AudioWorks.Extensions.Opus
             ["SerialNumber"] = new IntSettingInfo(int.MinValue, int.MaxValue)
         };
 
-        public string FileExtension { get; } = ".opus";
+        public string FileExtension => ".opus";
 
         public void Initialize(Stream stream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {

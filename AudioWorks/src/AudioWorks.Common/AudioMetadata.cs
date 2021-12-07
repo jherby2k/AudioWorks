@@ -138,7 +138,7 @@ namespace AudioWorks.Common
                     _day = string.Empty;
                 else
                 {
-                    if (!int.TryParse(value, out var intValue) || intValue < 1 || intValue > 31)
+                    if (!int.TryParse(value, out var intValue) || intValue is < 1 or > 31)
                         throw new AudioMetadataInvalidException("Day must be between 1 and 31.");
                     _day = intValue.ToString("00", CultureInfo.InvariantCulture);
                 }
@@ -163,7 +163,7 @@ namespace AudioWorks.Common
                     _month = string.Empty;
                 else
                 {
-                    if (!int.TryParse(value, out var intValue) || intValue < 1 || intValue > 12)
+                    if (!int.TryParse(value, out var intValue) || intValue is < 1 or > 12)
                         throw new AudioMetadataInvalidException("Month must be between 1 and 12.");
                     _month = intValue.ToString("00", CultureInfo.InvariantCulture);
                 }
@@ -213,7 +213,7 @@ namespace AudioWorks.Common
                     _trackNumber = string.Empty;
                 else
                 {
-                    if (!int.TryParse(value, out var intValue) || intValue < 1 || intValue > 99)
+                    if (!int.TryParse(value, out var intValue) || intValue is < 1 or > 99)
                         throw new AudioMetadataInvalidException("TrackNumber must be between 1 and 99.");
                     _trackNumber = intValue.ToString("00", CultureInfo.InvariantCulture);
                 }
@@ -238,7 +238,7 @@ namespace AudioWorks.Common
                     _trackCount = string.Empty;
                 else
                 {
-                    if (!int.TryParse(value, out var intValue) || intValue < 1 || intValue > 99)
+                    if (!int.TryParse(value, out var intValue) || intValue is < 1 or > 99)
                         throw new AudioMetadataInvalidException("TrackCount must be between 1 and 99.");
                     _trackCount = intValue.ToString("00", CultureInfo.InvariantCulture);
                 }
