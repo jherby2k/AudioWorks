@@ -119,7 +119,7 @@ namespace AudioWorks.Extensions.Vorbis
 
             try
             {
-                // Optimization - this is accessed frequently
+                // Optimization - this is accessed frequently (makes a sys-call on non-Windows and .NET < 6.0)
                 var streamLength = stream.Length;
 
                 // Scan to the start of the last Ogg page
