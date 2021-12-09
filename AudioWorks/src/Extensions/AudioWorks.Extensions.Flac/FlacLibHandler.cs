@@ -106,7 +106,7 @@ namespace AudioWorks.Extensions.Flac
 #else // LINUX
                 module = SafeNativeMethods.DlOpen("libFLAC.so.8", 2);
 #endif
-                logger.LogInformation("Using FLAC version {0}.",
+                logger.LogInformation("Using FLAC version {version}.",
                     Marshal.PtrToStringAnsi(
                         Marshal.PtrToStructure<IntPtr>(
 #if WINDOWS

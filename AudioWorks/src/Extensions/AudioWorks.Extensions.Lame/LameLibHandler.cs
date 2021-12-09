@@ -85,7 +85,7 @@ namespace AudioWorks.Extensions.Lame
             }
 
             // ReSharper disable once StringLiteralTypo
-            logger.LogInformation("Using LAME version {0}.",
+            logger.LogInformation("Using LAME version {version}.",
                 Marshal.PtrToStringAnsi(SafeNativeMethods.GetVersion()));
 
             return true;
