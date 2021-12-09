@@ -76,7 +76,7 @@ namespace AudioWorks.Api
             });
 
             LoggerManager.LoggerFactory.CreateLogger<EncodedPath>()
-                .LogDebug("Replacing encoded string '{0}' with '{1}'.", _encoded, result);
+                .LogDebug("Replacing encoded string '{encoded}' with '{result}'.", _encoded, result);
 
             return result;
         }

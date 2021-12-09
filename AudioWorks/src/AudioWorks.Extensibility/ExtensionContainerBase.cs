@@ -39,7 +39,7 @@ namespace AudioWorks.Extensibility
                 .ToList();
 
             var logger = LoggerManager.LoggerFactory.CreateLogger<ExtensionContainerBase>();
-            logger.LogDebug("Discovered {0} extension assemblies.", assemblies.Count);
+            logger.LogDebug("Discovered {count} extension assemblies.", assemblies.Count);
 
             // Remove any extension assemblies that can't have prerequisites handled automatically
             using (var unvalidatedContainer = new ContainerConfiguration().WithAssemblies(assemblies).CreateContainer())
@@ -47,7 +47,7 @@ namespace AudioWorks.Extensibility
                     if (!handler.Handle())
                     {
                         var validatorAssembly = handler.GetType().Assembly;
-                        logger.LogDebug("Extension assembly {0} failed prerequisite check. Removing.",
+                        logger.LogDebug("Extension assembly {assembly} failed prerequisite check. Removing.",
                             validatorAssembly.FullName);
 
                         assemblies.RemoveAll(assembly =>

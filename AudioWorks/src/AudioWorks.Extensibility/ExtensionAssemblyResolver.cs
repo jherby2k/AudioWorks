@@ -35,7 +35,7 @@ namespace AudioWorks.Extensibility
 
         internal ExtensionAssemblyResolver(string path)
         {
-            _logger.LogDebug("Loading extension '{0}'.", path);
+            _logger.LogDebug("Loading extension '{path}'.", path);
 
 #if NETSTANDARD2_0
             Assembly = RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework",
@@ -92,19 +92,19 @@ namespace AudioWorks.Extensibility
             {
                 if (assemblyName.Name == null) return null;
 
-                _logger.LogTrace("Attempting to resolve a dependency on '{1}'.", assemblyName.Name);
+                _logger.LogTrace("Attempting to resolve a dependency on '{assemblyName}'.", assemblyName.Name);
 
                 var matchingAssemblyName = assemblyFiles
                     .FirstOrDefault(assemblyFile => AssemblyName.ReferenceMatchesDefinition(
                         AssemblyName.GetAssemblyName(assemblyFile), new(assemblyName.Name)));
                 if (matchingAssemblyName == null)
                 {
-                    _logger.LogTrace("Did not locate dependency '{0}'.", assemblyName.FullName);
+                    _logger.LogTrace("Did not locate dependency '{assemblyName}'.", assemblyName.FullName);
                     return null;
                 }
 
                 var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(matchingAssemblyName);
-                _logger.LogTrace("Located dependency '{0}'.", assembly.FullName);
+                _logger.LogTrace("Located dependency '{assembly}'.", assembly.FullName);
                 return assembly;
             };
     }

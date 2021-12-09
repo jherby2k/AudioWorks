@@ -86,7 +86,7 @@ namespace AudioWorks.Extensions.ReplayGain
 
             SafeNativeMethods.GetVersion(out var major, out var minor, out var patch);
             // ReSharper disable once StringLiteralTypo
-            logger.LogInformation("Using libebur128 version {0}.{1}.{2}.", major, minor, patch);
+            logger.LogInformation("Using libebur128 version {major}.{minor}.{patch}.", major, minor, patch);
 
             return true;
         }

@@ -101,20 +101,20 @@ namespace AudioWorks.Api
                         using (var export = decoderFactory.CreateExport())
                         {
                             format = export.Value.Format;
-                            logger.LogDebug("Attempting to read '{0}' metadata from '{1}'.", format, stream.Name);
+                            logger.LogDebug("Attempting to read '{format}' metadata from '{name}'.", format, stream.Name);
                             return export.Value.ReadMetadata(stream);
                         }
                     }
                     catch (AudioUnsupportedException e)
                     {
-                        logger.LogDebug(e, "Unable to read '{0}' metadata from '{1}'.", format, stream.Name);
+                        logger.LogDebug(e, "Unable to read '{format}' metadata from '{name}'.", format, stream.Name);
 
                         // If a decoder wasn't supported, rewind the stream and try another
                         stream.Position = 0;
                     }
                 }
 
-                logger.LogDebug("Unable to read any metadata from '{0}'.", stream.Name);
+                logger.LogDebug("Unable to read any metadata from '{name}'.", stream.Name);
                 return new();
             }
             finally

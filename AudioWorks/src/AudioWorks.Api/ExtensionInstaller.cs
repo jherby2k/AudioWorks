@@ -103,7 +103,7 @@ namespace AudioWorks.Api
             {
                 // Log any connection errors and fail silently
                 if (e.InnerException is FatalProtocolException)
-                    logger.LogError(e.InnerException.Message);
+                    logger.LogError(e.InnerException, e.InnerException.Message);
                 else
                     throw;
             }
@@ -137,7 +137,7 @@ namespace AudioWorks.Api
                         {
                             Directory.Delete(Path.Combine(ExtensionRoot, installedExtension), true);
 
-                            logger.LogDebug("Deleted unlisted or obsolete extension in '{0}'.", installedExtension);
+                            logger.LogDebug("Deleted unlisted or obsolete extension in '{path}'.", installedExtension);
                         }
 
                     logger.LogInformation(!packagesInstalled
@@ -154,7 +154,7 @@ namespace AudioWorks.Api
             }
             catch (OperationCanceledException e)
             {
-                logger.LogWarning(e.Message);
+                logger.LogWarning(e, e.Message);
             }
         }
 
@@ -173,7 +173,7 @@ namespace AudioWorks.Api
 #endif
                 .ToArray();
 
-            logger.LogDebug("Discovered {0} extension packages published at '{1}'.",
+            logger.LogDebug("Discovered {count} extension packages published at '{source}'.",
                 result.Length, _customRepository.PackageSource.SourceUri);
 
             return result;
@@ -194,13 +194,13 @@ namespace AudioWorks.Api
                 new DirectoryInfo(Path.Combine(ExtensionRoot, packageMetadata.Identity.ToString()));
             if (extensionDir.Exists)
             {
-                logger.LogDebug("'{0}' version {1} is already installed. Skipping.",
+                logger.LogDebug("'{id}' version {version} is already installed. Skipping.",
                     packageMetadata.Identity.Id, packageMetadata.Identity.Version.ToString());
 
                 return false;
             }
 
-            logger.LogInformation("Installing '{0}' version {1}.",
+            logger.LogInformation("Installing '{id}' version {version}.",
                 packageMetadata.Identity.Id, packageMetadata.Identity.Version.ToString());
 
             try
@@ -281,7 +281,7 @@ namespace AudioWorks.Api
                 // ReSharper disable once InvertIf
                 if (Directory.Exists(extensionDir.FullName))
                 {
-                    logger.LogDebug("Deleting partially-installed extension '{0}'.", extensionDir.Name);
+                    logger.LogDebug("Deleting partially-installed extension '{name}'.", extensionDir.Name);
                     extensionDir.Delete(true);
                 }
 
@@ -372,7 +372,7 @@ namespace AudioWorks.Api
             }
 
             if (File.Exists(destination)) return;
-            logger.LogDebug("Copying '{0}' to '{1}'.", source, destination);
+            logger.LogDebug("Copying '{source}' to '{destination}'.", source, destination);
             Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
             File.Copy(source, destination);
         }
@@ -385,7 +385,7 @@ namespace AudioWorks.Api
                 return;
 
             if (File.Exists(destination)) return;
-            logger.LogDebug("Copying '{0}' to '{1}'.", source, destination);
+            logger.LogDebug("Copying '{source}' to '{destination}'.", source, destination);
             Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
             File.Copy(source, destination);
         }

@@ -87,7 +87,7 @@ namespace AudioWorks.Extensions.Opus
                 return false;
             }
 
-            logger.LogInformation("Using Opus version {0}.",
+            logger.LogInformation("Using Opus version {version}.",
                 (Marshal.PtrToStringAnsi(SafeNativeMethods.OpusGetVersion()) ?? "<unknown>")
 #if NETSTANDARD2_0
                     .Replace("libopus ", string.Empty));

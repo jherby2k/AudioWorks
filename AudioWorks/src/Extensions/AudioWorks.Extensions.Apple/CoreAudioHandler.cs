@@ -77,7 +77,7 @@ namespace AudioWorks.Extensions.Apple
                 return false;
             }
 
-            logger.LogInformation("Using CoreAudio version {0}.",
+            logger.LogInformation("Using CoreAudio version {version}.",
                 FileVersionInfo.GetVersionInfo(Path.Combine(libPath, "CoreAudioToolbox.dll")).ProductVersion);
 
 #endif

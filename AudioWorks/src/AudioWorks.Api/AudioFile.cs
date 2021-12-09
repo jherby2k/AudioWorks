@@ -84,13 +84,13 @@ namespace AudioWorks.Api
                         using (var export = factory.CreateExport())
                         {
                             format = export.Value.Format;
-                            logger.LogDebug("Attempting to decode '{0}' as '{1}'.", Path, format);
+                            logger.LogDebug("Attempting to decode '{path}' as '{format}'.", Path, format);
                             return export.Value.ReadAudioInfo(fileStream);
                         }
                     }
                     catch (AudioUnsupportedException e)
                     {
-                        logger.LogDebug(e, "Unable to decode '{0}' as '{1}'.", Path, format);
+                        logger.LogDebug(e, "Unable to decode '{path}' as '{format}'.", Path, format);
 
                         // If a decoder wasn't supported, rewind the stream and try another
                         fileStream.Position = 0;
