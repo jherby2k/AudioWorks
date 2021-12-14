@@ -64,19 +64,19 @@ namespace AudioWorks.Extensibility
         void ResolveFullFramework(IEnumerable<string> assemblyFiles) =>
             AppDomain.CurrentDomain.AssemblyResolve += (_, args) =>
             {
-                _logger.LogTrace("Attempting to resolve a dependency on '{1}'.", args.Name);
+                _logger.LogTrace("Attempting to resolve a dependency on '{name}'.", args.Name);
 
                 var matchingAssemblyName = assemblyFiles
                     .FirstOrDefault(assemblyFile => AssemblyName.ReferenceMatchesDefinition(
                         AssemblyName.GetAssemblyName(assemblyFile), new(args.Name)));
                 if (matchingAssemblyName == null)
                 {
-                    _logger.LogTrace("Did not locate dependency '{0}'.", args.Name);
+                    _logger.LogTrace("Did not locate dependency '{name}'.", args.Name);
                     return null;
                 }
 
                 var assembly = Assembly.LoadFrom(matchingAssemblyName);
-                _logger.LogTrace("Located dependency '{0}'.", assembly.FullName);
+                _logger.LogTrace("Located dependency '{assembly}'.", assembly.FullName);
                 return assembly;
             };
 #else

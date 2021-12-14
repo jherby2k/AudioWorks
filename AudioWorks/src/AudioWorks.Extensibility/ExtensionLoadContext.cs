@@ -66,7 +66,7 @@ namespace AudioWorks.Extensibility
             if (fullPath == null) return base.LoadUnmanagedDll(unmanagedDllName);
 
             LoggerManager.LoggerFactory.CreateLogger<ExtensionLoadContext>()
-                .LogDebug("Loading unmanaged assembly '{0}'.", fullPath);
+                .LogDebug("Loading unmanaged assembly '{assembly}'.", fullPath);
             return LoadUnmanagedDllFromPath(fullPath);
         }
     }

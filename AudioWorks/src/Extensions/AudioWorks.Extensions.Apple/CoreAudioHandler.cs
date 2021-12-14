@@ -73,7 +73,7 @@ namespace AudioWorks.Extensions.Apple
             }
             catch (EntryPointNotFoundException e)
             {
-                logger.LogWarning(e.Message);
+                logger.LogWarning(e, e.Message);
                 return false;
             }
 

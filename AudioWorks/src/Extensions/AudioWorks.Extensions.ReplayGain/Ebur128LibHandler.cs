@@ -75,12 +75,12 @@ namespace AudioWorks.Extensions.ReplayGain
             }
             catch (DllNotFoundException e)
             {
-                logger.LogWarning(e.Message);
+                logger.LogWarning(e, e.Message);
                 return false;
             }
             catch (EntryPointNotFoundException e)
             {
-                logger.LogWarning(e.Message);
+                logger.LogWarning(e, e.Message);
                 return false;
             }
 
