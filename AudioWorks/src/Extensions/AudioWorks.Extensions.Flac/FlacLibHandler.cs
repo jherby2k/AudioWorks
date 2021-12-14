@@ -87,12 +87,12 @@ namespace AudioWorks.Extensions.Flac
             }
             catch (DllNotFoundException e)
             {
-                logger.LogWarning(e, e.Message);
+                logger.LogWarning(e, "The FLAC library could not be found.");
                 return false;
             }
             catch (EntryPointNotFoundException e)
             {
-                logger.LogWarning(e, e.Message);
+                logger.LogWarning(e, "An expected entry point in the FLAC library was not found.");
                 return false;
             }
 

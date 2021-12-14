@@ -78,12 +78,12 @@ namespace AudioWorks.Extensions.Opus
             }
             catch (DllNotFoundException e)
             {
-                logger.LogWarning(e, e.Message);
+                logger.LogWarning(e, "The Opus library could not be found.");
                 return false;
             }
             catch (EntryPointNotFoundException e)
             {
-                logger.LogWarning(e, e.Message);
+                logger.LogWarning(e, "An expected entry point in the Opus library was not found.");
                 return false;
             }
 

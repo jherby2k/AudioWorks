@@ -78,12 +78,12 @@ namespace AudioWorks.Extensions.Vorbis
             }
             catch (DllNotFoundException e)
             {
-                logger.LogWarning(e, e.Message);
+                logger.LogWarning(e, "The Vorbis library could not be found.");
                 return false;
             }
             catch (EntryPointNotFoundException e)
             {
-                logger.LogWarning(e, e.Message);
+                logger.LogWarning(e, "An expected entry point in the Vorbis library was not found.");
                 return false;
             }
 

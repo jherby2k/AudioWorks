@@ -103,7 +103,7 @@ namespace AudioWorks.Api
             {
                 // Log any connection errors and fail silently
                 if (e.InnerException is FatalProtocolException)
-                    logger.LogError(e.InnerException, e.InnerException.Message);
+                    logger.LogError(e.InnerException, "Failed to install extension: {message}", e.InnerException.Message);
                 else
                     throw;
             }
@@ -140,9 +140,9 @@ namespace AudioWorks.Api
                             logger.LogDebug("Deleted unlisted or obsolete extension in '{path}'.", installedExtension);
                         }
 
-                    logger.LogInformation(!packagesInstalled
-                        ? "Extensions are already up to date."
-                        : "Extensions successfully updated.");
+                    logger.LogInformation(packagesInstalled
+                        ? "Extensions successfully updated."
+                        : "Extensions are already up to date.");
                 }
             }
             catch (FatalProtocolException e)
@@ -154,7 +154,7 @@ namespace AudioWorks.Api
             }
             catch (OperationCanceledException e)
             {
-                logger.LogWarning(e, e.Message);
+                logger.LogWarning(e, "The download was canceled.");
             }
         }
 

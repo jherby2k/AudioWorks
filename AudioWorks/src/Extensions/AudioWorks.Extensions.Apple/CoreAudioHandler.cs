@@ -73,7 +73,7 @@ namespace AudioWorks.Extensions.Apple
             }
             catch (EntryPointNotFoundException e)
             {
-                logger.LogWarning(e, e.Message);
+                logger.LogWarning(e, "An expected entry point in CoreAudioToolbox.dll was not found.");
                 return false;
             }
 
