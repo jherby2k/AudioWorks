@@ -43,11 +43,13 @@ namespace AudioWorks.Extensions.Flac
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool FreeLibrary(IntPtr module);
 
-        [DllImport(_kernelLibrary, ExactSpelling = true, CharSet = CharSet.Ansi, BestFitMapping = false)]
+        [DllImport(_kernelLibrary, ExactSpelling = true,
+            CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
         internal static extern IntPtr GetProcAddress(IntPtr module, string name);
 #else
-        [DllImport(_dlLibrary, EntryPoint = "dlopen", CharSet = CharSet.Ansi, BestFitMapping = false)]
+        [DllImport(_dlLibrary, EntryPoint = "dlopen",
+            CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
         internal static extern IntPtr DlOpen(string filename, int flags);
 
@@ -55,7 +57,8 @@ namespace AudioWorks.Extensions.Flac
         [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
         internal static extern int DlClose(IntPtr handle);
 
-        [DllImport(_dlLibrary, EntryPoint = "dlsym", CharSet = CharSet.Ansi, BestFitMapping = false)]
+        [DllImport(_dlLibrary, EntryPoint = "dlsym",
+            CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
         internal static extern IntPtr DlSym(IntPtr handle, string symbol);
 #endif
@@ -386,7 +389,8 @@ namespace AudioWorks.Extensions.Flac
             ulong totalSamples);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_object_picture_set_mime_type",
-            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, CharSet = CharSet.Ansi, BestFitMapping = false)]
+            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true,
+            CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
 #if NETSTANDARD2_0
         [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
 #else
@@ -395,7 +399,7 @@ namespace AudioWorks.Extensions.Flac
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataObjectPictureSetMimeType(
             MetadataBlockHandle handle,
-            [MarshalAs(UnmanagedType.LPStr)] string mimeType,
+            string mimeType,
             [MarshalAs(UnmanagedType.Bool)] bool copy);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_object_picture_set_data",
