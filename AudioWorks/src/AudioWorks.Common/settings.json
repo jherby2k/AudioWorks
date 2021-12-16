@@ -2,6 +2,10 @@
   "AutomaticExtensionDownloads": true,
   "AutomaticExtensionDownloadTimeout": 30,
   "UsePreReleaseExtensions": false,
+  "RequireSignedExtensions": true,
+  "TrustedFingerprints": [
+    "5D6F49B1DDD6D05F50200F18F1B3A08BE3DB94D6ECC78B88E79937EE76ADA703"
+  ],
   "ExtensionRepository": "https://www.myget.org/F/audioworks-extensions-v5/api/v3/index.json",
-  "DefaultRepository":  "https://api.nuget.org/v3/index.json"
+  "DefaultRepository": "https://api.nuget.org/v3/index.json"
 }

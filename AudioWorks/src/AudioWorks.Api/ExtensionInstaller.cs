@@ -13,6 +13,14 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
 using Microsoft.Extensions.Configuration;
@@ -22,16 +30,11 @@ using NuGet.Configuration;
 using NuGet.Frameworks;
 using NuGet.Packaging;
 using NuGet.Packaging.Core;
+#if !NETSTANDARD2_0
+using NuGet.Packaging.Signing;
+#endif
 using NuGet.Protocol.Core.Types;
 using NuGet.Resolver;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace AudioWorks.Api
@@ -232,6 +235,45 @@ namespace AudioWorks.Api
                             downloadResult.PackageReader == null ||
                             downloadResult.PackageStream is not FileStream packageStream)
                             continue;
+
+#if !NETSTANDARD2_0
+                        if (ConfigurationManager.Configuration.GetValue("RequireSignedExtensions", true))
+                        {
+                            var verificationProviders = new ISignatureVerificationProvider[]
+                            {
+                                new IntegrityVerificationProvider(),
+                                new SignatureTrustAndValidityVerificationProvider(),
+                                new AllowListVerificationProvider(ConfigurationManager.Configuration
+                                    .GetValue<string[]>("TrustedFingerprints",
+                                        new[] { "5D6F49B1DDD6D05F50200F18F1B3A08BE3DB94D6ECC78B88E79937EE76ADA703" })
+                                    .Select(f => new CertificateHashAllowListEntry(VerificationTarget.Author,
+                                        SignaturePlacement.PrimarySignature, f, HashAlgorithmName.SHA256)).ToArray())
+                            };
+
+                            var verifier = new PackageSignatureVerifier(verificationProviders);
+
+                            var result = await verifier.VerifySignaturesAsync(downloadResult.PackageReader,
+                                    SignedPackageVerifierSettings.GetRequireModeDefaultPolicy(), cancellationToken)
+                                .ConfigureAwait(false);
+                            if (result.IsValid)
+                                logger.LogDebug("Verified signature on extension '{id}'.", packageToInstall.Id);
+                            else
+                            {
+                                logger.LogError(
+                                    "The extension '{id}' is not signed with a trusted certificate and will not be installed.",
+                                    packageToInstall.Id);
+                                continue;
+                            }
+                        }
+                        else
+                            logger.LogWarning(
+                                "Did not verify signature of extension '{id}' as signature verification is disabled.",
+                                packageToInstall.Id);
+#else
+                        logger.LogWarning(
+                            "Signature verification of extension '{id}' cannot be performed under this runtime.",
+                            packageToInstall.Id);
+#endif
 
                         var libGroups = (await downloadResult.PackageReader.GetLibItemsAsync(cancellationToken)
                             .ConfigureAwait(false)).ToArray();
