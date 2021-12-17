@@ -46,17 +46,11 @@ namespace AudioWorks.Api
     {
         static readonly NuGetFramework _framework = NuGetFramework.ParseFolder(RuntimeChecker.GetShortFolderName());
 
-        static readonly SourceRepository _customRepository = new(new(
-                ConfigurationManager.Configuration.GetValue(
-                    "ExtensionRepository",
-                    "https://www.myget.org/F/audioworks-extensions-v5/api/v3/index.json")),
-            Repository.Provider.GetCoreV3());
+        static readonly SourceRepository _customRepository =
+            new(new(ConfigurationManager.Configuration["ExtensionRepository"]), Repository.Provider.GetCoreV3());
 
-        static readonly SourceRepository _defaultRepository = new(new(
-                ConfigurationManager.Configuration.GetValue(
-                    "DefaultRepository",
-                    "https://api.nuget.org/v3/index.json")),
-            Repository.Provider.GetCoreV3());
+        static readonly SourceRepository _defaultRepository =
+            new(new(ConfigurationManager.Configuration["DefaultRepository"]), Repository.Provider.GetCoreV3());
 
         static readonly List<string> _fileTypesToInstall = new(new[]
         {
@@ -119,7 +113,7 @@ namespace AudioWorks.Api
             try
             {
                 using (var tokenSource = new CancellationTokenSource(
-                    ConfigurationManager.Configuration.GetValue("AutomaticExtensionDownloadTimeout", 30) * 1000))
+                    ConfigurationManager.Configuration.GetValue<int>("AutomaticExtensionDownloadTimeout") * 1000))
                 {
                     // Hack - do this on the thread pool to avoid deadlocks
                     var publishedPackages = await Task.Run(() =>
@@ -237,17 +231,17 @@ namespace AudioWorks.Api
                             continue;
 
 #if !NETSTANDARD2_0
-                        if (ConfigurationManager.Configuration.GetValue("RequireSignedExtensions", true))
+                        if (ConfigurationManager.Configuration.GetValue<bool>("RequireSignedExtensions"))
                         {
                             var verificationProviders = new ISignatureVerificationProvider[]
                             {
                                 new IntegrityVerificationProvider(),
                                 new SignatureTrustAndValidityVerificationProvider(),
-                                new AllowListVerificationProvider(ConfigurationManager.Configuration
-                                    .GetValue<string[]>("TrustedFingerprints",
-                                        new[] { "5D6F49B1DDD6D05F50200F18F1B3A08BE3DB94D6ECC78B88E79937EE76ADA703" })
-                                    .Select(f => new CertificateHashAllowListEntry(VerificationTarget.Author,
-                                        SignaturePlacement.PrimarySignature, f, HashAlgorithmName.SHA256)).ToArray())
+                                new AllowListVerificationProvider(
+                                    ConfigurationManager.Configuration.GetValue<string[]>("TrustedFingerprints")
+                                        .Select(f => new CertificateHashAllowListEntry(VerificationTarget.Author,
+                                            SignaturePlacement.PrimarySignature, f, HashAlgorithmName.SHA256))
+                                        .ToArray())
                             };
 
                             var verifier = new PackageSignatureVerifier(verificationProviders);

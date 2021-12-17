@@ -14,11 +14,9 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace AudioWorks.Common
 {
@@ -27,17 +25,6 @@ namespace AudioWorks.Common
     /// </summary>
     public static class ConfigurationManager
     {
-        const string _currentRepository = "https://www.myget.org/F/audioworks-extensions-v5/api/v3/index.json";
-
-        static readonly List<string> _oldRepositories = new(new[]
-        {
-            "https://www.myget.org/F/audioworks-extensions/api/v3/index.json",
-            "https://www.myget.org/F/audioworks-extensions-v1/api/v3/index.json",
-            "https://www.myget.org/F/audioworks-extensions-v2/api/v3/index.json",
-            "https://www.myget.org/F/audioworks-extensions-v3/api/v3/index.json",
-            "https://www.myget.org/F/audioworks-extensions-v4/api/v3/index.json"
-        });
-
         /// <summary>
         /// Gets the configuration.
         /// </summary>
@@ -50,51 +37,21 @@ namespace AudioWorks.Common
             var settingsPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 "AudioWorks");
-            const string settingsFileName = "settings.json";
-            var settingsFile = Path.Combine(settingsPath, settingsFileName);
+            var settingsFile = Path.Combine(settingsPath, "settings.json");
 
-            MigrateToRoamingProfile(settingsFile);
-
-            if (File.Exists(settingsFile))
-                UpgradeRepositoryUrl(settingsFile);
-            else
-            {
-                // Copy the settings template if the file doesn't already exist
-                Directory.CreateDirectory(settingsPath);
-                File.Copy(
-                    Path.Combine(
-                        Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
-                        settingsFileName),
-                    settingsFile);
-            }
-
+            // Settings read from disk override the defaults
             Configuration = new ConfigurationBuilder()
-                .SetBasePath(settingsPath)
-                .AddJsonFile(settingsFileName, true)
+                .AddInMemoryCollection(LibraryConfiguration.GetDefaults().AsDictionary())
+                .AddJsonFile(settingsFile, true)
                 .Build();
-        }
 
-        static void MigrateToRoamingProfile(string settingsFile)
-        {
-            var oldSettingsFile = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "AudioWorks", Path.GetFileName(settingsFile));
-            if (!File.Exists(oldSettingsFile)) return;
-
-            if (!File.Exists(settingsFile))
-                File.Copy(oldSettingsFile, settingsFile);
-            File.Delete(oldSettingsFile);
-        }
-
-        static void UpgradeRepositoryUrl(string settingsFile)
-        {
-            var settings = File.ReadAllText(settingsFile);
-#if NETSTANDARD2_0
-            settings = _oldRepositories.Aggregate(settings, (current, oldRepository) => current.Replace(oldRepository, _currentRepository));
-#else
-            settings = _oldRepositories.Aggregate(settings, (current, oldRepository) => current.Replace(oldRepository, _currentRepository, StringComparison.OrdinalIgnoreCase));
-#endif
-            File.WriteAllText(settingsFile, settings);
+            // Write the configuration out to disk
+            var updatedConfig = new LibraryConfiguration();
+            Configuration.Bind(updatedConfig);
+            Directory.CreateDirectory(settingsPath);
+            File.WriteAllText(settingsFile,
+                JsonConvert.SerializeObject(updatedConfig,
+                    new JsonSerializerSettings { Formatting = Formatting.Indented }));
         }
     }
 }

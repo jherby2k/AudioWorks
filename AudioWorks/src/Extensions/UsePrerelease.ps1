@@ -1,4 +1,4 @@
-﻿<# Copyright © 2020 Jeremy Herbison
+﻿<# Copyright © 2021 Jeremy Herbison
 
 This file is part of AudioWorks.
 
@@ -13,9 +13,7 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. #>
 
-$localFeedDir = Join-Path -Path $([System.Environment]::GetFolderPath(28)) -ChildPath AudioWorks | Join-Path -ChildPath LocalFeed
-$roamingDir = Join-Path -Path $([System.Environment]::GetFolderPath(26)) -ChildPath AudioWorks
-$settingsFile = $roamingDir | Join-Path -ChildPath settings.json
+$settingsFile = Join-Path -Path $([System.Environment]::GetFolderPath(26)) -ChildPath AudioWorks | Join-Path -ChildPath settings.json
 
 $content = if (Test-Path $settingsFile) {
     Get-Content $settingsFile | ConvertFrom-Json
@@ -23,14 +21,13 @@ $content = if (Test-Path $settingsFile) {
     New-Item $roamingDir -ItemType Directory -Force | Out-Null
     New-Object -TypeName PSObject
 }
-$content | Add-Member -Name ExtensionRepository -Value $localFeedDir -MemberType NoteProperty -Force
-$content | Add-Member -Name RequireSignedExtensions -Value $false -MemberType NoteProperty -Force
+$content | Add-Member -Name UsePreReleaseExtensions -Value $true -MemberType NoteProperty -Force
 $content | ConvertTo-Json | Set-Content -Path $settingsFile
 # SIG # Begin signature block
 # MIInlAYJKoZIhvcNAQcCoIInhTCCJ4ECAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQU249Yeyc+gnAUEBPXvbFQgacu
-# k5yggiBrMIIFyTCCBLGgAwIBAgIQG7WPJSrfIwBJKMmuPX7tJzANBgkqhkiG9w0B
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUwn4L5njDJjeMcfh8jwz02/et
+# MYyggiBrMIIFyTCCBLGgAwIBAgIQG7WPJSrfIwBJKMmuPX7tJzANBgkqhkiG9w0B
 # AQwFADB+MQswCQYDVQQGEwJQTDEiMCAGA1UEChMZVW5pemV0byBUZWNobm9sb2dp
 # ZXMgUy5BLjEnMCUGA1UECxMeQ2VydHVtIENlcnRpZmljYXRpb24gQXV0aG9yaXR5
 # MSIwIAYDVQQDExlDZXJ0dW0gVHJ1c3RlZCBOZXR3b3JrIENBMB4XDTIxMDUzMTA2
@@ -207,36 +204,36 @@ $content | ConvertTo-Json | Set-Content -Path $settingsFile
 # YXRhIFN5c3RlbXMgUy5BLjEkMCIGA1UEAxMbQ2VydHVtIENvZGUgU2lnbmluZyAy
 # MDIxIENBAhAjMHOy/9pxpIx+GdCLJw5/MAkGBSsOAwIaBQCgeDAYBgorBgEEAYI3
 # AgEMMQowCKACgAChAoAAMBkGCSqGSIb3DQEJAzEMBgorBgEEAYI3AgEEMBwGCisG
-# AQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMCMGCSqGSIb3DQEJBDEWBBROTn/d9+Sg
-# BLf9LuDKVrhtE92nADANBgkqhkiG9w0BAQEFAASCAYB9Vs4UR1NFYJxrcDBpdIHi
-# tUu+fEduCZzwoG2Qp2inzYdkVe4fwm88cnkubbnrOoxN+95kmIuVYH+ggWFg6qMx
-# v6hz2vxZHO9V6I1dDLCy53/olkXV4LlwertDdQZb8J53VVqbFZO9HPDn0bOjD7Qj
-# t7DaDWL4vExL6+YLBxnQPTJ85F19HUdf2lwoKpk9MVmKVcmMgqxlyGL9Pm35wzID
-# r7HP3134tfSi1LMuy9Ot0BV2x0PM60zBreGpbvuglSGIq61QX5o88gqvdyyVlf9f
-# yI6hB02nHM29goRV4B+upUCKM0oI4qrvGF55wCvxWX+6JH85qTuC6+OOYPe2ezhr
-# T52d8J7q6nGV5D1akulApPGHjQ2fXRWRSQkmkeDvJOS8ySxvtALaYE0G+x7MbAvs
-# nGvwP0XFcN7J20nAHxw2UQhTYr42gKhVTr1/17giDWs29yZO6hj3hgtBNV1RX8ex
-# lDkAZGtp44keJfz85LZgOxgmhuq0ehufULGnLjjwPKmhggQEMIIEAAYJKoZIhvcN
+# AQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMCMGCSqGSIb3DQEJBDEWBBQbffPffJe9
+# FCCwnuermSKHhiCHdjANBgkqhkiG9w0BAQEFAASCAYBkTM5/QC9vgrHMDR43/rJe
+# xSISrhDUqeBdE5AYtRBV2bxk4pAROz1SsguJttarfpETj/wQF8vCQOmJB4ymzY35
+# fMhRLW/N1OH1lkZI2KQjRRY6D/3CnFF/IXjUwvrzNzK1gJmyvw+BgKZ1cIz/XKXo
+# Q5qFaOj0xZtJFbhPTA+Z9RYSqHb7Fnf/a6HNNswnPrs8GY055VKkrjutwYuU4Ia9
+# QA8L1NF/uwquRlmJynonoQdcRyydgnlYhG+45GmPSMYQifDuLo5i5gX3bI8YAnpK
+# LsVkfofjnnodsYa5fF+oUmCBPGkMB5BS+e6tCAP+xULgO2qUegF4CGPw6osVxPcV
+# rVh6UMoNzYMGR7moHUkUn/DPXevynlYRtaNXgapXy26L8UJwLaUUZEZWy1ssFSEv
+# UtNMsQOc/jSVdmjo72N/akWVes0onGrLBMp6RhPMDbrlq79eKC8tR4r/kjNzdA/m
+# x+jGLkv3K4UsXYXiACXekRi0ya5VvdBCr6Z6b/tonX2hggQEMIIEAAYJKoZIhvcN
 # AQkGMYID8TCCA+0CAQEwazBWMQswCQYDVQQGEwJQTDEhMB8GA1UEChMYQXNzZWNv
 # IERhdGEgU3lzdGVtcyBTLkEuMSQwIgYDVQQDExtDZXJ0dW0gVGltZXN0YW1waW5n
 # IDIwMjEgQ0ECEQDxZCWMCbbie+IOMmCOS/SoMA0GCWCGSAFlAwQCAgUAoIIBVzAa
 # BgkqhkiG9w0BCQMxDQYLKoZIhvcNAQkQAQQwHAYJKoZIhvcNAQkFMQ8XDTIxMTIx
-# NzE2MzUwMVowNwYLKoZIhvcNAQkQAi8xKDAmMCQwIgQgG1m/6OV3K6z2Q7t5rLSO
-# gVh4TyHFVK4TR206Gj4FxdMwPwYJKoZIhvcNAQkEMTIEMGm0Tur1iCRrWeE4uvqD
-# nTlrIBPvwKTWHtqhRJyANh6y/hsdWhAfFoJpR02CMoGRGTCBoAYLKoZIhvcNAQkQ
+# NzE2MzcwMVowNwYLKoZIhvcNAQkQAi8xKDAmMCQwIgQgG1m/6OV3K6z2Q7t5rLSO
+# gVh4TyHFVK4TR206Gj4FxdMwPwYJKoZIhvcNAQkEMTIEMGdY8cjx2+Ly4n4B5x9O
+# 4NnDG5s7X32/Zihw4tfqdfsyO3ydU3RusM6vjklvhESz6TCBoAYLKoZIhvcNAQkQ
 # AgwxgZAwgY0wgYowgYcEFNMRxpUxG4znP9W1Uxis31mK4ZsTMG8wWqRYMFYxCzAJ
 # BgNVBAYTAlBMMSEwHwYDVQQKExhBc3NlY28gRGF0YSBTeXN0ZW1zIFMuQS4xJDAi
 # BgNVBAMTG0NlcnR1bSBUaW1lc3RhbXBpbmcgMjAyMSBDQQIRAPFkJYwJtuJ74g4y
-# YI5L9KgwDQYJKoZIhvcNAQEBBQAEggIAiWbk7k5LsnaBuGvxPBfUx7UphluUlVlk
-# miDK/S9vyQCZoETgOBvGV5m5pp2OYnG5VQu7XnOXJhwF1uKW8mbiLcQfYE6zpr7R
-# 3cvM7mEplgLdqgo1iERkEEYa1Vdvlj8cC5cdRJldRdgX09612H7fvCEdtxNcaJh4
-# CwPnpdecIb03NVDzWbiiL+0urxLy3CP3ZULwkV7YLh630puswYGl3iG/RTd3uaVi
-# exlaK7sYVv52Yew3hzw6giuay3Axr+ZrBa0Jbq5YeHVQpmuGey9+fJtT2Q32LYiI
-# rFUgOERrMO1okSxcDhlBU4qPOWA/k0cfYnHQgEsuNngLxfuJs1CH+ks1i6Y9FV6a
-# AZdLgEtfwUi2lwqEQTO+kUuQLvvHuou4W8BK+meHz0GKlbUQduiVgv9wt2sVDxZX
-# w7qLA+6n5EAA4vYD9PPti9T6MU7h6wqaqvA4nAjVrTzVHqhV6UfGNHhBpcDZIxxZ
-# zSjgFuv8fSaxyxFx1t20if3P1bX5iIB4TkWBT5hEY2Ugkix7tH76eCSUTvE5zDgq
-# i5KZ+uFsEv5SB85pfGr8we5J9ys7t1uK6nd4WyMHYhKuPmj605L+DjewzCAYdR1o
-# 1P9rYQRCNBfPb85+XzGsrcvpm9dXYkyzI3sjKtr7qL7EtCU6HJBFeMcqd+QmOdFf
-# WIRk82WcJEo=
+# YI5L9KgwDQYJKoZIhvcNAQEBBQAEggIAWG0PCuQiWRAUBClOSWPNsjGccEaKoQdO
+# 4R/wRr+aNUoMWqlkYfmyaRgs1JBAPK3RpVMAZFFiyIVd6rWoS3MQGMyTmi7ZuzzW
+# +zY71l8N2uq/tXDkla/PgvZG6yJO2PnoR+MW3nBKW6DJ5LUwJv8x6j9FJ7RK8nkD
+# BZGCvRj0VsBJz65pf4i/qHCvz8R4qhf4elZBzk0Yp+iqyx9pP7uMzI1b+iSM8Y3X
+# oXuptgrE/GQ4dDh6n68kVFoFrAyUR8s5nEyWvhKi38q1p2ZGr+Lb6sDtBeR7RYGD
+# D00P1300FEBihlDJbCBIMzjr18rc/30QFNC5PCPy1k7WIjTy/Yp3UYgu6/R+gkqy
+# vzER05mXM3kb5TnqLYUaW50+efJ+SIDBZlu6xnOm2CWDt1ujVBDUi+eJ6nGn7AcE
+# /h2smfpnHTGHrJjHvIxJtVWqtwrLRnxNEeSyMT+khITjpQvZmvuSpnuQZFr5/YOz
+# XzEx8lRPLO71l+MK0XE0XX/PPFCvQYmi7uea4qWPTKA1JMFUrxd73ktmS1zVFyto
+# CFWyd4CVpDIrYvWCkokbKrXI/A9H6TBZkiNRP4MyZ0mVJW+WJEcljDpGwKx392Pw
+# lIRcEPSCo7x5Gl673v3YAWjf7buZ+pi0Oy8j1iU4HuAIu/zfi7Dy1Z/d9pRuYQsr
+# 0mOB52R9XNk=
 # SIG # End signature block

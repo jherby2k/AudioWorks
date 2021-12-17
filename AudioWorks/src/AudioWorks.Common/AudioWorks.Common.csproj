@@ -18,13 +18,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="settings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Pack>true</Pack>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <!-- Held back for PowerShell 5.1 compatibility -->
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
     <!-- Held back for PowerShell 5.1 compatibility -->

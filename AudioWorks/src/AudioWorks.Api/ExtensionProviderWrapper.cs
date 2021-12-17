@@ -28,7 +28,7 @@ namespace AudioWorks.Api
         {
             var logger = LoggerManager.LoggerFactory.CreateLogger(typeof(ExtensionInstaller).FullName);
 
-            if (!ConfigurationManager.Configuration.GetValue("AutomaticExtensionDownloads", true))
+            if (!ConfigurationManager.Configuration.GetValue<bool>("AutomaticExtensionDownloads"))
                 logger.LogInformation("Automatic extension downloads are disabled.");
             else
             {
