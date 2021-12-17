@@ -26,7 +26,7 @@ namespace AudioWorks.Common
                 AutomaticExtensionDownloads = true,
                 AutomaticExtensionDownloadTimeout = 30,
                 RequireSignedExtensions = true,
-                TrustedFingerprints = new[] { "5D6F49B1DDD6D05F50200F18F1B3A08BE3DB94D6ECC78B88E79937EE76ADA703" },
+                TrustedFingerprints = new[] { "C08BD3F5D3456D94CB61A4AF7A8FAA4E193DA73F0EF64872E6E7858BE5F51B9B" },
                 ExtensionRepository = "https://www.myget.org/F/audioworks-extensions-v5/api/v3/index.json",
                 DefaultRepository = "https://api.nuget.org/v3/index.json"
             };

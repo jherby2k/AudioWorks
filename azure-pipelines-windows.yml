@@ -18,8 +18,11 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  buildConfiguration: 'Release'
-  disable.coverage.autogenerate: 'true'
+- name: buildConfiguration
+  value: Release
+- name: disable.coverage.autogenerate
+  value: true
+- group: shared-variables
 
 steps:
 - task: UseDotNet@2
@@ -57,6 +60,13 @@ steps:
     buildProperties: 'VersionSuffix="pre.$(Build.BuildId)"'
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
   displayName: 'Package extensions'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'custom'
+    custom: 'nuget sign'
+    arguments: 'AudioWorks/src/Extensions/*/bin/$(buildConfiguration)/*.nupkg --certificate-path AudioWorks/src/Extensions/ExtensionSigning.pfx --timestamper http://time.certum.pl --certificate-password $(extensionSigningPassword) --verbosity detailed'
+  displayName: 'Sign extensions'
 
 - powershell: |
     $ProgressPreference = 'SilentlyContinue'
