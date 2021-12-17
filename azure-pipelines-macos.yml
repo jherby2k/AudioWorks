@@ -58,8 +58,8 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'custom'
-    custom: 'nuget sign'
-    arguments: 'AudioWorks/src/Extensions/*/bin/$(buildConfiguration)/*.nupkg --certificate-path AudioWorks/src/Extensions/ExtensionSigning.pfx --timestamper http://time.certum.pl --certificate-password $(extensionSigningPassword) --verbosity detailed'
+    custom: 'nuget'
+    arguments: 'sign AudioWorks/src/Extensions/*/bin/$(buildConfiguration)/*.nupkg --certificate-path AudioWorks/src/Extensions/ExtensionSigning.pfx --timestamper http://time.certum.pl --certificate-password $(extensionSigningPassword) --verbosity detailed'
   displayName: 'Sign extensions'
 
 - powershell: Write-Host echo "##vso[task.setvariable variable=localAppDataDir]$([System.Environment]::GetFolderPath(28))/AudioWorks"
