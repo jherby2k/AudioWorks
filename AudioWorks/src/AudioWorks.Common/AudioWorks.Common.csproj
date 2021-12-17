@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>1.2.0</VersionPrefix>
+    <VersionPrefix>1.3.0</VersionPrefix>
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <Description>Public types used by the AudioWorks API. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
