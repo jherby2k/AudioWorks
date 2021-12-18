@@ -236,11 +236,10 @@ namespace AudioWorks.Api
                             var verificationProviders = new ISignatureVerificationProvider[]
                             {
                                 new IntegrityVerificationProvider(),
-                                new SignatureTrustAndValidityVerificationProvider(),
                                 new AllowListVerificationProvider(
-                                    ConfigurationManager.Configuration.GetValue<string[]>("TrustedFingerprints")
-                                        .Select(f => new CertificateHashAllowListEntry(VerificationTarget.Author,
-                                            SignaturePlacement.PrimarySignature, f, HashAlgorithmName.SHA256))
+                                    ConfigurationManager.Configuration.GetSection("TrustedFingerprints").Get<string[]>()
+                                        .Select(item => new CertificateHashAllowListEntry(VerificationTarget.Author,
+                                            SignaturePlacement.PrimarySignature, item, HashAlgorithmName.SHA256))
                                         .ToArray())
                             };
 
