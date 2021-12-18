@@ -100,7 +100,8 @@ namespace AudioWorks.Api
             {
                 // Log any connection errors and fail silently
                 if (e.InnerException is FatalProtocolException)
-                    logger.LogError(e.InnerException, "Failed to install extension: {message}", e.InnerException.Message);
+                    logger.LogError(e.InnerException, "Failed to install extension: {message}",
+                        e.InnerException.Message);
                 else
                     throw;
             }
@@ -113,7 +114,8 @@ namespace AudioWorks.Api
             try
             {
                 using (var tokenSource = new CancellationTokenSource(
-                    ConfigurationManager.Configuration.GetValue<int>("AutomaticExtensionDownloadTimeout") * 1000))
+                           ConfigurationManager.Configuration.GetValue<int>("AutomaticExtensionDownloadTimeout") *
+                           1000))
                 {
                     // Hack - do this on the thread pool to avoid deadlocks
                     var publishedPackages = await Task.Run(() =>
@@ -128,9 +130,9 @@ namespace AudioWorks.Api
                     // Remove any extensions that aren't published
                     if (Directory.Exists(ExtensionRoot))
                         foreach (var installedExtension in new DirectoryInfo(ExtensionRoot).GetDirectories()
-                            .Select(dir => dir.Name)
-                            .Except(publishedPackages.Select(package => package.Identity.ToString()),
-                                StringComparer.OrdinalIgnoreCase))
+                                     .Select(dir => dir.Name)
+                                     .Except(publishedPackages.Select(package => package.Identity.ToString()),
+                                         StringComparer.OrdinalIgnoreCase))
                         {
                             Directory.Delete(Path.Combine(ExtensionRoot, installedExtension), true);
 
@@ -231,33 +233,33 @@ namespace AudioWorks.Api
                             continue;
 
 #if !NETSTANDARD2_0
-                        if (ConfigurationManager.Configuration.GetValue<bool>("RequireSignedExtensions"))
-                        {
-                            var verificationProviders = new ISignatureVerificationProvider[]
-                            {
-                                new IntegrityVerificationProvider(),
-                                new AllowListVerificationProvider(
-                                    ConfigurationManager.Configuration.GetSection("TrustedFingerprints").Get<string[]>()
-                                        .Select(item => new CertificateHashAllowListEntry(VerificationTarget.Author,
-                                            SignaturePlacement.PrimarySignature, item, HashAlgorithmName.SHA256))
-                                        .ToArray())
-                            };
-
-                            var verifier = new PackageSignatureVerifier(verificationProviders);
-
-                            var result = await verifier.VerifySignaturesAsync(downloadResult.PackageReader,
-                                    SignedPackageVerifierSettings.GetRequireModeDefaultPolicy(), cancellationToken)
-                                .ConfigureAwait(false);
-                            if (result.IsValid)
-                                logger.LogDebug("Verified signature on extension '{id}'.", packageToInstall.Id);
-                            else
-                            {
-                                logger.LogError(
-                                    "The extension '{id}' is not signed with a trusted certificate and will not be installed.",
-                                    packageToInstall.Id);
-                                continue;
-                            }
-                        }
+                        // Check the signature on extension packages (should be using a specified fingerprint)
+                        if (packageToInstall.Id.StartsWith("AudioWorks.Extensions",
+                                StringComparison.OrdinalIgnoreCase) &&
+                            ConfigurationManager.Configuration.GetValue<bool>("RequireSignedExtensions"))
+                            using (var reader = new PackageArchiveReader(downloadResult.PackageStream, true))
+                                if ((await new PackageSignatureVerifier(new ISignatureVerificationProvider[]
+                                        {
+                                            new IntegrityVerificationProvider(),
+                                            new AllowListVerificationProvider(
+                                                ConfigurationManager.Configuration.GetSection("TrustedFingerprints")
+                                                    .Get<string[]>()
+                                                    .Select(item => new CertificateHashAllowListEntry(
+                                                        VerificationTarget.All,
+                                                        SignaturePlacement.Any, item, HashAlgorithmName.SHA256))
+                                                    .ToArray())
+                                        })
+                                        .VerifySignaturesAsync(reader,
+                                            SignedPackageVerifierSettings.GetRequireModeDefaultPolicy(),
+                                            cancellationToken).ConfigureAwait(false)).IsValid)
+                                    logger.LogDebug("Verified signature on extension '{id}'.", packageToInstall.Id);
+                                else
+                                {
+                                    logger.LogError(
+                                        "The extension '{id}' is not signed with a trusted certificate and will not be installed.",
+                                        packageToInstall.Id);
+                                    continue;
+                                }
                         else
                             logger.LogWarning(
                                 "Did not verify signature of extension '{id}' as signature verification is disabled.",
@@ -275,7 +277,7 @@ namespace AudioWorks.Api
 
                         // Copy the relevant libraries directly from the NuGet cache
                         foreach (var item in libGroups
-                            .First(l => l.TargetFramework.Equals(nearestLibFramework)).Items)
+                                     .First(l => l.TargetFramework.Equals(nearestLibFramework)).Items)
                             CopyLibFiles(
                                 Path.Combine(Path.GetDirectoryName(packageStream.Name)!,
                                     item),
@@ -283,7 +285,7 @@ namespace AudioWorks.Api
                                 logger);
 
                         if (!packageToInstall.Id.StartsWith("AudioWorks.Extensions",
-                            StringComparison.OrdinalIgnoreCase))
+                                StringComparison.OrdinalIgnoreCase))
                             continue;
 
                         // For AudioWorks extension packages only, copy the native library content files as well
@@ -295,7 +297,7 @@ namespace AudioWorks.Api
                             frameworkReducer.GetNearest(_framework, contentGroups.Select(c => c.TargetFramework));
 
                         foreach (var item in contentGroups
-                            .First(c => c.TargetFramework.Equals(nearestContentFramework)).Items)
+                                     .First(c => c.TargetFramework.Equals(nearestContentFramework)).Items)
                         {
                             var sourceFileName = Path.Combine(
                                 Path.GetDirectoryName(packageStream.Name)!, item);
@@ -362,7 +364,8 @@ namespace AudioWorks.Api
 
             foreach (var repository in new[] { _customRepository, _defaultRepository })
             {
-                var dependencyInfoResource = await repository.GetResourceAsync<DependencyInfoResource>(cancellationToken)
+                var dependencyInfoResource = await repository
+                    .GetResourceAsync<DependencyInfoResource>(cancellationToken)
                     .ConfigureAwait(false);
                 var dependencyInfo = await dependencyInfoResource.ResolvePackage(
                         packageIdentity,
