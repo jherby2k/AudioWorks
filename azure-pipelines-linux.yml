@@ -49,7 +49,7 @@ steps:
   inputs:
     command: 'custom'
     arguments: 'config -set signaturevalidationmode=accept'
-  displayname: 'Relax signature validation rules on Linux'
+  displayName: 'Relax signature validation rules on Linux'
 
 - task: DotNetCoreCLI@2
   inputs:
