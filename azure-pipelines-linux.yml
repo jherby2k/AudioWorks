@@ -45,12 +45,6 @@ steps:
     arguments: '--configuration $(buildConfiguration)'
   displayName: 'Build $(buildConfiguration) configuration'
 
-- task: NuGetCommand@2
-  inputs:
-    command: 'custom'
-    arguments: 'config -set signaturevalidationmode=accept'
-  displayName: 'Relax signature validation rules on Linux'
-
 - task: DotNetCoreCLI@2
   inputs:
     command: 'custom'
