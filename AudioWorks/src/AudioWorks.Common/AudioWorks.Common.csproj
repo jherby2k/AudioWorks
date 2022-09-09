@@ -29,7 +29,7 @@
 
   <!-- ReSharper disable once UnknownProperty -->
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
-    <PackageReference Include="IndexRange" Version="1.0.1" PrivateAssets="all" />
+    <PackageReference Include="IndexRange" Version="1.0.2" PrivateAssets="all" />
   </ItemGroup>
 
 </Project>
