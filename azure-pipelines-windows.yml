@@ -106,7 +106,7 @@ steps:
 
         $extensionDirs = Get-ChildItem -Path $env:LOCALAPPDATADIR\Extensions\$destination\*
         foreach ($pdb in Get-ChildItem -Path AudioWorks\src\Extensions\*\bin\$env:BUILDCONFIGURATION\$source\* -Filter AudioWorks.Extensions.*.pdb) {
-            $extensionDir = $extensionDirs | Where-Object -Property Name -Like "$($pdb.Name -replace .pdb).*"
+            $extensionDir = $extensionDirs | Where-Object -Property Name -Like "$($pdb.Name -replace '.pdb').*"
             Copy-Item -Path $pdb.FullName -Destination $extensionDir -PassThru | % { Write-Host $_.FullName }
         }
     }
