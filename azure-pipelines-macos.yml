@@ -56,7 +56,7 @@ steps:
     command: pack
     packagesToPack: '**/Extensions/**/*.csproj'
     packDirectory: '$(Build.ArtifactStagingDirectory)/prereleases/extensions'
-    configurationToPack: $(buildConfiguration)
+    configuration: $(buildConfiguration)
     nobuild: 'true'
     buildProperties: 'VersionSuffix="pre.$(Build.BuildId)"'
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
