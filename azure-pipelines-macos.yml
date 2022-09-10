@@ -35,7 +35,7 @@ steps:
   displayName: 'Install .NET Core 6.0 SDK'
   inputs:
     packageType: sdk
-    version: 6.0.x
+    version: 6.0.303
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -56,7 +56,7 @@ steps:
     command: pack
     packagesToPack: '**/Extensions/**/*.csproj'
     packDirectory: '$(Build.ArtifactStagingDirectory)/prereleases/extensions'
-    configuration: $(buildConfiguration)
+    configurationToPack: $(buildConfiguration)
     nobuild: 'true'
     buildProperties: 'VersionSuffix="pre.$(Build.BuildId)"'
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
