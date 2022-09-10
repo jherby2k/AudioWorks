@@ -77,7 +77,7 @@ steps:
   displayName: Sign pre-release extensions
 
 - powershell: |
-    $ProgressPreference = SilentlyContinue
+    $ProgressPreference = 'SilentlyContinue'
     Invoke-WebRequest -Uri https://audioworks.blob.core.windows.net/prerequisites/AppleApplicationSupport.msi -OutFile AppleApplicationSupport.msi
     Invoke-WebRequest -Uri https://audioworks.blob.core.windows.net/prerequisites/AppleApplicationSupport64.msi -OutFile AppleApplicationSupport64.msi
   displayName: Download prerequisites
