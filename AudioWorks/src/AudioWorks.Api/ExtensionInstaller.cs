@@ -234,9 +234,10 @@ namespace AudioWorks.Api
 
 #if !NETSTANDARD2_0
                         // Check the signature on extension packages (should be using a specified fingerprint)
-                        if (packageToInstall.Id.StartsWith("AudioWorks.Extensions",
-                                StringComparison.OrdinalIgnoreCase) &&
-                            ConfigurationManager.Configuration.GetValue<bool>("RequireSignedExtensions"))
+                        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                            && ConfigurationManager.Configuration.GetValue<bool>("RequireSignedExtensions")
+                            && packageToInstall.Id.StartsWith("AudioWorks.Extensions",
+                                StringComparison.OrdinalIgnoreCase))
                             using (var reader = new PackageArchiveReader(downloadResult.PackageStream, true))
                                 if ((await new PackageSignatureVerifier(new ISignatureVerificationProvider[]
                                         {

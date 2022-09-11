@@ -47,13 +47,6 @@ steps:
 
 - task: DotNetCoreCLI@2
   inputs:
-    command: custom
-    custom: nuget
-    arguments: sign AudioWorks/src/Extensions/*/bin/$(buildConfiguration)/*.nupkg --certificate-path AudioWorks/src/Extensions/ExtensionSigning.pfx --timestamper http://time.certum.pl --certificate-password $(extensionSigningPassword) --verbosity detailed
-  displayName: Sign extensions
-
-- task: DotNetCoreCLI@2
-  inputs:
     command: pack
     packagesToPack: '**/Extensions/**/*.csproj'
     packDirectory: $(Build.ArtifactStagingDirectory)/prereleases/extensions
@@ -62,14 +55,6 @@ steps:
     buildProperties: VersionSuffix="pre.$(Build.BuildId)"
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
   displayName: Package pre-release extensions
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: custom
-    custom: nuget
-    arguments: sign "$(Build.ArtifactStagingDirectory)/prereleases/extensions/*.nupkg" --certificate-path AudioWorks/src/Extensions/ExtensionSigning.pfx --timestamper http://time.certum.pl --certificate-password $(extensionSigningPassword) --verbosity detailed
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
-  displayName: Sign pre-release extensions
 
 - script: |
     sudo apt-get install --yes libflac8 libmp3lame0 libopus0 libebur128-1
