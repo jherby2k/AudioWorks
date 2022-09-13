@@ -47,7 +47,7 @@ namespace AudioWorks.Extensions.Id3
             textType switch
             {
                 TextType.Utf16 => ReadUtf16(frame, ref index),
-                var t when Enum.IsDefined(typeof(TextType), t) => ReadTextNoPreamble(frame, ref index, textType),
+                _ when Enum.IsDefined(typeof(TextType), textType) => ReadTextNoPreamble(frame, ref index, textType),
                 _ => throw new AudioInvalidException("Invalid text type.")
             };
 
@@ -55,7 +55,7 @@ namespace AudioWorks.Extensions.Id3
             textType switch
             {
                 TextType.Utf16 => ReadUtf16End(frame),
-                var t when Enum.IsDefined(typeof(TextType), t) => ReadTextEndNoPreamble(frame, textType),
+                _ when Enum.IsDefined(typeof(TextType), textType) => ReadTextEndNoPreamble(frame, textType),
                 _ => throw new AudioInvalidException("Invalid text type.")
             };
 
