@@ -31,10 +31,9 @@ namespace AudioWorks.Extensibility
         /// </summary>
         /// <returns>The NuGet short folder name.</returns>
 #if NETSTANDARD2_0
-        public static string GetShortFolderName() =>
-            RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework", StringComparison.Ordinal)
+        public static string GetShortFolderName() => RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework", StringComparison.Ordinal)
                 ? $"net{GetFrameworkVersion()}"
-                : $"netcoreapp{Version.Parse(RuntimeInformation.FrameworkDescription[RuntimeInformation.FrameworkDescription.LastIndexOf(' ')..]).ToString(2)}";
+                : $"net{Version.Parse(RuntimeInformation.FrameworkDescription[RuntimeInformation.FrameworkDescription.LastIndexOf(' ')..]).ToString(2)}";
 
         static string GetFrameworkVersion()
         {
@@ -50,14 +49,8 @@ namespace AudioWorks.Extensibility
                 };
         }
 #else
-        public static string GetShortFolderName()
-        {
-            var version = Version.Parse(
-                RuntimeInformation.FrameworkDescription[RuntimeInformation.FrameworkDescription.LastIndexOf(' ')..]
-                    .Split('-')[0]);
-
-            return version.Major >= 5 ? $"net{version.ToString(2)}" : $"netcoreapp{version.ToString(2)}";
-        }
+        public static string GetShortFolderName() =>
+            $"net{Version.Parse(RuntimeInformation.FrameworkDescription[RuntimeInformation.FrameworkDescription.LastIndexOf(' ')..]).ToString(2)}";
 #endif
     }
 }
