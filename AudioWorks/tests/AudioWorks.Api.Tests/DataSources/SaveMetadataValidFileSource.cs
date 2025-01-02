@@ -682,8 +682,9 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "679251C0E61FC8EB10286525FE64F60F", // Legacy .NET
-                    "D0FF67DA066EAEABBF8182052A1375AE" // .NET Core 3.0+
+                    "862B09B8240906315D91AB953AA174BF", // 32-bit Legacy .NET
+                    "1FC596A38C7F84B7DDBE356215BE169D", // 64-bit Legacy .NET
+                    "7D35C341D95B0C3BD3663758116FD17E" // .NET Core 3.0+
                 }
             },
 
@@ -1156,8 +1157,9 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "1BF5C0A314A84C08A71E620ECFAC27FF", // Legacy .NET
-                    "10BE511C440AC14D8613B8A37E75882A" // .NET Core 3.0+
+                    "D0F19C93BFFFDE8A9D649276B5DF5DAE", // 32-bit Legacy .NET
+                    "09E9E1004B5279A8513B97D4FD34FEFB", // 64-bit Legacy .NET
+                    "8C495F4498B5923C8A4E43E8EE2D5654" // .NET Core 3.0+
                 }
             },
 
@@ -1403,8 +1405,9 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "CA3A8F152FFC10FE460E6DBD2DB2F090", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on Windows and Ubuntu)
-                    "426B4231FC7600779D8FE877B15D54CB", // Vorbis 1.3.7 AoTuV + Lancer (.NET Core 3.0+ on Windows and Ubuntu)
+                    "4A74639B61D636F02AE9003D1F8B728A", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on 32-bit Windows)
+                    "5202B8FFA7A76EA6AD53FEFFE9F206FD", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on 64-bit Windows)
+                    "BFF6FD917D8DC3C22D33FFA780358EDC", // Vorbis 1.3.7 AoTuV + Lancer (.NET Core 3.0+ on Windows and Ubuntu)
                     "36C4695F1C9FBD9E018E98FB4A132D83" // Vorbis 1.3.7 (MacOS)
                 }
             },
@@ -1630,8 +1633,9 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     "1636B4EF09C4EF2B16135E9C2670473B", // Opus 1.1.2 (Legacy .NET on Ubuntu 18.04)
                     "F4AFFDC5F5050965D5C62BB2C7F3D346", // Opus 1.1.2 (.NET Core 3.0+ on Ubuntu 18.04)
-                    "CABF32D411EA5FA9458A79B6DC2C2D69", // Opus 1.3.1 (MacOS and legacy .NET on Ubuntu 20.04, Windows)
-                    "EC76B2A5E0B74A2E142BFD255C52F13E" // Opus 1.3.1 (.NET Core 3.0+ on Ubuntu 20.04 and Windows)
+                    "C80AD6949880EA8AE45603CDAD7E0D29", // Opus 1.3.1 (Legacy .NET on 32-bit Windows)
+                    "6D91ACB2687A9FADC202A4B7C3920593", // Opus 1.3.1 (Legacy .NET on 64-bit Windows)
+                    "316157B1807D94E3E111802327A26787" // Opus 1.3.1 (MacOS, Ubuntu and .NET Core 3.0+ on Windows)
                 }
             },
 
