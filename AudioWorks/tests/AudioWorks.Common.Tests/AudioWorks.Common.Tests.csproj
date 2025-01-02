@@ -16,7 +16,7 @@
 
   <!-- ReSharper disable twice UnknownProperty -->
   <ItemGroup Condition="'$(TargetFramework)'=='net462'">
-    <PackageReference Include="System.Text.Json" Version="6.0.6" />
+    <PackageReference Include="System.Text.Json" Version="6.0.10" />
   </ItemGroup>
   
   <ItemGroup>
