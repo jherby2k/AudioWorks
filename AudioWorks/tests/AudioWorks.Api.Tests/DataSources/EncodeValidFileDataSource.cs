@@ -177,7 +177,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "44AA2E52CED28503D02D51957B19DF74", // FLAC 1.3.2 (Ubuntu 18.04)
                     "42070347011D5067A9D962DA3237EF63", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "BB7D8149E9AC3C96C79996C2CE7BFB78" // FLAC 1.4.1
                 }
@@ -188,7 +187,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "588ACB7827AF0D1A6A18751EEFEA3604", // FLAC 1.3.2 (Ubuntu 18.04)
                     "0771EF09959F087FACE194A4479F5107", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "CD9B7C00E3EFF10763F51414E1630AD5" // FLAC 1.4.1
                 }
@@ -199,7 +197,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "3983A342A074A7E8871FEF4FBE0AC73F", // FLAC 1.3.2 (Ubuntu 18.04)
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "6C23634B915BA1E7FEA6C5062D06A201" // FLAC 1.4.1
                 }
@@ -210,7 +207,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "8A532C4C9D61AF027BC6F684C59FE9A6", // FLAC 1.3.2 (Ubuntu 18.04)
                     "F0F075E05A3AFB67403CCF373932BCCA", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "9745D84285DFDFA68BD8D3362784581E" // FLAC 1.4.1
                 }
@@ -221,7 +217,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "4A4DE0494E31D82F446421C876FB10EA", // FLAC 1.3.2 (Ubuntu 18.04)
                     "D3A7B834DCE97F0709AEFCA45A24F5B6", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "488D7D6E95DD334D25C3C7B8B3E9C7A8" // FLAC 1.4.1
                 }
@@ -232,7 +227,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "A34A2A6CD402C98AB46C4BF4CE901A8E", // FLAC 1.3.2 (Ubuntu 18.04)
                     "10F6AC75659ECFE81D3C07D8D3074538", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "A7716A5C7639D750E2739E3855C60A9B" // FLAC 1.4.1
                 }
@@ -243,7 +237,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "B4E17B8DD9733AAB81EC9FA27D4F0D81", // FLAC 1.3.2 (Ubuntu 18.04)
                     "FCBAB8A8C261456CF6F87E603B237426", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "78128DB57EA3FD0E7387161F7C811086" // FLAC 1.4.1
                 }
@@ -254,7 +247,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "A6B18F2B4DDC51DC37154410E701251F", // FLAC 1.3.2 (Ubuntu 18.04)
                     "2F2F341FEECB7842F7FA9CE6CB110C67", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "E2DD7730726FE5ED62DB1295D74ADC88" // FLAC 1.4.1
                 }
@@ -265,7 +257,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "CC3E8D9A5B48AE40CB9D0EDD38D433B5", // FLAC 1.3.2 (Ubuntu 18.04)
                     "A48820F5E30B5C21A881E01209257E21", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "CAF95E65F1C131A065E5351B7B2EB5CD" // FLAC 1.4.1
                 }
@@ -276,7 +267,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "93016EE621E1F515BDAF0D405917DA25", // FLAC 1.3.2 (Ubuntu 18.04)
                     "D90693A520FA14AC987272ACB6CD8996", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "850E0ADBC12F3682209D5A4BA1C3DAE2" // FLAC 1.4.1
                 }
@@ -291,7 +281,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "3983A342A074A7E8871FEF4FBE0AC73F", // FLAC 1.3.2 (Ubuntu 18.04)
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "6C23634B915BA1E7FEA6C5062D06A201" // FLAC 1.4.1
                 }
@@ -306,7 +295,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "D352B276E4712ABBA3A8F1B9CA8BAB55", // FLAC 1.3.2 (Ubuntu 18.04)
                     "A58022B124B427771041A96F65D8DF21", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "1C0C702068210D78CC9391A938097F96" // FLAC 1.4.1
                 }
@@ -321,7 +309,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "C73F21F10850A4542EEA2435226F1DEB", // FLAC 1.3.2 (Ubuntu 18.04)
                     "F341E56E68A0A168B779A4EBFD41422D", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "F33C025E3D6E116750A574FFFD907C65" // FLAC 1.4.1
                 }
@@ -336,7 +323,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "3983A342A074A7E8871FEF4FBE0AC73F", // FLAC 1.3.2 (Ubuntu 18.04)
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "6C23634B915BA1E7FEA6C5062D06A201" // FLAC 1.4.1
                 }
@@ -351,7 +337,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "7DBB3E3E8079E60932AA5F8B4D9CD57C", // FLAC 1.3.2 (Ubuntu 18.04)
                     "986464F3AC48E00D00B8ECF3AF3FD6BC", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "8B399070A685ADC38EA67F9C3B5D6F21" // FLAC 1.4.1
                 }
@@ -366,7 +351,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "3983A342A074A7E8871FEF4FBE0AC73F", // FLAC 1.3.2 (Ubuntu 18.04)
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "6C23634B915BA1E7FEA6C5062D06A201" // FLAC 1.4.1
                 }
@@ -381,7 +365,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "3983A342A074A7E8871FEF4FBE0AC73F", // FLAC 1.3.2 (Ubuntu 18.04)
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "6C23634B915BA1E7FEA6C5062D06A201" // FLAC 1.4.1
                 }
@@ -396,7 +379,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "FFB7D9F0F4CDF37EDBA799FE371424A7", // FLAC 1.3.2 (Ubuntu 18.04)
                     "662592BD8B3853B6FEC4E188F7D0F246", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "3DB90E9E679EE1D72C36175E45E63FC9" // FLAC 1.4.1
                 }
@@ -411,7 +393,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "F03F417B853C560705CD424AD329EFBC", // FLAC 1.3.2 (Ubuntu 18.04)
                     "455753A51355171BF22CCC78647235B4", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "4DF51A1E2BD691F901F4446FF22BF029" // FLAC 1.4.1
                 }
@@ -2043,7 +2024,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "D085A7142C47B6898B3CCB6C5EDCBA55", // Opus 1.1.2 (Ubuntu 18.04)
                     "5E705C21EEB25418F69F54E33CF65156", // Opus 1.3.1 (Ubuntu 20.04)
                     "2D31A0D707D3A9AB865DB00095EB08AE", // Opus 1.3.1 (MacOS on Intel)
                     "FB641D1DA3D800E22BD22C7983D83325", // Opus 1.3.1 (MacOS on ARM)
@@ -2062,7 +2042,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "46B412FA052C97474B60DDDCF2CA8052", // Opus 1.1.2 (Ubuntu 18.04)
                     "E170CC2F31A402071E26892426AEC65B", // Opus 1.3.1 (Ubuntu 20.04)
                     "C22E87F617B51970785E9A4C43C9FC48", // Opus 1.3.1 (MacOS on Intel)
                     "86C499288EADAAB469F3E7FA63628AD1", // Opus 1.3.1 (MacOS on ARM)
@@ -2080,7 +2059,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "94AADBE44ECF34AF98982F17BCCE7C97", // Opus 1.1.2 (Ubuntu 18.04)
                     "9DA2DC35F1B9FBC9FAEF343788BB9E41", // Opus 1.3.1 (Ubuntu 20.04)
                     "0C6BF7ECB9F757DB8F8AF485137BD2C8", // Opus 1.3.1 (MacOS on Intel)
                     "DF1CE487259E093896FB4BDB74A6B1E3", // Opus 1.3.1 (MacOS on ARM)
@@ -2099,7 +2077,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "C9024DED60E2039752C7B372DFFC7149", // Opus 1.1.2 (Ubuntu 18.04)
                     "BD5F090F921BCC80F05FCBF5725D8E0E", // Opus 1.3.1 (Windows, Ubuntu 20.04 and MacOS on Intel)
                     "5074AE45A08E36CAF8FC0AB1B50F117C", // Opus 1.3.1 (MacOS on ARM)
                     "3C5EF551E97AEE3A916F1B39BCD5D3C2", // Opus 1.3.1 (32-bit Windows on Intel)
@@ -2116,7 +2093,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "22AA639A1AA309F9C343F8D8EBDB1B6D", // Opus 1.1.2 (Ubuntu 18.04)
                     "F7CB34EAF50E121D9474AE51E43BBB5B", // Opus 1.3.1 (Ubuntu 20.04)
                     "8A8FA9C452D9EBBCF8554EE3E270A538", // Opus 1.3.1 (MacOS on Intel)
                     "FC74891978B6213CDF3807C6D0130E82", // Opus 1.3.1 (MacOS on ARM)
@@ -2135,7 +2111,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "64C832F3C0D8A175084FB138D0A3525D", // Opus 1.1.2 (Ubuntu 18.04)
                     "CD27FFC8398F52FB2F5984085D2215AC", // Opus 1.3.1 (MacOS and Ubuntu 20.04 on Intel)
                     "2018DEFDE09A503E0734CD57B0E19FC4", // Opus 1.3.1 (Ubuntu 20.04 on AMD)
                     "4190DC99A4B49887AA3E5BC9E15DC1C8", // Opus 1.3.1 (MacOS on ARM)
@@ -2154,7 +2129,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "852C615283FA436C87460A6DD0A5ABE5", // Opus 1.1.2 (Ubuntu 18.04)
                     "9ED53495B32D47496C1C88B75D2FEF5F", // Opus 1.3.1 (MacOS and Ubuntu 20.04 on Intel)
                     "EF85B330CBC8A8931C2827A81F2E1532", // Opus 1.3.1 (Ubuntu 20.04 on AMD)
                     "5A928AED6645BDF1A8CBA3C2EEB7E90F", // Opus 1.3.1 (MacOS on ARM)
@@ -2173,7 +2147,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "1B7298B4EA52190612430642D2CD0694", // Opus 1.1.2 (Ubuntu 18.04)
                     "5A2C444BCD2F8D898E369DFA78D2336D", // Opus 1.3.1 (Ubuntu 20.04)
                     "5501D7D9730B0722C310D5263AFBEB77", // Opus 1.3.1 (MacOS on Intel)
                     "CB28DA52EF8451F944D8ED642D438292", // Opus 1.3.1 (MacOS on ARM)
@@ -2192,7 +2165,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "E497EF951D153E53CD3B2C3D84E5851C", // Opus 1.1.2 (Ubuntu 18.04)
                     "5D472AE652EB5A8ADCAE3E6CEF843B45", // Opus 1.3.1 (Ubuntu 20.04 on Intel)
                     "AFE05CB9E10ECE0CE4A267B01E91AA7C", // Opus 1.3.1 (Ubuntu 20.04 on AMD)
                     "0ADBC105EA51C62CB1ED53B978B33415", // Opus 1.3.1 (MacOS on Intel)
@@ -2215,7 +2187,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "476D30594189602BF6E4755E990D0615", // Opus 1.1.2 (Ubuntu 18.04)
                     "E170CC2F31A402071E26892426AEC65B", // Opus 1.3.1 (Ubuntu 20.04)
                     "0ADBC105EA51C62CB1ED53B978B33415", // Opus 1.3.1 (MacOS on Intel)
                     "2D7ABAB485382CFA8AD0DA8437304185", // Opus 1.3.1 (MacOS on ARM)
@@ -2235,7 +2206,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "DE6D30BCAC9DA6340DA28542E75C5E01", // Opus 1.1.2 (Ubuntu 18.04)
                     "503CA160DEC071D27F058FAE56273C29", // Opus 1.3.1 (Ubuntu 20.04)
                     "CDE65307AACEA4F40F22FF925622D14E", // Opus 1.3.1 (MacOS on Intel)
                     "F2FDC3B2D196D551919F3FC85120DA15", // Opus 1.3.1 (MacOS on ARM)
@@ -2255,7 +2225,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "D0DB0EE3ABC3950E3009663461F631DB", // Opus 1.1.2 (Ubuntu 18.04)
                     "E83E5634833A567959243B09B9AF666B", // Opus 1.3.1 (Ubuntu 20.04)
                     "3AA89123958BA0DF1611539BC909DD0B", // Opus 1.3.1 (MacOS on Intel)
                     "A7F53EB258E068E6B9B6C6A1D756E342", // Opus 1.3.1 (MacOS on ARM)
@@ -2276,7 +2245,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "7556A3E6FF92CEF2D0ECD5654322DEAB", // Opus 1.1.2 (Ubuntu 18.04)
                     "1F81AFD1976BAB56F31A4599A8AD8FF1", // Opus 1.3.1 (Ubuntu 20.04 and MacOS)
                     "FC89452B5F0EA49E3D738CE67FBF8B1C", // Opus 1.3.1 (32-bit Windows)
                     "D345EE9B84E231E3ACB17C7AC0972154" // Opus 1.3.1 (64-bit Windows)
@@ -2293,7 +2261,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "C031F42E8AF2D482E302264E132502E1", // Opus 1.1.2 (Ubuntu 18.04)
                     "2DBEDA9428C2522EFF60481B5446FA47", // Opus 1.3.1 (Ubuntu 20.04)
                     "785D39E686216F4958B8103B62E9E321", // Opus 1.3.1 (MacOS on Intel)
                     "4F1E3A4F58E62CB2F9DF5D0C3AED689D", // Opus 1.3.1 (MacOS on ARM)
@@ -2314,7 +2281,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "94AADBE44ECF34AF98982F17BCCE7C97", // Opus 1.1.2 (Ubuntu 18.04)
                     "9DA2DC35F1B9FBC9FAEF343788BB9E41", // Opus 1.3.1 (Ubuntu 20.04)
                     "0C6BF7ECB9F757DB8F8AF485137BD2C8", // Opus 1.3.1 (MacOS on Intel)
                     "DF1CE487259E093896FB4BDB74A6B1E3", // Opus 1.3.1 (MacOS on ARM)
@@ -2335,7 +2301,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "940955E239CF3D26B417F6B532EBC726", // Opus 1.1.2 (Ubuntu 18.04)
                     "713E85741D7499561FA4424B5EF74EE7", // Opus 1.3.1 (Ubuntu 20.04)
                     "B98AC6052E465C5A226D8D2905B535EC", // Opus 1.3.1 (MacOS on Intel)
                     "532F344E999193C4F59D1CDBF511C7DE", // Opus 1.3.1 (MacOS on ARM)
@@ -2356,7 +2321,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "9533FF6E154EE45B8ED522C3B5A25865", // Opus 1.1.2 (Ubuntu 18.04)
                     "9948DAE5FCE1CF7D6298C293E3D71B0F", // Opus 1.3.1 (Ubuntu 20.04)
                     "687B2402BF33EDB0EAD683235E309BC8", // Opus 1.3.1 (MacOS on Intel)
                     "D9E874A3511506C2A8021FF77DEAED23", // Opus 1.3.1 (MacOS on ARM)
@@ -2377,7 +2341,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "201BD7EF36658DB3DC9658C67E9AF71E", // Opus 1.1.2 (Ubuntu 18.04)
                     "B1D166A87EF5F03FDC80E8571B9FC70E", // Opus 1.3.1 (MacOS on ARM)
                     "8FC7BCF02EDB42E9785797FD2C9A71D6", // Opus 1.3.1 (MacOS, Ubuntu 20.04 and Windows on Intel)
                     "BD1629D7E9272CAA8AEAC20FD576B7C6" // Opus 1.3.1 (Windows on AMD)
@@ -2395,7 +2358,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "201BD7EF36658DB3DC9658C67E9AF71E", // Opus 1.1.2 (Ubuntu 18.04)
                     "B1D166A87EF5F03FDC80E8571B9FC70E", // Opus 1.3.1 (MacOS on ARM)
                     "8FC7BCF02EDB42E9785797FD2C9A71D6", // Opus 1.3.1 (MacOS, Ubuntu 20.04 and Windows on Intel)
                     "BD1629D7E9272CAA8AEAC20FD576B7C6" // Opus 1.3.1 (Windows on AMD)
@@ -2413,7 +2375,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "8AA73947B00AABCB3602F660E69263C5", // Opus 1.1.2 (Ubuntu 18.04)
                     "56A43E329A39A3CC568348116F5134F3", // Opus 1.3.1 (Ubuntu 20.04)
                     "84D72BBEF86EA7611518CF2862FC94BD", // Opus 1.3.1 (MacOS on Intel)
                     "3FBE634F53A90A6E5E26325A49BD20E5", // Opus 1.3.1 (MacOS on ARM)
@@ -2434,7 +2395,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "94AADBE44ECF34AF98982F17BCCE7C97", // Opus 1.1.2 (Ubuntu 18.04)
                     "9DA2DC35F1B9FBC9FAEF343788BB9E41", // Opus 1.3.1 (Ubuntu 20.04)
                     "0C6BF7ECB9F757DB8F8AF485137BD2C8", // Opus 1.3.1 (MacOS on Intel)
                     "DF1CE487259E093896FB4BDB74A6B1E3", // Opus 1.3.1 (MacOS on ARM)
@@ -2455,7 +2415,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "945B2B47707ED2C2DC2D30BD4AF75A34", // Opus 1.1.2 (Ubuntu 18.04)
                     "1CE1BF9EA0D643C0CDB9B8C8A1492B58", // Opus 1.3.1 (Ubuntu 20.04)
                     "B6029E9FC954A8722A1B10700F80EA19", // Opus 1.3.1 (MacOS on Intel)
                     "A9E1172F6E94329BC82ACAD85B83F3F0", // Opus 1.3.1 (MacOS on ARM)
@@ -2476,7 +2435,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new[]
                 {
-                    "2D5A8223552F6A731413BD1DD181040A", // Opus 1.1.2 (Ubuntu 18.04)
                     "5B7586B7F6F2DFCCA28E3A1D4C75690A", // Opus 1.3.1 (Ubuntu 20.04)
                     "EF6A93BC1F10A15E5F45255F36E90F3A", // Opus 1.3.1 (MacOS on Intel)
                     "8AF396D9A1F7648C2FDC7DFCC1AF35F6", // Opus 1.3.1 (MacOS on ARM)
