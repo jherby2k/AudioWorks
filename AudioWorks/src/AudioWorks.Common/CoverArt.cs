@@ -25,9 +25,6 @@ namespace AudioWorks.Common
     [Serializable]
     public sealed class CoverArt : ICoverArt
     {
-        readonly int _dataSize;
-        readonly byte[] _data;
-
         /// <inheritdoc/>
         public int Width { get; }
 
@@ -47,7 +44,9 @@ namespace AudioWorks.Common
         public string FileExtension { get; }
 
         /// <inheritdoc/>
-        public ReadOnlySpan<byte> Data => _data.AsSpan()[.._dataSize];
+#pragma warning disable CA1819
+        public byte[] Data { get; }
+#pragma warning restore CA1819
 
         internal CoverArt(Stream stream)
         {
@@ -72,8 +71,7 @@ namespace AudioWorks.Common
                         else
                             image.SaveAsPng(pngStream);
 
-                    _dataSize = (int) pngStream.Length;
-                    _data = pngStream.GetBuffer();
+                    Data = pngStream.ToArray();
                     pngStream.Position = 0;
                     format = Image.DetectFormat(pngStream);
                 }
@@ -81,13 +79,12 @@ namespace AudioWorks.Common
             // JPEG and PNG images should be stored verbatim
             else
             {
-                _dataSize = (int) stream.Length;
                 if (stream is MemoryStream currentStream)
-                    _data = currentStream.ToArray();
+                    Data = currentStream.ToArray();
                 else
                 {
-                    _data = new byte[_dataSize];
-                    using (var memoryStream = new MemoryStream(_data))
+                    Data = new byte[stream.Length];
+                    using (var memoryStream = new MemoryStream(Data))
                         stream.CopyTo(memoryStream);
                 }
             }

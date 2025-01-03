@@ -79,7 +79,7 @@ namespace AudioWorks.Api
             {
 #if NETSTANDARD2_0
                 var data = audioFile.Metadata.CoverArt.Data;
-                fileStream.Write(data.ToArray(), 0, data.Length);
+                fileStream.Write(data, 0, data.Length);
 #else
                 fileStream.Write(audioFile.Metadata.CoverArt.Data);
 #endif

@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Flac
@@ -48,14 +49,11 @@ namespace AudioWorks.Extensions.Flac
                 Marshal.OffsetOf<PictureMetadataBlock>("Picture").ToInt32() +
                 Marshal.OffsetOf<Picture>("ColorDepth").ToInt32()), depth);
 
-        internal unsafe void SetData(ReadOnlySpan<byte> data)
-        {
-            fixed (byte* dataAddress = data)
-                SafeNativeMethods.MetadataObjectPictureSetData(
-                    Handle,
-                    dataAddress,
-                    (uint) data.Length,
-                    true);
-        }
+        internal void SetData(byte[] data) =>
+            SafeNativeMethods.MetadataObjectPictureSetData(
+                Handle,
+                data,
+                (uint) data.Length,
+                true);
     }
 }

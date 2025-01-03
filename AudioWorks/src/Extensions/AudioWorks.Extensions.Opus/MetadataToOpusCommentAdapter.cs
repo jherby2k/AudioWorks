@@ -68,17 +68,15 @@ namespace AudioWorks.Extensions.Opus
 
             // Always store images in JPEG format since Vorbis is also lossy
             var coverArt = CoverArtFactory.ConvertToLossy(metadata.CoverArt);
-            fixed (byte* coverArtAddress = coverArt.Data)
-            {
-                var error = SafeNativeMethods.OpusEncoderCommentsAddPictureFromMemory(
-                    Handle,
-                    coverArtAddress,
-                    new(coverArt.Data.Length),
-                    -1,
-                    IntPtr.Zero);
-                if (error != 0)
-                    throw new AudioEncodingException($"Opus encountered error {error} writing the cover art.");
-            }
+
+            var error = SafeNativeMethods.OpusEncoderCommentsAddPictureFromMemory(
+                Handle,
+                coverArt.Data,
+                new(coverArt.Data.Length),
+                -1,
+                IntPtr.Zero);
+            if (error != 0)
+                throw new AudioEncodingException($"Opus encountered error {error} writing the cover art.");
         }
 
         internal unsafe void HeaderOut(out OggPacket packet) =>

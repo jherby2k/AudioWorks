@@ -61,7 +61,7 @@ namespace AudioWorks.Extensions.Id3
             {
                 PictureType = PictureType.CoverFront,
                 Mime = lossyCoverArt.MimeType,
-                PictureData = lossyCoverArt.Data.ToArray()
+                PictureData = lossyCoverArt.Data
             });
         }
 

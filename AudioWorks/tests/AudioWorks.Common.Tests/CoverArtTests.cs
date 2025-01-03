@@ -74,6 +74,6 @@ namespace AudioWorks.Common.Tests
                 expectedHash,
                 HashUtility.CalculateHash(
                     CoverArtFactory.GetOrCreate(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName))
-                        .Data.ToArray()));
+                        .Data));
     }
 }

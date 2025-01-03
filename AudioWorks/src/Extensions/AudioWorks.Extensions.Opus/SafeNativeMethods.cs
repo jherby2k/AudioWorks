@@ -243,9 +243,9 @@ namespace AudioWorks.Extensions.Opus
 #else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
-        internal static extern unsafe int OpusEncoderCommentsAddPictureFromMemory(
+        internal static extern int OpusEncoderCommentsAddPictureFromMemory(
             OpusCommentsHandle handle,
-            byte* data,
+            byte[] data,
             IntPtr size,
             int pictureType,
             IntPtr description);

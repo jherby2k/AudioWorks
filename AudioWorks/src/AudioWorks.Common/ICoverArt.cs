@@ -13,8 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System;
-
 namespace AudioWorks.Common
 {
     /// <summary>
@@ -62,6 +60,8 @@ namespace AudioWorks.Common
         /// Gets the raw image data.
         /// </summary>
         /// <value>The data.</value>
-        ReadOnlySpan<byte> Data { get; }
+#pragma warning disable CA1819
+        byte[] Data { get; }
+#pragma warning restore CA1819
     }
 }

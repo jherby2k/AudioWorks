@@ -225,7 +225,7 @@ namespace AudioWorks.Api.Tests
         public void CoverArtGetDataReturnsExpectedValue(string fileName, string expectedHash)
         {
             var result = new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Metadata.CoverArt?
-                .Data.ToArray();
+                .Data;
 
             Assert.Equal(expectedHash, result == null ? string.Empty : HashUtility.CalculateHash(result));
         }

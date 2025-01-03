@@ -410,9 +410,9 @@ namespace AudioWorks.Extensions.Flac
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
 #endif
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern unsafe bool MetadataObjectPictureSetData(
+        internal static extern bool MetadataObjectPictureSetData(
             MetadataBlockHandle handle,
-            byte* data,
+            byte[] data,
             uint length,
             [MarshalAs(UnmanagedType.Bool)] bool copy);
 
