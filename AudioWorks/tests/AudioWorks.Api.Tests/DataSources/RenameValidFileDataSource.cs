@@ -13,18 +13,17 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System.Collections.Generic;
-using System.Linq;
 using AudioWorks.Api.Tests.DataTypes;
+using System.Linq;
+using Xunit;
 
 namespace AudioWorks.Api.Tests.DataSources
 {
     public static class RenameValidFileDataSource
     {
-        static readonly List<object[]> _data = new()
+        public static TheoryData<string, TestAudioMetadata, string, string> Data { get; } = new()
         {
             // Basic rename
-            new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 new TestAudioMetadata(),
@@ -33,7 +32,6 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Metadata substitution
-            new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 new TestAudioMetadata
@@ -45,7 +43,6 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Composite of multiple metadata fields
-            new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 new TestAudioMetadata
@@ -58,7 +55,6 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Requested metadata not present
-            new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 new TestAudioMetadata(),
@@ -67,7 +63,6 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // Metadata with invalid characters
-            new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 new TestAudioMetadata
@@ -84,7 +79,6 @@ namespace AudioWorks.Api.Tests.DataSources
             },
 
             // New name matches old
-            new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 new TestAudioMetadata(),
@@ -93,9 +87,7 @@ namespace AudioWorks.Api.Tests.DataSources
             }
         };
 
-        public static IEnumerable<object[]> Data => _data;
-
-        public static IEnumerable<object[]> FileNames =>
-            _data.Select(item => new[] { item[0] }).Distinct(new ArrayComparer());
+        public static TheoryData<string> FileNames =>
+            new(Data.Select(item => item[0]).Cast<string>().Distinct());
     }
 }

@@ -13,43 +13,36 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System.Collections.Generic;
-using System.Linq;
 using AudioWorks.Api.Tests.DataTypes;
+using System.Linq;
+using Xunit;
 
 namespace AudioWorks.Api.Tests.DataSources
 {
     public static class AnalyzeValidFileDataSource
     {
-        static readonly List<object[]> _data = new()
+        public static TheoryData<string, string, TestSettingDictionary, TestAudioMetadata> Data { get; } = new()
         {
             // 8000Hz Stereo, default (simple) peaks
-            new object[]
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "ReplayGain",
                 new TestSettingDictionary(),
-                new[]
+                new TestAudioMetadata
                 {
-                    new TestAudioMetadata // .NET Core 3.0+
-                    {
-                        TrackPeak = "0.976562",
-                        AlbumPeak = "0.976562",
-                        TrackGain = "-8.84",
-                        AlbumGain = "-8.84"
-                    },
-                    new TestAudioMetadata // Legacy .NET
-                    {
-                        TrackPeak = "0.976563",
-                        AlbumPeak = "0.976563",
-                        TrackGain = "-8.84",
-                        AlbumGain = "-8.84"
-                    }
+#if NET472
+                    TrackPeak = "0.976563",
+                    AlbumPeak = "0.976563",
+#else
+                    TrackPeak = "0.976562",
+                    AlbumPeak = "0.976562",
+#endif
+                    TrackGain = "-8.84",
+                    AlbumGain = "-8.84"
                 }
             },
 
             // 8000Hz Stereo, interpolated peaks
-            new object[]
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "ReplayGain",
@@ -57,38 +50,30 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
-                new[]
+                new TestAudioMetadata
                 {
-                    new TestAudioMetadata
-                    {
-                        TrackPeak = "0.987757",
-                        AlbumPeak = "0.987757",
-                        TrackGain = "-8.84",
-                        AlbumGain = "-8.84"
-                    }
+                    TrackPeak = "0.987757",
+                    AlbumPeak = "0.987757",
+                    TrackGain = "-8.84",
+                    AlbumGain = "-8.84"
                 }
             },
 
             // 44100Hz Mono, default (simple) peaks
-            new object[]
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "ReplayGain",
                 new TestSettingDictionary(),
-                new[]
+                new TestAudioMetadata
                 {
-                    new TestAudioMetadata
-                    {
-                        TrackPeak = "1.000000",
-                        AlbumPeak = "1.000000",
-                        TrackGain = "-9.75",
-                        AlbumGain = "-9.75"
-                    }
+                    TrackPeak = "1.000000",
+                    AlbumPeak = "1.000000",
+                    TrackGain = "-9.75",
+                    AlbumGain = "-9.75"
                 }
             },
 
             // 44100Hz Mono, interpolated peaks
-            new object[]
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "ReplayGain",
@@ -96,38 +81,30 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
-                new[]
+                new TestAudioMetadata
                 {
-                    new TestAudioMetadata
-                    {
-                        TrackPeak = "1.342166",
-                        AlbumPeak = "1.342166",
-                        TrackGain = "-9.75",
-                        AlbumGain = "-9.75"
-                    }
+                    TrackPeak = "1.342166",
+                    AlbumPeak = "1.342166",
+                    TrackGain = "-9.75",
+                    AlbumGain = "-9.75"
                 }
             },
 
             // 44100Hz Stereo, default (simple) peaks
-            new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ReplayGain",
                 new TestSettingDictionary(),
-                new[]
+                new TestAudioMetadata
                 {
-                    new TestAudioMetadata
-                    {
-                        TrackPeak = "1.000000",
-                        AlbumPeak = "1.000000",
-                        TrackGain = "-8.67",
-                        AlbumGain = "-8.67"
-                    }
+                    TrackPeak = "1.000000",
+                    AlbumPeak = "1.000000",
+                    TrackGain = "-8.67",
+                    AlbumGain = "-8.67"
                 }
             },
 
             // 44100Hz Stereo, interpolated peaks
-            new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ReplayGain",
@@ -135,38 +112,30 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
-                new[]
+                new TestAudioMetadata
                 {
-                    new TestAudioMetadata
-                    {
-                        TrackPeak = "1.012000",
-                        AlbumPeak = "1.012000",
-                        TrackGain = "-8.67",
-                        AlbumGain = "-8.67"
-                    }
+                    TrackPeak = "1.012000",
+                    AlbumPeak = "1.012000",
+                    TrackGain = "-8.67",
+                    AlbumGain = "-8.67"
                 }
             },
 
             // 48000Hz Stereo, default (simple) peaks
-            new object[]
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "ReplayGain",
                 new TestSettingDictionary(),
-                new[]
+                new TestAudioMetadata
                 {
-                    new TestAudioMetadata
-                    {
-                        TrackPeak = "0.999969",
-                        AlbumPeak = "0.999969",
-                        TrackGain = "-8.66",
-                        AlbumGain = "-8.66"
-                    }
+                    TrackPeak = "0.999969",
+                    AlbumPeak = "0.999969",
+                    TrackGain = "-8.66",
+                    AlbumGain = "-8.66"
                 }
             },
 
             // 48000Hz Stereo, interpolated peaks
-            new object[]
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "ReplayGain",
@@ -174,38 +143,30 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
-                new[]
+                new TestAudioMetadata
                 {
-                    new TestAudioMetadata
-                    {
-                        TrackPeak = "1.014152",
-                        AlbumPeak = "1.014152",
-                        TrackGain = "-8.66",
-                        AlbumGain = "-8.66"
-                    }
+                    TrackPeak = "1.014152",
+                    AlbumPeak = "1.014152",
+                    TrackGain = "-8.66",
+                    AlbumGain = "-8.66"
                 }
             },
 
             // 96000Hz Stereo, default (simple) peaks
-            new object[]
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "ReplayGain",
                 new TestSettingDictionary(),
-                new[]
+                new TestAudioMetadata
                 {
-                    new TestAudioMetadata
-                    {
-                        TrackPeak = "0.988553",
-                        AlbumPeak = "0.988553",
-                        TrackGain = "-8.64",
-                        AlbumGain = "-8.64"
-                    }
+                    TrackPeak = "0.988553",
+                    AlbumPeak = "0.988553",
+                    TrackGain = "-8.64",
+                    AlbumGain = "-8.64"
                 }
             },
 
             // 96000Hz Stereo, interpolated peaks
-            new object[]
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "ReplayGain",
@@ -213,20 +174,16 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
-                new[]
+                new TestAudioMetadata
                 {
-                    new TestAudioMetadata
-                    {
-                        TrackPeak = "0.992940",
-                        AlbumPeak = "0.992940",
-                        TrackGain = "-8.64",
-                        AlbumGain = "-8.64"
-                    }
+                    TrackPeak = "0.992940",
+                    AlbumPeak = "0.992940",
+                    TrackGain = "-8.64",
+                    AlbumGain = "-8.64"
                 }
             },
 
             // 44100Hz Stereo, simple peaks (explicit)
-            new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ReplayGain",
@@ -234,25 +191,27 @@ namespace AudioWorks.Api.Tests.DataSources
                 {
                     ["PeakAnalysis"] = "Simple"
                 },
-                new[]
+                new TestAudioMetadata
                 {
-                    new TestAudioMetadata
-                    {
-                        TrackPeak = "1.000000",
-                        AlbumPeak = "1.000000",
-                        TrackGain = "-8.67",
-                        AlbumGain = "-8.67"
-                    }
+                    TrackPeak = "1.000000",
+                    AlbumPeak = "1.000000",
+                    TrackGain = "-8.67",
+                    AlbumGain = "-8.67"
                 }
             }
         };
 
-        public static IEnumerable<object[]> Data => _data;
+        public static TheoryData<string> Analyzers => new(Data.Select(item => item[1]).Cast<string>().Distinct());
 
-        public static IEnumerable<object[]> Analyzers =>
-            _data.Select(item => new[] { item[1] }).Distinct(new ArrayComparer());
-
-        public static IEnumerable<object[]> FileNamesAndAnalyzers =>
-            _data.Select(item => new[] { item[0], item[1] }).Distinct(new ArrayComparer());
+        public static TheoryData<string, string> FileNamesAndAnalyzers
+        {
+            get
+            {
+                var results = new TheoryData<string, string>();
+                foreach (var result in Data.Select(item => ((string) item[0], (string) item[1])).Distinct())
+                    results.Add(result.Item1, result.Item2);
+                return results;
+            }
+        }
     }
 }

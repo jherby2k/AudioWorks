@@ -19,7 +19,7 @@ namespace AudioWorks.Api.Tests.DataTypes
 {
     public sealed class TestAudioInfo : IXunitSerializable
     {
-#if NET462
+#if NET472
         public string Format { get; set; } = string.Empty;
 
         public int Channels { get; set; }

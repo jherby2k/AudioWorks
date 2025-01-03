@@ -237,7 +237,7 @@ namespace AudioWorks.Commands.Tests
             string fileName,
             string analyzerName,
             TestSettingDictionary settings,
-            TestAudioMetadata[] validMetadata)
+            TestAudioMetadata validMetadata)
         {
             var audioFile = new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
             using (var ps = PowerShell.Create())
@@ -258,7 +258,7 @@ namespace AudioWorks.Commands.Tests
                 ps.Invoke();
             }
 
-            Assert.Contains(audioFile.Metadata, validMetadata, new MetadataComparer());
+            Assert.Equivalent(validMetadata, audioFile.Metadata);
         }
 
         [Theory(DisplayName = "Measure-AudioFile creates the expected metadata for a group")]
@@ -267,7 +267,7 @@ namespace AudioWorks.Commands.Tests
             string[] fileNames,
             string analyzerName,
             TestSettingDictionary settings,
-            TestAudioMetadata[][] validMetadata)
+            TestAudioMetadata[] validMetadata)
         {
             var audioFiles = fileNames.Select(fileName =>
                     new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)))
@@ -295,14 +295,7 @@ namespace AudioWorks.Commands.Tests
                 ps.Invoke();
             }
 
-            var i = 0;
-            var comparer = new MetadataComparer();
-            // ReSharper disable twice ParameterOnlyUsedForPreconditionCheck.Local
-            Assert.All(audioFiles, audioFile =>
-            {
-                Assert.Contains(audioFile.Metadata, validMetadata.Select(group => group[i]), comparer);
-                i++;
-            });
+            Assert.Equivalent(validMetadata, audioFiles.Select(audioFile => audioFile.Metadata));
         }
     }
 }

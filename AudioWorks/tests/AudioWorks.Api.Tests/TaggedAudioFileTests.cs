@@ -267,7 +267,7 @@ namespace AudioWorks.Api.Tests
             audioFile.Metadata.Title = "Modified";
             audioFile.LoadMetadata();
 
-            Assert.True(new MetadataComparer().Equals(expectedMetadata, audioFile.Metadata));
+            Assert.Equivalent(expectedMetadata, audioFile.Metadata);
         }
 
         [Theory(DisplayName = "TaggedAudioFile's SaveMetadata method creates the expected output")]
@@ -319,9 +319,9 @@ namespace AudioWorks.Api.Tests
         {
             var audioFile = new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
 
-            Assert.True(new MetadataComparer().Equals(
+            Assert.Equivalent(
                 audioFile.Metadata,
-                JsonSerializer.Deserialize<TaggedAudioFile>(JsonSerializer.Serialize(audioFile))?.Metadata));
+                JsonSerializer.Deserialize<TaggedAudioFile>(JsonSerializer.Serialize(audioFile))?.Metadata);
         }
     }
 }

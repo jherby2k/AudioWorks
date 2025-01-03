@@ -16,6 +16,7 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
@@ -44,32 +45,32 @@ namespace AudioWorks.Api.Tests
                 new AudioFileAnalyzer("ReplayGain").MaxDegreeOfParallelism = 0);
 
         [Fact(DisplayName = "AudioFileEncoder's Encode method throws an exception if an audio file is null")]
-        public async void AnalyzeAsyncNullAudioFileThrowsException() =>
+        public async Task AnalyzeAsyncNullAudioFileThrowsException() =>
             await Assert.ThrowsAsync<ArgumentNullException>(() =>
                 new AudioFileAnalyzer("ReplayGain").AnalyzeAsync(null!)).ConfigureAwait(true);
 
         [Theory(DisplayName = "AudioFileAnalyzer's Analyze method creates the expected metadata")]
         [MemberData(nameof(AnalyzeValidFileDataSource.Data), MemberType = typeof(AnalyzeValidFileDataSource))]
-        public async void AnalyzeAsyncCreatesExpectedMetadata(
+        public async Task AnalyzeAsyncCreatesExpectedMetadata(
             string fileName,
             string analyzerName,
             TestSettingDictionary settings,
-            TestAudioMetadata[] validMetadata)
+            TestAudioMetadata validMetadata)
         {
             var audioFile = new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
 
             await new AudioFileAnalyzer(analyzerName, settings).AnalyzeAsync(audioFile).ConfigureAwait(true);
 
-            Assert.Contains(audioFile.Metadata, validMetadata, new MetadataComparer());
+            Assert.Equivalent(validMetadata, audioFile.Metadata);
         }
 
         [Theory(DisplayName = "AudioFileAnalyzer's Analyze method creates the expected metadata for a group")]
         [MemberData(nameof(AnalyzeGroupDataSource.Data), MemberType = typeof(AnalyzeGroupDataSource))]
-        public async void AnalyzeAsyncCreatesExpectedMetadataForGroup(
+        public async Task AnalyzeAsyncCreatesExpectedMetadataForGroup(
             string[] fileNames,
             string analyzerName,
             TestSettingDictionary settings,
-            TestAudioMetadata[][] validMetadata)
+            TestAudioMetadata[] validMetadata)
         {
             var audioFiles = fileNames.Select(fileName =>
                     new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)))
@@ -77,14 +78,7 @@ namespace AudioWorks.Api.Tests
 
             await new AudioFileAnalyzer(analyzerName, settings).AnalyzeAsync(audioFiles).ConfigureAwait(true);
 
-            var i = 0;
-            var comparer = new MetadataComparer();
-            // ReSharper disable twice ParameterOnlyUsedForPreconditionCheck.Local
-            Assert.All(audioFiles, audioFile =>
-            {
-                Assert.Contains(audioFile.Metadata, validMetadata.Select(group => group[i]), comparer);
-                i++;
-            });
+            Assert.Equivalent(validMetadata, audioFiles.Select(audioFile => audioFile.Metadata));
         }
     }
 }

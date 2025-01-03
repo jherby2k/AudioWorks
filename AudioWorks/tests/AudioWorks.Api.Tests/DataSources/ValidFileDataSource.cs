@@ -13,19 +13,18 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System.Collections.Generic;
-using System.Linq;
 using AudioWorks.Api.Tests.DataTypes;
+using System.Linq;
+using Xunit;
 
 namespace AudioWorks.Api.Tests.DataSources
 {
     public static class ValidFileDataSource
     {
-        static readonly List<object[]> _data = new()
+        static readonly TheoryData<string, TestAudioInfo, TestAudioMetadata> _data = new()
         {
             #region Wave
 
-            new object[]
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 new TestAudioInfo
@@ -39,8 +38,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 new TestAudioInfo
@@ -54,8 +51,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 new TestAudioInfo
@@ -69,8 +64,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 new TestAudioInfo
@@ -84,8 +77,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 new TestAudioInfo
@@ -99,8 +90,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "LPCM 16-bit 44100Hz Stereo (extensible).wav",
                 new TestAudioInfo
@@ -114,8 +103,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "A-law 44100Hz Stereo.wav",
                 new TestAudioInfo
@@ -128,8 +115,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "µ-law 44100Hz Stereo.wav",
                 new TestAudioInfo
@@ -147,7 +132,6 @@ namespace AudioWorks.Api.Tests.DataSources
 
             #region FLAC
 
-            new object[]
             {
                 "FLAC Level 5 8-bit 8000Hz Stereo.flac",
                 new TestAudioInfo
@@ -161,8 +145,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Mono.flac",
                 new TestAudioInfo
@@ -176,8 +158,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 new TestAudioInfo
@@ -191,8 +171,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "FLAC Level 5 16-bit 48000Hz Stereo.flac",
                 new TestAudioInfo
@@ -206,8 +184,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "FLAC Level 5 24-bit 96000Hz Stereo.flac",
                 new TestAudioInfo
@@ -221,8 +197,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 new TestAudioInfo
@@ -254,8 +228,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using mixed-case fields).flac",
                 new TestAudioInfo
@@ -287,8 +259,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using COMMENT).flac",
                 new TestAudioInfo
@@ -320,8 +290,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TOTALTRACKS).flac",
                 new TestAudioInfo
@@ -353,8 +321,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TRACKCOUNT).flac",
                 new TestAudioInfo
@@ -386,8 +352,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TRACKTOTAL).flac",
                 new TestAudioInfo
@@ -419,8 +383,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using YEAR).flac",
                 new TestAudioInfo
@@ -450,8 +412,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using extended DATE).flac",
                 new TestAudioInfo
@@ -483,8 +443,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using invalid DATE).flac",
                 new TestAudioInfo
@@ -513,8 +471,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using invalid TRACKNUMBER).flac",
                 new TestAudioInfo
@@ -544,8 +500,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using ReplayGain with '+' sign).flac",
                 new TestAudioInfo
@@ -577,8 +531,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using ReplayGain with missing 'dB').flac",
                 new TestAudioInfo
@@ -610,8 +562,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using invalid ReplayGain fields).flac",
                 new TestAudioInfo
@@ -644,7 +594,6 @@ namespace AudioWorks.Api.Tests.DataSources
 
             #region ALAC
 
-            new object[]
             {
                 "ALAC 16-bit 44100Hz Mono.m4a",
                 new TestAudioInfo
@@ -658,8 +607,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 new TestAudioInfo
@@ -673,8 +620,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "ALAC 16-bit 48000Hz Stereo.m4a",
                 new TestAudioInfo
@@ -688,8 +633,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "ALAC 24-bit 96000Hz Stereo.m4a",
                 new TestAudioInfo
@@ -703,8 +646,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "ALAC 16-bit 44100Hz Stereo (Tagged).m4a",
                 new TestAudioInfo
@@ -737,7 +678,6 @@ namespace AudioWorks.Api.Tests.DataSources
 
             #region AAC
 
-            new object[]
             {
                 "QAAC TVBR 91 8000Hz Stereo.m4a",
                 new TestAudioInfo
@@ -750,8 +690,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "QAAC TVBR 91 44100Hz Mono.m4a",
                 new TestAudioInfo
@@ -764,8 +702,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "QAAC TVBR 91 44100Hz Stereo.m4a",
                 new TestAudioInfo
@@ -778,8 +714,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "QAAC TVBR 91 48000Hz Stereo.m4a",
                 new TestAudioInfo
@@ -792,8 +726,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "QAAC TVBR 91 44100Hz Stereo (Tagged).m4a",
                 new TestAudioInfo
@@ -825,7 +757,6 @@ namespace AudioWorks.Api.Tests.DataSources
 
             #region MP3
 
-            new object[]
             {
                 "Lame CBR 24 8000Hz Stereo.mp3",
                 new TestAudioInfo
@@ -838,8 +769,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "Lame CBR 64 44100Hz Mono.mp3",
                 new TestAudioInfo
@@ -852,8 +781,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
                 new TestAudioInfo
@@ -866,8 +793,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "Lame CBR 128 44100Hz Stereo (no header).mp3",
                 new TestAudioInfo
@@ -879,8 +804,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "Lame CBR 128 48000Hz Stereo.mp3",
                 new TestAudioInfo
@@ -893,8 +816,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "Lame VBR Standard 44100Hz Stereo.mp3",
                 new TestAudioInfo
@@ -907,8 +828,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "Fraunhofer CBR 128 44100Hz Stereo.mp3",
                 new TestAudioInfo
@@ -920,8 +839,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "Fraunhofer VBR 44100Hz Stereo.mp3",
                 new TestAudioInfo
@@ -933,8 +850,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "Fraunhofer VBR 44100Hz Stereo (with header).mp3",
                 new TestAudioInfo
@@ -947,8 +862,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v1).mp3",
                 new TestAudioInfo
@@ -970,8 +883,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackNumber = "01"
                 }
             },
-
-            new object[]
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v1 missing values).mp3",
                 new TestAudioInfo
@@ -990,8 +901,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     Comment = "Test Comment"
                 }
             },
-
-            new object[]
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
                 new TestAudioInfo
@@ -1022,8 +931,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1 Extended Header).mp3",
                 new TestAudioInfo
@@ -1054,8 +961,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 UTF16).mp3",
                 new TestAudioInfo
@@ -1086,8 +991,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 UTF16 Unsynchronised).mp3",
                 new TestAudioInfo
@@ -1118,8 +1021,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.4 UTF16 Unsynchronised Frames).mp3",
                 new TestAudioInfo
@@ -1150,8 +1051,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.4 UTF16 Big Endian).mp3",
                 new TestAudioInfo
@@ -1182,8 +1081,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.4 UTF8).mp3",
                 new TestAudioInfo
@@ -1219,7 +1116,6 @@ namespace AudioWorks.Api.Tests.DataSources
 
             #region Ogg Vorbis
 
-            new object[]
             {
                 "Vorbis Quality 3 8000Hz Stereo.ogg",
                 new TestAudioInfo
@@ -1232,8 +1128,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "Vorbis Quality 3 44100Hz Mono.ogg",
                 new TestAudioInfo
@@ -1246,8 +1140,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
                 new TestAudioInfo
@@ -1260,8 +1152,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "Vorbis Quality 3 48000Hz Stereo.ogg",
                 new TestAudioInfo
@@ -1274,8 +1164,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "Vorbis Quality 3 96000Hz Stereo.ogg",
                 new TestAudioInfo
@@ -1287,8 +1175,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using defaults).ogg",
                 new TestAudioInfo
@@ -1319,8 +1205,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using mixed-case fields).ogg",
                 new TestAudioInfo
@@ -1351,8 +1235,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using COMMENT).ogg",
                 new TestAudioInfo
@@ -1383,8 +1265,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using TOTALTRACKS).ogg",
                 new TestAudioInfo
@@ -1415,8 +1295,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using TRACKCOUNT).ogg",
                 new TestAudioInfo
@@ -1447,8 +1325,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using TRACKTOTAL).ogg",
                 new TestAudioInfo
@@ -1479,8 +1355,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using YEAR).ogg",
                 new TestAudioInfo
@@ -1509,8 +1383,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using extended DATE).ogg",
                 new TestAudioInfo
@@ -1541,8 +1413,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using invalid DATE).ogg",
                 new TestAudioInfo
@@ -1570,8 +1440,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using invalid TRACKNUMBER).ogg",
                 new TestAudioInfo
@@ -1600,8 +1468,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using ReplayGain with '+' sign).ogg",
                 new TestAudioInfo
@@ -1632,8 +1498,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using ReplayGain with missing 'dB').ogg",
                 new TestAudioInfo
@@ -1664,8 +1528,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using invalid ReplayGain fields).ogg",
                 new TestAudioInfo
@@ -1697,7 +1559,6 @@ namespace AudioWorks.Api.Tests.DataSources
 
             #region Opus
 
-            new object[]
             {
                 "Opus VBR 8000Hz Stereo.opus",
                 new TestAudioInfo
@@ -1709,8 +1570,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "Opus VBR 44100Hz Mono.opus",
                 new TestAudioInfo
@@ -1722,8 +1581,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "Opus VBR 44100Hz Stereo.opus",
                 new TestAudioInfo
@@ -1735,8 +1592,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "Opus VBR 48000Hz Stereo.opus",
                 new TestAudioInfo
@@ -1748,8 +1603,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "Opus VBR 96000Hz Stereo.opus",
                 new TestAudioInfo
@@ -1761,8 +1614,6 @@ namespace AudioWorks.Api.Tests.DataSources
                 },
                 new TestAudioMetadata()
             },
-
-            new object[]
             {
                 "Opus VBR 44100Hz Stereo (Tagged using defaults).opus",
                 new TestAudioInfo
@@ -1788,8 +1639,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackCount = "12"
                 }
             },
-
-            new object[]
             {
                 "Opus VBR 44100Hz Stereo (Tagged using mixed-case fields).opus",
                 new TestAudioInfo
@@ -1815,8 +1664,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackCount = "12"
                 }
             },
-
-            new object[]
             {
                 "Opus VBR 44100Hz Stereo (Tagged using COMMENT).opus",
                 new TestAudioInfo
@@ -1842,8 +1689,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackCount = "12"
                 }
             },
-
-            new object[]
             {
                 "Opus VBR 44100Hz Stereo (Tagged using TOTALTRACKS).opus",
                 new TestAudioInfo
@@ -1869,8 +1714,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackCount = "12"
                 }
             },
-
-            new object[]
             {
                 "Opus VBR 44100Hz Stereo (Tagged using TRACKCOUNT).opus",
                 new TestAudioInfo
@@ -1896,8 +1739,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackCount = "12"
                 }
             },
-
-            new object[]
             {
                 "Opus VBR 44100Hz Stereo (Tagged using TRACKTOTAL).opus",
                 new TestAudioInfo
@@ -1923,8 +1764,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackCount = "12"
                 }
             },
-
-            new object[]
             {
                 "Opus VBR 44100Hz Stereo (Tagged using YEAR).opus",
                 new TestAudioInfo
@@ -1948,8 +1787,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackCount = "12"
                 }
             },
-
-            new object[]
             {
                 "Opus VBR 44100Hz Stereo (Tagged using extended DATE).opus",
                 new TestAudioInfo
@@ -1975,8 +1812,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackCount = "12"
                 }
             },
-
-            new object[]
             {
                 "Opus VBR 44100Hz Stereo (Tagged using invalid DATE).opus",
                 new TestAudioInfo
@@ -1999,8 +1834,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackCount = "12"
                 }
             },
-
-            new object[]
             {
                 "Opus VBR 44100Hz Stereo (Tagged using invalid TRACKNUMBER).opus",
                 new TestAudioInfo
@@ -2024,8 +1857,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     Year = "2017"
                 }
             },
-
-            new object[]
             {
                 "Opus VBR 44100Hz Stereo (Tagged using REPLAYGAIN).opus",
                 new TestAudioInfo
@@ -2055,8 +1886,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "Opus VBR 44100Hz Stereo (Tagged using REPLAYGAIN with '+' sign).opus",
                 new TestAudioInfo
@@ -2086,8 +1915,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "Opus VBR 44100Hz Stereo (Tagged using REPLAYGAIN with missing 'dB').opus",
                 new TestAudioInfo
@@ -2117,8 +1944,6 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.80"
                 }
             },
-
-            new object[]
             {
                 "Opus VBR 44100Hz Stereo (Tagged using R128).opus",
                 new TestAudioInfo
@@ -2150,10 +1975,28 @@ namespace AudioWorks.Api.Tests.DataSources
             #endregion
         };
 
-        public static IEnumerable<object[]> FileNames => _data.Select(item => new[] { item[0] });
+        public static TheoryData<string> FileNames => new(_data.Select(item => item[0]).Cast<string>());
 
-        public static IEnumerable<object[]> FileNamesAndAudioInfo => _data.Select(item => new[] { item[0], item[1] });
+        public static TheoryData<string, TestAudioInfo> FileNamesAndAudioInfo
+        {
+            get
+            {
+                var results = new TheoryData<string, TestAudioInfo>();
+                foreach (var result in _data.Select(item => ((string) item[0], (TestAudioInfo) item[1])))
+                    results.Add(result.Item1, result.Item2);
+                return results;
+            }
+        }
 
-        public static IEnumerable<object[]> FileNamesAndMetadata => _data.Select(item => new[] { item[0], item[2] });
+        public static TheoryData<string, TestAudioMetadata> FileNamesAndMetadata
+        {
+            get
+            {
+                var results = new TheoryData<string, TestAudioMetadata>();
+                foreach (var result in _data.Select(item => ((string) item[0], (TestAudioMetadata) item[2])))
+                    results.Add(result.Item1, result.Item2);
+                return results;
+            }
+        }
     }
 }

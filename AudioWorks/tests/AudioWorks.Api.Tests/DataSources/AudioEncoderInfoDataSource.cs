@@ -13,53 +13,23 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System.Collections.Generic;
+using Xunit;
 
 namespace AudioWorks.Api.Tests.DataSources
 {
     public static class AudioEncoderInfoDataSource
     {
-        static readonly List<object[]> _data = new()
+        public static TheoryData<string, string> Data { get; } = new()
         {
-            new object[]
-            {
-                "Wave",
-                "Waveform Audio File Format"
-            },
-            new object[]
-            {
-                "FLAC",
-                "Free Lossless Audio Codec"
-            },
+            { "Wave", "Waveform Audio File Format" },
+            { "FLAC", "Free Lossless Audio Codec" },
 #if !LINUX
-            new object[]
-            {
-                "ALAC",
-                "Apple Lossless Audio Codec"
-            },
-            new object[]
-            {
-                "AppleAAC",
-                "Apple MPEG-4 Advanced Audio Codec"
-            },
+            { "ALAC", "Apple Lossless Audio Codec" },
+            { "AppleAAC", "Apple MPEG-4 Advanced Audio Codec" },
 #endif
-            new object[]
-            {
-                "LameMP3",
-                "Lame MPEG Audio Layer 3"
-            },
-            new object[]
-            {
-                "Vorbis",
-                "Ogg Vorbis"
-            },
-            new object[]
-            {
-                "Opus",
-                "Opus"
-            }
+            { "LameMP3", "Lame MPEG Audio Layer 3" },
+            { "Vorbis", "Ogg Vorbis" },
+            { "Opus", "Opus" }
         };
-
-        public static IEnumerable<object[]> Data => _data;
     }
 }

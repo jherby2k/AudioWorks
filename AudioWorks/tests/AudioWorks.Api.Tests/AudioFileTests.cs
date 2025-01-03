@@ -80,9 +80,8 @@ namespace AudioWorks.Api.Tests
         {
             var audioFile = new AudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
 
-            Assert.True(new AudioInfoComparer().Equals(
-                audioFile.Info,
-                JsonSerializer.Deserialize<AudioFile>(JsonSerializer.Serialize(audioFile))?.Info));
+            Assert.Equivalent(audioFile.Info,
+                JsonSerializer.Deserialize<AudioFile>(JsonSerializer.Serialize(audioFile))?.Info);
         }
 
         [Theory(DisplayName = "AudioFile's Info property has the expected Format")]

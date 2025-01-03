@@ -13,22 +13,20 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System.Collections.Generic;
+using Xunit;
 
 namespace AudioWorks.Api.Tests.DataSources
 {
     public static class UnsupportedFileDataSource
     {
-        static readonly List<object[]> _data = new()
+        public static TheoryData<string> Data { get; } = new()
         {
-            new object[] { "Text.txt" },
-            new object[] { "MS ADPCM.wav" },
-            new object[] { "Speex.ogg" },
-            new object[] { "Opus.ogg" },
-            new object[] { "Vorbis.opus" },
-            new object[] { "Lame MP3.m4a" }
+            "Text.txt",
+            "MS ADPCM.wav",
+            "Speex.ogg",
+            "Opus.ogg",
+            "Vorbis.opus",
+            "Lame MP3.m4a"
         };
-
-        public static IEnumerable<object[]> Data => _data;
     }
 }

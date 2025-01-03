@@ -16,6 +16,7 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
@@ -57,13 +58,13 @@ namespace AudioWorks.Api.Tests
             Assert.Throws<ArgumentException>(() => new AudioFileEncoder("Wave").Settings["Foo"] = "Bar");
 
         [Fact(DisplayName = "AudioFileEncoder's Encode method throws an exception if an audio file is null")]
-        public async void EncodeAsyncNullAudioFileThrowsException() =>
+        public async Task EncodeAsyncNullAudioFileThrowsException() =>
             await Assert.ThrowsAsync<ArgumentNullException>(() =>
                 new AudioFileEncoder("Wave").EncodeAsync(null!)).ConfigureAwait(true);
 
         [Theory(DisplayName = "AudioFileEncoder's Encode method creates the expected audio file")]
         [MemberData(nameof(EncodeValidFileDataSource.Data), MemberType = typeof(EncodeValidFileDataSource))]
-        public async void EncodeAsyncCreatesExpectedAudioFile(
+        public async Task EncodeAsyncCreatesExpectedAudioFile(
             int index,
             string sourceFileName,
             string encoderName,

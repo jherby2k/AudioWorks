@@ -13,46 +13,19 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System.Collections.Generic;
+using Xunit;
 
 namespace AudioWorks.Api.Tests.DataSources
 {
     public static class AudioMetadataEncoderInfoDataSource
     {
-        static readonly List<object[]> _data = new()
+        public static TheoryData<string, string, string> Data { get; } = new()
         {
-            new object[]
-            {
-                ".flac",
-                "FLAC",
-                "FLAC"
-            },
-            new object[]
-            {
-                ".m4a",
-                "iTunes",
-                "iTunes-compatible MPEG-4"
-            },
-            new object[]
-            {
-                ".mp3",
-                "ID3",
-                "ID3 version 2.x"
-            },
-            new object[]
-            {
-                ".ogg",
-                "Vorbis",
-                "Vorbis Comments"
-            },
-            new object[]
-            {
-                ".opus",
-                "Opus",
-                "Opus Comments"
-            }
+            { ".flac", "FLAC", "FLAC" },
+            { ".m4a", "iTunes", "iTunes-compatible MPEG-4" },
+            { ".mp3", "ID3", "ID3 version 2.x" },
+            { ".ogg", "Vorbis", "Vorbis Comments" },
+            { ".opus", "Opus", "Opus Comments" }
         };
-
-        public static IEnumerable<object[]> Data => _data;
     }
 }

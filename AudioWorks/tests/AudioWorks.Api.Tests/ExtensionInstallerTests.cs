@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System.IO;
+using System.Threading.Tasks;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
 using Xunit;
@@ -28,7 +29,7 @@ namespace AudioWorks.Api.Tests
             LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
 
         [Fact(DisplayName = "ExtensionInstaller's InstallAsync method installs the available extensions")]
-        public async void InstallAsyncInstallsExtensions()
+        public async Task InstallAsyncInstallsExtensions()
         {
             var extensionRoot = new DirectoryInfo(ExtensionInstaller.ExtensionRoot);
 
@@ -44,7 +45,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Fact(DisplayName = "ExtensionInstaller's InstallAsync method removes unpublished extensions")]
-        public async void InstallAsyncRemovesUnpublishedExtensions()
+        public async Task InstallAsyncRemovesUnpublishedExtensions()
         {
             var extensionRoot = new DirectoryInfo(ExtensionInstaller.ExtensionRoot);
 

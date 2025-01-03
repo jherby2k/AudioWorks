@@ -13,26 +13,24 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System.Collections.Generic;
+using Xunit;
 
 namespace AudioWorks.Api.Tests.DataSources
 {
     public static class InvalidFileDataSource
     {
-        static readonly List<object[]> _data = new()
+        public static TheoryData<string> Data { get; } = new()
         {
-            new object[] { "Not RIFF Format.wav" },
-            new object[] { "Unexpectedly Truncated.wav" },
-            new object[] { "Not Wave Format.wav" },
-            new object[] { "Missing 'fmt' Chunk.wav" },
-            new object[] { "Not MPEG Audio.mp3"},
-            new object[] { "Not Audio Layer III.mp3"},
-            new object[] { "Not MPEG Audio.m4a" },
-            new object[] { "Not Ogg Format.ogg"},
-            new object[] { "Not FLAC Format.flac"},
-            new object[] { "Not Opus Format.opus"}
+            "Not RIFF Format.wav",
+            "Unexpectedly Truncated.wav",
+            "Not Wave Format.wav",
+            "Missing 'fmt' Chunk.wav",
+            "Not MPEG Audio.mp3",
+            "Not Audio Layer III.mp3",
+            "Not MPEG Audio.m4a",
+            "Not Ogg Format.ogg",
+            "Not FLAC Format.flac",
+            "Not Opus Format.opus"
         };
-
-        public static IEnumerable<object[]> Data => _data;
     }
 }
