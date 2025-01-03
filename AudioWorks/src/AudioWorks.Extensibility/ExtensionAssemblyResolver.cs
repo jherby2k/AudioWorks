@@ -50,7 +50,12 @@ namespace AudioWorks.Extensibility
 
             // Resolve dependencies from both the main and extension directories
             var assemblyFiles = Directory.GetFiles(
+#if NETSTANDARD
+                    // Avoid an issue with shadow-copied assemblies under .NET Framework
+                    Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath)!, "*.dll")
+#else
                     Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!, "*.dll")
+#endif
                 .Concat(Directory.GetFiles(extensionDir, "*.dll"));
 
 #if NETSTANDARD2_0
