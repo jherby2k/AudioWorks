@@ -11,7 +11,7 @@
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="coverlet.collector" Version="6.0.3" PrivateAssets="all" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
-    <PackageReference Include="Moq" Version="4.18.2" />
+    <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="ObjectsComparer" Version="1.4.1" />
     <PackageReference Include="xunit" Version="2.9.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.0.0" PrivateAssets="all" />
