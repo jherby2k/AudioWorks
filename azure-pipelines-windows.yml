@@ -187,14 +187,8 @@ steps:
     reports: $(Agent.TempDirectory)\*\coverage.cobertura.xml
     targetdir: reports\coverage
     reporttypes: HtmlInline_AzurePipelines;Cobertura;Badges
+    publishCodeCoverageResults: true
   displayName: Generate code coverage report
-
-- task: PublishCodeCoverageResults@1
-  inputs:
-    codecoverageTool: cobertura
-    summaryFileLocation: $(Build.SourcesDirectory)\reports\coverage\Cobertura.xml
-    reportDirectory: $(Build.SourcesDirectory)\reports\coverage
-  displayName: Publish code coverage results
 
 - task: CopyFiles@2
   inputs:
