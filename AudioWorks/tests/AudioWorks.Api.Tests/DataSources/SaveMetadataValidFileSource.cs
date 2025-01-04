@@ -1338,7 +1338,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "4A74639B61D636F02AE9003D1F8B728A", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on 32-bit Windows)
                     "5202B8FFA7A76EA6AD53FEFFE9F206FD", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on 64-bit Windows)
                     "BFF6FD917D8DC3C22D33FFA780358EDC", // Vorbis 1.3.7 AoTuV + Lancer (.NET Core 3.0+ on Windows and Ubuntu)
-                    "36C4695F1C9FBD9E018E98FB4A132D83" // Vorbis 1.3.7 (MacOS)
+                    "620158BEB9F80C0EB6A2982B0AA384BC" // Vorbis 1.3.7 (MacOS)
                 }
             },
 
