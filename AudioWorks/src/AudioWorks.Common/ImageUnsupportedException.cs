@@ -14,7 +14,9 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+#if NETSTANDARD2_0
 using System.Runtime.Serialization;
+#endif
 
 namespace AudioWorks.Common
 {
@@ -52,6 +54,7 @@ namespace AudioWorks.Common
             : base(message, innerException)
         {
         }
+#if NETSTANDARD2_0
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageUnsupportedException"/> class.
@@ -64,5 +67,6 @@ namespace AudioWorks.Common
             : base(info, context)
         {
         }
+#endif
     }
 }
