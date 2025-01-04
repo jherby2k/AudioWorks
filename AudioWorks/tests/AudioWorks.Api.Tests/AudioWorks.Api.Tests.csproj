@@ -19,7 +19,7 @@
 
   <!-- ReSharper disable twice UnknownProperty -->
   <ItemGroup Condition="'$(TargetFramework)'=='net472'">
-    <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Bcl.HashCode" Version="6.0.0" />
     <PackageReference Include="System.Text.Json" Version="6.0.10" />
   </ItemGroup>
 
