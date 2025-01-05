@@ -178,7 +178,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "42070347011D5067A9D962DA3237EF63", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
-                    "BB7D8149E9AC3C96C79996C2CE7BFB78" // FLAC 1.4.1
+                    "5C1655ACED0E208FC231C92C678FD87B" // FLAC 1.4.3
                 }
             },
             {
@@ -188,7 +188,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "0771EF09959F087FACE194A4479F5107", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
-                    "CD9B7C00E3EFF10763F51414E1630AD5" // FLAC 1.4.1
+                    "0B2A54ACAA983961889A83EF85942C5D" // FLAC 1.4.3
                 }
             },
             {
@@ -198,7 +198,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
-                    "6C23634B915BA1E7FEA6C5062D06A201" // FLAC 1.4.1
+                    "F86AA899D869835AB05C17699F7F30DC" // FLAC 1.4.3
                 }
             },
             {
@@ -208,7 +208,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "F0F075E05A3AFB67403CCF373932BCCA", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
-                    "9745D84285DFDFA68BD8D3362784581E" // FLAC 1.4.1
+                    "4CF8F4F9A26506718F891820268284DD" // FLAC 1.4.3
                 }
             },
             {
@@ -218,7 +218,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "D3A7B834DCE97F0709AEFCA45A24F5B6", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
-                    "488D7D6E95DD334D25C3C7B8B3E9C7A8" // FLAC 1.4.1
+                    "99355C1C3DD53802AB84425043CF1831" // FLAC 1.4.3
                 }
             },
             {
@@ -228,7 +228,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "10F6AC75659ECFE81D3C07D8D3074538", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
-                    "A7716A5C7639D750E2739E3855C60A9B" // FLAC 1.4.1
+                    "F7A6A7DC6610B277E302387A9E38FB32" // FLAC 1.4.3
                 }
             },
             {
@@ -238,7 +238,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "FCBAB8A8C261456CF6F87E603B237426", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
-                    "78128DB57EA3FD0E7387161F7C811086" // FLAC 1.4.1
+                    "2ED7D0E99EA9072FB4415FF1510D3056" // FLAC 1.4.3
                 }
             },
             {
@@ -248,7 +248,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "2F2F341FEECB7842F7FA9CE6CB110C67", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
-                    "E2DD7730726FE5ED62DB1295D74ADC88" // FLAC 1.4.1
+                    "D75493F3FFF379D7A14F5B0BFA5AFB8A" // FLAC 1.4.3
                 }
             },
             {
@@ -258,7 +258,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "A48820F5E30B5C21A881E01209257E21", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
-                    "CAF95E65F1C131A065E5351B7B2EB5CD" // FLAC 1.4.1
+                    "A7E0AA5D079DCBF97B3C03B76FA2E645" // FLAC 1.4.3
                 }
             },
             {
@@ -268,7 +268,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "D90693A520FA14AC987272ACB6CD8996", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
-                    "850E0ADBC12F3682209D5A4BA1C3DAE2" // FLAC 1.4.1
+                    "1ED46D08800E000E7D4FFD6B3E776C2C" // FLAC 1.4.3
                 }
             },
             {
@@ -282,7 +282,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
-                    "6C23634B915BA1E7FEA6C5062D06A201" // FLAC 1.4.1
+                    "F86AA899D869835AB05C17699F7F30DC" // FLAC 1.4.3
                 }
             },
             {
@@ -296,7 +296,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "A58022B124B427771041A96F65D8DF21", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
-                    "1C0C702068210D78CC9391A938097F96" // FLAC 1.4.1
+                    "FED4E3CA9AB4BF04C528E16D6D19EB44" // FLAC 1.4.3
                 }
             },
             {
@@ -310,7 +310,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "F341E56E68A0A168B779A4EBFD41422D", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
-                    "F33C025E3D6E116750A574FFFD907C65" // FLAC 1.4.1
+                    "3C563D2DAF004BF8C01139C6D5A7CA8F" // FLAC 1.4.3
                 }
             },
             {
@@ -324,7 +324,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
-                    "6C23634B915BA1E7FEA6C5062D06A201" // FLAC 1.4.1
+                    "F86AA899D869835AB05C17699F7F30DC" // FLAC 1.4.3
                 }
             },
             {
@@ -338,7 +338,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "986464F3AC48E00D00B8ECF3AF3FD6BC", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
-                    "8B399070A685ADC38EA67F9C3B5D6F21" // FLAC 1.4.1
+                    "46D403F89E109773996223F339570D74" // FLAC 1.4.3
                 }
             },
             {
@@ -352,7 +352,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
-                    "6C23634B915BA1E7FEA6C5062D06A201" // FLAC 1.4.1
+                    "F86AA899D869835AB05C17699F7F30DC" // FLAC 1.4.3
                 }
             },
             {
@@ -366,7 +366,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
-                    "6C23634B915BA1E7FEA6C5062D06A201" // FLAC 1.4.1
+                    "F86AA899D869835AB05C17699F7F30DC" // FLAC 1.4.3
                 }
             },
             {
@@ -380,7 +380,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "662592BD8B3853B6FEC4E188F7D0F246", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
-                    "3DB90E9E679EE1D72C36175E45E63FC9" // FLAC 1.4.1
+                    "A1A977792BBC0D92B12674A42AAE614F" // FLAC 1.4.3
                 }
             },
             {
@@ -394,7 +394,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new[]
                 {
                     "455753A51355171BF22CCC78647235B4", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
-                    "4DF51A1E2BD691F901F4446FF22BF029" // FLAC 1.4.1
+                    "B74DC40E795B96904E4DE801F98F1162" // FLAC 1.4.3
                 }
             },
 

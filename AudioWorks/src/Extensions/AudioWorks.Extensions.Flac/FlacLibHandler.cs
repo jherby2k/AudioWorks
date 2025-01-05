@@ -100,7 +100,7 @@ namespace AudioWorks.Extensions.Flac
             try
             {
 #if WINDOWS
-                module = SafeNativeMethods.LoadLibrary(Path.Combine(libPath, "FLAC.dll"));
+                module = SafeNativeMethods.LoadLibrary(Path.Combine(libPath, "libFLAC.dll"));
 #elif OSX
                 module = SafeNativeMethods.DlOpen(Path.Combine(libPath, "libFLAC.dylib"), 2);
 #else // LINUX
