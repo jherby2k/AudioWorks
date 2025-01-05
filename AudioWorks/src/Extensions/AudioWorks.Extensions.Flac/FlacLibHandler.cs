@@ -64,9 +64,11 @@ namespace AudioWorks.Extensions.Flac
             AddUnmanagedLibraryPath(libPath);
 #endif
 #elif OSX
-            AddUnmanagedLibraryPath(Path.Combine(
+            var libPath = Path.Combine(
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
-                $"macos.{GetOSVersion()}-{GetArch()}"));
+                $"macos.{GetOSVersion()}-{GetArch()}");
+
+            AddUnmanagedLibraryPath(libPath);
 #endif
 
             try
