@@ -54,17 +54,9 @@ namespace AudioWorks.Extensions.ReplayGain
             AddUnmanagedLibraryPath(libPath);
 #endif
 #elif OSX
-            var osVersion = GetOSVersion();
             AddUnmanagedLibraryPath(Path.Combine(
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
-                osVersion.StartsWith("10.15", StringComparison.Ordinal)
-                    ? "macos.10.15-x64" :
-                osVersion.StartsWith("11", StringComparison.Ordinal) ? RuntimeInformation.ProcessArchitecture == Architecture.Arm64
-                    ? "macos.11-arm64"
-                    : "macos.11-x64" :
-                RuntimeInformation.ProcessArchitecture == Architecture.Arm64
-                    ? "macos.12-arm64"
-                    : "macos.12-x64"));
+                $"macos.{GetOSVersion()}-{GetArch()}"));
 #endif
 
             try
@@ -112,9 +104,11 @@ namespace AudioWorks.Extensions.ReplayGain
                 process.Start();
                 var result = process.StandardOutput.ReadToEnd();
                 process.WaitForExit();
-                return result.Trim();
+                return result.Trim()[..2];
             }
         }
+
+        static string GetArch() => RuntimeInformation.ProcessArchitecture == Architecture.Arm64 ? "arm64" : "x64";
 #endif
     }
 }
