@@ -19,14 +19,14 @@ namespace AudioWorks.Api.Tests.DataSources
 {
     public static class UnsupportedFileDataSource
     {
-        public static TheoryData<string> Data { get; } = new()
-        {
+        public static TheoryData<string> Data { get; } =
+        [
             "Text.txt",
             "MS ADPCM.wav",
             "Speex.ogg",
             "Opus.ogg",
             "Vorbis.opus",
             "Lame MP3.m4a"
-        };
+        ];
     }
 }

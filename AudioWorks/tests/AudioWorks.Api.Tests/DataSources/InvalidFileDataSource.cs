@@ -19,8 +19,8 @@ namespace AudioWorks.Api.Tests.DataSources
 {
     public static class InvalidFileDataSource
     {
-        public static TheoryData<string> Data { get; } = new()
-        {
+        public static TheoryData<string> Data { get; } =
+        [
             "Not RIFF Format.wav",
             "Unexpectedly Truncated.wav",
             "Not Wave Format.wav",
@@ -31,6 +31,6 @@ namespace AudioWorks.Api.Tests.DataSources
             "Not Ogg Format.ogg",
             "Not FLAC Format.flac",
             "Not Opus Format.opus"
-        };
+        ];
     }
 }

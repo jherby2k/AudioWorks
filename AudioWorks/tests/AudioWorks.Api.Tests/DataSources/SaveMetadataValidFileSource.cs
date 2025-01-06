@@ -1549,13 +1549,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "PNG 24-bit 1280 x 935.png",
                 new TestSettingDictionary(),
-                new[]
-                {
+                [
                     "0DD686B1469BEF1FEA629A881B2A67C3", // Opus 1.5.2 (Legacy .NET on 32-bit Windows)
                     "358BD65B41660084B9C9CABEBCB1DC76", // Opus 1.5.2 (Legacy .NET on 64-bit Windows)
                     "316157B1807D94E3E111802327A26787", // Opus 1.3.1 (Ubuntu 20.04)
                     "08B5C5C61D460DAA69E52CA69E5F6768" // Opus 1.5.2 (MacOS and .NET Core 3.0+ on Windows)
-                }
+                ]
             },
 
             // JPEG CoverArt
@@ -1564,11 +1563,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestAudioMetadata(),
                 "JPEG 24-bit 1280 x 935.jpg",
                 new TestSettingDictionary(),
-                new[]
-                {
+                [
                     "CABF32D411EA5FA9458A79B6DC2C2D69", // Opus 1.3.1 (Ubuntu 20.04)
                     "EDBD61E6DED683084D781F9F3C578D25" // Opus 1.5.2 (MacOS and Windows)
-                }
+                ]
             }
 
             #endregion

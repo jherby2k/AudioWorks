@@ -20,10 +20,10 @@ namespace AudioWorks.Api.Tests.DataSources
 {
     public static class SaveMetadataUnsupportedFileDataSource
     {
-        static readonly TheoryData<string> _data = new()
-        {
+        static readonly TheoryData<string> _data =
+        [
             "LPCM 16-bit 44100Hz Stereo.wav"
-        };
+        ];
 
         public static TheoryData<int, string> Data
         {

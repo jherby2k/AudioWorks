@@ -24,16 +24,14 @@ namespace AudioWorks.Api.Tests.DataSources
         {
             // 8000Hz Stereo, default (simple) peaks
             {
-                new[]
-                {
+                [
                     "Track 1 LPCM 8-bit 8000Hz Stereo.wav",
                     "Track 2 LPCM 8-bit 8000Hz Stereo.wav",
                     "Track 3 LPCM 8-bit 8000Hz Stereo.wav"
-                },
+                ],
                 "ReplayGain",
                 new TestSettingDictionary(),
-                new[]
-                {
+                [
                     new TestAudioMetadata
                     {
 #if NET472
@@ -59,24 +57,22 @@ namespace AudioWorks.Api.Tests.DataSources
                         TrackGain = "-7.22",
                         AlbumGain = "-5.90"
                     }
-                }
+                ]
             },
 
             // 8000Hz Stereo, interpolated peaks
             {
-                new[]
-                {
+                [
                     "Track 1 LPCM 8-bit 8000Hz Stereo.wav",
                     "Track 2 LPCM 8-bit 8000Hz Stereo.wav",
                     "Track 3 LPCM 8-bit 8000Hz Stereo.wav"
-                },
+                ],
                 "ReplayGain",
                 new TestSettingDictionary
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
-                new[]
-                {
+                [
                     new TestAudioMetadata
                     {
                         TrackPeak = "0.820409",
@@ -98,21 +94,19 @@ namespace AudioWorks.Api.Tests.DataSources
                         TrackGain = "-7.22",
                         AlbumGain = "-5.90"
                     }
-                }
+                ]
             },
 
             // 44100Hz Mono, default (simple) peaks
             {
-                new[]
-                {
+                [
                     "Track 1 LPCM 16-bit 44100Hz Mono.wav",
                     "Track 2 LPCM 16-bit 44100Hz Mono.wav",
                     "Track 3 LPCM 16-bit 44100Hz Mono.wav"
-                },
+                ],
                 "ReplayGain",
                 new TestSettingDictionary(),
-                new[]
-                {
+                [
                     new TestAudioMetadata
                     {
                         TrackPeak = "0.590515",
@@ -134,24 +128,22 @@ namespace AudioWorks.Api.Tests.DataSources
                         TrackGain = "-3.84",
                         AlbumGain = "-1.83"
                     }
-                }
+                ]
             },
 
             // 44100Hz Mono, interpolated peaks
             {
-                new[]
-                {
+                [
                     "Track 1 LPCM 16-bit 44100Hz Mono.wav",
                     "Track 2 LPCM 16-bit 44100Hz Mono.wav",
                     "Track 3 LPCM 16-bit 44100Hz Mono.wav"
-                },
+                ],
                 "ReplayGain",
                 new TestSettingDictionary
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
-                new[]
-                {
+                [
                     new TestAudioMetadata
                     {
                         TrackPeak = "0.591049",
@@ -173,21 +165,19 @@ namespace AudioWorks.Api.Tests.DataSources
                         TrackGain = "-3.84",
                         AlbumGain = "-1.83"
                     }
-                }
+                ]
             },
 
             // 44100Hz Stereo, default (simple) peaks
             {
-                new[]
-                {
+                [
                     "Track 1 LPCM 16-bit 44100Hz Stereo.wav",
                     "Track 2 LPCM 16-bit 44100Hz Stereo.wav",
                     "Track 3 LPCM 16-bit 44100Hz Stereo.wav"
-                },
+                ],
                 "ReplayGain",
                 new TestSettingDictionary(),
-                new[]
-                {
+                [
                     new TestAudioMetadata
                     {
                         TrackPeak = "0.813904",
@@ -209,24 +199,22 @@ namespace AudioWorks.Api.Tests.DataSources
                         TrackGain = "-7.03",
                         AlbumGain = "-5.70"
                     }
-                }
+                ]
             },
 
             // 44100Hz Stereo, interpolated peaks
             {
-                new[]
-                {
+                [
                     "Track 1 LPCM 16-bit 44100Hz Stereo.wav",
                     "Track 2 LPCM 16-bit 44100Hz Stereo.wav",
                     "Track 3 LPCM 16-bit 44100Hz Stereo.wav"
-                },
+                ],
                 "ReplayGain",
                 new TestSettingDictionary
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
-                new[]
-                {
+                [
                     new TestAudioMetadata
                     {
                         TrackPeak = "0.814763",
@@ -248,21 +236,19 @@ namespace AudioWorks.Api.Tests.DataSources
                         TrackGain = "-7.03",
                         AlbumGain = "-5.70"
                     }
-                }
+                ]
             },
 
             // 48000Hz Stereo, default (simple) peaks
             {
-                new[]
-                {
+                [
                     "Track 1 LPCM 16-bit 48000Hz Stereo.wav",
                     "Track 2 LPCM 16-bit 48000Hz Stereo.wav",
                     "Track 3 LPCM 16-bit 48000Hz Stereo.wav"
-                },
+                ],
                 "ReplayGain",
                 new TestSettingDictionary(),
-                new[]
-                {
+                [
                     new TestAudioMetadata
                     {
                         TrackPeak = "0.814056",
@@ -284,24 +270,22 @@ namespace AudioWorks.Api.Tests.DataSources
                         TrackGain = "-7.02",
                         AlbumGain = "-5.69"
                     }
-                }
+                ]
             },
 
             // 48000Hz Stereo, interpolated peaks
             {
-                new[]
-                {
+                [
                     "Track 1 LPCM 16-bit 48000Hz Stereo.wav",
                     "Track 2 LPCM 16-bit 48000Hz Stereo.wav",
                     "Track 3 LPCM 16-bit 48000Hz Stereo.wav"
-                },
+                ],
                 "ReplayGain",
                 new TestSettingDictionary
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
-                new[]
-                {
+                [
                     new TestAudioMetadata
                     {
                         TrackPeak = "0.814716",
@@ -323,21 +307,19 @@ namespace AudioWorks.Api.Tests.DataSources
                         TrackGain = "-7.02",
                         AlbumGain = "-5.69"
                     }
-                }
+                ]
             },
 
             // 96000Hz Stereo, default (simple) peaks
             {
-                new[]
-                {
+                [
                     "Track 1 LPCM 24-bit 96000Hz Stereo.wav",
                     "Track 2 LPCM 24-bit 96000Hz Stereo.wav",
                     "Track 3 LPCM 24-bit 96000Hz Stereo.wav"
-                },
+                ],
                 "ReplayGain",
                 new TestSettingDictionary(),
-                new[]
-                {
+                [
                     new TestAudioMetadata
                     {
                         TrackPeak = "0.814049",
@@ -359,24 +341,22 @@ namespace AudioWorks.Api.Tests.DataSources
                         TrackGain = "-7.00",
                         AlbumGain = "-5.67"
                     }
-                }
+                ]
             },
 
             // 96000Hz Stereo, interpolated peaks
             {
-                new[]
-                {
+                [
                     "Track 1 LPCM 24-bit 96000Hz Stereo.wav",
                     "Track 2 LPCM 24-bit 96000Hz Stereo.wav",
                     "Track 3 LPCM 24-bit 96000Hz Stereo.wav"
-                },
+                ],
                 "ReplayGain",
                 new TestSettingDictionary
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
-                new[]
-                {
+                [
                     new TestAudioMetadata
                     {
                         TrackPeak = "0.814189",
@@ -398,24 +378,22 @@ namespace AudioWorks.Api.Tests.DataSources
                         TrackGain = "-7.00",
                         AlbumGain = "-5.67"
                     }
-                }
+                ]
             },
 
             // 44100Hz Stereo, simple peaks (explicit)
             {
-                new[]
-                {
+                [
                     "Track 1 LPCM 16-bit 44100Hz Stereo.wav",
                     "Track 2 LPCM 16-bit 44100Hz Stereo.wav",
                     "Track 3 LPCM 16-bit 44100Hz Stereo.wav"
-                },
+                ],
                 "ReplayGain",
                 new TestSettingDictionary
                 {
                     ["PeakAnalysis"] = "Simple"
                 },
-                new[]
-                {
+                [
                     new TestAudioMetadata
                     {
                         TrackPeak = "0.813904",
@@ -437,7 +415,7 @@ namespace AudioWorks.Api.Tests.DataSources
                         TrackGain = "-7.03",
                         AlbumGain = "-5.70"
                     }
-                }
+                ]
             }
         };
     }
