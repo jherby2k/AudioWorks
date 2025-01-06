@@ -1381,7 +1381,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "D22BBFDDCB298A427057253C4E833057" // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
+                    "D22BBFDDCB298A427057253C4E833057", // Opus 1.3.1 (Ubuntu 20.04)
+                    "83EAAF39634A97A730D4359E23CEE33F" // Opus 1.5.2 (MacOS and Windows)
                 }
             },
 
@@ -1406,7 +1407,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "B181BB7AF0A3E37C3A262B942FD197FC" // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
+                    "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (Ubuntu 20.04)
+                    "A298D22F719E0B950B31310E05BC1B66" // Opus 1.5.2 (MacOS and Windows)
                 }
             },
 
@@ -1431,7 +1433,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "B181BB7AF0A3E37C3A262B942FD197FC" // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
+                    "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (Ubuntu 20.04)
+                    "A298D22F719E0B950B31310E05BC1B66" // Opus 1.5.2 (MacOS and Windows)
                 }
             },
 
@@ -1456,7 +1459,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "166F1DD0C71E2CCCF226157A34791E1B" // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
+                    "166F1DD0C71E2CCCF226157A34791E1B", // Opus 1.3.1 (Ubuntu 20.04)
+                    "8F3233D946C369EA87132A3EDB50071E" // Opus 1.5.2 (MacOS and Windows)
                 }
             },
 
@@ -1481,7 +1485,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "8EA7FC13A2F214CADF3A1D447EF5CB65" // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
+                    "8EA7FC13A2F214CADF3A1D447EF5CB65", // Opus 1.3.1 (Ubuntu 20.04)
+                    "41253CA69E1D124E2CAC11B5D945EC67" // Opus 1.5.2 (MacOS and Windows)
                 }
             },
 
@@ -1507,7 +1512,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "BB50765E7DB79BDEADFC81E771101FD7" // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
+                    "BB50765E7DB79BDEADFC81E771101FD7", // Opus 1.3.1 (Ubuntu 20.04)
+                    "56AD6E2C6333F2A033914E9CF6FBA6CB" // Opus 1.5.2 (MacOS and Windows)
                 }
             },
 
@@ -1519,7 +1525,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "367DB09F8408583579F918061FCB6322" // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
+                    "367DB09F8408583579F918061FCB6322", // Opus 1.3.1 (Ubuntu 20.04)
+                    "CF85C82F03F478E096F1248F792D0B1E" // Opus 1.5.2 (MacOS and Windows)
                 }
             },
 
@@ -1531,7 +1538,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "22D33DFB735C5B7805AB26C7A04CDA86" // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
+                    "22D33DFB735C5B7805AB26C7A04CDA86", // Opus 1.3.1 (Ubuntu 20.04)
+                    "507E009E734B28534500E143CEA74EFD" // Opus 1.5.2 (MacOS and Windows)
                 }
             },
 
@@ -1543,9 +1551,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "C80AD6949880EA8AE45603CDAD7E0D29", // Opus 1.3.1 (Legacy .NET on 32-bit Windows)
-                    "6D91ACB2687A9FADC202A4B7C3920593", // Opus 1.3.1 (Legacy .NET on 64-bit Windows)
-                    "316157B1807D94E3E111802327A26787" // Opus 1.3.1 (MacOS, Ubuntu and .NET Core 3.0+ on Windows)
+                    "0DD686B1469BEF1FEA629A881B2A67C3", // Opus 1.5.2 (Legacy .NET on 32-bit Windows)
+                    "358BD65B41660084B9C9CABEBCB1DC76", // Opus 1.5.2 (Legacy .NET on 64-bit Windows)
+                    "316157B1807D94E3E111802327A26787", // Opus 1.3.1 (Ubuntu 20.04)
+                    "08B5C5C61D460DAA69E52CA69E5F6768" // Opus 1.5.2 (MacOS and .NET Core 3.0+ on Windows)
                 }
             },
 
@@ -1557,7 +1566,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 new TestSettingDictionary(),
                 new[]
                 {
-                    "CABF32D411EA5FA9458A79B6DC2C2D69" // Opus 1.3.1 (Ubuntu 20.04, MacOS and Windows)
+                    "CABF32D411EA5FA9458A79B6DC2C2D69", // Opus 1.3.1 (Ubuntu 20.04)
+                    "EDBD61E6DED683084D781F9F3C578D25" // Opus 1.5.2 (MacOS and Windows)
                 }
             }
 

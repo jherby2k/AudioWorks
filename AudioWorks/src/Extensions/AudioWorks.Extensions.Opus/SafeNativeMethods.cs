@@ -22,15 +22,16 @@ namespace AudioWorks.Extensions.Opus
     [SuppressUnmanagedCodeSecurity]
     static class SafeNativeMethods
     {
+#if !LINUX
+        const string _oggLibrary = "libogg";
+#endif
 #if WINDOWS
-        const string _oggLibrary = "ogg";
         const string _opusLibrary = "opus";
         const string _opusEncLibrary = "opusenc";
 #elif LINUX
         const string _oggLibrary = "libogg.so.0";
         const string _opusLibrary = "libopus.so.0";
 #else
-        const string _oggLibrary = "libogg";
         const string _opusLibrary = "libopus";
 #endif
 #if !WINDOWS
