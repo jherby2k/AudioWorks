@@ -22,16 +22,13 @@ namespace AudioWorks.Extensions.Vorbis
     [SuppressUnmanagedCodeSecurity]
     static class SafeNativeMethods
     {
-#if WINDOWS
-        const string _oggLibrary = "ogg";
-        const string _vorbisLibrary = "vorbis";
-#elif LINUX
+#if LINUX
         const string _oggLibrary = "libogg.so.0";
-#else // MacOS
+#else
         const string _oggLibrary = "libogg";
 #endif
-#if !WINDOWS
         const string _vorbisLibrary = "libvorbis";
+#if !WINDOWS
         const string _vorbisEncLibrary = "libvorbisenc";
 #endif
 
