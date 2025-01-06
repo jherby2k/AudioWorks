@@ -2149,7 +2149,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "17D464F4D94C17DD99AC0017BAB9228F", // Opus 1.3.1 (32-bit Windows on Intel)
                     "2005EA5C8571256292391346D1153012", // Opus 1.5.2 (Legacy .NET on 32-bit Windows / AMD)
                     "14EB0889A6F92036165A3676F9D7E240", // Opus 1.5.2 (.NET Core 3.0+ on 32-bit Windows / AMD)
-                    "FB347C1C1B7A9A89599B2ED2E423C0AC", // Opus 1.3.1 (Legacy .NET on 64-bit Windows / Intel)
+                    "E2E73DC93259B672C7307ACE9B5AA14E", // Opus 1.5.2 (Legacy .NET on 64-bit Windows / Intel)
                     "4044A896DE26E13DB1979ACBCF85084A", // Opus 1.5.2 (.NET Core 3.0+ on 64-bit Windows / Intel)
                     "A948C31D62A79D98DE51E05CF03BE8AD", // Opus 1.5.2 (Legacy .NET on 64-bit Windows / AMD)
                     "0440A8288CD63A81D633ADDC2EC4435F" // Opus 1.5.2 (.NET Core 3.0+ on 64-bit Windows / AMD)
