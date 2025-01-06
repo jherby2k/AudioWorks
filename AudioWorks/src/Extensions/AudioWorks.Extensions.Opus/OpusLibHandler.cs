@@ -66,8 +66,8 @@ namespace AudioWorks.Extensions.Opus
             if (release.StartsWith("Ubuntu", StringComparison.OrdinalIgnoreCase))
                 AddUnmanagedLibraryPath(Path.Combine(
                     Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
-                    release.StartsWith("Ubuntu 18.04", StringComparison.OrdinalIgnoreCase) ? "ubuntu.18.04-x64" :
-                    "ubuntu.20.04-x64"));
+                    release.StartsWith("Ubuntu 20.04", StringComparison.OrdinalIgnoreCase) ? "ubuntu.20.04-x64" :
+                    "ubuntu.22.04-x64"));
 #endif
 
             try
