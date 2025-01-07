@@ -28,7 +28,7 @@ namespace AudioWorks.Common
     /// </summary>
     public static class CoverArtFactory
     {
-        static readonly string[] _acceptedExtensions = { ".bmp", ".png", ".jpg", ".jpeg" };
+        static readonly string[] _acceptedExtensions = [".bmp", ".png", ".jpg", ".jpeg"];
         static readonly Dictionary<string, WeakReference<CoverArt>> _internedCovers = new();
 
         /// <summary>

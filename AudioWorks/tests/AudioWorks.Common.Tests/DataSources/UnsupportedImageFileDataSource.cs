@@ -19,10 +19,10 @@ namespace AudioWorks.Common.Tests.DataSources
 {
     public static class UnsupportedImageFileDataSource
     {
-        static readonly List<object[]> _data = new()
-        {
+        static readonly List<object[]> _data =
+        [
             new object[] { "Text.txt" }
-        };
+        ];
 
         public static IEnumerable<object[]> Data => _data;
     }

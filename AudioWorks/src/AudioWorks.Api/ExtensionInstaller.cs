@@ -52,12 +52,15 @@ namespace AudioWorks.Api
         static readonly SourceRepository _defaultRepository =
             new(new(ConfigurationManager.Configuration["DefaultRepository"]), Repository.Provider.GetCoreV3());
 
-        static readonly List<string> _fileTypesToInstall = new(new[]
-        {
-            ".dll",
-            ".dylib",
-            ".so"
-        });
+        static readonly List<string> _fileTypesToInstall =
+        [
+            ..new[]
+            {
+                ".dll",
+                ".dylib",
+                ".so"
+            }
+        ];
 
         static readonly string[] _rootAssemblyNames = GetRootAssemblyNames().ToArray();
 
@@ -239,8 +242,7 @@ namespace AudioWorks.Api
                             && packageToInstall.Id.StartsWith("AudioWorks.Extensions",
                                 StringComparison.OrdinalIgnoreCase))
                             using (var reader = new PackageArchiveReader(downloadResult.PackageStream, true))
-                                if ((await new PackageSignatureVerifier(new ISignatureVerificationProvider[]
-                                        {
+                                if ((await new PackageSignatureVerifier([
                                             new IntegrityVerificationProvider(),
                                             new AllowListVerificationProvider(
                                                 ConfigurationManager.Configuration.GetSection("TrustedFingerprints")
@@ -249,7 +251,7 @@ namespace AudioWorks.Api
                                                         VerificationTarget.All,
                                                         SignaturePlacement.Any, item, HashAlgorithmName.SHA256))
                                                     .ToArray())
-                                        })
+                                        ])
                                         .VerifySignaturesAsync(reader,
                                             SignedPackageVerifierSettings.GetRequireModeDefaultPolicy(),
                                             cancellationToken).ConfigureAwait(false)).IsValid)
@@ -340,14 +342,8 @@ namespace AudioWorks.Api
                 .ConfigureAwait(false);
 
             var resolverContext = new PackageResolverContext(
-                DependencyBehavior.Lowest,
-                new[] { packageIdentity.Id },
-                Enumerable.Empty<string>(),
-                Enumerable.Empty<PackageReference>(),
-                Enumerable.Empty<PackageIdentity>(),
-                dependencies,
-                new[] { _customRepository.PackageSource, _defaultRepository.PackageSource },
-                NullLogger.Instance);
+                DependencyBehavior.Lowest, [packageIdentity.Id], [], [], [], dependencies,
+                [_customRepository.PackageSource, _defaultRepository.PackageSource], NullLogger.Instance);
 
             // Resolve the dependency graph
             var resolver = new PackageResolver();

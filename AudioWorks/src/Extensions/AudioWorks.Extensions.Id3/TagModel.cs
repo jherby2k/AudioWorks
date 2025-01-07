@@ -24,7 +24,7 @@ namespace AudioWorks.Extensions.Id3
 
         internal TagExtendedHeader ExtendedHeader { get; } = new();
 
-        internal List<FrameBase> Frames { get; } = new();
+        internal List<FrameBase> Frames { get; } = [];
 
         internal void UpdateSize()
         {

@@ -153,9 +153,9 @@ namespace AudioWorks.Extensions.Mp4
 
         internal void UpdateTimeStamps(DateTime? creationTime, DateTime? modificationTime)
         {
-            UpdateTimeStamp(new[] { "moov", "mvhd" }, creationTime, modificationTime);
-            UpdateTimeStamp(new[] { "moov", "trak", "tkhd" }, creationTime, modificationTime);
-            UpdateTimeStamp(new[] { "moov", "trak", "mdia", "mdhd" }, creationTime, modificationTime);
+            UpdateTimeStamp(["moov", "mvhd"], creationTime, modificationTime);
+            UpdateTimeStamp(["moov", "trak", "tkhd"], creationTime, modificationTime);
+            UpdateTimeStamp(["moov", "trak", "mdia", "mdhd"], creationTime, modificationTime);
         }
 
         void UpdateTimeStamp(string[] hierarchy, DateTime? creationTime, DateTime? modificationTime)

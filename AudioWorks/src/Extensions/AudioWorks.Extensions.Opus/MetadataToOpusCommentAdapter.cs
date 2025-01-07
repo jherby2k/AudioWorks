@@ -28,7 +28,7 @@ namespace AudioWorks.Extensions.Opus
     {
         internal OpusCommentsHandle Handle { get; }
 
-        internal unsafe MetadataToOpusCommentAdapter(AudioMetadata metadata)
+        internal MetadataToOpusCommentAdapter(AudioMetadata metadata)
         {
             Handle = SafeNativeMethods.OpusEncoderCommentsCreate();
 

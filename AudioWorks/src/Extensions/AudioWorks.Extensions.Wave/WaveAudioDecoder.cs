@@ -39,7 +39,8 @@ namespace AudioWorks.Extensions.Wave
 
         const int _defaultFrameCount = 4096;
 
-        static readonly short[] _aLawDecodeValues = {
+        static readonly short[] _aLawDecodeValues =
+        [
             -5504, -5248, -6016, -5760, -4480, -4224, -4992, -4736,
             -7552, -7296, -8064, -7808, -6528, -6272, -7040, -6784,
             -2752, -2624, -3008, -2880, -2240, -2112, -2496, -2368,
@@ -72,8 +73,9 @@ namespace AudioWorks.Extensions.Wave
             1888, 1824, 2016, 1952, 1632, 1568, 1760, 1696,
             688, 656, 752, 720, 560, 528, 624, 592,
             944, 912, 1008, 976, 816, 784, 880, 848
-        };
-        static readonly short[] _µLawDecodeValues = {
+        ];
+        static readonly short[] _µLawDecodeValues =
+        [
             -32124, -31100, -30076, -29052, -28028, -27004, -25980, -24956,
             -23932, -22908, -21884, -20860, -19836, -18812, -17788, -16764,
             -15996, -15484, -14972, -14460, -13948, -13436, -12924, -12412,
@@ -106,7 +108,7 @@ namespace AudioWorks.Extensions.Wave
             244, 228, 212, 196, 180, 164, 148, 132,
             120, 112, 104, 96, 88, 80, 72, 64,
             56, 48, 40, 32, 24, 16, 8, 0
-        };
+        ];
 
         AudioInfo? _audioInfo;
         RiffReader? _reader;
