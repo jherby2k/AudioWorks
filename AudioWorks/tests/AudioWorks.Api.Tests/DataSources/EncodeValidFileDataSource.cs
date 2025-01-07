@@ -578,7 +578,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "7E21540C472F59D17BB67D400BFD7991", // MacOS on ARM
                     "09CD8B8C8E9D8BC09121D8C9F871F9B7", // 32-bit Windows on Intel
                     "CF5AD69DADDCCE22612CD6FA8FB21897", // 32-bit Windows on AMD
-                    "75D127D9FCD7720CBE92C0670A93A880", // 64-bit Windows on Intel
+                    "D281CFECEEBE5A14D0D3D953D12F71DC", // 64-bit Windows on Intel
                     "F1E4C1E4386B0DD4B233284E4E2363D8" // 64-bit Windows on AMD
                 ]
             },
@@ -595,7 +595,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "439F73E38831F4A10B5BD4F91F732A15", // MacOS on ARM
                     "9A0F6E1984B428F236E1209C13AED4D1", // 32-bit Windows on Intel
                     "7FABBF9DDF1A16701E57C6DD190485E0", // 32-bit Windows on AMD
-                    "1D0F379EC9C47267569F88729569D407", // 64-bit Windows on Intel
+                    "47189DECF29E68A40F60645F97714BE3", // 64-bit Windows on Intel
                     "C40C18B162E7429F60C62DF6A23071D6" // 64-bit Windows on AMD
                 ]
             },
@@ -612,7 +612,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "13BB443AE1F220DF897615F96EF0A0D2", // MacOS on ARM
                     "CB39DFBF414790022574435C2D30297D", // 32-bit Windows on Intel
                     "EB0DA4A098888A34C2F77A2A65D2E337", // 32-bit Windows on AMD
-                    "E0A80A6B32CD5A8FA5C62B44F28C4A87", // 64-bit Windows on Intel
+                    "589C93B14B5A2C8EF39239949A7729FF", // 64-bit Windows on Intel
                     "CA58A161F472C9038E29DB08BC8B41CC" // 64-bit Windows on AMD
                 ]
             },
@@ -629,7 +629,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "88908D8E665C16C5B6762CD1B14F8B7C", // MacOS on ARM
                     "E0C34EA1479C8979D3AF3A2C98D4E699", // 32-bit Windows on Intel
                     "06469BD31CF3F0B799D9E52BBEA00C72", // 32-bit Windows on AMD
-                    "ED307F76DD052720321284BAD8876AB2", // 64-bit Windows on Intel
+                    "BA760ADA182CA749797AC1B978266CB1", // 64-bit Windows on Intel
                     "155983F671E0ACD36DC482A283A8EDBE" // 64-bit Windows on AMD
                 ]
             },
@@ -646,7 +646,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "18E802BDE2DDECAAEF5628312EC47EC9", // MacOS on ARM
                     "6E08F885FEC4094041F6A0B4A02F10AB", // 32-bit Windows on Intel
                     "194D40FBCAE58B4A01095DD89CE70A2D", // 32-bit Windows on AMD
-                    "369DAA1350BB9C45BAF84F7769221F00", // 64-bit Windows on Intel
+                    "061ECBD66434D647CFFC03337B4EFC5A", // 64-bit Windows on Intel
                     "B90925A2DA13F80969FB7E6FEF7E81E0" // 64-bit Windows on AMD
                 ]
             },
@@ -663,7 +663,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "7B13752769B0DCF9A5054C462D18CB40", // MacOS on AMD
                     "D41235E8E642C5773C499DCE06A72CC8", // 32-bit Windows on Intel
                     "C7FD479EFD340F30F3DE645205FA3BC5", // 32-bit Windows on AMD
-                    "A86E9A3D4A9479A44F852FA42BA0C9C2", // 64-bit Windows on Intel
+                    "03B3AE83638F10833E9A6ECC83FD720B", // 64-bit Windows on Intel
                     "437164350E18B65669094C81C9335C4E" // 64-bit Windows on AMD
                 ]
             },
@@ -680,7 +680,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "04ABF599CC89FC3478FAFD96DD393DBA", // MacOS on ARM
                     "7BAD797AA7C5F71C7168C24077271029", // 32-bit Windows on Intel
                     "01DF45A55B786EBDEFCFFFFFD58187DF", // 32-bit Windows on AMD
-                    "102A8F21E39D364419B9CF5BFB386631", // 64-bit Windows on Intel
+                    "A3DC2D21D29A05456284B0B8C09E1F94", // 64-bit Windows on Intel
                     "EB34F55D3D94E569E99C12BD8FCF5BBF" // 64-bit Windows on AMD
                 ]
             },
@@ -695,11 +695,12 @@ namespace AudioWorks.Api.Tests.DataSources
                 [
                     "4FFFB1DD9D5BEB99B2DEFFF8A80DC933", // MacOS on Intel
                     "B1BD1E3A78B5E47CAAE8462B13720EDE", // MacOS on ARM
-                    "9AC3DEF9B464D0E1AB2D4F91C1A08B83", // 32-bit Windows on Intel
+                    "61EC671C23EB3AC1A03029EB0BCDF257", // Legacy .NET on 32-bit Windows / Intel
+                    "937750181287505A92B933F8A815D4C2", // .NET Core 3.0+ on 32-bit Windows / Intel
                     "E0B28BC27F9F86696F724F2D6E2540AA", // Legacy .NET on 32-bit Windows / AMD
                     "B6A891E92CF4D1FF747716CAB6F617DA", // .NET Core 3.0+ on 32-bit Windows / AMD
                     "D3113CF2C5283D2879F3DBEB617D050B", // Legacy .NET on 64-bit Windows / Intel
-                    "FEC2C179EB82166BBA78F5EDC06194F6", // .NET Core 3.0+ on 64-bit Windows / Intel
+                    "A0705FB3CDB8E21E2477DE72DC0E2C7A", // .NET Core 3.0+ on 64-bit Windows / Intel
                     "067296B4F0A8B3DCE4AF3C48EA9B0C66", // Legacy .NET on 64-bit Windows / AMD
                     "CEFB86217E9AA94C807AE03273151C6E" // .NET Core 3.0+ on 64-bit Windows / AMD
                 ]
@@ -717,7 +718,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "B1BD1E3A78B5E47CAAE8462B13720EDE", // MacOS on ARM
                     "9AC3DEF9B464D0E1AB2D4F91C1A08B83", // 32-bit Windows on Intel
                     "4BB812252790CAEDE8CE8547E7BD546A", // 32-bit Windows on AMD
-                    "2863A63E2060267B6A6151CA90239BC6", // 64-bit Windows on Intel
+                    "DC77F4678649D575CE3E91DB950CDF55", // 64-bit Windows on Intel
                     "76BFBCEB5644AEA27C774D00D35A2B66" // 64-bit Windows on AMD
                 ]
             },
@@ -736,7 +737,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "439F73E38831F4A10B5BD4F91F732A15", // MacOS on ARM
                     "9A0F6E1984B428F236E1209C13AED4D1", // 32-bit Windows on Intel
                     "7FABBF9DDF1A16701E57C6DD190485E0", // 32-bit Windows on AMD
-                    "1D0F379EC9C47267569F88729569D407", // 64-bit Windows on Intel
+                    "47189DECF29E68A40F60645F97714BE3", // 64-bit Windows on Intel
                     "C40C18B162E7429F60C62DF6A23071D6" // 64-bit Windows on AMD
                 ]
             },
@@ -774,7 +775,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "D565DE5B4A908E077EEC1BB5B75C05C2", // MacOS on ARM
                     "7EDD94F25082AEEE82B2AA87E795AB6D", // 32-bit Windows on Intel
                     "9EFB3B60246E65F1C90A0880CF8905D9", // 32-bit Windows on AMD
-                    "A1CD6AC102BA40A728B2C7E00B1E786D", // 64-bit Windows on Intel
+                    "560039278EF9183F0FB2C47E5744E475", // 64-bit Windows on Intel
                     "288B9B3FE4FCC212491B9A370757FC46" // 64-bit Windows on AMD
                 ]
             },
@@ -793,7 +794,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "DAA69EC398F6E9E31B67B12DD735331F", // MacOS on ARM
                     "0177BB1DEB19854CA8495C4CBBB25366", // 32-bit Windows on Intel
                     "4EE479F602DD0FB162B19540B683B2BF", // 32-bit Windows on AMD
-                    "38D28BD3802566CB30D3B824D7FF593F", // 64-bit Windows on Intel
+                    "DB44ACD7770861D4A3C6D7EE644C5E1C", // 64-bit Windows on Intel
                     "2D6F2B1043E1276764605C70E94A9EAE" // 64-bit Windows on AMD
                 ]
             },
@@ -828,7 +829,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "01245B8ECCFC4C4DA1F261F691A3FF37", // MacOS on ARM
                     "EBD496E30A953A8D0FE11C2609EFABC3", // 32-bit Windows on Intel
                     "AFEC3388275B59A08EFD11A9B32904FD", // 32-bit Windows on AMD
-                    "2AD5FC82A78732A66B8F04387D7D412B", // 64-bit Windows on Intel
+                    "A67A5F8D1A55CD2A29EEFA54E583AEA1", // 64-bit Windows on Intel
                     "58E298B32860D9A30E1F31B3D164A3AC" // 64-bit Windows on AMD
                 ]
             },
@@ -847,7 +848,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "8B21060F2783BBD1029CB5E38489EE6F", // MacOS on ARM
                     "DE5F94EC1EACB75A3D049AE9960A7ACB", // 32-bit Windows on Intel
                     "C3A45A0F87C7E3A8BDAD6526CFA00ABF", // 32-bit Windows on AMD
-                    "298A2B946AA53102FD025DDD9D273B21", // 64-bit Windows on Intel
+                    "8F6858F8F86AA821789D926E0B4F63B6", // 64-bit Windows on Intel
                     "8853121A36B39C0A607B5FE219A8EFD8" // 64-bit Windows on AMD
                 ]
             },
@@ -866,7 +867,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "2E531801B06854D07EE21F128D15021D", // MacOS on Intel
                     "0557E7171818C5DC73C175F1F8DC7535", // MacOS on ARM
                     "B26C14FD53A4027C26FA3A57CB96AF4C", // 32-bit Windows
-                    "96E46C6CF7126E26E58224D5F55850F2", // 64-bit Windows on Intel
+                    "EEEAF1FB2801EF0FB49B9B87350B5587", // 64-bit Windows on Intel
                     "60DEF5D19AF12B0962777B0B38CBA79A" // 64-bit Windows on AMD
                 ]
             },
@@ -885,7 +886,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "2E531801B06854D07EE21F128D15021D", // MacOS on Intel
                     "0557E7171818C5DC73C175F1F8DC7535", // MacOS on ARM
                     "B26C14FD53A4027C26FA3A57CB96AF4C", // 32-bit Windows
-                    "96E46C6CF7126E26E58224D5F55850F2", // 64-bit Windows on Intel
+                    "EEEAF1FB2801EF0FB49B9B87350B5587", // 64-bit Windows on Intel
                     "60DEF5D19AF12B0962777B0B38CBA79A" // 64-bit Windows on AMD
                 ]
             },
@@ -904,7 +905,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "5121C9A7D75A0718B62D7A83CAD441FE", // MacOS on Intel
                     "C17ED28BC045C9E5010DF361ADE59515", // MacOS on ARM
                     "B65D496ADABF3DBCDB24136A9655C295", // 32-bit Windows
-                    "D4A9A3FFC75AC0383B68BADA43E23C3D", // 64-bit Windows on Intel
+                    "6AD4BD76918C74B976FD7774163CD7ED", // 64-bit Windows on Intel
                     "2B2F9D57CFA1F3A0D63D261AD4750468" // 64-bit Windows on AMD
                 ]
             },
@@ -924,7 +925,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "FB38869E1A10C837554BCD0CCDBC660A", // MacOS on ARM
                     "365D7E965534C8690B4694B27D0CF1C9", // 32-bit Windows on Intel
                     "BCA45E90590A453EF4DBDCE3950C9CC4", // 32-bit Windows on AMD
-                    "08686D04EFF88BC663C469F2DD224020", // 64-bit Windows on Intel
+                    "4E99289AFF43EA387442E30EAFB7305A", // 64-bit Windows on Intel
                     "85FBE50C3C18EFAB46DE754068F359BC" // 64-bit Windows on AMD
                 ]
             },
@@ -943,7 +944,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "439F73E38831F4A10B5BD4F91F732A15", // MacOS on ARM
                     "9A0F6E1984B428F236E1209C13AED4D1", // 32-bit Windows on Intel
                     "7FABBF9DDF1A16701E57C6DD190485E0", // 32-bit Windows on AMD
-                    "1D0F379EC9C47267569F88729569D407", // 64-bit Windows on Intel
+                    "47189DECF29E68A40F60645F97714BE3", // 64-bit Windows on Intel
                     "C40C18B162E7429F60C62DF6A23071D6" // 64-bit Windows on AMD
                 ]
             },
@@ -962,7 +963,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "F245069996E7B90FBC76C04515E7DB2C", // MacOS on ARM
                     "DDA8DBB070EA36F77455A41A2628B6AA", // 32-bit Windows on Intel
                     "9EBD64EEF7F1CB540012892515A3B0F5", // 32-bit Windows on AMD
-                    "B49EC8F6428A1CDEBA4F0728FC1BF8E5", // 64-bit Windows on Intel
+                    "14145EA9D279E2FA457AD85F19DC0896", // 64-bit Windows on Intel
                     "A65D4DA9DB98F2DEF066508818C680CD" // 64-bit Windows on AMD
                 ]
             },
@@ -981,7 +982,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "AF4D1BAF1D9D5DFB5F4B6E5D5D50F423", // MacOS on ARM
                     "5502D724D98AA24FE49FA8AFB0FC63A6", // 32-bit Windows on Intel
                     "838B5CABD1F8E0077559E4DF504842DC", // 32-bit Windows on AMD
-                    "19940A1BA1D575D9E165584C24A955F4", // 64-bit Windows on Intel
+                    "90D1426E435372B957E6558E4DC5D7FD", // 64-bit Windows on Intel
                     "8107A1714777E243320A2E72F8F1D6D7" // 64-bit Windows on AMD
                 ]
             },
@@ -1871,7 +1872,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "2D31A0D707D3A9AB865DB00095EB08AE", // Opus 1.3.1 (Ubuntu 22.04)
                     "4477BA0E09EF52AC239EE55FF44DA2A0", // Opus 1.5.2 (MacOS on Intel)
                     "FB641D1DA3D800E22BD22C7983D83325", // Opus 1.3.1 (MacOS on ARM)
-                    "8BB7F2763D133BD534AE9C20104AFA2E", // Opus 1.3.1 (32-bit Windows on Intel)
+                    "47359005DE5203C8AF0FDDE7F34713D9", // Opus 1.5.2 (32-bit Windows on Intel)
                     "ADB9E5F7EADCD228D63F97351F7456B0", // Opus 1.5.2 (32-bit Windows on AMD)
                     "A2EDE18F0E554FDC9EE5DD9C62622236", // Opus 1.5.2 (64-bit Windows on Intel)
                     "BA67EF14D54C77C508A44C0B08D01261" // Opus 1.5.2 (64-bit Windows on AMD)
@@ -1903,7 +1904,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "0C6BF7ECB9F757DB8F8AF485137BD2C8", // Opus 1.3.1 (Ubuntu 22.04)
                     "54A2DC75ED7879D6B890D50F4CB34603", // Opus 1.5.2 (MacOS on Intel)
                     "DF1CE487259E093896FB4BDB74A6B1E3", // Opus 1.3.1 (MacOS on ARM)
-                    "3CAB512976D0D62B45E2C9239B19735D", // Opus 1.3.1 (32-bit Windows on Intel)
+                    "E105170CA90D2D427A6431ACB8D5A16C", // Opus 1.5.2 (32-bit Windows on Intel)
                     "8A9F6B6464C10B76DC880BAF4DF1AA3B", // Opus 1.5.2 (32-bit Windows on AMD)
                     "BF310174502CDAD081F13998FB901865", // Opus 1.5.2 (64-bit Windows on Intel)
                     "AB19CD2D3E02D331600240F8FC9D56CC" // Opus 1.5.2 (64-bit Windows on AMD)
@@ -1920,9 +1921,9 @@ namespace AudioWorks.Api.Tests.DataSources
                     "BD5F090F921BCC80F05FCBF5725D8E0E", // Opus 1.3.1 (Ubuntu 22.04)
                     "FB5BA2E0CF0A5738942A622FEE822D4E", // Opus 1.5.2 (MacOS on Intel)
                     "5074AE45A08E36CAF8FC0AB1B50F117C", // Opus 1.3.1 (MacOS on ARM)
-                    "3C5EF551E97AEE3A916F1B39BCD5D3C2", // Opus 1.3.1 (32-bit Windows on Intel)
+                    "AB158A17CCED018828790DAA396BAB93", // Opus 1.5.2 (32-bit Windows on Intel)
                     "348B339AB9B26FC3185112CFFC784479", // Opus 1.5.2 (32-bit Windows on AMD)
-                    "F4D51B165CDACF9CC1740A023FC832F7", // Opus 1.5.2 (MacOS and 64-bit Windows on Intel)
+                    "F4D51B165CDACF9CC1740A023FC832F7", // Opus 1.5.2 (64-bit Windows on Intel)
                     "7136AEEC7C21613DC83A006AA79DC260" // Opus 1.5.2 (64-bit Windows on AMD)
                 ]
             },
@@ -1937,7 +1938,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "8A8FA9C452D9EBBCF8554EE3E270A538", // Opus 1.3.1 (Ubuntu 22.04)
                     "2821951FD04D0E164FBF6E6604B85F86", // Opus 1.5.2 (MacOS on Intel)
                     "FC74891978B6213CDF3807C6D0130E82", // Opus 1.3.1 (MacOS on ARM)
-                    "9E31F9F58A41EA377740E7AC43E57939", // Opus 1.3.1 (32-bit Windows on Intel)
+                    "DA42257349612217D56C05879F45DD52", // Opus 1.5.2 (32-bit Windows on Intel)
                     "66F597B809F3331DEA291B8F147A3B6B", // Opus 1.5.2 (32-bit Windows on AMD)
                     "48D4A34C2C1BB5B6F1230BFE64764ED6", // Opus 1.5.2 (64-bit Windows on Intel)
                     "FD5836D8C677561A65CA77CB9A2898EA" // Opus 1.5.2 (64-bit Windows on AMD)
@@ -1955,7 +1956,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "2018DEFDE09A503E0734CD57B0E19FC4", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "5A972613B661C285E44AB07D8416DC0A", // Opus 1.5.2 (MacOS on Intel)
                     "4190DC99A4B49887AA3E5BC9E15DC1C8", // Opus 1.3.1 (MacOS on ARM)
-                    "F06773DFABF471946AF2B3D55E881795", // Opus 1.3.1 (32-bit Windows on Intel)
+                    "8BB79D2D7415D4082679D416B2F41D93", // Opus 1.5.2 (32-bit Windows on Intel)
                     "CA97D1381E6BC36AB0A1880339C6A0E7", // Opus 1.5.2 (32-bit Windows on AMD)
                     "AE7BD2C79045C6DD3AFD6D20A98902D6", // Opus 1.5.2 (64-bit Windows on Intel)
                     "0BBEC9BAABF1C61003A65E6174CE7A71" // Opus 1.5.2 (64-bit Windows on AMD)
@@ -1973,7 +1974,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "EF85B330CBC8A8931C2827A81F2E1532", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "D432F9BAABD834950984D4DFB1F446FA", // Opus 1.5.2 (MacOS on Intel)
                     "5A928AED6645BDF1A8CBA3C2EEB7E90F", // Opus 1.3.1 (MacOS on ARM)
-                    "86E35D927296E4954BAE384D4B28F247", // Opus 1.3.1 (32-bit Windows on Intel)
+                    "F8C93268C74883B727D78FBDB38F831F", // Opus 1.5.2 (32-bit Windows on Intel)
                     "7691A7F85D7F6FBFC3C3C1AA4F1D291A", // Opus 1.5.2 (32-bit Windows on AMD)
                     "DCB3078A6720C49D9726C64C0DCCCD7E", // Opus 1.5.2 (64-bit Windows on Intel)
                     "7300DC516256ED2274BDCE4F782872E2" // Opus 1.5.2 (64-bit Windows on AMD)
@@ -1990,7 +1991,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "5501D7D9730B0722C310D5263AFBEB77", // Opus 1.3.1 (Ubuntu 22.04)
                     "C110F6EFE538B370E49ECBAE4B40C8C2", // Opus 1.5.2 (MacOS on Intel)
                     "CB28DA52EF8451F944D8ED642D438292", // Opus 1.3.1 (MacOS on ARM)
-                    "ED5EA746CA5182DE57E0D25695D17F4E", // Opus 1.3.1 (32-bit Windows on Intel)
+                    "C461EAB699527B90A919D2B26979A30A", // Opus 1.5.2 (32-bit Windows on Intel)
                     "F8E8DE9329CE7869197512B31ABCB9EC", // Opus 1.5.2 (32-bit Windows on AMD)
                     "F6F88CF0DC907202CE5F91CC706A8ADD", // Opus 1.5.2 (64-bit Windows on Intel)
                     "3C64C7A9670C2DACEE22ED461A1FC1C5" // Opus 1.5.2 (64-bit Windows on AMD)
@@ -2008,7 +2009,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     "AFE05CB9E10ECE0CE4A267B01E91AA7C", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "1F562788793531FA94B5BC715886C983", // Opus 1.5.2 (MacOS on Intel)
                     "2D7ABAB485382CFA8AD0DA8437304185", // Opus 1.3.1 (MacOS on ARM)
-                    "17D464F4D94C17DD99AC0017BAB9228F", // Opus 1.3.1 (32-bit Windows on Intel)
+                    "A7DBF7182ACFDB5C1A608F24C89BEAB3", // Opus 1.5.2 (Legacy .NET on 32-bit Windows / Intel)
+                    "F24CCDB06BAFA257E2276FC09D2E3100", // Opus 1.5.2 (.NET Core 3.0+ on 32-bit Windows / Intel)
                     "2005EA5C8571256292391346D1153012", // Opus 1.5.2 (Legacy .NET on 32-bit Windows / AMD)
                     "14EB0889A6F92036165A3676F9D7E240", // Opus 1.5.2 (.NET Core 3.0+ on 32-bit Windows / AMD)
                     "E2E73DC93259B672C7307ACE9B5AA14E", // Opus 1.5.2 (Legacy .NET on 64-bit Windows / Intel)
@@ -2028,8 +2030,9 @@ namespace AudioWorks.Api.Tests.DataSources
                     "0ADBC105EA51C62CB1ED53B978B33415", // Opus 1.3.1 (Ubuntu 22.04)
                     "BA2DB653CD22442197C80828E35B694E", // Opus 1.5.2 (MacOS on Intel)
                     "2D7ABAB485382CFA8AD0DA8437304185", // Opus 1.3.1 (MacOS on ARM)
+                    "AA83D462884ABCC559AFAB31D08652CA", // Opus 1.5.2 (32-bit Windows on Intel)
                     "2B14B7A07466F519B4411D1E21A16DEB", // Opus 1.5.2 (32-bit Windows on AMD)
-                    "BDD151A5D31382F430EA2139D18DD46A", // Opus 1.5.2 (Windows on Intel)
+                    "BDD151A5D31382F430EA2139D18DD46A", // Opus 1.5.2 (64-bit Windows on Intel)
                     "9A0971BA58A017AC3C01ED4AAC60FFE7" // Opus 1.5.2 (64-bit Windows on AMD)
                 ]
             },
@@ -2045,7 +2048,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "CDE65307AACEA4F40F22FF925622D14E", // Opus 1.3.1 (Ubuntu 22.04)
                     "6C30D9BB7917BAEB1934A89C4874ADAC", // Opus 1.5.2 (MacOS on Intel)
                     "F2FDC3B2D196D551919F3FC85120DA15", // Opus 1.3.1 (MacOS on ARM)
-                    "0E458849DBB876C84D23FA8B1AE58E7D", // Opus 1.3.1 (32-bit Windows on Intel)
+                    "C768F0F87DAD97B1FF7C0A03FE6C2950", // Opus 1.5.2 (32-bit Windows on Intel)
                     "42E4106E48A192A9BC6D2EDE7B9C9A49", // Opus 1.5.2 (32-bit Windows on AMD)
                     "828B1323F1F7F6E9589249130098DB64", // Opus 1.5.2 (64-bit Windows on Intel)
                     "67D4E04F3A749124E32EE6ED7134865B" // Opus 1.5.2 (64-bit Windows on AMD)
@@ -2063,7 +2066,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "3AA89123958BA0DF1611539BC909DD0B", // Opus 1.3.1 (Ubuntu 22.04)
                     "49452D1FB45FAB63ACCA4D7B98FC3421", // Opus 1.5.2 (MacOS on Intel)
                     "A7F53EB258E068E6B9B6C6A1D756E342", // Opus 1.3.1 (MacOS on ARM)
-                    "049CE3FC2614A25BDE9E311CCEC4E995", // Opus 1.3.1 (32-bit Windows on Intel)
+                    "B3D8AECD20CEC76CD140DA44979A60E4", // Opus 1.5.2 (32-bit Windows on Intel)
                     "F16D71E1988E3DF6E8D02C555D080E5F", // Opus 1.5.2 (32-bit Windows on AMD)
                     "4195302C28B204B94F945E14A4A9672B", // Opus 1.5.2 (64-bit Windows on Intel)
                     "D2DE03FC8DCCAE320BB7FF8432A6EF31" // Opus 1.5.2 (64-bit Windows on AMD)
@@ -2116,7 +2119,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "0C6BF7ECB9F757DB8F8AF485137BD2C8", // Opus 1.3.1 (Ubuntu 22.04)
                     "54A2DC75ED7879D6B890D50F4CB34603", // Opus 1.5.2 (MacOS on Intel)
                     "DF1CE487259E093896FB4BDB74A6B1E3", // Opus 1.3.1 (MacOS on ARM)
-                    "3CAB512976D0D62B45E2C9239B19735D", // Opus 1.3.1 (32-bit Windows on Intel)
+                    "E105170CA90D2D427A6431ACB8D5A16C", // Opus 1.5.2 (32-bit Windows on Intel)
                     "8A9F6B6464C10B76DC880BAF4DF1AA3B", // Opus 1.5.2 (32-bit Windows on AMD)
                     "BF310174502CDAD081F13998FB901865", // Opus 1.5.2 (64-bit Windows on Intel)
                     "AB19CD2D3E02D331600240F8FC9D56CC" // Opus 1.5.2 (64-bit Windows on AMD)
@@ -2135,7 +2138,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "B98AC6052E465C5A226D8D2905B535EC", // Opus 1.3.1 (Ubuntu 22.04)
                     "6EED767F4AD005A03CCE4535E62836D3", // Opus 1.5.2 (MacOS on Intel)
                     "532F344E999193C4F59D1CDBF511C7DE", // Opus 1.3.1 (MacOS on ARM)
-                    "38E90E75D928371AB9C1CFF243C731B4", // Opus 1.3.1 (32-bit Windows on Intel)
+                    "93110D453D9EF4DF0EF57B0B758092D7", // Opus 1.5.2 (32-bit Windows on Intel)
                     "A74FA40F2DD860E515BE360C42558A2D", // Opus 1.5.2 (32-bit Windows on AMD)
                     "1C8382776908484524B1F8287A133A1F", // Opus 1.5.2 (64-bit Windows on Intel)
                     "9262170234B68A66E7FC8CEFC012EB63" // Opus 1.5.2 (64-bit Windows on AMD)
@@ -2154,7 +2157,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "687B2402BF33EDB0EAD683235E309BC8", // Opus 1.3.1 (Ubuntu 22.04)
                     "69CB6F9E36304A413E772A64F8930EF8", // Opus 1.5.2 (MacOS on Intel)
                     "D9E874A3511506C2A8021FF77DEAED23", // Opus 1.3.1 (MacOS on ARM)
-                    "0A4FC1F40FD76797222FC8CACCA83AD9", // Opus 1.3.1 (32-bit Windows on Intel)
+                    "3CE799E222F941AC4BE899AB1B5236B4", // Opus 1.5.2 (32-bit Windows on Intel)
                     "7554FB04DC120221749C1EE818CA6906", // Opus 1.5.2 (32-bit Windows on AMD)
                     "682884B45E806A93559FD12B759992D7", // Opus 1.5.2 (64-bit Windows on Intel)
                     "F4228369593D13A85161D84CFCB9E749" // Opus 1.5.2 (64-bit Windows on AMD)
@@ -2226,7 +2229,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "0C6BF7ECB9F757DB8F8AF485137BD2C8", // Opus 1.3.1 (Ubuntu 22.04)
                     "54A2DC75ED7879D6B890D50F4CB34603", // Opus 1.5.2 (MacOS on Intel)
                     "DF1CE487259E093896FB4BDB74A6B1E3", // Opus 1.3.1 (MacOS on ARM)
-                    "3CAB512976D0D62B45E2C9239B19735D", // Opus 1.3.1 (32-bit Windows on Intel)
+                    "E105170CA90D2D427A6431ACB8D5A16C", // Opus 1.5.2 (32-bit Windows on Intel)
                     "8A9F6B6464C10B76DC880BAF4DF1AA3B", // Opus 1.5.2 (32-bit Windows on AMD)
                     "BF310174502CDAD081F13998FB901865", // Opus 1.5.2 (64-bit Windows on Intel)
                     "AB19CD2D3E02D331600240F8FC9D56CC" // Opus 1.5.2 (64-bit Windows on AMD)
@@ -2245,7 +2248,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "B6029E9FC954A8722A1B10700F80EA19", // Opus 1.3.1 (Ubuntu 22.04)
                     "33E6FD8F8DC37F80C467DF3EF820D424", // Opus 1.5.2 (MacOS on Intel)
                     "A9E1172F6E94329BC82ACAD85B83F3F0", // Opus 1.3.1 (MacOS on ARM)
-                    "2B5AD4B688767C703DC63A83C3F96074", // Opus 1.3.1 (32-bit Windows on Intel)
+                    "E199F6D24770B47A9AF906F3ECA8E863", // Opus 1.5.2 (32-bit Windows on Intel)
                     "C05063029AD8645A38F639F92B573B81", // Opus 1.5.2 (32-bit Windows on AMD)
                     "D6414CE58A6E7C07C17C9CC11A8CD966", // Opus 1.5.2 (64-bit Windows on Intel)
                     "CA783515424077C81C2654A5F4037B0D" // Opus 1.5.2 (64-bit Windows on AMD)
@@ -2264,7 +2267,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "EF6A93BC1F10A15E5F45255F36E90F3A", // Opus 1.3.1 (Ubuntu 22.04)
                     "070E63A0E8A8A6F69B5C4DF9A7D1C82A", // Opus 1.5.2 (MacOS on Intel)
                     "8AF396D9A1F7648C2FDC7DFCC1AF35F6", // Opus 1.3.1 (MacOS on ARM)
-                    "509504BD68BD34AC79FECEA9073BAFB3", // Opus 1.3.1 (32-bit Windows on Intel)
+                    "E8199A697B010856D7ED9F4C67A82481", // Opus 1.5.2 (32-bit Windows on Intel)
                     "5A71D9D8779039B3C5EB689A58C3C5FB", // Opus 1.5.2 (32-bit Windows on AMD)
                     "1C7A4661C5DD9C5CD8FC8CED950E2C80", // Opus 1.5.2 (64-bit Windows on Intel)
                     "09059F0610AB711E2F3B1B8EAB838A67" // Opus 1.5.2 (64-bit Windows on AMD)
