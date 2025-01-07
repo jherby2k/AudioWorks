@@ -165,7 +165,7 @@ namespace AudioWorks.Extensions.Lame
             _stream.Position = _startPosition;
 
 #if NETSTANDARD2_0
-            var bufferSize = SafeNativeMethods.GetLameTagFrame(_handle, Array.Empty<byte>(), UIntPtr.Zero);
+            var bufferSize = SafeNativeMethods.GetLameTagFrame(_handle, [], UIntPtr.Zero);
             var buffer = ArrayPool<byte>.Shared.Rent((int) bufferSize.ToUInt32());
             try
             {

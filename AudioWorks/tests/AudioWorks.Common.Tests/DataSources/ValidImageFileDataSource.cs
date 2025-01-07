@@ -20,8 +20,8 @@ namespace AudioWorks.Common.Tests.DataSources
 {
     public static class ValidImageFileDataSource
     {
-        static readonly List<object[]> _data = new()
-        {
+        static readonly List<object[]> _data =
+        [
             new object[]
             {
                 "Bitmap 24-bit 1280 x 935.bmp",
@@ -32,6 +32,7 @@ namespace AudioWorks.Common.Tests.DataSources
                 "image/png",
                 "9315650A78F4292A5527586198C4F3C8"
             },
+
 
             new object[]
             {
@@ -44,6 +45,7 @@ namespace AudioWorks.Common.Tests.DataSources
                 "85E02F6C2BCF8112E16E63660CADFE02"
             },
 
+
             new object[]
             {
                 "JPEG 24-bit 1280 x 935.jpg",
@@ -54,7 +56,7 @@ namespace AudioWorks.Common.Tests.DataSources
                 "image/jpeg",
                 "4BFBE209E1183AE63DBBED12EEE773B8"
             }
-        };
+        ];
 
         public static IEnumerable<object[]> FileNames => _data.Select(item => new[] { item[0] });
 

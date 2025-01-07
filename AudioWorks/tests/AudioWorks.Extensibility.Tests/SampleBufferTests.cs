@@ -180,7 +180,7 @@ namespace AudioWorks.Extensibility.Tests
             var leftOutSamples = new float[2];
             var rightOutSamples = new float[2];
 
-            using (var samples = new SampleBuffer(new[] { 1f, 2f, 1f, 2f }, 2))
+            using (var samples = new SampleBuffer([1f, 2f, 1f, 2f], 2))
                 samples.CopyTo(leftOutSamples, rightOutSamples);
 
             Assert.All(leftOutSamples, value => Assert.Equal(1f, value));
@@ -241,7 +241,7 @@ namespace AudioWorks.Extensibility.Tests
             var leftOutSamples = new int[2];
             var rightOutSamples = new int[2];
 
-            using (var samples = new SampleBuffer(new[] { 1, 1 }, new[] { 2, 2 }, 16))
+            using (var samples = new SampleBuffer([1, 1], [2, 2], 16))
                 samples.CopyTo(leftOutSamples, rightOutSamples, 16);
 
             Assert.All(leftOutSamples, value => Assert.Equal(1, value));
@@ -362,10 +362,10 @@ namespace AudioWorks.Extensibility.Tests
         {
             var outSamples = new int[4];
 
-            using (var samples = new SampleBuffer(new[] { 1, 1 }, new[] { 2, 2 }, 16))
+            using (var samples = new SampleBuffer([1, 1], [2, 2], 16))
                 samples.CopyToInterleaved(outSamples, 16);
 
-            Assert.Equal(new[] { 1, 2, 1, 2 }, outSamples);
+            Assert.Equal([1, 2, 1, 2], outSamples);
         }
 
         [Fact(DisplayName = "CopyToInterleaved (packed) does nothing when the buffer is empty")]

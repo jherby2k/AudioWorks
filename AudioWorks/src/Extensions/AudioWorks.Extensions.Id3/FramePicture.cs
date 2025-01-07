@@ -29,7 +29,7 @@ namespace AudioWorks.Extensions.Id3
 
         public string Description { get; set; } = string.Empty;
 
-        internal byte[] PictureData { get; set; } = Array.Empty<byte>();
+        internal byte[] PictureData { get; set; } = [];
 
         public FramePicture()
             : base("APIC")

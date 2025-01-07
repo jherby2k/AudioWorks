@@ -29,7 +29,7 @@ namespace AudioWorks.Commands
     public sealed class MeasureAudioFileCommand : LoggingCmdlet, IDynamicParameters, IDisposable
     {
         readonly CancellationTokenSource _cancellationSource = new();
-        readonly List<ITaggedAudioFile> _audioFiles = new();
+        readonly List<ITaggedAudioFile> _audioFiles = [];
         RuntimeDefinedParameterDictionary? _parameters;
 
         [Parameter(Mandatory = true, Position = 0)]

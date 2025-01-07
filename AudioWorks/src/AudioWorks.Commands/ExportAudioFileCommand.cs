@@ -29,7 +29,7 @@ namespace AudioWorks.Commands
     public sealed class ExportAudioFileCommand : LoggingPSCmdlet, IDynamicParameters, IDisposable
     {
         readonly CancellationTokenSource _cancellationSource = new();
-        readonly List<ITaggedAudioFile> _sourceAudioFiles = new();
+        readonly List<ITaggedAudioFile> _sourceAudioFiles = [];
         RuntimeDefinedParameterDictionary? _parameters;
 
         [Parameter(Mandatory = true, Position = 0)]

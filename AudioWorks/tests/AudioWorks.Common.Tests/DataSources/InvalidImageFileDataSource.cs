@@ -19,10 +19,10 @@ namespace AudioWorks.Common.Tests.DataSources
 {
     public static class InvalidImageFileDataSource
     {
-        static readonly List<object[]> _data = new()
-        {
+        static readonly List<object[]> _data =
+        [
             new object[] { "Not an Image.bmp" }
-        };
+        ];
 
         public static IEnumerable<object[]> Data => _data;
     }

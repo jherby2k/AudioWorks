@@ -20,7 +20,7 @@ namespace AudioWorks.Extensions.Mp4
     sealed class EsdsAtom
     {
         static readonly uint[] _sampleRates =
-        {
+        [
             96000,
             88200,
             64000,
@@ -35,7 +35,7 @@ namespace AudioWorks.Extensions.Mp4
             8000,
             7350,
             0
-        };
+        ];
 
         internal bool IsAac { get; }
 

@@ -40,7 +40,7 @@ namespace AudioWorks.Commands
                 var providerPath =
                     cmdlet.SessionState.Path.GetUnresolvedProviderPathFromPSPath(literalPath, out provider, out _);
                 if (provider.ImplementingType == typeof(FileSystemProvider))
-                    return new[] { providerPath };
+                    return [providerPath];
             }
 
             return Array.Empty<string>();

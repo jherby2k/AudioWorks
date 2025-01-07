@@ -31,7 +31,7 @@ namespace AudioWorks.Extensions.Apple
     [AudioEncoderExport("AppleAAC", "Apple MPEG-4 Advanced Audio Codec")]
     sealed class AacAudioEncoder : IAudioEncoder, IDisposable
     {
-        static readonly uint[] _vbrQualities = { 0, 9, 18, 27, 36, 45, 54, 63, 73, 82, 91, 100, 109, 118, 127 };
+        static readonly uint[] _vbrQualities = [0, 9, 18, 27, 36, 45, 54, 63, 73, 82, 91, 100, 109, 118, 127];
 
         Stream? _stream;
         AudioMetadata? _metadata;
