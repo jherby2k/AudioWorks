@@ -42,12 +42,12 @@ namespace AudioWorks.TestUtilities
         {
             if (data == null) return string.Empty;
 
-            using (var md5 = MD5.Create())
 #if NET472
+            using (var md5 = MD5.Create())
                 return BitConverter.ToString(md5.ComputeHash(data)).Replace("-", string.Empty);
 #else
-                return BitConverter.ToString(md5.ComputeHash(data))
-                    .Replace("-", string.Empty, StringComparison.OrdinalIgnoreCase);
+            return BitConverter.ToString(MD5.HashData(data))
+                .Replace("-", string.Empty, StringComparison.OrdinalIgnoreCase);
 #endif
         }
     }
