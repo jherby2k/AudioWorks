@@ -51,6 +51,9 @@ namespace AudioWorks.Common.Tests.DataSources
             }
         };
 
+        public static TheoryData<string> FileNames =>
+            new(_data.Select(item => item.Data.Item1));
+
         public static TheoryData<string, int> FileNamesAndWidth =>
             new(_data.Select(item => (item.Data.Item1, item.Data.Item2)));
 
@@ -68,8 +71,5 @@ namespace AudioWorks.Common.Tests.DataSources
 
         public static TheoryData<string, string> FileNamesAndDataHash =>
             new(_data.Select(item => (item.Data.Item1, item.Data.Item7)));
-
-        public static TheoryData<int, string, string> IndexedFileNamesAndDataHash =>
-            new(_data.Select((item, index) => (index, item.Data.Item1, item.Data.Item7)));
     }
 }

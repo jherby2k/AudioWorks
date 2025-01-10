@@ -672,7 +672,7 @@ namespace AudioWorks.Commands.Tests
 
             new Comparer().Compare(_testMetadata, mock.Object.Metadata, out var differenceEnumerable);
             var differences = differenceEnumerable.ToArray();
-            Assert.True(differences.Length == 4);
+            Assert.Equal(4, differences.Length);
             foreach (var difference in differences)
             {
                 Assert.Contains(difference.MemberPath, new[] { "TrackPeak", "AlbumPeak", "TrackGain", "AlbumGain" });

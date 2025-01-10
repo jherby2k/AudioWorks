@@ -67,7 +67,7 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioAnalyzerInfo");
 
-                Assert.IsAssignableFrom<AudioAnalyzerInfo>(ps.Invoke()[0].BaseObject);
+                Assert.IsType<AudioAnalyzerInfo>(ps.Invoke()[0].BaseObject, false);
             }
         }
     }

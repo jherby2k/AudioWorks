@@ -26,7 +26,7 @@ namespace AudioWorks.Common.Tests
 
         [Fact(DisplayName = "ImageUnsupportedException is an AudioException")]
         public void IsAudioException() =>
-            Assert.IsAssignableFrom<AudioException>(new ImageUnsupportedException());
+            Assert.IsType<AudioException>(new ImageUnsupportedException(), false);
 
         [Fact(DisplayName = "ImageUnsupportedException has the expected Message property value")]
         public void HasExpectedMessage()

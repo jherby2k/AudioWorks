@@ -111,8 +111,7 @@ namespace AudioWorks.Extensibility.Tests
             samples.CopyTo(outSamples);
 
             Assert.All(outSamples, value =>
-                // ReSharper disable once CompareOfFloatsByEqualityOperator
-                Assert.True(value == 0));
+                Assert.Equal(0, value));
         }
 
         [Fact(DisplayName = "CopyTo (float, mono) throws an exception when the object has been disposed")]
@@ -146,8 +145,7 @@ namespace AudioWorks.Extensibility.Tests
             samples.CopyTo(leftOutSamples, rightOutSamples);
 
             Assert.All(leftOutSamples.Concat(rightOutSamples), value =>
-                // ReSharper disable once CompareOfFloatsByEqualityOperator
-                Assert.True(value == 0));
+                Assert.Equal(0, value));
         }
 
         [Fact(DisplayName = "CopyTo (float, stereo) throws an exception when the object has been disposed")]
@@ -196,7 +194,7 @@ namespace AudioWorks.Extensibility.Tests
             samples.CopyTo(leftOutSamples, rightOutSamples, 16);
 
             Assert.All(leftOutSamples.Concat(rightOutSamples), value =>
-                Assert.True(value == 0));
+                Assert.Equal(0, value));
         }
 
         [Fact(DisplayName = "CopyTo (int, stereo) throws an exception when the object has been disposed")]
@@ -256,8 +254,7 @@ namespace AudioWorks.Extensibility.Tests
             samples.CopyToInterleaved(outSamples);
 
             Assert.All(outSamples, value =>
-                // ReSharper disable once CompareOfFloatsByEqualityOperator
-                Assert.True(value == 0));
+                Assert.Equal(0, value));
         }
 
         [Fact(DisplayName = "CopyToInterleaved (float) throws an exception when the object has been disposed")]
@@ -302,7 +299,7 @@ namespace AudioWorks.Extensibility.Tests
             samples.CopyToInterleaved(outSamples, 16);
 
             Assert.All(outSamples, value =>
-                Assert.True(value == 0));
+                Assert.Equal(0, value));
         }
 
         [Fact(DisplayName = "CopyToInterleaved (int) throws an exception when the object has been disposed")]
@@ -376,7 +373,7 @@ namespace AudioWorks.Extensibility.Tests
             samples.CopyToInterleaved(outSamples, 16);
 
             Assert.All(outSamples, value =>
-                Assert.True(value == 0));
+                Assert.Equal(0, value));
         }
 
         [Fact(DisplayName = "CopyToInterleaved (packed) throws an exception when the object has been disposed")]
