@@ -13,8 +13,8 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using AudioWorks.Api.Tests.DataTypes;
 using System.Linq;
+using AudioWorks.Api.Tests.DataTypes;
 using Xunit;
 
 namespace AudioWorks.Api.Tests.DataSources
@@ -27,7 +27,7 @@ namespace AudioWorks.Api.Tests.DataSources
 
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
-                new TestAudioInfo
+                new()
                 {
                     Format = "LPCM",
                     Channels = 2,
@@ -36,11 +36,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 22515,
                     BitRate = 128000
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
-                new TestAudioInfo
+                new()
                 {
                     Format = "LPCM",
                     Channels = 1,
@@ -49,11 +49,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 705600
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
-                new TestAudioInfo
+                new()
                 {
                     Format = "LPCM",
                     Channels = 2,
@@ -62,11 +62,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 1411200
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
-                new TestAudioInfo
+                new()
                 {
                     Format = "LPCM",
                     Channels = 2,
@@ -75,11 +75,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 135087,
                     BitRate = 1536000
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
-                new TestAudioInfo
+                new()
                 {
                     Format = "LPCM",
                     Channels = 2,
@@ -88,11 +88,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 270174,
                     BitRate = 4608000
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "LPCM 16-bit 44100Hz Stereo (extensible).wav",
-                new TestAudioInfo
+                new()
                 {
                     Format = "LPCM",
                     Channels = 2,
@@ -101,11 +101,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 1411200
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "A-law 44100Hz Stereo.wav",
-                new TestAudioInfo
+                new()
                 {
                     Format = "A-law",
                     Channels = 2,
@@ -113,11 +113,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 705600
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "µ-law 44100Hz Stereo.wav",
-                new TestAudioInfo
+                new()
                 {
                     Format = "µ-law",
                     Channels = 2,
@@ -125,7 +125,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 705600
                 },
-                new TestAudioMetadata()
+                new()
             },
 
             #endregion
@@ -134,7 +134,7 @@ namespace AudioWorks.Api.Tests.DataSources
 
             {
                 "FLAC Level 5 8-bit 8000Hz Stereo.flac",
-                new TestAudioInfo
+                new()
                 {
                     Format = "FLAC",
                     Channels = 2,
@@ -143,11 +143,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 22515,
                     BitRate = 128000
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Mono.flac",
-                new TestAudioInfo
+                new()
                 {
                     Format = "FLAC",
                     Channels = 1,
@@ -156,11 +156,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 705600
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
-                new TestAudioInfo
+                new()
                 {
                     Format = "FLAC",
                     Channels = 2,
@@ -169,11 +169,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 1411200
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "FLAC Level 5 16-bit 48000Hz Stereo.flac",
-                new TestAudioInfo
+                new()
                 {
                     Format = "FLAC",
                     Channels = 2,
@@ -182,11 +182,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 135087,
                     BitRate = 1536000
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "FLAC Level 5 24-bit 96000Hz Stereo.flac",
-                new TestAudioInfo
+                new()
                 {
                     Format = "FLAC",
                     Channels = 2,
@@ -195,11 +195,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 270174,
                     BitRate = 4608000
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
-                new TestAudioInfo
+                new()
                 {
                     Format = "FLAC",
                     Channels = 2,
@@ -208,7 +208,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 1411200
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -230,7 +230,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using mixed-case fields).flac",
-                new TestAudioInfo
+                new()
                 {
                     Format = "FLAC",
                     Channels = 2,
@@ -239,7 +239,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 1411200
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -261,7 +261,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using COMMENT).flac",
-                new TestAudioInfo
+                new()
                 {
                     Format = "FLAC",
                     Channels = 2,
@@ -270,7 +270,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 1411200
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -292,7 +292,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TOTALTRACKS).flac",
-                new TestAudioInfo
+                new()
                 {
                     Format = "FLAC",
                     Channels = 2,
@@ -301,7 +301,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 1411200
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -323,7 +323,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TRACKCOUNT).flac",
-                new TestAudioInfo
+                new()
                 {
                     Format = "FLAC",
                     Channels = 2,
@@ -332,7 +332,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 1411200
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -354,7 +354,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TRACKTOTAL).flac",
-                new TestAudioInfo
+                new()
                 {
                     Format = "FLAC",
                     Channels = 2,
@@ -363,7 +363,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 1411200
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -385,7 +385,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using YEAR).flac",
-                new TestAudioInfo
+                new()
                 {
                     Format = "FLAC",
                     Channels = 2,
@@ -394,7 +394,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 1411200
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -414,7 +414,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using extended DATE).flac",
-                new TestAudioInfo
+                new()
                 {
                     Format = "FLAC",
                     Channels = 2,
@@ -423,7 +423,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 1411200
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -445,7 +445,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using invalid DATE).flac",
-                new TestAudioInfo
+                new()
                 {
                     Format = "FLAC",
                     Channels = 2,
@@ -454,7 +454,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 1411200
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -473,7 +473,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using invalid TRACKNUMBER).flac",
-                new TestAudioInfo
+                new()
                 {
                     Format = "FLAC",
                     Channels = 2,
@@ -482,7 +482,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 1411200
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -502,7 +502,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using ReplayGain with '+' sign).flac",
-                new TestAudioInfo
+                new()
                 {
                     Format = "FLAC",
                     Channels = 2,
@@ -511,7 +511,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 1411200
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -533,7 +533,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using ReplayGain with missing 'dB').flac",
-                new TestAudioInfo
+                new()
                 {
                     Format = "FLAC",
                     Channels = 2,
@@ -542,7 +542,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 1411200
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -564,7 +564,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using invalid ReplayGain fields).flac",
-                new TestAudioInfo
+                new()
                 {
                     Format = "FLAC",
                     Channels = 2,
@@ -573,7 +573,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 1411200
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -596,7 +596,7 @@ namespace AudioWorks.Api.Tests.DataSources
 
             {
                 "ALAC 16-bit 44100Hz Mono.m4a",
-                new TestAudioInfo
+                new()
                 {
                     Format = "ALAC",
                     Channels = 1,
@@ -605,11 +605,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 122880,
                     BitRate = 705600
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
-                new TestAudioInfo
+                new()
                 {
                     Format = "ALAC",
                     Channels = 2,
@@ -618,11 +618,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 122880,
                     BitRate = 1411200
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "ALAC 16-bit 48000Hz Stereo.m4a",
-                new TestAudioInfo
+                new()
                 {
                     Format = "ALAC",
                     Channels = 2,
@@ -631,11 +631,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 131072,
                     BitRate = 1536000
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "ALAC 24-bit 96000Hz Stereo.m4a",
-                new TestAudioInfo
+                new()
                 {
                     Format = "ALAC",
                     Channels = 2,
@@ -644,11 +644,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 266240,
                     BitRate = 4608000
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "ALAC 16-bit 44100Hz Stereo (Tagged).m4a",
-                new TestAudioInfo
+                new()
                 {
                     Format = "ALAC",
                     Channels = 2,
@@ -657,7 +657,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 122880,
                     BitRate = 1411200
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -680,7 +680,7 @@ namespace AudioWorks.Api.Tests.DataSources
 
             {
                 "QAAC TVBR 91 8000Hz Stereo.m4a",
-                new TestAudioInfo
+                new()
                 {
                     Format = "AAC",
                     Channels = 2,
@@ -688,11 +688,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 25600,
                     BitRate = 50795
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "QAAC TVBR 91 44100Hz Mono.m4a",
-                new TestAudioInfo
+                new()
                 {
                     Format = "AAC",
                     Channels = 1,
@@ -700,11 +700,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 126976,
                     BitRate = 93207
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "QAAC TVBR 91 44100Hz Stereo.m4a",
-                new TestAudioInfo
+                new()
                 {
                     Format = "AAC",
                     Channels = 2,
@@ -712,11 +712,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 126976,
                     BitRate = 183702
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "QAAC TVBR 91 48000Hz Stereo.m4a",
-                new TestAudioInfo
+                new()
                 {
                     Format = "AAC",
                     Channels = 2,
@@ -724,11 +724,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 137216,
                     BitRate = 197757
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "QAAC TVBR 91 44100Hz Stereo (Tagged).m4a",
-                new TestAudioInfo
+                new()
                 {
                     Format = "AAC",
                     Channels = 2,
@@ -736,7 +736,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 126976,
                     BitRate = 183702
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -759,7 +759,7 @@ namespace AudioWorks.Api.Tests.DataSources
 
             {
                 "Lame CBR 24 8000Hz Stereo.mp3",
-                new TestAudioInfo
+                new()
                 {
                     Format = "MP3",
                     Channels = 2,
@@ -767,11 +767,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 24192,
                     BitRate = 24571
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "Lame CBR 64 44100Hz Mono.mp3",
-                new TestAudioInfo
+                new()
                 {
                     Format = "MP3",
                     Channels = 1,
@@ -779,11 +779,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 125568,
                     BitRate = 64582
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new TestAudioInfo
+                new()
                 {
                     Format = "MP3",
                     Channels = 2,
@@ -791,22 +791,22 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 125568,
                     BitRate = 129170
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "Lame CBR 128 44100Hz Stereo (no header).mp3",
-                new TestAudioInfo
+                new()
                 {
                     Format = "MP3",
                     Channels = 2,
                     SampleRate = 44100,
                     BitRate = 128000
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "Lame CBR 128 48000Hz Stereo.mp3",
-                new TestAudioInfo
+                new()
                 {
                     Format = "MP3",
                     Channels = 2,
@@ -814,11 +814,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 137088,
                     BitRate = 129076
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "Lame VBR Standard 44100Hz Stereo.mp3",
-                new TestAudioInfo
+                new()
                 {
                     Format = "MP3",
                     Channels = 2,
@@ -826,33 +826,33 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 125568,
                     BitRate = 213358
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "Fraunhofer CBR 128 44100Hz Stereo.mp3",
-                new TestAudioInfo
+                new()
                 {
                     Format = "MP3",
                     Channels = 2,
                     SampleRate = 44100,
                     BitRate = 128000
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "Fraunhofer VBR 44100Hz Stereo.mp3",
-                new TestAudioInfo
+                new()
                 {
                     Format = "MP3",
                     Channels = 2,
                     SampleRate = 44100,
                     BitRate = 160000
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "Fraunhofer VBR 44100Hz Stereo (with header).mp3",
-                new TestAudioInfo
+                new()
                 {
                     Format = "MP3",
                     Channels = 2,
@@ -860,11 +860,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 126720,
                     BitRate = 143200
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v1).mp3",
-                new TestAudioInfo
+                new()
                 {
                     Format = "MP3",
                     Channels = 2,
@@ -872,7 +872,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 125568,
                     BitRate = 129170
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -885,7 +885,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v1 missing values).mp3",
-                new TestAudioInfo
+                new()
                 {
                     Format = "MP3",
                     Channels = 2,
@@ -893,7 +893,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 125568,
                     BitRate = 129170
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -903,7 +903,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
-                new TestAudioInfo
+                new()
                 {
                     Format = "MP3",
                     Channels = 2,
@@ -911,7 +911,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 125568,
                     BitRate = 129170
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -933,7 +933,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1 Extended Header).mp3",
-                new TestAudioInfo
+                new()
                 {
                     Format = "MP3",
                     Channels = 2,
@@ -941,7 +941,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 125568,
                     BitRate = 129170
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -963,7 +963,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 UTF16).mp3",
-                new TestAudioInfo
+                new()
                 {
                     Format = "MP3",
                     Channels = 2,
@@ -971,7 +971,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 125568,
                     BitRate = 129170
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -993,7 +993,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 UTF16 Unsynchronised).mp3",
-                new TestAudioInfo
+                new()
                 {
                     Format = "MP3",
                     Channels = 2,
@@ -1001,7 +1001,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 125568,
                     BitRate = 129170
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1023,7 +1023,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.4 UTF16 Unsynchronised Frames).mp3",
-                new TestAudioInfo
+                new()
                 {
                     Format = "MP3",
                     Channels = 2,
@@ -1031,7 +1031,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 125568,
                     BitRate = 129170
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1053,7 +1053,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.4 UTF16 Big Endian).mp3",
-                new TestAudioInfo
+                new()
                 {
                     Format = "MP3",
                     Channels = 2,
@@ -1061,7 +1061,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 125568,
                     BitRate = 129170
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1083,7 +1083,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.4 UTF8).mp3",
-                new TestAudioInfo
+                new()
                 {
                     Format = "MP3",
                     Channels = 2,
@@ -1091,7 +1091,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 125568,
                     BitRate = 129170
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1118,7 +1118,7 @@ namespace AudioWorks.Api.Tests.DataSources
 
             {
                 "Vorbis Quality 3 8000Hz Stereo.ogg",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Vorbis",
                     Channels = 2,
@@ -1126,11 +1126,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 22515,
                     BitRate = 31800
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "Vorbis Quality 3 44100Hz Mono.ogg",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Vorbis",
                     Channels = 1,
@@ -1138,11 +1138,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 80000
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Vorbis",
                     Channels = 2,
@@ -1150,11 +1150,11 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 112000
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "Vorbis Quality 3 48000Hz Stereo.ogg",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Vorbis",
                     Channels = 2,
@@ -1162,22 +1162,22 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 135087,
                     BitRate = 112000
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "Vorbis Quality 3 96000Hz Stereo.ogg",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Vorbis",
                     Channels = 2,
                     SampleRate = 96000,
                     SampleCount = 270174
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using defaults).ogg",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Vorbis",
                     Channels = 2,
@@ -1185,7 +1185,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 112000
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1207,7 +1207,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using mixed-case fields).ogg",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Vorbis",
                     Channels = 2,
@@ -1215,7 +1215,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 112000
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1237,7 +1237,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using COMMENT).ogg",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Vorbis",
                     Channels = 2,
@@ -1245,7 +1245,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 112000
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1267,7 +1267,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using TOTALTRACKS).ogg",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Vorbis",
                     Channels = 2,
@@ -1275,7 +1275,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 112000
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1297,7 +1297,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using TRACKCOUNT).ogg",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Vorbis",
                     Channels = 2,
@@ -1305,7 +1305,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 112000
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1327,7 +1327,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using TRACKTOTAL).ogg",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Vorbis",
                     Channels = 2,
@@ -1335,7 +1335,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 112000
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1357,7 +1357,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using YEAR).ogg",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Vorbis",
                     Channels = 2,
@@ -1365,7 +1365,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 112000
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1385,7 +1385,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using extended DATE).ogg",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Vorbis",
                     Channels = 2,
@@ -1393,7 +1393,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 112000
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1415,7 +1415,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using invalid DATE).ogg",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Vorbis",
                     Channels = 2,
@@ -1423,7 +1423,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 112000
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1442,7 +1442,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using invalid TRACKNUMBER).ogg",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Vorbis",
                     Channels = 2,
@@ -1450,7 +1450,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 112000
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1470,7 +1470,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using ReplayGain with '+' sign).ogg",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Vorbis",
                     Channels = 2,
@@ -1478,7 +1478,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 112000
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1500,7 +1500,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using ReplayGain with missing 'dB').ogg",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Vorbis",
                     Channels = 2,
@@ -1508,7 +1508,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 112000
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1530,7 +1530,7 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using invalid ReplayGain fields).ogg",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Vorbis",
                     Channels = 2,
@@ -1538,7 +1538,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     SampleCount = 124112,
                     BitRate = 112000
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1561,69 +1561,69 @@ namespace AudioWorks.Api.Tests.DataSources
 
             {
                 "Opus VBR 8000Hz Stereo.opus",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Opus",
                     Channels = 2,
                     SampleRate = 8000,
                     SampleCount = 22515
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "Opus VBR 44100Hz Mono.opus",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Opus",
                     Channels = 1,
                     SampleRate = 44100,
                     SampleCount = 124112
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "Opus VBR 44100Hz Stereo.opus",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Opus",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 124112
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "Opus VBR 48000Hz Stereo.opus",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Opus",
                     Channels = 2,
                     SampleRate = 48000,
                     SampleCount = 135087
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "Opus VBR 96000Hz Stereo.opus",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Opus",
                     Channels = 2,
                     SampleRate = 96000,
                     SampleCount = 270174
                 },
-                new TestAudioMetadata()
+                new()
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using defaults).opus",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Opus",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 124112
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1641,14 +1641,14 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using mixed-case fields).opus",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Opus",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 124112
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1666,14 +1666,14 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using COMMENT).opus",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Opus",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 124112
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1691,14 +1691,14 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using TOTALTRACKS).opus",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Opus",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 124112
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1716,14 +1716,14 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using TRACKCOUNT).opus",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Opus",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 124112
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1741,14 +1741,14 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using TRACKTOTAL).opus",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Opus",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 124112
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1766,14 +1766,14 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using YEAR).opus",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Opus",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 124112
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1789,14 +1789,14 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using extended DATE).opus",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Opus",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 124112
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1814,14 +1814,14 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using invalid DATE).opus",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Opus",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 124112
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1836,14 +1836,14 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using invalid TRACKNUMBER).opus",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Opus",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 124112
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1859,14 +1859,14 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using REPLAYGAIN).opus",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Opus",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 124112
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1888,14 +1888,14 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using REPLAYGAIN with '+' sign).opus",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Opus",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 124112
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1917,14 +1917,14 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using REPLAYGAIN with missing 'dB').opus",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Opus",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 124112
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1946,14 +1946,14 @@ namespace AudioWorks.Api.Tests.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using R128).opus",
-                new TestAudioInfo
+                new()
                 {
                     Format = "Opus",
                     Channels = 2,
                     SampleRate = 44100,
                     SampleCount = 124112
                 },
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",

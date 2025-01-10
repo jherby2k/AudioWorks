@@ -13,9 +13,9 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using AudioWorks.Api.Tests.DataTypes;
 using System;
 using System.Linq;
+using AudioWorks.Api.Tests.DataTypes;
 using Xunit;
 
 namespace AudioWorks.Api.Tests.DataSources
@@ -29,7 +29,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // All fields
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -49,7 +49,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "BAE0A61EB5C4912A4793C8B259ED5633", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "1F5FEC2305DE58CE9BA73AFC9E5017AA" // FLAC 1.4.3
@@ -59,7 +59,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Day unset
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -78,7 +78,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "FDB702CF53676594BDD9FBEC77F154A3", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "CB5A4B3F94A3F5A2B152B909A6EC2D8C" // FLAC 1.4.3
@@ -88,7 +88,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Month unset
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -107,7 +107,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "FDB702CF53676594BDD9FBEC77F154A3", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "CB5A4B3F94A3F5A2B152B909A6EC2D8C" // FLAC 1.4.3
@@ -117,7 +117,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // TrackNumber unset
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -136,7 +136,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "A05D916A5C03E9599CBC9A9F6989FDB0", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "C238388B2E5ED6E8026FBFE7A60B6AC0" // FLAC 1.4.3
@@ -146,7 +146,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // TrackCount unset
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -165,7 +165,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "0917BADDD895CCFD370BB222AF216E7B", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "B4969C097EBD1D6F1CE704C652FC7A0A" // FLAC 1.4.3
@@ -175,7 +175,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Existing tag
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -195,7 +195,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "BAE0A61EB5C4912A4793C8B259ED5633", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "1F5FEC2305DE58CE9BA73AFC9E5017AA" // FLAC 1.4.3
@@ -205,7 +205,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // No padding
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -225,7 +225,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary
+                new()
                 {
                     ["Padding"] = 0
                 },
@@ -238,7 +238,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // 100 bytes of padding
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -258,7 +258,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary
+                new()
                 {
                     ["Padding"] = 100
                 },
@@ -271,9 +271,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // Existing tag removal
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
-                new TestAudioMetadata(),
+                new(),
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "A5B12EAFE3014399E04E427CA756234B" // FLAC 1.4.3
@@ -283,9 +283,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // Nothing to do
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
-                new TestAudioMetadata(),
+                new(),
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "A5B12EAFE3014399E04E427CA756234B" // FLAC 1.4.3
@@ -295,9 +295,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // PNG CoverArt
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
-                new TestAudioMetadata(),
+                new(),
                 "PNG 24-bit 1280 x 935.png",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "1399992DC07E38EBCD3F5DB1AF48B8C3", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "1F6BDDA2A2585E5E84B4A9F5CFB344C0" // FLAC 1.4.3
@@ -307,9 +307,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // JPEG CoverArt
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
-                new TestAudioMetadata(),
+                new(),
                 "JPEG 24-bit 1280 x 935.jpg",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "BB1A252DAA1100EA9D0B4658DE863A86", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "5CADC0776BE4E84F683DB333057E54E1" // FLAC 1.4.3
@@ -323,7 +323,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // All fields
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -343,7 +343,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "7F7316891B26F9FC3DE7D2D1304F9CFE"
                 ]
@@ -352,7 +352,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Day unset
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -371,7 +371,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "9957A905E53C3D2411A3A4BF3DA4DBA3"
                 ]
@@ -380,7 +380,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Month unset
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -399,7 +399,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "9957A905E53C3D2411A3A4BF3DA4DBA3"
                 ]
@@ -408,7 +408,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // TrackNumber unset
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -427,7 +427,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "847E8C85293966F62132E8F851FA7BAE"
                 ]
@@ -436,7 +436,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // TrackCount unset
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -455,7 +455,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "BD8C422B4F08A50532168922680B0C2E"
                 ]
@@ -464,7 +464,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Existing tag
             {
                 "ALAC 16-bit 44100Hz Stereo (Tagged).m4a",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -484,7 +484,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "7F7316891B26F9FC3DE7D2D1304F9CFE"
                 ]
@@ -493,9 +493,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // Updated creation time
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
-                new TestAudioMetadata(),
+                new(),
                 string.Empty,
-                new TestSettingDictionary
+                new()
                 {
                     ["CreationTime"] = new DateTime(2018, 9, 1)
                 },
@@ -507,9 +507,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // Updated modification time
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
-                new TestAudioMetadata(),
+                new(),
                 string.Empty,
-                new TestSettingDictionary
+                new()
                 {
                     ["ModificationTime"] = new DateTime(2018, 9, 1)
                 },
@@ -521,9 +521,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // Existing tag removal
             {
                 "ALAC 16-bit 44100Hz Stereo (Tagged).m4a",
-                new TestAudioMetadata(),
+                new(),
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "090FD975097BAFC4164370A3DEA9E696"
                 ]
@@ -532,9 +532,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // Nothing to do
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
-                new TestAudioMetadata(),
+                new(),
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "090FD975097BAFC4164370A3DEA9E696"
                 ]
@@ -543,9 +543,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // Default padding (explicit)
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
-                new TestAudioMetadata(),
+                new(),
                 string.Empty,
-                new TestSettingDictionary
+                new()
                 {
                     ["Padding"] = 2048
                 },
@@ -557,9 +557,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // Disabled padding
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
-                new TestAudioMetadata(),
+                new(),
                 string.Empty,
-                new TestSettingDictionary
+                new()
                 {
                     ["Padding"] = 0
                 },
@@ -571,9 +571,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // Maximum padding
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
-                new TestAudioMetadata(),
+                new(),
                 string.Empty,
-                new TestSettingDictionary
+                new()
                 {
                     ["Padding"] = 16_777_216
                 },
@@ -585,9 +585,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // PNG CoverArt (ALAC)
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
-                new TestAudioMetadata(),
+                new(),
                 "PNG 24-bit 1280 x 935.png",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "767F47AEEA8A8F85DA214D51E0751CD5"
                 ]
@@ -596,9 +596,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // JPEG CoverArt (ALAC)
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
-                new TestAudioMetadata(),
+                new(),
                 "JPEG 24-bit 1280 x 935.jpg",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "D419908A6F39E2D402BFDE1CB4DA8821"
                 ]
@@ -607,9 +607,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // PNG CoverArt (AAC, converted)
             {
                 "QAAC TVBR 91 44100Hz Stereo.m4a",
-                new TestAudioMetadata(),
+                new(),
                 "PNG 24-bit 1280 x 935.png",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "862B09B8240906315D91AB953AA174BF", // 32-bit Legacy .NET
                     "1FC596A38C7F84B7DDBE356215BE169D", // 64-bit Legacy .NET
@@ -620,9 +620,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // JPEG CoverArt (AAC)
             {
                 "QAAC TVBR 91 44100Hz Stereo.m4a",
-                new TestAudioMetadata(),
+                new(),
                 "JPEG 24-bit 1280 x 935.jpg",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "679251C0E61FC8EB10286525FE64F60F"
                 ]
@@ -635,7 +635,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // All fields
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -655,7 +655,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "23C89D97086DD52D0B12AF0D215CB204"
                 ]
@@ -664,7 +664,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Day unset
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -683,7 +683,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "63C6147CC1AEDC8C79CEA3A64A4D1D70"
                 ]
@@ -692,7 +692,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Month unset
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -711,7 +711,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "63C6147CC1AEDC8C79CEA3A64A4D1D70"
                 ]
@@ -720,7 +720,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // TrackNumber unset
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -739,7 +739,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "436A20F9A295581E7ADA1124C4DDC457"
                 ]
@@ -748,7 +748,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // TrackCount unset
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -767,7 +767,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "A6AA8BE5A043577E1DEA4607343E4625"
                 ]
@@ -776,7 +776,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Existing tag
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -796,7 +796,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "FF55C184441BFF19D872D0B7767AC981"
                 ]
@@ -805,7 +805,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Tag version 2.4
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -825,7 +825,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary
+                new()
                 {
                     ["TagVersion"] = "2.4"
                 },
@@ -837,7 +837,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // UTF-16 encoding
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -857,7 +857,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary
+                new()
                 {
                     ["TagEncoding"] = "UTF16"
                 },
@@ -869,7 +869,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // UTF-8 encoding
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -889,7 +889,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary
+                new()
                 {
                     ["TagEncoding"] = "UTF8"
                 },
@@ -901,7 +901,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Default padding (explicit)
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -921,7 +921,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary
+                new()
                 {
                     ["TagPadding"] = 2048
                 },
@@ -933,7 +933,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // No padding
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -953,7 +953,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary
+                new()
                 {
                     ["TagPadding"] = 0
                 },
@@ -965,7 +965,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Maximum padding
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -985,7 +985,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary
+                new()
                 {
                     ["TagPadding"] = 16_777_216
                 },
@@ -997,7 +997,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Existing v1 tag
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v1).mp3",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1017,7 +1017,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "23C89D97086DD52D0B12AF0D215CB204"
                 ]
@@ -1026,9 +1026,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // Existing tag removal
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
-                new TestAudioMetadata(),
+                new(),
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "3EA0A7381A4AD97A317205F1026AC938"
                 ]
@@ -1037,9 +1037,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // Nothing to do
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new TestAudioMetadata(),
+                new(),
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "963D578D818C25DE5FEE6625BE7BFA98"
                 ]
@@ -1048,9 +1048,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // PNG CoverArt (converted)
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new TestAudioMetadata(),
+                new(),
                 "PNG 24-bit 1280 x 935.png",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "D0F19C93BFFFDE8A9D649276B5DF5DAE", // 32-bit Legacy .NET
                     "09E9E1004B5279A8513B97D4FD34FEFB", // 64-bit Legacy .NET
@@ -1061,9 +1061,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // JPEG CoverArt
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new TestAudioMetadata(),
+                new(),
                 "JPEG 24-bit 1280 x 935.jpg",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "1BF5C0A314A84C08A71E620ECFAC27FF"
                 ]
@@ -1076,7 +1076,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // All fields
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1096,7 +1096,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "BD9FBB0769E89FC46E37BB48A7F8A62F", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
                     "4AA6D9C63E0CFD18F450A99819E28811" // Vorbis 1.3.7 (MacOS)
@@ -1106,7 +1106,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Day unset
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1125,7 +1125,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "4BCB964FA118AE894302C5D9318EBB3E", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
                     "2CFA7B065217D20087B138681D587899" // Vorbis 1.3.7 (MacOS)
@@ -1135,7 +1135,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Month unset
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1154,7 +1154,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "4BCB964FA118AE894302C5D9318EBB3E", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
                     "2CFA7B065217D20087B138681D587899" // Vorbis 1.3.7 (MacOS)
@@ -1164,7 +1164,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // TrackNumber unset
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1183,7 +1183,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "E84E26FA84319808E2DD078BDE0561CB", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
                     "D87431EDDF5977239830E5BC9BCF042A" // Vorbis 1.3.7 (MacOS)
@@ -1193,7 +1193,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // TrackCount unset
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1212,7 +1212,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "A44D6CC373B6F34D65EADBB32C94C566", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
                     "C9C6B75D075FA0B9B398FFCB760A002D" // Vorbis 1.3.7 (MacOS)
@@ -1222,7 +1222,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Existing tag
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using defaults).ogg",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1242,7 +1242,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "BD9FBB0769E89FC46E37BB48A7F8A62F", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
                     "4AA6D9C63E0CFD18F450A99819E28811" // Vorbis 1.3.7 (MacOS)
@@ -1252,9 +1252,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // Existing tag removal
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using defaults).ogg",
-                new TestAudioMetadata(),
+                new(),
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "D225108B66480DC5F4368F6CD605AD7C", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
                     "3FDD942360BA5074F9CF7303E80AA4D0" // Vorbis 1.3.7 (MacOS)
@@ -1264,9 +1264,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // Nothing to do
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
-                new TestAudioMetadata(),
+                new(),
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "D225108B66480DC5F4368F6CD605AD7C", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
                     "3FDD942360BA5074F9CF7303E80AA4D0" // Vorbis 1.3.7 (MacOS)
@@ -1276,9 +1276,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // PNG CoverArt (Converted)
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
-                new TestAudioMetadata(),
+                new(),
                 "PNG 24-bit 1280 x 935.png",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "4A74639B61D636F02AE9003D1F8B728A", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on 32-bit Windows)
                     "5202B8FFA7A76EA6AD53FEFFE9F206FD", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on 64-bit Windows)
@@ -1290,9 +1290,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // JPEG CoverArt
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
-                new TestAudioMetadata(),
+                new(),
                 "JPEG 24-bit 1280 x 935.jpg",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "CA3A8F152FFC10FE460E6DBD2DB2F090", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
                     "36C4695F1C9FBD9E018E98FB4A132D83" // Vorbis 1.3.7 (MacOS)
@@ -1306,7 +1306,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // All fields
             {
                 "Opus VBR 44100Hz Stereo.opus",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1322,7 +1322,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackCount = "12"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "D22BBFDDCB298A427057253C4E833057", // Opus 1.3.1 (Ubuntu 20.04)
                     "83EAAF39634A97A730D4359E23CEE33F" // Opus 1.5.2 (MacOS and Windows)
@@ -1332,7 +1332,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Day unset
             {
                 "Opus VBR 44100Hz Stereo.opus",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1347,7 +1347,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackCount = "12"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (Ubuntu 20.04)
                     "A298D22F719E0B950B31310E05BC1B66" // Opus 1.5.2 (MacOS and Windows)
@@ -1357,7 +1357,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Month unset
             {
                 "Opus VBR 44100Hz Stereo.opus",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1372,7 +1372,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackCount = "12"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (Ubuntu 20.04)
                     "A298D22F719E0B950B31310E05BC1B66" // Opus 1.5.2 (MacOS and Windows)
@@ -1382,7 +1382,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // TrackNumber unset
             {
                 "Opus VBR 44100Hz Stereo.opus",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1397,7 +1397,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackCount = "12"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "166F1DD0C71E2CCCF226157A34791E1B", // Opus 1.3.1 (Ubuntu 20.04)
                     "8F3233D946C369EA87132A3EDB50071E" // Opus 1.5.2 (MacOS and Windows)
@@ -1407,7 +1407,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // TrackCount unset
             {
                 "Opus VBR 44100Hz Stereo.opus",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1422,7 +1422,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackNumber = "01"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "8EA7FC13A2F214CADF3A1D447EF5CB65", // Opus 1.3.1 (Ubuntu 20.04)
                     "41253CA69E1D124E2CAC11B5D945EC67" // Opus 1.5.2 (MacOS and Windows)
@@ -1432,7 +1432,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Existing tag
             {
                 "Opus VBR 44100Hz Stereo (Tagged using defaults).opus",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist",
@@ -1448,7 +1448,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     TrackCount = "12"
                 },
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "BB50765E7DB79BDEADFC81E771101FD7", // Opus 1.3.1 (Ubuntu 20.04)
                     "56AD6E2C6333F2A033914E9CF6FBA6CB" // Opus 1.5.2 (MacOS and Windows)
@@ -1458,9 +1458,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // Existing tag removal
             {
                 "Opus VBR 44100Hz Stereo (Tagged using defaults).opus",
-                new TestAudioMetadata(),
+                new(),
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "367DB09F8408583579F918061FCB6322", // Opus 1.3.1 (Ubuntu 20.04)
                     "CF85C82F03F478E096F1248F792D0B1E" // Opus 1.5.2 (MacOS and Windows)
@@ -1470,9 +1470,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // Nothing to do
             {
                 "Opus VBR 44100Hz Stereo.opus",
-                new TestAudioMetadata(),
+                new(),
                 string.Empty,
-                new TestSettingDictionary(),
+                new(),
                 [
                     "22D33DFB735C5B7805AB26C7A04CDA86", // Opus 1.3.1 (Ubuntu 20.04)
                     "507E009E734B28534500E143CEA74EFD" // Opus 1.5.2 (MacOS and Windows)
@@ -1482,9 +1482,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // PNG CoverArt (Converted)
             {
                 "Opus VBR 44100Hz Stereo.opus",
-                new TestAudioMetadata(),
+                new(),
                 "PNG 24-bit 1280 x 935.png",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "0DD686B1469BEF1FEA629A881B2A67C3", // Opus 1.5.2 (Legacy .NET on 32-bit Windows)
                     "358BD65B41660084B9C9CABEBCB1DC76", // Opus 1.5.2 (Legacy .NET on 64-bit Windows)
@@ -1496,9 +1496,9 @@ namespace AudioWorks.Api.Tests.DataSources
             // JPEG CoverArt
             {
                 "Opus VBR 44100Hz Stereo.opus",
-                new TestAudioMetadata(),
+                new(),
                 "JPEG 24-bit 1280 x 935.jpg",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "CABF32D411EA5FA9458A79B6DC2C2D69", // Opus 1.3.1 (Ubuntu 20.04)
                     "EDBD61E6DED683084D781F9F3C578D25" // Opus 1.5.2 (MacOS and Windows)

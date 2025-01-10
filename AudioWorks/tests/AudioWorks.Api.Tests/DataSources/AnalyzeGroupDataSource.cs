@@ -30,9 +30,9 @@ namespace AudioWorks.Api.Tests.DataSources
                     "Track 3 LPCM 8-bit 8000Hz Stereo.wav"
                 ],
                 "ReplayGain",
-                new TestSettingDictionary(),
+                new(),
                 [
-                    new TestAudioMetadata
+                    new()
                     {
 #if NET472
                         TrackPeak = "0.820313",
@@ -43,14 +43,14 @@ namespace AudioWorks.Api.Tests.DataSources
                         TrackGain = "-1.36",
                         AlbumGain = "-5.90"
                     },
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "1.000000",
                         AlbumPeak = "1.000000",
                         TrackGain = "-6.49",
                         AlbumGain = "-5.90"
                     },
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "1.000000",
                         AlbumPeak = "1.000000",
@@ -68,26 +68,26 @@ namespace AudioWorks.Api.Tests.DataSources
                     "Track 3 LPCM 8-bit 8000Hz Stereo.wav"
                 ],
                 "ReplayGain",
-                new TestSettingDictionary
+                new()
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
                 [
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.820409",
                         AlbumPeak = "1.001346",
                         TrackGain = "-1.36",
                         AlbumGain = "-5.90"
                     },
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "1.001346",
                         AlbumPeak = "1.001346",
                         TrackGain = "-6.49",
                         AlbumGain = "-5.90"
                     },
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "1.000070",
                         AlbumPeak = "1.001346",
@@ -105,23 +105,23 @@ namespace AudioWorks.Api.Tests.DataSources
                     "Track 3 LPCM 16-bit 44100Hz Mono.wav"
                 ],
                 "ReplayGain",
-                new TestSettingDictionary(),
+                new(),
                 [
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.590515",
                         AlbumPeak = "0.965790",
                         TrackGain = "4.24",
                         AlbumGain = "-1.83"
                     },
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.914001",
                         AlbumPeak = "0.965790",
                         TrackGain = "-2.03",
                         AlbumGain = "-1.83"
                     },
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.965790",
                         AlbumPeak = "0.965790",
@@ -139,26 +139,26 @@ namespace AudioWorks.Api.Tests.DataSources
                     "Track 3 LPCM 16-bit 44100Hz Mono.wav"
                 ],
                 "ReplayGain",
-                new TestSettingDictionary
+                new()
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
                 [
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.591049",
                         AlbumPeak = "0.966563",
                         TrackGain = "4.24",
                         AlbumGain = "-1.83"
                     },
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.914502",
                         AlbumPeak = "0.966563",
                         TrackGain = "-2.03",
                         AlbumGain = "-1.83"
                     },
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.966563",
                         AlbumPeak = "0.966563",
@@ -176,23 +176,23 @@ namespace AudioWorks.Api.Tests.DataSources
                     "Track 3 LPCM 16-bit 44100Hz Stereo.wav"
                 ],
                 "ReplayGain",
-                new TestSettingDictionary(),
+                new(),
                 [
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.813904",
                         AlbumPeak = "0.999664",
                         TrackGain = "-1.15",
                         AlbumGain = "-5.70"
                     },
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.997620",
                         AlbumPeak = "0.999664",
                         TrackGain = "-6.28",
                         AlbumGain = "-5.70"
                     },
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.999664",
                         AlbumPeak = "0.999664",
@@ -210,26 +210,26 @@ namespace AudioWorks.Api.Tests.DataSources
                     "Track 3 LPCM 16-bit 44100Hz Stereo.wav"
                 ],
                 "ReplayGain",
-                new TestSettingDictionary
+                new()
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
                 [
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.814763",
                         AlbumPeak = "1.000577",
                         TrackGain = "-1.15",
                         AlbumGain = "-5.70"
                     },
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.998429",
                         AlbumPeak = "1.000577",
                         TrackGain = "-6.28",
                         AlbumGain = "-5.70"
                     },
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "1.000577",
                         AlbumPeak = "1.000577",
@@ -247,23 +247,23 @@ namespace AudioWorks.Api.Tests.DataSources
                     "Track 3 LPCM 16-bit 48000Hz Stereo.wav"
                 ],
                 "ReplayGain",
-                new TestSettingDictionary(),
+                new(),
                 [
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.814056",
                         AlbumPeak = "0.999634",
                         TrackGain = "-1.15",
                         AlbumGain = "-5.69"
                     },
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.997467",
                         AlbumPeak = "0.999634",
                         TrackGain = "-6.28",
                         AlbumGain = "-5.69"
                     },
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.999634",
                         AlbumPeak = "0.999634",
@@ -281,26 +281,26 @@ namespace AudioWorks.Api.Tests.DataSources
                     "Track 3 LPCM 16-bit 48000Hz Stereo.wav"
                 ],
                 "ReplayGain",
-                new TestSettingDictionary
+                new()
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
                 [
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.814716",
                         AlbumPeak = "1.000568",
                         TrackGain = "-1.15",
                         AlbumGain = "-5.69"
                     },
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.998379",
                         AlbumPeak = "1.000568",
                         TrackGain = "-6.28",
                         AlbumGain = "-5.69"
                     },
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "1.000568",
                         AlbumPeak = "1.000568",
@@ -318,23 +318,23 @@ namespace AudioWorks.Api.Tests.DataSources
                     "Track 3 LPCM 24-bit 96000Hz Stereo.wav"
                 ],
                 "ReplayGain",
-                new TestSettingDictionary(),
+                new(),
                 [
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.814049",
                         AlbumPeak = "0.999651",
                         TrackGain = "-1.13",
                         AlbumGain = "-5.67"
                     },
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.997602",
                         AlbumPeak = "0.999651",
                         TrackGain = "-6.26",
                         AlbumGain = "-5.67"
                     },
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.999651",
                         AlbumPeak = "0.999651",
@@ -352,26 +352,26 @@ namespace AudioWorks.Api.Tests.DataSources
                     "Track 3 LPCM 24-bit 96000Hz Stereo.wav"
                 ],
                 "ReplayGain",
-                new TestSettingDictionary
+                new()
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
                 [
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.814189",
                         AlbumPeak = "0.999758",
                         TrackGain = "-1.13",
                         AlbumGain = "-5.67"
                     },
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.997720",
                         AlbumPeak = "0.999758",
                         TrackGain = "-6.26",
                         AlbumGain = "-5.67"
                     },
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.999758",
                         AlbumPeak = "0.999758",
@@ -389,26 +389,26 @@ namespace AudioWorks.Api.Tests.DataSources
                     "Track 3 LPCM 16-bit 44100Hz Stereo.wav"
                 ],
                 "ReplayGain",
-                new TestSettingDictionary
+                new()
                 {
                     ["PeakAnalysis"] = "Simple"
                 },
                 [
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.813904",
                         AlbumPeak = "0.999664",
                         TrackGain = "-1.15",
                         AlbumGain = "-5.70"
                     },
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.997620",
                         AlbumPeak = "0.999664",
                         TrackGain = "-6.28",
                         AlbumGain = "-5.70"
                     },
-                    new TestAudioMetadata
+                    new()
                     {
                         TrackPeak = "0.999664",
                         AlbumPeak = "0.999664",

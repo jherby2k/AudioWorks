@@ -13,8 +13,8 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using AudioWorks.Api.Tests.DataTypes;
 using System.Linq;
+using AudioWorks.Api.Tests.DataTypes;
 using Xunit;
 
 namespace AudioWorks.Api.Tests.DataSources
@@ -27,8 +27,8 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "ReplayGain",
-                new TestSettingDictionary(),
-                new TestAudioMetadata
+                new(),
+                new()
                 {
 #if NET472
                     TrackPeak = "0.976563",
@@ -46,11 +46,11 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "ReplayGain",
-                new TestSettingDictionary
+                new()
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
-                new TestAudioMetadata
+                new()
                 {
                     TrackPeak = "0.987757",
                     AlbumPeak = "0.987757",
@@ -63,8 +63,8 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "ReplayGain",
-                new TestSettingDictionary(),
-                new TestAudioMetadata
+                new(),
+                new()
                 {
                     TrackPeak = "1.000000",
                     AlbumPeak = "1.000000",
@@ -77,11 +77,11 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "ReplayGain",
-                new TestSettingDictionary
+                new()
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
-                new TestAudioMetadata
+                new()
                 {
                     TrackPeak = "1.342166",
                     AlbumPeak = "1.342166",
@@ -94,8 +94,8 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ReplayGain",
-                new TestSettingDictionary(),
-                new TestAudioMetadata
+                new(),
+                new()
                 {
                     TrackPeak = "1.000000",
                     AlbumPeak = "1.000000",
@@ -108,11 +108,11 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ReplayGain",
-                new TestSettingDictionary
+                new()
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
-                new TestAudioMetadata
+                new()
                 {
                     TrackPeak = "1.012000",
                     AlbumPeak = "1.012000",
@@ -125,8 +125,8 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "ReplayGain",
-                new TestSettingDictionary(),
-                new TestAudioMetadata
+                new(),
+                new()
                 {
                     TrackPeak = "0.999969",
                     AlbumPeak = "0.999969",
@@ -139,11 +139,11 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "ReplayGain",
-                new TestSettingDictionary
+                new()
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
-                new TestAudioMetadata
+                new()
                 {
                     TrackPeak = "1.014152",
                     AlbumPeak = "1.014152",
@@ -156,8 +156,8 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "ReplayGain",
-                new TestSettingDictionary(),
-                new TestAudioMetadata
+                new(),
+                new()
                 {
                     TrackPeak = "0.988553",
                     AlbumPeak = "0.988553",
@@ -170,11 +170,11 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "ReplayGain",
-                new TestSettingDictionary
+                new()
                 {
                     ["PeakAnalysis"] = "Interpolated"
                 },
-                new TestAudioMetadata
+                new()
                 {
                     TrackPeak = "0.992940",
                     AlbumPeak = "0.992940",
@@ -187,11 +187,11 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ReplayGain",
-                new TestSettingDictionary
+                new()
                 {
                     ["PeakAnalysis"] = "Simple"
                 },
-                new TestAudioMetadata
+                new()
                 {
                     TrackPeak = "1.000000",
                     AlbumPeak = "1.000000",

@@ -13,8 +13,8 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using AudioWorks.Api.Tests.DataTypes;
 using System.Linq;
+using AudioWorks.Api.Tests.DataTypes;
 using Xunit;
 
 namespace AudioWorks.Api.Tests.DataSources
@@ -26,7 +26,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Basic rename
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
-                new TestAudioMetadata(),
+                new(),
                 "Testing 123",
                 "Testing 123.wav"
             },
@@ -34,7 +34,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Metadata substitution
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title"
                 },
@@ -45,7 +45,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Composite of multiple metadata fields
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title",
                     Artist = "Test Artist"
@@ -57,7 +57,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Requested metadata not present
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
-                new TestAudioMetadata(),
+                new(),
                 "{Title} by {Artist}",
                 "Unknown Title by Unknown Artist.wav"
             },
@@ -65,7 +65,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // Metadata with invalid characters
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
-                new TestAudioMetadata
+                new()
                 {
                     Title = "Test Title <> with |invalid \"characters\""
                 },
@@ -81,7 +81,7 @@ namespace AudioWorks.Api.Tests.DataSources
             // New name matches old
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
-                new TestAudioMetadata(),
+                new(),
                 "LPCM 16-bit 44100Hz Stereo",
                 "LPCM 16-bit 44100Hz Stereo.wav"
             }
