@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFrameworks>net8.0;net472</TargetFrameworks>
     <TargetFrameworks Condition="'$(OS)'!='Windows_NT'">net8.0</TargetFrameworks>
     <IsPackable>false</IsPackable>
@@ -10,8 +11,8 @@
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.3" PrivateAssets="all" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
-    <PackageReference Include="xunit" Version="2.9.2" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="3.0.0" PrivateAssets="all" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.0.1" PrivateAssets="all" />
+    <PackageReference Include="xunit.v3" Version="1.0.1" />
   </ItemGroup>
 
   <!-- ReSharper disable twice UnknownProperty -->

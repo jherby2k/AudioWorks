@@ -13,7 +13,7 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using Xunit.Abstractions;
+using Xunit.Sdk;
 
 namespace AudioWorks.Api.Tests.DataTypes
 {
@@ -48,7 +48,7 @@ namespace AudioWorks.Api.Tests.DataTypes
         public void Deserialize(IXunitSerializationInfo info)
         {
             foreach (var property in GetType().GetProperties())
-                property.SetValue(this, info.GetValue(property.Name, property.PropertyType));
+                property.SetValue(this, info.GetValue(property.Name));
         }
 
         public void Serialize(IXunitSerializationInfo info)

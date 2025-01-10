@@ -1975,28 +1975,13 @@ namespace AudioWorks.Api.Tests.DataSources
             #endregion
         };
 
-        public static TheoryData<string> FileNames => new(_data.Select(item => item[0]).Cast<string>());
+        public static TheoryData<string> FileNames =>
+            new(_data.Select(item => item.Data.Item1));
 
-        public static TheoryData<string, TestAudioInfo> FileNamesAndAudioInfo
-        {
-            get
-            {
-                var results = new TheoryData<string, TestAudioInfo>();
-                foreach (var result in _data.Select(item => ((string) item[0], (TestAudioInfo) item[1])))
-                    results.Add(result.Item1, result.Item2);
-                return results;
-            }
-        }
+        public static TheoryData<string, TestAudioInfo> FileNamesAndAudioInfo =>
+            new(_data.Select(item => (item.Data.Item1, item.Data.Item2)));
 
-        public static TheoryData<string, TestAudioMetadata> FileNamesAndMetadata
-        {
-            get
-            {
-                var results = new TheoryData<string, TestAudioMetadata>();
-                foreach (var result in _data.Select(item => ((string) item[0], (TestAudioMetadata) item[2])))
-                    results.Add(result.Item1, result.Item2);
-                return results;
-            }
-        }
+        public static TheoryData<string, TestAudioMetadata> FileNamesAndMetadata =>
+            new(_data.Select(item => (item.Data.Item1, item.Data.Item3)));
     }
 }

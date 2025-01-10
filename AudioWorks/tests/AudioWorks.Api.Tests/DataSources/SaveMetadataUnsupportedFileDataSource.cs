@@ -25,15 +25,7 @@ namespace AudioWorks.Api.Tests.DataSources
             "LPCM 16-bit 44100Hz Stereo.wav"
         ];
 
-        public static TheoryData<int, string> Data
-        {
-            get
-            {
-                var results = new TheoryData<int, string>();
-                foreach (var result in _data.Cast<string>().Select((item, index) => (index, item)))
-                    results.Add(result.Item1, result.Item2);
-                return results;
-            }
-        }
+        public static TheoryData<int, string> Data =>
+            new(_data.Select((item, index) => (index, item.Data)));
     }
 }

@@ -15,20 +15,25 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using Xunit;
-using Xunit.Abstractions;
+using Xunit.Sdk;
+using Xunit.v3;
 
 namespace AudioWorks.Api.Tests
 {
-    public class TestOrderer : ITestCollectionOrderer
+    public sealed class TestOrderer : ITestCollectionOrderer
     {
-        public IEnumerable<ITestCollection> OrderTestCollections(IEnumerable<ITestCollection> testCollections)
+        public IReadOnlyCollection<TTestCollection> OrderTestCollections<TTestCollection>(
+            IReadOnlyCollection<TTestCollection> testCollections) where TTestCollection : ITestCollection
         {
             var collections = testCollections.ToArray();
-            return collections.Where(c => c.DisplayName.Equals("Setup Tests", StringComparison.OrdinalIgnoreCase))
+            return new ReadOnlyCollection<TTestCollection>(collections
+                .Where(c => c.TestCollectionDisplayName.Equals("Setup Tests", StringComparison.OrdinalIgnoreCase))
                 .Concat(
-                    collections.Where(c => !c.DisplayName.Equals("Setup Tests", StringComparison.OrdinalIgnoreCase)));
+                    collections.Where(c =>
+                        !c.TestCollectionDisplayName.Equals("Setup Tests", StringComparison.OrdinalIgnoreCase)))
+                .ToList());
         }
     }
 }

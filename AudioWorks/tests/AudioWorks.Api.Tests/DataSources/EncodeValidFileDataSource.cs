@@ -2277,19 +2277,8 @@ namespace AudioWorks.Api.Tests.DataSources
             #endregion
         };
 
-        public static TheoryData<int, string, string, TestSettingDictionary, string[]> Data
-        {
-            get
-            {
-                var results = new TheoryData<int, string, string, TestSettingDictionary, string[]>();
-                foreach (var result in _data.Select((item, index) => (index,
-                             (string) item[0],
-                             (string) item[1],
-                             (TestSettingDictionary) item[2],
-                             (string[]) item[3])))
-                    results.Add(result.index, result.Item2, result.Item3, result.Item4, result.Item5);
-                return results;
-            }
-        }
+        public static TheoryData<int, string, string, TestSettingDictionary, string[]> Data =>
+            new(_data.Select((item, index) =>
+                (index, item.Data.Item1, item.Data.Item2, item.Data.Item3, item.Data.Item4)));
     }
 }

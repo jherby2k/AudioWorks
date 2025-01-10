@@ -88,6 +88,6 @@ namespace AudioWorks.Api.Tests.DataSources
         };
 
         public static TheoryData<string> FileNames =>
-            new(Data.Select(item => item[0]).Cast<string>().Distinct());
+            new(Data.Select(item => item.Data.Item1).Distinct());
     }
 }

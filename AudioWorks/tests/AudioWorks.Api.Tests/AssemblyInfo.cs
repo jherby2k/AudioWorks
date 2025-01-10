@@ -14,8 +14,9 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using AudioWorks.Api.Tests;
 using Xunit;
 
 [assembly: CLSCompliant(false)]
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
-[assembly: TestCollectionOrderer("AudioWorks.Api.Tests.TestOrderer", "AudioWorks.Api.Tests")]
+[assembly: TestCollectionOrderer(typeof(TestOrderer))]

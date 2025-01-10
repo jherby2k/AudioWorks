@@ -17,7 +17,6 @@ using System;
 using System.Text.Json;
 using AudioWorks.TestUtilities;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace AudioWorks.Common.Tests
 {

@@ -18,7 +18,6 @@ using System.Linq;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace AudioWorks.Extensibility.Tests
 {

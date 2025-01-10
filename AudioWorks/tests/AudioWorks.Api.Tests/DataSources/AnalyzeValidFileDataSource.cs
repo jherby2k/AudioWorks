@@ -201,17 +201,10 @@ namespace AudioWorks.Api.Tests.DataSources
             }
         };
 
-        public static TheoryData<string> Analyzers => new(Data.Select(item => item[1]).Cast<string>().Distinct());
+        public static TheoryData<string> Analyzers =>
+            new(Data.Select(item => item.Data.Item1).Distinct());
 
-        public static TheoryData<string, string> FileNamesAndAnalyzers
-        {
-            get
-            {
-                var results = new TheoryData<string, string>();
-                foreach (var result in Data.Select(item => ((string) item[0], (string) item[1])).Distinct())
-                    results.Add(result.Item1, result.Item2);
-                return results;
-            }
-        }
+        public static TheoryData<string, string> FileNamesAndAnalyzers =>
+            new(Data.Select(item => (item.Data.Item1, item.Data.Item2)).Distinct());
     }
 }

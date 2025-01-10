@@ -17,7 +17,6 @@ using System.IO;
 using AudioWorks.Common.Tests.DataSources;
 using AudioWorks.TestUtilities;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace AudioWorks.Common.Tests
 {

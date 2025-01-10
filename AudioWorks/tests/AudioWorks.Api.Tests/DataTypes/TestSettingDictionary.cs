@@ -17,7 +17,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 using AudioWorks.Common;
-using Xunit.Abstractions;
+using Xunit.Sdk;
 
 namespace AudioWorks.Api.Tests.DataTypes
 {

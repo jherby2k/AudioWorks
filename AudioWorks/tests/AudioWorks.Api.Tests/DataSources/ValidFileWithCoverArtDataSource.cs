@@ -159,81 +159,25 @@ namespace AudioWorks.Api.Tests.DataSources
             }
         };
 
-        public static TheoryData<string, int> FileNamesAndWidth
-        {
-            get
-            {
-                var results = new TheoryData<string, int>();
-                foreach (var result in _data.Select(item => ((string) item[0], (int) item[1])))
-                    results.Add(result.Item1, result.Item2);
-                return results;
-            }
-        }
+        public static TheoryData<string, int> FileNamesAndWidth =>
+            new(_data.Select(item => (item.Data.Item1, item.Data.Item2)));
 
-        public static TheoryData<string, int> FileNamesAndHeight
-        {
-            get
-            {
-                var results = new TheoryData<string, int>();
-                foreach (var result in _data.Select(item => ((string) item[0], (int) item[2])))
-                    results.Add(result.Item1, result.Item2);
-                return results;
-            }
-        }
+        public static TheoryData<string, int> FileNamesAndHeight =>
+            new(_data.Select(item => (item.Data.Item1, item.Data.Item3)));
 
-        public static TheoryData<string, int> FileNamesAndColorDepth
-        {
-            get
-            {
-                var results = new TheoryData<string, int>();
-                foreach (var result in _data.Select(item => ((string) item[0], (int) item[3])))
-                    results.Add(result.Item1, result.Item2);
-                return results;
-            }
-        }
+        public static TheoryData<string, int> FileNamesAndColorDepth =>
+            new(_data.Select(item => (item.Data.Item1, item.Data.Item4)));
 
-        public static TheoryData<string, bool> FileNamesAndLossless
-        {
-            get
-            {
-                var results = new TheoryData<string, bool>();
-                foreach (var result in _data.Select(item => ((string) item[0], (bool) item[4])))
-                    results.Add(result.Item1, result.Item2);
-                return results;
-            }
-        }
+        public static TheoryData<string, bool> FileNamesAndLossless =>
+            new(_data.Select(item => (item.Data.Item1, item.Data.Item5)));
 
-        public static TheoryData<string, string> FileNamesAndMimeType
-        {
-            get
-            {
-                var results = new TheoryData<string, string>();
-                foreach (var result in _data.Select(item => ((string) item[0], (string) item[5])))
-                    results.Add(result.Item1, result.Item2);
-                return results;
-            }
-        }
+        public static TheoryData<string, string> FileNamesAndMimeType =>
+            new(_data.Select(item => (item.Data.Item1, item.Data.Item6)));
 
-        public static TheoryData<string, string> FileNamesAndDataHash
-        {
-            get
-            {
-                var results = new TheoryData<string, string>();
-                foreach (var result in _data.Select(item => ((string) item[0], (string) item[6])))
-                    results.Add(result.Item1, result.Item2);
-                return results;
-            }
-        }
+        public static TheoryData<string, string> FileNamesAndDataHash =>
+            new(_data.Select(item => (item.Data.Item1, item.Data.Item7)));
 
-        public static TheoryData<int, string, string> IndexedFileNamesAndDataHash
-        {
-            get
-            {
-                var results = new TheoryData<int, string, string>();
-                foreach (var result in _data.Select((item, index) => (index, (string) item[0], (string) item[6])))
-                    results.Add(result.Item1, result.Item2, result.Item3);
-                return results;
-            }
-        }
+        public static TheoryData<int, string, string> IndexedFileNamesAndDataHash =>
+            new(_data.Select((item, index) => (index, item.Data.Item1, item.Data.Item7)));
     }
 }
