@@ -28,7 +28,9 @@ using Microsoft.Extensions.Logging;
 using NuGet.Common;
 using NuGet.Configuration;
 using NuGet.Frameworks;
+#if !NETSTANDARD2_0
 using NuGet.Packaging;
+#endif
 using NuGet.Packaging.Core;
 #if !NETSTANDARD2_0
 using NuGet.Packaging.Signing;

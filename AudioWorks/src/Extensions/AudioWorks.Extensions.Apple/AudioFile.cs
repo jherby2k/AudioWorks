@@ -88,8 +88,11 @@ namespace AudioWorks.Extensions.Apple
             }
         }
 
-        internal void GetPropertyInfo(AudioFilePropertyId id, out uint dataSize, out uint isWritable) =>
-            SafeNativeMethods.AudioFileGetPropertyInfo(Handle, id, out dataSize, out isWritable);
+        internal uint GetPropertyInfo(AudioFilePropertyId id)
+        {
+            SafeNativeMethods.AudioFileGetPropertyInfo(Handle, id, out var dataSize, out _);
+            return dataSize;
+        }
 
         internal void ReadPackets(
             ref uint numBytes,

@@ -21,7 +21,7 @@ namespace AudioWorks.Extensions.Id3
 {
     sealed class TagHeader
     {
-        static readonly byte[] _id3 = [0x49, 0x44, 0x33]; //"ID3" tag
+        static readonly byte[] _id3 = "ID3"u8.ToArray();
 
         bool _hasFooter;
 

@@ -114,7 +114,7 @@ namespace AudioWorks.Extensions.Apple
 
         static IntPtr GetMagicCookie(AudioFile audioFile, AudioConverter converter)
         {
-            audioFile.GetPropertyInfo(AudioFilePropertyId.MagicCookieData, out var dataSize, out _);
+            var dataSize = audioFile.GetPropertyInfo(AudioFilePropertyId.MagicCookieData);
             var cookie = audioFile.GetProperty(AudioFilePropertyId.MagicCookieData, dataSize);
             converter.SetProperty(AudioConverterPropertyId.DecompressionMagicCookie, dataSize, cookie);
             return cookie;

@@ -92,11 +92,11 @@ namespace AudioWorks.Extensions.Flac
 
         internal unsafe void Process(ReadOnlySpan<int> leftBuffer, ReadOnlySpan<int> rightBuffer)
         {
-            Span<IntPtr> buffers = stackalloc IntPtr[]
-            {
-                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(leftBuffer))),
-                new IntPtr(Unsafe.AsPointer(ref MemoryMarshal.GetReference(rightBuffer)))
-            };
+            Span<IntPtr> buffers =
+            [
+                new(Unsafe.AsPointer(ref MemoryMarshal.GetReference(leftBuffer))),
+                new(Unsafe.AsPointer(ref MemoryMarshal.GetReference(rightBuffer)))
+            ];
 
             if (!SafeNativeMethods.StreamEncoderProcess(
                 _handle,
