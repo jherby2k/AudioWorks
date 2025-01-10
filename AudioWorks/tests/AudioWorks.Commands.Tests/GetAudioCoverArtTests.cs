@@ -23,18 +23,14 @@ using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    public sealed class GetAudioCoverArtTests : IClassFixture<ModuleFixture>
+    public sealed class GetAudioCoverArtTests(ModuleFixture moduleFixture) : IClassFixture<ModuleFixture>
     {
-        readonly ModuleFixture _moduleFixture;
-
-        public GetAudioCoverArtTests(ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
-
         [Fact(DisplayName = "Get-AudioCoverArt command exists")]
         public void CommandExists()
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioCoverArt");
                 try
                 {
@@ -54,7 +50,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioCoverArt")
                     .AddParameter("Path", "Foo");
 
@@ -69,7 +65,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioCoverArt");
 
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
@@ -81,7 +77,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioCoverArt")
                     .AddArgument("Foo");
 
@@ -96,7 +92,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Set-Variable")
                     .AddArgument("path")
                     .AddArgument("Foo")
@@ -121,7 +117,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-Command")
                     .AddArgument("Get-AudioCoverArt");
                 ps.AddCommand("Select-Object")
@@ -140,7 +136,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioCoverArt")
                     .AddArgument("Foo");
 
@@ -161,7 +157,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioCoverArt")
                     .AddArgument(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
 
@@ -175,7 +171,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioCoverArt")
                     .AddArgument(Path.Combine(PathUtility.GetTestFileRoot(), "Unsupported", fileName));
 
@@ -196,7 +192,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioCoverArt")
                     .AddArgument(Path.Combine(PathUtility.GetTestFileRoot(), "Invalid", fileName));
 

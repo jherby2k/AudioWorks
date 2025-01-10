@@ -17,12 +17,9 @@ using System;
 
 namespace AudioWorks.Extensions.Flac
 {
-    abstract class MetadataBlock : IDisposable
+    abstract class MetadataBlock(MetadataType metadataType) : IDisposable
     {
-        internal MetadataBlockHandle Handle { get; }
-
-        protected MetadataBlock(MetadataType metadataType) =>
-            Handle = SafeNativeMethods.MetadataObjectNew(metadataType);
+        internal MetadataBlockHandle Handle { get; } = SafeNativeMethods.MetadataObjectNew(metadataType);
 
         public void Dispose() => Handle.Dispose();
     }

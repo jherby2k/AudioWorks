@@ -19,17 +19,13 @@ using System.IO;
 namespace AudioWorks.Extensions.Id3
 {
     [Frame("T")]
-    public class FrameText : FrameBase
+    public class FrameText(string frameId) : FrameBase(frameId)
     {
         internal TextType TextType { get; set; } = TextType.Ascii;
 
         internal string Text { get; set; } = string.Empty;
 
         // ReSharper disable once MemberCanBeProtected.Global
-        public FrameText(string frameId)
-            : base(frameId)
-        {
-        }
 
         internal override void Parse(Span<byte> frame)
         {

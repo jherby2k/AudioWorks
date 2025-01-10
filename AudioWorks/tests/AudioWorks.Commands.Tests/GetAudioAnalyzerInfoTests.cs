@@ -20,18 +20,14 @@ using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    public sealed class GetAudioAnalyzerInfoTests : IClassFixture<ModuleFixture>
+    public sealed class GetAudioAnalyzerInfoTests(ModuleFixture moduleFixture) : IClassFixture<ModuleFixture>
     {
-        readonly ModuleFixture _moduleFixture;
-
-        public GetAudioAnalyzerInfoTests(ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
-
         [Fact(DisplayName = "Get-AudioAnalyzerInfo command exists")]
         public void CommandExists()
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioAnalyzerInfo");
                 try
                 {
@@ -51,7 +47,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-Command")
                     .AddArgument("Get-AudioAnalyzerInfo");
                 ps.AddCommand("Select-Object")
@@ -68,7 +64,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioAnalyzerInfo");
 
                 Assert.IsAssignableFrom<AudioAnalyzerInfo>(ps.Invoke()[0].BaseObject);

@@ -25,18 +25,14 @@ using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    public sealed class ExportAudioCoverArtTests : IClassFixture<ModuleFixture>
+    public sealed class ExportAudioCoverArtTests(ModuleFixture moduleFixture) : IClassFixture<ModuleFixture>
     {
-        readonly ModuleFixture _moduleFixture;
-
-        public ExportAudioCoverArtTests(ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
-
         [Fact(DisplayName = "Export-AudioCoverArt command exists")]
         public void CommandExists()
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Export-AudioCoverArt");
                 try
                 {
@@ -56,7 +52,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Export-AudioCoverArt")
                     .AddParameter("Path", "Foo");
 
@@ -69,7 +65,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Export-AudioCoverArt")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object);
 
@@ -82,7 +78,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Export-AudioCoverArt")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object)
                     .AddParameter("Path", "{Invalid}");
@@ -98,7 +94,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-Command")
                     .AddArgument("Export-AudioCoverArt");
                 ps.AddCommand("Select-Object")
@@ -116,7 +112,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Export-AudioCoverArt")
                     .AddParameter("AudioFile",
                         new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", sourceFileName)))

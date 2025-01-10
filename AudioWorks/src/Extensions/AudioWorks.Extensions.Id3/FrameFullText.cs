@@ -25,16 +25,11 @@ namespace AudioWorks.Extensions.Id3
 {
     [Frame("COMM")]
     // ReSharper disable once ClassNeverInstantiated.Global
-    public sealed class FrameFullText : FrameText, IFrameDescription
+    public sealed class FrameFullText() : FrameText("COMM"), IFrameDescription
     {
         public string Description { get; set; } = string.Empty;
 
         internal string Language { get; set; } = "eng";
-
-        public FrameFullText()
-            : base("COMM")
-        {
-        }
 
 #if NETSTANDARD2_0
         internal override unsafe void Parse(Span<byte> frame)

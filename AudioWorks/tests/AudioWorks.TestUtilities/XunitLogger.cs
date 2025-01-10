@@ -18,17 +18,8 @@ using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.TestUtilities
 {
-    public sealed class XunitLogger : ILogger
+    public sealed class XunitLogger(XunitLoggerProvider provider, string? categoryName) : ILogger
     {
-        readonly XunitLoggerProvider _provider;
-        readonly string? _categoryName;
-
-        public XunitLogger(XunitLoggerProvider provider, string? categoryName)
-        {
-            _provider = provider;
-            _categoryName = categoryName;
-        }
-
         public void Log<TState>(
             LogLevel logLevel,
             EventId eventId,
@@ -40,13 +31,13 @@ namespace AudioWorks.TestUtilities
 
             try
             {
-                if (_categoryName != null)
-                    _provider.OutputHelper?.WriteLine("{0}: {1}: {2}",
+                if (categoryName != null)
+                    provider.OutputHelper?.WriteLine("{0}: {1}: {2}",
                         Enum.GetName(typeof(LogLevel), logLevel),
-                        _categoryName,
+                        categoryName,
                         formatter(state, exception));
                 else
-                    _provider.OutputHelper?.WriteLine("{0}: {1}",
+                    provider.OutputHelper?.WriteLine("{0}: {1}",
                         Enum.GetName(typeof(LogLevel), logLevel),
                         formatter(state, exception));
             }
@@ -56,7 +47,7 @@ namespace AudioWorks.TestUtilities
             }
         }
 
-        public bool IsEnabled(LogLevel logLevel) => logLevel >= _provider.MinLogLevel;
+        public bool IsEnabled(LogLevel logLevel) => logLevel >= provider.MinLogLevel;
 
         public IDisposable BeginScope<TState>(TState state) => new NullScope();
     }

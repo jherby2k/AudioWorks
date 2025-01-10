@@ -26,18 +26,14 @@ using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    public sealed class ExportAudioFileTests : IClassFixture<ModuleFixture>
+    public sealed class ExportAudioFileTests(ModuleFixture moduleFixture) : IClassFixture<ModuleFixture>
     {
-        readonly ModuleFixture _moduleFixture;
-
-        public ExportAudioFileTests(ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
-
         [Fact(DisplayName = "Export-AudioFile command exists")]
         public void CommandExists()
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Export-AudioFile");
                 try
                 {
@@ -57,7 +53,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Export-AudioFile")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object)
                     .AddParameter("Path", "Bar");
@@ -71,7 +67,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Export-AudioFile")
                     .AddParameter("Encoder", "Foo")
                     .AddParameter("Path", "Bar");
@@ -85,7 +81,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Export-AudioFile")
                     .AddParameter("Encoder", "Foo")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object);
@@ -102,7 +98,7 @@ namespace AudioWorks.Commands.Tests
                 .Returns(AudioInfo.CreateForLossless("Test", 2, 16, 44100, 100));
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Export-AudioFile")
                     .AddParameter("Encoder", "Wave")
                     .AddParameter("AudioFile", mock.Object)
@@ -119,7 +115,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-Command")
                     .AddArgument("Export-AudioFile");
                 ps.AddCommand("Select-Object")
@@ -143,7 +139,7 @@ namespace AudioWorks.Commands.Tests
             var sourceAudioFile = new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", sourceFileName));
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Export-AudioFile")
                     .AddArgument(encoderName)
                     .AddArgument(sourceAudioFile)

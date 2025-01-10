@@ -19,7 +19,7 @@ using System.IO;
 namespace AudioWorks.Extensions.Id3
 {
     [Frame("APIC")]
-    public sealed class FramePicture : FrameBase, IFrameDescription
+    public sealed class FramePicture() : FrameBase("APIC"), IFrameDescription
     {
         internal TextType TextType { get; set; } = TextType.Ascii;
 
@@ -30,11 +30,6 @@ namespace AudioWorks.Extensions.Id3
         public string Description { get; set; } = string.Empty;
 
         internal byte[] PictureData { get; set; } = [];
-
-        public FramePicture()
-            : base("APIC")
-        {
-        }
 
         internal override void Parse(Span<byte> frame)
         {

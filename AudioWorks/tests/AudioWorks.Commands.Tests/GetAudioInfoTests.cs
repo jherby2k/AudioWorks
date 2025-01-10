@@ -25,18 +25,14 @@ using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    public sealed class GetAudioInfoTests : IClassFixture<ModuleFixture>
+    public sealed class GetAudioInfoTests(ModuleFixture moduleFixture) : IClassFixture<ModuleFixture>
     {
-        readonly ModuleFixture _moduleFixture;
-
-        public GetAudioInfoTests(ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
-
         [Fact(DisplayName = "Get-AudioInfo command exists")]
         public void CommandExists()
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioInfo");
                 try
                 {
@@ -56,7 +52,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioInfo")
                     .AddParameter("AudioFile", new Mock<IAudioFile>().Object);
 
@@ -71,7 +67,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioInfo");
 
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
@@ -83,7 +79,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioInfo")
                     .AddArgument(new Mock<IAudioFile>().Object);
 
@@ -98,7 +94,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Set-Variable")
                     .AddArgument("audioFile")
                     .AddArgument(new Mock<IAudioFile>().Object)
@@ -123,7 +119,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-Command")
                     .AddArgument("Get-AudioInfo");
                 ps.AddCommand("Select-Object")
@@ -141,7 +137,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioInfo")
                     .AddArgument(new AudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)));
 

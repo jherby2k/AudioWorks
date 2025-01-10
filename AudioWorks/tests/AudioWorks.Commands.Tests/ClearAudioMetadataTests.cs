@@ -23,9 +23,8 @@ using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    public sealed class ClearAudioMetadataTests : IClassFixture<ModuleFixture>
+    public sealed class ClearAudioMetadataTests(ModuleFixture moduleFixture) : IClassFixture<ModuleFixture>
     {
-        readonly ModuleFixture _moduleFixture;
         readonly AudioMetadata _testMetadata = new()
         {
             Title = "Test Title",
@@ -46,14 +45,12 @@ namespace AudioWorks.Commands.Tests
             AlbumGain = "0.8"
         };
 
-        public ClearAudioMetadataTests(ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
-
         [Fact(DisplayName = "Clear-AudioMetadata command exists")]
         public void CommandExists()
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata");
                 try
                 {
@@ -75,7 +72,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object);
 
@@ -90,7 +87,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata");
 
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
@@ -104,7 +101,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddArgument(mock.Object);
 
@@ -121,7 +118,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Set-Variable")
                     .AddArgument("audioFile")
                     .AddArgument(mock.Object)
@@ -148,7 +145,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object);
 
@@ -166,7 +163,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Title");
@@ -184,7 +181,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Title");
@@ -206,7 +203,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Artist");
@@ -224,7 +221,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Artist");
@@ -246,7 +243,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Album");
@@ -264,7 +261,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Album");
@@ -286,7 +283,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("AlbumArtist");
@@ -304,7 +301,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("AlbumArtist");
@@ -326,7 +323,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Composer");
@@ -344,7 +341,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Composer");
@@ -366,7 +363,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Genre");
@@ -384,7 +381,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Genre");
@@ -406,7 +403,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Comment");
@@ -424,7 +421,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Comment");
@@ -446,7 +443,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Day");
@@ -464,7 +461,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Day");
@@ -486,7 +483,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Month");
@@ -504,7 +501,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Month");
@@ -526,7 +523,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Year");
@@ -544,7 +541,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Year");
@@ -566,7 +563,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("TrackNumber");
@@ -584,7 +581,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("TrackNumber");
@@ -606,7 +603,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("TrackCount");
@@ -624,7 +621,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("TrackCount");
@@ -646,7 +643,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Loudness");
@@ -657,14 +654,15 @@ namespace AudioWorks.Commands.Tests
             }
         }
 
-        [Fact(DisplayName = "Clear-AudioMetadata with Loudness switch clears only the TrackPeak, AlbumPeak, TrackGain and AlbumGain")]
+        [Fact(DisplayName =
+            "Clear-AudioMetadata with Loudness switch clears only the TrackPeak, AlbumPeak, TrackGain and AlbumGain")]
         public void LoudnessSwitchClearsPeakAndGain()
         {
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("Loudness");
@@ -689,7 +687,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("PassThru");
@@ -707,7 +705,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("PassThru");
@@ -721,7 +719,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-Command")
                     .AddArgument("Clear-AudioMetadata");
                 ps.AddCommand("Select-Object")

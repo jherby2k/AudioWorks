@@ -20,18 +20,14 @@ using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    public sealed class GetAudioMetadataEncoderInfoTests : IClassFixture<ModuleFixture>
+    public sealed class GetAudioMetadataEncoderInfoTests(ModuleFixture moduleFixture) : IClassFixture<ModuleFixture>
     {
-        readonly ModuleFixture _moduleFixture;
-
-        public GetAudioMetadataEncoderInfoTests(ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
-
         [Fact(DisplayName = "Get-AudioMetadataEncoderInfo command exists")]
         public void CommandExists()
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioMetadataEncoderInfo");
                 try
                 {
@@ -51,7 +47,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-Command")
                     .AddArgument("Get-AudioMetadataEncoderInfo");
                 ps.AddCommand("Select-Object")
@@ -68,7 +64,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioMetadataEncoderInfo");
 
                 Assert.IsAssignableFrom<AudioMetadataEncoderInfo>(ps.Invoke()[0].BaseObject);

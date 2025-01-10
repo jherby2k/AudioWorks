@@ -18,13 +18,11 @@ using Xunit.Abstractions;
 
 namespace AudioWorks.TestUtilities
 {
-    public sealed class XunitLoggerProvider : ILoggerProvider
+    public sealed class XunitLoggerProvider(LogLevel minLogLevel = LogLevel.Debug) : ILoggerProvider
     {
         public ITestOutputHelper? OutputHelper { get; set; }
 
-        public LogLevel MinLogLevel { get; }
-
-        public XunitLoggerProvider(LogLevel minLogLevel = LogLevel.Debug) => MinLogLevel = minLogLevel;
+        public LogLevel MinLogLevel { get; } = minLogLevel;
 
         public ILogger CreateLogger(string? categoryName) => new XunitLogger(this, categoryName);
 

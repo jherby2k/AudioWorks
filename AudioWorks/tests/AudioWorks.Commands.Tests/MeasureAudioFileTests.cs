@@ -27,18 +27,14 @@ using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    public sealed class MeasureAudioFileTests : IClassFixture<ModuleFixture>
+    public sealed class MeasureAudioFileTests(ModuleFixture moduleFixture) : IClassFixture<ModuleFixture>
     {
-        readonly ModuleFixture _moduleFixture;
-
-        public MeasureAudioFileTests(ModuleFixture moduleFixture) => _moduleFixture = moduleFixture;
-
         [Fact(DisplayName = "Measure-AudioFile command exists")]
         public void CommandExists()
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile");
                 try
                 {
@@ -58,7 +54,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object);
 
@@ -71,7 +67,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-Command")
                     .AddArgument("Measure-AudioFile");
                 ps.AddCommand("Select-Object")
@@ -89,7 +85,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
                     .AddParameter("Analyzer", analyzerName)
                     .AddParameter("AudioFile",
@@ -107,7 +103,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
                     .AddArgument(analyzerName)
                     .AddParameter("AudioFile",
@@ -125,7 +121,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
                     .AddParameter("Analyzer", analyzerName)
                     .AddParameter("AudioFile",
@@ -143,7 +139,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
                     .AddParameter("Analyzer", analyzer);
 
@@ -157,7 +153,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
                     .AddArgument(analyzerName)
                     .AddArgument(new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)));
@@ -174,7 +170,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Set-Variable")
                     .AddArgument("audioFile")
                     .AddArgument(new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)))
@@ -201,7 +197,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
                     .AddParameter("Analyzer", analyzerName)
                     .AddParameter("AudioFile",
@@ -221,7 +217,7 @@ namespace AudioWorks.Commands.Tests
             var audioFile = new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
                     .AddParameter("Analyzer", analyzerName)
                     .AddParameter("AudioFile", audioFile)
@@ -242,7 +238,7 @@ namespace AudioWorks.Commands.Tests
             var audioFile = new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Measure-AudioFile")
                     .AddArgument(analyzerName)
                     .AddArgument(audioFile);
@@ -274,7 +270,7 @@ namespace AudioWorks.Commands.Tests
                 .ToArray<ITaggedAudioFile>();
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Set-Variable")
                     .AddArgument("audioFiles")
                     .AddArgument(audioFiles)
