@@ -33,12 +33,12 @@ namespace AudioWorks.TestUtilities
             {
                 if (categoryName != null)
                     provider.OutputHelper?.WriteLine("{0}: {1}: {2}",
-                        Enum.GetName(typeof(LogLevel), logLevel),
+                        Enum.GetName(typeof(LogLevel), logLevel)!,
                         categoryName,
                         formatter(state, exception));
                 else
                     provider.OutputHelper?.WriteLine("{0}: {1}",
-                        Enum.GetName(typeof(LogLevel), logLevel),
+                        Enum.GetName(typeof(LogLevel), logLevel)!,
                         formatter(state, exception));
             }
             catch (InvalidOperationException)
@@ -49,6 +49,6 @@ namespace AudioWorks.TestUtilities
 
         public bool IsEnabled(LogLevel logLevel) => logLevel >= provider.MinLogLevel;
 
-        public IDisposable BeginScope<TState>(TState state) => new NullScope();
+        IDisposable ILogger.BeginScope<TState>(TState state) => new NullScope();
     }
 }

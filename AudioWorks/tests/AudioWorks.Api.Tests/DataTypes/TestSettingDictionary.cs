@@ -25,7 +25,7 @@ namespace AudioWorks.Api.Tests.DataTypes
     {
         public void Deserialize(IXunitSerializationInfo info)
         {
-            foreach (var item in info.GetValue<string[]>("Items"))
+            foreach (var item in info.GetValue<string[]>("Items") ?? [])
             {
                 var splitItem = item.Split('|');
                 Add(splitItem[0],

@@ -238,7 +238,7 @@ namespace AudioWorks.Extensions.Apple
         static void SetConverterProperty<T>(IntPtr converter, AudioConverterPropertyId propertyId, T value)
             where T : struct
         {
-            var unmanagedValueSize = Marshal.SizeOf(typeof(T));
+            var unmanagedValueSize = Marshal.SizeOf<T>();
             var unmanagedValue = Marshal.AllocHGlobal(unmanagedValueSize);
             try
             {

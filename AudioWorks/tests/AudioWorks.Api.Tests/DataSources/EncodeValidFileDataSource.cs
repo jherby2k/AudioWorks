@@ -31,7 +31,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "Wave",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "818EE6CBF16F76F923D33650E7A52708"
                 ]
@@ -39,7 +39,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "Wave",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "509B83828F13945E4121E4C4897A8649"
                 ]
@@ -47,7 +47,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Wave",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "5D4B869CD72BE208BC7B47F35E13BE9A"
                 ]
@@ -55,7 +55,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "Wave",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "EFBC44B9FA9C04449D67ECD16CB7F3D8"
                 ]
@@ -63,7 +63,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "Wave",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "D55BD1987676A7D6C2A04BF09C10F64F"
                 ]
@@ -71,7 +71,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "A-law 44100Hz Stereo.wav",
                 "Wave",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "47B031C7D8246F557E0CB37E4DB3F528"
                 ]
@@ -79,7 +79,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "µ-law 44100Hz Stereo.wav",
                 "Wave",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "FCA4C53C5F98B061CE9C9186A303D816"
                 ]
@@ -87,7 +87,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Mono.flac",
                 "Wave",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "509B83828F13945E4121E4C4897A8649"
                 ]
@@ -95,7 +95,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 "Wave",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "5D4B869CD72BE208BC7B47F35E13BE9A"
                 ]
@@ -103,7 +103,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 48000Hz Stereo.flac",
                 "Wave",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "EFBC44B9FA9C04449D67ECD16CB7F3D8"
                 ]
@@ -111,7 +111,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 24-bit 96000Hz Stereo.flac",
                 "Wave",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "D55BD1987676A7D6C2A04BF09C10F64F"
                 ]
@@ -121,7 +121,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "ALAC 16-bit 44100Hz Mono.m4a",
                 "Wave",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "509B83828F13945E4121E4C4897A8649"
                 ]
@@ -129,7 +129,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 "Wave",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "5D4B869CD72BE208BC7B47F35E13BE9A"
                 ]
@@ -137,7 +137,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "ALAC 16-bit 48000Hz Stereo.m4a",
                 "Wave",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "EFBC44B9FA9C04449D67ECD16CB7F3D8"
                 ]
@@ -145,7 +145,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "ALAC 24-bit 96000Hz Stereo.m4a",
                 "Wave",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "D55BD1987676A7D6C2A04BF09C10F64F"
                 ]
@@ -159,7 +159,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "FLAC",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "42070347011D5067A9D962DA3237EF63", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "5C1655ACED0E208FC231C92C678FD87B" // FLAC 1.4.3
@@ -168,7 +168,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "FLAC",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "0771EF09959F087FACE194A4479F5107", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "0B2A54ACAA983961889A83EF85942C5D" // FLAC 1.4.3
@@ -177,7 +177,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "F86AA899D869835AB05C17699F7F30DC" // FLAC 1.4.3
@@ -186,7 +186,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "FLAC",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "F0F075E05A3AFB67403CCF373932BCCA", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "4CF8F4F9A26506718F891820268284DD" // FLAC 1.4.3
@@ -195,7 +195,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "FLAC",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "D3A7B834DCE97F0709AEFCA45A24F5B6", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "99355C1C3DD53802AB84425043CF1831" // FLAC 1.4.3
@@ -204,7 +204,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "A-law 44100Hz Stereo.wav",
                 "FLAC",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "10F6AC75659ECFE81D3C07D8D3074538", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "F7A6A7DC6610B277E302387A9E38FB32" // FLAC 1.4.3
@@ -213,7 +213,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "µ-law 44100Hz Stereo.wav",
                 "FLAC",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "FCBAB8A8C261456CF6F87E603B237426", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "2ED7D0E99EA9072FB4415FF1510D3056" // FLAC 1.4.3
@@ -222,7 +222,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "FLAC",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "2F2F341FEECB7842F7FA9CE6CB110C67", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "D75493F3FFF379D7A14F5B0BFA5AFB8A" // FLAC 1.4.3
@@ -231,7 +231,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
                 "FLAC",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "A48820F5E30B5C21A881E01209257E21", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "A7E0AA5D079DCBF97B3C03B76FA2E645" // FLAC 1.4.3
@@ -240,7 +240,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "FLAC",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "D90693A520FA14AC987272ACB6CD8996", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "1ED46D08800E000E7D4FFD6B3E776C2C" // FLAC 1.4.3
@@ -249,7 +249,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Default compression
                     ["CompressionLevel"] = 5
@@ -262,7 +262,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Minimum compression
                     ["CompressionLevel"] = 0
@@ -275,7 +275,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Maximum compression
                     ["CompressionLevel"] = 8
@@ -288,7 +288,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Default seek point interval
                     ["SeekPointInterval"] = 10
@@ -301,7 +301,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Disabled seek points
                     ["SeekPointInterval"] = 0
@@ -314,7 +314,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Maximum seek point interval
                     ["SeekPointInterval"] = 600
@@ -327,7 +327,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Default padding
                     ["Padding"] = 8192
@@ -340,7 +340,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Disabled padding
                     ["Padding"] = 0
@@ -353,7 +353,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Maximum padding
                     ["Padding"] = 16_775_369
@@ -373,7 +373,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "ALAC",
-                new TestSettingDictionary
+                new()
                 {
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
@@ -386,7 +386,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ALAC",
-                new TestSettingDictionary
+                new()
                 {
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
@@ -399,7 +399,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "ALAC",
-                new TestSettingDictionary
+                new()
                 {
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
@@ -412,7 +412,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "ALAC",
-                new TestSettingDictionary
+                new()
                 {
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
@@ -425,7 +425,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "A-law 44100Hz Stereo.wav",
                 "ALAC",
-                new TestSettingDictionary
+                new()
                 {
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
@@ -438,7 +438,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "µ-law 44100Hz Stereo.wav",
                 "ALAC",
-                new TestSettingDictionary
+                new()
                 {
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
@@ -451,7 +451,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "ALAC",
-                new TestSettingDictionary
+                new()
                 {
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
@@ -464,7 +464,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
                 "ALAC",
-                new TestSettingDictionary
+                new()
                 {
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
@@ -477,7 +477,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "ALAC",
-                new TestSettingDictionary
+                new()
                 {
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
@@ -490,7 +490,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ALAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Different creation time
                     ["CreationTime"] = new DateTime(2016, 12, 1),
@@ -504,7 +504,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ALAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Different modification time
                     ["CreationTime"] = new DateTime(2017, 1, 31),
@@ -518,7 +518,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ALAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Default padding (explicit)
                     ["Padding"] = 2048,
@@ -533,7 +533,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ALAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Disabled padding
                     ["Padding"] = 0,
@@ -548,7 +548,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ALAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Maximum padding
                     ["Padding"] = 16_777_216,
@@ -568,7 +568,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
@@ -585,7 +585,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
@@ -602,7 +602,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
@@ -619,7 +619,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
@@ -636,7 +636,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "A-law 44100Hz Stereo.wav",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
@@ -653,7 +653,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "µ-law 44100Hz Stereo.wav",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
@@ -670,7 +670,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
@@ -687,7 +687,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
@@ -708,7 +708,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     ["CreationTime"] = new DateTime(2017, 1, 31),
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
@@ -725,7 +725,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Default VBR quality
                     ["VBRQuality"] = 9,
@@ -744,7 +744,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Minimum VBR quality
                     ["VBRQuality"] = 0,
@@ -763,7 +763,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Maximum VBR quality
                     ["VBRQuality"] = 14,
@@ -782,7 +782,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Minimum bit rate (stereo is automatically increased to 64)
                     ["BitRate"] = 32,
@@ -801,7 +801,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Minimum bit rate (mono)
                     ["BitRate"] = 32,
@@ -817,7 +817,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Maximum bit rate (stereo)
                     ["BitRate"] = 320,
@@ -836,7 +836,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Maximum bit rate (mono is automatically reduced to 256)
                     ["BitRate"] = 320,
@@ -855,7 +855,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Constrained bit rate mode (default)
                     ["BitRate"] = 128,
@@ -874,7 +874,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Constrained bit rate mode (explicit)
                     ["ControlMode"] = "Constrained",
@@ -893,7 +893,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Average bit rate mode
                     ["ControlMode"] = "Average",
@@ -912,7 +912,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Constant bit rate mode
                     ["ControlMode"] = "Constant",
@@ -932,7 +932,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     // TrackGain requested but not available
                     ["ApplyGain"] = "Track",
@@ -951,7 +951,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Scaled to TrackGain
                     ["ApplyGain"] = "Track",
@@ -970,7 +970,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "AppleAAC",
-                new TestSettingDictionary
+                new()
                 {
                     // Scaled to AlbumGain
                     ["ApplyGain"] = "Album",
@@ -996,7 +996,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "LameMP3",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "F2BD0875E273743A8908F96DCCFDFC44", // Lame 3.100 (Ubuntu and MacOS)
                     "7CB68FB7ACC70E8CD928E7DB437B16FE" // Lame 3.100 (Windows)
@@ -1005,7 +1005,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "LameMP3",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "1CB5B915B3A72CBE76087E16F96A0A3E", // Lame 3.100 (Ubuntu and MacOS)
                     "537DE5BA83AAF6542B2E29C74D405EC2" // Lame 3.100 (Windows)
@@ -1014,7 +1014,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS)
                     "EF2FAA877F1DE84DC87015F841103263" // Lame 3.100 (Windows)
@@ -1023,7 +1023,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "LameMP3",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "1454732B48913F2A3898164BA366DA01", // Lame 3.100 (Ubuntu and MacOS)
                     "D6C2622620E83D442C80AADBE6B45921" // Lame 3.100 (Windows)
@@ -1032,7 +1032,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "LameMP3",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "AD56C3A1ACD627DBDA4B5A28AFE0355D", // Lame 3.100 (Ubuntu and MacOS)
                     "5BCC0ED414809596507ECFEDEBD4454D" // Lame 3.100 (Windows)
@@ -1041,7 +1041,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "A-law 44100Hz Stereo.wav",
                 "LameMP3",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "0190385E444B8576C297E1DE837279F1", // Lame 3.100 (Ubuntu and MacOS)
                     "C43AEE67905D09300EE49323D6330426" // Lame 3.100 (Windows)
@@ -1050,7 +1050,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "µ-law 44100Hz Stereo.wav",
                 "LameMP3",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "3CE431DA62AC5204B9FAE63BD8E2B4A8", // Lame 3.100 (Ubuntu and MacOS)
                     "CC60AD39342F059B4F590988F192FE8D" // Lame 3.100 (Windows)
@@ -1059,7 +1059,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "F737A24D4F60E5B3229689CC15FF10EE", // Lame 3.100 (Ubuntu and MacOS)
                     "EA2FE7549FB7A1971265FA27B88D0285" // Lame 3.100 (Windows)
@@ -1068,7 +1068,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
                 "LameMP3",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "FB1B7DECB2C2A2C9CAA1FBB917A81472", // Lame 3.100 (MacOS and Legacy .NET on Ubuntu)
                     "BA2607DC22DBB4BA6DD592CCA6E7C994", // Lame 3.100 (.NET Core 3.0+ on Ubuntu)
@@ -1080,7 +1080,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "LameMP3",
-                new TestSettingDictionary(),
+                new(),
                 [
                     "FB1B7DECB2C2A2C9CAA1FBB917A81472", // Lame 3.100 (Ubuntu and MacOS)
                     "A4306E31052226EFD081D5D5FA80F62B" // Lame 3.100 (Windows)
@@ -1089,7 +1089,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // Default tag version
                     ["TagVersion"] = "2.3"
@@ -1102,7 +1102,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // Tag version 2.4
                     ["TagVersion"] = "2.4"
@@ -1115,7 +1115,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // Default tag encoding
                     ["TagEncoding"] = "Latin1"
@@ -1128,7 +1128,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // UTF-16 tag encoding
                     ["TagEncoding"] = "UTF16"
@@ -1141,7 +1141,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // UTF-8 tag encoding, implicit tag version 2.4
                     ["TagEncoding"] = "UTF8"
@@ -1154,7 +1154,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // UTF-8 tag encoding, explicit tag version 2.4
                     ["TagVersion"] = "2.4",
@@ -1168,7 +1168,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // UTF-8 tag encoding, ignored tag version 2.3
                     ["TagVersion"] = "2.3",
@@ -1182,7 +1182,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // Default tag padding (explicit)
                     ["TagPadding"] = 2048
@@ -1195,7 +1195,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // Tag padding disabled
                     ["TagPadding"] = 0
@@ -1208,7 +1208,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // Maximum tag padding
                     ["TagPadding"] = 16_777_216
@@ -1221,7 +1221,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // Tag version does nothing without metadata
                     ["TagVersion"] = "2.4"
@@ -1234,7 +1234,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // Tag encoding does nothing without metadata
                     ["TagEncoding"] = "UTF16"
@@ -1247,7 +1247,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // Tag padding does nothing without metadata
                     ["TagPadding"] = 100
@@ -1260,7 +1260,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // Default VBR quality
                     ["VBRQuality"] = 3
@@ -1273,7 +1273,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // Minimum VBR quality
                     ["VBRQuality"] = 9
@@ -1286,7 +1286,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // Maximum VBR quality
                     ["VBRQuality"] = 0
@@ -1299,7 +1299,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // Minimum bit rate
                     ["BitRate"] = 8
@@ -1312,7 +1312,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // Maximum bit rate
                     ["BitRate"] = 320
@@ -1325,7 +1325,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // Forced bit rate disabled (default)
                     ["BitRate"] = 128
@@ -1338,7 +1338,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // Forced bit rate explicitly disabled
                     ["BitRate"] = 128,
@@ -1352,7 +1352,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // Forced bit rate enabled
                     ["BitRate"] = 128,
@@ -1366,7 +1366,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // Forced bit rate ignored without bit rate
                     ["ForceCBR"] = true
@@ -1379,7 +1379,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // VBR quality ignored with bit rate
                     ["VBRQuality"] = 3,
@@ -1393,7 +1393,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // TrackGain requested but not available
                     ["ApplyGain"] = "Track"
@@ -1406,7 +1406,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // Scaled to TrackGain
                     ["ApplyGain"] = "Track"
@@ -1421,7 +1421,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
-                new TestSettingDictionary
+                new()
                 {
                     // Scaled to AlbumGain
                     ["ApplyGain"] = "Album"
@@ -1441,7 +1441,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     ["SerialNumber"] = 1
                 },
@@ -1455,7 +1455,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     ["SerialNumber"] = 1
                 },
@@ -1471,7 +1471,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     ["SerialNumber"] = 1
                 },
@@ -1486,7 +1486,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     ["SerialNumber"] = 1
                 },
@@ -1501,7 +1501,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     ["SerialNumber"] = 1
                 },
@@ -1516,7 +1516,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "A-law 44100Hz Stereo.wav",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     ["SerialNumber"] = 1
                 },
@@ -1531,7 +1531,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "µ-law 44100Hz Stereo.wav",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     ["SerialNumber"] = 1
                 },
@@ -1547,7 +1547,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     ["SerialNumber"] = 1
                 },
@@ -1562,7 +1562,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     ["SerialNumber"] = 1
                 },
@@ -1579,7 +1579,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     ["SerialNumber"] = 1
                 },
@@ -1594,7 +1594,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     // Minimum serial #
                     ["SerialNumber"] = int.MinValue
@@ -1610,7 +1610,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     // Maximum serial #
                     ["SerialNumber"] = int.MaxValue
@@ -1626,7 +1626,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     // Default quality (explicit)
                     ["Quality"] = 5,
@@ -1643,7 +1643,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     // Minimum quality
                     ["Quality"] = -1,
@@ -1662,7 +1662,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     // Maximum quality
                     ["Quality"] = 10,
@@ -1680,7 +1680,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     // Minimum bit rate
                     ["BitRate"] = 45,
@@ -1697,7 +1697,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     // Maximum bit rate
                     ["BitRate"] = 500,
@@ -1715,7 +1715,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     // Forced bit rate disabled (default)
                     ["BitRate"] = 128,
@@ -1732,7 +1732,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     // Forced bit rate disabled (explicit)
                     ["BitRate"] = 128,
@@ -1750,7 +1750,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     // Forced bit rate enabled
                     ["BitRate"] = 128,
@@ -1768,7 +1768,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     // Forced bit rate ignored without bit rate
                     ["ForceCBR"] = true,
@@ -1785,7 +1785,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     // Quality ignored with bit rate
                     ["Quality"] = 3,
@@ -1803,7 +1803,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     // TrackGain requested but not available
                     ["ApplyGain"] = "Track",
@@ -1820,7 +1820,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     // Scaled to TrackGain
                     ["ApplyGain"] = "Track",
@@ -1839,7 +1839,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "Vorbis",
-                new TestSettingDictionary
+                new()
                 {
                     // Scaled to AlbumGain
                     ["ApplyGain"] = "Album",
@@ -1864,7 +1864,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     ["SerialNumber"] = 1
                 },
@@ -1881,7 +1881,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     ["SerialNumber"] = 1
                 },
@@ -1896,7 +1896,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     ["SerialNumber"] = 1
                 },
@@ -1913,7 +1913,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     ["SerialNumber"] = 1
                 },
@@ -1930,7 +1930,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     ["SerialNumber"] = 1
                 },
@@ -1947,7 +1947,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "A-law 44100Hz Stereo.wav",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     ["SerialNumber"] = 1
                 },
@@ -1965,7 +1965,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "µ-law 44100Hz Stereo.wav",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     ["SerialNumber"] = 1
                 },
@@ -1983,7 +1983,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     ["SerialNumber"] = 1
                 },
@@ -2000,7 +2000,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     ["SerialNumber"] = 1
                 },
@@ -2022,7 +2022,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     ["SerialNumber"] = 1
                 },
@@ -2039,7 +2039,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     // Minimum serial #
                     ["SerialNumber"] = int.MinValue
@@ -2057,7 +2057,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     // Maximum serial #
                     ["SerialNumber"] = int.MaxValue
@@ -2075,7 +2075,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     // Minimum bit rate
                     ["BitRate"] = 5,
@@ -2090,7 +2090,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     // Maximum bit rate
                     ["BitRate"] = 512,
@@ -2109,7 +2109,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     // Variable control mode (default, explicit)
                     ["ControlMode"] = "Variable",
@@ -2128,7 +2128,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     // Constrained VBR mode
                     ["ControlMode"] = "Constrained",
@@ -2147,7 +2147,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     // CBR mode
                     ["ControlMode"] = "Constant",
@@ -2166,7 +2166,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     // Low bit rate, Music signal type (default)
                     ["BitRate"] = 32,
@@ -2183,7 +2183,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     // Low bit rate, Music signal type (explicit)
                     ["SignalType"] = "Music",
@@ -2201,7 +2201,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     // Low bit rate, Speech signal type
                     ["SignalType"] = "Speech",
@@ -2219,7 +2219,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     // TrackGain requested but not available
                     ["ApplyGain"] = "Track",
@@ -2238,7 +2238,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     // Scaled to TrackGain
                     ["ApplyGain"] = "Track",
@@ -2257,7 +2257,7 @@ namespace AudioWorks.Api.Tests.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "Opus",
-                new TestSettingDictionary
+                new()
                 {
                     // Scaled to AlbumGain
                     ["ApplyGain"] = "Album",
