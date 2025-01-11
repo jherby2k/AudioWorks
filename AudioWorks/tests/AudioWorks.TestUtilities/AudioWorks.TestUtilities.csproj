@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net8.0;net472</TargetFrameworks>
     <TargetFrameworks Condition="'$(OS)'!='Windows_NT'">net8.0</TargetFrameworks>
+    <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
   </PropertyGroup>
 
   <ItemGroup>
