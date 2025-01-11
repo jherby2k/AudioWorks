@@ -35,14 +35,13 @@ steps:
   inputs:
     command: restore
     projects: AudioWorks\AudioWorks.sln
-    restoreArguments: --runtime win-x64
   displayName: Restore dependencies
 
 - task: DotNetCoreCLI@2
   inputs:
     command: build
     projects: AudioWorks\AudioWorks.sln
-    arguments: --configuration $(buildConfiguration)
+    arguments: --configuration $(buildConfiguration) --runtime win-x64
   displayName: Build $(buildConfiguration) configuration
 
 - task: DotNetCoreCLI@2
