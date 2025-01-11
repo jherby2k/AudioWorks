@@ -115,7 +115,7 @@ steps:
     projects: AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj
     publishTestResults: true
     testRunTitle: AudioWorks.Api on .NET 8.0
-    arguments: --framework net8.0 --configuration $(buildConfiguration) --filter "FullyQualifiedName!~AudioWorks.Api.Tests.ExtensionInstallerTests" --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(localAppDataDir)/Extensions/net8.0/*
+    arguments: --framework net8.0 --configuration $(buildConfiguration) --filter "FullyQualifiedName!~AudioWorks.Api.Tests.ExtensionInstallerTests" --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=\"$(localAppDataDir)/Extensions/net8.0/*\"
   displayName: Test AudioWorks.Api on .NET 8.0
 
 - task: DotNetCoreCLI@2
@@ -124,7 +124,7 @@ steps:
     projects: AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj
     publishTestResults: true
     testRunTitle: AudioWorks.Commands on .NET 8.0
-    arguments: --framework net8.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(Build.SourcesDirectory)/AudioWorks/tests/AudioWorks.Commands.Tests/bin/$(buildConfiguration)/net8.0/AudioWorks.Commands/net8.0
+    arguments: --framework net8.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=\"$(Build.SourcesDirectory)/AudioWorks/tests/AudioWorks.Commands.Tests/bin/$(buildConfiguration)/net8.0/AudioWorks.Commands/net8.0\"
   displayName: Test AudioWorks.Commands on .NET 8.0
 
 - task: reportgenerator@5
