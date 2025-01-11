@@ -35,6 +35,7 @@ steps:
   inputs:
     command: restore
     projects: AudioWorks\AudioWorks.sln
+    restoreArguments: --runtime win-x64
   displayName: Restore dependencies
 
 - task: DotNetCoreCLI@2
