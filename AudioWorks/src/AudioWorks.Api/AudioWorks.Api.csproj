@@ -39,12 +39,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AudioWorks.Extensibility\AudioWorks.Extensibility.csproj" />
-    <ProjectReference Include="..\Extensions\AudioWorks.Extensions.Apple\AudioWorks.Extensions.Apple.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <OutputItemType>Content</OutputItemType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Targets>Build;DebugSymbolsProjectOutputGroup</Targets>
-    </ProjectReference>
     <ProjectReference Include="..\Extensions\AudioWorks.Extensions.Flac\AudioWorks.Extensions.Flac.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <OutputItemType>Content</OutputItemType>
@@ -100,6 +94,15 @@
       <Targets>Build;DebugSymbolsProjectOutputGroup</Targets>
     </ProjectReference>
     <ProjectReference Include="..\Extensions\AudioWorks.Extensions.Wave\AudioWorks.Extensions.Wave.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Content</OutputItemType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Targets>Build;DebugSymbolsProjectOutputGroup</Targets>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="!$([MSBuild]::IsOSPlatform('Linux'))">
+    <ProjectReference Include="..\Extensions\AudioWorks.Extensions.Apple\AudioWorks.Extensions.Apple.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <OutputItemType>Content</OutputItemType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
