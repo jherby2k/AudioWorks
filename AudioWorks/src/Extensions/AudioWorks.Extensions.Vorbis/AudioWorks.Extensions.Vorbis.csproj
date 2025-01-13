@@ -4,47 +4,24 @@
   <PropertyGroup>
     <VersionPrefix>1.16.0</VersionPrefix>
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
-    <Description>The Ogg Vorbis extension for AudioWorks. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
-    <PackageReleaseNotes>https://github.com/jherby2k/AudioWorks/wiki/Vorbis-Extension#release-notes</PackageReleaseNotes>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <NoWarn>NU5100</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(OS)'=='Windows_NT'">
-    <PackageId>$(AssemblyName).Windows</PackageId>
-    <PackageTags>Windows</PackageTags>
-  </PropertyGroup>
-  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
-    <PackageId>$(AssemblyName).Linux</PackageId>
-    <PackageTags>Linux</PackageTags>
-  </PropertyGroup>
-  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('OSX'))">
-    <PackageId>$(AssemblyName).MacOS</PackageId>
-    <PackageTags>MacOS</PackageTags>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(OS)'=='Windows_NT'">
     <None Include="win-*\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Pack>true</Pack>
-      <PackagePath>contentFiles\any\any\</PackagePath>
     </None>
   </ItemGroup>
 
   <ItemGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
     <None Include="ubuntu.*\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Pack>true</Pack>
-      <PackagePath>contentFiles\any\any\</PackagePath>
     </None>
   </ItemGroup>
 
   <ItemGroup Condition="$([MSBuild]::IsOSPlatform('OSX'))">
     <None Include="macos.*\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Pack>true</Pack>
-      <PackagePath>contentFiles\any\any\</PackagePath>
     </None>
   </ItemGroup>
 
@@ -57,10 +34,5 @@
   <ItemGroup>
     <ProjectReference Include="..\..\AudioWorks.Extensibility\AudioWorks.Extensibility.csproj" PrivateAssets="all" />
   </ItemGroup>
-
-  <Target Name="PublishLocally" AfterTargets="Pack">
-    <Exec Condition="'$(OS)'=='Windows_NT'" Command="powershell -ExecutionPolicy Bypass -File &quot;..\PublishLocally.ps1&quot; -ProjectName AudioWorks.Extensions.Vorbis -Configuration $(Configuration)" />
-    <Exec Condition="'$(OS)'!='Windows_NT'" Command="pwsh -File &quot;../PublishLocally.ps1&quot; -ProjectName AudioWorks.Extensions.Vorbis -Configuration $(Configuration)" />
-  </Target>
 
 </Project>

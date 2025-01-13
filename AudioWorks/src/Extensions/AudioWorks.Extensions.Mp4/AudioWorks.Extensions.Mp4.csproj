@@ -4,10 +4,6 @@
   <PropertyGroup>
     <VersionPrefix>1.8.0</VersionPrefix>
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
-    <Description>The MPEG-4 Audio extension for AudioWorks. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
-    <PackageReleaseNotes>https://github.com/jherby2k/AudioWorks/wiki/MP4-Extension#release-notes</PackageReleaseNotes>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageTags>Windows, MacOS, Linux</PackageTags>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
@@ -24,10 +20,5 @@
   <ItemGroup>
     <ProjectReference Include="..\..\AudioWorks.Extensibility\AudioWorks.Extensibility.csproj" PrivateAssets="all" />
   </ItemGroup>
-
-  <Target Name="PublishLocally" AfterTargets="Pack">
-    <Exec Condition="'$(OS)'=='Windows_NT'" Command="powershell -ExecutionPolicy Bypass -File &quot;..\PublishLocally.ps1&quot; -ProjectName AudioWorks.Extensions.Mp4 -Configuration $(Configuration)" />
-    <Exec Condition="'$(OS)'!='Windows_NT'" Command="pwsh -File &quot;../PublishLocally.ps1&quot; -ProjectName AudioWorks.Extensions.Mp4 -Configuration $(Configuration)" />
-  </Target>
 
 </Project>
