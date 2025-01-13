@@ -19,8 +19,6 @@
 
   <ItemGroup>
     <!-- Held back for PowerShell 5.1 compatibility -->
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
-    <!-- Held back for PowerShell 5.1 compatibility -->
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="2.1.9" />
   </ItemGroup>
