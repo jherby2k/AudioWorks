@@ -39,47 +39,9 @@ steps:
     arguments: --configuration $(buildConfiguration)
   displayName: Build $(buildConfiguration) configuration
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: pack
-    packagesToPack: '**/Extensions/**/*.csproj'
-    packDirectory: $(Build.ArtifactStagingDirectory)/prereleases/extensions
-    configurationToPack: $(buildConfiguration)
-    nobuild: true
-    buildProperties: VersionSuffix="pre.$(Build.BuildId)"
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
-  displayName: Package pre-release extensions
-
 - script: |
     sudo apt-get install --yes libflac8 libmp3lame0 libopus0 libebur128-1
   displayName: Download and install prerequisites
-
-- powershell: Write-Host echo "##vso[task.setvariable variable=localAppDataDir]$([System.Environment]::GetFolderPath(28))/AudioWorks"
-  displayName: Set local application data directory
-
-- powershell: |
-    &"AudioWorks/src/Extensions/UseLocalRepository.ps1"
-    &"AudioWorks/src/Extensions/UsePrerelease.ps1"
-    dotnet test AudioWorks/tests/AudioWorks.Api.Tests --configuration $env:BUILDCONFIGURATION --filter "FullyQualifiedName~AudioWorks.Api.Tests.ExtensionInstallerTests" --no-build  --no-build --results-directory $env:AGENT_TEMPDIRECTORY --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*
-    Write-Host
-    Write-Host 'Installed files:'
-    Get-ChildItem -File -Recurse $env:LOCALAPPDATADIR/Extensions | Select-Object -ExpandProperty FullName
-  displayName: Install extensions
-
-- powershell: |
-    function Copy-Symbols {
-        param ($source, $destination)
-
-        $extensionDirs = Get-ChildItem -Path $env:LOCALAPPDATADIR/Extensions/$destination/*
-        foreach ($pdb in Get-ChildItem -Path AudioWorks/src/Extensions/*/bin/$env:BUILDCONFIGURATION/$source/* -Filter AudioWorks.Extensions.*.pdb) {
-            $extensionDir = $extensionDirs | Where-Object -Property Name -Like "$($pdb.Name -replace '.pdb').*"
-            Copy-Item -Path $pdb.FullName -Destination $extensionDir -PassThru | % { Write-Host $_.FullName }
-        }
-    }
-
-    Write-Host 'Copied symbols:'
-    Copy-Symbols net8.0 net8.0
-  displayName: Copy symbols to extension directories
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -105,7 +67,7 @@ steps:
     projects: AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj
     publishTestResults: true
     testRunTitle: AudioWorks.Api on .NET 8.0
-    arguments: --framework net8.0 --configuration $(buildConfiguration) --filter "FullyQualifiedName!~AudioWorks.Api.Tests.ExtensionInstallerTests" --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(localAppDataDir)/Extensions/net8.0/*
+    arguments: --framework net8.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*
   displayName: Test AudioWorks.Api on .NET 8.0
 
 - task: DotNetCoreCLI@2
@@ -124,16 +86,6 @@ steps:
     reporttypes: HtmlInline_AzurePipelines;Cobertura;Badges
     publishCodeCoverageResults: true
   displayName: Generate code coverage report
-
-- task: CopyFiles@2
-  inputs:
-    contents: |
-      AudioWorks/src/Extensions/**/*.nupkg
-      AudioWorks/src/Extensions/**/*.snupkg
-    targetFolder: $(Build.ArtifactStagingDirectory)/releases/extensions
-    flattenFolders: true
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
-  displayName: Copy extensions to artifacts directory
 
 - task: PublishBuildArtifacts@1
   displayName: Publish artifacts

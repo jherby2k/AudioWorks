@@ -44,32 +44,6 @@ steps:
     arguments: --configuration $(buildConfiguration)
   displayName: Build $(buildConfiguration) configuration
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: custom
-    custom: nuget
-    arguments: sign AudioWorks\src\Extensions\*\bin\$(buildConfiguration)\*.nupkg --certificate-path AudioWorks\src\Extensions\ExtensionSigning.pfx --timestamper http://time.certum.pl --certificate-password $(extensionSigningPassword) --verbosity detailed
-  displayName: Sign extensions
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: pack
-    packagesToPack: '**\Extensions\**\*.csproj'
-    packDirectory: $(Build.ArtifactStagingDirectory)\prereleases\extensions
-    configurationToPack: $(buildConfiguration)
-    nobuild: true
-    buildProperties: VersionSuffix="pre.$(Build.BuildId)"
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
-  displayName: Package pre-release extensions
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: custom
-    custom: nuget
-    arguments: sign "$(Build.ArtifactStagingDirectory)\prereleases\extensions\*.nupkg" --certificate-path AudioWorks\src\Extensions\ExtensionSigning.pfx --timestamper http://time.certum.pl --certificate-password $(extensionSigningPassword) --verbosity detailed
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
-  displayName: Sign pre-release extensions
-
 - powershell: |
     $ProgressPreference = 'SilentlyContinue'
     Invoke-WebRequest -Uri https://audioworks.blob.core.windows.net/prerequisites/AppleApplicationSupport.msi -OutFile AppleApplicationSupport.msi
@@ -81,34 +55,6 @@ steps:
     msiexec /i AppleApplicationSupport.msi /qb-
     msiexec /i AppleApplicationSupport64.msi /qb-
   displayName: Install prerequisites
-
-- powershell: Write-Host echo "##vso[task.setvariable variable=localAppDataDir]$([System.Environment]::GetFolderPath(28))\AudioWorks"
-  displayName: Set local application data directory
-
-- powershell: |
-    &"AudioWorks\src\Extensions\UseLocalRepository.ps1"
-    &"AudioWorks\src\Extensions\UsePrerelease.ps1"
-    dotnet test AudioWorks\tests\AudioWorks.Api.Tests --configuration $env:BUILDCONFIGURATION --filter "FullyQualifiedName~AudioWorks.Api.Tests.ExtensionInstallerTests" --no-build --results-directory $env:AGENT_TEMPDIRECTORY --collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*%2c[AudioWorks.TestUtilities]*
-    Write-Host
-    Write-Host 'Installed files:'
-    Get-ChildItem -File -Recurse $env:LOCALAPPDATADIR\Extensions | Select-Object -ExpandProperty FullName
-  displayName: Install extensions
-
-- powershell: |
-    function Copy-Symbols {
-        param ($source, $destination)
-
-        $extensionDirs = Get-ChildItem -Path $env:LOCALAPPDATADIR\Extensions\$destination\*
-        foreach ($pdb in Get-ChildItem -Path AudioWorks\src\Extensions\*\bin\$env:BUILDCONFIGURATION\$source\* -Filter AudioWorks.Extensions.*.pdb) {
-            $extensionDir = $extensionDirs | Where-Object -Property Name -Like "$($pdb.Name -replace '.pdb').*"
-            Copy-Item -Path $pdb.FullName -Destination $extensionDir -PassThru | % { Write-Host $_.FullName }
-        }
-    }
-
-    Write-Host 'Copied symbols:'
-    Copy-Symbols net8.0 net8.0
-    Copy-Symbols netstandard2.0 net48
-  displayName: Copy symbols to extension directories
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -152,7 +98,7 @@ steps:
     projects: AudioWorks\tests\AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj
     publishTestResults: true
     testRunTitle: AudioWorks.Api on .NET 8.0
-    arguments: --framework net8.0 --configuration $(buildConfiguration) --filter "FullyQualifiedName!~AudioWorks.Api.Tests.ExtensionInstallerTests" --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(localAppDataDir)\Extensions\net8.0\*
+    arguments: --framework net8.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*
   displayName: Test AudioWorks.Api on .NET 8.0
 
 - task: DotNetCoreCLI@2
@@ -161,7 +107,7 @@ steps:
     projects: AudioWorks\tests\AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj
     publishTestResults: true
     testRunTitle: AudioWorks.Api on .NET Framework 4.8
-    arguments: --framework net472 --configuration $(buildConfiguration) --filter "FullyQualifiedName!~AudioWorks.Api.Tests.ExtensionInstallerTests" --no-build --collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(localAppDataDir)\Extensions\net48\*
+    arguments: --framework net472 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*
   displayName: Test AudioWorks.Api on .NET Framework 4.8
 
 - task: DotNetCoreCLI@2
@@ -199,16 +145,6 @@ steps:
     flattenFolders: true
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
   displayName: Copy core libraries to artifacts directory
-
-- task: CopyFiles@2
-  inputs:
-    contents: |
-      AudioWorks\src\Extensions\**\*.nupkg
-      AudioWorks\src\Extensions\**\*.snupkg
-    targetFolder: $(Build.ArtifactStagingDirectory)\releases\extensions
-    flattenFolders: true
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
-  displayName: Copy extensions to artifacts directory
 
 - task: CopyFiles@2
   inputs:
