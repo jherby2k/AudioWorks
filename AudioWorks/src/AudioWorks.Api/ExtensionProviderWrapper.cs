@@ -15,31 +15,12 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System.Collections.Generic;
 using System.Composition;
-using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Api
 {
     static class ExtensionProviderWrapper
     {
-        static ExtensionProviderWrapper()
-        {
-            var logger = LoggerManager.LoggerFactory.CreateLogger(typeof(ExtensionInstaller).FullName);
-
-            if (!ConfigurationManager.Configuration.GetValue<bool>("AutomaticExtensionDownloads"))
-                logger.LogInformation("Automatic extension downloads are disabled.");
-            else
-            {
-                logger.LogInformation("Beginning automatic extension updates.");
-
-                ExtensionInstaller.InstallAsync().Wait();
-            }
-
-            ExtensionInstaller.SetLoadComplete();
-        }
-
         internal static IEnumerable<ExportFactory<T, IDictionary<string, object>>> GetFactories<T>()
             where T : class =>
             ExtensionProvider.GetFactories<T>();

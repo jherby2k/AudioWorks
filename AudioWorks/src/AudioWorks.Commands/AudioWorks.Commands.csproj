@@ -34,7 +34,6 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
-    <PackageReference Include="Nuget.Resolver" Version="6.3.0" />
   </ItemGroup>
 
   <!-- ReSharper disable once UnknownProperty -->

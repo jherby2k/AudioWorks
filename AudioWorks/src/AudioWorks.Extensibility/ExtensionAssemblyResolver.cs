@@ -13,15 +13,16 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+#if NETSTANDARD2_0
 using System;
+#endif
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-#if NETSTANDARD2_0
-using System.Runtime.InteropServices;
-#endif
+#if !NETSTANDARD2_0
 using System.Runtime.Loader;
+#endif
 using AudioWorks.Common;
 using Microsoft.Extensions.Logging;
 
@@ -38,32 +39,15 @@ namespace AudioWorks.Extensibility
             _logger.LogDebug("Loading extension '{path}'.", path);
 
 #if NETSTANDARD2_0
-            Assembly = RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework",
-                StringComparison.Ordinal)
-                ? Assembly.LoadFrom(path)
-                : LoadWithLoader(path);
+            Assembly = Assembly.LoadFrom(path);
 #else
             Assembly = LoadWithLoader(path);
 #endif
 
-            var extensionDir = Path.GetDirectoryName(path)!;
-
-            // Resolve dependencies from both the main and extension directories
-            var assemblyFiles = Directory.GetFiles(
-#if NETSTANDARD
-                    // Avoid an issue with shadow-copied assemblies under .NET Framework
-                    Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath)!, "*.dll")
-#else
-                    Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!, "*.dll")
-#endif
-                .Concat(Directory.GetFiles(extensionDir, "*.dll"));
+            var assemblyFiles = Directory.GetFiles(Path.GetDirectoryName(path)!, "*.dll");
 
 #if NETSTANDARD2_0
-            if (RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework",
-                StringComparison.Ordinal))
-                ResolveFullFramework(assemblyFiles);
-            else
-                ResolveWithLoader(assemblyFiles);
+            ResolveFullFramework(assemblyFiles);
         }
 
         void ResolveFullFramework(IEnumerable<string> assemblyFiles) =>
@@ -87,7 +71,6 @@ namespace AudioWorks.Extensibility
 #else
             ResolveWithLoader(assemblyFiles);
         }
-#endif
 
         static Assembly LoadWithLoader(string path) =>
             new ExtensionLoadContext().LoadFromAssemblyPath(path);
@@ -112,5 +95,6 @@ namespace AudioWorks.Extensibility
                 _logger.LogTrace("Located dependency '{assembly}'.", assembly.FullName);
                 return assembly;
             };
+#endif
     }
 }

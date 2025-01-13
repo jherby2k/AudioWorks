@@ -17,6 +17,7 @@ using System;
 using System.Composition.Hosting;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using AudioWorks.Common;
 using Microsoft.Extensions.Logging;
 
@@ -28,15 +29,11 @@ namespace AudioWorks.Extensibility
 
         static ExtensionContainerBase()
         {
-            var assemblies = new DirectoryInfo(Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                    "AudioWorks",
-                    "Extensions",
-                    RuntimeChecker.GetShortFolderName()))
-                .GetDirectories()
-                .SelectMany(extensionDir => extensionDir.GetFiles("AudioWorks.Extensions.*.dll"))
-                .Select(fileInfo => new ExtensionAssemblyResolver(fileInfo.FullName).Assembly)
-                .ToList();
+            var assemblies =
+                new DirectoryInfo(Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!)
+                    .GetFiles("AudioWorks.Extensions.*.dll")
+                    .Select(fileInfo => new ExtensionAssemblyResolver(fileInfo.FullName).Assembly)
+                    .ToList();
 
             var logger = LoggerManager.LoggerFactory.CreateLogger<ExtensionContainerBase>();
             logger.LogDebug("Discovered {count} extension assemblies.", assemblies.Count);
