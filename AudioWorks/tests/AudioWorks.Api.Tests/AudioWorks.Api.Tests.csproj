@@ -1,13 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFrameworks>net8.0;net472</TargetFrameworks>
-    <TargetFrameworks Condition="'$(OS)'!='Windows_NT'">net8.0</TargetFrameworks>
-    <IsPackable>false</IsPackable>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="coverlet.collector" Version="6.0.3" PrivateAssets="all" />

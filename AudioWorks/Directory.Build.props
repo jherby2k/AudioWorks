@@ -1,20 +1,12 @@
 <Project>
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
     <LangVersion>12.0</LangVersion>
     <Nullable>enable</Nullable>
     <Revision>$(BUILD_BUILDID)</Revision>
     <Revision Condition="'$(Revision)'==''">0</Revision>
-    <Authors>Jeremy Herbison</Authors>
-    <Company />
     <Product>AudioWorks</Product>
     <Copyright>© 2018 Jeremy Herbison</Copyright>
-    <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/jherby2k/AudioWorks</PackageProjectUrl>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <NeutralLanguage>en-US</NeutralLanguage>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <ContinuousIntegrationBuild Condition="'$(TF_BUILD)'=='true'">true</ContinuousIntegrationBuild>
