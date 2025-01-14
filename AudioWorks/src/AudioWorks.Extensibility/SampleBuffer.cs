@@ -30,6 +30,13 @@ namespace AudioWorks.Extensibility
         /// <value>An empty <see cref="SampleBuffer"/>.</value>
         public static SampleBuffer Empty { get; } = new();
 
+        /// <summary>
+        /// Gets or sets a value indicating whether various performance optimizations will be applied. This defaults to
+        /// true, and should only be disabled for testing or troubleshooting purposes.
+        /// </summary>
+        /// <value><c>false</c> if optimizations should be skipped; otherwise, <c>true</c>.</value>
+        public static bool UseOptimizations { get; set; } = true;
+
         readonly IMemoryOwner<float>? _buffer;
         bool _isDisposed;
 
@@ -104,7 +111,7 @@ namespace AudioWorks.Extensibility
             Frames = monoSamples.Length;
             _buffer = MemoryPool<float>.Shared.Rent(Frames);
 
-            SampleProcessor.Convert(monoSamples, _buffer.Memory.Span, bitsPerSample);
+            SampleProcessor.Convert(monoSamples, _buffer.Memory.Span, bitsPerSample, UseOptimizations);
         }
 
         /// <summary>
@@ -130,8 +137,8 @@ namespace AudioWorks.Extensibility
             Frames = leftSamples.Length;
             _buffer = MemoryPool<float>.Shared.Rent(Frames * 2);
 
-            SampleProcessor.Convert(leftSamples, _buffer.Memory.Span[..Frames], bitsPerSample);
-            SampleProcessor.Convert(rightSamples, _buffer.Memory.Span[Frames..], bitsPerSample);
+            SampleProcessor.Convert(leftSamples, _buffer.Memory.Span[..Frames], bitsPerSample, UseOptimizations);
+            SampleProcessor.Convert(rightSamples, _buffer.Memory.Span[Frames..], bitsPerSample, UseOptimizations);
         }
 
         /// <summary>
@@ -162,7 +169,7 @@ namespace AudioWorks.Extensibility
             if (channels > 1)
                 IsInterleaved = true;
 
-            SampleProcessor.Convert(interleavedSamples, _buffer.Memory.Span, bitsPerSample);
+            SampleProcessor.Convert(interleavedSamples, _buffer.Memory.Span, bitsPerSample, UseOptimizations);
         }
 
         /// <summary>
@@ -199,11 +206,11 @@ namespace AudioWorks.Extensibility
             switch (bytesPerSample)
             {
                 case 1:
-                    SampleProcessor.Convert(interleavedSamples, _buffer.Memory.Span, bitsPerSample);
+                    SampleProcessor.Convert(interleavedSamples, _buffer.Memory.Span, bitsPerSample, UseOptimizations);
                     break;
                 case 2:
                     var interleavedInt16Samples = MemoryMarshal.Cast<byte, short>(interleavedSamples);
-                    SampleProcessor.Convert(interleavedInt16Samples, _buffer.Memory.Span, bitsPerSample);
+                    SampleProcessor.Convert(interleavedInt16Samples, _buffer.Memory.Span, bitsPerSample, UseOptimizations);
                     break;
                 case 3:
                     var interleavedInt24Samples = MemoryMarshal.Cast<byte, Int24>(interleavedSamples);
@@ -211,7 +218,7 @@ namespace AudioWorks.Extensibility
                     break;
                 case 4:
                     var interleavedInt32Samples = MemoryMarshal.Cast<byte, int>(interleavedSamples);
-                    SampleProcessor.Convert(interleavedInt32Samples, _buffer.Memory.Span, bitsPerSample);
+                    SampleProcessor.Convert(interleavedInt32Samples, _buffer.Memory.Span, bitsPerSample, UseOptimizations);
                     break;
             }
         }
@@ -258,7 +265,8 @@ namespace AudioWorks.Extensibility
                 SampleProcessor.DeInterleave(
                     _buffer.Memory.Span[..(Frames * 2)],
                     leftDestination,
-                    rightDestination);
+                    rightDestination,
+                    UseOptimizations);
             else
             {
                 _buffer.Memory.Span[..Frames].CopyTo(leftDestination);
@@ -290,14 +298,14 @@ namespace AudioWorks.Extensibility
             {
                 Span<float> leftBuffer = stackalloc float[Frames];
                 Span<float> rightBuffer = stackalloc float[Frames];
-                SampleProcessor.DeInterleave(_buffer.Memory.Span[..(Frames * 2)], leftBuffer, rightBuffer);
-                SampleProcessor.Convert(leftBuffer, leftDestination, bitsPerSample);
-                SampleProcessor.Convert(rightBuffer, rightDestination, bitsPerSample);
+                SampleProcessor.DeInterleave(_buffer.Memory.Span[..(Frames * 2)], leftBuffer, rightBuffer, UseOptimizations);
+                SampleProcessor.Convert(leftBuffer, leftDestination, bitsPerSample, UseOptimizations);
+                SampleProcessor.Convert(rightBuffer, rightDestination, bitsPerSample, UseOptimizations);
             }
             else
             {
-                SampleProcessor.Convert(_buffer.Memory.Span[..Frames], leftDestination, bitsPerSample);
-                SampleProcessor.Convert(_buffer.Memory.Span.Slice(Frames, Frames), rightDestination, bitsPerSample);
+                SampleProcessor.Convert(_buffer.Memory.Span[..Frames], leftDestination, bitsPerSample, UseOptimizations);
+                SampleProcessor.Convert(_buffer.Memory.Span.Slice(Frames, Frames), rightDestination, bitsPerSample, UseOptimizations);
             }
         }
 
@@ -327,7 +335,8 @@ namespace AudioWorks.Extensibility
                 SampleProcessor.Interleave(
                     _buffer.Memory.Span[..Frames],
                     _buffer.Memory.Span.Slice(Frames, Frames),
-                    destination);
+                    destination,
+                    UseOptimizations);
         }
 
         /// <summary>
@@ -355,15 +364,17 @@ namespace AudioWorks.Extensibility
                 throw new ArgumentOutOfRangeException(nameof(bitsPerSample), "bitsPerSample is out of range.");
 
             if (Channels == 1 || IsInterleaved)
-                SampleProcessor.Convert(_buffer.Memory.Span[..(Frames * Channels)], destination, bitsPerSample);
+                SampleProcessor.Convert(
+                    _buffer.Memory.Span[..(Frames * Channels)], destination, bitsPerSample, UseOptimizations);
             else
             {
                 Span<float> interleavedBuffer = stackalloc float[Frames * 2];
                 SampleProcessor.Interleave(
                     _buffer.Memory.Span[..Frames],
                     _buffer.Memory.Span.Slice(Frames, Frames),
-                    interleavedBuffer);
-                SampleProcessor.Convert(interleavedBuffer, destination, bitsPerSample);
+                    interleavedBuffer,
+                    UseOptimizations);
+                SampleProcessor.Convert(interleavedBuffer, destination, bitsPerSample, UseOptimizations);
             }
         }
 
@@ -401,15 +412,17 @@ namespace AudioWorks.Extensibility
                         SampleProcessor.Convert(
                             _buffer.Memory.Span[..(Frames * Channels)],
                             destination,
-                            bitsPerSample);
+                            bitsPerSample,
+                            UseOptimizations);
                     else
                     {
                         Span<float> interleavedBuffer = stackalloc float[Frames * 2];
                         SampleProcessor.Interleave(
                             _buffer.Memory.Span[..Frames],
                             _buffer.Memory.Span.Slice(Frames, Frames),
-                            interleavedBuffer);
-                        SampleProcessor.Convert(interleavedBuffer, destination, bitsPerSample);
+                            interleavedBuffer,
+                            UseOptimizations);
+                        SampleProcessor.Convert(interleavedBuffer, destination, bitsPerSample, UseOptimizations);
                     }
                     break;
                 case 2:
@@ -418,15 +431,17 @@ namespace AudioWorks.Extensibility
                         SampleProcessor.Convert(
                             _buffer.Memory.Span[..(Frames * Channels)],
                             int16Destination,
-                            bitsPerSample);
+                            bitsPerSample,
+                            UseOptimizations);
                     else
                     {
                         Span<float> interleavedBuffer = stackalloc float[Frames * 2];
                         SampleProcessor.Interleave(
                             _buffer.Memory.Span[..Frames],
                             _buffer.Memory.Span.Slice(Frames, Frames),
-                            interleavedBuffer);
-                        SampleProcessor.Convert(interleavedBuffer, int16Destination, bitsPerSample);
+                            interleavedBuffer,
+                            UseOptimizations);
+                        SampleProcessor.Convert(interleavedBuffer, int16Destination, bitsPerSample, UseOptimizations);
                     }
                     break;
                 case 3:
@@ -442,7 +457,8 @@ namespace AudioWorks.Extensibility
                         SampleProcessor.Interleave(
                             _buffer.Memory.Span[..Frames],
                             _buffer.Memory.Span.Slice(Frames, Frames),
-                            interleavedBuffer);
+                            interleavedBuffer,
+                            UseOptimizations);
                         SampleProcessor.Convert(interleavedBuffer, int24Destination, bitsPerSample);
                     }
                     break;
@@ -452,15 +468,17 @@ namespace AudioWorks.Extensibility
                         SampleProcessor.Convert(
                             _buffer.Memory.Span[..(Frames * Channels)],
                             int32Destination,
-                            bitsPerSample);
+                            bitsPerSample,
+                            UseOptimizations);
                     else
                     {
                         Span<float> interleavedBuffer = stackalloc float[Frames * 2];
                         SampleProcessor.Interleave(
                             _buffer.Memory.Span[..Frames],
                             _buffer.Memory.Span.Slice(Frames, Frames),
-                            interleavedBuffer);
-                        SampleProcessor.Convert(interleavedBuffer, int32Destination, bitsPerSample);
+                            interleavedBuffer,
+                            UseOptimizations);
+                        SampleProcessor.Convert(interleavedBuffer, int32Destination, bitsPerSample, UseOptimizations);
                     }
                     break;
             }

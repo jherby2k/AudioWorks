@@ -25,13 +25,13 @@ namespace AudioWorks.Extensibility
 {
     static class SampleProcessor
     {
-        internal static void Convert(ReadOnlySpan<float> source, Span<byte> destination, int bitsPerSample)
+        internal static void Convert(ReadOnlySpan<float> source, Span<byte> destination, int bitsPerSample, bool optimize)
         {
             var adjustment = (int) GetAbsoluteQuantizationLevels(bitsPerSample);
             var max = adjustment - 1;
 
-            // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
-            if (Vector.IsHardwareAccelerated)
+            // Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
+            if (optimize && Vector.IsHardwareAccelerated)
             {
                 var adjVector = new Vector<int>(adjustment);
                 var maxVector = new Vector<int>(max);
@@ -64,13 +64,13 @@ namespace AudioWorks.Extensibility
             }
         }
 
-        internal static void Convert(ReadOnlySpan<float> source, Span<short> destination, int bitsPerSample)
+        internal static void Convert(ReadOnlySpan<float> source, Span<short> destination, int bitsPerSample, bool optimize)
         {
             var multiplier = (int) GetAbsoluteQuantizationLevels(bitsPerSample);
             var max = multiplier - 1;
 
-            // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
-            if (Vector.IsHardwareAccelerated)
+            // Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
+            if (optimize && Vector.IsHardwareAccelerated)
             {
                 var maxVector = new Vector<int>(max);
                 var srcVectors = MemoryMarshal.Cast<float, Vector<float>>(source);
@@ -100,10 +100,10 @@ namespace AudioWorks.Extensibility
                 destination[sampleIndex] = new((int) Math.Min(source[sampleIndex] * multiplier, max));
         }
 
-        internal static void Convert(ReadOnlySpan<float> source, Span<int> destination, int bitsPerSample)
+        internal static void Convert(ReadOnlySpan<float> source, Span<int> destination, int bitsPerSample, bool optimize)
         {
-            // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
-            if (Vector.IsHardwareAccelerated && bitsPerSample < 32)
+            // Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
+            if (optimize && Vector.IsHardwareAccelerated && bitsPerSample < 32)
             {
                 var multiplier = (int) GetAbsoluteQuantizationLevels(bitsPerSample);
                 var max = multiplier - 1;
@@ -137,13 +137,13 @@ namespace AudioWorks.Extensibility
             }
         }
 
-        internal static void Convert(ReadOnlySpan<byte> source, Span<float> destination, int bitsPerSample)
+        internal static void Convert(ReadOnlySpan<byte> source, Span<float> destination, int bitsPerSample, bool optimize)
         {
             var adjustment = (float) GetAbsoluteQuantizationLevels(bitsPerSample);
             var multiplier = 1 / adjustment;
 
-            // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
-            if (Vector.IsHardwareAccelerated)
+            // Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
+            if (optimize && Vector.IsHardwareAccelerated)
             {
                 var adjustmentVector = new Vector<float>(adjustment);
                 var srcVectors = MemoryMarshal.Cast<byte, Vector<byte>>(source);
@@ -171,12 +171,12 @@ namespace AudioWorks.Extensibility
                     destination[sampleIndex] = (source[sampleIndex] - adjustment) * multiplier;
         }
 
-        internal static void Convert(ReadOnlySpan<short> source, Span<float> destination, int bitsPerSample)
+        internal static void Convert(ReadOnlySpan<short> source, Span<float> destination, int bitsPerSample, bool optimize)
         {
             var multiplier = 1 / (float) GetAbsoluteQuantizationLevels(bitsPerSample);
 
-            // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
-            if (Vector.IsHardwareAccelerated)
+            // Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
+            if (optimize && Vector.IsHardwareAccelerated)
             {
                 var srcVectors = MemoryMarshal.Cast<short, Vector<short>>(source);
                 var destVectors = MemoryMarshal.Cast<float, Vector<float>>(destination);
@@ -207,12 +207,12 @@ namespace AudioWorks.Extensibility
                 destination[sampleIndex] = source[sampleIndex] * multiplier;
         }
 
-        internal static void Convert(ReadOnlySpan<int> source, Span<float> destination, int bitsPerSample)
+        internal static void Convert(ReadOnlySpan<int> source, Span<float> destination, int bitsPerSample, bool optimize)
         {
             var multiplier = 1 / (float) GetAbsoluteQuantizationLevels(bitsPerSample);
 
-            // Optimization - Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
-            if (Vector.IsHardwareAccelerated)
+            // Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
+            if (optimize && Vector.IsHardwareAccelerated)
             {
                 var srcVectors = MemoryMarshal.Cast<int, Vector<int>>(source);
                 var destVectors = MemoryMarshal.Cast<float, Vector<float>>(destination);
@@ -232,7 +232,8 @@ namespace AudioWorks.Extensibility
         internal static void Interleave(
             ReadOnlySpan<float> leftSource,
             ReadOnlySpan<float> rightSource,
-            Span<float> destination)
+            Span<float> destination,
+            bool optimize)
         {
 #if NETSTANDARD2_0
             for (int frameIndex = 0, destIndex = 0; frameIndex < leftSource.Length; frameIndex++)
@@ -241,8 +242,8 @@ namespace AudioWorks.Extensibility
                 destination[destIndex++] = rightSource[frameIndex];
             }
 #else
-            // Optimization - Vectorized implementation is about 3x faster with AVX2
-            if (Avx2.IsSupported)
+            // Vectorized implementation is about 3x faster with AVX2
+            if (optimize && Avx2.IsSupported)
             {
                 var controlVector = Vector256.Create(0, 2, 1, 3, 4, 6, 5, 7);
                 var leftSrcVectors = MemoryMarshal.Cast<float, Vector256<float>>(leftSource);
@@ -286,7 +287,8 @@ namespace AudioWorks.Extensibility
         internal static void DeInterleave(
             ReadOnlySpan<float> source,
             Span<float> leftDestination,
-            Span<float> rightDestination)
+            Span<float> rightDestination,
+            bool optimize)
         {
 #if NETSTANDARD2_0
             for (int destIndex = 0, srcIndex = 0; destIndex < leftDestination.Length; destIndex++)
@@ -295,8 +297,8 @@ namespace AudioWorks.Extensibility
                 rightDestination[destIndex] = source[srcIndex++];
             }
 #else
-            // Optimization - Vectorized implementation is about 3x faster with AVX2
-            if (Avx2.IsSupported)
+            // Vectorized implementation is about 3x faster with AVX2
+            if (optimize && Avx2.IsSupported)
             {
                 var controlVector = Vector256.Create(0, 2, 4, 6, 1, 3, 5, 7);
                 var srcVectors = MemoryMarshal.Cast<float, Vector256<float>>(source);

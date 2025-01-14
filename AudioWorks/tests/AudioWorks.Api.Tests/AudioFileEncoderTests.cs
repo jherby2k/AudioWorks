@@ -61,9 +61,9 @@ namespace AudioWorks.Api.Tests
             await Assert.ThrowsAsync<ArgumentNullException>(() =>
                 new AudioFileEncoder("Wave").EncodeAsync(null!)).ConfigureAwait(true);
 
-        [Theory(DisplayName = "AudioFileEncoder's Encode method creates the expected audio file")]
+        [Theory(DisplayName = "AudioFileEncoder's Encode method creates the expected audio file with optimization")]
         [MemberData(nameof(EncodeValidFileDataSource.Data), MemberType = typeof(EncodeValidFileDataSource))]
-        public async Task EncodeAsyncCreatesExpectedAudioFile(
+        public async Task EncodeAsyncCreatesExpectedAudioFileWithOptimization(
             int index,
             string sourceFileName,
             string encoderName,
@@ -76,6 +76,28 @@ namespace AudioWorks.Api.Tests
                         $"{index:000} - {Path.GetFileNameWithoutExtension(sourceFileName)}",
                         settings)
                     { Overwrite = true }
+                .EncodeAsync(new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", sourceFileName)))
+                .ConfigureAwait(true)).ToArray();
+
+            Assert.Single(results);
+            Assert.Contains(HashUtility.CalculateHash(results[0].Path), validHashes);
+        }
+
+        [Theory(DisplayName = "AudioFileEncoder's Encode method creates the expected audio file without optimization")]
+        [MemberData(nameof(EncodeValidFileDataSource.Data), MemberType = typeof(EncodeValidFileDataSource))]
+        public async Task EncodeAsyncCreatesExpectedAudioFileWithoutOptimization(
+            int index,
+            string sourceFileName,
+            string encoderName,
+            TestSettingDictionary settings,
+            string[] validHashes)
+        {
+            var results = (await new AudioFileEncoder(
+                        encoderName,
+                        Path.Combine("Output", "Encode", "Valid"),
+                        $"{index:000} - {Path.GetFileNameWithoutExtension(sourceFileName)}",
+                        settings)
+                    { Overwrite = true, UseOptimizations = false }
                 .EncodeAsync(new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", sourceFileName)))
                 .ConfigureAwait(true)).ToArray();
 
