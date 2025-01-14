@@ -578,7 +578,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "7E21540C472F59D17BB67D400BFD7991", // MacOS on ARM
                     "09CD8B8C8E9D8BC09121D8C9F871F9B7", // 32-bit Windows on Intel
                     "CF5AD69DADDCCE22612CD6FA8FB21897", // 32-bit Windows on AMD
-                    "D281CFECEEBE5A14D0D3D953D12F71DC", // 64-bit Windows on Intel
+                    "75D127D9FCD7720CBE92C0670A93A880", // 64-bit Windows on Intel
                     "F1E4C1E4386B0DD4B233284E4E2363D8" // 64-bit Windows on AMD
                 ]
             },
@@ -595,7 +595,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "439F73E38831F4A10B5BD4F91F732A15", // MacOS on ARM
                     "9A0F6E1984B428F236E1209C13AED4D1", // 32-bit Windows on Intel
                     "7FABBF9DDF1A16701E57C6DD190485E0", // 32-bit Windows on AMD
-                    "47189DECF29E68A40F60645F97714BE3", // 64-bit Windows on Intel
+                    "1D0F379EC9C47267569F88729569D407", // 64-bit Windows on Intel
                     "C40C18B162E7429F60C62DF6A23071D6" // 64-bit Windows on AMD
                 ]
             },
@@ -612,7 +612,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "13BB443AE1F220DF897615F96EF0A0D2", // MacOS on ARM
                     "CB39DFBF414790022574435C2D30297D", // 32-bit Windows on Intel
                     "EB0DA4A098888A34C2F77A2A65D2E337", // 32-bit Windows on AMD
-                    "589C93B14B5A2C8EF39239949A7729FF", // 64-bit Windows on Intel
+                    "E0A80A6B32CD5A8FA5C62B44F28C4A87", // 64-bit Windows on Intel
                     "CA58A161F472C9038E29DB08BC8B41CC" // 64-bit Windows on AMD
                 ]
             },
@@ -629,7 +629,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "88908D8E665C16C5B6762CD1B14F8B7C", // MacOS on ARM
                     "E0C34EA1479C8979D3AF3A2C98D4E699", // 32-bit Windows on Intel
                     "06469BD31CF3F0B799D9E52BBEA00C72", // 32-bit Windows on AMD
-                    "BA760ADA182CA749797AC1B978266CB1", // 64-bit Windows on Intel
+                    "ED307F76DD052720321284BAD8876AB2", // 64-bit Windows on Intel
                     "155983F671E0ACD36DC482A283A8EDBE" // 64-bit Windows on AMD
                 ]
             },
@@ -646,7 +646,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "18E802BDE2DDECAAEF5628312EC47EC9", // MacOS on ARM
                     "6E08F885FEC4094041F6A0B4A02F10AB", // 32-bit Windows on Intel
                     "194D40FBCAE58B4A01095DD89CE70A2D", // 32-bit Windows on AMD
-                    "061ECBD66434D647CFFC03337B4EFC5A", // 64-bit Windows on Intel
+                    "369DAA1350BB9C45BAF84F7769221F00", // 64-bit Windows on Intel
                     "B90925A2DA13F80969FB7E6FEF7E81E0" // 64-bit Windows on AMD
                 ]
             },
@@ -663,7 +663,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "7B13752769B0DCF9A5054C462D18CB40", // MacOS on AMD
                     "D41235E8E642C5773C499DCE06A72CC8", // 32-bit Windows on Intel
                     "C7FD479EFD340F30F3DE645205FA3BC5", // 32-bit Windows on AMD
-                    "03B3AE83638F10833E9A6ECC83FD720B", // 64-bit Windows on Intel
+                    "A86E9A3D4A9479A44F852FA42BA0C9C2", // 64-bit Windows on Intel
                     "437164350E18B65669094C81C9335C4E" // 64-bit Windows on AMD
                 ]
             },
@@ -680,7 +680,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "04ABF599CC89FC3478FAFD96DD393DBA", // MacOS on ARM
                     "7BAD797AA7C5F71C7168C24077271029", // 32-bit Windows on Intel
                     "01DF45A55B786EBDEFCFFFFFD58187DF", // 32-bit Windows on AMD
-                    "A3DC2D21D29A05456284B0B8C09E1F94", // 64-bit Windows on Intel
+                    "102A8F21E39D364419B9CF5BFB386631", // 64-bit Windows on Intel
                     "EB34F55D3D94E569E99C12BD8FCF5BBF" // 64-bit Windows on AMD
                 ]
             },
@@ -700,7 +700,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "E0B28BC27F9F86696F724F2D6E2540AA", // Legacy .NET on 32-bit Windows / AMD
                     "B6A891E92CF4D1FF747716CAB6F617DA", // .NET Core 3.0+ on 32-bit Windows / AMD
                     "D3113CF2C5283D2879F3DBEB617D050B", // Legacy .NET on 64-bit Windows / Intel
-                    "A0705FB3CDB8E21E2477DE72DC0E2C7A", // .NET Core 3.0+ on 64-bit Windows / Intel
+                    "FEC2C179EB82166BBA78F5EDC06194F6", // .NET Core 3.0+ on 64-bit Windows / Intel
                     "067296B4F0A8B3DCE4AF3C48EA9B0C66", // Legacy .NET on 64-bit Windows / AMD
                     "CEFB86217E9AA94C807AE03273151C6E" // .NET Core 3.0+ on 64-bit Windows / AMD
                 ]
@@ -718,7 +718,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "B1BD1E3A78B5E47CAAE8462B13720EDE", // MacOS on ARM
                     "9AC3DEF9B464D0E1AB2D4F91C1A08B83", // 32-bit Windows on Intel
                     "4BB812252790CAEDE8CE8547E7BD546A", // 32-bit Windows on AMD
-                    "DC77F4678649D575CE3E91DB950CDF55", // 64-bit Windows on Intel
+                    "2863A63E2060267B6A6151CA90239BC6", // 64-bit Windows on Intel
                     "76BFBCEB5644AEA27C774D00D35A2B66" // 64-bit Windows on AMD
                 ]
             },
@@ -737,7 +737,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "439F73E38831F4A10B5BD4F91F732A15", // MacOS on ARM
                     "9A0F6E1984B428F236E1209C13AED4D1", // 32-bit Windows on Intel
                     "7FABBF9DDF1A16701E57C6DD190485E0", // 32-bit Windows on AMD
-                    "47189DECF29E68A40F60645F97714BE3", // 64-bit Windows on Intel
+                    "1D0F379EC9C47267569F88729569D407", // 64-bit Windows on Intel
                     "C40C18B162E7429F60C62DF6A23071D6" // 64-bit Windows on AMD
                 ]
             },
@@ -775,7 +775,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "D565DE5B4A908E077EEC1BB5B75C05C2", // MacOS on ARM
                     "7EDD94F25082AEEE82B2AA87E795AB6D", // 32-bit Windows on Intel
                     "9EFB3B60246E65F1C90A0880CF8905D9", // 32-bit Windows on AMD
-                    "560039278EF9183F0FB2C47E5744E475", // 64-bit Windows on Intel
+                    "A1CD6AC102BA40A728B2C7E00B1E786D", // 64-bit Windows on Intel
                     "288B9B3FE4FCC212491B9A370757FC46" // 64-bit Windows on AMD
                 ]
             },
@@ -794,7 +794,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "DAA69EC398F6E9E31B67B12DD735331F", // MacOS on ARM
                     "0177BB1DEB19854CA8495C4CBBB25366", // 32-bit Windows on Intel
                     "4EE479F602DD0FB162B19540B683B2BF", // 32-bit Windows on AMD
-                    "DB44ACD7770861D4A3C6D7EE644C5E1C", // 64-bit Windows on Intel
+                    "38D28BD3802566CB30D3B824D7FF593F", // 64-bit Windows on Intel
                     "2D6F2B1043E1276764605C70E94A9EAE" // 64-bit Windows on AMD
                 ]
             },
@@ -829,7 +829,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "01245B8ECCFC4C4DA1F261F691A3FF37", // MacOS on ARM
                     "EBD496E30A953A8D0FE11C2609EFABC3", // 32-bit Windows on Intel
                     "AFEC3388275B59A08EFD11A9B32904FD", // 32-bit Windows on AMD
-                    "A67A5F8D1A55CD2A29EEFA54E583AEA1", // 64-bit Windows on Intel
+                    "2AD5FC82A78732A66B8F04387D7D412B", // 64-bit Windows on Intel
                     "58E298B32860D9A30E1F31B3D164A3AC" // 64-bit Windows on AMD
                 ]
             },
@@ -848,7 +848,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "8B21060F2783BBD1029CB5E38489EE6F", // MacOS on ARM
                     "DE5F94EC1EACB75A3D049AE9960A7ACB", // 32-bit Windows on Intel
                     "C3A45A0F87C7E3A8BDAD6526CFA00ABF", // 32-bit Windows on AMD
-                    "8F6858F8F86AA821789D926E0B4F63B6", // 64-bit Windows on Intel
+                    "298A2B946AA53102FD025DDD9D273B21", // 64-bit Windows on Intel
                     "8853121A36B39C0A607B5FE219A8EFD8" // 64-bit Windows on AMD
                 ]
             },
@@ -867,7 +867,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "2E531801B06854D07EE21F128D15021D", // MacOS on Intel
                     "0557E7171818C5DC73C175F1F8DC7535", // MacOS on ARM
                     "B26C14FD53A4027C26FA3A57CB96AF4C", // 32-bit Windows
-                    "EEEAF1FB2801EF0FB49B9B87350B5587", // 64-bit Windows on Intel
+                    "96E46C6CF7126E26E58224D5F55850F2", // 64-bit Windows on Intel
                     "60DEF5D19AF12B0962777B0B38CBA79A" // 64-bit Windows on AMD
                 ]
             },
@@ -886,7 +886,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "2E531801B06854D07EE21F128D15021D", // MacOS on Intel
                     "0557E7171818C5DC73C175F1F8DC7535", // MacOS on ARM
                     "B26C14FD53A4027C26FA3A57CB96AF4C", // 32-bit Windows
-                    "EEEAF1FB2801EF0FB49B9B87350B5587", // 64-bit Windows on Intel
+                    "96E46C6CF7126E26E58224D5F55850F2", // 64-bit Windows on Intel
                     "60DEF5D19AF12B0962777B0B38CBA79A" // 64-bit Windows on AMD
                 ]
             },
@@ -905,7 +905,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "5121C9A7D75A0718B62D7A83CAD441FE", // MacOS on Intel
                     "C17ED28BC045C9E5010DF361ADE59515", // MacOS on ARM
                     "B65D496ADABF3DBCDB24136A9655C295", // 32-bit Windows
-                    "6AD4BD76918C74B976FD7774163CD7ED", // 64-bit Windows on Intel
+                    "D4A9A3FFC75AC0383B68BADA43E23C3D", // 64-bit Windows on Intel
                     "2B2F9D57CFA1F3A0D63D261AD4750468" // 64-bit Windows on AMD
                 ]
             },
@@ -925,7 +925,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "FB38869E1A10C837554BCD0CCDBC660A", // MacOS on ARM
                     "365D7E965534C8690B4694B27D0CF1C9", // 32-bit Windows on Intel
                     "BCA45E90590A453EF4DBDCE3950C9CC4", // 32-bit Windows on AMD
-                    "4E99289AFF43EA387442E30EAFB7305A", // 64-bit Windows on Intel
+                    "08686D04EFF88BC663C469F2DD224020", // 64-bit Windows on Intel
                     "85FBE50C3C18EFAB46DE754068F359BC" // 64-bit Windows on AMD
                 ]
             },
@@ -944,7 +944,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "439F73E38831F4A10B5BD4F91F732A15", // MacOS on ARM
                     "9A0F6E1984B428F236E1209C13AED4D1", // 32-bit Windows on Intel
                     "7FABBF9DDF1A16701E57C6DD190485E0", // 32-bit Windows on AMD
-                    "47189DECF29E68A40F60645F97714BE3", // 64-bit Windows on Intel
+                    "1D0F379EC9C47267569F88729569D407", // 64-bit Windows on Intel
                     "C40C18B162E7429F60C62DF6A23071D6" // 64-bit Windows on AMD
                 ]
             },
@@ -963,7 +963,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "F245069996E7B90FBC76C04515E7DB2C", // MacOS on ARM
                     "DDA8DBB070EA36F77455A41A2628B6AA", // 32-bit Windows on Intel
                     "9EBD64EEF7F1CB540012892515A3B0F5", // 32-bit Windows on AMD
-                    "14145EA9D279E2FA457AD85F19DC0896", // 64-bit Windows on Intel
+                    "B49EC8F6428A1CDEBA4F0728FC1BF8E5", // 64-bit Windows on Intel
                     "A65D4DA9DB98F2DEF066508818C680CD" // 64-bit Windows on AMD
                 ]
             },
@@ -982,7 +982,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "AF4D1BAF1D9D5DFB5F4B6E5D5D50F423", // MacOS on ARM
                     "5502D724D98AA24FE49FA8AFB0FC63A6", // 32-bit Windows on Intel
                     "838B5CABD1F8E0077559E4DF504842DC", // 32-bit Windows on AMD
-                    "90D1426E435372B957E6558E4DC5D7FD", // 64-bit Windows on Intel
+                    "19940A1BA1D575D9E165584C24A955F4", // 64-bit Windows on Intel
                     "8107A1714777E243320A2E72F8F1D6D7" // 64-bit Windows on AMD
                 ]
             },
