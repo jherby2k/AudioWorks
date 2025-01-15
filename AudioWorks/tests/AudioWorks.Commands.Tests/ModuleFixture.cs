@@ -16,6 +16,7 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.IO;
 using System.Management.Automation.Runspaces;
+using Microsoft.PowerShell;
 
 namespace AudioWorks.Commands.Tests
 {
@@ -29,10 +30,7 @@ namespace AudioWorks.Commands.Tests
         public ModuleFixture()
         {
             var state = InitialSessionState.CreateDefault();
-
-            // This bypasses the execution policy (InitialSessionState.ExecutionPolicy isn't available with PowerShell 5)
-            state.AuthorizationManager = new("Microsoft.PowerShell");
-
+            state.ExecutionPolicy = ExecutionPolicy.Bypass;
             state.ImportPSModule(
                 Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).FullName, _moduleProject)
             );
