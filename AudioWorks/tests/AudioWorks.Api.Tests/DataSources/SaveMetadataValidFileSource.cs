@@ -611,9 +611,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "PNG 24-bit 1280 x 935.png",
                 new(),
                 [
-                    "862B09B8240906315D91AB953AA174BF", // 32-bit Legacy .NET
-                    "1FC596A38C7F84B7DDBE356215BE169D", // 64-bit Legacy .NET
-                    "1F72E87B05DA969322B0501DF63B6905" // .NET Core 3.0+
+                    "1F72E87B05DA969322B0501DF63B6905"
                 ]
             },
 
@@ -1052,9 +1050,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "PNG 24-bit 1280 x 935.png",
                 new(),
                 [
-                    "D0F19C93BFFFDE8A9D649276B5DF5DAE", // 32-bit Legacy .NET
-                    "09E9E1004B5279A8513B97D4FD34FEFB", // 64-bit Legacy .NET
-                    "DFB1301AEF575A97D738485F9542DC05" // .NET Core 3.0+
+                    "DFB1301AEF575A97D738485F9542DC05"
                 ]
             },
 
@@ -1280,9 +1276,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "PNG 24-bit 1280 x 935.png",
                 new(),
                 [
-                    "4A74639B61D636F02AE9003D1F8B728A", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on 32-bit Windows)
-                    "5202B8FFA7A76EA6AD53FEFFE9F206FD", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on 64-bit Windows)
-                    "FC6665047AC5EE74B3A64B08F7C15264", // Vorbis 1.3.7 AoTuV + Lancer (.NET Core 3.0+ on Windows and Ubuntu)
+                    "FC6665047AC5EE74B3A64B08F7C15264", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
                     "620158BEB9F80C0EB6A2982B0AA384BC" // Vorbis 1.3.7 (MacOS)
                 ]
             },
@@ -1324,7 +1318,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 string.Empty,
                 new(),
                 [
-                    "D22BBFDDCB298A427057253C4E833057", // Opus 1.3.1 (Ubuntu 20.04)
+                    "D22BBFDDCB298A427057253C4E833057", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
                     "83EAAF39634A97A730D4359E23CEE33F" // Opus 1.5.2 (MacOS and Windows)
                 ]
             },
@@ -1349,7 +1343,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 string.Empty,
                 new(),
                 [
-                    "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (Ubuntu 20.04)
+                    "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
                     "A298D22F719E0B950B31310E05BC1B66" // Opus 1.5.2 (MacOS and Windows)
                 ]
             },
@@ -1374,7 +1368,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 string.Empty,
                 new(),
                 [
-                    "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (Ubuntu 20.04)
+                    "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
                     "A298D22F719E0B950B31310E05BC1B66" // Opus 1.5.2 (MacOS and Windows)
                 ]
             },
@@ -1399,7 +1393,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 string.Empty,
                 new(),
                 [
-                    "166F1DD0C71E2CCCF226157A34791E1B", // Opus 1.3.1 (Ubuntu 20.04)
+                    "166F1DD0C71E2CCCF226157A34791E1B", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
                     "8F3233D946C369EA87132A3EDB50071E" // Opus 1.5.2 (MacOS and Windows)
                 ]
             },
@@ -1424,7 +1418,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 string.Empty,
                 new(),
                 [
-                    "8EA7FC13A2F214CADF3A1D447EF5CB65", // Opus 1.3.1 (Ubuntu 20.04)
+                    "8EA7FC13A2F214CADF3A1D447EF5CB65", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
                     "41253CA69E1D124E2CAC11B5D945EC67" // Opus 1.5.2 (MacOS and Windows)
                 ]
             },
@@ -1450,7 +1444,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 string.Empty,
                 new(),
                 [
-                    "BB50765E7DB79BDEADFC81E771101FD7", // Opus 1.3.1 (Ubuntu 20.04)
+                    "BB50765E7DB79BDEADFC81E771101FD7", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
                     "56AD6E2C6333F2A033914E9CF6FBA6CB" // Opus 1.5.2 (MacOS and Windows)
                 ]
             },
@@ -1462,7 +1456,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 string.Empty,
                 new(),
                 [
-                    "367DB09F8408583579F918061FCB6322", // Opus 1.3.1 (Ubuntu 20.04)
+                    "367DB09F8408583579F918061FCB6322", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
                     "CF85C82F03F478E096F1248F792D0B1E" // Opus 1.5.2 (MacOS and Windows)
                 ]
             },
@@ -1474,7 +1468,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 string.Empty,
                 new(),
                 [
-                    "22D33DFB735C5B7805AB26C7A04CDA86", // Opus 1.3.1 (Ubuntu 20.04)
+                    "22D33DFB735C5B7805AB26C7A04CDA86", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
                     "507E009E734B28534500E143CEA74EFD" // Opus 1.5.2 (MacOS and Windows)
                 ]
             },
@@ -1486,10 +1480,8 @@ namespace AudioWorks.Api.Tests.DataSources
                 "PNG 24-bit 1280 x 935.png",
                 new(),
                 [
-                    "0DD686B1469BEF1FEA629A881B2A67C3", // Opus 1.5.2 (Legacy .NET on 32-bit Windows)
-                    "358BD65B41660084B9C9CABEBCB1DC76", // Opus 1.5.2 (Legacy .NET on 64-bit Windows)
-                    "316157B1807D94E3E111802327A26787", // Opus 1.3.1 (Ubuntu 20.04)
-                    "E7E9C4686F7B92FC843FEDA3522C961B" // Opus 1.5.2 (MacOS and .NET Core 3.0+ on Windows)
+                    "316157B1807D94E3E111802327A26787", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
+                    "E7E9C4686F7B92FC843FEDA3522C961B" // Opus 1.5.2 (MacOS and Windows)
                 ]
             },
 

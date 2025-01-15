@@ -695,14 +695,10 @@ namespace AudioWorks.Api.Tests.DataSources
                 [
                     "4FFFB1DD9D5BEB99B2DEFFF8A80DC933", // MacOS on Intel
                     "B1BD1E3A78B5E47CAAE8462B13720EDE", // MacOS on ARM
-                    "61EC671C23EB3AC1A03029EB0BCDF257", // Legacy .NET on 32-bit Windows / Intel
-                    "937750181287505A92B933F8A815D4C2", // .NET Core 3.0+ on 32-bit Windows / Intel
-                    "E0B28BC27F9F86696F724F2D6E2540AA", // Legacy .NET on 32-bit Windows / AMD
-                    "B6A891E92CF4D1FF747716CAB6F617DA", // .NET Core 3.0+ on 32-bit Windows / AMD
-                    "D3113CF2C5283D2879F3DBEB617D050B", // Legacy .NET on 64-bit Windows / Intel
-                    "FEC2C179EB82166BBA78F5EDC06194F6", // .NET Core 3.0+ on 64-bit Windows / Intel
-                    "067296B4F0A8B3DCE4AF3C48EA9B0C66", // Legacy .NET on 64-bit Windows / AMD
-                    "FC1903FEEBCC293C1995CFF357BC3579" // .NET Core 3.0+ on 64-bit Windows / AMD
+                    "937750181287505A92B933F8A815D4C2", // 32-bit Windows on Intel
+                    "B6A891E92CF4D1FF747716CAB6F617DA", // 32-bit Windows on AMD
+                    "FEC2C179EB82166BBA78F5EDC06194F6", // 64-bit Windows on Intel
+                    "FC1903FEEBCC293C1995CFF357BC3579" // 64-bit Windows on AMD
                 ]
             },
             {
@@ -1070,11 +1066,9 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LameMP3",
                 new(),
                 [
-                    "FB1B7DECB2C2A2C9CAA1FBB917A81472", // Lame 3.100 (MacOS and Legacy .NET on Ubuntu)
-                    "BA2607DC22DBB4BA6DD592CCA6E7C994", // Lame 3.100 (.NET Core 3.0+ on Ubuntu)
-                    "D888321C2C776E245434E50FDF61A6E8", // Lame 3.100 (Legacy .NET on 32-bit Windows)
-                    "A286239868A51F5CD05540C198EA96B2", // Lame 3.100 (Legacy .NET on 64-bit Windows)
-                    "6E47BB49242784E79114392F240D1318" // Lame 3.100 (.NET Core 3.0+ on Windows)
+                    "FB1B7DECB2C2A2C9CAA1FBB917A81472", // Lame 3.100 (MacOS)
+                    "BA2607DC22DBB4BA6DD592CCA6E7C994", // Lame 3.100 (Ubuntu)
+                    "6E47BB49242784E79114392F240D1318" // Lame 3.100 (Windows)
                 ]
             },
             {
@@ -1414,8 +1408,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 [
                     "8D5A9BA2D974BCDEFB50A3DA7E134335", // Lame 3.100 (MacOS)
                     "49CB061F4DE93D7F88D3B656458C7003", // Lame 3.100 (Ubuntu)
-                    "3AE3B2DA82CE86ABDA69CFBB06EBDB6E", // Lame 3.100 (Legacy .NET on Windows)
-                    "F3F89801873BDC7D9E403C160051B457" // Lame 3.100 (.NET Core 3.0+ on Windows)
+                    "F3F89801873BDC7D9E403C160051B457" // Lame 3.100 (Windows)
                 ]
             },
             {
@@ -1429,8 +1422,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 [
                     "94E8EF913253B83D35E760A8C81C18BA", // Lame 3.100 (MacOS)
                     "E804988EFC1EA58704E6C78B42CE1DF6", // Lame 3.100 (Ubuntu)
-                    "85C1262D46F863436B5C55B71C8C0B31", // Lame 3.100 (Legacy .NET on Windows)
-                    "026C2587049104F0FFF72EB8E49F87AB" // Lame 3.100 (.NET Core 3.0+ on Windows)
+                    "026C2587049104F0FFF72EB8E49F87AB" // Lame 3.100 (Windows)
                 ]
             },
 
@@ -1571,9 +1563,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "BD1777F28C923D15E00840C2725EB14A", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
                     "ECE596D89D40FBD4573DD17588F5C962", // Vorbis 1.3.7 (MacOS on Intel)
                     "CD4B255CDC3C689C8A2242FDE5F912C7", // Vorbis 1.3.7 (MacOS on ARM)
-                    "7A82FD0ADD477568D0FA4B84BE1CFDD9", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on 32-bit Windows)
-                    "45E719C489D35DD1CC902143B578553D", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on 64-bit Windows)
-                    "725AC9661D2A9AABE9508DEBEDA99BA9" // Vorbis 1.3.7 AoTuV + Lancer (.NET Core 3.0+ on Windows)
+                    "725AC9661D2A9AABE9508DEBEDA99BA9" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
             },
             {
@@ -1830,10 +1820,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     "39443EC16B23C3B5159CD199E83AD092", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu)
                     "466D9535B74B53EA088F13FF9720268C", // Vorbis 1.3.7 (MacOS on Intel)
                     "A637C5C3C53C717092D518B1F47963D5", // Vorbis 1.3.7 (MacOS on ARM)
-                    "CE264095289A42A1FB038E6F44D5F007", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on Windows / Intel)
-                    "E698F1678A8FBC0A6834B6E7230743DA", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on Windows / AMD)
-                    "805F62BDFE149898E21C9448F4335BAC", // Vorbis 1.3.7 AoTuV + Lancer (.NET Core 3.0+ on Windows / Intel)
-                    "64478AA7F8E2052608AE10624A3C396B" // Vorbis 1.3.7 AoTuV + Lancer (.NET Core 3.0+ on Windows / AMD)
+                    "805F62BDFE149898E21C9448F4335BAC", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
+                    "64478AA7F8E2052608AE10624A3C396B" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
             },
             {
@@ -1850,10 +1838,8 @@ namespace AudioWorks.Api.Tests.DataSources
                     "9F4297E686E3A938051AB8C753476521", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
                     "488A2980F20619FE0206CFBB1767CBAC", // Vorbis 1.3.7 (MacOS on Intel)
                     "8F7096C15F10B9EB3CA0DFA0E044877E", // Vorbis 1.3.7 (MacOS on ARM)
-                    "4BCFD0F13F55B657F36304BBE3F41D39", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on Windows / Intel)
-                    "F4C820158442E1ECEEBBCEFF42855E5F", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on Windows / AMD)
-                    "34BA39848B7D78D7FE1D2B30999DF6A9", // Vorbis 1.3.7 AoTuV + Lancer (.NET Core 3.0+ on Windows / Intel)
-                    "F1F317505EE9AD557FBF2DB31777AAAB" // Vorbis 1.3.7 AoTuV + Lancer (.NET Core 3.0+ on Windows / AMD)
+                    "34BA39848B7D78D7FE1D2B30999DF6A9", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
+                    "F1F317505EE9AD557FBF2DB31777AAAB" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
             },
 
@@ -1890,7 +1876,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "A96ECE9F6FC5F2977202F2489A105967", // Opus 1.5.2 (MacOS on Intel)
                     "86C499288EADAAB469F3E7FA63628AD1", // Opus 1.3.1 (MacOS on ARM)
                     "6F0174BCFBF9AE02ACFCC0B2E3B834B8", // Opus 1.5.2 (Windows on Intel)
-                    "D40EF4C25A4F36F96A715D2C2D5084BF" // Opus 1.5.2 (64-bit Windows on AMD)
+                    "D40EF4C25A4F36F96A715D2C2D5084BF" // Opus 1.5.2 (Windows on AMD)
                 ]
             },
             {
@@ -2009,14 +1995,10 @@ namespace AudioWorks.Api.Tests.DataSources
                     "AFE05CB9E10ECE0CE4A267B01E91AA7C", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "1F562788793531FA94B5BC715886C983", // Opus 1.5.2 (MacOS on Intel)
                     "2D7ABAB485382CFA8AD0DA8437304185", // Opus 1.3.1 (MacOS on ARM)
-                    "A7DBF7182ACFDB5C1A608F24C89BEAB3", // Opus 1.5.2 (Legacy .NET on 32-bit Windows / Intel)
-                    "F24CCDB06BAFA257E2276FC09D2E3100", // Opus 1.5.2 (.NET Core 3.0+ on 32-bit Windows / Intel)
-                    "2005EA5C8571256292391346D1153012", // Opus 1.5.2 (Legacy .NET on 32-bit Windows / AMD)
-                    "14EB0889A6F92036165A3676F9D7E240", // Opus 1.5.2 (.NET Core 3.0+ on 32-bit Windows / AMD)
-                    "E2E73DC93259B672C7307ACE9B5AA14E", // Opus 1.5.2 (Legacy .NET on 64-bit Windows / Intel)
-                    "4044A896DE26E13DB1979ACBCF85084A", // Opus 1.5.2 (.NET Core 3.0+ on 64-bit Windows / Intel)
-                    "A948C31D62A79D98DE51E05CF03BE8AD", // Opus 1.5.2 (Legacy .NET on 64-bit Windows / AMD)
-                    "73C936BA1F0ACCD5246BBDFA17702259" // Opus 1.5.2 (.NET Core 3.0+ on 64-bit Windows / AMD)
+                    "F24CCDB06BAFA257E2276FC09D2E3100", // Opus 1.5.2 (32-bit Windows on Intel)
+                    "14EB0889A6F92036165A3676F9D7E240", // Opus 1.5.2 (32-bit Windows on AMD)
+                    "4044A896DE26E13DB1979ACBCF85084A", // Opus 1.5.2 (64-bit Windows on Intel)
+                    "73C936BA1F0ACCD5246BBDFA17702259" // Opus 1.5.2 (64-bit Windows on AMD)
                 ]
             },
             {
