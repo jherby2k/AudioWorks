@@ -89,7 +89,7 @@ namespace AudioWorks.Extensions.Id3
                 }
 
                 var frameBuffer = new byte[frameSize - extendedHeaderBytes];
-                stream.Read(frameBuffer, 0, (int) (frameSize - extendedHeaderBytes));
+                stream.ReadExactly(frameBuffer, 0, (int) (frameSize - extendedHeaderBytes));
                 frame.Parse(frameBuffer);
                 return frame;
             }

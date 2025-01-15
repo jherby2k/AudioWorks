@@ -66,7 +66,7 @@ namespace AudioWorks.Extensions.Id3
                 while (index < rawSize)
                 {
                     // Read one byte first, looking for padding
-                    stream.Read(frameIdBuffer[..1]);
+                    stream.ReadExactly(frameIdBuffer[..1]);
 
                     // We reached the padding
                     if (frameIdBuffer[0] == 0)
@@ -82,7 +82,7 @@ namespace AudioWorks.Extensions.Id3
                         throw new AudioInvalidException("Tag is corrupt: incomplete frame.");
 
                     // Read the rest of the frame ID
-                    stream.Read(frameIdBuffer.Slice(1, 3));
+                    stream.ReadExactly(frameIdBuffer.Slice(1, 3));
                     index += 4;
 
                     using (var reader = new TagReader(stream))
