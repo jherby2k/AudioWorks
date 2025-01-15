@@ -17,8 +17,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Held back for PowerShell 5.1 compatibility -->
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
+    <!-- Logging held back for PowerShell 7.4 compatibility -->
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.1" />
     <PackageReference Include="SixLabors.ImageSharp" Version="2.1.9" />
   </ItemGroup>
 
