@@ -68,29 +68,11 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: test
-    projects: AudioWorks\tests\AudioWorks.Common.Tests\AudioWorks.Common.Tests.csproj
-    publishTestResults: true
-    testRunTitle: AudioWorks.Common on .NET Framework 4.8
-    arguments: --framework net472 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*
-  displayName: Test AudioWorks.Common on .NET Framework 4.8
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: test
     projects: AudioWorks\tests\AudioWorks.Extensibility.Tests\AudioWorks.Extensibility.Tests.csproj
     publishTestResults: true
     testRunTitle: AudioWorks.Extensibility on .NET 8.0
     arguments: --framework net8.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*
   displayName: Test AudioWorks.Extensibility on .NET 8.0
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: test
-    projects: AudioWorks\tests\AudioWorks.Extensibility.Tests\AudioWorks.Extensibility.Tests.csproj
-    publishTestResults: true
-    testRunTitle: AudioWorks.Extensibility on .NET Framework 4.8
-    arguments: --framework net472 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*
-  displayName: Test AudioWorks.Extensibility on .NET Framework 4.8
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -104,29 +86,11 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: test
-    projects: AudioWorks\tests\AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj
-    publishTestResults: true
-    testRunTitle: AudioWorks.Api on .NET Framework 4.8
-    arguments: --framework net472 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*
-  displayName: Test AudioWorks.Api on .NET Framework 4.8
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: test
     projects: AudioWorks\tests\AudioWorks.Commands.Tests\AudioWorks.Commands.Tests.csproj
     publishTestResults: true
     testRunTitle: AudioWorks.Commands on .NET 8.0
     arguments: --framework net8.0 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(Build.SourcesDirectory)\AudioWorks\tests\AudioWorks.Commands.Tests\bin\$(buildConfiguration)\net8.0\AudioWorks.Commands\net8.0
   displayName: Test AudioWorks.Commands on .NET 8.0
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: test
-    projects: AudioWorks\tests\AudioWorks.Commands.Tests\AudioWorks.Commands.Tests.csproj
-    publishTestResults: true
-    testRunTitle: AudioWorks.Commands on .NET Framework 4.8
-    arguments: --framework net472 --configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]* DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.IncludeDirectory=$(Build.SourcesDirectory)\AudioWorks\tests\AudioWorks.Commands.Tests\bin\$(buildConfiguration)\net472\AudioWorks.Commands\net462
-  displayName: Test AudioWorks.Commands on .NET Framework 4.8
 
 - task: reportgenerator@5
   inputs:
