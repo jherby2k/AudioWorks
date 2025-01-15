@@ -28,12 +28,8 @@ namespace AudioWorks.TestUtilities
         {
             using (var md5 = MD5.Create())
             using (var fileStream = File.OpenRead(filePath))
-#if NET472
-                return BitConverter.ToString(md5.ComputeHash(fileStream)).Replace("-", string.Empty);
-#else
                 return BitConverter.ToString(md5.ComputeHash(fileStream))
                     .Replace("-", string.Empty, StringComparison.Ordinal);
-#endif
         }
 
         [SuppressMessage("Microsoft.Security", "CA5351:Do not use insecure cryptographic algorithm MD5.",
@@ -42,13 +38,8 @@ namespace AudioWorks.TestUtilities
         {
             if (data == null) return string.Empty;
 
-#if NET472
-            using (var md5 = MD5.Create())
-                return BitConverter.ToString(md5.ComputeHash(data)).Replace("-", string.Empty);
-#else
             return BitConverter.ToString(MD5.HashData(data))
                 .Replace("-", string.Empty, StringComparison.OrdinalIgnoreCase);
-#endif
         }
     }
 }

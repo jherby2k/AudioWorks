@@ -3,8 +3,6 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
-    <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>

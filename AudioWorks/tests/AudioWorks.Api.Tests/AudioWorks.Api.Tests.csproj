@@ -10,12 +10,6 @@
     <PackageReference Include="xunit.v3" Version="1.0.1" />
   </ItemGroup>
 
-  <!-- ReSharper disable twice UnknownProperty -->
-  <ItemGroup Condition="'$(TargetFramework)'=='net472'">
-    <PackageReference Include="Microsoft.Bcl.HashCode" Version="6.0.0" />
-    <PackageReference Include="System.Text.Json" Version="9.0.1" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\src\AudioWorks.Api\AudioWorks.Api.csproj" />
     <ProjectReference Include="..\AudioWorks.TestUtilities\AudioWorks.TestUtilities.csproj" />

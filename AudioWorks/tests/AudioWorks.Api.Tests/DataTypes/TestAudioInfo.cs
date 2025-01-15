@@ -19,19 +19,6 @@ namespace AudioWorks.Api.Tests.DataTypes
 {
     public sealed class TestAudioInfo : IXunitSerializable
     {
-#if NET472
-        public string Format { get; set; } = string.Empty;
-
-        public int Channels { get; set; }
-
-        public int BitsPerSample { get; set; }
-
-        public int SampleRate { get; set; }
-
-        public int BitRate { get; set; }
-
-        public long SampleCount { get; set; }
-#else
         public string Format { get; init; } = string.Empty;
 
         public int Channels { get; init; }
@@ -43,7 +30,6 @@ namespace AudioWorks.Api.Tests.DataTypes
         public int BitRate { get; init; }
 
         public long SampleCount { get; init; }
-#endif
 
         public void Deserialize(IXunitSerializationInfo info)
         {

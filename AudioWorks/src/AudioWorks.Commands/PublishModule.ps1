@@ -31,8 +31,7 @@ if (Test-Path $outputDir) { Remove-Item -Path $outputDir -Recurse -ErrorAction S
 
 # Workaround for non-referenced extension content:
 $apiProjectDir = Split-Path -Path $ProjectDir -Parent | Join-Path -ChildPath AudioWorks.Api
-$apiFramework = if ($Framework -eq "net462") { "netstandard2.0" } else { $Framework }
-dotnet publish "$apiProjectDir" --no-build -c $Configuration -o "$outputDir" -f $apiFramework
+dotnet publish "$apiProjectDir" --no-build -c $Configuration -o "$outputDir" -f $Framework
 
 Write-Host "Publishing $Framework PowerShell module to $outputDir..."
 
@@ -42,11 +41,7 @@ Remove-Item -Path $(Join-Path -Path $outputDir -ChildPath *) -Recurse -Include "
 
 Write-Host "Generating help file..."
 
-# Only do this once, as platyPS can't be loaded if it is already in use.
-if ($Framework -eq "net6.0")
-{
-	Install-PackageProvider -Name NuGet -Scope CurrentUser -Force -ErrorAction SilentlyContinue
-	Install-Module -Name platyPS -Scope CurrentUser -Force -ErrorAction SilentlyContinue
-	Import-Module platyPS -ErrorAction Stop
-	New-ExternalHelp -Path $(Join-Path -Path $ProjectDir -ChildPath docs) -OutputPath $(Join-Path -Path $outputRoot -ChildPath en-US) -Force -ErrorAction Stop
-}
+Install-PackageProvider -Name NuGet -Scope CurrentUser -Force -ErrorAction SilentlyContinue
+Install-Module -Name platyPS -Scope CurrentUser -Force -ErrorAction SilentlyContinue
+Import-Module platyPS -ErrorAction Stop
+New-ExternalHelp -Path $(Join-Path -Path $ProjectDir -ChildPath docs) -OutputPath $(Join-Path -Path $outputRoot -ChildPath en-US) -Force -ErrorAction Stop

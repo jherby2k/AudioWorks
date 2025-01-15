@@ -33,15 +33,9 @@ namespace AudioWorks.Commands.Tests
             // This bypasses the execution policy (InitialSessionState.ExecutionPolicy isn't available with PowerShell 5)
             state.AuthorizationManager = new("Microsoft.PowerShell");
 
-#if NET472
-            state.ImportPSModule([
-                Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).FullName, _moduleProject)
-            ]);
-#else
             state.ImportPSModule(
                 Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).FullName, _moduleProject)
             );
-#endif
 
             Runspace = RunspaceFactory.CreateRunspace(state);
             Runspace.Open();

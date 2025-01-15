@@ -16,11 +16,6 @@
     <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.4.6" />
   </ItemGroup>
 
-  <!-- ReSharper disable once UnknownProperty -->
-  <ItemGroup Condition="'$(TargetFramework)'=='net472'">
-    <PackageReference Include="Microsoft.PowerShell.5.ReferenceAssemblies" Version="1.1.0" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj" />
     <ProjectReference Include="..\AudioWorks.Common.Tests\AudioWorks.Common.Tests.csproj" />
