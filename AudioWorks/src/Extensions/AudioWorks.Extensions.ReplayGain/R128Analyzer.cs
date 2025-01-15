@@ -30,7 +30,7 @@ namespace AudioWorks.Extensions.ReplayGain
         {
             _channels = channels;
             _calculateTruePeaks = calculateTruePeaks;
-            Handle = SafeNativeMethods.Init(channels, sampleRate,
+            Handle = SafeNativeMethods.Init(channels, new(sampleRate),
                 calculateTruePeaks ? Modes.Global | Modes.TruePeak : Modes.Global | Modes.SamplePeak);
         }
 

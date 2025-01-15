@@ -25,19 +25,11 @@ namespace AudioWorks.Extensions.Vorbis
 
         readonly OggPackBuffer OggPackBuffer;
 
-#if WINDOWS
-        readonly int Lw;
+        readonly CLong Lw;
 
-        readonly int W;
+        readonly CLong W;
 
-        readonly int Nw;
-#else
-        readonly long Lw;
-
-        readonly long W;
-
-        readonly long Nw;
-#endif
+        readonly CLong Nw;
 
         readonly int PcmEnd;
 
@@ -53,39 +45,21 @@ namespace AudioWorks.Extensions.Vorbis
 
         readonly IntPtr LocalStore;
 
-#if WINDOWS
-        readonly int LocalTop;
+        readonly CLong LocalTop;
 
-        readonly int LocalAlloc;
+        readonly CLong LocalAlloc;
 
-        readonly int TotalUse;
-#else
-        readonly long LocalTop;
-
-        readonly long LocalAlloc;
-
-        readonly long TotalUse;
-#endif
+        readonly CLong TotalUse;
 
         readonly IntPtr Reap;
 
-#if WINDOWS
-        readonly int GlueBits;
+        readonly CLong GlueBits;
 
-        readonly int TimeBits;
+        readonly CLong TimeBits;
 
-        readonly int FloorBits;
+        readonly CLong FloorBits;
 
-        readonly int ResBits;
-#else
-        readonly long GlueBits;
-
-        readonly long TimeBits;
-
-        readonly long FloorBits;
-
-        readonly long ResBits;
-#endif
+        readonly CLong ResBits;
 
         readonly IntPtr Internal;
     }

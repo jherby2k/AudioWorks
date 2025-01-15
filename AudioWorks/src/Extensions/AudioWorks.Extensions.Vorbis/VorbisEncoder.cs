@@ -31,7 +31,7 @@ namespace AudioWorks.Extensions.Vorbis
         internal VorbisEncoder(int channels, int sampleRate, float baseQuality)
         {
             SafeNativeMethods.VorbisInfoInit(_info);
-            SafeNativeMethods.VorbisEncodeInitVbr(_info, channels, sampleRate, baseQuality);
+            SafeNativeMethods.VorbisEncodeInitVbr(_info, new(channels), new(sampleRate), baseQuality);
             SafeNativeMethods.VorbisAnalysisInit(DspState, _info);
             SafeNativeMethods.VorbisBlockInit(DspState, _block);
         }
@@ -41,7 +41,8 @@ namespace AudioWorks.Extensions.Vorbis
         internal VorbisEncoder(int channels, int sampleRate, int maxBitRate, int nominalBitRate, int minBitRate)
         {
             SafeNativeMethods.VorbisInfoInit(_info);
-            SafeNativeMethods.VorbisEncodeInit(_info, channels, sampleRate, maxBitRate, nominalBitRate, minBitRate);
+            SafeNativeMethods.VorbisEncodeInit(_info,
+                new(channels), new(sampleRate), new(maxBitRate), new(nominalBitRate), new(minBitRate));
             SafeNativeMethods.VorbisAnalysisInit(DspState, _info);
             SafeNativeMethods.VorbisBlockInit(DspState, _block);
         }

@@ -31,12 +31,7 @@ namespace AudioWorks.Extensions.ReplayGain
         [DllImport(_ebur128Library, EntryPoint = "ebur128_init",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#if WINDOWS
-        internal static extern StateHandle Init(uint channels, uint sampleRate, Modes modes);
-#else
-        internal static extern StateHandle Init(uint channels, ulong samplerate, Modes modes);
-#endif
-
+        internal static extern StateHandle Init(uint channels, CULong samplerate, Modes modes);
 
         [DllImport(_ebur128Library, EntryPoint = "ebur128_get_version",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]

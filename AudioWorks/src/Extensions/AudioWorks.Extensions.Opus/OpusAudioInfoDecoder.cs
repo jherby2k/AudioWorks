@@ -61,11 +61,7 @@ namespace AudioWorks.Extensions.Opus
                         oggStream.PageIn(page);
 
                         while (oggStream.PacketOut(out var packet))
-#if WINDOWS
                             return GetAudioInfo(oggStream.SerialNumber, packet, stream);
-#else
-                            return GetAudioInfo((int) oggStream.SerialNumber, packet, stream);
-#endif
                     } while (!SafeNativeMethods.OggPageEos(page));
 
                     throw new AudioInvalidException("The end of the Ogg stream was reached without finding a header.");
@@ -79,14 +75,10 @@ namespace AudioWorks.Extensions.Opus
 
         static unsafe AudioInfo GetAudioInfo(int serialNumber, in OggPacket headerPacket, Stream stream)
         {
-            if (headerPacket.Bytes < 19)
+            if (headerPacket.Bytes.Value.ToInt32() < 19)
                 throw new AudioUnsupportedException("Not an Opus stream.");
 
-#if WINDOWS
-            var headerBytes = new Span<byte>(headerPacket.Packet.ToPointer(), headerPacket.Bytes);
-#else
-            var headerBytes = new Span<byte>(headerPacket.Packet.ToPointer(), (int) headerPacket.Bytes);
-#endif
+            var headerBytes = new Span<byte>(headerPacket.Packet.ToPointer(), headerPacket.Bytes.Value.ToInt32());
 
             if (!Encoding.ASCII.GetString(headerBytes[..8])
                 .Equals("OpusHead", StringComparison.Ordinal))

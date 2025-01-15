@@ -39,23 +39,13 @@ namespace AudioWorks.Extensions.Vorbis
 
         readonly int EofFlag;
 
-#if WINDOWS
-        readonly int Lw;
+        readonly CLong Lw;
 
-        readonly int W;
+        readonly CLong W;
 
-        readonly int Nw;
+        readonly CLong Nw;
 
-        readonly int CenterW;
-#else
-        readonly long Lw;
-
-        readonly long W;
-
-        readonly long Nw;
-
-        readonly long CenterW;
-#endif
+        readonly CLong CenterW;
 
         readonly long GranulePosition;
 

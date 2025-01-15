@@ -25,14 +25,10 @@ namespace AudioWorks.Extensions.Opus
     {
         internal unsafe CommentHeaderToMetadataAdapter(in OggPacket packet)
         {
-            if (packet.Bytes < 16)
+            if (packet.Bytes.Value.ToInt32() < 16)
                 throw new AudioMetadataInvalidException("Invalid Opus comment header.");
 
-#if WINDOWS
-            var headerBytes = new Span<byte>(packet.Packet.ToPointer(), packet.Bytes);
-#else
-            var headerBytes = new Span<byte>(packet.Packet.ToPointer(), (int) packet.Bytes);
-#endif
+            var headerBytes = new Span<byte>(packet.Packet.ToPointer(), packet.Bytes.Value.ToInt32());
 
             if (!Encoding.ASCII.GetString(headerBytes[..8])
                 .Equals("OpusTags", StringComparison.Ordinal))

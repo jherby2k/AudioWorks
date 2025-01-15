@@ -23,41 +23,23 @@ namespace AudioWorks.Extensions.Opus
     {
         readonly IntPtr BodyData;
 
-#if WINDOWS
-        readonly int BodyStorage;
+        readonly CLong BodyStorage;
 
-        readonly int BodyFill;
+        readonly CLong BodyFill;
 
-        readonly int BodyReturned;
-#else
-        readonly long BodyStorage;
-
-        readonly long BodyFill;
-
-        readonly long BodyReturned;
-#endif
+        readonly CLong BodyReturned;
 
         readonly IntPtr LacingValues;
 
         readonly IntPtr GranuleValues;
 
-#if WINDOWS
-        readonly int LacingStorage;
+        readonly CLong LacingStorage;
 
-        readonly int LacingFill;
+        readonly CLong LacingFill;
 
-        readonly int LacingPacket;
+        readonly CLong LacingPacket;
 
-        readonly int LacingReturned;
-#else
-        readonly long LacingStorage;
-
-        readonly long LacingFill;
-
-        readonly long LacingPacket;
-
-        readonly long LacingReturned;
-#endif
+        readonly CLong LacingReturned;
 
         fixed byte Header[282];
 
@@ -67,15 +49,9 @@ namespace AudioWorks.Extensions.Opus
 
         readonly int BeginningOfStream;
 
-#if WINDOWS
-        internal readonly int SerialNumber;
+        internal readonly CLong SerialNumber;
 
-        readonly int PageNumber;
-#else
-        internal readonly long SerialNumber;
-
-        readonly long PageNumber;
-#endif
+        readonly CLong PageNumber;
 
         readonly long PacketNumber;
 

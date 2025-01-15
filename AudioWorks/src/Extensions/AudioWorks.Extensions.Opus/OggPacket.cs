@@ -23,19 +23,11 @@ namespace AudioWorks.Extensions.Opus
     {
         internal IntPtr Packet;
 
-#if WINDOWS
-        internal int Bytes;
+        internal CLong Bytes;
 
-        readonly int BeginningOfStream;
+        readonly CLong BeginningOfStream;
 
-        readonly int EndOfStream;
-#else
-        internal long Bytes;
-
-        readonly long BeginningOfStream;
-
-        readonly long EndOfStream;
-#endif
+        readonly CLong EndOfStream;
 
         readonly long GranulePosition;
 

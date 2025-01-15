@@ -68,22 +68,14 @@ namespace AudioWorks.Extensions.Vorbis
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static extern IntPtr OggSyncBuffer(
             IntPtr syncState,
-#if WINDOWS
-            int size);
-#else
-            long size);
-#endif
+            CLong size);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_sync_wrote",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static extern int OggSyncWrote(
             IntPtr syncState,
-#if WINDOWS
-            int bytes);
-#else
-            long bytes);
-#endif
+            CLong bytes);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_sync_clear",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -96,11 +88,7 @@ namespace AudioWorks.Extensions.Vorbis
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static extern int OggStreamInit(
             IntPtr streamState,
-#if WINDOWS
             int serialNumber);
-#else
-            long serialNumber);
-#endif
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_stream_pagein",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -196,19 +184,11 @@ namespace AudioWorks.Extensions.Vorbis
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static extern int VorbisEncodeInit(
             IntPtr info,
-#if WINDOWS
-            int channels,
-            int sampleRate,
-            int maximumBitRate,
-            int nominalBitRate,
-            int minimumBitRate);
-#else
-            long channels,
-            long sampleRate,
-            long maximumBitRate,
-            long nominalBitRate,
-            long minimumBitRate);
-#endif
+            CLong channels,
+            CLong sampleRate,
+            CLong maximumBitRate,
+            CLong nominalBitRate,
+            CLong minimumBitRate);
 
 #if WINDOWS
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_encode_init_vbr",
@@ -219,13 +199,8 @@ namespace AudioWorks.Extensions.Vorbis
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static extern int VorbisEncodeInitVbr(
             IntPtr info,
-#if WINDOWS
-            int channels,
-            int rate,
-#else
-            long channels,
-            long rate,
-#endif
+            CLong channels,
+            CLong rate,
             float baseQuality);
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_analysis_init",

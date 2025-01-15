@@ -23,19 +23,11 @@ namespace AudioWorks.Extensions.Vorbis
     {
         readonly IntPtr Packet;
 
-#if WINDOWS
-        readonly int Bytes;
+        readonly CLong Bytes;
 
-        readonly int BeginningOfStream;
+        readonly CLong BeginningOfStream;
 
-        readonly int EndOfStream;
-#else
-        readonly long Bytes;
-
-        readonly long BeginningOfStream;
-
-        readonly long EndOfStream;
-#endif
+        readonly CLong EndOfStream;
 
         readonly long GranulePosition;
 

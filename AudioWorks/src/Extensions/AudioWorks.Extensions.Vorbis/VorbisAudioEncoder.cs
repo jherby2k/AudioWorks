@@ -181,13 +181,8 @@ namespace AudioWorks.Extensions.Vorbis
 
         void WritePage(in OggPage page)
         {
-#if WINDOWS
-            WriteFromUnmanaged(page.Header, page.HeaderLength);
-            WriteFromUnmanaged(page.Body, page.BodyLength);
-#else
-            WriteFromUnmanaged(page.Header, (int) page.HeaderLength);
-            WriteFromUnmanaged(page.Body, (int) page.BodyLength);
-#endif
+            WriteFromUnmanaged(page.Header, page.HeaderLength.Value.ToInt32());
+            WriteFromUnmanaged(page.Body, page.BodyLength.Value.ToInt32());
         }
 
         unsafe void WriteFromUnmanaged(IntPtr location, int length) =>

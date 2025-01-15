@@ -127,13 +127,8 @@ namespace AudioWorks.Extensions.Vorbis
 
         static void WritePage(in OggPage page, Stream stream)
         {
-#if WINDOWS
-            WriteFromUnmanaged(page.Header, page.HeaderLength, stream);
-            WriteFromUnmanaged(page.Body, page.BodyLength, stream);
-#else
-            WriteFromUnmanaged(page.Header, (int) page.HeaderLength, stream);
-            WriteFromUnmanaged(page.Body, (int) page.BodyLength, stream);
-#endif
+            WriteFromUnmanaged(page.Header, page.HeaderLength.Value.ToInt32(), stream);
+            WriteFromUnmanaged(page.Body, page.BodyLength.Value.ToInt32(), stream);
         }
 
         static unsafe void WriteFromUnmanaged(IntPtr location, int length, Stream stream) =>
@@ -141,11 +136,9 @@ namespace AudioWorks.Extensions.Vorbis
 
             static unsafe void UpdateSequenceNumber(ref OggPage page, uint sequenceNumber)
         {
-#if WINDOWS
-            var sequenceNumberSpan = new Span<byte>(page.Header.ToPointer(), page.HeaderLength).Slice(18, 4);
-#else
-            var sequenceNumberSpan = new Span<byte>(page.Header.ToPointer(), (int) page.HeaderLength).Slice(18, 4);
-#endif
+            var sequenceNumberSpan = new Span<byte>(page.Header.ToPointer(), page.HeaderLength.Value.ToInt32())
+                .Slice(18, 4);
+
             // Only do the update if the sequence number has changed
             if (BinaryPrimitives.ReadUInt32LittleEndian(sequenceNumberSpan) == sequenceNumber) return;
 

@@ -25,27 +25,16 @@ namespace AudioWorks.Extensions.Vorbis
 
         internal readonly int Channels;
 
-#if WINDOWS
-        internal readonly int Rate;
+        internal readonly CLong Rate;
 
-        readonly int BitRateUpper;
+        readonly CLong BitRateUpper;
 
-        internal readonly int BitRateNominal;
+        internal readonly CLong BitRateNominal;
 
-        readonly int BitRateLower;
+        readonly CLong BitRateLower;
 
-        readonly int BitRateWindow;
-#else
-        internal readonly long Rate;
+        readonly CLong BitRateWindow;
 
-        readonly long BitRateUpper;
-
-        internal readonly long BitRateNominal;
-
-        readonly long BitRateLower;
-
-        readonly long BitRateWindow;
-#endif
         readonly IntPtr CodecSetup;
     }
 }

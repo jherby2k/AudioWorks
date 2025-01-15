@@ -72,15 +72,9 @@ namespace AudioWorks.Extensions.Vorbis
                             return AudioInfo.CreateForLossy(
                                 "Vorbis",
                                 info.Channels,
-#if WINDOWS
-                                info.Rate,
+                                info.Rate.Value.ToInt32(),
                                 GetFinalGranulePosition(oggStream.SerialNumber, stream),
-                                Math.Max(info.BitRateNominal, 0));
-#else
-                                (int) info.Rate,
-                                GetFinalGranulePosition((int) oggStream.SerialNumber, stream),
-                                Math.Max((int) info.BitRateNominal, 0));
-#endif
+                                Math.Max(info.BitRateNominal.Value.ToInt32(), 0));
                         }
                     } while (!SafeNativeMethods.OggPageEos(page));
 

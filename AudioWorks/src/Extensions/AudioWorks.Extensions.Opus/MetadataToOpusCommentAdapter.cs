@@ -80,7 +80,7 @@ namespace AudioWorks.Extensions.Opus
             packet = new()
             {
                 Packet = Marshal.ReadIntPtr(Handle.DangerousGetHandle()),
-                Bytes = Marshal.ReadInt32(IntPtr.Add(Handle.DangerousGetHandle(), sizeof(IntPtr))),
+                Bytes = new(Marshal.ReadInt32(IntPtr.Add(Handle.DangerousGetHandle(), sizeof(IntPtr)))),
                 PacketNumber = 1
             };
 

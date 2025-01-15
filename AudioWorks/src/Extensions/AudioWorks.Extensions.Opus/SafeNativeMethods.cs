@@ -74,22 +74,14 @@ namespace AudioWorks.Extensions.Opus
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static extern IntPtr OggSyncBuffer(
             IntPtr syncState,
-#if WINDOWS
-            int size);
-#else
-            long size);
-#endif
+            CLong size);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_sync_wrote",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static extern int OggSyncWrote(
             IntPtr syncState,
-#if WINDOWS
-            int bytes);
-#else
-            long bytes);
-#endif
+            CLong bytes);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_sync_clear",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -102,11 +94,7 @@ namespace AudioWorks.Extensions.Opus
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static extern int OggStreamInit(
             IntPtr streamState,
-#if WINDOWS
             int serialNumber);
-#else
-            long serialNumber);
-#endif
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_stream_pagein",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]

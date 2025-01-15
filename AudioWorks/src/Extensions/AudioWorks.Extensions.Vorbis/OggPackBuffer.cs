@@ -21,11 +21,7 @@ namespace AudioWorks.Extensions.Vorbis
     [StructLayout(LayoutKind.Sequential)]
     readonly struct OggPackBuffer
     {
-#if WINDOWS
-        readonly int EndByte;
-#else
-        readonly long EndByte;
-#endif
+        readonly CLong EndByte;
 
         readonly int EndBit;
 
@@ -33,10 +29,6 @@ namespace AudioWorks.Extensions.Vorbis
 
         readonly IntPtr Ptr;
 
-#if WINDOWS
-        readonly int Storage;
-#else
-        readonly long Storage;
-#endif
+        readonly CLong Storage;
     }
 }
