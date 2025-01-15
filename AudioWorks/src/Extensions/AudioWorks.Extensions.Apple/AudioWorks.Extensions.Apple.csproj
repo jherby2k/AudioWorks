@@ -1,5 +1,4 @@
-﻿<!--EXTERNAL_PROPERTIES: BUILD_BUILDID-->
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <VersionPrefix>1.10.0</VersionPrefix>

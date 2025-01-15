@@ -1,5 +1,4 @@
-﻿<!--EXTERNAL_PROPERTIES: BUILD_BUILDID-->
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <VersionPrefix>1.3.0</VersionPrefix>
@@ -31,7 +30,6 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <!-- ReSharper disable twice UnknownProperty -->
     <Exec Condition="'$(OS)'=='Windows_NT'" Command="powershell -ExecutionPolicy Bypass -File &quot;$(ProjectDir)PublishModule.ps1&quot; -ProjectDir $(ProjectDir) -Configuration $(Configuration) -Framework $(TargetFramework)" />
     <Exec Condition="'$(OS)'!='Windows_NT'" Command="pwsh -File &quot;$(ProjectDir)PublishModule.ps1&quot; -ProjectDir $(ProjectDir) -Configuration $(Configuration) -Framework $(TargetFramework)" />
   </Target>
