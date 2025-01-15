@@ -613,7 +613,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 [
                     "862B09B8240906315D91AB953AA174BF", // 32-bit Legacy .NET
                     "1FC596A38C7F84B7DDBE356215BE169D", // 64-bit Legacy .NET
-                    "7D35C341D95B0C3BD3663758116FD17E" // .NET Core 3.0+
+                    "1F72E87B05DA969322B0501DF63B6905" // .NET Core 3.0+
                 ]
             },
 
@@ -1054,7 +1054,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 [
                     "D0F19C93BFFFDE8A9D649276B5DF5DAE", // 32-bit Legacy .NET
                     "09E9E1004B5279A8513B97D4FD34FEFB", // 64-bit Legacy .NET
-                    "8C495F4498B5923C8A4E43E8EE2D5654" // .NET Core 3.0+
+                    "DFB1301AEF575A97D738485F9542DC05" // .NET Core 3.0+
                 ]
             },
 
@@ -1282,7 +1282,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 [
                     "4A74639B61D636F02AE9003D1F8B728A", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on 32-bit Windows)
                     "5202B8FFA7A76EA6AD53FEFFE9F206FD", // Vorbis 1.3.7 AoTuV + Lancer (Legacy .NET on 64-bit Windows)
-                    "BFF6FD917D8DC3C22D33FFA780358EDC", // Vorbis 1.3.7 AoTuV + Lancer (.NET Core 3.0+ on Windows and Ubuntu)
+                    "FC6665047AC5EE74B3A64B08F7C15264", // Vorbis 1.3.7 AoTuV + Lancer (.NET Core 3.0+ on Windows and Ubuntu)
                     "620158BEB9F80C0EB6A2982B0AA384BC" // Vorbis 1.3.7 (MacOS)
                 ]
             },
@@ -1489,7 +1489,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     "0DD686B1469BEF1FEA629A881B2A67C3", // Opus 1.5.2 (Legacy .NET on 32-bit Windows)
                     "358BD65B41660084B9C9CABEBCB1DC76", // Opus 1.5.2 (Legacy .NET on 64-bit Windows)
                     "316157B1807D94E3E111802327A26787", // Opus 1.3.1 (Ubuntu 20.04)
-                    "08B5C5C61D460DAA69E52CA69E5F6768" // Opus 1.5.2 (MacOS and .NET Core 3.0+ on Windows)
+                    "E7E9C4686F7B92FC843FEDA3522C961B" // Opus 1.5.2 (MacOS and .NET Core 3.0+ on Windows)
                 ]
             },
 

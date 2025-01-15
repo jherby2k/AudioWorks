@@ -50,48 +50,54 @@ namespace AudioWorks.Common
 
         internal CoverArt(Stream stream)
         {
-            var format = Image.DetectFormat(stream) ??
-                         throw new ImageInvalidException("Not a valid image.");
-
-            var info = Image.Identify(stream);
-            Width = info.Width;
-            Height = info.Height;
-            ColorDepth = info.PixelType.BitsPerPixel;
-
-            stream.Position = 0;
-
-            // Bitmaps should be compressed in PNG format
-            if (format.Name.Equals("BMP", StringComparison.OrdinalIgnoreCase))
-                using (var pngStream = new MemoryStream())
-                {
-                    // Only create an alpha channel if necessary
-                    using (var image = Image.Load(stream))
-                        if (ColorDepth <= 24)
-                            image.SaveAsPng(pngStream, new() { ColorType = PngColorType.Rgb });
-                        else
-                            image.SaveAsPng(pngStream);
-
-                    Data = pngStream.ToArray();
-                    pngStream.Position = 0;
-                    format = Image.DetectFormat(pngStream);
-                }
-
-            // JPEG and PNG images should be stored verbatim
-            else
+            try
             {
-                if (stream is MemoryStream currentStream)
-                    Data = currentStream.ToArray();
+                var format = Image.DetectFormat(stream);
+
+                var info = Image.Identify(stream);
+                Width = info.Width;
+                Height = info.Height;
+                ColorDepth = info.PixelType.BitsPerPixel;
+
+                stream.Position = 0;
+
+                // Bitmaps should be compressed in PNG format
+                if (format.Name.Equals("BMP", StringComparison.OrdinalIgnoreCase))
+                    using (var pngStream = new MemoryStream())
+                    {
+                        // Only create an alpha channel if necessary
+                        using (var image = Image.Load(stream))
+                            if (ColorDepth <= 24)
+                                image.SaveAsPng(pngStream, new() { ColorType = PngColorType.Rgb });
+                            else
+                                image.SaveAsPng(pngStream);
+
+                        Data = pngStream.ToArray();
+                        pngStream.Position = 0;
+                        format = Image.DetectFormat(pngStream);
+                    }
+
+                // JPEG and PNG images should be stored verbatim
                 else
                 {
-                    Data = new byte[stream.Length];
-                    using (var memoryStream = new MemoryStream(Data))
-                        stream.CopyTo(memoryStream);
+                    if (stream is MemoryStream currentStream)
+                        Data = currentStream.ToArray();
+                    else
+                    {
+                        Data = new byte[stream.Length];
+                        using (var memoryStream = new MemoryStream(Data))
+                            stream.CopyTo(memoryStream);
+                    }
                 }
-            }
 
-            Lossless = format.Name.Equals("PNG", StringComparison.OrdinalIgnoreCase);
-            MimeType = format.DefaultMimeType;
-            FileExtension = $".{format.FileExtensions.First()}";
+                Lossless = format.Name.Equals("PNG", StringComparison.OrdinalIgnoreCase);
+                MimeType = format.DefaultMimeType;
+                FileExtension = $".{format.FileExtensions.First()}";
+            }
+            catch (UnknownImageFormatException e)
+            {
+                throw new ImageInvalidException("Not a valid image.", e);
+            }
         }
     }
 }
