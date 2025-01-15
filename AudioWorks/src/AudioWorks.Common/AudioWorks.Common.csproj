@@ -6,7 +6,6 @@
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <Description>Public types used by the AudioWorks API. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>StrongName.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>

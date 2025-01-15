@@ -4,7 +4,6 @@
   <PropertyGroup>
     <VersionPrefix>1.16.0</VersionPrefix>
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(OS)'=='Windows_NT'">
