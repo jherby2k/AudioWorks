@@ -13,16 +13,11 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-#if NETSTANDARD2_0
-using System;
-#endif
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-#if !NETSTANDARD2_0
 using System.Runtime.Loader;
-#endif
 using AudioWorks.Common;
 using Microsoft.Extensions.Logging;
 
@@ -38,37 +33,9 @@ namespace AudioWorks.Extensibility
         {
             _logger.LogDebug("Loading extension '{path}'.", path);
 
-#if NETSTANDARD2_0
-            Assembly = Assembly.LoadFrom(path);
-#else
             Assembly = LoadWithLoader(path);
-#endif
 
             var assemblyFiles = Directory.GetFiles(Path.GetDirectoryName(path)!, "*.dll");
-
-#if NETSTANDARD2_0
-            ResolveFullFramework(assemblyFiles);
-        }
-
-        void ResolveFullFramework(IEnumerable<string> assemblyFiles) =>
-            AppDomain.CurrentDomain.AssemblyResolve += (_, args) =>
-            {
-                _logger.LogTrace("Attempting to resolve a dependency on '{name}'.", args.Name);
-
-                var matchingAssemblyName = assemblyFiles
-                    .FirstOrDefault(assemblyFile => AssemblyName.ReferenceMatchesDefinition(
-                        AssemblyName.GetAssemblyName(assemblyFile), new(args.Name)));
-                if (matchingAssemblyName == null)
-                {
-                    _logger.LogTrace("Did not locate dependency '{name}'.", args.Name);
-                    return null;
-                }
-
-                var assembly = Assembly.LoadFrom(matchingAssemblyName);
-                _logger.LogTrace("Located dependency '{assembly}'.", assembly.FullName);
-                return assembly;
-            };
-#else
             ResolveWithLoader(assemblyFiles);
         }
 
@@ -95,6 +62,5 @@ namespace AudioWorks.Extensibility
                 _logger.LogTrace("Located dependency '{assembly}'.", assembly.FullName);
                 return assembly;
             };
-#endif
     }
 }

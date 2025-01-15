@@ -27,11 +27,6 @@ namespace AudioWorks.Extensions.Mp4
 
         internal TextAtom(ReadOnlySpan<byte> data)
         {
-#if NETSTANDARD2_0
-            _fourCc = new(CodePagesEncodingProvider.Instance.GetEncoding(1252)
-                .GetChars(data[..4].ToArray()));
-            Value = new(Encoding.UTF8.GetChars(data[24..].ToArray()));
-#else
             Span<char> fourCcBuffer = stackalloc char[4];
             (CodePagesEncodingProvider.Instance.GetEncoding(1252) ?? Encoding.ASCII)
                 .GetChars(data[..4], fourCcBuffer);
@@ -40,7 +35,6 @@ namespace AudioWorks.Extensions.Mp4
             Span<char> charBuffer = stackalloc char[Encoding.UTF8.GetMaxCharCount(data.Length - 24)];
             var charCount = Encoding.UTF8.GetChars(data[24..], charBuffer);
             Value = new(charBuffer[..charCount]);
-#endif
         }
 
         internal TextAtom(string fourCc, string value)
@@ -57,13 +51,9 @@ namespace AudioWorks.Extensions.Mp4
             {
                 // Write the atom header
                 writer.WriteBigEndian((uint) contents.Length + 24);
-#if NETSTANDARD2_0
-                writer.Write(CodePagesEncodingProvider.Instance.GetEncoding(1252).GetBytes(_fourCc));
-#else
                 Span<byte> fourCcBuffer = stackalloc byte[4];
                 (CodePagesEncodingProvider.Instance.GetEncoding(1252) ?? Encoding.ASCII).GetBytes(_fourCc, fourCcBuffer);
                 writer.Write(fourCcBuffer);
-#endif
 
                 // Write the data atom header
                 writer.WriteBigEndian((uint) contents.Length + 16);

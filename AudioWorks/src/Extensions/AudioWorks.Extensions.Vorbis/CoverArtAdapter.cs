@@ -47,11 +47,7 @@ namespace AudioWorks.Extensions.Vorbis
                 decodedValue.Slice(offset + 4, (int) BinaryPrimitives.ReadUInt32BigEndian(decodedValue[offset..])));
         }
 
-#if NETSTANDARD2_0
-        internal static unsafe ReadOnlySpan<byte> ToBase64(ICoverArt coverArt)
-#else
         internal static ReadOnlySpan<byte> ToBase64(ICoverArt coverArt)
-#endif
         {
             var dataLength = 32 + coverArt.MimeType.Length + coverArt.Data.Length;
             Span<byte> buffer = new byte[Base64.GetMaxEncodedToUtf8Length(dataLength) + 1];
@@ -59,21 +55,6 @@ namespace AudioWorks.Extensions.Vorbis
             // Set the picture type as "Front Cover"
             BinaryPrimitives.WriteUInt32BigEndian(buffer, 3);
 
-#if NETSTANDARD2_0
-            BinaryPrimitives.WriteUInt32BigEndian(buffer[4..], (uint) coverArt.MimeType.Length);
-            fixed (char* mimeTypeAddress = coverArt.MimeType)
-            fixed (byte* bufferAddress = buffer[8..])
-                Encoding.ASCII.GetBytes(
-                    mimeTypeAddress, coverArt.MimeType.Length,
-                    bufferAddress, coverArt.MimeType.Length);
-
-            BinaryPrimitives.WriteUInt32BigEndian(buffer[(12 + coverArt.MimeType.Length)..], (uint) coverArt.Width);
-            BinaryPrimitives.WriteUInt32BigEndian(buffer[(16 + coverArt.MimeType.Length)..], (uint) coverArt.Height);
-            BinaryPrimitives.WriteUInt32BigEndian(buffer[(20 + coverArt.MimeType.Length)..], (uint) coverArt.ColorDepth);
-
-            BinaryPrimitives.WriteUInt32BigEndian(buffer[(28 + coverArt.MimeType.Length)..], (uint) coverArt.Data.Length);
-            coverArt.Data.CopyTo(buffer[(32 + coverArt.MimeType.Length)..]);
-#else
             BinaryPrimitives.WriteUInt32BigEndian(buffer[4..], (uint) coverArt.MimeType.Length);
             Encoding.ASCII.GetBytes(coverArt.MimeType, buffer[8..]);
 
@@ -83,7 +64,6 @@ namespace AudioWorks.Extensions.Vorbis
 
             BinaryPrimitives.WriteUInt32BigEndian(buffer[(28 + coverArt.MimeType.Length)..], (uint) coverArt.Data.Length);
             coverArt.Data.CopyTo(buffer[(32 + coverArt.MimeType.Length)..]);
-#endif
 
             Base64.EncodeToUtf8InPlace(buffer, dataLength, out var bytesWritten);
 

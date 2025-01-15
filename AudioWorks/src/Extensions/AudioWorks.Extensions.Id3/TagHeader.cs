@@ -56,12 +56,8 @@ namespace AudioWorks.Extensions.Id3
             using (var reader = new TagReader(stream))
             {
                 // Read the tag identifier
-#if NETSTANDARD2_0
-                var idTag = reader.ReadBytes(3);
-#else
                 Span<byte> idTag = stackalloc byte[3];
                 reader.Read(idTag);
-#endif
                 if (_id3.AsSpan().SequenceCompareTo(idTag) != 0)
                     throw new TagNotFoundException("ID3v2 tag identifier was not found.");
 

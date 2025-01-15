@@ -15,10 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.IO;
-#if NETSTANDARD2_0
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-#endif
 using System.Text;
 
 namespace AudioWorks.Extensions.Id3
@@ -31,11 +27,7 @@ namespace AudioWorks.Extensions.Id3
 
         internal string Language { get; set; } = "eng";
 
-#if NETSTANDARD2_0
-        internal override unsafe void Parse(Span<byte> frame)
-#else
         internal override void Parse(Span<byte> frame)
-#endif
         {
             var index = 0;
             TextType = (TextType) frame[index];
@@ -45,12 +37,7 @@ namespace AudioWorks.Extensions.Id3
             if (frame.Length - index < 3)
                 return;
 
-#if NETSTANDARD2_0
-            Language = Encoding.ASCII.GetString(
-                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(frame[index..])), 3);
-#else
             Language = Encoding.ASCII.GetString(frame.Slice(index, 3));
-#endif
             index += 3;
 
             if (frame.Length - index < 1)

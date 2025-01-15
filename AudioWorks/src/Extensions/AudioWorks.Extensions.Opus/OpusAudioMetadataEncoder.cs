@@ -14,9 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-#if NETSTANDARD2_0
-using System.Buffers;
-#endif
 using System.Buffers.Binary;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -38,11 +35,7 @@ namespace AudioWorks.Extensions.Opus
             {
                 OggStream? inputOggStream = null;
                 OggStream? outputOggStream = null;
-#if NETSTANDARD2_0
-                var buffer = ArrayPool<byte>.Shared.Rent(4096);
-#else
                 Span<byte> buffer = stackalloc byte[4096];
-#endif
 
                 try
                 {
@@ -57,20 +50,12 @@ namespace AudioWorks.Extensions.Opus
                             // Read from the buffer into a page
                             while (!sync.PageOut(out page))
                             {
-#if NETSTANDARD2_0
-                                var bytesRead = stream.Read(buffer, 0, buffer.Length);
-#else
                                 var bytesRead = stream.Read(buffer);
-#endif
                                 if (bytesRead == 0)
                                     throw new AudioInvalidException("No Ogg stream was found.");
 
                                 var nativeBuffer = new Span<byte>(sync.Buffer(bytesRead).ToPointer(), bytesRead);
-#if NETSTANDARD2_0
-                                buffer.AsSpan()[..bytesRead].CopyTo(nativeBuffer);
-#else
                                 buffer[..bytesRead].CopyTo(nativeBuffer);
-#endif
                                 sync.Wrote(bytesRead);
                             }
 
@@ -130,9 +115,6 @@ namespace AudioWorks.Extensions.Opus
                 }
                 finally
                 {
-#if NETSTANDARD2_0
-                    ArrayPool<byte>.Shared.Return(buffer);
-#endif
                     inputOggStream?.Dispose();
                     outputOggStream?.Dispose();
                 }
@@ -150,32 +132,8 @@ namespace AudioWorks.Extensions.Opus
 #endif
         }
 
-#if NETSTANDARD2_0
-        static unsafe void WriteFromUnmanaged(IntPtr location, int length, Stream stream)
-        {
-            var buffer = ArrayPool<byte>.Shared.Rent(4096);
-            try
-            {
-                var data = new Span<byte>(location.ToPointer(), length);
-                var offset = 0;
-
-                while (offset < length)
-                {
-                    var bytesCopied = Math.Min(length - offset, buffer.Length);
-                    data.Slice(offset, bytesCopied).CopyTo(buffer);
-                    stream.Write(buffer, 0, bytesCopied);
-                    offset += bytesCopied;
-                }
-            }
-            finally
-            {
-                ArrayPool<byte>.Shared.Return(buffer);
-            }
-        }
-#else
         static unsafe void WriteFromUnmanaged(IntPtr location, int length, Stream stream) =>
             stream.Write(new Span<byte>(location.ToPointer(), length));
-#endif
 
         static unsafe void UpdateSequenceNumber(ref OggPage page, uint sequenceNumber)
         {

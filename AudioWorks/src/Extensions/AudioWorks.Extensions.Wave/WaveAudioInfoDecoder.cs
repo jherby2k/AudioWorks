@@ -50,12 +50,8 @@ namespace AudioWorks.Extensions.Wave
                     if (fmtChunkSize == 0)
                         throw new AudioInvalidException("Missing 'fmt' chunk.");
 
-#if NETSTANDARD2_0
-                    Span<byte> fmtData = reader.ReadBytes((int) fmtChunkSize);
-#else
                     Span<byte> fmtData = stackalloc byte[(int) fmtChunkSize];
                     reader.Read(fmtData);
-#endif
 
                     var dataSize = reader.SeekToChunk("data");
 
@@ -72,11 +68,7 @@ namespace AudioWorks.Extensions.Wave
 
                         // WAVE_FORMAT_EXTENSIBLE
                         case 0xFFFE:
-#if NETSTANDARD2_0
-                            var guid = new Guid(fmtData.Slice(24, 16).ToArray());
-#else
                             var guid = new Guid(fmtData.Slice(24, 16));
-#endif
                             if (guid == _lpcmGuid) return ParseLpcm(fmtData, dataSize);
                             if (guid == _aLawGuid) return ParseG711("A-law", fmtData, dataSize);
                             if (guid == _µLawGuid) return ParseG711("µ-law", fmtData, dataSize);

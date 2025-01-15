@@ -33,11 +33,7 @@ namespace AudioWorks.Api
             var validProperties = typeof(AudioMetadata).GetProperties()
                 .Select(propertyInfo => propertyInfo.Name).ToArray();
             if (_replacer.Matches(encoded)
-#if NETSTANDARD2_0
-                .Cast<Match>().Select(match => match.Value.Substring(1, match.Value.Length - 2))
-#else
                 .Select(match => match.Value[1..^1])
-#endif
                 .Except(validProperties).Any())
                 throw new ArgumentException("Parameter contains one or more invalid metadata properties.",
                     nameof(encoded));
@@ -49,11 +45,7 @@ namespace AudioWorks.Api
         {
             var result = _replacer.Replace(_encoded, match =>
             {
-#if NETSTANDARD2_0
-                var propertyName = match.Value.Substring(1, match.Value.Length - 2);
-#else
                 var propertyName = match.Value[1..^1];
-#endif
                 var propertyValue = (string) typeof(AudioMetadata).GetProperty(propertyName)!.GetValue(metadata)!;
 
                 if (string.IsNullOrEmpty(propertyValue))
@@ -63,14 +55,9 @@ namespace AudioWorks.Api
                     new string(propertyValue.Where(character => !_invalidChars.Contains(character)).ToArray());
 
                 // Remove any double spaces introduced in sanitization
-#if NETSTANDARD2_0
-                if (sanitizedPropertyValue.Contains("  ") && !propertyValue.Contains("  "))
-                    sanitizedPropertyValue = sanitizedPropertyValue.Replace("  ", " ");
-#else
                 if (sanitizedPropertyValue.Contains("  ", StringComparison.Ordinal) &&
                     !propertyValue.Contains("  ", StringComparison.Ordinal))
                     sanitizedPropertyValue = sanitizedPropertyValue.Replace("  ", " ", StringComparison.Ordinal);
-#endif
 
                 return sanitizedPropertyValue;
             });

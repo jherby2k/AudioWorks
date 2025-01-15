@@ -70,29 +70,12 @@ namespace AudioWorks.Extensions.Id3
             {
                 reader.BaseStream.Seek(-128, SeekOrigin.End);
 
-#if NETSTANDARD2_0
-                var buffer = reader.ReadChars(3);
-#else
                 Span<char> buffer = stackalloc char[3];
                 reader.Read(buffer);
-#endif
+
                 if (!new string(buffer).Equals("TAG", StringComparison.Ordinal))
                     throw new TagNotFoundException("ID3v1 tag was not found");
 
-#if NETSTANDARD2_0
-                Title = new string(reader.ReadChars(30)).TrimEnd('\0');
-                Artist = new string(reader.ReadChars(30)).TrimEnd('\0');
-                Album = new string(reader.ReadChars(30)).TrimEnd('\0');
-                Year = new string(reader.ReadChars(4)).TrimEnd('\0');
-                var commentChars = reader.ReadChars(30);
-                if (commentChars[28] == 0)
-                {
-                    Comment = new string(commentChars, 0, 28).TrimEnd('\0');
-                    TrackNumber = commentChars[29];
-                }
-                else
-                    Comment = new string(commentChars).TrimEnd('\0');
-#else
                 buffer = stackalloc char[30];
 
                 reader.Read(buffer);
@@ -107,7 +90,6 @@ namespace AudioWorks.Extensions.Id3
                 Comment = new(buffer[..buffer.IndexOf('\0')]);
                 if (buffer[28] == 0)
                     TrackNumber = buffer[29];
-#endif
 
                 var genreIndex = reader.ReadByte();
                 if (genreIndex < _genres.Length)

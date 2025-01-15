@@ -16,10 +16,6 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Collections.Generic;
 using System.IO;
-#if NETSTANDARD2_0
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-#endif
 using System.Text;
 using AudioWorks.Common;
 
@@ -64,23 +60,14 @@ namespace AudioWorks.Extensions.Id3
             var encoding = _encodings[textType];
             using (var writer = new BinaryWriter(stream, encoding, true))
             {
-#if NETSTANDARD2_0
-                writer.Write(encoding.GetPreamble());
-                writer.Write(text.ToCharArray());
-#else
                 writer.Write(encoding.Preamble);
                 writer.Write(text.AsSpan());
-#endif
                 if (nullTerminate)
                     writer.Write('\0');
             }
         }
 
-#if NETSTANDARD2_0
-        static unsafe string ReadTextNoPreamble(Span<byte> frame, ref int index, TextType textType)
-#else
         static string ReadTextNoPreamble(Span<byte> frame, ref int index, TextType textType)
-#endif
         {
             var text = string.Empty;
             var count = frame[index..].IndexOf((byte) 0);
@@ -89,12 +76,7 @@ namespace AudioWorks.Extensions.Id3
                 case -1:
                     throw new AudioInvalidException("Invalid ASCII string size.");
                 case > 0:
-#if NETSTANDARD2_0
-                    text = _encodings[textType].GetString(
-                        (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(frame[index..])), count);
-#else
                     text = _encodings[textType].GetString(frame.Slice(index, count));
-#endif
                     index += count;
                     break;
             }
@@ -124,13 +106,8 @@ namespace AudioWorks.Extensions.Id3
             throw new AudioInvalidException("Invalid UTF16 string.");
         }
 
-#if NETSTANDARD2_0
-        static unsafe string ReadTextEndNoPreamble(Span<byte> frame, TextType textType) => _encodings[textType]
-            .GetString((byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(frame)), frame.Length).TrimEnd('\0');
-#else
         static string ReadTextEndNoPreamble(Span<byte> frame, TextType textType) =>
             _encodings[textType].GetString(frame).TrimEnd('\0');
-#endif
 
         static string ReadUtf16End(Span<byte> frame)
         {

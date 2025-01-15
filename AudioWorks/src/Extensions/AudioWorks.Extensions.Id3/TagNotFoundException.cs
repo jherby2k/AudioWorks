@@ -14,9 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-#if NETSTANDARD2_0
-using System.Runtime.Serialization;
-#endif
 
 namespace AudioWorks.Extensions.Id3
 {
@@ -36,12 +33,5 @@ namespace AudioWorks.Extensions.Id3
             : base(message, innerException)
         {
         }
-#if NETSTANDARD2_0
-
-        TagNotFoundException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
-#endif
     }
 }

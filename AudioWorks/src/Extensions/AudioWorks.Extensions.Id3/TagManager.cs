@@ -13,9 +13,7 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-#if !NETSTANDARD2_0
 using System;
-#endif
 using System.IO;
 using System.Text;
 using AudioWorks.Common;
@@ -63,20 +61,12 @@ namespace AudioWorks.Extensions.Id3
                     throw new AudioInvalidException("No frames are present in the tag.");
 
                 uint index = 0;
-#if NETSTANDARD2_0
-                var frameIdBuffer = new byte[4];
-#else
                 Span<byte> frameIdBuffer = stackalloc byte[4];
-#endif
 
                 while (index < rawSize)
                 {
                     // Read one byte first, looking for padding
-#if NETSTANDARD2_0
-                    stream.Read(frameIdBuffer, 0, 1);
-#else
                     stream.Read(frameIdBuffer[..1]);
-#endif
 
                     // We reached the padding
                     if (frameIdBuffer[0] == 0)
@@ -92,11 +82,7 @@ namespace AudioWorks.Extensions.Id3
                         throw new AudioInvalidException("Tag is corrupt: incomplete frame.");
 
                     // Read the rest of the frame ID
-#if NETSTANDARD2_0
-                    stream.Read(frameIdBuffer, 1, 3);
-#else
                     stream.Read(frameIdBuffer.Slice(1, 3));
-#endif
                     index += 4;
 
                     using (var reader = new TagReader(stream))
@@ -115,11 +101,7 @@ namespace AudioWorks.Extensions.Id3
                         index += 2;
 
                         tagModel.Frames.Add(ReadFrame(reader,
-#if NETSTANDARD2_0
-                            Encoding.ASCII.GetString(frameIdBuffer, 0, 4), flags, frameSize));
-#else
                             Encoding.ASCII.GetString(frameIdBuffer), flags, frameSize));
-#endif
 
                         index += frameSize;
                     }
@@ -135,15 +117,12 @@ namespace AudioWorks.Extensions.Id3
 
         static FrameBase ReadFrame(BinaryReader reader, string frameId, FrameFlags flags, uint frameSize)
         {
-#if NETSTANDARD2_0
-            var frameDataBuffer = reader.ReadBytes((int) frameSize);
-#else
             // Use heap allocations for frames > 256kB (usually pictures)
             var frameDataBuffer = frameSize < 0x40000
                 ? stackalloc byte[(int) frameSize]
                 : new byte[(int) frameSize];
             reader.Read(frameDataBuffer);
-#endif
+
             return FrameFactory.Build(frameId, flags, frameDataBuffer);
         }
 
@@ -157,11 +136,7 @@ namespace AudioWorks.Extensions.Id3
             using (var writer = new TagWriter(stream))
                 foreach (var frame in tagModel.Frames)
                 {
-#if NETSTANDARD2_0
-                    writer.Write(frame.FrameId.ToCharArray());
-#else
                     writer.Write(frame.FrameId.AsSpan());
-#endif
 
                     // Skip the size bytes for now
                     var sizeIndex = stream.Position;

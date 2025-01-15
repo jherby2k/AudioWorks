@@ -44,26 +44,15 @@ namespace AudioWorks.Extensions.Flac
         public bool Handle()
         {
             var logger = LoggerManager.LoggerFactory.CreateLogger<FlacLibHandler>();
-
-#if !LINUX
-
-#endif
 #if WINDOWS
+
             var libPath = Path.Combine(
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
                 Environment.Is64BitProcess ? "win-x64" : "win-x86");
 
-#if NETSTANDARD2_0
-            // On Full Framework, AssemblyLoadContext isn't available, so we add the directory to PATH
-            if (RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework", StringComparison.Ordinal))
-                Environment.SetEnvironmentVariable("PATH",
-                    $"{libPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}");
-            else
-                AddUnmanagedLibraryPath(libPath);
-#else
             AddUnmanagedLibraryPath(libPath);
-#endif
 #elif OSX
+
             var libPath = Path.Combine(
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
                 $"macos.{GetOSVersion()}-{GetArch()}");

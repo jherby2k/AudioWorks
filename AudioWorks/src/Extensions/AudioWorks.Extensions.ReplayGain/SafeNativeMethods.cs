@@ -30,11 +30,7 @@ namespace AudioWorks.Extensions.ReplayGain
 
         [DllImport(_ebur128Library, EntryPoint = "ebur128_init",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
 #if WINDOWS
         internal static extern StateHandle Init(uint channels, uint sampleRate, Modes modes);
 #else
@@ -44,11 +40,7 @@ namespace AudioWorks.Extensions.ReplayGain
 
         [DllImport(_ebur128Library, EntryPoint = "ebur128_get_version",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern void GetVersion(
             out int major,
             out int minor,
@@ -56,11 +48,7 @@ namespace AudioWorks.Extensions.ReplayGain
 
         [DllImport(_ebur128Library, EntryPoint = "ebur128_add_frames_float",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern Ebur128Error AddFramesFloat(
             StateHandle handle,
             in float source,
@@ -68,11 +56,7 @@ namespace AudioWorks.Extensions.ReplayGain
 
         [DllImport(_ebur128Library, EntryPoint = "ebur128_sample_peak",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern Ebur128Error SamplePeak(
             StateHandle handle,
             uint channel,
@@ -80,11 +64,7 @@ namespace AudioWorks.Extensions.ReplayGain
 
         [DllImport(_ebur128Library, EntryPoint = "ebur128_true_peak",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern Ebur128Error TruePeak(
             StateHandle handle,
             uint channel,
@@ -92,22 +72,14 @@ namespace AudioWorks.Extensions.ReplayGain
 
         [DllImport(_ebur128Library, EntryPoint = "ebur128_loudness_global",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern Ebur128Error LoudnessGlobal(
             StateHandle handle,
             out double result);
 
         [DllImport(_ebur128Library, EntryPoint = "ebur128_loudness_global_multiple",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern Ebur128Error LoudnessGlobalMultiple(
             IntPtr[] handles,
             UIntPtr count,
@@ -115,11 +87,7 @@ namespace AudioWorks.Extensions.ReplayGain
 
         [DllImport(_ebur128Library, EntryPoint = "ebur128_destroy",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern void Destroy(ref IntPtr handle);
     }
 }

@@ -39,16 +39,7 @@ namespace AudioWorks.Extensions.Opus
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
                 Environment.Is64BitProcess ? "win-x64" : "win-x86");
 
-#if NETSTANDARD2_0
-            // On Full Framework, AssemblyLoadContext isn't available, so we add the directory to PATH
-            if (RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework", StringComparison.Ordinal))
-                Environment.SetEnvironmentVariable("PATH",
-                    $"{libPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}");
-            else
-                AddUnmanagedLibraryPath(libPath);
-#else
             AddUnmanagedLibraryPath(libPath);
-#endif
 #elif OSX
             AddUnmanagedLibraryPath(Path.Combine(
                 Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
@@ -81,11 +72,7 @@ namespace AudioWorks.Extensions.Opus
 
             logger.LogInformation("Using Opus version {version}.",
                 (Marshal.PtrToStringAnsi(SafeNativeMethods.OpusGetVersion()) ?? "<unknown>")
-#if NETSTANDARD2_0
-                    .Replace("libopus ", string.Empty));
-#else
                     .Replace("libopus ", string.Empty, StringComparison.Ordinal));
-#endif
 
             return true;
         }

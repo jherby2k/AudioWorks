@@ -66,20 +66,12 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_new",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern StreamDecoderHandle StreamDecoderNew();
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_init_stream",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int StreamDecoderInitStream(
             StreamDecoderHandle handle,
             NativeCallbacks.StreamDecoderReadCallback readCallback,
@@ -94,11 +86,7 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_set_metadata_respond",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamDecoderSetMetadataRespond(
             StreamDecoderHandle handle,
@@ -106,73 +94,45 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_process_until_end_of_metadata",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamDecoderProcessUntilEndOfMetadata(
             StreamDecoderHandle handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_process_single",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamDecoderProcessSingle(
             StreamDecoderHandle handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_get_state",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern DecoderState StreamDecoderGetState(
             StreamDecoderHandle handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_finish",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamDecoderFinish(
             StreamDecoderHandle handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_delete",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern void StreamDecoderDelete(
             IntPtr handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_new",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern StreamEncoderHandle StreamEncoderNew();
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_set_channels",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamEncoderSetChannels(
             StreamEncoderHandle handle,
@@ -180,21 +140,13 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_get_channels",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern uint StreamEncoderGetChannels(
             StreamEncoderHandle handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_set_bits_per_sample",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamEncoderSetBitsPerSample(
             StreamEncoderHandle handle,
@@ -202,21 +154,13 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_get_bits_per_sample",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern uint StreamEncoderGetBitsPerSample(
             StreamEncoderHandle handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_set_sample_rate",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamEncoderSetSampleRate(
             StreamEncoderHandle handle,
@@ -224,11 +168,7 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_set_total_samples_estimate",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamEncoderSetTotalSamplesEstimate(
             StreamEncoderHandle handle,
@@ -236,21 +176,13 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_get_total_samples_estimate",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern ulong StreamEncoderGetTotalSamplesEstimate(
             StreamEncoderHandle handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_set_compression_level",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern void StreamEncoderSetCompressionLevel(
             StreamEncoderHandle handle,
@@ -258,11 +190,7 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_set_metadata",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamEncoderSetMetadata(
             StreamEncoderHandle handle,
@@ -271,11 +199,7 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_init_stream",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int StreamEncoderInitStream(
             StreamEncoderHandle handle,
             NativeCallbacks.StreamEncoderWriteCallback writeCallback,
@@ -286,11 +210,7 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_process",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamEncoderProcess(
             StreamEncoderHandle handle,
@@ -299,11 +219,7 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_process_interleaved",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamEncoderProcessInterleaved(
             StreamEncoderHandle handle,
@@ -312,51 +228,31 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_finish",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StreamEncoderFinish(
             StreamEncoderHandle handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_get_state",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern EncoderState StreamEncoderGetState(
             StreamEncoderHandle handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_delete",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern void StreamEncoderDelete(
             IntPtr handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_object_new", CallingConvention = CallingConvention.Cdecl)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern MetadataBlockHandle MetadataObjectNew(
             MetadataType blockType);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_object_vorbiscomment_entry_from_name_value_pair",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataObjectVorbisCommentEntryFromNameValuePair(
             out VorbisCommentEntry entry,
@@ -365,11 +261,7 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_object_vorbiscomment_append_comment",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataObjectVorbisCommentAppendComment(
             MetadataBlockHandle handle,
@@ -378,11 +270,7 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_object_seektable_template_append_spaced_points",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataObjectSeekTableTemplateAppendSpacedPoints(
             MetadataBlockHandle handle,
@@ -392,11 +280,7 @@ namespace AudioWorks.Extensions.Flac
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_object_picture_set_mime_type",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true,
             CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataObjectPictureSetMimeType(
             MetadataBlockHandle handle,
@@ -405,11 +289,7 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_object_picture_set_data",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataObjectPictureSetData(
             MetadataBlockHandle handle,
@@ -419,11 +299,7 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_object_delete",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern void MetadataObjectDelete(
             IntPtr handle);
 
@@ -433,11 +309,7 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_chain_read_with_callbacks",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataChainReadWithCallbacks(
             MetadataChainHandle handle,
@@ -446,11 +318,7 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_chain_check_if_tempfile_needed",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataChainCheckIfTempFileNeeded(
             MetadataChainHandle handle,
@@ -458,11 +326,7 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_chain_write_with_callbacks",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataChainWriteWithCallbacks(
             MetadataChainHandle handle,
@@ -472,11 +336,7 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_chain_write_with_callbacks_and_tempfile",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataChainWriteWithCallbacksAndTempFile(
             MetadataChainHandle handle,
@@ -488,62 +348,38 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_chain_delete",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern void MetadataChainDelete(
             IntPtr handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_iterator_new",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern MetadataIteratorHandle MetadataIteratorNew();
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_iterator_init",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern void MetadataIteratorInit(
             MetadataIteratorHandle handle,
             MetadataChainHandle chainHandle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_iterator_next",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataIteratorNext(
             MetadataIteratorHandle handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_iterator_get_block",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern IntPtr MetadataIteratorGetBlock(
             MetadataIteratorHandle handle);
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_iterator_insert_block_after",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataIteratorInsertBlockAfter(
             MetadataIteratorHandle handle,
@@ -551,11 +387,7 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_iterator_delete_block"
             , CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool MetadataIteratorDeleteBlock(
             MetadataIteratorHandle handle,
@@ -563,11 +395,7 @@ namespace AudioWorks.Extensions.Flac
 
         [DllImport(_flacLibrary, EntryPoint = "FLAC__metadata_iterator_delete",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern void MetadataIteratorDelete(
             IntPtr handle);
     }

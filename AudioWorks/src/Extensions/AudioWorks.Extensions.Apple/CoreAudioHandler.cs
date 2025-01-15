@@ -44,17 +44,7 @@ namespace AudioWorks.Extensions.Apple
             if (!Directory.Exists(libPath))
                 libPath = Path.Combine(Environment.GetEnvironmentVariable("ProgramFiles") ?? string.Empty, "iTunes");
 
-#if NETSTANDARD2_0
-            // On Full Framework, AssemblyLoadContext isn't available, so we add the directory to PATH
-            if (RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework", StringComparison.Ordinal))
-                Environment.SetEnvironmentVariable("PATH",
-                    $"{libPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}");
-            else
-                AddUnmanagedLibraryPath(libPath);
-#else
             AddUnmanagedLibraryPath(libPath);
-#endif
-
             try
             {
                 foreach (var methodInfo in typeof(SafeNativeMethods).GetMethods(

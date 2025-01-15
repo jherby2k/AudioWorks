@@ -14,9 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-#if NETSTANDARD2_0
-using System.Buffers;
-#endif
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -142,44 +139,6 @@ namespace AudioWorks.Extensions.Wave
         public SampleBuffer DecodeSamples()
         {
             SampleBuffer result;
-#if NETSTANDARD2_0
-            var length = _audioInfo!.Channels * (int) Math.Min(_framesRemaining, _defaultFrameCount) * _bytesPerSample;
-
-            var buffer = ArrayPool<byte>.Shared.Rent(length);
-            try
-            {
-                if (_reader!.Read(buffer, 0, length) < length)
-                    throw new AudioInvalidException("Stream is unexpectedly truncated.");
-
-                if (_format == DataFormat.Lpcm)
-                    result = new(buffer.AsSpan()[..length], _audioInfo.Channels, _bitsPerSample);
-                else
-                {
-                    var lpcmBuffer = ArrayPool<short>.Shared.Rent(length);
-                    try
-                    {
-                        if (_format == DataFormat.ALaw)
-                            for (var sampleIndex = 0; sampleIndex < buffer.Length; sampleIndex++)
-                                lpcmBuffer[sampleIndex] = _aLawDecodeValues[buffer[sampleIndex]];
-                        else
-                            for (var sampleIndex = 0; sampleIndex < buffer.Length; sampleIndex++)
-                                lpcmBuffer[sampleIndex] = _µLawDecodeValues[buffer[sampleIndex]];
-
-                        // TODO SampleBuffer should probably accept 16-bit buffers directly
-                        result = new(MemoryMarshal.Cast<short, byte>(lpcmBuffer.AsSpan()[..length]),
-                            _audioInfo.Channels, 16);
-                    }
-                    finally
-                    {
-                        ArrayPool<short>.Shared.Return(lpcmBuffer);
-                    }
-                }
-            }
-            finally
-            {
-                ArrayPool<byte>.Shared.Return(buffer);
-            }
-#else
             Span<byte> buffer = stackalloc byte[_audioInfo!.Channels *
                                                 (int) Math.Min(_framesRemaining, _defaultFrameCount)
                                                 * _bytesPerSample];
@@ -204,7 +163,6 @@ namespace AudioWorks.Extensions.Wave
                 // TODO SampleBuffer should probably accept 16-bit buffers directly
                 result = new(MemoryMarshal.Cast<short, byte>(lpcmBuffer), _audioInfo.Channels, 16);
             }
-#endif
 
             _framesRemaining -= result.Frames;
             return result;

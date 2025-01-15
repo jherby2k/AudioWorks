@@ -16,10 +16,6 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Buffers.Binary;
 using System.Globalization;
-#if NETSTANDARD2_0
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-#endif
 using System.Text;
 using AudioWorks.Common;
 
@@ -38,42 +34,6 @@ namespace AudioWorks.Extensions.Opus
             var headerBytes = new Span<byte>(packet.Packet.ToPointer(), (int) packet.Bytes);
 #endif
 
-#if NETSTANDARD2_0
-            if (!Encoding.ASCII.GetString((byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(headerBytes)), 8)
-                .Equals("OpusTags", StringComparison.Ordinal))
-                throw new AudioMetadataInvalidException("Invalid Opus comment header.");
-            var headerPosition = 8;
-
-            var vendorLength = (int) BinaryPrimitives.ReadUInt32LittleEndian(headerBytes[8..]);
-            headerPosition += 4 + vendorLength;
-
-            var commentCount = BinaryPrimitives.ReadUInt32LittleEndian(headerBytes[headerPosition..]);
-            headerPosition += 4;
-
-            while (commentCount > 0)
-            {
-                var length = (int) BinaryPrimitives.ReadUInt32LittleEndian(headerBytes[headerPosition..]);
-                headerPosition += 4;
-
-                var commentBytes = headerBytes.Slice(headerPosition, length);
-                headerPosition += length;
-
-                var delimiter = commentBytes.IndexOf((byte) 0x3D); // '='
-                var keyBytes = commentBytes[..delimiter];
-                var key = Encoding.ASCII.GetString(
-                    (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)),
-                    keyBytes.Length);
-
-                if (key.Equals("METADATA_BLOCK_PICTURE", StringComparison.OrdinalIgnoreCase))
-                    CoverArt = CoverArtAdapter.FromBase64(commentBytes[(delimiter + 1)..]);
-                else
-                {
-                    var valueBytes = commentBytes[(delimiter + 1)..];
-                    SetText(key, Encoding.UTF8.GetString(
-                        (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes)),
-                        valueBytes.Length));
-                }
-#else
             if (!Encoding.ASCII.GetString(headerBytes[..8])
                 .Equals("OpusTags", StringComparison.Ordinal))
                 throw new AudioMetadataInvalidException("Invalid Opus comment header.");
@@ -100,7 +60,6 @@ namespace AudioWorks.Extensions.Opus
                     CoverArt = CoverArtAdapter.FromBase64(commentBytes[(delimiter + 1)..]);
                 else
                     SetText(key, Encoding.UTF8.GetString(commentBytes[(delimiter + 1)..]));
-#endif
 
                 commentCount--;
             }
@@ -191,19 +150,11 @@ namespace AudioWorks.Extensions.Opus
                         break;
 
                     case "REPLAYGAIN_TRACK_GAIN":
-#if NETSTANDARD2_0
-                        TrackGain = value.Replace(" dB", string.Empty);
-#else
                         TrackGain = value.Replace(" dB", string.Empty, StringComparison.OrdinalIgnoreCase);
-#endif
                         break;
 
                     case "REPLAYGAIN_ALBUM_GAIN":
-#if NETSTANDARD2_0
-                        AlbumGain = value.Replace(" dB", string.Empty);
-#else
                         AlbumGain = value.Replace(" dB", string.Empty, StringComparison.OrdinalIgnoreCase);
-#endif
                         break;
                 }
             }

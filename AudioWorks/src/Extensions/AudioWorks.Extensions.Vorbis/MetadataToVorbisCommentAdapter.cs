@@ -16,9 +16,6 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-#if NETSTANDARD2_0
-using System.Runtime.CompilerServices;
-#endif
 using System.Text;
 using AudioWorks.Common;
 
@@ -98,31 +95,18 @@ namespace AudioWorks.Extensions.Vorbis
         {
             // Optimization - avoid allocating on the heap
             Span<byte> keyBytes = stackalloc byte[Encoding.ASCII.GetMaxByteCount(key.Length) + 1];
-#if NETSTANDARD2_0
-            fixed (char* keyAddress = key)
-                Encoding.ASCII.GetBytes(
-                    keyAddress, key.Length,
-                    (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)), keyBytes.Length);
-#else
             var keyLength = Encoding.ASCII.GetBytes(key, keyBytes);
-#endif
 
             // Use heap allocations for comments > 256kB
             var valueMaxByteCount = Encoding.UTF8.GetMaxByteCount(value.Length) + 1;
             var valueBytes = valueMaxByteCount < 0x40000
                 ? stackalloc byte[valueMaxByteCount]
                 : new byte[valueMaxByteCount];
-#if NETSTANDARD2_0
-            fixed (char* valueAddress = value)
-            fixed (byte* valueBytesAddress = valueBytes)
-                Encoding.UTF8.GetBytes(valueAddress, value.Length, valueBytesAddress, valueMaxByteCount);
-#else
             var valueLength = Encoding.UTF8.GetBytes(value, valueBytes);
 
             // Since SkipLocalsInit is set, make sure the strings are null-terminated
             keyBytes[keyLength] = 0;
             valueBytes[valueLength] = 0;
-#endif
 
             fixed (byte* valueBytesAddress = valueBytes)
                 SafeNativeMethods.VorbisCommentAddTag(_comment, ref MemoryMarshal.GetReference(keyBytes),
@@ -135,17 +119,10 @@ namespace AudioWorks.Extensions.Vorbis
         {
             // Optimization - avoid allocating on the heap
             Span<byte> keyBytes = stackalloc byte[Encoding.ASCII.GetMaxByteCount(key.Length) + 1];
-#if NETSTANDARD2_0
-            fixed (char* keyAddress = key)
-                Encoding.ASCII.GetBytes(
-                    keyAddress, key.Length,
-                    (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)), keyBytes.Length);
-#else
             var keyLength = Encoding.ASCII.GetBytes(key, keyBytes);
 
             // Since SkipLocalsInit is set, make sure the key is null-terminated
             keyBytes[keyLength] = 0;
-#endif
 
             fixed (byte* valueAddress = value)
                 SafeNativeMethods.VorbisCommentAddTag(_comment, ref MemoryMarshal.GetReference(keyBytes),

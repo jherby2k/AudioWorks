@@ -15,9 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.IO;
-#if NETSTANDARD2_0
-using System.Runtime.CompilerServices;
-#endif
 using System.Runtime.InteropServices;
 using System.Text;
 using AudioWorks.Common;
@@ -50,21 +47,9 @@ namespace AudioWorks.Extensions.Flac
 
                         var commentBytes = new Span<byte>(entry.Entry.ToPointer(), (int) entry.Length);
                         var delimiter = commentBytes.IndexOf((byte) 0x3D); // '='
-#if NETSTANDARD2_0
-                        var keyBytes = commentBytes[..delimiter];
-                        var valueBytes = commentBytes[(delimiter + 1)..];
-                        AudioMetadata.Set(
-                            Encoding.ASCII.GetString(
-                                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)),
-                                keyBytes.Length),
-                            Encoding.UTF8.GetString(
-                                (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes)),
-                                valueBytes.Length));
-#else
                         AudioMetadata.Set(
                             Encoding.ASCII.GetString(commentBytes[..delimiter]),
                             Encoding.UTF8.GetString(commentBytes[(delimiter + 1)..]));
-#endif
                     }
 
                     break;

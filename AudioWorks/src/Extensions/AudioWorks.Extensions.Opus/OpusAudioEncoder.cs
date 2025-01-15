@@ -68,16 +68,7 @@ namespace AudioWorks.Extensions.Opus
             _encoder.SetHeaderGain(gain);
 
             if (!settings.TryGetValue("SerialNumber", out int serialNumber))
-#if NETSTANDARD2_0
-                using (var random = RandomNumberGenerator.Create())
-                {
-                    var buffer = new byte[sizeof(int)];
-                    random.GetNonZeroBytes(buffer);
-                    serialNumber = BitConverter.ToInt32(buffer, 0);
-                }
-#else
                 serialNumber = RandomNumberGenerator.GetInt32(int.MaxValue);
-#endif
             _encoder.SetSerialNumber(serialNumber);
 
             // Default to full VBR

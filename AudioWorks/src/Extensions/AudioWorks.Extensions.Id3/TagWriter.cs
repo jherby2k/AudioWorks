@@ -36,22 +36,16 @@ namespace AudioWorks.Extensions.Id3
             buffer[1] = (byte) (((buffer[2] >> 6) & 0x0000_0010) | (buffer[1] << 2) & 0b0111_1111);
             buffer[2] = (byte) (((buffer[3] >> 7) & 0b0000_0001) | (buffer[2] << 1) & 0b0111_1111);
             buffer[3] = (byte) (buffer[3] & 0b0111_1111);
-#if NETSTANDARD2_0
-            Write(buffer.ToArray());
-#else
+
             Write(buffer);
-#endif
         }
 
         internal void WriteBigEndian(uint value)
         {
             Span<byte> buffer = stackalloc byte[4];
             BinaryPrimitives.WriteUInt32BigEndian(buffer, value);
-#if NETSTANDARD2_0
-            Write(buffer.ToArray());
-#else
+
             Write(buffer);
-#endif
         }
     }
 }

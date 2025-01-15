@@ -15,10 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Globalization;
-#if NETSTANDARD2_0
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-#endif
 using System.Text;
 using AudioWorks.Common;
 
@@ -36,29 +32,12 @@ namespace AudioWorks.Extensions.Vorbis
                 var commentBytes = new Span<byte>(commentPtrs[i].ToPointer(), commentLengths[i]);
                 var delimiter = commentBytes.IndexOf((byte) 0x3D); // '='
 
-#if NETSTANDARD2_0
-                var keyBytes = commentBytes[..delimiter];
-                var key = Encoding.ASCII.GetString(
-                    (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)),
-                    keyBytes.Length);
-
-                if (key.Equals("METADATA_BLOCK_PICTURE", StringComparison.OrdinalIgnoreCase))
-                    CoverArt = CoverArtAdapter.FromBase64(commentBytes[(delimiter + 1)..]);
-                else
-                {
-                    var valueBytes = commentBytes[(delimiter + 1)..];
-                    SetText(key, Encoding.UTF8.GetString(
-                        (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes)),
-                        valueBytes.Length));
-                }
-#else
                 var key = Encoding.ASCII.GetString(commentBytes[..delimiter]);
 
                 if (key.Equals("METADATA_BLOCK_PICTURE", StringComparison.OrdinalIgnoreCase))
                     CoverArt = CoverArtAdapter.FromBase64(commentBytes[(delimiter + 1)..]);
                 else
                     SetText(key, Encoding.UTF8.GetString(commentBytes[(delimiter + 1)..]));
-#endif
             }
         }
 
@@ -138,19 +117,11 @@ namespace AudioWorks.Extensions.Vorbis
                         break;
 
                     case "REPLAYGAIN_TRACK_GAIN":
-#if NETSTANDARD2_0
-                        TrackGain = value.Replace(" dB", string.Empty);
-#else
                         TrackGain = value.Replace(" dB", string.Empty, StringComparison.OrdinalIgnoreCase);
-#endif
                         break;
 
                     case "REPLAYGAIN_ALBUM_GAIN":
-#if NETSTANDARD2_0
-                        AlbumGain = value.Replace(" dB", string.Empty);
-#else
                         AlbumGain = value.Replace(" dB", string.Empty, StringComparison.OrdinalIgnoreCase);
-#endif
                         break;
                 }
             }

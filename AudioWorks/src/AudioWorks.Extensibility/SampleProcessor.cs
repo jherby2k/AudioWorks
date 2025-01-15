@@ -16,10 +16,8 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
-#if !NETSTANDARD2_0
 using System.Runtime.Intrinsics;
 using System.Runtime.Intrinsics.X86;
-#endif
 
 namespace AudioWorks.Extensibility
 {
@@ -235,13 +233,6 @@ namespace AudioWorks.Extensibility
             Span<float> destination,
             bool optimize)
         {
-#if NETSTANDARD2_0
-            for (int frameIndex = 0, destIndex = 0; frameIndex < leftSource.Length; frameIndex++)
-            {
-                destination[destIndex++] = leftSource[frameIndex];
-                destination[destIndex++] = rightSource[frameIndex];
-            }
-#else
             // Vectorized implementation is about 3x faster with AVX2
             if (optimize && Avx2.IsSupported)
             {
@@ -281,7 +272,6 @@ namespace AudioWorks.Extensibility
                     destination[destIndex++] = rightSource[frameIndex];
                 }
             }
-#endif
         }
 
         internal static void DeInterleave(
@@ -290,13 +280,6 @@ namespace AudioWorks.Extensibility
             Span<float> rightDestination,
             bool optimize)
         {
-#if NETSTANDARD2_0
-            for (int destIndex = 0, srcIndex = 0; destIndex < leftDestination.Length; destIndex++)
-            {
-                leftDestination[destIndex] = source[srcIndex++];
-                rightDestination[destIndex] = source[srcIndex++];
-            }
-#else
             // Vectorized implementation is about 3x faster with AVX2
             if (optimize && Avx2.IsSupported)
             {
@@ -331,7 +314,6 @@ namespace AudioWorks.Extensibility
                     rightDestination[destIndex] = source[sourceIndex++];
                 }
             }
-#endif
         }
 
         static uint GetAbsoluteQuantizationLevels(int bitsPerSample) => 1u << (bitsPerSample - 1);

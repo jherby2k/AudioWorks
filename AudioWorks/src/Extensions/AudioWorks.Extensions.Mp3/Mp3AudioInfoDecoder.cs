@@ -55,22 +55,15 @@ namespace AudioWorks.Extensions.Mp3
 
         static FrameHeader ReadFrameHeader(FrameReader reader)
         {
-#if NETSTANDARD2_0
-            var buffer = new byte[4];
-#else
             Span<byte> buffer = stackalloc byte[4];
-#endif
 
             // Seek to the first valid frame header
             FrameHeader? result = null;
             do
             {
                 reader.SeekToNextFrame();
-#if NETSTANDARD2_0
-                if (reader.Read(buffer, 0, 4) < 4)
-#else
+
                 if (reader.Read(buffer) < 4)
-#endif
                     throw new AudioInvalidException("Stream is unexpectedly truncated.");
 
                 try

@@ -14,9 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-#if NETSTANDARD2_0
-using System.Buffers;
-#endif
 using System.Composition;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -71,16 +68,7 @@ namespace AudioWorks.Extensions.Vorbis
             InitializeReplayGainFilter(info, metadata, settings);
 
             if (!settings.TryGetValue("SerialNumber", out int serialNumber))
-#if NETSTANDARD2_0
-                using (var random = RandomNumberGenerator.Create())
-                {
-                    var buffer = new byte[sizeof(int)];
-                    random.GetNonZeroBytes(buffer);
-                    serialNumber = BitConverter.ToInt32(buffer, 0);
-                }
-#else
                 serialNumber = RandomNumberGenerator.GetInt32(int.MaxValue);
-#endif
 
             _oggStream = new(serialNumber);
 
@@ -202,32 +190,7 @@ namespace AudioWorks.Extensions.Vorbis
 #endif
         }
 
-
-#if NETSTANDARD2_0
-        unsafe void WriteFromUnmanaged(IntPtr location, int length)
-        {
-            var buffer = ArrayPool<byte>.Shared.Rent(4096);
-            try
-            {
-                var data = new Span<byte>(location.ToPointer(), length);
-                var offset = 0;
-
-                while (offset < length)
-                {
-                    var bytesCopied = Math.Min(length - offset, buffer.Length);
-                    data.Slice(offset, bytesCopied).CopyTo(buffer);
-                    _outputStream!.Write(buffer, 0, bytesCopied);
-                    offset += bytesCopied;
-                }
-            }
-            finally
-            {
-                ArrayPool<byte>.Shared.Return(buffer);
-            }
-        }
-#else
         unsafe void WriteFromUnmanaged(IntPtr location, int length) =>
             _outputStream!.Write(new Span<byte>(location.ToPointer(), length));
-#endif
     }
 }

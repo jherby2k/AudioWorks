@@ -13,9 +13,7 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-#if !NETSTANDARD2_0
 using System;
-#endif
 using System.Buffers.Binary;
 using System.IO;
 using System.Text;
@@ -25,10 +23,6 @@ namespace AudioWorks.Extensions.Mp4
 {
     sealed class Mp4Reader : BinaryReader
     {
-#if NETSTANDARD2_0
-        readonly byte[] _buffer = new byte[4];
-
-#endif
         internal Mp4Reader(Stream input)
             : base(input, CodePagesEncodingProvider.Instance.GetEncoding(1252) ?? Encoding.ASCII, true)
         {
@@ -36,13 +30,8 @@ namespace AudioWorks.Extensions.Mp4
 
         internal string ReadFourCc()
         {
-#if NETSTANDARD2_0
-            var buffer = ReadChars(4);
-            if (buffer.Length < 4)
-#else
             Span<char> buffer = stackalloc char[4];
             if (Read(buffer) < 4)
-#endif
                 throw new AudioInvalidException("Stream is unexpectedly truncated.");
 
             return new(buffer);
@@ -50,18 +39,11 @@ namespace AudioWorks.Extensions.Mp4
 
         internal uint ReadUInt32BigEndian()
         {
-#if NETSTANDARD2_0
-            if (Read(_buffer, 0, 4) < 4)
-                throw new AudioInvalidException("Stream is unexpectedly truncated.");
-
-            return BinaryPrimitives.ReadUInt32BigEndian(_buffer);
-#else
             Span<byte> buffer = stackalloc byte[4];
             if (Read(buffer) < 4)
                 throw new AudioInvalidException("Stream is unexpectedly truncated.");
 
             return BinaryPrimitives.ReadUInt32BigEndian(buffer);
-#endif
         }
     }
 }

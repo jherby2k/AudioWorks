@@ -15,9 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-#if NETSTANDARD2_0
-using System.Buffers;
-#endif
 using System.IO;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
@@ -36,11 +33,7 @@ namespace AudioWorks.Extensions.Opus
         public unsafe AudioMetadata ReadMetadata(Stream stream)
         {
             OggStream? oggStream = null;
-#if NETSTANDARD2_0
-            var buffer = ArrayPool<byte>.Shared.Rent(4096);
-#else
             Span<byte> buffer = stackalloc byte[4096];
-#endif
 
             try
             {
@@ -53,20 +46,12 @@ namespace AudioWorks.Extensions.Opus
                         // Read from the buffer into a page
                         while (!sync.PageOut(out page))
                         {
-#if NETSTANDARD2_0
-                            var bytesRead = stream.Read(buffer, 0, buffer.Length);
-#else
                             var bytesRead = stream.Read(buffer);
-#endif
                             if (bytesRead == 0)
                                 throw new AudioInvalidException("No Ogg stream was found.");
 
                             var nativeBuffer = new Span<byte>(sync.Buffer(bytesRead).ToPointer(), bytesRead);
-#if NETSTANDARD2_0
-                            buffer.AsSpan()[..bytesRead].CopyTo(nativeBuffer);
-#else
                             buffer[..bytesRead].CopyTo(nativeBuffer);
-#endif
                             sync.Wrote(bytesRead);
                         }
 
@@ -83,9 +68,6 @@ namespace AudioWorks.Extensions.Opus
             }
             finally
             {
-#if NETSTANDARD2_0
-                ArrayPool<byte>.Shared.Return(buffer);
-#endif
                 oggStream?.Dispose();
             }
         }

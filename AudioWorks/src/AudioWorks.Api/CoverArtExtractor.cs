@@ -76,14 +76,7 @@ namespace AudioWorks.Api
                 outputFileName + audioFile.Metadata.CoverArt.FileExtension));
 
             using (var fileStream = result.Open(Overwrite ? FileMode.Create : FileMode.CreateNew, FileAccess.Write))
-            {
-#if NETSTANDARD2_0
-                var data = audioFile.Metadata.CoverArt.Data;
-                fileStream.Write(data, 0, data.Length);
-#else
                 fileStream.Write(audioFile.Metadata.CoverArt.Data);
-#endif
-            }
 
             return result;
         }

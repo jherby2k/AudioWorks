@@ -15,9 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-#if NETSTANDARD2_0
-using System.Buffers;
-#endif
 using System.IO;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
@@ -67,24 +64,9 @@ namespace AudioWorks.Extensions.Wave
         {
             if (samples.Frames == 0) return;
 
-#if NETSTANDARD2_0
-            var dataSize = samples.Channels * samples.Frames * _bytesPerSample;
-
-            var buffer = ArrayPool<byte>.Shared.Rent(dataSize);
-            try
-            {
-                samples.CopyToInterleaved(buffer, _bitsPerSample);
-                _writer!.Write(buffer, 0, dataSize);
-            }
-            finally
-            {
-                ArrayPool<byte>.Shared.Return(buffer);
-            }
-#else
             Span<byte> buffer = stackalloc byte[samples.Channels * samples.Frames * _bytesPerSample];
             samples.CopyToInterleaved(buffer, _bitsPerSample);
             _writer!.Write(buffer);
-#endif
         }
 
         public void Finish()

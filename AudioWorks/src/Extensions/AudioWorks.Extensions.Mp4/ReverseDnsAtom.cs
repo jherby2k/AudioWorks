@@ -13,13 +13,8 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-#if !NETSTANDARD2_0
 using System;
-#endif
 using System.IO;
-#if NETSTANDARD2_0
-using System.Linq;
-#endif
 using System.Text;
 
 namespace AudioWorks.Extensions.Mp4
@@ -28,10 +23,6 @@ namespace AudioWorks.Extensions.Mp4
     {
         readonly byte[] _data;
 
-#if NETSTANDARD2_0
-        internal string Name => new((CodePagesEncodingProvider.Instance.GetEncoding(1252) ?? Encoding.ASCII)
-            .GetChars(_data.Skip(48).Take(8).ToArray()));
-#else
         internal string Name
         {
             get
@@ -42,7 +33,6 @@ namespace AudioWorks.Extensions.Mp4
                 return new(charBuffer);
             }
         }
-#endif
 
         internal ReverseDnsAtom(byte[] data) => _data = data;
 

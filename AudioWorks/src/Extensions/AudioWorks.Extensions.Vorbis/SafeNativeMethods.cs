@@ -34,62 +34,38 @@ namespace AudioWorks.Extensions.Vorbis
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_page_serialno",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int OggPageSerialNo(
             in OggPage page);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_page_eos",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool OggPageEos(
             in OggPage page);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_page_checksum_set",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern void OggPageChecksumSet(
             ref OggPage page);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_sync_init",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int OggSyncInit(
             IntPtr syncState);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_sync_pageout",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int OggSyncPageOut(IntPtr syncState,
             out OggPage page);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_sync_buffer",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern IntPtr OggSyncBuffer(
             IntPtr syncState,
 #if WINDOWS
@@ -100,11 +76,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_sync_wrote",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int OggSyncWrote(
             IntPtr syncState,
 #if WINDOWS
@@ -115,21 +87,13 @@ namespace AudioWorks.Extensions.Vorbis
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_sync_clear",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int OggSyncClear(
             IntPtr syncState);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_stream_init",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int OggStreamInit(
             IntPtr streamState,
 #if WINDOWS
@@ -140,95 +104,59 @@ namespace AudioWorks.Extensions.Vorbis
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_stream_pagein",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int OggStreamPageIn(
             IntPtr streamState,
             in OggPage page);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_stream_pageout",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int OggStreamPageOut(
             IntPtr streamState,
             out OggPage page);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_stream_packetin",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int OggStreamPacketIn(
             IntPtr streamState,
             in OggPacket packet);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_stream_packetout",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int OggStreamPacketOut(
             IntPtr streamState,
             out OggPacket packet);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_stream_flush",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int OggStreamFlush(
             IntPtr streamState,
             out OggPage page);
 
         [DllImport(_oggLibrary, EntryPoint = "ogg_stream_clear",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern void OggStreamClear(
             IntPtr streamState);
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_version_string",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern IntPtr VorbisVersion();
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_comment_init",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern void VorbisCommentInit(
             out VorbisComment comment);
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_comment_add_tag",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern unsafe void VorbisCommentAddTag(
             in VorbisComment comment,
             ref byte tag,
@@ -236,42 +164,26 @@ namespace AudioWorks.Extensions.Vorbis
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_comment_clear",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern void VorbisCommentClear(
             ref VorbisComment comment);
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_commentheader_out",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int VorbisCommentHeaderOut(
             in VorbisComment comment,
             out OggPacket packet);
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_info_init",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern void VorbisInfoInit(
             IntPtr info);
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_info_clear",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern void VorbisInfoClear(
             IntPtr info);
 
@@ -281,11 +193,7 @@ namespace AudioWorks.Extensions.Vorbis
         [DllImport(_vorbisEncLibrary, EntryPoint = "vorbis_encode_init",
 #endif
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int VorbisEncodeInit(
             IntPtr info,
 #if WINDOWS
@@ -308,11 +216,7 @@ namespace AudioWorks.Extensions.Vorbis
         [DllImport(_vorbisEncLibrary, EntryPoint = "vorbis_encode_init_vbr",
 #endif
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int VorbisEncodeInitVbr(
             IntPtr info,
 #if WINDOWS
@@ -326,22 +230,14 @@ namespace AudioWorks.Extensions.Vorbis
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_analysis_init",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int VorbisAnalysisInit(
             IntPtr dspState,
             IntPtr info);
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_analysis_headerout",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int VorbisAnalysisHeaderOut(
             IntPtr dspState,
             in VorbisComment comment,
@@ -351,118 +247,74 @@ namespace AudioWorks.Extensions.Vorbis
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_analysis_buffer",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern IntPtr VorbisAnalysisBuffer(
             IntPtr dspState,
             int samples);
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_analysis_wrote",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int VorbisAnalysisWrote(
             IntPtr dspState,
             int samples);
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_analysis_blockout",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int VorbisAnalysisBlockOut(
             IntPtr dspState,
             IntPtr block);
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_analysis",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int VorbisAnalysis(
             IntPtr block,
             IntPtr packet);
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_bitrate_addblock",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int VorbisBitrateAddBlock(
             IntPtr block);
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_bitrate_flushpacket",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int VorbisBitrateFlushPacket(
             IntPtr dspState,
             out OggPacket packet);
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_dsp_clear",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern void VorbisDspClear(
             IntPtr dspState);
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_block_init",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int VorbisBlockInit(
             IntPtr dspState,
             IntPtr block);
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_block_clear",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern void VorbisBlockClear(
             IntPtr block);
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_synthesis_idheader",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool VorbisSynthesisIdHeader(
             in OggPacket packet);
 
         [DllImport(_vorbisLibrary, EntryPoint = "vorbis_synthesis_headerin",
             CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-#if NETSTANDARD2_0
-        [DefaultDllImportSearchPaths(DllImportSearchPath.LegacyBehavior)]
-#else
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-#endif
         internal static extern int VorbisSynthesisHeaderIn(
             IntPtr info,
             in VorbisComment comment,

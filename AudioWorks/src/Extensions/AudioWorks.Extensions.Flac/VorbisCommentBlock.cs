@@ -32,26 +32,12 @@ namespace AudioWorks.Extensions.Flac
             Span<byte> keyBytes = stackalloc byte[Encoding.ASCII.GetMaxByteCount(key.Length) + 1];
             Span<byte> valueBytes = stackalloc byte[Encoding.UTF8.GetMaxByteCount(value.Length) + 1];
 
-#if NETSTANDARD2_0
-            int keyLength;
-            fixed (char* keyAddress = key)
-                keyLength = Encoding.ASCII.GetBytes(
-                    keyAddress, key.Length,
-                    (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes)), keyBytes.Length);
-
-            int valueLength;
-            fixed (char* valueAddress = value)
-                valueLength = Encoding.UTF8.GetBytes(
-                    valueAddress, value.Length,
-                    (byte*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes)), valueBytes.Length);
-#else
             var keyLength = Encoding.ASCII.GetBytes(key, keyBytes);
             var valueLength = Encoding.UTF8.GetBytes(value, valueBytes);
 
             // Since SkipLocalsInit is set, make sure the strings are null-terminated
             keyBytes[keyLength] = 0;
             valueBytes[valueLength] = 0;
-#endif
 
             SafeNativeMethods.MetadataObjectVorbisCommentEntryFromNameValuePair(
                 out var entry,
