@@ -693,7 +693,7 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
                 [
-                    "4FFFB1DD9D5BEB99B2DEFFF8A80DC933", // MacOS on Intel
+                    "7B0E359B3C464CD7A26FDFE457715DD4", // MacOS on Intel
                     "B1BD1E3A78B5E47CAAE8462B13720EDE", // MacOS on ARM
                     "937750181287505A92B933F8A815D4C2", // 32-bit Windows on Intel
                     "B6A891E92CF4D1FF747716CAB6F617DA", // 32-bit Windows on AMD
@@ -1066,8 +1066,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "LameMP3",
                 new(),
                 [
-                    "FB1B7DECB2C2A2C9CAA1FBB917A81472", // Lame 3.100 (MacOS)
-                    "BA2607DC22DBB4BA6DD592CCA6E7C994", // Lame 3.100 (Ubuntu)
+                    "E19CC567ECA5EA8CC06AB204F0A6DCFB", // Lame 3.100 (Ubuntu and MacOS)
                     "6E47BB49242784E79114392F240D1318" // Lame 3.100 (Windows)
                 ]
             },
@@ -1559,9 +1558,9 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "234B57CFDB48E7C3B793D17436AA53E9", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
+                    "E571643A52713B7696C5217696836ABC", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
                     "BD1777F28C923D15E00840C2725EB14A", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
-                    "ECE596D89D40FBD4573DD17588F5C962", // Vorbis 1.3.7 (MacOS on Intel)
+                    "46F9042BE0BD04F4509E76B927DC0D71", // Vorbis 1.3.7 (MacOS on Intel)
                     "CD4B255CDC3C689C8A2242FDE5F912C7", // Vorbis 1.3.7 (MacOS on ARM)
                     "725AC9661D2A9AABE9508DEBEDA99BA9" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
@@ -1991,9 +1990,9 @@ namespace AudioWorks.Api.Tests.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "5D472AE652EB5A8ADCAE3E6CEF843B45", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
+                    "E00313922D18720824C1B0BB443E8679", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
                     "AFE05CB9E10ECE0CE4A267B01E91AA7C", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
-                    "1F562788793531FA94B5BC715886C983", // Opus 1.5.2 (MacOS on Intel)
+                    "1A3E6E580E6CED2A176855154F117F55", // Opus 1.5.2 (MacOS on Intel)
                     "2D7ABAB485382CFA8AD0DA8437304185", // Opus 1.3.1 (MacOS on ARM)
                     "F24CCDB06BAFA257E2276FC09D2E3100", // Opus 1.5.2 (32-bit Windows on Intel)
                     "14EB0889A6F92036165A3676F9D7E240", // Opus 1.5.2 (32-bit Windows on AMD)

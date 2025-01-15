@@ -1277,7 +1277,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 new(),
                 [
                     "FC6665047AC5EE74B3A64B08F7C15264", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
-                    "620158BEB9F80C0EB6A2982B0AA384BC" // Vorbis 1.3.7 (MacOS)
+                    "8E3BEF265FA8D9C8632A1CB4B5155156" // Vorbis 1.3.7 (MacOS)
                 ]
             },
 
@@ -1480,7 +1480,7 @@ namespace AudioWorks.Api.Tests.DataSources
                 "PNG 24-bit 1280 x 935.png",
                 new(),
                 [
-                    "316157B1807D94E3E111802327A26787", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
+                    "F152E6100DC6002C78DDCC6DF83D8880", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
                     "E7E9C4686F7B92FC843FEDA3522C961B" // Opus 1.5.2 (MacOS and Windows)
                 ]
             },
