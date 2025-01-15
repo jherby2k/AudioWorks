@@ -22,8 +22,8 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Condition="'$(OS)'=='Windows_NT'" Command="powershell -ExecutionPolicy Bypass -File &quot;$(ProjectDir)CopyModule.ps1&quot; -Configuration $(Configuration) -ModuleProjectRoot &quot;$(ProjectDir)..\..\src\AudioWorks.Commands&quot; -OutputRoot $(OutDir)" />
-    <Exec Condition="'$(OS)'!='Windows_NT'" Command="pwsh -File &quot;$(ProjectDir)CopyModule.ps1&quot; -Configuration $(Configuration) -ModuleProjectRoot &quot;$(ProjectDir)../../src/AudioWorks.Commands&quot; -OutputRoot $(OutDir)" />
+    <Exec Condition="'$(OS)'=='Windows_NT'" Command="powershell -ExecutionPolicy Bypass -File &quot;$(ProjectDir)CopyModule.ps1&quot; -Configuration $(Configuration) -ArtifactRoot &quot;$(ProjectDir)..\..\src\artifacts&quot; -OutputRoot $(OutDir)" />
+    <Exec Condition="'$(OS)'!='Windows_NT'" Command="pwsh -File &quot;$(ProjectDir)CopyModule.ps1&quot; -Configuration $(Configuration) -ArtifactRoot &quot;$(ProjectDir)../../src/artifacts&quot; -OutputRoot $(OutDir)" />
   </Target>
 
 </Project>

@@ -103,8 +103,8 @@ steps:
 - task: CopyFiles@2
   inputs:
     contents: |
-      AudioWorks\src\*\bin\$(buildConfiguration)\*.nupkg
-      AudioWorks\src\*\bin\$(buildConfiguration)\*.snupkg
+      AudioWorks\src\artifacts\package\$(buildConfiguration)\*.nupkg
+      AudioWorks\src\artifacts\package\$(buildConfiguration)\*.snupkg
     targetFolder: $(Build.ArtifactStagingDirectory)\releases\core
     flattenFolders: true
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
@@ -112,7 +112,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    contents: AudioWorks\src\AudioWorks.Commands\bin\$(buildConfiguration)\AudioWorks.Commands\**
+    contents: AudioWorks\src\artifacts\package\$(buildConfiguration)\AudioWorks.Commands\**
     targetFolder: $(Build.ArtifactStagingDirectory)\releases\module
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
   displayName: Copy PowerShell module to artifacts directory

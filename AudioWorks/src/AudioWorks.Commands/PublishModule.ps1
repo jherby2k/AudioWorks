@@ -20,28 +20,29 @@ param(
     [ValidateSet("Debug", "Release")]
     [string] $Configuration,
     [Parameter(Mandatory)]
-    [string] $Framework)
+    [string] $Framework,
+    [Parameter(Mandatory)]
+    [string] $Destination)
 
-$outputRoot = Join-Path -Path $ProjectDir -ChildPath bin | Join-Path -ChildPath $Configuration | Join-Path -ChildPath AudioWorks.Commands
-$outputDir = Join-Path -Path $outputRoot -ChildPath $Framework
 
-Write-Host "Clearing $outputDir..."
+Write-Host "Clearing $Destination..."
 
-if (Test-Path $outputDir) { Remove-Item -Path $outputDir -Recurse -ErrorAction Stop }
+if (Test-Path $Destination) { Remove-Item -Path $Destination -Recurse -ErrorAction Stop }
 
 # Workaround for non-referenced extension content:
 $apiProjectDir = Split-Path -Path $ProjectDir -Parent | Join-Path -ChildPath AudioWorks.Api
-dotnet publish "$apiProjectDir" --no-build -c $Configuration -o "$outputDir" -f $Framework
+dotnet publish "$apiProjectDir" --no-build -c $Configuration -f $Framework -o "$(Join-Path -Path $Destination -ChildPath $Framework)"
 
-Write-Host "Publishing $Framework PowerShell module to $outputDir..."
+Write-Host "Publishing $Framework PowerShell module to $Destination..."
 
-dotnet publish "$ProjectDir" --no-build -c $Configuration -o "$outputDir" -f $Framework
-Copy-Item -Path $(Join-Path -Path $outputDir -ChildPath *) -Destination $outputRoot -Include "*.psd1", "*.psm1", "*.ps1xml", "COPYING" -ErrorAction Stop
-Remove-Item -Path $(Join-Path -Path $outputDir -ChildPath *) -Recurse -Include "*.psd1", "*.psm1", "*.ps1xml", "*.xml", "*.pdb", "*.deps.json", "COPYING", "Icon.png" -ErrorAction Stop
+dotnet publish "$ProjectDir" --no-build -c $Configuration -f $Framework -o "$(Join-Path -Path $Destination -ChildPath $Framework)"
+Write-Host $(Join-Path -Path $Destination -ChildPath $Framework)
+Copy-Item -Path $(Join-Path -Path $Destination -ChildPath $Framework | Join-Path -ChildPath *) -Destination $Destination -Include "*.psd1", "*.psm1", "*.ps1xml", "COPYING" -ErrorAction Stop
+Remove-Item -Path $(Join-Path -Path $Destination -ChildPath $Framework | Join-Path -ChildPath *) -Include "*.psd1", "*.psm1", "*.ps1xml", "*.xml", "*.pdb", "*.deps.json", "COPYING", "Icon.png" -ErrorAction Stop
 
 Write-Host "Generating help file..."
 
 Install-PackageProvider -Name NuGet -Scope CurrentUser -Force -ErrorAction SilentlyContinue
 Install-Module -Name platyPS -Scope CurrentUser -Force -ErrorAction SilentlyContinue
 Import-Module platyPS -ErrorAction Stop
-New-ExternalHelp -Path $(Join-Path -Path $ProjectDir -ChildPath docs) -OutputPath $(Join-Path -Path $outputRoot -ChildPath en-US) -Force -ErrorAction Stop
+New-ExternalHelp -Path $(Join-Path -Path $ProjectDir -ChildPath docs) -OutputPath $(Join-Path -Path $Destination -ChildPath en-US) -Force -ErrorAction Stop
