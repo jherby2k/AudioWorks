@@ -24,8 +24,8 @@ param(
     [string] $OutputRoot)
 
 $moduleName = "AudioWorks.Commands"
-$packageRoot = Join-Path -Path $ArtifactRoot -ChildPath "package" | Join-Path -ChildPath $Configuration
-$binDir = Join-Path -Path $ArtifactRoot -ChildPath "bin" | Join-Path -ChildPath $moduleName | Join-Path -ChildPath $Configuration
+$packageRoot = Join-Path -Path $ArtifactRoot -ChildPath "package" | Join-Path -ChildPath $Configuration.ToLower()
+$binDir = Join-Path -Path $ArtifactRoot -ChildPath "bin" | Join-Path -ChildPath $moduleName | Join-Path -ChildPath $Configuration.ToLower()
 
 $outputDir = Join-Path $OutputRoot -ChildPath $moduleName
 if (Test-Path $outputDir) { Remove-Item -Path $outputDir -Recurse -ErrorAction Stop }
