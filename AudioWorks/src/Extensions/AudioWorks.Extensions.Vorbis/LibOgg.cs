@@ -28,86 +28,63 @@ namespace AudioWorks.Extensions.Vorbis
 
         [LibraryImport(_oggLibrary, EntryPoint = "ogg_page_serialno")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int OggPageSerialNo(
-            in OggPage page);
+        internal static partial int PageSerialNo(in OggPage page);
 
         [LibraryImport(_oggLibrary, EntryPoint = "ogg_page_eos")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static partial bool OggPageEos(
-            in OggPage page);
+        internal static partial bool PageEos(in OggPage page);
 
         [LibraryImport(_oggLibrary, EntryPoint = "ogg_page_checksum_set")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial void OggPageChecksumSet(
-            ref OggPage page);
+        internal static partial void PageChecksumSet(ref OggPage page);
 
         [LibraryImport(_oggLibrary, EntryPoint = "ogg_sync_init")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int OggSyncInit(
-            IntPtr syncState);
+        internal static partial int SyncInit(IntPtr syncState);
 
         [LibraryImport(_oggLibrary, EntryPoint = "ogg_sync_pageout")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int OggSyncPageOut(IntPtr syncState,
-            out OggPage page);
+        internal static partial int SyncPageOut(IntPtr syncState, out OggPage page);
 
         [LibraryImport(_oggLibrary, EntryPoint = "ogg_sync_buffer")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial IntPtr OggSyncBuffer(
-            IntPtr syncState,
-            CLong size);
+        internal static partial IntPtr SyncBuffer(IntPtr syncState, CLong size);
 
         [LibraryImport(_oggLibrary, EntryPoint = "ogg_sync_wrote")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int OggSyncWrote(
-            IntPtr syncState,
-            CLong bytes);
+        internal static partial int SyncWrote(IntPtr syncState, CLong bytes);
 
         [LibraryImport(_oggLibrary, EntryPoint = "ogg_sync_clear")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int OggSyncClear(
-            IntPtr syncState);
+        internal static partial int SyncClear(IntPtr syncState);
 
         [LibraryImport(_oggLibrary, EntryPoint = "ogg_stream_init")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int OggStreamInit(
-            IntPtr streamState,
-            int serialNumber);
+        internal static partial int StreamInit(IntPtr streamState, int serialNumber);
 
         [LibraryImport(_oggLibrary, EntryPoint = "ogg_stream_pagein")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int OggStreamPageIn(
-            IntPtr streamState,
-            in OggPage page);
+        internal static partial int StreamPageIn(IntPtr streamState, in OggPage page);
 
         [LibraryImport(_oggLibrary, EntryPoint = "ogg_stream_pageout")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int OggStreamPageOut(
-            IntPtr streamState,
-            out OggPage page);
+        internal static partial int StreamPageOut(IntPtr streamState, out OggPage page);
 
         [LibraryImport(_oggLibrary, EntryPoint = "ogg_stream_packetin")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int OggStreamPacketIn(
-            IntPtr streamState,
-            in OggPacket packet);
+        internal static partial int StreamPacketIn(IntPtr streamState, in OggPacket packet);
 
         [LibraryImport(_oggLibrary, EntryPoint = "ogg_stream_packetout")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int OggStreamPacketOut(
-            IntPtr streamState,
-            out OggPacket packet);
+        internal static partial int StreamPacketOut(IntPtr streamState, out OggPacket packet);
 
         [LibraryImport(_oggLibrary, EntryPoint = "ogg_stream_flush")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int OggStreamFlush(
-            IntPtr streamState,
-            out OggPage page);
+        internal static partial int StreamFlush(IntPtr streamState, out OggPage page);
 
         [LibraryImport(_oggLibrary, EntryPoint = "ogg_stream_clear")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial void OggStreamClear(
-            IntPtr streamState);
+        internal static partial void StreamClear(IntPtr streamState);
     }
 }

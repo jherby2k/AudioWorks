@@ -30,22 +30,22 @@ namespace AudioWorks.Extensions.Vorbis
         internal unsafe OggStream(int serialNumber)
         {
             _state = Marshal.AllocHGlobal(sizeof(OggStreamState));
-            LibOgg.OggStreamInit(_state, serialNumber);
+            LibOgg.StreamInit(_state, serialNumber);
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
-        internal void PageIn(in OggPage page) => LibOgg.OggStreamPageIn(_state, page);
+        internal void PageIn(in OggPage page) => LibOgg.StreamPageIn(_state, page);
 
-        internal bool PageOut(out OggPage page) => LibOgg.OggStreamPageOut(_state, out page) != 0;
+        internal bool PageOut(out OggPage page) => LibOgg.StreamPageOut(_state, out page) != 0;
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
-        internal void PacketIn(in OggPacket packet) => LibOgg.OggStreamPacketIn(_state, packet);
+        internal void PacketIn(in OggPacket packet) => LibOgg.StreamPacketIn(_state, packet);
 
-        internal bool PacketOut(out OggPacket packet) => LibOgg.OggStreamPacketOut(_state, out packet) == 1;
+        internal bool PacketOut(out OggPacket packet) => LibOgg.StreamPacketOut(_state, out packet) == 1;
 
-        internal bool Flush(out OggPage page) => LibOgg.OggStreamFlush(_state, out page) != 0;
+        internal bool Flush(out OggPage page) => LibOgg.StreamFlush(_state, out page) != 0;
 
         public void Dispose()
         {
@@ -55,7 +55,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         void FreeUnmanaged()
         {
-            LibOgg.OggStreamClear(_state);
+            LibOgg.StreamClear(_state);
             Marshal.FreeHGlobal(_state);
         }
 

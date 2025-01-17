@@ -33,7 +33,7 @@ namespace AudioWorks.Extensions.Vorbis
         public unsafe AudioMetadata ReadMetadata(Stream stream)
         {
             OggStream? oggStream = null;
-            LibVorbis.VorbisCommentInit(out var vorbisComment);
+            LibVorbis.CommentInit(out var vorbisComment);
             Span<byte> buffer = stackalloc byte[4096];
 
             try
@@ -57,7 +57,7 @@ namespace AudioWorks.Extensions.Vorbis
                             sync.Wrote(bytesRead);
                         }
 
-                        oggStream ??= new(LibOgg.OggPageSerialNo(page));
+                        oggStream ??= new(LibOgg.PageSerialNo(page));
                         oggStream.PageIn(page);
 
                         while (oggStream.PacketOut(out var packet))
@@ -67,14 +67,14 @@ namespace AudioWorks.Extensions.Vorbis
                             if (packet.PacketNumber == 1)
                                 return new VorbisCommentToMetadataAdapter(vorbisComment);
                         }
-                    } while (!LibOgg.OggPageEos(page));
+                    } while (!LibOgg.PageEos(page));
 
                     throw new AudioInvalidException("The end of the Ogg stream was reached without finding a header.");
                 }
             }
             finally
             {
-                LibVorbis.VorbisCommentClear(ref vorbisComment);
+                LibVorbis.CommentClear(ref vorbisComment);
                 oggStream?.Dispose();
             }
         }

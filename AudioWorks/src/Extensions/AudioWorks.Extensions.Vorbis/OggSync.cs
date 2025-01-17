@@ -28,18 +28,18 @@ namespace AudioWorks.Extensions.Vorbis
         internal unsafe OggSync()
         {
             _state = Marshal.AllocHGlobal(sizeof(OggSyncState));
-            LibOgg.OggSyncInit(_state);
+            LibOgg.SyncInit(_state);
         }
 
-        internal bool PageOut(out OggPage page) => LibOgg.OggSyncPageOut(_state, out page) == 1;
+        internal bool PageOut(out OggPage page) => LibOgg.SyncPageOut(_state, out page) == 1;
 
         internal IntPtr Buffer(int size) =>
-            LibOgg.OggSyncBuffer(_state, new(size));
+            LibOgg.SyncBuffer(_state, new(size));
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
         internal void Wrote(int bytes) =>
-            LibOgg.OggSyncWrote(_state, new(bytes));
+            LibOgg.SyncWrote(_state, new(bytes));
 
         public void Dispose()
         {
@@ -51,7 +51,7 @@ namespace AudioWorks.Extensions.Vorbis
             Justification = "Native method always returns 0")]
         void FreeUnmanaged()
         {
-            LibOgg.OggSyncClear(_state);
+            LibOgg.SyncClear(_state);
             Marshal.FreeHGlobal(_state);
         }
 

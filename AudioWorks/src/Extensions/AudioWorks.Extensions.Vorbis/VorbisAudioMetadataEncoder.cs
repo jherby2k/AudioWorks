@@ -59,7 +59,7 @@ namespace AudioWorks.Extensions.Vorbis
                                 sync.Wrote(bytesRead);
                             }
 
-                            inputOggStream ??= new(LibOgg.OggPageSerialNo(page));
+                            inputOggStream ??= new(LibOgg.PageSerialNo(page));
                             outputOggStream ??= new(inputOggStream.SerialNumber);
 
                             // Write new header page(s) using a modified comment packet
@@ -108,7 +108,7 @@ namespace AudioWorks.Extensions.Vorbis
                                 pagesWritten++;
                             }
 
-                        } while (!LibOgg.OggPageEos(page));
+                        } while (!LibOgg.PageEos(page));
 
                         // Once the end of the input is reached, overwrite the original file and return
                         stream.Position = 0;
@@ -146,7 +146,7 @@ namespace AudioWorks.Extensions.Vorbis
             BinaryPrimitives.WriteUInt32LittleEndian(sequenceNumberSpan, sequenceNumber);
 
             // Recalculate the CRC
-            LibOgg.OggPageChecksumSet(ref page);
+            LibOgg.PageChecksumSet(ref page);
         }
     }
 }

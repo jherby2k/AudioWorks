@@ -27,40 +27,32 @@ namespace AudioWorks.Extensions.Vorbis
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_version_string")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial IntPtr VorbisVersion();
+        internal static partial IntPtr GetVersion();
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_comment_init")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial void VorbisCommentInit(
-            out VorbisComment comment);
+        internal static partial void CommentInit(out VorbisComment comment);
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_comment_add_tag")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static unsafe partial void VorbisCommentAddTag(
-            in VorbisComment comment,
-            ref byte tag,
-            byte* contents);
+        internal static unsafe partial void CommentAddTag(
+            in VorbisComment comment, ref byte tag, byte* contents);
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_comment_clear")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial void VorbisCommentClear(
-            ref VorbisComment comment);
+        internal static partial void CommentClear(ref VorbisComment comment);
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_commentheader_out")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int VorbisCommentHeaderOut(
-            in VorbisComment comment,
-            out OggPacket packet);
+        internal static partial int CommentHeaderOut(in VorbisComment comment, out OggPacket packet);
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_info_init")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial void VorbisInfoInit(
-            IntPtr info);
+        internal static partial void InfoInit(IntPtr info);
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_info_clear")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial void VorbisInfoClear(
-            IntPtr info);
+        internal static partial void InfoClear(IntPtr info);
 
 #if WINDOWS
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_encode_init")]
@@ -68,7 +60,7 @@ namespace AudioWorks.Extensions.Vorbis
         [LibraryImport(_vorbisEncLibrary, EntryPoint = "vorbis_encode_init")]
 #endif
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int VorbisEncodeInit(
+        internal static partial int EncodeInit(
             IntPtr info,
             CLong channels,
             CLong sampleRate,
@@ -82,21 +74,16 @@ namespace AudioWorks.Extensions.Vorbis
         [LibraryImport(_vorbisEncLibrary, EntryPoint = "vorbis_encode_init_vbr")]
 #endif
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int VorbisEncodeInitVbr(
-            IntPtr info,
-            CLong channels,
-            CLong rate,
-            float baseQuality);
+        internal static partial int EncodeInitVbr(
+            IntPtr info, CLong channels, CLong rate, float baseQuality);
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_analysis_init")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int VorbisAnalysisInit(
-            IntPtr dspState,
-            IntPtr info);
+        internal static partial int AnalysisInit(IntPtr dspState, IntPtr info);
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_analysis_headerout")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int VorbisAnalysisHeaderOut(
+        internal static partial int AnalysisHeaderOut(
             IntPtr dspState,
             in VorbisComment comment,
             out OggPacket first,
@@ -105,66 +92,48 @@ namespace AudioWorks.Extensions.Vorbis
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_analysis_buffer")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial IntPtr VorbisAnalysisBuffer(
-            IntPtr dspState,
-            int samples);
+        internal static partial IntPtr AnalysisBuffer(IntPtr dspState, int samples);
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_analysis_wrote")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int VorbisAnalysisWrote(
-            IntPtr dspState,
-            int samples);
+        internal static partial int AnalysisWrote(IntPtr dspState, int samples);
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_analysis_blockout")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int VorbisAnalysisBlockOut(
-            IntPtr dspState,
-            IntPtr block);
+        internal static partial int AnalysisBlockOut(IntPtr dspState, IntPtr block);
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_analysis")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int VorbisAnalysis(
-            IntPtr block,
-            IntPtr packet);
+        internal static partial int Analysis(IntPtr block, IntPtr packet);
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_bitrate_addblock")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int VorbisBitrateAddBlock(
-            IntPtr block);
+        internal static partial int BitrateAddBlock(IntPtr block);
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_bitrate_flushpacket")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int VorbisBitrateFlushPacket(
-            IntPtr dspState,
-            out OggPacket packet);
+        internal static partial int BitrateFlushPacket(IntPtr dspState, out OggPacket packet);
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_dsp_clear")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial void VorbisDspClear(
-            IntPtr dspState);
+        internal static partial void DspClear(IntPtr dspState);
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_block_init")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int VorbisBlockInit(
-            IntPtr dspState,
-            IntPtr block);
+        internal static partial int BlockInit(IntPtr dspState, IntPtr block);
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_block_clear")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial void VorbisBlockClear(
-            IntPtr block);
+        internal static partial void BlockClear(IntPtr block);
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_synthesis_idheader")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static partial bool VorbisSynthesisIdHeader(
-            in OggPacket packet);
+        internal static partial bool SynthesisIdHeader(in OggPacket packet);
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_synthesis_headerin")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int VorbisSynthesisHeaderIn(
-            IntPtr info,
-            in VorbisComment comment,
-            in OggPacket packet);
+        internal static partial int SynthesisHeaderIn(
+            IntPtr info, in VorbisComment comment, in OggPacket packet);
     }
 }
