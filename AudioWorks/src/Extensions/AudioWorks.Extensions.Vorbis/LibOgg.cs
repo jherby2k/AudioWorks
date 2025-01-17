@@ -18,7 +18,9 @@ using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
 {
+#pragma warning disable CA1060
     static partial class LibOgg
+#pragma warning restore CA1060
     {
 #if LINUX
         const string _oggLibrary = "libogg.so.0";

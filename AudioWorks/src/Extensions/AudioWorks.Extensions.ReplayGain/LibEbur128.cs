@@ -18,7 +18,9 @@ using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.ReplayGain
 {
+#pragma warning disable CA1060
     static partial class LibEbur128
+#pragma warning restore CA1060
     {
 #if LINUX
         const string _ebur128Library = "libebur128.so.1";

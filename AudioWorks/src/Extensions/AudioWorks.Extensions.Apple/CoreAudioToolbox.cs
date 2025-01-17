@@ -18,7 +18,9 @@ using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Apple
 {
+#pragma warning disable CA1060
     static partial class CoreAudioToolbox
+#pragma warning restore CA1060
     {
 #if OSX
         const string _coreAudioLibrary = "/System/Library/Frameworks/AudioToolbox.framework/AudioToolbox";

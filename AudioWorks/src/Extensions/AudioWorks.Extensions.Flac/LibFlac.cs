@@ -20,7 +20,9 @@ using System.Runtime.InteropServices.Marshalling;
 
 namespace AudioWorks.Extensions.Flac
 {
+#pragma warning disable CA1060
     static partial class LibFlac
+#pragma warning restore CA1060
     {
 #if LINUX
         const string _flacLibrary = "libFLAC.so.8";

@@ -18,7 +18,9 @@ using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Opus
 {
+#pragma warning disable CA1060
     static partial class LibOpusEnc
+#pragma warning restore CA1060
     {
 #if WINDOWS
         const string _opusEncLibrary = "opusenc";

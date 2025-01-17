@@ -19,7 +19,9 @@ using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Flac
 {
+#pragma warning disable CA1060
     static partial class LibDL
+#pragma warning restore CA1060
     {
 #if LINUX
         const string _dlLibrary = "libdl.so.2";

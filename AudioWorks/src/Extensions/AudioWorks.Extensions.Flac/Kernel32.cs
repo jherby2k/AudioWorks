@@ -19,7 +19,9 @@ using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Flac
 {
+#pragma warning disable CA1060
     static partial class Kernel32
+#pragma warning restore CA1060
     {
         const string _kernelLibrary = "kernel32";
 

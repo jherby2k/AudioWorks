@@ -18,7 +18,9 @@ using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
 {
+#pragma warning disable CA1060
     static partial class LibVorbis
+#pragma warning restore CA1060
     {
         const string _vorbisLibrary = "libvorbis";
 #if !WINDOWS

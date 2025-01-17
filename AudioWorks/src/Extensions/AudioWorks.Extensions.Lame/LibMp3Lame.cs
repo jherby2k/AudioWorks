@@ -18,7 +18,9 @@ using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Lame
 {
+#pragma warning disable CA1060
     static partial class LibMp3Lame
+#pragma warning restore CA1060
     {
 #if LINUX
         const string _lameLibrary = "libmp3lame.so.0";
