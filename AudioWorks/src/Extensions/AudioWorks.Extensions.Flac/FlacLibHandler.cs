@@ -87,7 +87,6 @@ namespace AudioWorks.Extensions.Flac
 #else // LINUX
                 module = LibDL.Open("libFLAC.so.8", 2);
 #endif
-                var address = Kernel32.GetProcAddress(module, "FLAC__VENDOR_STRING");
                 logger.LogInformation("Using FLAC version {version}.",
                     Marshal.PtrToStringAnsi(
                         Marshal.PtrToStructure<IntPtr>(
