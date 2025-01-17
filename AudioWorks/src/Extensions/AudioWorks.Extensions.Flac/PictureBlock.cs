@@ -31,7 +31,7 @@ namespace AudioWorks.Extensions.Flac
                 Marshal.OffsetOf<Picture>("Type").ToInt32()), (int) type);
 
         internal void SetMimeType(string mimeType) =>
-            SafeNativeMethods.MetadataObjectPictureSetMimeType(Handle, mimeType, true);
+            LibFlac.MetadataObjectPictureSetMimeType(Handle, mimeType, true);
 
         internal void SetWidth(int width) =>
             Marshal.WriteInt32(IntPtr.Add(Handle.DangerousGetHandle(),
@@ -49,7 +49,7 @@ namespace AudioWorks.Extensions.Flac
                 Marshal.OffsetOf<Picture>("ColorDepth").ToInt32()), depth);
 
         internal void SetData(byte[] data) =>
-            SafeNativeMethods.MetadataObjectPictureSetData(
+            LibFlac.MetadataObjectPictureSetData(
                 Handle,
                 data,
                 (uint) data.Length,

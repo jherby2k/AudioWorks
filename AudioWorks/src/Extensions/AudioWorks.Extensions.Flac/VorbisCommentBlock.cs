@@ -39,13 +39,13 @@ namespace AudioWorks.Extensions.Flac
             keyBytes[keyLength] = 0;
             valueBytes[valueLength] = 0;
 
-            SafeNativeMethods.MetadataObjectVorbisCommentEntryFromNameValuePair(
+            LibFlac.MetadataObjectVorbisCommentEntryFromNameValuePair(
                 out var entry,
                 new(Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes[..(keyLength + 1)]))),
                 new(Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes[..(valueLength + 1)]))));
 
             // The comment takes ownership of the new entry if 'copy' is false
-            SafeNativeMethods.MetadataObjectVorbisCommentAppendComment(Handle, entry, false);
+            LibFlac.MetadataObjectVorbisCommentAppendComment(Handle, entry, false);
         }
     }
 }

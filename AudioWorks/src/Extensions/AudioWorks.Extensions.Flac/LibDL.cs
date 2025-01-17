@@ -13,16 +13,28 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using Microsoft.Win32.SafeHandles;
+#if !WINDOWS
+using System;
+using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Flac
 {
-    sealed class MetadataIteratorHandle() : SafeHandleZeroOrMinusOneIsInvalid(true)
+    static partial class LibDL
     {
-        protected override bool ReleaseHandle()
-        {
-            LibFlac.MetadataIteratorDelete(handle);
-            return true;
-        }
+#if LINUX
+        const string _dlLibrary = "libdl.so.2";
+#else
+        const string _dlLibrary = "libdl";
+#endif
+
+        [LibraryImport(_dlLibrary, EntryPoint = "dlopen", StringMarshalling = StringMarshalling.Utf8)]
+        internal static partial IntPtr Open(string filename, int flags);
+
+        [LibraryImport(_dlLibrary, EntryPoint = "dlclose")]
+        internal static partial int Close(IntPtr handle);
+
+        [LibraryImport(_dlLibrary, EntryPoint = "dlsym", StringMarshalling = StringMarshalling.Utf8)]
+        internal static partial IntPtr Sym(IntPtr handle, string symbol);
     }
 }
+#endif

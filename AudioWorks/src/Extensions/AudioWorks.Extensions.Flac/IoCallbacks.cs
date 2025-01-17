@@ -13,6 +13,7 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Flac
@@ -20,16 +21,16 @@ namespace AudioWorks.Extensions.Flac
     [StructLayout(LayoutKind.Sequential)]
     struct IoCallbacks
     {
-        internal NativeCallbacks.IoCallbacksReadCallback Read;
+        internal IntPtr Read;
 
-        internal NativeCallbacks.IoCallbacksWriteCallback Write;
+        internal IntPtr Write;
 
-        internal NativeCallbacks.IoCallbacksSeekCallback Seek;
+        internal IntPtr Seek;
 
-        internal NativeCallbacks.IoCallbacksTellCallback Tell;
+        internal IntPtr Tell;
 
-        internal NativeCallbacks.IoCallbacksEofCallback Eof;
+        internal IntPtr Eof;
 
-        readonly NativeCallbacks.IoCallbacksCloseCallback Close;
+        readonly IntPtr Close;
     }
 }

@@ -19,24 +19,24 @@ namespace AudioWorks.Extensions.Flac
 {
     sealed class MetadataIterator : IDisposable
     {
-        readonly MetadataIteratorHandle _handle = SafeNativeMethods.MetadataIteratorNew();
+        readonly MetadataIteratorHandle _handle = LibFlac.MetadataIteratorNew();
 
         internal MetadataIterator(MetadataChainHandle chainHandle) =>
-            SafeNativeMethods.MetadataIteratorInit(_handle, chainHandle);
+            LibFlac.MetadataIteratorInit(_handle, chainHandle);
 
-        internal bool Next() => SafeNativeMethods.MetadataIteratorNext(_handle);
+        internal bool Next() => LibFlac.MetadataIteratorNext(_handle);
 
-        internal IntPtr GetBlock() => SafeNativeMethods.MetadataIteratorGetBlock(_handle);
+        internal IntPtr GetBlock() => LibFlac.MetadataIteratorGetBlock(_handle);
 
         internal void InsertBlockAfter(MetadataBlock metadataBlock)
         {
             // The iterator takes ownership of the handle
-            SafeNativeMethods.MetadataIteratorInsertBlockAfter(_handle, metadataBlock.Handle);
+            LibFlac.MetadataIteratorInsertBlockAfter(_handle, metadataBlock.Handle);
             metadataBlock.Handle.DropOwnership();
         }
 
         internal void DeleteBlock(bool replaceWithPadding) =>
-            SafeNativeMethods.MetadataIteratorDeleteBlock(_handle, replaceWithPadding);
+            LibFlac.MetadataIteratorDeleteBlock(_handle, replaceWithPadding);
 
         public void Dispose() => _handle.Dispose();
     }

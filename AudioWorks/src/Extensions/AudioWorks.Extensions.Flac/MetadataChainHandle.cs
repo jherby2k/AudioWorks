@@ -17,17 +17,11 @@ using Microsoft.Win32.SafeHandles;
 
 namespace AudioWorks.Extensions.Flac
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
-    sealed class MetadataChainHandle : SafeHandleZeroOrMinusOneIsInvalid
+    sealed class MetadataChainHandle() : SafeHandleZeroOrMinusOneIsInvalid(true)
     {
-        internal MetadataChainHandle()
-            : base(true)
-        {
-        }
-
         protected override bool ReleaseHandle()
         {
-            SafeNativeMethods.MetadataChainDelete(handle);
+            LibFlac.MetadataChainDelete(handle);
             return true;
         }
     }

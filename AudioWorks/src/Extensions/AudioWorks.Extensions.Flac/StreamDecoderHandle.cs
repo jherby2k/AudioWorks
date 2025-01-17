@@ -17,17 +17,11 @@ using Microsoft.Win32.SafeHandles;
 
 namespace AudioWorks.Extensions.Flac
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
-    sealed class StreamDecoderHandle : SafeHandleZeroOrMinusOneIsInvalid
+    sealed class StreamDecoderHandle() : SafeHandleZeroOrMinusOneIsInvalid(true)
     {
-        internal StreamDecoderHandle()
-            : base(true)
-        {
-        }
-
         protected override bool ReleaseHandle()
         {
-            SafeNativeMethods.StreamDecoderDelete(handle);
+            LibFlac.StreamDecoderDelete(handle);
             return true;
         }
     }

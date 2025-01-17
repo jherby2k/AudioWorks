@@ -26,10 +26,10 @@ namespace AudioWorks.Extensions.Flac
 {
     sealed class StreamEncoder : IDisposable
     {
-        readonly StreamEncoderHandle _handle = SafeNativeMethods.StreamEncoderNew();
-        readonly NativeCallbacks.StreamEncoderWriteCallback _writeCallback;
-        readonly NativeCallbacks.StreamEncoderSeekCallback _seekCallback;
-        readonly NativeCallbacks.StreamEncoderTellCallback _tellCallback;
+        readonly StreamEncoderHandle _handle = LibFlac.StreamEncoderNew();
+        readonly LibFlac.StreamEncoderWriteCallback _writeCallback;
+        readonly LibFlac.StreamEncoderSeekCallback _seekCallback;
+        readonly LibFlac.StreamEncoderTellCallback _tellCallback;
 #pragma warning disable CA2213 // Disposable fields should be disposed
         Stream _stream;
 #pragma warning restore CA2213 // Disposable fields should be disposed
@@ -45,24 +45,24 @@ namespace AudioWorks.Extensions.Flac
             _stream = stream;
         }
 
-        internal void SetChannels(uint channels) => SafeNativeMethods.StreamEncoderSetChannels(_handle, channels);
+        internal void SetChannels(uint channels) => LibFlac.StreamEncoderSetChannels(_handle, channels);
 
         internal void SetBitsPerSample(uint bitsPerSample) =>
-            SafeNativeMethods.StreamEncoderSetBitsPerSample(_handle, bitsPerSample);
+            LibFlac.StreamEncoderSetBitsPerSample(_handle, bitsPerSample);
 
         internal void SetSampleRate(uint sampleRate) =>
-            SafeNativeMethods.StreamEncoderSetSampleRate(_handle, sampleRate);
+            LibFlac.StreamEncoderSetSampleRate(_handle, sampleRate);
 
         internal void SetTotalSamplesEstimate(ulong sampleCount) =>
-            SafeNativeMethods.StreamEncoderSetTotalSamplesEstimate(_handle, sampleCount);
+            LibFlac.StreamEncoderSetTotalSamplesEstimate(_handle, sampleCount);
 
         internal void SetCompressionLevel(uint compressionLevel) =>
-            SafeNativeMethods.StreamEncoderSetCompressionLevel(_handle, compressionLevel);
+            LibFlac.StreamEncoderSetCompressionLevel(_handle, compressionLevel);
 
         internal void SetMetadata(IEnumerable<MetadataBlock> metadataBlocks)
         {
             var blockPointers = metadataBlocks.Select(block => block.Handle.DangerousGetHandle()).ToArray();
-            SafeNativeMethods.StreamEncoderSetMetadata(_handle, blockPointers, (uint) blockPointers.Length);
+            LibFlac.StreamEncoderSetMetadata(_handle, blockPointers, (uint) blockPointers.Length);
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
@@ -74,14 +74,14 @@ namespace AudioWorks.Extensions.Flac
             {
                 var fileStream = _stream;
                 _stream = tempStream;
-                SafeNativeMethods.StreamEncoderInitStream(_handle, _writeCallback, _seekCallback, _tellCallback, null,
+                LibFlac.StreamEncoderInitStream(_handle, _writeCallback, _seekCallback, _tellCallback, null,
                     IntPtr.Zero);
 
                 // Pre-allocate the whole stream (estimate worst case compression, plus metadata)
                 fileStream.SetLength(
-                    SafeNativeMethods.StreamEncoderGetChannels(_handle) *
-                    (uint) Math.Ceiling(SafeNativeMethods.StreamEncoderGetBitsPerSample(_handle) / 8.0) *
-                    (long) SafeNativeMethods.StreamEncoderGetTotalSamplesEstimate(_handle) +
+                    LibFlac.StreamEncoderGetChannels(_handle) *
+                    (uint) Math.Ceiling(LibFlac.StreamEncoderGetBitsPerSample(_handle) / 8.0) *
+                    (long) LibFlac.StreamEncoderGetTotalSamplesEstimate(_handle) +
                     tempStream.Length);
 
                 // Flush the metadata to the output stream, and swap the streams back
@@ -98,7 +98,7 @@ namespace AudioWorks.Extensions.Flac
                 new(Unsafe.AsPointer(ref MemoryMarshal.GetReference(rightBuffer)))
             ];
 
-            if (!SafeNativeMethods.StreamEncoderProcess(
+            if (!LibFlac.StreamEncoderProcess(
                 _handle,
                 MemoryMarshal.GetReference(buffers),
                 (uint) leftBuffer.Length))
@@ -108,7 +108,7 @@ namespace AudioWorks.Extensions.Flac
 
         internal void ProcessInterleaved(ReadOnlySpan<int> buffer, uint frames)
         {
-            if (!SafeNativeMethods.StreamEncoderProcessInterleaved(
+            if (!LibFlac.StreamEncoderProcessInterleaved(
                 _handle,
                 MemoryMarshal.GetReference(buffer),
                 frames))
@@ -117,7 +117,7 @@ namespace AudioWorks.Extensions.Flac
 
         internal void Finish()
         {
-            if (!SafeNativeMethods.StreamEncoderFinish(_handle))
+            if (!LibFlac.StreamEncoderFinish(_handle))
                 throw new AudioEncodingException($"FLAC encountered error '{GetState()}' while finishing encoding.");
 
             // The pre-allocation may have been based on an estimated frame count
@@ -151,6 +151,6 @@ namespace AudioWorks.Extensions.Flac
             return EncoderTellStatus.Ok;
         }
 
-        EncoderState GetState() => SafeNativeMethods.StreamEncoderGetState(_handle);
+        EncoderState GetState() => LibFlac.StreamEncoderGetState(_handle);
     }
 }

@@ -21,20 +21,20 @@ namespace AudioWorks.Extensions.Flac
 {
     abstract class StreamDecoder : IDisposable
     {
-        readonly NativeCallbacks.StreamDecoderReadCallback _readCallback;
-        readonly NativeCallbacks.StreamDecoderSeekCallback _seekCallback;
-        readonly NativeCallbacks.StreamDecoderTellCallback _tellCallback;
-        readonly NativeCallbacks.StreamDecoderLengthCallback _lengthCallback;
-        readonly NativeCallbacks.StreamDecoderEofCallback _eofCallback;
-        readonly NativeCallbacks.StreamDecoderWriteCallback _writeCallback;
-        readonly NativeCallbacks.StreamDecoderMetadataCallback _metadataCallback;
-        readonly NativeCallbacks.StreamDecoderErrorCallback _errorCallback;
+        readonly LibFlac.StreamDecoderReadCallback _readCallback;
+        readonly LibFlac.StreamDecoderSeekCallback _seekCallback;
+        readonly LibFlac.StreamDecoderTellCallback _tellCallback;
+        readonly LibFlac.StreamDecoderLengthCallback _lengthCallback;
+        readonly LibFlac.StreamDecoderEofCallback _eofCallback;
+        readonly LibFlac.StreamDecoderWriteCallback _writeCallback;
+        readonly LibFlac.StreamDecoderMetadataCallback _metadataCallback;
+        readonly LibFlac.StreamDecoderErrorCallback _errorCallback;
 #pragma warning disable CA2213 // Disposable fields should be disposed
         readonly Stream _stream;
 #pragma warning restore CA2213 // Disposable fields should be disposed
         readonly long _streamLength;
 
-        protected StreamDecoderHandle Handle { get; } = SafeNativeMethods.StreamDecoderNew();
+        protected StreamDecoderHandle Handle { get; } = LibFlac.StreamDecoderNew();
 
         internal StreamDecoder(Stream stream)
         {
@@ -55,7 +55,7 @@ namespace AudioWorks.Extensions.Flac
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
         internal void Initialize() =>
-            SafeNativeMethods.StreamDecoderInitStream(Handle,
+            LibFlac.StreamDecoderInitStream(Handle,
                 _readCallback,
                 _seekCallback,
                 _tellCallback,
@@ -66,11 +66,11 @@ namespace AudioWorks.Extensions.Flac
                 _errorCallback,
                 IntPtr.Zero);
 
-        internal bool ProcessMetadata() => SafeNativeMethods.StreamDecoderProcessUntilEndOfMetadata(Handle);
+        internal bool ProcessMetadata() => LibFlac.StreamDecoderProcessUntilEndOfMetadata(Handle);
 
-        internal void Finish() => SafeNativeMethods.StreamDecoderFinish(Handle);
+        internal void Finish() => LibFlac.StreamDecoderFinish(Handle);
 
-        internal DecoderState GetState() => SafeNativeMethods.StreamDecoderGetState(Handle);
+        internal DecoderState GetState() => LibFlac.StreamDecoderGetState(Handle);
 
         public void Dispose() => Handle.Dispose();
 

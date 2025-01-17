@@ -19,6 +19,6 @@ namespace AudioWorks.Extensions.Flac
     {
         internal SeekTableBlock(uint count, ulong sampleCount)
             : base(MetadataType.SeekTable) =>
-            SafeNativeMethods.MetadataObjectSeekTableTemplateAppendSpacedPoints(Handle, count, sampleCount);
+            LibFlac.MetadataObjectSeekTableTemplateAppendSpacedPoints(Handle, count, sampleCount);
     }
 }

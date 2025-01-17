@@ -62,7 +62,7 @@ namespace AudioWorks.Extensions.Flac
 
             try
             {
-                foreach (var methodInfo in typeof(SafeNativeMethods).GetMethods(
+                foreach (var methodInfo in typeof(LibFlac).GetMethods(
                     BindingFlags.NonPublic | BindingFlags.Static))
                     Marshal.Prelink(methodInfo);
             }
@@ -81,28 +81,29 @@ namespace AudioWorks.Extensions.Flac
             try
             {
 #if WINDOWS
-                module = SafeNativeMethods.LoadLibrary(Path.Combine(libPath, "libFLAC.dll"));
+                module = Kernel32.LoadLibrary(Path.Combine(libPath, "libFLAC.dll"));
 #elif OSX
-                module = SafeNativeMethods.DlOpen(Path.Combine(libPath, "libFLAC.dylib"), 2);
+                module = LibDL.Open(Path.Combine(libPath, "libFLAC.dylib"), 2);
 #else // LINUX
-                module = SafeNativeMethods.DlOpen("libFLAC.so.8", 2);
+                module = LibDL.Open("libFLAC.so.8", 2);
 #endif
+                var address = Kernel32.GetProcAddress(module, "FLAC__VENDOR_STRING");
                 logger.LogInformation("Using FLAC version {version}.",
                     Marshal.PtrToStringAnsi(
                         Marshal.PtrToStructure<IntPtr>(
 #if WINDOWS
-                            SafeNativeMethods.GetProcAddress(module, "FLAC__VENDOR_STRING"))));
+                            Kernel32.GetProcAddress(module, "FLAC__VENDOR_STRING"))));
 #else
-                            SafeNativeMethods.DlSym(module, "FLAC__VENDOR_STRING"))));
+                            LibDL.Sym(module, "FLAC__VENDOR_STRING"))));
 #endif
             }
             finally
             {
                 if (module != IntPtr.Zero)
 #if WINDOWS
-                    SafeNativeMethods.FreeLibrary(module);
+                    Kernel32.FreeLibrary(module);
 #else
-                    SafeNativeMethods.DlClose(module);
+                    LibDL.Close(module);
 #endif
             }
 

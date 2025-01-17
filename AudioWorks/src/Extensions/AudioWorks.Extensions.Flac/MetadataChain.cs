@@ -22,21 +22,21 @@ namespace AudioWorks.Extensions.Flac
 {
     sealed class MetadataChain : IDisposable
     {
-        readonly MetadataChainHandle _handle = SafeNativeMethods.MetadataChainNew();
+        readonly MetadataChainHandle _handle = LibFlac.MetadataChainNew();
         readonly IoCallbacks _callbacks;
 
         internal MetadataChain(Stream stream) => _callbacks = InitializeCallbacks(stream);
 
-        internal void Read() => SafeNativeMethods.MetadataChainReadWithCallbacks(_handle, IntPtr.Zero, _callbacks);
+        internal void Read() => LibFlac.MetadataChainReadWithCallbacks(_handle, IntPtr.Zero, _callbacks);
 
         internal bool CheckIfTempFileNeeded(bool usePadding) =>
-            SafeNativeMethods.MetadataChainCheckIfTempFileNeeded(_handle, usePadding);
+            LibFlac.MetadataChainCheckIfTempFileNeeded(_handle, usePadding);
 
         internal void Write(bool usePadding) =>
-            SafeNativeMethods.MetadataChainWriteWithCallbacks(_handle, usePadding, IntPtr.Zero, _callbacks);
+            LibFlac.MetadataChainWriteWithCallbacks(_handle, usePadding, IntPtr.Zero, _callbacks);
 
         internal void WriteWithTempFile(bool usePadding, Stream tempStream) =>
-            SafeNativeMethods.MetadataChainWriteWithCallbacksAndTempFile(
+            LibFlac.MetadataChainWriteWithCallbacksAndTempFile(
                 _handle,
                 usePadding,
                 IntPtr.Zero,
@@ -51,52 +51,57 @@ namespace AudioWorks.Extensions.Flac
         static IoCallbacks InitializeCallbacks(Stream stream) => new()
         {
             // ReSharper disable once UnusedParameter.Local
-            Read = (readBuffer, bufferSize, numberOfRecords, handle) =>
-            {
-                var totalBufferSize = bufferSize.ToInt32() * numberOfRecords.ToInt32();
-                var buffer = ArrayPool<byte>.Shared.Rent(totalBufferSize);
-                try
+            Read = Marshal.GetFunctionPointerForDelegate<LibFlac.IoCallbacksReadCallback>(
+                (readBuffer, bufferSize, numberOfRecords, handle) =>
                 {
-                    var bytesRead = stream.Read(buffer, 0, totalBufferSize);
-                    Marshal.Copy(buffer, 0, readBuffer, totalBufferSize);
-                    return new(bytesRead);
-                }
-                finally
-                {
-                    ArrayPool<byte>.Shared.Return(buffer);
-                }
-            },
+                    var totalBufferSize = bufferSize.ToInt32() * numberOfRecords.ToInt32();
+                    var buffer = ArrayPool<byte>.Shared.Rent(totalBufferSize);
+                    try
+                    {
+                        var bytesRead = stream.Read(buffer, 0, totalBufferSize);
+                        Marshal.Copy(buffer, 0, readBuffer, totalBufferSize);
+                        return new(bytesRead);
+                    }
+                    finally
+                    {
+                        ArrayPool<byte>.Shared.Return(buffer);
+                    }
+                }),
 
             // ReSharper disable once UnusedParameter.Local
-            Write = (writeBuffer, bufferSize, numberOfRecords, handle) =>
-            {
-                var castNumberOfRecords = numberOfRecords.ToInt32();
-                var totalBufferSize = bufferSize.ToInt32() * castNumberOfRecords;
-                var buffer = ArrayPool<byte>.Shared.Rent(totalBufferSize);
-                try
+            Write = Marshal.GetFunctionPointerForDelegate<LibFlac.IoCallbacksWriteCallback>(
+                (writeBuffer, bufferSize, numberOfRecords, handle) =>
                 {
-                    Marshal.Copy(writeBuffer, buffer, 0, totalBufferSize);
-                    stream.Write(buffer, 0, totalBufferSize);
-                    return new(castNumberOfRecords);
-                }
-                finally
+                    var castNumberOfRecords = numberOfRecords.ToInt32();
+                    var totalBufferSize = bufferSize.ToInt32() * castNumberOfRecords;
+                    var buffer = ArrayPool<byte>.Shared.Rent(totalBufferSize);
+                    try
+                    {
+                        Marshal.Copy(writeBuffer, buffer, 0, totalBufferSize);
+                        stream.Write(buffer, 0, totalBufferSize);
+                        return new(castNumberOfRecords);
+                    }
+                    finally
+                    {
+                        ArrayPool<byte>.Shared.Return(buffer);
+                    }
+                }),
+
+            // ReSharper disable once UnusedParameter.Local
+            Seek = Marshal.GetFunctionPointerForDelegate<LibFlac.IoCallbacksSeekCallback>(
+                (handle, offset, whence) =>
                 {
-                    ArrayPool<byte>.Shared.Return(buffer);
-                }
-            },
+                    stream.Seek(offset, whence);
+                    return 0;
+                }),
 
             // ReSharper disable once UnusedParameter.Local
-            Seek = (handle, offset, whence) =>
-            {
-                stream.Seek(offset, whence);
-                return 0;
-            },
+            Tell = Marshal.GetFunctionPointerForDelegate<LibFlac.IoCallbacksTellCallback>(
+                handle => stream.Position),
 
             // ReSharper disable once UnusedParameter.Local
-            Tell = handle => stream.Position,
-
-            // ReSharper disable once UnusedParameter.Local
-            Eof = handle => stream.Position < stream.Length ? 0 : 1
+            Eof = Marshal.GetFunctionPointerForDelegate<LibFlac.IoCallbacksEofCallback>(
+                handle => stream.Position < stream.Length ? 0 : 1)
         };
     }
 }
