@@ -28,7 +28,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         internal MetadataToVorbisCommentAdapter(AudioMetadata metadata)
         {
-            SafeNativeMethods.VorbisCommentInit(out _comment);
+            LibVorbis.VorbisCommentInit(out _comment);
 
             if (!string.IsNullOrEmpty(metadata.Title))
                 AddTag("TITLE", metadata.Title);
@@ -74,7 +74,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
-        internal void HeaderOut(out OggPacket packet) => SafeNativeMethods.VorbisCommentHeaderOut(_comment, out packet);
+        internal void HeaderOut(out OggPacket packet) => LibVorbis.VorbisCommentHeaderOut(_comment, out packet);
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
@@ -83,7 +83,7 @@ namespace AudioWorks.Extensions.Vorbis
             out OggPacket first,
             out OggPacket second,
             out OggPacket third) =>
-            SafeNativeMethods.VorbisAnalysisHeaderOut(dspState, _comment, out first, out second, out third);
+            LibVorbis.VorbisAnalysisHeaderOut(dspState, _comment, out first, out second, out third);
 
         public void Dispose()
         {
@@ -109,7 +109,7 @@ namespace AudioWorks.Extensions.Vorbis
             valueBytes[valueLength] = 0;
 
             fixed (byte* valueBytesAddress = valueBytes)
-                SafeNativeMethods.VorbisCommentAddTag(_comment, ref MemoryMarshal.GetReference(keyBytes),
+                LibVorbis.VorbisCommentAddTag(_comment, ref MemoryMarshal.GetReference(keyBytes),
                     valueBytesAddress);
 
             _unmanagedMemoryAllocated = true;
@@ -125,7 +125,7 @@ namespace AudioWorks.Extensions.Vorbis
             keyBytes[keyLength] = 0;
 
             fixed (byte* valueAddress = value)
-                SafeNativeMethods.VorbisCommentAddTag(_comment, ref MemoryMarshal.GetReference(keyBytes),
+                LibVorbis.VorbisCommentAddTag(_comment, ref MemoryMarshal.GetReference(keyBytes),
                     valueAddress);
 
             _unmanagedMemoryAllocated = true;
@@ -134,7 +134,7 @@ namespace AudioWorks.Extensions.Vorbis
         void FreeUnmanaged()
         {
             if (_unmanagedMemoryAllocated)
-                SafeNativeMethods.VorbisCommentClear(ref _comment);
+                LibVorbis.VorbisCommentClear(ref _comment);
         }
 
         ~MetadataToVorbisCommentAdapter() => FreeUnmanaged();

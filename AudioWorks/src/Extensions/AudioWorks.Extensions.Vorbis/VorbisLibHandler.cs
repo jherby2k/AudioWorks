@@ -55,7 +55,7 @@ namespace AudioWorks.Extensions.Vorbis
 
             try
             {
-                foreach (var methodInfo in typeof(SafeNativeMethods).GetMethods(
+                foreach (var methodInfo in typeof(LibVorbis).GetMethods(
                     BindingFlags.NonPublic | BindingFlags.Static))
                     Marshal.Prelink(methodInfo);
             }
@@ -71,7 +71,7 @@ namespace AudioWorks.Extensions.Vorbis
             }
 
             logger.LogInformation("Using Vorbis version {version}.",
-                Marshal.PtrToStringAnsi(SafeNativeMethods.VorbisVersion()));
+                Marshal.PtrToStringAnsi(LibVorbis.VorbisVersion()));
 
             return true;
         }

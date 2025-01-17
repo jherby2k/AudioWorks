@@ -34,7 +34,7 @@ namespace AudioWorks.Extensions.Vorbis
         public unsafe AudioInfo ReadAudioInfo(Stream stream)
         {
             OggStream? oggStream = null;
-            SafeNativeMethods.VorbisCommentInit(out var vorbisComment);
+            LibVorbis.VorbisCommentInit(out var vorbisComment);
             Span<byte> buffer = stackalloc byte[4096];
 
             try
@@ -58,12 +58,12 @@ namespace AudioWorks.Extensions.Vorbis
                             sync.Wrote(bytesRead);
                         }
 
-                        oggStream ??= new(SafeNativeMethods.OggPageSerialNo(page));
+                        oggStream ??= new(LibOgg.OggPageSerialNo(page));
                         oggStream.PageIn(page);
 
                         while (oggStream.PacketOut(out var packet))
                         {
-                            if (!SafeNativeMethods.VorbisSynthesisIdHeader(packet))
+                            if (!LibVorbis.VorbisSynthesisIdHeader(packet))
                                 throw new AudioUnsupportedException("Not a Vorbis stream.");
 
                             decoder.HeaderIn(vorbisComment, packet);
@@ -76,14 +76,14 @@ namespace AudioWorks.Extensions.Vorbis
                                 GetFinalGranulePosition(oggStream.SerialNumber, stream),
                                 Math.Max(info.BitRateNominal.Value.ToInt32(), 0));
                         }
-                    } while (!SafeNativeMethods.OggPageEos(page));
+                    } while (!LibOgg.OggPageEos(page));
 
                     throw new AudioInvalidException("The end of the Ogg stream was reached without finding a header.");
                 }
             }
             finally
             {
-                SafeNativeMethods.VorbisCommentClear(ref vorbisComment);
+                LibVorbis.VorbisCommentClear(ref vorbisComment);
                 oggStream?.Dispose();
             }
         }
