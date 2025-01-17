@@ -27,7 +27,7 @@ namespace AudioWorks.Extensions.Opus
 
         internal MetadataToOpusCommentAdapter(AudioMetadata metadata)
         {
-            Handle = SafeNativeMethods.OpusEncoderCommentsCreate();
+            Handle = LibOpusEnc.CommentsCreate();
 
             if (!string.IsNullOrEmpty(metadata.Title))
                 AddTag("TITLE", metadata.Title);
@@ -66,7 +66,7 @@ namespace AudioWorks.Extensions.Opus
             // Always store images in JPEG format since Vorbis is also lossy
             var coverArt = CoverArtFactory.ConvertToLossy(metadata.CoverArt);
 
-            var error = SafeNativeMethods.OpusEncoderCommentsAddPictureFromMemory(
+            var error = LibOpusEnc.CommentsAddPictureFromMemory(
                 Handle,
                 coverArt.Data,
                 new(coverArt.Data.Length),
@@ -105,7 +105,7 @@ namespace AudioWorks.Extensions.Opus
 
             fixed (byte* valueBytesAddress = valueBytes)
             {
-                var error = SafeNativeMethods.OpusEncoderCommentsAdd(Handle, ref MemoryMarshal.GetReference(keyBytes),
+                var error = LibOpusEnc.CommentsAdd(Handle, ref MemoryMarshal.GetReference(keyBytes),
                     valueBytesAddress);
                 if (error != 0)
                     throw new AudioEncodingException($"Opus encountered error {error} writing a comment.");

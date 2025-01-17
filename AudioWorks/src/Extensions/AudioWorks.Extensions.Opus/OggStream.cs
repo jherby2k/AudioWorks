@@ -30,20 +30,20 @@ namespace AudioWorks.Extensions.Opus
         internal unsafe OggStream(int serialNumber)
         {
             _state = Marshal.AllocHGlobal(sizeof(OggStreamState));
-            SafeNativeMethods.OggStreamInit(_state, serialNumber);
+            LibOgg.StreamInit(_state, serialNumber);
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
-        internal void PageIn(in OggPage page) => SafeNativeMethods.OggStreamPageIn(_state, page);
+        internal void PageIn(in OggPage page) => LibOgg.StreamPageIn(_state, page);
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
-        internal void PacketIn(in OggPacket packet) => SafeNativeMethods.OggStreamPacketIn(_state, packet);
+        internal void PacketIn(in OggPacket packet) => LibOgg.StreamPacketIn(_state, packet);
 
-        internal bool PacketOut(out OggPacket packet) => SafeNativeMethods.OggStreamPacketOut(_state, out packet) == 1;
+        internal bool PacketOut(out OggPacket packet) => LibOgg.StreamPacketOut(_state, out packet) == 1;
 
-        internal bool Flush(out OggPage page) => SafeNativeMethods.OggStreamFlush(_state, out page) != 0;
+        internal bool Flush(out OggPage page) => LibOgg.StreamFlush(_state, out page) != 0;
 
         public void Dispose()
         {
@@ -53,7 +53,7 @@ namespace AudioWorks.Extensions.Opus
 
         void FreeUnmanaged()
         {
-            SafeNativeMethods.OggStreamClear(_state);
+            LibOgg.StreamClear(_state);
             Marshal.FreeHGlobal(_state);
         }
 

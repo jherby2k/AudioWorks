@@ -55,13 +55,13 @@ namespace AudioWorks.Extensions.Opus
                             sync.Wrote(bytesRead);
                         }
 
-                        oggStream ??= new(SafeNativeMethods.OggPageSerialNo(page));
+                        oggStream ??= new(LibOgg.PageSerialNo(page));
                         oggStream.PageIn(page);
 
                         while (oggStream.PacketOut(out var packet))
                             if (packet.PacketNumber == 1)
                                 return new CommentHeaderToMetadataAdapter(packet);
-                    } while (!SafeNativeMethods.OggPageEos(page));
+                    } while (!LibOgg.PageEos(page));
 
                     throw new AudioInvalidException("The end of the Ogg stream was reached without finding a header.");
                 }

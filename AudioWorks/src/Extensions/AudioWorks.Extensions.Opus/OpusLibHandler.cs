@@ -55,7 +55,7 @@ namespace AudioWorks.Extensions.Opus
 
             try
             {
-                foreach (var methodInfo in typeof(SafeNativeMethods).GetMethods(
+                foreach (var methodInfo in typeof(LibOpusEnc).GetMethods(
                     BindingFlags.NonPublic | BindingFlags.Static))
                     Marshal.Prelink(methodInfo);
             }
@@ -71,7 +71,7 @@ namespace AudioWorks.Extensions.Opus
             }
 
             logger.LogInformation("Using Opus version {version}.",
-                (Marshal.PtrToStringAnsi(SafeNativeMethods.OpusGetVersion()) ?? "<unknown>")
+                (Marshal.PtrToStringAnsi(LibOpus.GetVersion()) ?? "<unknown>")
                     .Replace("libopus ", string.Empty, StringComparison.Ordinal));
 
             return true;

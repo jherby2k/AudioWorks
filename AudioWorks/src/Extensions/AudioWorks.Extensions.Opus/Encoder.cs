@@ -46,7 +46,7 @@ namespace AudioWorks.Extensions.Opus
             _channels = channels;
             _totalSeconds = totalSeconds;
             _callbacks = InitializeCallbacks();
-            _handle = SafeNativeMethods.OpusEncoderCreateCallbacks(
+            _handle = LibOpusEnc.CreateCallbacks(
                 ref _callbacks,
                 IntPtr.Zero,
                 comments,
@@ -114,7 +114,7 @@ namespace AudioWorks.Extensions.Opus
         {
             if (!_headersFlushed) FlushHeaders();
 
-            var error = SafeNativeMethods.OpusEncoderWriteFloat(
+            var error = LibOpusEnc.WriteFloat(
                 _handle,
                 MemoryMarshal.GetReference(interleavedSamples),
                 interleavedSamples.Length / _channels);
@@ -124,7 +124,7 @@ namespace AudioWorks.Extensions.Opus
 
         internal void Drain()
         {
-            var error = SafeNativeMethods.OpusEncoderDrain(_handle);
+            var error = LibOpusEnc.Drain(_handle);
             if (error != 0)
                 throw new AudioEncodingException($"Opus encountered error '{error}' draining the encoder.");
 
@@ -142,20 +142,22 @@ namespace AudioWorks.Extensions.Opus
         OpusEncoderCallbacks InitializeCallbacks() => new()
         {
             // ReSharper disable once UnusedParameter.Local
-            Write = (userData, buffer, length) =>
-            {
-                _outputStream.Write(buffer, 0, length);
-                return 0;
-            },
+            Write = Marshal.GetFunctionPointerForDelegate<LibOpusEnc.WriteCallback>(
+                (userData, buffer, length) =>
+                {
+                    _outputStream.Write(buffer, 0, length);
+                    return 0;
+                }),
 
             // Leave the stream open
             // ReSharper disable once UnusedParameter.Local
-            Close = userData => 0
+            Close = Marshal.GetFunctionPointerForDelegate<LibOpusEnc.CloseCallback>(
+                userData => 0)
         };
 
         void FlushHeaders()
         {
-            var error = SafeNativeMethods.OpusEncoderFlushHeader(_handle);
+            var error = LibOpusEnc.FlushHeader(_handle);
             if (error != 0)
                 throw new AudioEncodingException($"Opus encountered error '{error}' flushing the header.");
 
@@ -183,22 +185,22 @@ namespace AudioWorks.Extensions.Opus
 #if OSX
             // HACK ope_encoder_ctl needs the variadic argument pushed to the stack on ARM64
             RuntimeInformation.ProcessArchitecture == Architecture.Arm64
-                ? SafeNativeMethods.OpusEncoderControlGetArm64(_handle, request,
+                ? LibOpusEnc.ControlGetArm64(_handle, request,
                     IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, out value)
-                : SafeNativeMethods.OpusEncoderControlGet(_handle, request, out value);
+                : LibOpusEnc.ControlGet(_handle, request, out value);
 #else
-            SafeNativeMethods.OpusEncoderControlGet(_handle, request, out value);
+            LibOpusEnc.ControlGet(_handle, request, out value);
 #endif
 
         int OpusEncoderControlSet(EncoderControlRequest request, int argument) =>
 #if OSX
             // HACK ope_encoder_ctl needs the variadic argument pushed to the stack on ARM64
             RuntimeInformation.ProcessArchitecture == Architecture.Arm64
-                ? SafeNativeMethods.OpusEncoderControlSetArm64(_handle, request,
+                ? LibOpusEnc.ControlSetArm64(_handle, request,
                     IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, argument)
-                : SafeNativeMethods.OpusEncoderControlSet(_handle, request, argument);
+                : LibOpusEnc.ControlSet(_handle, request, argument);
 #else
-            SafeNativeMethods.OpusEncoderControlSet(_handle, request, argument);
+            LibOpusEnc.ControlSet(_handle, request, argument);
 #endif
     }
 }

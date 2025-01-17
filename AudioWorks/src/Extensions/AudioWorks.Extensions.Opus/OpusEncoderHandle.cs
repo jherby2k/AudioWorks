@@ -17,17 +17,11 @@ using Microsoft.Win32.SafeHandles;
 
 namespace AudioWorks.Extensions.Opus
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
-    sealed class OpusEncoderHandle : SafeHandleZeroOrMinusOneIsInvalid
+    sealed class OpusEncoderHandle() : SafeHandleZeroOrMinusOneIsInvalid(true)
     {
-        internal OpusEncoderHandle()
-            : base(true)
-        {
-        }
-
         protected override bool ReleaseHandle()
         {
-            SafeNativeMethods.OpusEncoderDestroy(handle);
+            LibOpusEnc.Destroy(handle);
             return true;
         }
     }

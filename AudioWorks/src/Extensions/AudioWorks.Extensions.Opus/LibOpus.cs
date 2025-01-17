@@ -18,16 +18,18 @@ using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Opus
 {
-    static class NativeCallbacks
+    static partial class LibOpus
     {
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate int OpusEncoderWriteCallback(
-            IntPtr userData,
-            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] buffer,
-            int length);
+#if WINDOWS
+        const string _opusLibrary = "opus";
+#elif LINUX
+        const string _opusLibrary = "libopus.so.0";
+#else
+        const string _opusLibrary = "libopus";
+#endif
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate int OpusEncoderCloseCallback(
-            IntPtr userData);
+        [LibraryImport(_opusLibrary, EntryPoint = "opus_get_version_string")]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+        internal static partial IntPtr GetVersion();
     }
 }
