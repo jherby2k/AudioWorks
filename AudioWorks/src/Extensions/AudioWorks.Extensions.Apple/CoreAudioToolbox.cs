@@ -15,12 +15,10 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Runtime.InteropServices;
-using System.Security;
 
 namespace AudioWorks.Extensions.Apple
 {
-    [SuppressUnmanagedCodeSecurity]
-    static class SafeNativeMethods
+    static partial class CoreAudioToolbox
     {
 #if OSX
         const string _coreAudioLibrary = "/System/Library/Frameworks/AudioToolbox.framework/AudioToolbox";
@@ -28,49 +26,49 @@ namespace AudioWorks.Extensions.Apple
         const string _coreAudioLibrary = "CoreAudioToolbox";
 #endif
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static extern AudioFileStatus AudioFileOpenWithCallbacks(
+        internal static partial AudioFileStatus AudioFileOpenWithCallbacks(
             IntPtr userData,
-            NativeCallbacks.AudioFileReadCallback readCallback,
-            NativeCallbacks.AudioFileWriteCallback? writeCallback,
-            NativeCallbacks.AudioFileGetSizeCallback getSizeCallback,
-            NativeCallbacks.AudioFileSetSizeCallback? setSizeCallback,
+            AudioFileReadCallback readCallback,
+            AudioFileWriteCallback? writeCallback,
+            AudioFileGetSizeCallback getSizeCallback,
+            AudioFileSetSizeCallback? setSizeCallback,
             AudioFileType fileType,
             out AudioFileHandle handle);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static extern AudioFileStatus AudioFileInitializeWithCallbacks(
+        internal static partial AudioFileStatus AudioFileInitializeWithCallbacks(
             IntPtr userData,
-            NativeCallbacks.AudioFileReadCallback readCallback,
-            NativeCallbacks.AudioFileWriteCallback writeCallback,
-            NativeCallbacks.AudioFileGetSizeCallback getSizeCallback,
-            NativeCallbacks.AudioFileSetSizeCallback setSizeCallback,
+            AudioFileReadCallback readCallback,
+            AudioFileWriteCallback writeCallback,
+            AudioFileGetSizeCallback getSizeCallback,
+            AudioFileSetSizeCallback setSizeCallback,
             AudioFileType fileType,
             ref AudioStreamBasicDescription description,
             uint flags,
             out AudioFileHandle handle);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static extern AudioFileStatus AudioFileGetProperty(
+        internal static partial AudioFileStatus AudioFileGetProperty(
             AudioFileHandle handle,
             AudioFilePropertyId id,
             ref uint size,
-            [Out] IntPtr data);
+            IntPtr data);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static extern AudioFileStatus AudioFileGetPropertyInfo(
+        internal static partial AudioFileStatus AudioFileGetPropertyInfo(
             AudioFileHandle handle,
             AudioFilePropertyId id,
             out uint dataSize,
             out uint isWritable);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static extern AudioFileStatus AudioFileReadPacketData(
+        internal static partial AudioFileStatus AudioFileReadPacketData(
             AudioFileHandle handle,
             [MarshalAs(UnmanagedType.Bool)] bool useCache,
             ref uint numBytes,
@@ -79,82 +77,114 @@ namespace AudioWorks.Extensions.Apple
             ref uint packets,
             IntPtr data);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static extern AudioFileStatus AudioFileClose(
+        internal static partial AudioFileStatus AudioFileClose(
             IntPtr handle);
 
-        [DllImport(_coreAudioLibrary, EntryPoint = "ExtAudioFileWrapAudioFileID",
-            CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [LibraryImport(_coreAudioLibrary, EntryPoint = "ExtAudioFileWrapAudioFileID")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static extern ExtendedAudioFileStatus ExtAudioFileWrapAudioFile(
+        internal static partial ExtendedAudioFileStatus ExtAudioFileWrapAudioFile(
             AudioFileHandle audioFileHandle,
             [MarshalAs(UnmanagedType.Bool)] bool forWriting,
             out ExtendedAudioFileHandle handle);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static extern ExtendedAudioFileStatus ExtAudioFileGetProperty(
+        internal static partial ExtendedAudioFileStatus ExtAudioFileGetProperty(
             ExtendedAudioFileHandle handle,
             ExtendedAudioFilePropertyId id,
             ref uint size,
-            [Out] IntPtr data);
+            IntPtr data);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static extern ExtendedAudioFileStatus ExtAudioFileSetProperty(
+        internal static partial ExtendedAudioFileStatus ExtAudioFileSetProperty(
             ExtendedAudioFileHandle handle,
             ExtendedAudioFilePropertyId id,
             uint size,
             IntPtr data);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static extern ExtendedAudioFileStatus ExtAudioFileWrite(
+        internal static partial ExtendedAudioFileStatus ExtAudioFileWrite(
             ExtendedAudioFileHandle handle,
             uint frames,
-            ref AudioBufferList data);
+            ref AudioBufferListSingle data);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static extern ExtendedAudioFileStatus ExtAudioFileDispose(
+        internal static partial ExtendedAudioFileStatus ExtAudioFileDispose(
             IntPtr handle);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static extern AudioConverterStatus AudioConverterNew(
+        internal static partial AudioConverterStatus AudioConverterNew(
             ref AudioStreamBasicDescription sourceFormat,
             ref AudioStreamBasicDescription destinationFormat,
             out AudioConverterHandle handle);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static extern AudioConverterStatus AudioConverterFillComplexBuffer(
+        internal static partial AudioConverterStatus AudioConverterFillComplexBuffer(
             AudioConverterHandle handle,
-            NativeCallbacks.AudioConverterComplexInputCallback inputCallback,
+            AudioConverterComplexInputCallback inputCallback,
             IntPtr userData,
             ref uint packetSize,
-            ref AudioBufferList outputData,
+            ref AudioBufferListSingle outputData,
             [In, Out] AudioStreamPacketDescription[]? packetDescriptions);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static extern AudioConverterStatus AudioConverterSetProperty(
+        internal static partial AudioConverterStatus AudioConverterSetProperty(
             AudioConverterHandle handle,
             AudioConverterPropertyId id,
             uint size,
             IntPtr data);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static extern AudioConverterStatus AudioConverterSetProperty(
+        internal static partial AudioConverterStatus AudioConverterSetProperty(
             IntPtr handle,
             AudioConverterPropertyId id,
             uint size,
             IntPtr data);
 
-        [DllImport(_coreAudioLibrary, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static extern AudioConverterStatus AudioConverterDispose(IntPtr handle);
+        internal static partial AudioConverterStatus AudioConverterDispose(IntPtr handle);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate AudioFileStatus AudioFileReadCallback(
+            IntPtr userData,
+            long position,
+            uint requestCount,
+            [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] buffer,
+            out uint actualCount);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate AudioFileStatus AudioFileWriteCallback(
+            IntPtr userData,
+            long position,
+            uint requestCount,
+            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] buffer,
+            out uint actualCount);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate long AudioFileGetSizeCallback(
+            IntPtr userData);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate AudioFileStatus AudioFileSetSizeCallback(
+            IntPtr userData,
+            long size);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate AudioConverterStatus AudioConverterComplexInputCallback(
+            IntPtr handle,
+            ref uint numberPackets,
+            ref AudioBufferListSingle data,
+            IntPtr packetDescriptions,
+            IntPtr userData);
     }
 }

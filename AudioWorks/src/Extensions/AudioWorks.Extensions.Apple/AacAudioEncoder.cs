@@ -144,14 +144,16 @@ namespace AudioWorks.Extensions.Apple
             Span<float> buffer = stackalloc float[samples.Frames * samples.Channels];
             samples.CopyToInterleaved(buffer);
 
-            var bufferList = new AudioBufferList
+            var bufferList = new AudioBufferListSingle
             {
                 NumberBuffers = 1,
-                Buffers = new AudioBuffer[1]
+                Buffer1 = new()
+                {
+                    NumberChannels = (uint) samples.Channels,
+                    DataByteSize = (uint) (buffer.Length * sizeof(float)),
+                    Data = new(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)))
+                }
             };
-            bufferList.Buffers[0].NumberChannels = (uint) samples.Channels;
-            bufferList.Buffers[0].DataByteSize = (uint) (buffer.Length * sizeof(float));
-            bufferList.Buffers[0].Data = new(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)));
 
             var status = _audioFile!.Write(bufferList, (uint)samples.Frames);
             if (status != ExtendedAudioFileStatus.Ok)
@@ -243,7 +245,7 @@ namespace AudioWorks.Extensions.Apple
             try
             {
                 Marshal.StructureToPtr(value, unmanagedValue, false);
-                SafeNativeMethods.AudioConverterSetProperty(converter, propertyId, (uint) unmanagedValueSize,
+                CoreAudioToolbox.AudioConverterSetProperty(converter, propertyId, (uint) unmanagedValueSize,
                     unmanagedValue);
             }
             finally

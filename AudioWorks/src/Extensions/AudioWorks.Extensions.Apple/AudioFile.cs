@@ -22,10 +22,10 @@ namespace AudioWorks.Extensions.Apple
     class AudioFile : IDisposable
     {
         // ReSharper disable PrivateFieldCanBeConvertedToLocalVariable
-        readonly NativeCallbacks.AudioFileReadCallback _readCallback;
-        readonly NativeCallbacks.AudioFileGetSizeCallback _getSizeCallback;
-        readonly NativeCallbacks.AudioFileWriteCallback? _writeCallback;
-        readonly NativeCallbacks.AudioFileSetSizeCallback? _setSizeCallback;
+        readonly CoreAudioToolbox.AudioFileReadCallback _readCallback;
+        readonly CoreAudioToolbox.AudioFileGetSizeCallback _getSizeCallback;
+        readonly CoreAudioToolbox.AudioFileWriteCallback? _writeCallback;
+        readonly CoreAudioToolbox.AudioFileSetSizeCallback? _setSizeCallback;
         // ReSharper restore PrivateFieldCanBeConvertedToLocalVariable
 #pragma warning disable CA2213 // Disposable fields should be disposed
         readonly Stream _stream;
@@ -43,7 +43,7 @@ namespace AudioWorks.Extensions.Apple
             _stream = stream;
             _endOfData = stream.Length;
 
-            SafeNativeMethods.AudioFileOpenWithCallbacks(IntPtr.Zero,
+            CoreAudioToolbox.AudioFileOpenWithCallbacks(IntPtr.Zero,
                 _readCallback, null, _getSizeCallback, null,
                 fileType, out var handle);
             Handle = handle;
@@ -59,7 +59,7 @@ namespace AudioWorks.Extensions.Apple
 
             _stream = stream;
 
-            SafeNativeMethods.AudioFileInitializeWithCallbacks(IntPtr.Zero,
+            CoreAudioToolbox.AudioFileInitializeWithCallbacks(IntPtr.Zero,
                 _readCallback, _writeCallback, _getSizeCallback, _setSizeCallback,
                 fileType, ref description, 0, out var handle);
             Handle = handle;
@@ -69,7 +69,7 @@ namespace AudioWorks.Extensions.Apple
         {
             // Callers must release this!
             var unmanagedValue = Marshal.AllocHGlobal((int) size);
-            SafeNativeMethods.AudioFileGetProperty(Handle, id, ref size, unmanagedValue);
+            CoreAudioToolbox.AudioFileGetProperty(Handle, id, ref size, unmanagedValue);
             return unmanagedValue;
         }
 
@@ -79,7 +79,7 @@ namespace AudioWorks.Extensions.Apple
             var unmanagedValue = Marshal.AllocHGlobal((int)size);
             try
             {
-                SafeNativeMethods.AudioFileGetProperty(Handle, id, ref size, unmanagedValue);
+                CoreAudioToolbox.AudioFileGetProperty(Handle, id, ref size, unmanagedValue);
                 return Marshal.PtrToStructure<T>(unmanagedValue);
             }
             finally
@@ -90,7 +90,7 @@ namespace AudioWorks.Extensions.Apple
 
         internal uint GetPropertyInfo(AudioFilePropertyId id)
         {
-            SafeNativeMethods.AudioFileGetPropertyInfo(Handle, id, out var dataSize, out _);
+            CoreAudioToolbox.AudioFileGetPropertyInfo(Handle, id, out var dataSize, out _);
             return dataSize;
         }
 
@@ -100,7 +100,7 @@ namespace AudioWorks.Extensions.Apple
             long startingPacket,
             ref uint packets,
             IntPtr data) =>
-            SafeNativeMethods.AudioFileReadPacketData(Handle, false, ref numBytes, packetDescriptions,
+            CoreAudioToolbox.AudioFileReadPacketData(Handle, false, ref numBytes, packetDescriptions,
                 startingPacket, ref packets, data);
 
         protected virtual void Dispose(bool disposing)

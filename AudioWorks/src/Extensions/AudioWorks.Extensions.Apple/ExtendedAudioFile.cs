@@ -24,7 +24,7 @@ namespace AudioWorks.Extensions.Apple
 
         public ExtendedAudioFile(AudioStreamBasicDescription description, AudioFileType fileType, Stream stream)
             : base(description, fileType, stream) =>
-            SafeNativeMethods.ExtAudioFileWrapAudioFile(Handle, true, out _handle);
+            CoreAudioToolbox.ExtAudioFileWrapAudioFile(Handle, true, out _handle);
 
         internal void SetProperty<T>(ExtendedAudioFilePropertyId id, T value) where T : unmanaged
         {
@@ -33,7 +33,7 @@ namespace AudioWorks.Extensions.Apple
             try
             {
                 Marshal.StructureToPtr(value, unmanagedValue, false);
-                SafeNativeMethods.ExtAudioFileSetProperty(_handle, id, (uint) unmanagedValueSize, unmanagedValue);
+                CoreAudioToolbox.ExtAudioFileSetProperty(_handle, id, (uint) unmanagedValueSize, unmanagedValue);
             }
             finally
             {
@@ -47,7 +47,7 @@ namespace AudioWorks.Extensions.Apple
             var unmanagedValue = Marshal.AllocHGlobal((int) unmanagedValueSize);
             try
             {
-                SafeNativeMethods.ExtAudioFileGetProperty(_handle, id, ref unmanagedValueSize, unmanagedValue);
+                CoreAudioToolbox.ExtAudioFileGetProperty(_handle, id, ref unmanagedValueSize, unmanagedValue);
                 return Marshal.PtrToStructure<T>(unmanagedValue);
             }
             finally
@@ -56,8 +56,8 @@ namespace AudioWorks.Extensions.Apple
             }
         }
 
-        internal ExtendedAudioFileStatus Write(AudioBufferList data, uint frames) =>
-            SafeNativeMethods.ExtAudioFileWrite(_handle, frames, ref data);
+        internal ExtendedAudioFileStatus Write(AudioBufferListSingle data, uint frames) =>
+            CoreAudioToolbox.ExtAudioFileWrite(_handle, frames, ref data);
 
         protected override void Dispose(bool disposing)
         {

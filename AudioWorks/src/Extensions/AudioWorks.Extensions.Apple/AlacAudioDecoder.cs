@@ -55,14 +55,16 @@ namespace AudioWorks.Extensions.Apple
         {
             Span<int> buffer = stackalloc int[(int) (_defaultFrameCount * _outputDescription.ChannelsPerFrame)];
 
-            var bufferList = new AudioBufferList
+            var bufferList = new AudioBufferListSingle
             {
                 NumberBuffers = 1,
-                Buffers = new AudioBuffer[1]
+                Buffer1 = new()
+                {
+                    NumberChannels = _outputDescription.ChannelsPerFrame,
+                    DataByteSize = (uint) (buffer.Length * sizeof(int)),
+                    Data = new(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)))
+                }
             };
-            bufferList.Buffers[0].NumberChannels = _outputDescription.ChannelsPerFrame;
-            bufferList.Buffers[0].DataByteSize = (uint) (buffer.Length * sizeof(int));
-            bufferList.Buffers[0].Data = new(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)));
 
             var frameCount = _defaultFrameCount;
             _converter!.FillBuffer(ref frameCount, ref bufferList, null);

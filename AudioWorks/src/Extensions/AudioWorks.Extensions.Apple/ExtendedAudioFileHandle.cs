@@ -17,17 +17,11 @@ using Microsoft.Win32.SafeHandles;
 
 namespace AudioWorks.Extensions.Apple
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
-    sealed class ExtendedAudioFileHandle : SafeHandleZeroOrMinusOneIsInvalid
+    sealed class ExtendedAudioFileHandle() : SafeHandleZeroOrMinusOneIsInvalid(true)
     {
-        internal ExtendedAudioFileHandle()
-            : base(true)
-        {
-        }
-
         protected override bool ReleaseHandle()
         {
-            SafeNativeMethods.ExtAudioFileDispose(handle);
+            CoreAudioToolbox.ExtAudioFileDispose(handle);
             return true;
         }
     }

@@ -21,7 +21,7 @@ namespace AudioWorks.Extensions.Apple
 {
     sealed class AudioConverter : IDisposable
     {
-        readonly NativeCallbacks.AudioConverterComplexInputCallback _inputCallback;
+        readonly CoreAudioToolbox.AudioConverterComplexInputCallback _inputCallback;
         readonly AudioConverterHandle _handle;
         readonly AudioFile _audioFile;
         long _packetIndex;
@@ -35,7 +35,7 @@ namespace AudioWorks.Extensions.Apple
         {
             _inputCallback = InputCallback;
 
-            SafeNativeMethods.AudioConverterNew(ref inputDescription,
+            CoreAudioToolbox.AudioConverterNew(ref inputDescription,
                 ref outputDescription, out _handle);
 
             _audioFile = audioFile;
@@ -43,13 +43,15 @@ namespace AudioWorks.Extensions.Apple
 
         internal void FillBuffer(
             ref uint packetSize,
-            ref AudioBufferList outputBuffer,
-            AudioStreamPacketDescription[]? packetDescriptions) =>
-            SafeNativeMethods.AudioConverterFillComplexBuffer(_handle, _inputCallback, IntPtr.Zero,
+            ref AudioBufferListSingle outputBuffer,
+            AudioStreamPacketDescription[]? packetDescriptions)
+        {
+            var result = CoreAudioToolbox.AudioConverterFillComplexBuffer(_handle, _inputCallback, IntPtr.Zero,
                 ref packetSize, ref outputBuffer, packetDescriptions);
+        }
 
         internal void SetProperty(AudioConverterPropertyId propertyId, uint size, IntPtr data) =>
-            SafeNativeMethods.AudioConverterSetProperty(_handle, propertyId, size, data);
+            CoreAudioToolbox.AudioConverterSetProperty(_handle, propertyId, size, data);
 
         public void Dispose()
         {
@@ -63,7 +65,7 @@ namespace AudioWorks.Extensions.Apple
         unsafe AudioConverterStatus InputCallback(
             IntPtr handle,
             ref uint numberPackets,
-            ref AudioBufferList data,
+            ref AudioBufferListSingle data,
             IntPtr packetDescriptions,
             IntPtr userData)
         {
@@ -84,8 +86,8 @@ namespace AudioWorks.Extensions.Apple
 
             _packetIndex += numberPackets;
 
-            data.Buffers[0].DataByteSize = numBytes;
-            data.Buffers[0].Data = new(_bufferHandle.Pointer);
+            data.Buffer1.DataByteSize = numBytes;
+            data.Buffer1.Data = new(_bufferHandle.Pointer);
 
             // If this conversion requires packet descriptions, provide them
             // ReSharper disable once InvertIf

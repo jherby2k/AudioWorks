@@ -18,11 +18,11 @@ using System.Runtime.InteropServices;
 namespace AudioWorks.Extensions.Apple
 {
     [StructLayout(LayoutKind.Sequential)]
-    struct AudioBufferList
+    struct AudioBufferListSingle
     {
         internal uint NumberBuffers;
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)]
-        internal AudioBuffer[] Buffers;
+        // This is difficult to marshal as an array with LibraryImport, and we only single (interlaced) buffers anyway
+        internal AudioBuffer Buffer1;
     }
 }

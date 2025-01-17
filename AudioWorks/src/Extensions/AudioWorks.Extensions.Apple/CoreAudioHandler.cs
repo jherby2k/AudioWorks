@@ -47,7 +47,7 @@ namespace AudioWorks.Extensions.Apple
             AddUnmanagedLibraryPath(libPath);
             try
             {
-                foreach (var methodInfo in typeof(SafeNativeMethods).GetMethods(
+                foreach (var methodInfo in typeof(CoreAudioToolbox).GetMethods(
                     BindingFlags.NonPublic | BindingFlags.Static))
                     Marshal.Prelink(methodInfo);
             }
