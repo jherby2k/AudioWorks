@@ -17,17 +17,11 @@ using Microsoft.Win32.SafeHandles;
 
 namespace AudioWorks.Extensions.ReplayGain
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
-    sealed class StateHandle : SafeHandleZeroOrMinusOneIsInvalid
+    sealed class StateHandle() : SafeHandleZeroOrMinusOneIsInvalid(true)
     {
-        internal StateHandle()
-            : base(true)
-        {
-        }
-
         protected override bool ReleaseHandle()
         {
-            SafeNativeMethods.Destroy(ref handle);
+            LibEbur128.Destroy(ref handle);
             return true;
         }
     }

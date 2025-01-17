@@ -30,12 +30,12 @@ namespace AudioWorks.Extensions.ReplayGain
         {
             _channels = channels;
             _calculateTruePeaks = calculateTruePeaks;
-            Handle = SafeNativeMethods.Init(channels, new(sampleRate),
+            Handle = LibEbur128.Init(channels, new(sampleRate),
                 calculateTruePeaks ? Modes.Global | Modes.TruePeak : Modes.Global | Modes.SamplePeak);
         }
 
         internal void AddFrames(Span<float> samples, uint frames) =>
-            SafeNativeMethods.AddFramesFloat(Handle, MemoryMarshal.GetReference(samples), new(frames));
+            LibEbur128.AddFramesFloat(Handle, MemoryMarshal.GetReference(samples), new(frames));
 
         internal double GetPeak()
         {
@@ -45,9 +45,9 @@ namespace AudioWorks.Extensions.ReplayGain
             {
                 double channelPeak;
                 if (_calculateTruePeaks)
-                    SafeNativeMethods.TruePeak(Handle, channel, out channelPeak);
+                    LibEbur128.TruePeak(Handle, channel, out channelPeak);
                 else
-                    SafeNativeMethods.SamplePeak(Handle, channel, out channelPeak);
+                    LibEbur128.SamplePeak(Handle, channel, out channelPeak);
                 absolutePeak = Math.Max(channelPeak, absolutePeak);
             }
 
@@ -56,13 +56,13 @@ namespace AudioWorks.Extensions.ReplayGain
 
         internal double GetLoudness()
         {
-            SafeNativeMethods.LoudnessGlobal(Handle, out var loudness);
+            LibEbur128.LoudnessGlobal(Handle, out var loudness);
             return loudness;
         }
 
         internal static double GetLoudnessMultiple(StateHandle[] handles)
         {
-            SafeNativeMethods.LoudnessGlobalMultiple(
+            LibEbur128.LoudnessGlobalMultiple(
                 handles.Select(handle => handle.DangerousGetHandle()).ToArray(),
                 new((uint) handles.Length),
                 out var loudness);

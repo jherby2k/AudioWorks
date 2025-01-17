@@ -52,7 +52,7 @@ namespace AudioWorks.Extensions.ReplayGain
 
             try
             {
-                foreach (var methodInfo in typeof(SafeNativeMethods).GetMethods(
+                foreach (var methodInfo in typeof(LibEbur128).GetMethods(
                     BindingFlags.NonPublic | BindingFlags.Static))
                     Marshal.Prelink(methodInfo);
             }
@@ -67,7 +67,7 @@ namespace AudioWorks.Extensions.ReplayGain
                 return false;
             }
 
-            SafeNativeMethods.GetVersion(out var major, out var minor, out var patch);
+            LibEbur128.GetVersion(out var major, out var minor, out var patch);
             // ReSharper disable once StringLiteralTypo
             logger.LogInformation("Using libebur128 version {major}.{minor}.{patch}.", major, minor, patch);
 
