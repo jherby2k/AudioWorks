@@ -52,7 +52,7 @@ namespace AudioWorks.Extensions.Lame
 
             try
             {
-                foreach (var methodInfo in typeof(SafeNativeMethods).GetMethods(
+                foreach (var methodInfo in typeof(LibMp3Lame).GetMethods(
                     BindingFlags.NonPublic | BindingFlags.Static))
                     Marshal.Prelink(methodInfo);
             }
@@ -69,7 +69,7 @@ namespace AudioWorks.Extensions.Lame
 
             // ReSharper disable once StringLiteralTypo
             logger.LogInformation("Using LAME version {version}.",
-                Marshal.PtrToStringAnsi(SafeNativeMethods.GetVersion()));
+                Marshal.PtrToStringAnsi(LibMp3Lame.GetVersion()));
 
             return true;
         }

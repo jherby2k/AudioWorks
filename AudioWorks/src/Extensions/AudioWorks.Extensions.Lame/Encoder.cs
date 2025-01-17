@@ -23,7 +23,7 @@ namespace AudioWorks.Extensions.Lame
 {
     sealed class Encoder : IDisposable
     {
-        readonly EncoderHandle _handle = SafeNativeMethods.Init();
+        readonly EncoderHandle _handle = LibMp3Lame.Init();
 #pragma warning disable CA2213 // Disposable fields should be disposed
         readonly Stream _stream;
 #pragma warning restore CA2213 // Disposable fields should be disposed
@@ -31,33 +31,33 @@ namespace AudioWorks.Extensions.Lame
 
         internal Encoder(Stream stream) => _stream = stream;
 
-        internal void SetChannels(int channels) => SafeNativeMethods.SetNumChannels(_handle, channels);
+        internal void SetChannels(int channels) => LibMp3Lame.SetNumChannels(_handle, channels);
 
-        internal void SetSampleRate(int sampleRate) => SafeNativeMethods.SetInSampleRate(_handle, sampleRate);
+        internal void SetSampleRate(int sampleRate) => LibMp3Lame.SetInSampleRate(_handle, sampleRate);
 
-        internal void SetSampleCount(uint sampleCount) => SafeNativeMethods.SetNumSamples(_handle, sampleCount);
+        internal void SetSampleCount(uint sampleCount) => LibMp3Lame.SetNumSamples(_handle, sampleCount);
 
-        internal void SetBitRate(int bitRate) => SafeNativeMethods.SetBRate(_handle, bitRate);
+        internal void SetBitRate(int bitRate) => LibMp3Lame.SetBRate(_handle, bitRate);
 
-        internal void SetVbrMode(VbrMode mode) => SafeNativeMethods.SetVbr(_handle, mode);
+        internal void SetVbrMode(VbrMode mode) => LibMp3Lame.SetVbr(_handle, mode);
 
-        internal void SetVbrMeanBitRate(int bitRate) => SafeNativeMethods.SetVbrMeanBitRateKbps(_handle, bitRate);
+        internal void SetVbrMeanBitRate(int bitRate) => LibMp3Lame.SetVbrMeanBitRateKbps(_handle, bitRate);
 
-        internal void SetVbrQuality(float quality) => SafeNativeMethods.SetVbrQuality(_handle, quality);
+        internal void SetVbrQuality(float quality) => LibMp3Lame.SetVbrQuality(_handle, quality);
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
         internal void InitializeParameters()
         {
             _startPosition = _stream.Position;
-            SafeNativeMethods.InitParams(_handle);
+            LibMp3Lame.InitParams(_handle);
         }
 
         internal void Encode(ReadOnlySpan<float> leftSamples, ReadOnlySpan<float> rightSamples)
         {
             Span<byte> buffer = stackalloc byte[(int) Math.Ceiling(1.25 * leftSamples.Length) + 7200];
 
-            var bytesEncoded = SafeNativeMethods.EncodeBufferIeeeFloat(
+            var bytesEncoded = LibMp3Lame.EncodeBufferIeeeFloat(
                 _handle,
                 MemoryMarshal.GetReference(leftSamples),
                 MemoryMarshal.GetReference(rightSamples),
@@ -75,7 +75,7 @@ namespace AudioWorks.Extensions.Lame
         {
             Span<byte> buffer = stackalloc byte[(int) Math.Ceiling(1.25 * frameCount) + 7200];
 
-            var bytesEncoded = SafeNativeMethods.EncodeBufferInterleavedIeeeFloat(
+            var bytesEncoded = LibMp3Lame.EncodeBufferInterleavedIeeeFloat(
                 _handle,
                 MemoryMarshal.GetReference(samples),
                 frameCount,
@@ -91,7 +91,7 @@ namespace AudioWorks.Extensions.Lame
         internal void Flush()
         {
             Span<byte> buffer = stackalloc byte[7200];
-            var bytesFlushed = SafeNativeMethods.EncodeFlush(
+            var bytesFlushed = LibMp3Lame.EncodeFlush(
                 _handle,
                 ref MemoryMarshal.GetReference(buffer),
                 buffer.Length);
@@ -104,9 +104,9 @@ namespace AudioWorks.Extensions.Lame
             _stream.Position = _startPosition;
 
             byte empty = 0;
-            var bufferSize = SafeNativeMethods.GetLameTagFrame(_handle, ref empty, UIntPtr.Zero);
+            var bufferSize = LibMp3Lame.GetLameTagFrame(_handle, ref empty, UIntPtr.Zero);
             Span<byte> buffer = stackalloc byte[(int) bufferSize.ToUInt32()];
-            _stream.Write(buffer[..(int) SafeNativeMethods.GetLameTagFrame(
+            _stream.Write(buffer[..(int) LibMp3Lame.GetLameTagFrame(
                 _handle,
                 ref MemoryMarshal.GetReference(buffer),
                 bufferSize).ToUInt32()]);

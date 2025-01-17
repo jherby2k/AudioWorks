@@ -17,17 +17,11 @@ using Microsoft.Win32.SafeHandles;
 
 namespace AudioWorks.Extensions.Lame
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
-    sealed class EncoderHandle : SafeHandleZeroOrMinusOneIsInvalid
+    sealed class EncoderHandle() : SafeHandleZeroOrMinusOneIsInvalid(true)
     {
-        internal EncoderHandle()
-            : base(true)
-        {
-        }
-
         protected override bool ReleaseHandle()
         {
-            SafeNativeMethods.Close(handle);
+            LibMp3Lame.Close(handle);
             return true;
         }
     }
