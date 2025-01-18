@@ -657,7 +657,9 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName =
             "Clear-AudioMetadata with Loudness switch clears only the TrackPeak, AlbumPeak, TrackGain and AlbumGain")]
         public void LoudnessSwitchClearsPeakAndGain()
-        {
+        { 
+            var fieldsToClear = new[] { "TrackPeak", "AlbumPeak", "TrackGain", "AlbumGain" };
+
             var mock = new Mock<ITaggedAudioFile>();
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata(_testMetadata));
             using (var ps = PowerShell.Create())
@@ -675,7 +677,7 @@ namespace AudioWorks.Commands.Tests
             Assert.Equal(4, differences.Length);
             foreach (var difference in differences)
             {
-                Assert.Contains(difference.MemberPath, new[] { "TrackPeak", "AlbumPeak", "TrackGain", "AlbumGain" });
+                Assert.Contains(difference.MemberPath, fieldsToClear);
                 Assert.True(string.IsNullOrEmpty(difference.Value2));
             }
         }

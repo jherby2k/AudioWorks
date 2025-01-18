@@ -27,23 +27,17 @@ using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    public sealed class SaveAudioMetadataTests : IClassFixture<ModuleFixture>
+    public sealed class SaveAudioMetadataTests(ModuleFixture moduleFixture) : IClassFixture<ModuleFixture>
     {
-        readonly ModuleFixture _moduleFixture;
-        readonly IMapper _mapper;
-
-        public SaveAudioMetadataTests(ModuleFixture moduleFixture)
-        {
-            _moduleFixture = moduleFixture;
-            _mapper = new MapperConfiguration(config => config.CreateMap<AudioMetadata, AudioMetadata>()).CreateMapper();
-        }
+        readonly IMapper _mapper = new MapperConfiguration(
+            config => config.CreateMap<AudioMetadata, AudioMetadata>()).CreateMapper();
 
         [Fact(DisplayName = "Save-AudioMetadata command exists")]
         public void CommandExists()
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata");
                 try
                 {
@@ -67,7 +61,7 @@ namespace AudioWorks.Commands.Tests
 
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object);
 
@@ -82,7 +76,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata");
 
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
@@ -97,7 +91,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata")
                     .AddArgument(mock.Object);
 
@@ -115,7 +109,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Set-Variable")
                     .AddArgument("audioFile")
                     .AddArgument(mock.Object)
@@ -143,7 +137,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("PassThru");
@@ -162,7 +156,7 @@ namespace AudioWorks.Commands.Tests
             mock.SetupGet(audioFile => audioFile.Metadata).Returns(new AudioMetadata());
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata")
                     .AddParameter("AudioFile", mock.Object)
                     .AddParameter("PassThru");
@@ -176,7 +170,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-Command")
                     .AddArgument("Save-AudioMetadata");
                 ps.AddCommand("Select-Object")
@@ -208,7 +202,7 @@ namespace AudioWorks.Commands.Tests
                 audioFile.Metadata.CoverArt = CoverArtFactory.GetOrCreate(Path.Combine(sourceDirectory, imageFileName));
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata")
                     .AddArgument(audioFile);
                 foreach (var item in settings)
@@ -235,7 +229,7 @@ namespace AudioWorks.Commands.Tests
             File.Copy(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName), path, true);
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Save-AudioMetadata")
                     .AddArgument(new TaggedAudioFile(path));
 

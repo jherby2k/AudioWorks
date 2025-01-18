@@ -44,11 +44,9 @@ namespace AudioWorks.Extensions.Apple
         internal void FillBuffer(
             ref uint packetSize,
             ref AudioBufferListSingle outputBuffer,
-            AudioStreamPacketDescription[]? packetDescriptions)
-        {
-            var result = CoreAudioToolbox.AudioConverterFillComplexBuffer(_handle, _inputCallback, IntPtr.Zero,
+            AudioStreamPacketDescription[]? packetDescriptions) =>
+            CoreAudioToolbox.AudioConverterFillComplexBuffer(_handle, _inputCallback, IntPtr.Zero,
                 ref packetSize, ref outputBuffer, packetDescriptions);
-        }
 
         internal void SetProperty(AudioConverterPropertyId propertyId, uint size, IntPtr data) =>
             CoreAudioToolbox.AudioConverterSetProperty(_handle, propertyId, size, data);

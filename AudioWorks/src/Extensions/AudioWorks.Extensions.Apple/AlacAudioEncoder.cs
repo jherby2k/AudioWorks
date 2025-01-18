@@ -43,7 +43,7 @@ namespace AudioWorks.Extensions.Apple
                 // Use the external MP4 encoder's SettingInfo
                 var metadataEncoderFactory =
                     ExtensionProvider.GetFactories<IAudioMetadataEncoder>("Extension", FileExtension).FirstOrDefault();
-                if (metadataEncoderFactory == null) return new();
+                if (metadataEncoderFactory == null) return [];
                 using (var export = metadataEncoderFactory.CreateExport())
                     return export.Value.SettingInfo;
             }
