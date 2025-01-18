@@ -19,10 +19,10 @@ using System.Runtime.InteropServices;
 namespace AudioWorks.Extensions.Opus
 {
     [StructLayout(LayoutKind.Sequential)]
-    struct OpusEncoderCallbacks
+    unsafe struct OpusEncoderCallbacks
     {
-        internal IntPtr Write;
+        internal delegate* unmanaged<IntPtr, byte*, int, int> Write;
 
-        internal IntPtr Close;
+        internal delegate* unmanaged<IntPtr, int> Close;
     }
 }

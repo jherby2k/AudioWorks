@@ -23,14 +23,14 @@ namespace AudioWorks.Extensions.Opus
     sealed class Encoder : IDisposable
     {
 #pragma warning disable CA2213 // Disposable fields should be disposed
-        readonly Stream _realStream;
+        readonly Stream _outputStream;
 #pragma warning restore CA2213 // Disposable fields should be disposed
-        Stream _outputStream;
         readonly int _channels;
         readonly int _totalSeconds;
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         readonly OpusEncoderCallbacks _callbacks;
-        readonly OpusEncoderHandle _handle;
+        GCHandle _outputStreamHandle;
+        readonly OpusEncoderHandle _encoderHandle;
         int _requestedBitRate;
         bool _headersFlushed;
 
@@ -41,14 +41,17 @@ namespace AudioWorks.Extensions.Opus
             int totalSeconds,
             OpusCommentsHandle comments)
         {
-            _realStream = stream;
-            _outputStream = new MemoryStream();
+            _outputStream = stream;
             _channels = channels;
             _totalSeconds = totalSeconds;
             _callbacks = InitializeCallbacks();
-            _handle = LibOpusEnc.CreateCallbacks(
+
+            // The callbacks have to be static, so pass the output stream through as userData
+            _outputStreamHandle = GCHandle.Alloc(_outputStream);
+
+            _encoderHandle = LibOpusEnc.CreateCallbacks(
                 ref _callbacks,
-                IntPtr.Zero,
+                GCHandle.ToIntPtr(_outputStreamHandle),
                 comments,
                 sampleRate,
                 channels,
@@ -115,7 +118,7 @@ namespace AudioWorks.Extensions.Opus
             if (!_headersFlushed) FlushHeaders();
 
             var error = LibOpusEnc.WriteFloat(
-                _handle,
+                _encoderHandle,
                 MemoryMarshal.GetReference(interleavedSamples),
                 interleavedSamples.Length / _channels);
             if (error != 0)
@@ -124,7 +127,7 @@ namespace AudioWorks.Extensions.Opus
 
         internal void Drain()
         {
-            var error = LibOpusEnc.Drain(_handle);
+            var error = LibOpusEnc.Drain(_encoderHandle);
             if (error != 0)
                 throw new AudioEncodingException($"Opus encountered error '{error}' draining the encoder.");
 
@@ -134,30 +137,31 @@ namespace AudioWorks.Extensions.Opus
 
         public void Dispose()
         {
-            if (_outputStream is MemoryStream)
-                _outputStream.Dispose();
-            _handle.Dispose();
+            _outputStreamHandle.Free();
+            _encoderHandle.Dispose();
         }
 
-        OpusEncoderCallbacks InitializeCallbacks() => new()
+        static unsafe OpusEncoderCallbacks InitializeCallbacks() => new()
         {
-            // ReSharper disable once UnusedParameter.Local
-            Write = Marshal.GetFunctionPointerForDelegate<LibOpusEnc.WriteCallback>(
-                (userData, buffer, length) =>
-                {
-                    _outputStream.Write(buffer, 0, length);
-                    return 0;
-                }),
-
+            Write = &WriteCallback,
             // Leave the stream open
-            // ReSharper disable once UnusedParameter.Local
-            Close = Marshal.GetFunctionPointerForDelegate<LibOpusEnc.CloseCallback>(
-                userData => 0)
+            Close = &CloseCallback
         };
+
+        [UnmanagedCallersOnly]
+        static unsafe int WriteCallback(IntPtr userData, byte* buffer, int length)
+        {
+            var outputStream = (Stream) GCHandle.FromIntPtr(userData).Target!;
+            outputStream.Write(new(buffer, length));
+            return 0;
+        }
+
+        [UnmanagedCallersOnly]
+        static int CloseCallback(IntPtr userData) => 0;
 
         void FlushHeaders()
         {
-            var error = LibOpusEnc.FlushHeader(_handle);
+            var error = LibOpusEnc.FlushHeader(_encoderHandle);
             if (error != 0)
                 throw new AudioEncodingException($"Opus encountered error '{error}' flushing the header.");
 
@@ -170,13 +174,7 @@ namespace AudioWorks.Extensions.Opus
             }
 
             // Pre-allocate the whole stream (estimate worst case bit rate, plus the header)
-            _realStream.SetLength((_requestedBitRate + 25000) / 8 * _totalSeconds + _outputStream.Length);
-
-            // Flush the headers to the real output stream
-            _outputStream.Position = 0;
-            _outputStream.CopyTo(_realStream);
-            _outputStream.Close();
-            _outputStream = _realStream;
+            _outputStream.SetLength((_requestedBitRate + 25000) / 8 * _totalSeconds + _outputStream.Position);
 
             _headersFlushed = true;
         }
@@ -189,7 +187,7 @@ namespace AudioWorks.Extensions.Opus
                     IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, out value)
                 : LibOpusEnc.ControlGet(_handle, request, out value);
 #else
-            LibOpusEnc.ControlGet(_handle, request, out value);
+            LibOpusEnc.ControlGet(_encoderHandle, request, out value);
 #endif
 
         int OpusEncoderControlSet(EncoderControlRequest request, int argument) =>
@@ -200,7 +198,7 @@ namespace AudioWorks.Extensions.Opus
                     IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, argument)
                 : LibOpusEnc.ControlSet(_handle, request, argument);
 #else
-            LibOpusEnc.ControlSet(_handle, request, argument);
+            LibOpusEnc.ControlSet(_encoderHandle, request, argument);
 #endif
     }
 }

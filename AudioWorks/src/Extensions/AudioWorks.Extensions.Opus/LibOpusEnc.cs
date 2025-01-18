@@ -97,12 +97,5 @@ namespace AudioWorks.Extensions.Opus
         [LibraryImport(_opusEncLibrary, EntryPoint = "ope_encoder_destroy")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static partial void Destroy(IntPtr handle);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate int WriteCallback(
-            IntPtr userData, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] buffer, int length);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate int CloseCallback(IntPtr userData);
     }
 }
