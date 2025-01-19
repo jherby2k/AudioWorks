@@ -14,23 +14,24 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Flac
 {
     [StructLayout(LayoutKind.Sequential)]
-    struct IoCallbacks
+    unsafe struct IoCallbacks
     {
-        internal IntPtr Read;
+        internal delegate* unmanaged<IntPtr, IntPtr, IntPtr, IntPtr, IntPtr> Read;
 
-        internal IntPtr Write;
+        internal delegate* unmanaged<IntPtr, IntPtr, IntPtr, IntPtr, IntPtr> Write;
 
-        internal IntPtr Seek;
+        internal delegate* unmanaged<IntPtr, long, SeekOrigin, int> Seek;
 
-        internal IntPtr Tell;
+        internal delegate* unmanaged<IntPtr, long> Tell;
 
-        internal IntPtr Eof;
+        internal delegate* unmanaged<IntPtr, int> Eof;
 
-        readonly IntPtr Close;
+        internal delegate* unmanaged<IntPtr, int> Close;
     }
 }

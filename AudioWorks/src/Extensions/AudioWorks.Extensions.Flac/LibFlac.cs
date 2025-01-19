@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
@@ -326,25 +325,5 @@ namespace AudioWorks.Extensions.Flac
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate void StreamEncoderMetadataCallback(IntPtr handle, IntPtr metaData, IntPtr userData);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate IntPtr IoCallbacksReadCallback(
-            IntPtr readBuffer, IntPtr bufferSize, IntPtr numberOfRecords, IntPtr handle);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate IntPtr IoCallbacksWriteCallback(
-            IntPtr writeBuffer, IntPtr bufferSize, IntPtr numberOfRecords, IntPtr handle);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate int IoCallbacksSeekCallback(IntPtr handle, long offset, SeekOrigin whence);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate long IoCallbacksTellCallback(IntPtr handle);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate int IoCallbacksEofCallback(IntPtr handle);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate int IoCallbacksCloseCallback(IntPtr handle);
     }
 }

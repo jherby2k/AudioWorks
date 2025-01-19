@@ -22,86 +22,135 @@ namespace AudioWorks.Extensions.Flac
 {
     sealed class MetadataChain : IDisposable
     {
+        static readonly IoCallbacks _callbacks = InitializeCallbacks();
+#pragma warning disable CA2213 // Disposable fields should be disposed
+        readonly Stream _stream;
+#pragma warning restore CA2213 // Disposable fields should be disposed
         readonly MetadataChainHandle _handle = LibFlac.MetadataChainNew();
-        readonly IoCallbacks _callbacks;
 
-        internal MetadataChain(Stream stream) => _callbacks = InitializeCallbacks(stream);
+        internal MetadataChain(Stream stream) => _stream = stream;
 
-        internal void Read() => LibFlac.MetadataChainReadWithCallbacks(_handle, IntPtr.Zero, _callbacks);
+        internal void Read()
+        {
+            var streamHandle = GCHandle.Alloc(_stream);
+            try
+            {
+                LibFlac.MetadataChainReadWithCallbacks(_handle, GCHandle.ToIntPtr(streamHandle), _callbacks);
+            }
+            finally
+            {
+                streamHandle.Free();
+            }
+        }
 
         internal bool CheckIfTempFileNeeded(bool usePadding) =>
             LibFlac.MetadataChainCheckIfTempFileNeeded(_handle, usePadding);
 
-        internal void Write(bool usePadding) =>
-            LibFlac.MetadataChainWriteWithCallbacks(_handle, usePadding, IntPtr.Zero, _callbacks);
+        internal void Write(bool usePadding)
+        {
+            var streamHandle = GCHandle.Alloc(_stream);
+            try
+            {
+                LibFlac.MetadataChainWriteWithCallbacks(
+                    _handle, usePadding, GCHandle.ToIntPtr(streamHandle), _callbacks);
+            }
+            finally
+            {
+                streamHandle.Free();
+            }
+        }
 
-        internal void WriteWithTempFile(bool usePadding, Stream tempStream) =>
-            LibFlac.MetadataChainWriteWithCallbacksAndTempFile(
-                _handle,
-                usePadding,
-                IntPtr.Zero,
-                _callbacks,
-                IntPtr.Zero,
-                InitializeCallbacks(tempStream));
+        internal void WriteWithTempFile(bool usePadding, Stream tempStream)
+        {
+            var streamHandle = GCHandle.Alloc(_stream);
+            var tempStreamHandle = GCHandle.Alloc(tempStream);
+            try
+            {
+                LibFlac.MetadataChainWriteWithCallbacksAndTempFile(
+                    _handle,
+                    usePadding,
+                    GCHandle.ToIntPtr(streamHandle),
+                    _callbacks,
+                    GCHandle.ToIntPtr(tempStreamHandle),
+                    _callbacks);
+            }
+            finally
+            {
+                streamHandle.Free();
+                tempStreamHandle.Free();
+            }
+        }
 
         internal MetadataIterator GetIterator() => new(_handle);
 
         public void Dispose() => _handle.Dispose();
 
-        static IoCallbacks InitializeCallbacks(Stream stream) => new()
+        static unsafe IoCallbacks InitializeCallbacks() => new()
         {
-            // ReSharper disable once UnusedParameter.Local
-            Read = Marshal.GetFunctionPointerForDelegate<LibFlac.IoCallbacksReadCallback>(
-                (readBuffer, bufferSize, numberOfRecords, handle) =>
-                {
-                    var totalBufferSize = bufferSize.ToInt32() * numberOfRecords.ToInt32();
-                    var buffer = ArrayPool<byte>.Shared.Rent(totalBufferSize);
-                    try
-                    {
-                        var bytesRead = stream.Read(buffer, 0, totalBufferSize);
-                        Marshal.Copy(buffer, 0, readBuffer, totalBufferSize);
-                        return new(bytesRead);
-                    }
-                    finally
-                    {
-                        ArrayPool<byte>.Shared.Return(buffer);
-                    }
-                }),
-
-            // ReSharper disable once UnusedParameter.Local
-            Write = Marshal.GetFunctionPointerForDelegate<LibFlac.IoCallbacksWriteCallback>(
-                (writeBuffer, bufferSize, numberOfRecords, handle) =>
-                {
-                    var castNumberOfRecords = numberOfRecords.ToInt32();
-                    var totalBufferSize = bufferSize.ToInt32() * castNumberOfRecords;
-                    var buffer = ArrayPool<byte>.Shared.Rent(totalBufferSize);
-                    try
-                    {
-                        Marshal.Copy(writeBuffer, buffer, 0, totalBufferSize);
-                        stream.Write(buffer, 0, totalBufferSize);
-                        return new(castNumberOfRecords);
-                    }
-                    finally
-                    {
-                        ArrayPool<byte>.Shared.Return(buffer);
-                    }
-                }),
-
-            // ReSharper disable once UnusedParameter.Local
-            Seek = Marshal.GetFunctionPointerForDelegate<LibFlac.IoCallbacksSeekCallback>(
-                (handle, offset, whence) =>
-                {
-                    stream.Seek(offset, whence);
-                    return 0;
-                }),
-
-            // ReSharper disable once UnusedParameter.Local
-            Tell = Marshal.GetFunctionPointerForDelegate<LibFlac.IoCallbacksTellCallback>(
-                handle => stream.Position),
-
-            // ReSharper disable once UnusedParameter.Local
-            Eof = Marshal.GetFunctionPointerForDelegate<LibFlac.IoCallbacksEofCallback>(
-                handle => stream.Position < stream.Length ? 0 : 1)
+            Read = &ReadCallback,
+            Write = &WriteCallback,
+            Seek = &SeekCallback,
+            Tell = &TellCallback,
+            Eof = &EofCallback
         };
+
+        [UnmanagedCallersOnly]
+        static IntPtr ReadCallback(IntPtr readBuffer, IntPtr bufferSize, IntPtr numberOfRecords, IntPtr handle)
+        {
+            var totalBufferSize = bufferSize.ToInt32() * numberOfRecords.ToInt32();
+            var buffer = ArrayPool<byte>.Shared.Rent(totalBufferSize);
+            try
+            {
+                var stream = (Stream) GCHandle.FromIntPtr(handle).Target!;
+                var bytesRead = stream.Read(buffer, 0, totalBufferSize);
+                Marshal.Copy(buffer, 0, readBuffer, totalBufferSize);
+                return new(bytesRead);
+            }
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(buffer);
+            }
+        }
+
+        [UnmanagedCallersOnly]
+        static IntPtr WriteCallback(IntPtr writeBuffer, IntPtr bufferSize, IntPtr numberOfRecords, IntPtr handle)
+        {
+            var castNumberOfRecords = numberOfRecords.ToInt32();
+            var totalBufferSize = bufferSize.ToInt32() * castNumberOfRecords;
+            var buffer = ArrayPool<byte>.Shared.Rent(totalBufferSize);
+            try
+            {
+                var stream = (Stream) GCHandle.FromIntPtr(handle).Target!;
+                Marshal.Copy(writeBuffer, buffer, 0, totalBufferSize);
+                stream.Write(buffer, 0, totalBufferSize);
+                return new(castNumberOfRecords);
+            }
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(buffer);
+            }
+        }
+
+        [UnmanagedCallersOnly]
+        static int SeekCallback(IntPtr handle, long offset, SeekOrigin whence)
+        {
+            var stream = (Stream) GCHandle.FromIntPtr(handle).Target!;
+            stream.Seek(offset, whence);
+            return 0;
+        }
+
+        [UnmanagedCallersOnly]
+        static long TellCallback(IntPtr handle)
+        {
+            var stream = (Stream) GCHandle.FromIntPtr(handle).Target!;
+            return stream.Position;
+        }
+
+        [UnmanagedCallersOnly]
+        static int EofCallback(IntPtr handle)
+        {
+            var stream = (Stream) GCHandle.FromIntPtr(handle).Target!;
+            return stream.Position < stream.Length ? 0 : 1;
+        }
     }
 }
