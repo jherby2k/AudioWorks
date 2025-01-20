@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Buffers;
 using System.IO;
 using System.Runtime.InteropServices;
 
@@ -95,40 +94,19 @@ namespace AudioWorks.Extensions.Flac
         };
 
         [UnmanagedCallersOnly]
-        static IntPtr ReadCallback(IntPtr readBuffer, IntPtr bufferSize, IntPtr numberOfRecords, IntPtr handle)
+        static unsafe IntPtr ReadCallback(void* readBuffer, IntPtr bufferSize, IntPtr numberOfRecords, IntPtr handle)
         {
-            var totalBufferSize = bufferSize.ToInt32() * numberOfRecords.ToInt32();
-            var buffer = ArrayPool<byte>.Shared.Rent(totalBufferSize);
-            try
-            {
-                var stream = (Stream) GCHandle.FromIntPtr(handle).Target!;
-                var bytesRead = stream.Read(buffer, 0, totalBufferSize);
-                Marshal.Copy(buffer, 0, readBuffer, totalBufferSize);
-                return new(bytesRead);
-            }
-            finally
-            {
-                ArrayPool<byte>.Shared.Return(buffer);
-            }
+            var stream = (Stream) GCHandle.FromIntPtr(handle).Target!;
+            var bytesRead = stream.Read(new(readBuffer, bufferSize.ToInt32() * numberOfRecords.ToInt32()));
+            return new(bytesRead);
         }
 
         [UnmanagedCallersOnly]
-        static IntPtr WriteCallback(IntPtr writeBuffer, IntPtr bufferSize, IntPtr numberOfRecords, IntPtr handle)
+        static unsafe IntPtr WriteCallback(void* writeBuffer, IntPtr bufferSize, IntPtr numberOfRecords, IntPtr handle)
         {
-            var castNumberOfRecords = numberOfRecords.ToInt32();
-            var totalBufferSize = bufferSize.ToInt32() * castNumberOfRecords;
-            var buffer = ArrayPool<byte>.Shared.Rent(totalBufferSize);
-            try
-            {
-                var stream = (Stream) GCHandle.FromIntPtr(handle).Target!;
-                Marshal.Copy(writeBuffer, buffer, 0, totalBufferSize);
-                stream.Write(buffer, 0, totalBufferSize);
-                return new(castNumberOfRecords);
-            }
-            finally
-            {
-                ArrayPool<byte>.Shared.Return(buffer);
-            }
+            var stream = (Stream) GCHandle.FromIntPtr(handle).Target!;
+            stream.Write(new (writeBuffer, bufferSize.ToInt32() * numberOfRecords.ToInt32()));
+            return numberOfRecords;
         }
 
         [UnmanagedCallersOnly]

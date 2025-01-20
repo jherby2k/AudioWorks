@@ -22,9 +22,9 @@ namespace AudioWorks.Extensions.Flac
     [StructLayout(LayoutKind.Sequential)]
     unsafe struct IoCallbacks
     {
-        internal delegate* unmanaged<IntPtr, IntPtr, IntPtr, IntPtr, IntPtr> Read;
+        internal delegate* unmanaged<void*, IntPtr, IntPtr, IntPtr, IntPtr> Read;
 
-        internal delegate* unmanaged<IntPtr, IntPtr, IntPtr, IntPtr, IntPtr> Write;
+        internal delegate* unmanaged<void*, IntPtr, IntPtr, IntPtr, IntPtr> Write;
 
         internal delegate* unmanaged<IntPtr, long, SeekOrigin, int> Seek;
 
