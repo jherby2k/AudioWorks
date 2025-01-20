@@ -35,16 +35,16 @@ namespace AudioWorks.Extensions.Flac
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_init_stream")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int StreamDecoderInitStream(
+        internal static unsafe partial int StreamDecoderInitStream(
             StreamDecoderHandle handle,
-            StreamDecoderReadCallback readCallback,
-            StreamDecoderSeekCallback? seekCallback,
-            StreamDecoderTellCallback? tellCallback,
-            StreamDecoderLengthCallback? lengthCallback,
-            StreamDecoderEofCallback? eofCallback,
+            delegate* unmanaged<IntPtr, byte*, int*, IntPtr, DecoderReadStatus> readCallback,
+            delegate* unmanaged<IntPtr, ulong, IntPtr, DecoderSeekStatus> seekCallback,
+            delegate* unmanaged<IntPtr, ulong*, IntPtr, DecoderTellStatus> tellCallback,
+            delegate* unmanaged<IntPtr, ulong*, IntPtr, DecoderLengthStatus> lengthCallback,
+            delegate* unmanaged<IntPtr, IntPtr, int> eofCallback,
             StreamDecoderWriteCallback writeCallback,
             StreamDecoderMetadataCallback? metadataCallback,
-            StreamDecoderErrorCallback errorCallback,
+            delegate* unmanaged<IntPtr, DecoderErrorStatus, IntPtr, void> errorCallback,
             IntPtr userData);
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_set_metadata_respond")]
@@ -109,10 +109,6 @@ namespace AudioWorks.Extensions.Flac
         internal static partial bool StreamEncoderSetTotalSamplesEstimate(
             StreamEncoderHandle handle, ulong totalSamples);
 
-        [LibraryImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_get_total_samples_estimate")]
-        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial ulong StreamEncoderGetTotalSamplesEstimate(StreamEncoderHandle handle);
-
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_set_compression_level")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -127,12 +123,12 @@ namespace AudioWorks.Extensions.Flac
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_init_stream")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int StreamEncoderInitStream(
+        internal static unsafe partial int StreamEncoderInitStream(
             StreamEncoderHandle handle,
-            StreamEncoderWriteCallback writeCallback,
-            StreamEncoderSeekCallback? seekCallback,
-            StreamEncoderTellCallback? tellCallback,
-            StreamEncoderMetadataCallback? metadataCallback,
+            delegate* unmanaged<IntPtr, byte*, int, uint, uint, IntPtr, EncoderWriteStatus> writeCallback,
+            delegate* unmanaged<IntPtr, ulong, IntPtr, EncoderSeekStatus> seekCallback,
+            delegate* unmanaged<IntPtr, ulong*, IntPtr, EncoderTellStatus> tellCallback,
+            delegate* unmanaged<IntPtr, IntPtr, IntPtr, void> metadataCallback,
             IntPtr userData);
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_process")]
@@ -274,56 +270,11 @@ namespace AudioWorks.Extensions.Flac
         internal static partial void MetadataIteratorDelete(IntPtr handle);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate DecoderReadStatus StreamDecoderReadCallback(
-            IntPtr handle,
-            [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]
-            byte[] buffer,
-            ref int bytes,
-            IntPtr userData);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate DecoderSeekStatus StreamDecoderSeekCallback(
-            IntPtr handle, ulong absoluteOffset, IntPtr userData);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate DecoderTellStatus StreamDecoderTellCallback(
-            IntPtr handle, out ulong absoluteOffset, IntPtr userData);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate DecoderLengthStatus StreamDecoderLengthCallback(
-            IntPtr handle, out ulong streamLength, IntPtr userData);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate bool StreamDecoderEofCallback(IntPtr handle, IntPtr userData);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate DecoderWriteStatus StreamDecoderWriteCallback(
             IntPtr handle, ref Frame frame, IntPtr buffer, IntPtr userData);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate void StreamDecoderMetadataCallback(IntPtr handle, IntPtr metadataBlock, IntPtr userData);
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate void StreamDecoderErrorCallback(IntPtr handle, DecoderErrorStatus error, IntPtr userData);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate EncoderWriteStatus StreamEncoderWriteCallback(
-            IntPtr handle,
-            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] buffer,
-            int bytes,
-            uint samples,
-            uint currentFrame,
-            IntPtr userData);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate EncoderSeekStatus StreamEncoderSeekCallback(
-            IntPtr handle, ulong absoluteOffset, IntPtr userData);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate EncoderTellStatus StreamEncoderTellCallback(
-            IntPtr handle, out ulong absoluteOffset, IntPtr userData);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate void StreamEncoderMetadataCallback(IntPtr handle, IntPtr metaData, IntPtr userData);
     }
 }

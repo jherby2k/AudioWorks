@@ -16,55 +16,47 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Flac
 {
-    abstract class StreamDecoder : IDisposable
+    abstract unsafe class StreamDecoder : IDisposable
     {
-        readonly LibFlac.StreamDecoderReadCallback _readCallback;
-        readonly LibFlac.StreamDecoderSeekCallback _seekCallback;
-        readonly LibFlac.StreamDecoderTellCallback _tellCallback;
-        readonly LibFlac.StreamDecoderLengthCallback _lengthCallback;
-        readonly LibFlac.StreamDecoderEofCallback _eofCallback;
         readonly LibFlac.StreamDecoderWriteCallback _writeCallback;
         readonly LibFlac.StreamDecoderMetadataCallback _metadataCallback;
-        readonly LibFlac.StreamDecoderErrorCallback _errorCallback;
 #pragma warning disable CA2213 // Disposable fields should be disposed
         readonly Stream _stream;
 #pragma warning restore CA2213 // Disposable fields should be disposed
-        readonly long _streamLength;
+        GCHandle _streamHandle;
 
         protected StreamDecoderHandle Handle { get; } = LibFlac.StreamDecoderNew();
 
         internal StreamDecoder(Stream stream)
         {
             // Need a reference to the callbacks for the lifetime of the decoder
-            _readCallback = ReadCallback;
-            _seekCallback = SeekCallback;
-            _tellCallback = TellCallback;
-            _lengthCallback = LengthCallback;
-            _eofCallback = EofCallback;
             _writeCallback = WriteCallback;
             _metadataCallback = MetadataCallback;
-            _errorCallback = ErrorCallback;
-
             _stream = stream;
-            _streamLength = stream.Length;
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
-        internal void Initialize() =>
+        internal void Initialize()
+        {
+            // The callbacks have to be static, so pass the output stream through as userData
+            _streamHandle = GCHandle.Alloc(_stream);
+
             LibFlac.StreamDecoderInitStream(Handle,
-                _readCallback,
-                _seekCallback,
-                _tellCallback,
-                _lengthCallback,
-                _eofCallback,
+                &ReadCallback,
+                &SeekCallback,
+                &TellCallback,
+                &LengthCallback,
+                &EofCallback,
                 _writeCallback,
                 _metadataCallback,
-                _errorCallback,
-                IntPtr.Zero);
+                &ErrorCallback,
+                GCHandle.ToIntPtr(_streamHandle));
+        }
 
         internal bool ProcessMetadata() => LibFlac.StreamDecoderProcessUntilEndOfMetadata(Handle);
 
@@ -72,33 +64,50 @@ namespace AudioWorks.Extensions.Flac
 
         internal DecoderState GetState() => LibFlac.StreamDecoderGetState(Handle);
 
-        public void Dispose() => Handle.Dispose();
-
-        DecoderReadStatus ReadCallback(IntPtr handle, byte[] buffer, ref int bytes, IntPtr userData)
+        public void Dispose()
         {
-            bytes = _stream.Read(buffer, 0, bytes);
-            return bytes == 0 ? DecoderReadStatus.EndOfStream : DecoderReadStatus.Continue;
+            _streamHandle.Free();
+            Handle.Dispose();
         }
 
-        DecoderSeekStatus SeekCallback(IntPtr handle, ulong absoluteOffset, IntPtr userData)
+        [UnmanagedCallersOnly]
+        static DecoderReadStatus ReadCallback(IntPtr handle, byte* buffer, int* bytes, IntPtr userData)
         {
-            _stream.Position = (long) absoluteOffset;
+            var stream = (Stream) GCHandle.FromIntPtr(userData).Target!;
+            *bytes = stream.Read(new(buffer, *bytes));
+            return *bytes == 0 ? DecoderReadStatus.EndOfStream : DecoderReadStatus.Continue;
+        }
+
+        [UnmanagedCallersOnly]
+        static DecoderSeekStatus SeekCallback(IntPtr handle, ulong absoluteOffset, IntPtr userData)
+        {
+            var stream = (Stream) GCHandle.FromIntPtr(userData).Target!;
+            stream.Position = (long) absoluteOffset;
             return DecoderSeekStatus.Ok;
         }
 
-        DecoderTellStatus TellCallback(IntPtr handle, out ulong absoluteOffset, IntPtr userData)
+        [UnmanagedCallersOnly]
+        static DecoderTellStatus TellCallback(IntPtr handle, ulong* absoluteOffset, IntPtr userData)
         {
-            absoluteOffset = (ulong) _stream.Position;
+            var stream = (Stream) GCHandle.FromIntPtr(userData).Target!;
+            *absoluteOffset = (ulong) stream.Position;
             return DecoderTellStatus.Ok;
         }
 
-        DecoderLengthStatus LengthCallback(IntPtr handle, out ulong streamLength, IntPtr userData)
+        [UnmanagedCallersOnly]
+        static DecoderLengthStatus LengthCallback(IntPtr handle, ulong* streamLength, IntPtr userData)
         {
-            streamLength = (ulong) _streamLength;
+            var stream = (Stream) GCHandle.FromIntPtr(userData).Target!;
+            *streamLength = (ulong) stream.Length;
             return DecoderLengthStatus.Ok;
         }
 
-        bool EofCallback(IntPtr handle, IntPtr userData) => _stream.Position >= _streamLength;
+        [UnmanagedCallersOnly]
+        static int EofCallback(IntPtr handle, IntPtr userData)
+        {
+            var stream = (Stream) GCHandle.FromIntPtr(userData).Target!;
+            return stream.Position >= stream.Length ? 1 : 0;
+        }
 
         protected virtual DecoderWriteStatus WriteCallback(IntPtr handle, ref Frame frame, IntPtr buffer,
             IntPtr userData) =>
@@ -108,6 +117,7 @@ namespace AudioWorks.Extensions.Flac
         {
         }
 
+        [UnmanagedCallersOnly]
         static void ErrorCallback(IntPtr handle, DecoderErrorStatus error, IntPtr userData)
         {
         }
