@@ -13,11 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text;
-
 namespace AudioWorks.Extensions.Flac
 {
     abstract class VorbisCommentBlock : MetadataBlock
@@ -27,22 +22,9 @@ namespace AudioWorks.Extensions.Flac
         {
         }
 
-        internal unsafe void Append(string key, string value)
+        internal void Append(string key, string value)
         {
-            Span<byte> keyBytes = stackalloc byte[Encoding.ASCII.GetMaxByteCount(key.Length) + 1];
-            Span<byte> valueBytes = stackalloc byte[Encoding.UTF8.GetMaxByteCount(value.Length) + 1];
-
-            var keyLength = Encoding.ASCII.GetBytes(key, keyBytes);
-            var valueLength = Encoding.UTF8.GetBytes(value, valueBytes);
-
-            // Since SkipLocalsInit is set, make sure the strings are null-terminated
-            keyBytes[keyLength] = 0;
-            valueBytes[valueLength] = 0;
-
-            LibFlac.MetadataObjectVorbisCommentEntryFromNameValuePair(
-                out var entry,
-                new(Unsafe.AsPointer(ref MemoryMarshal.GetReference(keyBytes[..(keyLength + 1)]))),
-                new(Unsafe.AsPointer(ref MemoryMarshal.GetReference(valueBytes[..(valueLength + 1)]))));
+            LibFlac.MetadataObjectVorbisCommentEntryFromNameValuePair(out var entry, key, value);
 
             // The comment takes ownership of the new entry if 'copy' is false
             LibFlac.MetadataObjectVorbisCommentAppendComment(Handle, entry, false);

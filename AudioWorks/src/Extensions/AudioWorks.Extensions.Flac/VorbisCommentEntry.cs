@@ -19,10 +19,10 @@ using System.Runtime.InteropServices;
 namespace AudioWorks.Extensions.Flac
 {
     [StructLayout(LayoutKind.Sequential)]
-    readonly struct VorbisCommentEntry
+    readonly unsafe struct VorbisCommentEntry
     {
         internal readonly uint Length;
 
-        internal readonly IntPtr Entry;
+        internal readonly byte* Entry;
     }
 }

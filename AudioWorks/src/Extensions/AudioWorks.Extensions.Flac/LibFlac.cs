@@ -163,7 +163,9 @@ namespace AudioWorks.Extensions.Flac
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static partial bool MetadataObjectVorbisCommentEntryFromNameValuePair(
-            out VorbisCommentEntry entry, IntPtr key, IntPtr value);
+            out VorbisCommentEntry entry,
+            [MarshalUsing(typeof(AnsiStringMarshaller))] string key,
+            [MarshalAs(UnmanagedType.LPUTF8Str)] string value);
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__metadata_object_vorbiscomment_append_comment")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]

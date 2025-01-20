@@ -16,7 +16,7 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Text;
+using System.Runtime.InteropServices.Marshalling;
 using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Flac
@@ -45,11 +45,9 @@ namespace AudioWorks.Extensions.Flac
                         var entry = Marshal.PtrToStructure<VorbisCommentEntry>(IntPtr.Add(vorbisComment.Comments,
                             commentIndex * sizeof(VorbisCommentEntry)));
 
-                        var commentBytes = new Span<byte>(entry.Entry.ToPointer(), (int) entry.Length);
-                        var delimiter = commentBytes.IndexOf((byte) 0x3D); // '='
-                        AudioMetadata.Set(
-                            Encoding.ASCII.GetString(commentBytes[..delimiter]),
-                            Encoding.UTF8.GetString(commentBytes[(delimiter + 1)..]));
+                        var entryString = Utf8StringMarshaller.ConvertToManaged(entry.Entry) ?? string.Empty;
+                        var delimiter = entryString.IndexOf('=', StringComparison.OrdinalIgnoreCase);
+                        AudioMetadata.Set(entryString[..delimiter], entryString[(delimiter + 1)..]);
                     }
 
                     break;
