@@ -183,9 +183,9 @@ namespace AudioWorks.Extensions.Opus
 #if OSX
             // HACK ope_encoder_ctl needs the variadic argument pushed to the stack on ARM64
             RuntimeInformation.ProcessArchitecture == Architecture.Arm64
-                ? LibOpusEnc.ControlGetArm64(_handle, request,
+                ? LibOpusEnc.ControlGetArm64(_encoderHandle, request,
                     IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, out value)
-                : LibOpusEnc.ControlGet(_handle, request, out value);
+                : LibOpusEnc.ControlGet(_encoderHandle, request, out value);
 #else
             LibOpusEnc.ControlGet(_encoderHandle, request, out value);
 #endif
@@ -194,9 +194,9 @@ namespace AudioWorks.Extensions.Opus
 #if OSX
             // HACK ope_encoder_ctl needs the variadic argument pushed to the stack on ARM64
             RuntimeInformation.ProcessArchitecture == Architecture.Arm64
-                ? LibOpusEnc.ControlSetArm64(_handle, request,
+                ? LibOpusEnc.ControlSetArm64(_encoderHandle, request,
                     IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, argument)
-                : LibOpusEnc.ControlSet(_handle, request, argument);
+                : LibOpusEnc.ControlSet(_encoderHandle, request, argument);
 #else
             LibOpusEnc.ControlSet(_encoderHandle, request, argument);
 #endif
