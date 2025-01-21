@@ -13,19 +13,18 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
 {
     [StructLayout(LayoutKind.Sequential)]
-    readonly struct OggPage
+    readonly unsafe struct OggPage
     {
-        internal readonly IntPtr Header;
+        internal readonly byte* Header;
 
         internal readonly CLong HeaderLength;
 
-        internal readonly IntPtr Body;
+        internal readonly byte* Body;
 
         internal readonly CLong BodyLength;
     }

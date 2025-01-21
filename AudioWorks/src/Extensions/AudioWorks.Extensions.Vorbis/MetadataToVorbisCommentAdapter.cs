@@ -15,8 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
-using System.Text;
 using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Vorbis
@@ -93,41 +91,15 @@ namespace AudioWorks.Extensions.Vorbis
 
         unsafe void AddTag(string key, string value)
         {
-            // Optimization - avoid allocating on the heap
-            Span<byte> keyBytes = stackalloc byte[Encoding.ASCII.GetMaxByteCount(key.Length) + 1];
-            var keyLength = Encoding.ASCII.GetBytes(key, keyBytes);
-
-            // Use heap allocations for comments > 256kB
-            var valueMaxByteCount = Encoding.UTF8.GetMaxByteCount(value.Length) + 1;
-            var valueBytes = valueMaxByteCount < 0x40000
-                ? stackalloc byte[valueMaxByteCount]
-                : new byte[valueMaxByteCount];
-            var valueLength = Encoding.UTF8.GetBytes(value, valueBytes);
-
-            // Since SkipLocalsInit is set, make sure the strings are null-terminated
-            keyBytes[keyLength] = 0;
-            valueBytes[valueLength] = 0;
-
-            fixed (byte* valueBytesAddress = valueBytes)
-                LibVorbis.CommentAddTag(_comment, ref MemoryMarshal.GetReference(keyBytes),
-                    valueBytesAddress);
-
+            LibVorbis.CommentAddTag(_comment, key, value);
             _unmanagedMemoryAllocated = true;
         }
 
+
         unsafe void AddTag(string key, ReadOnlySpan<byte> value)
         {
-            // Optimization - avoid allocating on the heap
-            Span<byte> keyBytes = stackalloc byte[Encoding.ASCII.GetMaxByteCount(key.Length) + 1];
-            var keyLength = Encoding.ASCII.GetBytes(key, keyBytes);
-
-            // Since SkipLocalsInit is set, make sure the key is null-terminated
-            keyBytes[keyLength] = 0;
-
             fixed (byte* valueAddress = value)
-                LibVorbis.CommentAddTag(_comment, ref MemoryMarshal.GetReference(keyBytes),
-                    valueAddress);
-
+                LibVorbis.CommentAddTag(_comment, key, valueAddress);
             _unmanagedMemoryAllocated = true;
         }
 

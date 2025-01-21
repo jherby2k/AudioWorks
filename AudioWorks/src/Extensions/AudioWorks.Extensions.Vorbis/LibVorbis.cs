@@ -15,6 +15,7 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 
 namespace AudioWorks.Extensions.Vorbis
 {
@@ -38,7 +39,14 @@ namespace AudioWorks.Extensions.Vorbis
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_comment_add_tag")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static unsafe partial void CommentAddTag(
-            in VorbisComment comment, ref byte tag, byte* contents);
+            in VorbisComment comment,
+            [MarshalUsing(typeof(AnsiStringMarshaller))] string tag,
+            [MarshalAs(UnmanagedType.LPUTF8Str)] string contents);
+
+        [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_comment_add_tag")]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+        internal static unsafe partial void CommentAddTag(
+            in VorbisComment comment, [MarshalUsing(typeof(AnsiStringMarshaller))] string tag, byte* contents);
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_comment_clear")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]

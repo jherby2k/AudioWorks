@@ -179,13 +179,10 @@ namespace AudioWorks.Extensions.Vorbis
             }
         }
 
-        void WritePage(in OggPage page)
+        unsafe void WritePage(in OggPage page)
         {
-            WriteFromUnmanaged(page.Header, page.HeaderLength.Value.ToInt32());
-            WriteFromUnmanaged(page.Body, page.BodyLength.Value.ToInt32());
+            _outputStream!.Write(new Span<byte>(page.Header, page.HeaderLength.Value.ToInt32()));
+            _outputStream!.Write(new Span<byte>(page.Body, page.BodyLength.Value.ToInt32()));
         }
-
-        unsafe void WriteFromUnmanaged(IntPtr location, int length) =>
-            _outputStream!.Write(new Span<byte>(location.ToPointer(), length));
     }
 }
