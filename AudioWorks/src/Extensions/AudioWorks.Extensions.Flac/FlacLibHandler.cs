@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Linq;
 #if OSX
 using System.Diagnostics;
 #endif
@@ -62,8 +63,9 @@ namespace AudioWorks.Extensions.Flac
 
             try
             {
-                foreach (var methodInfo in typeof(LibFlac).GetMethods(
-                    BindingFlags.NonPublic | BindingFlags.Static))
+                foreach (var methodInfo in new[]
+                                 { typeof(Encoder.LibFlac), typeof(Decoder.LibFlac), typeof(Metadata.LibFlac) }
+                             .SelectMany(type => type.GetMethods(BindingFlags.NonPublic | BindingFlags.Static)))
                     Marshal.Prelink(methodInfo);
             }
             catch (DllNotFoundException e)
