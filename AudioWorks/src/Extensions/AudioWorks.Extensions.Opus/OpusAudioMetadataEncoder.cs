@@ -54,7 +54,7 @@ namespace AudioWorks.Extensions.Opus
                                 if (bytesRead == 0)
                                     throw new AudioInvalidException("No Ogg stream was found.");
 
-                                var nativeBuffer = new Span<byte>(sync.Buffer(bytesRead).ToPointer(), bytesRead);
+                                var nativeBuffer = new Span<byte>(sync.Buffer(bytesRead), bytesRead);
                                 buffer[..bytesRead].CopyTo(nativeBuffer);
                                 sync.Wrote(bytesRead);
                             }
@@ -77,11 +77,7 @@ namespace AudioWorks.Extensions.Opus
                                         // Substitute the new comment packet
                                         case 1:
                                             using (var adapter = new MetadataToOpusCommentAdapter(metadata))
-                                            {
-                                                adapter.HeaderOut(out var commentPacket);
-                                                outputOggStream.PacketIn(commentPacket);
-                                            }
-
+                                                outputOggStream.PacketIn(adapter.GetHeader());
                                             headerWritten = true;
                                             break;
 
@@ -121,18 +117,15 @@ namespace AudioWorks.Extensions.Opus
             }
         }
 
-        static void WritePage(in OggPage page, Stream stream)
+        static unsafe void WritePage(in OggPage page, Stream stream)
         {
-            WriteFromUnmanaged(page.Header, page.HeaderLength.Value.ToInt32(), stream);
-            WriteFromUnmanaged(page.Body, page.BodyLength.Value.ToInt32(), stream);
+            stream.Write(new Span<byte>(page.Header, page.HeaderLength.Value.ToInt32()));
+            stream.Write(new Span<byte>(page.Body, page.BodyLength.Value.ToInt32()));
         }
-
-        static unsafe void WriteFromUnmanaged(IntPtr location, int length, Stream stream) =>
-            stream.Write(new Span<byte>(location.ToPointer(), length));
 
         static unsafe void UpdateSequenceNumber(ref OggPage page, uint sequenceNumber)
         {
-            var sequenceNumberSpan = new Span<byte>(page.Header.ToPointer(), page.HeaderLength.Value.ToInt32())
+            var sequenceNumberSpan = new Span<byte>(page.Header, page.HeaderLength.Value.ToInt32())
                 .Slice(18, 4);
 
             // Only do the update if the sequence number has changed

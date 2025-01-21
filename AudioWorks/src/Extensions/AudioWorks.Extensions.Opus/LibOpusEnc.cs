@@ -15,6 +15,7 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 
 namespace AudioWorks.Extensions.Opus
 {
@@ -34,7 +35,10 @@ namespace AudioWorks.Extensions.Opus
 
         [LibraryImport(_opusEncLibrary, EntryPoint = "ope_comments_add")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static unsafe partial int CommentsAdd(OpusCommentsHandle handle, ref byte tag, byte* value);
+        internal static unsafe partial int CommentsAdd(
+            OpusCommentsHandle handle,
+            [MarshalUsing(typeof(AnsiStringMarshaller))] string tag,
+            [MarshalAs(UnmanagedType.LPUTF8Str)] string value);
 
         [LibraryImport(_opusEncLibrary, EntryPoint = "ope_comments_add_picture_from_memory")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]

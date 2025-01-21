@@ -52,7 +52,7 @@ namespace AudioWorks.Extensions.Opus
                             if (bytesRead == 0)
                                 throw new AudioInvalidException("No Ogg stream was found.");
 
-                            var nativeBuffer = new Span<byte>(sync.Buffer(bytesRead).ToPointer(), bytesRead);
+                            var nativeBuffer = new Span<byte>(sync.Buffer(bytesRead), bytesRead);
                             buffer[..bytesRead].CopyTo(nativeBuffer);
                             sync.Wrote(bytesRead);
                         }
@@ -78,7 +78,7 @@ namespace AudioWorks.Extensions.Opus
             if (headerPacket.Bytes.Value.ToInt32() < 19)
                 throw new AudioUnsupportedException("Not an Opus stream.");
 
-            var headerBytes = new Span<byte>(headerPacket.Packet.ToPointer(), headerPacket.Bytes.Value.ToInt32());
+            var headerBytes = new Span<byte>(headerPacket.Packet, headerPacket.Bytes.Value.ToInt32());
 
             if (!Encoding.ASCII.GetString(headerBytes[..8])
                 .Equals("OpusHead", StringComparison.Ordinal))

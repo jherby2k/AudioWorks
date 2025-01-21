@@ -33,7 +33,7 @@ namespace AudioWorks.Extensions.Opus
 
         internal bool PageOut(out OggPage page) => LibOgg.SyncPageOut(_state, out page) == 1;
 
-        internal IntPtr Buffer(int size) =>
+        internal unsafe void* Buffer(int size) =>
             LibOgg.SyncBuffer(_state, new(size));
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",

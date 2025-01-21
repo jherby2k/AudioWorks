@@ -13,15 +13,14 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Opus
 {
     [StructLayout(LayoutKind.Sequential)]
-    struct OggPacket
+    unsafe struct OggPacket
     {
-        internal IntPtr Packet;
+        internal void* Packet;
 
         internal CLong Bytes;
 

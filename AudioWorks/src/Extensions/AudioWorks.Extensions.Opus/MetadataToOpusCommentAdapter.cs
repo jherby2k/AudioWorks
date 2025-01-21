@@ -16,7 +16,6 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Globalization;
 using System.Runtime.InteropServices;
-using System.Text;
 using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Opus
@@ -76,40 +75,20 @@ namespace AudioWorks.Extensions.Opus
                 throw new AudioEncodingException($"Opus encountered error {error} writing the cover art.");
         }
 
-        internal unsafe void HeaderOut(out OggPacket packet) =>
-            packet = new()
-            {
-                Packet = Marshal.ReadIntPtr(Handle.DangerousGetHandle()),
-                Bytes = new(Marshal.ReadInt32(IntPtr.Add(Handle.DangerousGetHandle(), sizeof(IntPtr)))),
-                PacketNumber = 1
-            };
+        internal unsafe OggPacket GetHeader() => new()
+        {
+            Packet = Marshal.ReadIntPtr(Handle.DangerousGetHandle()).ToPointer(),
+            Bytes = new(Marshal.ReadInt32(Handle.DangerousGetHandle(), sizeof(IntPtr))),
+            PacketNumber = 1
+        };
 
         public void Dispose() => Handle.Dispose();
 
-        unsafe void AddTag(string key, string value)
+        void AddTag(string key, string value)
         {
-            // Optimization - avoid allocating on the heap
-            Span<byte> keyBytes = stackalloc byte[Encoding.ASCII.GetMaxByteCount(key.Length) + 1];
-            var keyLength = Encoding.ASCII.GetBytes(key, keyBytes);
-
-            // Use heap allocations for comments > 256kB (usually pictures)
-            var valueMaxByteCount = Encoding.UTF8.GetMaxByteCount(value.Length) + 1;
-            var valueBytes = valueMaxByteCount < 0x40000
-                ? stackalloc byte[valueMaxByteCount]
-                : new byte[valueMaxByteCount];
-            var valueLength = Encoding.UTF8.GetBytes(value, valueBytes);
-
-            // Since SkipLocalsInit is set, make sure the strings are null-terminated
-            keyBytes[keyLength] = 0;
-            valueBytes[valueLength] = 0;
-
-            fixed (byte* valueBytesAddress = valueBytes)
-            {
-                var error = LibOpusEnc.CommentsAdd(Handle, ref MemoryMarshal.GetReference(keyBytes),
-                    valueBytesAddress);
-                if (error != 0)
-                    throw new AudioEncodingException($"Opus encountered error {error} writing a comment.");
-            }
+            var error = LibOpusEnc.CommentsAdd(Handle, key, value);
+            if (error != 0)
+                throw new AudioEncodingException($"Opus encountered error {error} writing a comment.");
         }
 
         static string ConvertGain(string gain) =>

@@ -28,7 +28,7 @@ namespace AudioWorks.Extensions.Opus
             if (packet.Bytes.Value.ToInt32() < 16)
                 throw new AudioMetadataInvalidException("Invalid Opus comment header.");
 
-            var headerBytes = new Span<byte>(packet.Packet.ToPointer(), packet.Bytes.Value.ToInt32());
+            var headerBytes = new Span<byte>(packet.Packet, packet.Bytes.Value.ToInt32());
 
             if (!Encoding.ASCII.GetString(headerBytes[..8])
                 .Equals("OpusTags", StringComparison.Ordinal))

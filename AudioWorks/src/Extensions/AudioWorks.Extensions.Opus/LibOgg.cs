@@ -51,7 +51,7 @@ namespace AudioWorks.Extensions.Opus
 
         [LibraryImport(_oggLibrary, EntryPoint = "ogg_sync_buffer")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial IntPtr SyncBuffer(IntPtr syncState, CLong size);
+        internal static unsafe partial void* SyncBuffer(IntPtr syncState, CLong size);
 
         [LibraryImport(_oggLibrary, EntryPoint = "ogg_sync_wrote")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
