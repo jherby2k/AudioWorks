@@ -20,8 +20,6 @@
   <ItemGroup Condition="$([MSBuild]::IsOSPlatform('OSX'))">
     <None Include="macos.*\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Pack>true</Pack>
-      <PackagePath>contentFiles\any\any\</PackagePath>
     </None>
   </ItemGroup>
 
