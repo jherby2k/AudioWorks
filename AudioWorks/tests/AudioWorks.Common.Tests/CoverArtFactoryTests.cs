@@ -15,8 +15,8 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.IO;
-using AudioWorks.Common.Tests.DataSources;
 using AudioWorks.TestUtilities;
+using AudioWorks.TestUtilities.DataSources;
 using Xunit;
 
 namespace AudioWorks.Common.Tests

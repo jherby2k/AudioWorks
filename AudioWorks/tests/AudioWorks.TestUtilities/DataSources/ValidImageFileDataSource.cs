@@ -16,7 +16,7 @@ You should have received a copy of the GNU Affero General Public License along w
 using System.Linq;
 using Xunit;
 
-namespace AudioWorks.Common.Tests.DataSources
+namespace AudioWorks.TestUtilities.DataSources
 {
     public static class ValidImageFileDataSource
     {
