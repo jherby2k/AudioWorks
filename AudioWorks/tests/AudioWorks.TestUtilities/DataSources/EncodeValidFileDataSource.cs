@@ -31,7 +31,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "Wave",
-                new(),
+                [],
                 [
                     "818EE6CBF16F76F923D33650E7A52708"
                 ]
@@ -39,7 +39,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "Wave",
-                new(),
+                [],
                 [
                     "509B83828F13945E4121E4C4897A8649"
                 ]
@@ -47,7 +47,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Wave",
-                new(),
+                [],
                 [
                     "5D4B869CD72BE208BC7B47F35E13BE9A"
                 ]
@@ -55,7 +55,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "Wave",
-                new(),
+                [],
                 [
                     "EFBC44B9FA9C04449D67ECD16CB7F3D8"
                 ]
@@ -63,7 +63,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "Wave",
-                new(),
+                [],
                 [
                     "D55BD1987676A7D6C2A04BF09C10F64F"
                 ]
@@ -71,7 +71,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "A-law 44100Hz Stereo.wav",
                 "Wave",
-                new(),
+                [],
                 [
                     "47B031C7D8246F557E0CB37E4DB3F528"
                 ]
@@ -79,7 +79,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "µ-law 44100Hz Stereo.wav",
                 "Wave",
-                new(),
+                [],
                 [
                     "FCA4C53C5F98B061CE9C9186A303D816"
                 ]
@@ -87,7 +87,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Mono.flac",
                 "Wave",
-                new(),
+                [],
                 [
                     "509B83828F13945E4121E4C4897A8649"
                 ]
@@ -95,7 +95,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 "Wave",
-                new(),
+                [],
                 [
                     "5D4B869CD72BE208BC7B47F35E13BE9A"
                 ]
@@ -103,7 +103,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "FLAC Level 5 16-bit 48000Hz Stereo.flac",
                 "Wave",
-                new(),
+                [],
                 [
                     "EFBC44B9FA9C04449D67ECD16CB7F3D8"
                 ]
@@ -111,7 +111,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "FLAC Level 5 24-bit 96000Hz Stereo.flac",
                 "Wave",
-                new(),
+                [],
                 [
                     "D55BD1987676A7D6C2A04BF09C10F64F"
                 ]
@@ -121,7 +121,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "ALAC 16-bit 44100Hz Mono.m4a",
                 "Wave",
-                new(),
+                [],
                 [
                     "509B83828F13945E4121E4C4897A8649"
                 ]
@@ -129,7 +129,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 "Wave",
-                new(),
+                [],
                 [
                     "5D4B869CD72BE208BC7B47F35E13BE9A"
                 ]
@@ -137,7 +137,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "ALAC 16-bit 48000Hz Stereo.m4a",
                 "Wave",
-                new(),
+                [],
                 [
                     "EFBC44B9FA9C04449D67ECD16CB7F3D8"
                 ]
@@ -145,7 +145,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "ALAC 24-bit 96000Hz Stereo.m4a",
                 "Wave",
-                new(),
+                [],
                 [
                     "D55BD1987676A7D6C2A04BF09C10F64F"
                 ]
@@ -159,7 +159,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "FLAC",
-                new(),
+                [],
                 [
                     "42070347011D5067A9D962DA3237EF63", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "5C1655ACED0E208FC231C92C678FD87B" // FLAC 1.4.3
@@ -168,7 +168,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "FLAC",
-                new(),
+                [],
                 [
                     "0771EF09959F087FACE194A4479F5107", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "0B2A54ACAA983961889A83EF85942C5D" // FLAC 1.4.3
@@ -177,7 +177,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
-                new(),
+                [],
                 [
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "F86AA899D869835AB05C17699F7F30DC" // FLAC 1.4.3
@@ -186,7 +186,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "FLAC",
-                new(),
+                [],
                 [
                     "F0F075E05A3AFB67403CCF373932BCCA", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "4CF8F4F9A26506718F891820268284DD" // FLAC 1.4.3
@@ -195,7 +195,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "FLAC",
-                new(),
+                [],
                 [
                     "D3A7B834DCE97F0709AEFCA45A24F5B6", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "99355C1C3DD53802AB84425043CF1831" // FLAC 1.4.3
@@ -204,7 +204,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "A-law 44100Hz Stereo.wav",
                 "FLAC",
-                new(),
+                [],
                 [
                     "10F6AC75659ECFE81D3C07D8D3074538", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "F7A6A7DC6610B277E302387A9E38FB32" // FLAC 1.4.3
@@ -213,7 +213,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "µ-law 44100Hz Stereo.wav",
                 "FLAC",
-                new(),
+                [],
                 [
                     "FCBAB8A8C261456CF6F87E603B237426", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "2ED7D0E99EA9072FB4415FF1510D3056" // FLAC 1.4.3
@@ -222,7 +222,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "FLAC",
-                new(),
+                [],
                 [
                     "2F2F341FEECB7842F7FA9CE6CB110C67", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "D75493F3FFF379D7A14F5B0BFA5AFB8A" // FLAC 1.4.3
@@ -231,7 +231,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
                 "FLAC",
-                new(),
+                [],
                 [
                     "A48820F5E30B5C21A881E01209257E21", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "A7E0AA5D079DCBF97B3C03B76FA2E645" // FLAC 1.4.3
@@ -240,7 +240,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "FLAC",
-                new(),
+                [],
                 [
                     "D90693A520FA14AC987272ACB6CD8996", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "1ED46D08800E000E7D4FFD6B3E776C2C" // FLAC 1.4.3
@@ -992,7 +992,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "LameMP3",
-                new(),
+                [],
                 [
                     "F2BD0875E273743A8908F96DCCFDFC44", // Lame 3.100 (Ubuntu and MacOS)
                     "7CB68FB7ACC70E8CD928E7DB437B16FE" // Lame 3.100 (Windows)
@@ -1001,7 +1001,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "LameMP3",
-                new(),
+                [],
                 [
                     "1CB5B915B3A72CBE76087E16F96A0A3E", // Lame 3.100 (Ubuntu and MacOS)
                     "537DE5BA83AAF6542B2E29C74D405EC2" // Lame 3.100 (Windows)
@@ -1010,7 +1010,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
-                new(),
+                [],
                 [
                     "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS)
                     "EF2FAA877F1DE84DC87015F841103263" // Lame 3.100 (Windows)
@@ -1019,7 +1019,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "LameMP3",
-                new(),
+                [],
                 [
                     "1454732B48913F2A3898164BA366DA01", // Lame 3.100 (Ubuntu and MacOS)
                     "D6C2622620E83D442C80AADBE6B45921" // Lame 3.100 (Windows)
@@ -1028,7 +1028,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "LameMP3",
-                new(),
+                [],
                 [
                     "AD56C3A1ACD627DBDA4B5A28AFE0355D", // Lame 3.100 (Ubuntu and MacOS)
                     "5BCC0ED414809596507ECFEDEBD4454D" // Lame 3.100 (Windows)
@@ -1037,7 +1037,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "A-law 44100Hz Stereo.wav",
                 "LameMP3",
-                new(),
+                [],
                 [
                     "0190385E444B8576C297E1DE837279F1", // Lame 3.100 (Ubuntu and MacOS)
                     "C43AEE67905D09300EE49323D6330426" // Lame 3.100 (Windows)
@@ -1046,7 +1046,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "µ-law 44100Hz Stereo.wav",
                 "LameMP3",
-                new(),
+                [],
                 [
                     "3CE431DA62AC5204B9FAE63BD8E2B4A8", // Lame 3.100 (Ubuntu and MacOS)
                     "CC60AD39342F059B4F590988F192FE8D" // Lame 3.100 (Windows)
@@ -1055,7 +1055,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
-                new(),
+                [],
                 [
                     "F737A24D4F60E5B3229689CC15FF10EE", // Lame 3.100 (Ubuntu and MacOS)
                     "EA2FE7549FB7A1971265FA27B88D0285" // Lame 3.100 (Windows)
@@ -1064,7 +1064,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
                 "LameMP3",
-                new(),
+                [],
                 [
                     "E19CC567ECA5EA8CC06AB204F0A6DCFB", // Lame 3.100 (Ubuntu and MacOS)
                     "6E47BB49242784E79114392F240D1318" // Lame 3.100 (Windows)
@@ -1073,7 +1073,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "LameMP3",
-                new(),
+                [],
                 [
                     "FB1B7DECB2C2A2C9CAA1FBB917A81472", // Lame 3.100 (Ubuntu and MacOS)
                     "A4306E31052226EFD081D5D5FA80F62B" // Lame 3.100 (Windows)

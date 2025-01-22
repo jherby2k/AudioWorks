@@ -27,7 +27,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "ReplayGain",
-                new(),
+                [],
                 new()
                 {
                     TrackPeak = "0.976562",
@@ -58,7 +58,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "ReplayGain",
-                new(),
+                [],
                 new()
                 {
                     TrackPeak = "1.000000",
@@ -89,7 +89,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ReplayGain",
-                new(),
+                [],
                 new()
                 {
                     TrackPeak = "1.000000",
@@ -120,7 +120,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "ReplayGain",
-                new(),
+                [],
                 new()
                 {
                     TrackPeak = "0.999969",
@@ -151,7 +151,7 @@ namespace AudioWorks.TestUtilities.DataSources
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "ReplayGain",
-                new(),
+                [],
                 new()
                 {
                     TrackPeak = "0.988553",

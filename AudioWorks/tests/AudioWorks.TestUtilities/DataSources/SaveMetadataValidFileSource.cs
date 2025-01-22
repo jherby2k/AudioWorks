@@ -49,7 +49,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "BAE0A61EB5C4912A4793C8B259ED5633", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "1F5FEC2305DE58CE9BA73AFC9E5017AA" // FLAC 1.4.3
@@ -78,7 +78,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "FDB702CF53676594BDD9FBEC77F154A3", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "CB5A4B3F94A3F5A2B152B909A6EC2D8C" // FLAC 1.4.3
@@ -107,7 +107,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "FDB702CF53676594BDD9FBEC77F154A3", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "CB5A4B3F94A3F5A2B152B909A6EC2D8C" // FLAC 1.4.3
@@ -136,7 +136,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "A05D916A5C03E9599CBC9A9F6989FDB0", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "C238388B2E5ED6E8026FBFE7A60B6AC0" // FLAC 1.4.3
@@ -165,7 +165,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "0917BADDD895CCFD370BB222AF216E7B", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "B4969C097EBD1D6F1CE704C652FC7A0A" // FLAC 1.4.3
@@ -195,7 +195,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "BAE0A61EB5C4912A4793C8B259ED5633", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "1F5FEC2305DE58CE9BA73AFC9E5017AA" // FLAC 1.4.3
@@ -273,7 +273,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 new(),
                 string.Empty,
-                new(),
+                [],
                 [
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "A5B12EAFE3014399E04E427CA756234B" // FLAC 1.4.3
@@ -285,7 +285,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 new(),
                 string.Empty,
-                new(),
+                [],
                 [
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "A5B12EAFE3014399E04E427CA756234B" // FLAC 1.4.3
@@ -297,7 +297,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 new(),
                 "PNG 24-bit 1280 x 935.png",
-                new(),
+                [],
                 [
                     "1399992DC07E38EBCD3F5DB1AF48B8C3", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "1F6BDDA2A2585E5E84B4A9F5CFB344C0" // FLAC 1.4.3
@@ -309,7 +309,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 new(),
                 "JPEG 24-bit 1280 x 935.jpg",
-                new(),
+                [],
                 [
                     "BB1A252DAA1100EA9D0B4658DE863A86", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "5CADC0776BE4E84F683DB333057E54E1" // FLAC 1.4.3
@@ -343,7 +343,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "7F7316891B26F9FC3DE7D2D1304F9CFE"
                 ]
@@ -371,7 +371,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "9957A905E53C3D2411A3A4BF3DA4DBA3"
                 ]
@@ -399,7 +399,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "9957A905E53C3D2411A3A4BF3DA4DBA3"
                 ]
@@ -427,7 +427,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "847E8C85293966F62132E8F851FA7BAE"
                 ]
@@ -455,7 +455,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "BD8C422B4F08A50532168922680B0C2E"
                 ]
@@ -484,7 +484,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "7F7316891B26F9FC3DE7D2D1304F9CFE"
                 ]
@@ -523,7 +523,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "ALAC 16-bit 44100Hz Stereo (Tagged).m4a",
                 new(),
                 string.Empty,
-                new(),
+                [],
                 [
                     "090FD975097BAFC4164370A3DEA9E696"
                 ]
@@ -534,7 +534,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 new(),
                 string.Empty,
-                new(),
+                [],
                 [
                     "090FD975097BAFC4164370A3DEA9E696"
                 ]
@@ -587,7 +587,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 new(),
                 "PNG 24-bit 1280 x 935.png",
-                new(),
+                [],
                 [
                     "767F47AEEA8A8F85DA214D51E0751CD5"
                 ]
@@ -598,7 +598,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 new(),
                 "JPEG 24-bit 1280 x 935.jpg",
-                new(),
+                [],
                 [
                     "D419908A6F39E2D402BFDE1CB4DA8821"
                 ]
@@ -609,7 +609,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "QAAC TVBR 91 44100Hz Stereo.m4a",
                 new(),
                 "PNG 24-bit 1280 x 935.png",
-                new(),
+                [],
                 [
                     "1F72E87B05DA969322B0501DF63B6905"
                 ]
@@ -620,7 +620,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "QAAC TVBR 91 44100Hz Stereo.m4a",
                 new(),
                 "JPEG 24-bit 1280 x 935.jpg",
-                new(),
+                [],
                 [
                     "679251C0E61FC8EB10286525FE64F60F"
                 ]
@@ -653,7 +653,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "23C89D97086DD52D0B12AF0D215CB204"
                 ]
@@ -681,7 +681,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "63C6147CC1AEDC8C79CEA3A64A4D1D70"
                 ]
@@ -709,7 +709,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "63C6147CC1AEDC8C79CEA3A64A4D1D70"
                 ]
@@ -737,7 +737,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "436A20F9A295581E7ADA1124C4DDC457"
                 ]
@@ -765,7 +765,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "A6AA8BE5A043577E1DEA4607343E4625"
                 ]
@@ -794,7 +794,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "FF55C184441BFF19D872D0B7767AC981"
                 ]
@@ -1015,7 +1015,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "23C89D97086DD52D0B12AF0D215CB204"
                 ]
@@ -1026,7 +1026,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
                 new(),
                 string.Empty,
-                new(),
+                [],
                 [
                     "3EA0A7381A4AD97A317205F1026AC938"
                 ]
@@ -1037,7 +1037,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "Lame CBR 128 44100Hz Stereo.mp3",
                 new(),
                 string.Empty,
-                new(),
+                [],
                 [
                     "963D578D818C25DE5FEE6625BE7BFA98"
                 ]
@@ -1048,7 +1048,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "Lame CBR 128 44100Hz Stereo.mp3",
                 new(),
                 "PNG 24-bit 1280 x 935.png",
-                new(),
+                [],
                 [
                     "DFB1301AEF575A97D738485F9542DC05"
                 ]
@@ -1059,7 +1059,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "Lame CBR 128 44100Hz Stereo.mp3",
                 new(),
                 "JPEG 24-bit 1280 x 935.jpg",
-                new(),
+                [],
                 [
                     "1BF5C0A314A84C08A71E620ECFAC27FF"
                 ]
@@ -1092,7 +1092,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "BD9FBB0769E89FC46E37BB48A7F8A62F", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
                     "4AA6D9C63E0CFD18F450A99819E28811" // Vorbis 1.3.7 (MacOS)
@@ -1121,7 +1121,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "4BCB964FA118AE894302C5D9318EBB3E", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
                     "2CFA7B065217D20087B138681D587899" // Vorbis 1.3.7 (MacOS)
@@ -1150,7 +1150,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "4BCB964FA118AE894302C5D9318EBB3E", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
                     "2CFA7B065217D20087B138681D587899" // Vorbis 1.3.7 (MacOS)
@@ -1179,7 +1179,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "E84E26FA84319808E2DD078BDE0561CB", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
                     "D87431EDDF5977239830E5BC9BCF042A" // Vorbis 1.3.7 (MacOS)
@@ -1208,7 +1208,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "A44D6CC373B6F34D65EADBB32C94C566", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
                     "C9C6B75D075FA0B9B398FFCB760A002D" // Vorbis 1.3.7 (MacOS)
@@ -1238,7 +1238,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     AlbumGain = "0.8"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "BD9FBB0769E89FC46E37BB48A7F8A62F", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
                     "4AA6D9C63E0CFD18F450A99819E28811" // Vorbis 1.3.7 (MacOS)
@@ -1250,7 +1250,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using defaults).ogg",
                 new(),
                 string.Empty,
-                new(),
+                [],
                 [
                     "D225108B66480DC5F4368F6CD605AD7C", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
                     "3FDD942360BA5074F9CF7303E80AA4D0" // Vorbis 1.3.7 (MacOS)
@@ -1262,7 +1262,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
                 new(),
                 string.Empty,
-                new(),
+                [],
                 [
                     "D225108B66480DC5F4368F6CD605AD7C", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
                     "3FDD942360BA5074F9CF7303E80AA4D0" // Vorbis 1.3.7 (MacOS)
@@ -1274,7 +1274,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
                 new(),
                 "PNG 24-bit 1280 x 935.png",
-                new(),
+                [],
                 [
                     "FC6665047AC5EE74B3A64B08F7C15264", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
                     "8E3BEF265FA8D9C8632A1CB4B5155156" // Vorbis 1.3.7 (MacOS)
@@ -1286,7 +1286,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
                 new(),
                 "JPEG 24-bit 1280 x 935.jpg",
-                new(),
+                [],
                 [
                     "CA3A8F152FFC10FE460E6DBD2DB2F090", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
                     "36C4695F1C9FBD9E018E98FB4A132D83" // Vorbis 1.3.7 (MacOS)
@@ -1316,7 +1316,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     TrackCount = "12"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "D22BBFDDCB298A427057253C4E833057", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
                     "83EAAF39634A97A730D4359E23CEE33F" // Opus 1.5.2 (MacOS and Windows)
@@ -1341,7 +1341,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     TrackCount = "12"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
                     "A298D22F719E0B950B31310E05BC1B66" // Opus 1.5.2 (MacOS and Windows)
@@ -1366,7 +1366,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     TrackCount = "12"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
                     "A298D22F719E0B950B31310E05BC1B66" // Opus 1.5.2 (MacOS and Windows)
@@ -1391,7 +1391,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     TrackCount = "12"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "166F1DD0C71E2CCCF226157A34791E1B", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
                     "8F3233D946C369EA87132A3EDB50071E" // Opus 1.5.2 (MacOS and Windows)
@@ -1416,7 +1416,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     TrackNumber = "01"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "8EA7FC13A2F214CADF3A1D447EF5CB65", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
                     "41253CA69E1D124E2CAC11B5D945EC67" // Opus 1.5.2 (MacOS and Windows)
@@ -1442,7 +1442,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     TrackCount = "12"
                 },
                 string.Empty,
-                new(),
+                [],
                 [
                     "BB50765E7DB79BDEADFC81E771101FD7", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
                     "56AD6E2C6333F2A033914E9CF6FBA6CB" // Opus 1.5.2 (MacOS and Windows)
@@ -1454,7 +1454,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "Opus VBR 44100Hz Stereo (Tagged using defaults).opus",
                 new(),
                 string.Empty,
-                new(),
+                [],
                 [
                     "367DB09F8408583579F918061FCB6322", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
                     "CF85C82F03F478E096F1248F792D0B1E" // Opus 1.5.2 (MacOS and Windows)
@@ -1466,7 +1466,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "Opus VBR 44100Hz Stereo.opus",
                 new(),
                 string.Empty,
-                new(),
+                [],
                 [
                     "22D33DFB735C5B7805AB26C7A04CDA86", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
                     "507E009E734B28534500E143CEA74EFD" // Opus 1.5.2 (MacOS and Windows)
@@ -1478,7 +1478,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "Opus VBR 44100Hz Stereo.opus",
                 new(),
                 "PNG 24-bit 1280 x 935.png",
-                new(),
+                [],
                 [
                     "F152E6100DC6002C78DDCC6DF83D8880", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
                     "E7E9C4686F7B92FC843FEDA3522C961B" // Opus 1.5.2 (MacOS and Windows)
@@ -1490,7 +1490,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "Opus VBR 44100Hz Stereo.opus",
                 new(),
                 "JPEG 24-bit 1280 x 935.jpg",
-                new(),
+                [],
                 [
                     "CABF32D411EA5FA9458A79B6DC2C2D69", // Opus 1.3.1 (Ubuntu 20.04)
                     "EDBD61E6DED683084D781F9F3C578D25" // Opus 1.5.2 (MacOS and Windows)
