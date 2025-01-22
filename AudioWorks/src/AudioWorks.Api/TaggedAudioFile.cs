@@ -23,24 +23,19 @@ using IO = System.IO;
 namespace AudioWorks.Api
 {
     /// <inheritdoc cref="ITaggedAudioFile"/>
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TaggedAudioFile"/> class.
+    /// </summary>
+    /// <param name="path">The fully-qualified path to the file.</param>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="path"/> is null or empty.</exception>
+    /// <exception cref="FileNotFoundException">Thrown if <paramref name="path"/> does not exist.</exception>
     [Serializable]
-    public sealed class TaggedAudioFile : AudioFile, ITaggedAudioFile
+    public sealed class TaggedAudioFile(string path) : AudioFile(path), ITaggedAudioFile
     {
         AudioMetadata? _metadata;
 
         /// <inheritdoc/>
         public AudioMetadata Metadata => _metadata ??= LoadMetadata(Path);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TaggedAudioFile"/> class.
-        /// </summary>
-        /// <param name="path">The fully-qualified path to the file.</param>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="path"/> is null or empty.</exception>
-        /// <exception cref="FileNotFoundException">Thrown if <paramref name="path"/> does not exist.</exception>
-        public TaggedAudioFile(string path)
-            : base(path)
-        {
-        }
 
         /// <inheritdoc/>
         public void LoadMetadata() => _metadata = LoadMetadata(Path);
@@ -48,7 +43,7 @@ namespace AudioWorks.Api
         /// <inheritdoc/>
         public void SaveMetadata(SettingDictionary? settings = null)
         {
-            settings ??= new();
+            settings ??= [];
             var extension = IO.Path.GetExtension(Path);
 
             // Make sure the provided settings are clean

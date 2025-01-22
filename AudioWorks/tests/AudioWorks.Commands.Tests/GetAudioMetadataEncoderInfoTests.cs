@@ -67,7 +67,7 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioMetadataEncoderInfo");
 
-                Assert.IsAssignableFrom<AudioMetadataEncoderInfo>(ps.Invoke()[0].BaseObject);
+                Assert.IsType<AudioMetadataEncoderInfo>(ps.Invoke()[0].BaseObject, false);
             }
         }
     }

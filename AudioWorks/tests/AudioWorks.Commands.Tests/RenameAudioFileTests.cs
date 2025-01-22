@@ -27,23 +27,16 @@ using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    public sealed class RenameAudioFileTests : IClassFixture<ModuleFixture>
+    public sealed class RenameAudioFileTests(ModuleFixture moduleFixture) : IClassFixture<ModuleFixture>
     {
-        readonly ModuleFixture _moduleFixture;
-        readonly IMapper _mapper;
-
-        public RenameAudioFileTests(ModuleFixture moduleFixture)
-        {
-            _moduleFixture = moduleFixture;
-            _mapper = new MapperConfiguration(config => config.CreateMap<AudioMetadata, AudioMetadata>()).CreateMapper();
-        }
+        readonly IMapper _mapper = new MapperConfiguration(config => config.CreateMap<AudioMetadata, AudioMetadata>()).CreateMapper();
 
         [Fact(DisplayName = "Rename-AudioFile command exists")]
         public void CommandExists()
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Rename-AudioFile");
                 try
                 {
@@ -63,7 +56,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Rename-AudioFile")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object);
 
@@ -76,7 +69,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Rename-AudioFile")
                     .AddArgument("Foo")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object);
@@ -92,7 +85,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Rename-AudioFile")
                     .AddParameter("Name", "Foo");
 
@@ -105,7 +98,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Rename-AudioFile")
                     .AddParameter("Name", "Foo")
                     .AddArgument(new Mock<ITaggedAudioFile>().Object);
@@ -121,7 +114,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Set-Variable")
                     .AddArgument("audioFile")
                     .AddArgument(new Mock<ITaggedAudioFile>().Object)
@@ -147,7 +140,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Rename-AudioFile")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object)
                     .AddParameter("Name", "Foo")
@@ -164,7 +157,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Rename-AudioFile")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object)
                     .AddParameter("Name", "Foo")
@@ -181,7 +174,7 @@ namespace AudioWorks.Commands.Tests
         {
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-Command")
                     .AddArgument("Rename-AudioFile");
                 ps.AddCommand("Select-Object")
@@ -203,7 +196,7 @@ namespace AudioWorks.Commands.Tests
             var audioFile = new TaggedAudioFile(path);
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Rename-AudioFile")
                     .AddParameter("AudioFile", audioFile)
                     .AddParameter("Name", "Foo")
@@ -225,7 +218,7 @@ namespace AudioWorks.Commands.Tests
             _mapper.Map(metadata, audioFile.Metadata);
             using (var ps = PowerShell.Create())
             {
-                ps.Runspace = _moduleFixture.Runspace;
+                ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Rename-AudioFile")
                     .AddParameter("AudioFile", audioFile)
                     .AddParameter("Name", name)

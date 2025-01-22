@@ -141,7 +141,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Get-AudioInfo")
                     .AddArgument(new AudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)));
 
-                Assert.IsAssignableFrom<AudioInfo>(ps.Invoke()[0].BaseObject);
+                Assert.IsType<AudioInfo>(ps.Invoke()[0].BaseObject, false);
             }
         }
     }

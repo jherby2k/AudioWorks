@@ -203,7 +203,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Get-AudioFile")
                     .AddArgument(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
 
-                Assert.IsAssignableFrom<ITaggedAudioFile>(ps.Invoke()[0].BaseObject);
+                Assert.IsType<ITaggedAudioFile>(ps.Invoke()[0].BaseObject, false);
             }
         }
 
@@ -225,7 +225,7 @@ namespace AudioWorks.Commands.Tests
 
                 ps.Invoke();
 
-                Assert.IsAssignableFrom<ITaggedAudioFile>(result[0].BaseObject);
+                Assert.IsType<ITaggedAudioFile>(result[0].BaseObject, false);
             }
         }
     }

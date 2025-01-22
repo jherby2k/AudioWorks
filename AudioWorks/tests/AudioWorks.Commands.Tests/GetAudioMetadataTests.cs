@@ -141,7 +141,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Get-AudioMetadata")
                     .AddArgument(new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)));
 
-                Assert.IsAssignableFrom<AudioMetadata>(ps.Invoke()[0].BaseObject);
+                Assert.IsType<AudioMetadata>(ps.Invoke()[0].BaseObject, false);
             }
         }
     }
