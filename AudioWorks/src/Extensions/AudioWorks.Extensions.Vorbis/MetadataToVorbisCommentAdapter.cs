@@ -89,7 +89,7 @@ namespace AudioWorks.Extensions.Vorbis
             GC.SuppressFinalize(this);
         }
 
-        unsafe void AddTag(string key, string value)
+        void AddTag(string key, string value)
         {
             LibVorbis.CommentAddTag(_comment, key, value);
             _unmanagedMemoryAllocated = true;

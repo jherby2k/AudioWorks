@@ -59,6 +59,6 @@ namespace AudioWorks.Commands
                 _ => false
             };
 
-        public IDisposable BeginScope<TState>(TState state) => new NullScope();
+        public IDisposable BeginScope<TState>(TState state) where TState : notnull => new NullScope();
     }
 }
