@@ -15,18 +15,22 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using Xunit;
 
-namespace AudioWorks.Api.Tests.DataSources
+namespace AudioWorks.TestUtilities.DataSources
 {
-    public static class UnsupportedFileDataSource
+    public static class InvalidFileDataSource
     {
         public static TheoryData<string> Data { get; } =
         [
-            "Text.txt",
-            "MS ADPCM.wav",
-            "Speex.ogg",
-            "Opus.ogg",
-            "Vorbis.opus",
-            "Lame MP3.m4a"
+            "Not RIFF Format.wav",
+            "Unexpectedly Truncated.wav",
+            "Not Wave Format.wav",
+            "Missing 'fmt' Chunk.wav",
+            "Not MPEG Audio.mp3",
+            "Not Audio Layer III.mp3",
+            "Not MPEG Audio.m4a",
+            "Not Ogg Format.ogg",
+            "Not FLAC Format.flac",
+            "Not Opus Format.opus"
         ];
     }
 }

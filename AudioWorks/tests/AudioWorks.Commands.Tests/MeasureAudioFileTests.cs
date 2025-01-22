@@ -18,10 +18,10 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using AudioWorks.Api;
-using AudioWorks.Api.Tests.DataSources;
-using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
+using AudioWorks.TestUtilities.DataSources;
+using AudioWorks.TestUtilities.DataTypes;
 using Moq;
 using Xunit;
 

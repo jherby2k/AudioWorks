@@ -13,10 +13,10 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using AudioWorks.Api.Tests.DataTypes;
+using AudioWorks.TestUtilities.DataTypes;
 using Xunit;
 
-namespace AudioWorks.Api.Tests.DataSources
+namespace AudioWorks.TestUtilities.DataSources
 {
     public static class AnalyzeGroupDataSource
     {

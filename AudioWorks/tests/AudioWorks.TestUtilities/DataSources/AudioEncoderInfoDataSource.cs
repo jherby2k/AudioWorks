@@ -15,18 +15,21 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using Xunit;
 
-namespace AudioWorks.Api.Tests.DataSources
+namespace AudioWorks.TestUtilities.DataSources
 {
-    public static class AudioFileFormatInfoDataSource
+    public static class AudioEncoderInfoDataSource
     {
         public static TheoryData<string, string> Data { get; } = new()
         {
-            { ".wav", "Waveform Audio" },
-            { ".flac", "FLAC" },
-            { ".m4a", "MPEG-4 Audio" },
-            { ".mp3", "MPEG Audio Layer 3" },
-            { ".ogg", "Ogg Vorbis" },
-            { ".opus", "Opus" }
+            { "Wave", "Waveform Audio File Format" },
+            { "FLAC", "Free Lossless Audio Codec" },
+#if !LINUX
+            { "ALAC", "Apple Lossless Audio Codec" },
+            { "AppleAAC", "Apple MPEG-4 Advanced Audio Codec" },
+#endif
+            { "LameMP3", "Lame MPEG Audio Layer 3" },
+            { "Vorbis", "Ogg Vorbis" },
+            { "Opus", "Opus" }
         };
     }
 }

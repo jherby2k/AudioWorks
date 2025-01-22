@@ -14,10 +14,10 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System.Linq;
-using AudioWorks.Api.Tests.DataTypes;
+using AudioWorks.TestUtilities.DataTypes;
 using Xunit;
 
-namespace AudioWorks.Api.Tests.DataSources
+namespace AudioWorks.TestUtilities.DataSources
 {
     public static class RenameValidFileDataSource
     {

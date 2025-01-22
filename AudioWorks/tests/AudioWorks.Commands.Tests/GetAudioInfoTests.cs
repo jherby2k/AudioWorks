@@ -17,9 +17,9 @@ using System;
 using System.IO;
 using System.Management.Automation;
 using AudioWorks.Api;
-using AudioWorks.Api.Tests.DataSources;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
+using AudioWorks.TestUtilities.DataSources;
 using Moq;
 using Xunit;
 

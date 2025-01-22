@@ -17,10 +17,10 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using AudioWorks.Api.Tests.DataSources;
-using AudioWorks.Api.Tests.DataTypes;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
+using AudioWorks.TestUtilities.DataSources;
+using AudioWorks.TestUtilities.DataTypes;
 using Xunit;
 
 namespace AudioWorks.Api.Tests

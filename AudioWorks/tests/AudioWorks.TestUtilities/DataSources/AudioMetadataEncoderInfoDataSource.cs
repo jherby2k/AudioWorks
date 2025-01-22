@@ -1,4 +1,4 @@
-﻿/* Copyright © 2018 Jeremy Herbison
+﻿/* Copyright © 2020 Jeremy Herbison
 
 This file is part of AudioWorks.
 
@@ -15,22 +15,17 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using Xunit;
 
-namespace AudioWorks.Api.Tests.DataSources
+namespace AudioWorks.TestUtilities.DataSources
 {
-    public static class InvalidFileDataSource
+    public static class AudioMetadataEncoderInfoDataSource
     {
-        public static TheoryData<string> Data { get; } =
-        [
-            "Not RIFF Format.wav",
-            "Unexpectedly Truncated.wav",
-            "Not Wave Format.wav",
-            "Missing 'fmt' Chunk.wav",
-            "Not MPEG Audio.mp3",
-            "Not Audio Layer III.mp3",
-            "Not MPEG Audio.m4a",
-            "Not Ogg Format.ogg",
-            "Not FLAC Format.flac",
-            "Not Opus Format.opus"
-        ];
+        public static TheoryData<string, string, string> Data { get; } = new()
+        {
+            { ".flac", "FLAC", "FLAC" },
+            { ".m4a", "iTunes", "iTunes-compatible MPEG-4" },
+            { ".mp3", "ID3", "ID3 version 2.x" },
+            { ".ogg", "Vorbis", "Vorbis Comments" },
+            { ".opus", "Opus", "Opus Comments" }
+        };
     }
 }

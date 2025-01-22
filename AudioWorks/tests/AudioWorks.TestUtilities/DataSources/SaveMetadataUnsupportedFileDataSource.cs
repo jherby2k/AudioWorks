@@ -1,4 +1,4 @@
-﻿/* Copyright © 2020 Jeremy Herbison
+﻿/* Copyright © 2018 Jeremy Herbison
 
 This file is part of AudioWorks.
 
@@ -13,23 +13,19 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System.Linq;
 using Xunit;
 
-namespace AudioWorks.Api.Tests.DataSources
+namespace AudioWorks.TestUtilities.DataSources
 {
-    public static class AudioEncoderInfoDataSource
+    public static class SaveMetadataUnsupportedFileDataSource
     {
-        public static TheoryData<string, string> Data { get; } = new()
-        {
-            { "Wave", "Waveform Audio File Format" },
-            { "FLAC", "Free Lossless Audio Codec" },
-#if !LINUX
-            { "ALAC", "Apple Lossless Audio Codec" },
-            { "AppleAAC", "Apple MPEG-4 Advanced Audio Codec" },
-#endif
-            { "LameMP3", "Lame MPEG Audio Layer 3" },
-            { "Vorbis", "Ogg Vorbis" },
-            { "Opus", "Opus" }
-        };
+        static readonly TheoryData<string> _data =
+        [
+            "LPCM 16-bit 44100Hz Stereo.wav"
+        ];
+
+        public static TheoryData<int, string> Data =>
+            new(_data.Select((item, index) => (index, item.Data)));
     }
 }

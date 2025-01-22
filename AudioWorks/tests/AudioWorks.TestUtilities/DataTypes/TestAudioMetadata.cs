@@ -13,24 +13,13 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using AudioWorks.Common;
 using Xunit.Sdk;
 
-namespace AudioWorks.Api.Tests.DataTypes
+namespace AudioWorks.TestUtilities.DataTypes
 {
-    public sealed class TestAudioInfo : IXunitSerializable
+    public sealed class TestAudioMetadata : AudioMetadata, IXunitSerializable
     {
-        public string Format { get; init; } = string.Empty;
-
-        public int Channels { get; init; }
-
-        public int BitsPerSample { get; init; }
-
-        public int SampleRate { get; init; }
-
-        public int BitRate { get; init; }
-
-        public long SampleCount { get; init; }
-
         public void Deserialize(IXunitSerializationInfo info)
         {
             foreach (var property in GetType().GetProperties())

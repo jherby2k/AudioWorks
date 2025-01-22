@@ -1,4 +1,4 @@
-﻿/* Copyright © 2018 Jeremy Herbison
+﻿/* Copyright © 2020 Jeremy Herbison
 
 This file is part of AudioWorks.
 
@@ -13,23 +13,15 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using AudioWorks.Common;
-using Xunit.Sdk;
+using Xunit;
 
-namespace AudioWorks.Api.Tests.DataTypes
+namespace AudioWorks.TestUtilities.DataSources
 {
-    public sealed class TestAudioMetadata : AudioMetadata, IXunitSerializable
+    public static class AudioAnalyzerInfoDataSource
     {
-        public void Deserialize(IXunitSerializationInfo info)
+        public static TheoryData<string, string> Data { get; } = new()
         {
-            foreach (var property in GetType().GetProperties())
-                property.SetValue(this, info.GetValue(property.Name));
-        }
-
-        public void Serialize(IXunitSerializationInfo info)
-        {
-            foreach (var property in GetType().GetProperties())
-                info.AddValue(property.Name, property.GetValue(this));
-        }
+            { "ReplayGain", "ReplayGain 2.0" }
+        };
     }
 }

@@ -1,4 +1,4 @@
-﻿/* Copyright © 2020 Jeremy Herbison
+﻿/* Copyright © 2018 Jeremy Herbison
 
 This file is part of AudioWorks.
 
@@ -15,17 +15,18 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using Xunit;
 
-namespace AudioWorks.Api.Tests.DataSources
+namespace AudioWorks.TestUtilities.DataSources
 {
-    public static class AudioMetadataEncoderInfoDataSource
+    public static class UnsupportedFileDataSource
     {
-        public static TheoryData<string, string, string> Data { get; } = new()
-        {
-            { ".flac", "FLAC", "FLAC" },
-            { ".m4a", "iTunes", "iTunes-compatible MPEG-4" },
-            { ".mp3", "ID3", "ID3 version 2.x" },
-            { ".ogg", "Vorbis", "Vorbis Comments" },
-            { ".opus", "Opus", "Opus Comments" }
-        };
+        public static TheoryData<string> Data { get; } =
+        [
+            "Text.txt",
+            "MS ADPCM.wav",
+            "Speex.ogg",
+            "Opus.ogg",
+            "Vorbis.opus",
+            "Lame MP3.m4a"
+        ];
     }
 }

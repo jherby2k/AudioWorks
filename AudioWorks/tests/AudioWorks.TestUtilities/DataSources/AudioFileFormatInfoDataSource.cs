@@ -1,4 +1,4 @@
-﻿/* Copyright © 2018 Jeremy Herbison
+﻿/* Copyright © 2020 Jeremy Herbison
 
 This file is part of AudioWorks.
 
@@ -13,19 +13,20 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System.Linq;
 using Xunit;
 
-namespace AudioWorks.Api.Tests.DataSources
+namespace AudioWorks.TestUtilities.DataSources
 {
-    public static class SaveMetadataUnsupportedFileDataSource
+    public static class AudioFileFormatInfoDataSource
     {
-        static readonly TheoryData<string> _data =
-        [
-            "LPCM 16-bit 44100Hz Stereo.wav"
-        ];
-
-        public static TheoryData<int, string> Data =>
-            new(_data.Select((item, index) => (index, item.Data)));
+        public static TheoryData<string, string> Data { get; } = new()
+        {
+            { ".wav", "Waveform Audio" },
+            { ".flac", "FLAC" },
+            { ".m4a", "MPEG-4 Audio" },
+            { ".mp3", "MPEG Audio Layer 3" },
+            { ".ogg", "Ogg Vorbis" },
+            { ".opus", "Opus" }
+        };
     }
 }
