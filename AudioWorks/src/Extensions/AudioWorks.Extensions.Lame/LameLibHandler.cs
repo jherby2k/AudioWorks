@@ -26,7 +26,13 @@ namespace AudioWorks.Extensions.Lame
     [PrerequisiteHandlerExport]
     public sealed class LameLibHandler : IPrerequisiteHandler
     {
-        const string lameLib = "libmp3lame";
+        const string _lameLib = "libmp3lame";
+        static readonly string _lameLibFullPath = Path.Combine(
+            Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
+            RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !Environment.Is64BitProcess
+                ? "win-x86"
+                : RuntimeInformation.RuntimeIdentifier,
+            _lameLib);
 
         public bool Handle()
         {
@@ -34,6 +40,8 @@ namespace AudioWorks.Extensions.Lame
 
             try
             {
+                logger.LogDebug("Attempting to load {_lameLibFullPath}", _lameLibFullPath);
+
                 NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), DllImportResolver);
 
                 logger.LogInformation("Using LAME version {version}.",
@@ -52,13 +60,8 @@ namespace AudioWorks.Extensions.Lame
         {
             // Load from the RID-specific folder unless this is 32-bit Windows
             // On Linux, use the system-provided library
-            if (libraryName == lameLib && !RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                return NativeLibrary.Load(Path.Combine(
-                    Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
-                    RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !Environment.Is64BitProcess
-                        ? "win-x86"
-                        : RuntimeInformation.RuntimeIdentifier,
-                    lameLib));
+            if (libraryName == _lameLib && !RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                return NativeLibrary.Load(_lameLibFullPath);
 
             return IntPtr.Zero;
         }

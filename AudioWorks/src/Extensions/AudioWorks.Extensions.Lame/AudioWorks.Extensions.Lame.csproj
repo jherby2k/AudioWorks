@@ -5,13 +5,10 @@
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(OS)'=='Windows_NT'">
+  <ItemGroup>
     <None Include="win-*\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup Condition="$([MSBuild]::IsOSPlatform('OSX'))">
     <None Include="macos.*\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
