@@ -22,11 +22,7 @@ namespace AudioWorks.Extensions.Lame
     static partial class LibMp3Lame
 #pragma warning restore CA1060
     {
-#if LINUX
-        const string _lameLibrary = "libmp3lame.so.0";
-#else
         const string _lameLibrary = "libmp3lame";
-#endif
 
         [LibraryImport(_lameLibrary, EntryPoint = "get_lame_version")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]

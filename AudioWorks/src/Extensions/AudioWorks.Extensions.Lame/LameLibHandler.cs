@@ -14,17 +14,9 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-#if OSX
-using System.Diagnostics;
-#endif
-#if !LINUX
 using System.IO;
-#endif
 using System.Reflection;
 using System.Runtime.InteropServices;
-#if !LINUX
-using System.Runtime.Loader;
-#endif
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
 using Microsoft.Extensions.Logging;
@@ -34,72 +26,41 @@ namespace AudioWorks.Extensions.Lame
     [PrerequisiteHandlerExport]
     public sealed class LameLibHandler : IPrerequisiteHandler
     {
+        const string lameLib = "libmp3lame";
+
         public bool Handle()
         {
             var logger = LoggerManager.LoggerFactory.CreateLogger<LameLibHandler>();
 
-#if WINDOWS
-            var libPath = Path.Combine(
-                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
-                Environment.Is64BitProcess ? "win-x64" : "win-x86");
-
-            AddUnmanagedLibraryPath(libPath);
-#elif OSX
-            AddUnmanagedLibraryPath(Path.Combine(
-                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
-                $"macos.{GetOSVersion()}-{GetArch()}"));
-#endif
-
             try
             {
-                foreach (var methodInfo in typeof(LibMp3Lame).GetMethods(
-                    BindingFlags.NonPublic | BindingFlags.Static))
-                    Marshal.Prelink(methodInfo);
+                NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), DllImportResolver);
+
+                logger.LogInformation("Using LAME version {version}.",
+                    Marshal.PtrToStringAnsi(LibMp3Lame.GetVersion()));
             }
             catch (DllNotFoundException e)
             {
                 logger.LogWarning(e, "The LAME library could not be found.");
                 return false;
             }
-            catch (EntryPointNotFoundException e)
-            {
-                logger.LogWarning(e, "An expected entry point in the LAME library was not found.");
-                return false;
-            }
-
-            // ReSharper disable once StringLiteralTypo
-            logger.LogInformation("Using LAME version {version}.",
-                Marshal.PtrToStringAnsi(LibMp3Lame.GetVersion()));
 
             return true;
         }
 
-#if !LINUX
-        static void AddUnmanagedLibraryPath(string libPath) =>
-            (AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()) as ExtensionLoadContext)?
-            .AddUnmanagedLibraryPath(libPath);
-#endif
-#if OSX
-
-        static string GetOSVersion()
+        static IntPtr DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
         {
-            using (var process = new Process())
-            {
-                process.StartInfo = new ProcessStartInfo("sw_vers", "-productVersion")
-                {
-                    RedirectStandardOutput = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
+            // Load from the RID-specific folder unless this is 32-bit Windows
+            // On Linux, use the system-provided library
+            if (libraryName == lameLib && !RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                return NativeLibrary.Load(Path.Combine(
+                    Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
+                    RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !Environment.Is64BitProcess
+                        ? "win-x86"
+                        : RuntimeInformation.RuntimeIdentifier,
+                    lameLib));
 
-                process.Start();
-                var result = process.StandardOutput.ReadToEnd();
-                process.WaitForExit();
-                return result.Trim()[..2];
-            }
+            return IntPtr.Zero;
         }
-
-        static string GetArch() => RuntimeInformation.ProcessArchitecture == Architecture.Arm64 ? "arm64" : "x64";
-#endif
     }
 }
