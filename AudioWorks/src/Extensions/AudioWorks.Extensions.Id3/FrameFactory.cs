@@ -45,7 +45,7 @@ namespace AudioWorks.Extensions.Id3
             if (_frameTypes.TryGetValue(frameId[..1], out type) && Activator.CreateInstance(type, frameId) is FrameBase txxxFrame)
                 return txxxFrame;
 
-            throw new ArgumentException($"'{frameId}' is not a supported frame ID.", nameof(frameId));
+            throw new AudioUnsupportedException($"'{frameId}' is not a supported frame ID.");
         }
 
         internal static unsafe FrameBase Build(string frameId, FrameFlags flags, ReadOnlySpan<byte> buffer)
