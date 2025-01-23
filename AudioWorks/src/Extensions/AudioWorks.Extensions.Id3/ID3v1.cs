@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Collections.Immutable;
 using System.IO;
 using System.Text;
 
@@ -21,7 +22,7 @@ namespace AudioWorks.Extensions.Id3
 {
     sealed class Id3V1
     {
-        static readonly string[] _genres =
+        static readonly ImmutableArray<string> _genres =
         [
             "Blues", "Classic Rock", "Country", "Dance", "Disco", "Funk", "Grunge", "Hip-Hop", "Jazz", "Metal",
             "New Age", "Oldies", "Other", "Pop", "Rhythm and Blues", "Rap", "Reggae", "Rock", "Techno", "Industrial",
@@ -65,36 +66,28 @@ namespace AudioWorks.Extensions.Id3
 
         internal void Deserialize(Stream stream)
         {
-            using (var reader = new BinaryReader(stream,
-                CodePagesEncodingProvider.Instance.GetEncoding(1252) ?? Encoding.ASCII, true))
-            {
-                reader.BaseStream.Seek(-128, SeekOrigin.End);
+            Span<byte> buffer = stackalloc byte[128];
+            stream.Seek(-128, SeekOrigin.End);
+            stream.ReadExactly(buffer);
 
-                Span<char> buffer = stackalloc char[3];
-                reader.Read(buffer);
+            var encoding = CodePagesEncodingProvider.Instance.GetEncoding(1252) ?? Encoding.ASCII;
 
-                if (!new string(buffer).Equals("TAG", StringComparison.Ordinal))
-                    throw new TagNotFoundException("ID3v1 tag was not found");
+            if (!encoding.GetString(buffer[..3]).Equals("TAG", StringComparison.Ordinal))
+                throw new TagNotFoundException("ID3v1 tag was not found");
 
-                buffer = stackalloc char[30];
+            // Each field has a fixed length, but stop parsing at the first null character
+            Title = encoding.GetString(buffer[3..Math.Min(buffer.IndexOf((byte) 0), 33)]);
+            Artist = encoding.GetString(buffer[33..Math.Min(buffer[33..].IndexOf((byte) 0) + 33, 63)]);
+            Album = encoding.GetString(buffer[63..Math.Min(buffer[63..].IndexOf((byte) 0) + 63, 93)]);
+            Year = encoding.GetString(buffer[93..Math.Min(buffer[93..].IndexOf((byte) 0) + 93, 97)]);
+            Comment = encoding.GetString(buffer[97..Math.Min(buffer[97..].IndexOf((byte) 0) + 97, 127)]);
 
-                reader.Read(buffer);
-                Title = new(buffer[..buffer.IndexOf('\0')]);
-                reader.Read(buffer);
-                Artist = new(buffer[..buffer.IndexOf('\0')]);
-                reader.Read(buffer);
-                Album = new(buffer[..buffer.IndexOf('\0')]);
-                reader.Read(buffer[..4]);
-                Year = new(buffer[..Math.Min(4, buffer.IndexOf('\0'))]);
-                reader.Read(buffer);
-                Comment = new(buffer[..buffer.IndexOf('\0')]);
-                if (buffer[28] == 0)
-                    TrackNumber = buffer[29];
+            // ID3v1.1 indicates that if the second-last comment byte is 0, the last one contains the track number
+            if (buffer[125] == 0)
+                TrackNumber = buffer[126];
 
-                var genreIndex = reader.ReadByte();
-                if (genreIndex < _genres.Length)
-                    Genre = _genres[genreIndex];
-            }
+            if (buffer[127] < _genres.Length)
+                Genre = _genres[buffer[127]];
         }
     }
 }
