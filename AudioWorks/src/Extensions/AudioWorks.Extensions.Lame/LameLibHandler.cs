@@ -63,6 +63,8 @@ namespace AudioWorks.Extensions.Lame
         {
             if (libraryName != _lameLib) return IntPtr.Zero;
 
+            throw new Exception("path: " + _lameLibFullPath);
+
             // On Linux, use the system-provided library. On Mac, we need to add the .dylib suffix for whatever reason
             return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
                 ? NativeLibrary.Load($"{_lameLib}.so.{_linuxLibVersion}", assembly, searchPath)
