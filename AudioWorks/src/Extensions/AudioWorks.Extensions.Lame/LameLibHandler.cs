@@ -27,6 +27,7 @@ namespace AudioWorks.Extensions.Lame
     public sealed class LameLibHandler : IPrerequisiteHandler
     {
         const string _lameLib = "libmp3lame";
+        const string _linuxLibVersion = "0";
 
         // Use the RID-specific directory except on 32-bit Windows
         static readonly string _lameLibFullPath = Path.Combine(
@@ -64,7 +65,7 @@ namespace AudioWorks.Extensions.Lame
 
             // On Linux, use the system-provided library
             return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
-                ? NativeLibrary.Load(_lameLib + ".so.0", assembly, searchPath)
+                ? NativeLibrary.Load($"{_lameLib}.so.{_linuxLibVersion}", assembly, searchPath)
                 : NativeLibrary.Load(_lameLibFullPath);
         }
     }
