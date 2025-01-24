@@ -34,7 +34,7 @@ namespace AudioWorks.Extensions.Vorbis
         const string _opusEncLib = "opusenc";
 
         // Use the RID-specific directory, except on 32-bit Windows
-        // On Mac, we need to add the full file name, but on Windows it resolves the file extension properly
+        // On Mac we need to add the full file name, but on Windows it resolves the file properly
         static readonly string _oggLibFullPath = Path.Combine(
             Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
             "runtimes",
@@ -47,7 +47,7 @@ namespace AudioWorks.Extensions.Vorbis
                 : _oggLib);
 
         // Use the RID-specific directory, except on 32-bit Windows
-        // On Mac, we need to add the full file name, but on Windows it resolves the file extension properly
+        // On Mac we need to add the full file name, but on Windows it resolves the file properly
         static readonly string _opusLibFullPath = Path.Combine(
             Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
             "runtimes",
@@ -60,7 +60,7 @@ namespace AudioWorks.Extensions.Vorbis
                 : _opusLib);
 
         // Use the RID-specific directory, except on 32-bit Windows
-        // On Mac, we need to add the full file name, but on Windows/Linux it resolves the file extension properly
+        // On Mac and Linux we need to add the full file name, but on Windows it resolves the file properly
         static readonly string _opusEncLibFullPath = Path.Combine(
             Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
             "runtimes",
@@ -70,7 +70,9 @@ namespace AudioWorks.Extensions.Vorbis
             "native",
             RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
                 ? $"lib{_opusEncLib}.dylib"
-                : _opusEncLib);
+                : RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
+                    ? $"lib{_opusEncLib}.so"
+                    : _opusEncLib);
 
         public bool Handle()
         {

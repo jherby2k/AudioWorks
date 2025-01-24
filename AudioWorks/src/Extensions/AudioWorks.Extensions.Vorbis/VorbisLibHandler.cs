@@ -32,7 +32,7 @@ namespace AudioWorks.Extensions.Vorbis
         const string _vorbisEncLib = "vorbisenc";
 
         // Use the RID-specific directory, except on 32-bit Windows
-        // On Mac, we need to add the full file name, but on Windows it resolves the file extension properly
+        // On Mac we need to add the full file name, but on Windows it resolves the file properly
         static readonly string _oggLibFullPath = Path.Combine(
             Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
             "runtimes",
@@ -45,7 +45,7 @@ namespace AudioWorks.Extensions.Vorbis
                 : _oggLib);
 
         // Use the RID-specific directory, except on 32-bit Windows
-        // On Mac, we need to add the full file name, but on Windows/Linux it resolves the file extension properly
+        // On Mac and Linux we need to use the full file name, but on Windows it resolves the file properly
         static readonly string _vorbisLibFullPath = Path.Combine(
             Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
             "runtimes",
@@ -55,10 +55,12 @@ namespace AudioWorks.Extensions.Vorbis
             "native",
             RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
                 ? $"lib{_vorbisLib}.dylib"
-                : _vorbisLib);
+                : RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                    ? $"lib{_vorbisLib}.so"
+                    : _vorbisLib);
 
         // On Windows, these functions are actually in vorbis.dll
-        // On Mac, we need to add the full file name, but on Linux it resolves the file extension properly
+        // On Mac and Linux we need to add the full file name, but on Windows it resolves the file properly
         static readonly string _vorbisEncLibFullPath = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
             ? _vorbisLibFullPath
             : Path.Combine(
@@ -68,7 +70,9 @@ namespace AudioWorks.Extensions.Vorbis
                 "native",
                 RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
                     ? $"lib{_vorbisEncLib}.dylib"
-                    : _vorbisEncLib);
+                    : RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                        ? $"lib{_vorbisEncLib}.so"
+                        : _vorbisEncLib);
 
         public bool Handle()
         {
