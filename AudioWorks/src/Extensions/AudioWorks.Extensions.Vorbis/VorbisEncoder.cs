@@ -31,7 +31,7 @@ namespace AudioWorks.Extensions.Vorbis
         internal VorbisEncoder(int channels, int sampleRate, float baseQuality)
         {
             LibVorbis.InfoInit(_info);
-            LibVorbis.EncodeInitVbr(_info, new(channels), new(sampleRate), baseQuality);
+            LibVorbisEnc.EncodeInitVbr(_info, new(channels), new(sampleRate), baseQuality);
             LibVorbis.AnalysisInit(DspState, _info);
             LibVorbis.BlockInit(DspState, _block);
         }
@@ -41,7 +41,7 @@ namespace AudioWorks.Extensions.Vorbis
         internal VorbisEncoder(int channels, int sampleRate, int maxBitRate, int nominalBitRate, int minBitRate)
         {
             LibVorbis.InfoInit(_info);
-            LibVorbis.EncodeInit(_info,
+            LibVorbisEnc.EncodeInit(_info,
                 new(channels), new(sampleRate), new(maxBitRate), new(nominalBitRate), new(minBitRate));
             LibVorbis.AnalysisInit(DspState, _info);
             LibVorbis.BlockInit(DspState, _block);

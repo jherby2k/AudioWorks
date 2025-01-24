@@ -23,10 +23,7 @@ namespace AudioWorks.Extensions.Vorbis
     static partial class LibVorbis
 #pragma warning restore CA1060
     {
-        const string _vorbisLibrary = "libvorbis";
-#if !WINDOWS
-        const string _vorbisEncLibrary = "libvorbisenc";
-#endif
+        const string _vorbisLibrary = "vorbis";
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_version_string")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
@@ -63,29 +60,6 @@ namespace AudioWorks.Extensions.Vorbis
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_info_clear")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static partial void InfoClear(IntPtr info);
-
-#if WINDOWS
-        [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_encode_init")]
-#else
-        [LibraryImport(_vorbisEncLibrary, EntryPoint = "vorbis_encode_init")]
-#endif
-        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int EncodeInit(
-            IntPtr info,
-            CLong channels,
-            CLong sampleRate,
-            CLong maximumBitRate,
-            CLong nominalBitRate,
-            CLong minimumBitRate);
-
-#if WINDOWS
-        [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_encode_init_vbr")]
-#else
-        [LibraryImport(_vorbisEncLibrary, EntryPoint = "vorbis_encode_init_vbr")]
-#endif
-        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial int EncodeInitVbr(
-            IntPtr info, CLong channels, CLong rate, float baseQuality);
 
         [LibraryImport(_vorbisLibrary, EntryPoint = "vorbis_analysis_init")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
