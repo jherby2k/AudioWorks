@@ -18,6 +18,7 @@ using System.Composition.Hosting;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Loader;
 using AudioWorks.Common;
 using Microsoft.Extensions.Logging;
 
@@ -32,7 +33,7 @@ namespace AudioWorks.Extensibility
             var assemblies =
                 new DirectoryInfo(Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!)
                     .GetFiles("AudioWorks.Extensions.*.dll")
-                    .Select(fileInfo => new ExtensionAssemblyResolver(fileInfo.FullName).Assembly)
+                    .Select(fileInfo => AssemblyLoadContext.Default.LoadFromAssemblyPath(fileInfo.FullName))
                     .ToList();
 
             var logger = LoggerManager.LoggerFactory.CreateLogger<ExtensionContainerBase>();
