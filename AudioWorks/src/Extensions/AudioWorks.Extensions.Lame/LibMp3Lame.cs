@@ -22,7 +22,7 @@ namespace AudioWorks.Extensions.Lame
     static partial class LibMp3Lame
 #pragma warning restore CA1060
     {
-        const string _lameLibrary = "libmp3lame";
+        const string _lameLibrary = "mp3lame";
 
         [LibraryImport(_lameLibrary, EntryPoint = "get_lame_version")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]

@@ -26,7 +26,7 @@ namespace AudioWorks.Extensions.Lame
     [PrerequisiteHandlerExport]
     public sealed class LameLibHandler : IPrerequisiteHandler
     {
-        const string _lameLib = "libmp3lame";
+        const string _lameLib = "mp3lame";
         const string _linuxLibVersion = "0";
 
         // Use the RID-specific directory except on 32-bit Windows
