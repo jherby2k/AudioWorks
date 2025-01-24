@@ -9,7 +9,7 @@
     <None Include="win-*\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="macos-*\*">
+    <None Include="osx-*\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
