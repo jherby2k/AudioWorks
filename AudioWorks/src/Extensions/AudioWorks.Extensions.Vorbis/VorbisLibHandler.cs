@@ -17,7 +17,6 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Runtime.Loader;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
 using Microsoft.Extensions.Logging;
@@ -98,7 +97,8 @@ namespace AudioWorks.Extensions.Vorbis
                 _oggLib => RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
                     ? NativeLibrary.Load($"{_oggLib}.so.{_linuxOggLibVersion}", assembly, searchPath)
                     : NativeLibrary.Load(_oggLibFullPath),
-                _vorbisLib or _vorbisEncLib => NativeLibrary.Load(_vorbisEncLibFullPath),
+                _vorbisLib => NativeLibrary.Load(_vorbisLibFullPath),
+                _vorbisEncLib => NativeLibrary.Load(_vorbisEncLibFullPath),
                 _ => IntPtr.Zero
             };
     }
