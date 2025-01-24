@@ -22,11 +22,7 @@ namespace AudioWorks.Extensions.ReplayGain
     static partial class LibEbur128
 #pragma warning restore CA1060
     {
-#if LINUX
-        const string _ebur128Library = "libebur128.so.1";
-#else
-        const string _ebur128Library = "libebur128";
-#endif
+        const string _ebur128Library = "ebur128";
 
         [LibraryImport(_ebur128Library, EntryPoint = "ebur128_init")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]

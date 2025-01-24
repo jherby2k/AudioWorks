@@ -14,17 +14,9 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-#if OSX
-using System.Diagnostics;
-#endif
-#if !LINUX
 using System.IO;
-#endif
 using System.Reflection;
 using System.Runtime.InteropServices;
-#if !LINUX
-using System.Runtime.Loader;
-#endif
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
 using Microsoft.Extensions.Logging;
@@ -34,72 +26,53 @@ namespace AudioWorks.Extensions.ReplayGain
     [PrerequisiteHandlerExport]
     public sealed class Ebur128LibHandler : IPrerequisiteHandler
     {
+        const string _ebur128Lib = "ebur128";
+        const string _linuxLibVersion = "1";
+
+        // Use the RID-specific directory, except on 32-bit Windows
+        // On Mac, we need to add the full file name, but on Windows it resolves the file extension properly
+        static readonly string _ebur128LibFullPath = Path.Combine(
+            Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
+            "runtimes",
+            RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !Environment.Is64BitProcess
+                ? "win-x86"
+                : RuntimeInformation.RuntimeIdentifier,
+            "native",
+            RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
+                ? $"lib{_ebur128Lib}.dylib"
+                : _ebur128Lib);
+
         public bool Handle()
         {
             var logger = LoggerManager.LoggerFactory.CreateLogger<Ebur128LibHandler>();
 
-#if WINDOWS
-            var libPath = Path.Combine(
-                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
-                Environment.Is64BitProcess ? "win-x64" : "win-x86");
-
-            AddUnmanagedLibraryPath(libPath);
-#elif OSX
-            AddUnmanagedLibraryPath(Path.Combine(
-                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
-                $"macos.{GetOSVersion()}-{GetArch()}"));
-#endif
-
             try
             {
-                foreach (var methodInfo in typeof(LibEbur128).GetMethods(
-                    BindingFlags.NonPublic | BindingFlags.Static))
-                    Marshal.Prelink(methodInfo);
+                logger.LogDebug("Attempting to load {_ebur128LibFullPath}", _ebur128LibFullPath);
+
+                NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), DllImportResolver);
+
+                LibEbur128.GetVersion(out var major, out var minor, out var patch);
+
+                logger.LogInformation("Using ebur128 version {major}.{minor}.{patch}.", major, minor, patch);
             }
             catch (DllNotFoundException e)
             {
                 logger.LogWarning(e, "The ebur128 library could not be found.");
                 return false;
             }
-            catch (EntryPointNotFoundException e)
-            {
-                logger.LogWarning(e, "An expected entry point in the ebur128 library was not found.");
-                return false;
-            }
-
-            LibEbur128.GetVersion(out var major, out var minor, out var patch);
-            // ReSharper disable once StringLiteralTypo
-            logger.LogInformation("Using libebur128 version {major}.{minor}.{patch}.", major, minor, patch);
 
             return true;
         }
 
-#if !LINUX
-        static void AddUnmanagedLibraryPath(string libPath) =>
-            (AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()) as ExtensionLoadContext)?
-            .AddUnmanagedLibraryPath(libPath);
-#endif
-#if OSX
-
-        static string GetOSVersion()
+        static IntPtr DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
         {
-            using (var process = new Process())
-            {
-                process.StartInfo = new ProcessStartInfo("sw_vers", "-productVersion")
-                {
-                    RedirectStandardOutput = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
+            if (libraryName != _ebur128Lib) return IntPtr.Zero;
 
-                process.Start();
-                var result = process.StandardOutput.ReadToEnd();
-                process.WaitForExit();
-                return result.Trim()[..2];
-            }
+            // On Linux, use the system-provided library.
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                ? NativeLibrary.Load($"{_ebur128Lib}.so.{_linuxLibVersion}", assembly, searchPath)
+                : NativeLibrary.Load(_ebur128LibFullPath);
         }
-
-        static string GetArch() => RuntimeInformation.ProcessArchitecture == Architecture.Arm64 ? "arm64" : "x64";
-#endif
     }
 }
