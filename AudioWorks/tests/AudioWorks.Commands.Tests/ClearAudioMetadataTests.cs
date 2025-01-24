@@ -657,7 +657,7 @@ namespace AudioWorks.Commands.Tests
         [Fact(DisplayName =
             "Clear-AudioMetadata with Loudness switch clears only the TrackPeak, AlbumPeak, TrackGain and AlbumGain")]
         public void LoudnessSwitchClearsPeakAndGain()
-        { 
+        {
             var fieldsToClear = new[] { "TrackPeak", "AlbumPeak", "TrackGain", "AlbumGain" };
 
             var mock = new Mock<ITaggedAudioFile>();
