@@ -43,20 +43,20 @@ namespace AudioWorks.Extensions.Lame
         {
             var logger = LoggerManager.LoggerFactory.CreateLogger<LameLibHandler>();
 
-            try
-            {
+            //try
+            //{
                 logger.LogDebug("Attempting to load {_lameLibFullPath}", _lameLibFullPath);
 
                 NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), DllImportResolver);
 
                 logger.LogInformation("Using LAME version {version}.",
                     Marshal.PtrToStringAnsi(LibMp3Lame.GetVersion()));
-            }
-            catch (DllNotFoundException e)
-            {
-                logger.LogWarning(e, "The LAME library could not be found.");
-                return false;
-            }
+            //}
+            //catch (DllNotFoundException e)
+            //{
+            //    logger.LogWarning(e, "The LAME library could not be found.");
+            //    return false;
+            //}
 
             return true;
         }
