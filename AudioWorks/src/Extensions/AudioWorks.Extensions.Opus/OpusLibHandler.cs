@@ -28,7 +28,7 @@ namespace AudioWorks.Extensions.Vorbis
     public sealed class OpusLibHandler : IPrerequisiteHandler
     {
         const string _oggLib = "ogg";
-        const string _linuxOggLibVersion = "1";
+        const string _linuxOggLibVersion = "0";
         const string _opusLib = "opus";
         const string _linuxOpusLibVersion = "0";
         const string _opusEncLib = "opusenc";

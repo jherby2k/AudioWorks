@@ -27,7 +27,7 @@ namespace AudioWorks.Extensions.Vorbis
     public sealed class VorbisLibHandler : IPrerequisiteHandler
     {
         const string _oggLib = "ogg";
-        const string _linuxOggLibVersion = "1";
+        const string _linuxOggLibVersion = "0";
         const string _vorbisLib = "vorbis";
         const string _vorbisEncLib = "vorbisenc";
 
