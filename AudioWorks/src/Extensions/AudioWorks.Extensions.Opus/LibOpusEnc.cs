@@ -23,11 +23,7 @@ namespace AudioWorks.Extensions.Opus
     static partial class LibOpusEnc
 #pragma warning restore CA1060
     {
-#if WINDOWS
         const string _opusEncLibrary = "opusenc";
-#else
-        const string _opusEncLibrary = "libopusenc";
-#endif
 
         [LibraryImport(_opusEncLibrary, EntryPoint = "ope_comments_create")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
@@ -75,28 +71,26 @@ namespace AudioWorks.Extensions.Opus
         [LibraryImport(_opusEncLibrary, EntryPoint = "ope_encoder_ctl")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static partial int ControlGet(OpusEncoderHandle handle, EncoderControlRequest request, out int value);
-#if OSX
 
         [LibraryImport(_opusEncLibrary, EntryPoint = "ope_encoder_ctl")]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static partial int ControlGetArm64(
             OpusEncoderHandle handle,
             EncoderControlRequest request,
             IntPtr register2, IntPtr register3, IntPtr register4, IntPtr register5, IntPtr register6, IntPtr register7,
             out int value);
-#endif
 
         [LibraryImport(_opusEncLibrary, EntryPoint = "ope_encoder_ctl")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static partial int ControlSet(OpusEncoderHandle handle, EncoderControlRequest request, int argument);
-#if OSX
 
         [LibraryImport(_opusEncLibrary, EntryPoint = "ope_encoder_ctl")]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static partial int ControlSetArm64(
             OpusEncoderHandle handle,
             EncoderControlRequest request,
             IntPtr register2, IntPtr register3, IntPtr register4, IntPtr register5, IntPtr register6, IntPtr register7,
             int argument);
-#endif
 
         [LibraryImport(_opusEncLibrary, EntryPoint = "ope_encoder_destroy")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]

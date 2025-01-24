@@ -1,4 +1,4 @@
-﻿/* Copyright © 2019 Jeremy Herbison
+﻿/* Copyright © 2018 Jeremy Herbison
 
 This file is part of AudioWorks.
 
@@ -14,120 +14,97 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-#if !WINDOWS
-using System.Diagnostics;
-#endif
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Runtime.Loader;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
+using AudioWorks.Extensions.Opus;
 using Microsoft.Extensions.Logging;
 
-namespace AudioWorks.Extensions.Opus
+namespace AudioWorks.Extensions.Vorbis
 {
     [PrerequisiteHandlerExport]
     public sealed class OpusLibHandler : IPrerequisiteHandler
     {
+        const string _oggLib = "ogg";
+        const string _linuxOggLibVersion = "1";
+        const string _opusLib = "opus";
+        const string _linuxOpusLibVersion = "0";
+        const string _opusEncLib = "opusenc";
+
+        // Use the RID-specific directory, except on 32-bit Windows
+        // On Mac, we need to add the full file name, but on Windows it resolves the file extension properly
+        static readonly string _oggLibFullPath = Path.Combine(
+            Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
+            "runtimes",
+            RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !Environment.Is64BitProcess
+                ? "win-x86"
+                : RuntimeInformation.RuntimeIdentifier,
+            "native",
+            RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
+                ? $"lib{_oggLib}.dylib"
+                : _oggLib);
+
+        // Use the RID-specific directory, except on 32-bit Windows
+        // On Mac, we need to add the full file name, but on Windows it resolves the file extension properly
+        static readonly string _opusLibFullPath = Path.Combine(
+            Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
+            "runtimes",
+            RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !Environment.Is64BitProcess
+                ? "win-x86"
+                : RuntimeInformation.RuntimeIdentifier,
+            "native",
+            RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
+                ? $"lib{_opusLib}.dylib"
+                : _opusLib);
+
+        // Use the RID-specific directory, except on 32-bit Windows
+        // On Mac, we need to add the full file name, but on Windows/Linux it resolves the file extension properly
+        static readonly string _opusEncLibFullPath = Path.Combine(
+            Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
+            "runtimes",
+            RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !Environment.Is64BitProcess
+                ? "win-x86"
+                : RuntimeInformation.RuntimeIdentifier,
+            "native",
+            RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
+                ? $"lib{_opusEncLib}.dylib"
+                : _opusEncLib);
+
         public bool Handle()
         {
             var logger = LoggerManager.LoggerFactory.CreateLogger<OpusLibHandler>();
 
-#if WINDOWS
-            var libPath = Path.Combine(
-                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
-                Environment.Is64BitProcess ? "win-x64" : "win-x86");
-
-            AddUnmanagedLibraryPath(libPath);
-#elif OSX
-            AddUnmanagedLibraryPath(Path.Combine(
-                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
-                $"macos.{GetOSVersion()}-{GetArch()}"));
-#else // LINUX
-            var release = GetRelease();
-            if (release.StartsWith("Ubuntu", StringComparison.OrdinalIgnoreCase))
-                AddUnmanagedLibraryPath(Path.Combine(
-                    Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
-                    release.StartsWith("Ubuntu 20.04", StringComparison.OrdinalIgnoreCase) ? "ubuntu.20.04-x64" :
-                    "ubuntu.22.04-x64"));
-#endif
-
             try
             {
-                foreach (var methodInfo in typeof(LibOpusEnc).GetMethods(
-                    BindingFlags.NonPublic | BindingFlags.Static))
-                    Marshal.Prelink(methodInfo);
+                NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), DllImportResolver);
+
+                logger.LogInformation("Using Opus version {version}.",
+                    (Marshal.PtrToStringAnsi(LibOpus.GetVersion()) ?? "<unknown>")
+                    .Replace("libopus ", string.Empty, StringComparison.Ordinal));
             }
             catch (DllNotFoundException e)
             {
                 logger.LogWarning(e, "The Opus library could not be found.");
                 return false;
             }
-            catch (EntryPointNotFoundException e)
-            {
-                logger.LogWarning(e, "An expected entry point in the Opus library was not found.");
-                return false;
-            }
-
-            logger.LogInformation("Using Opus version {version}.",
-                (Marshal.PtrToStringAnsi(LibOpus.GetVersion()) ?? "<unknown>")
-                    .Replace("libopus ", string.Empty, StringComparison.Ordinal));
 
             return true;
         }
 
-        static void AddUnmanagedLibraryPath(string libPath) =>
-            (AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()) as ExtensionLoadContext)?
-            .AddUnmanagedLibraryPath(libPath);
-#if LINUX
-
-        static string GetRelease()
-        {
-            try
+        static IntPtr DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath) =>
+            libraryName switch
             {
-                using (var process = new Process())
-                {
-                    process.StartInfo = new ProcessStartInfo("lsb_release", "-d -s")
-                    {
-                        RedirectStandardOutput = true,
-                        UseShellExecute = false,
-                        CreateNoWindow = true
-                    };
-
-                    process.Start();
-                    var result = process.StandardOutput.ReadToEnd();
-                    process.WaitForExit();
-                    return result.Trim();
-                }
-            }
-            catch (FileNotFoundException)
-            {
-                // If lsb_release isn't available, the distribution is unknown
-                return string.Empty;
-            }
-        }
-#elif OSX
-
-        static string GetOSVersion()
-        {
-            using (var process = new Process())
-            {
-                process.StartInfo = new ProcessStartInfo("sw_vers", "-productVersion")
-                {
-                    RedirectStandardOutput = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
-
-                process.Start();
-                var result = process.StandardOutput.ReadToEnd();
-                process.WaitForExit();
-                return result.Trim()[..2];
-            }
-        }
-
-        static string GetArch() => RuntimeInformation.ProcessArchitecture == Architecture.Arm64 ? "arm64" : "x64";
-#endif
+                // On Linux, use the system-provided libogg and libopus
+                _oggLib => RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                    ? NativeLibrary.Load($"{_oggLib}.so.{_linuxOggLibVersion}", assembly, searchPath)
+                    : NativeLibrary.Load(_oggLibFullPath),
+                _opusLib => RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                    ? NativeLibrary.Load($"{_opusLib}.so.{_linuxOpusLibVersion}", assembly, searchPath)
+                    : NativeLibrary.Load(_opusLibFullPath),
+                _opusEncLib => NativeLibrary.Load(_opusEncLibFullPath),
+                _ => IntPtr.Zero
+            };
     }
 }

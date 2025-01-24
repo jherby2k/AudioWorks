@@ -22,13 +22,7 @@ namespace AudioWorks.Extensions.Opus
     static partial class LibOpus
 #pragma warning restore CA1060
     {
-#if WINDOWS
         const string _opusLibrary = "opus";
-#elif LINUX
-        const string _opusLibrary = "libopus.so.0";
-#else
-        const string _opusLibrary = "libopus";
-#endif
 
         [LibraryImport(_opusLibrary, EntryPoint = "opus_get_version_string")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]

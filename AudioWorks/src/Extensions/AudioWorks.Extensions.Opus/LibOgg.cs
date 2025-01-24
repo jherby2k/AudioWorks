@@ -22,11 +22,7 @@ namespace AudioWorks.Extensions.Opus
     static partial class LibOgg
 #pragma warning restore CA1060
     {
-#if LINUX
-        const string _oggLibrary = "libogg.so.0";
-#else
-        const string _oggLibrary = "libogg";
-#endif
+        const string _oggLibrary = "ogg";
 
         [LibraryImport(_oggLibrary, EntryPoint = "ogg_page_serialno")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
