@@ -70,7 +70,7 @@ namespace AudioWorks.Extensions.Vorbis
             "native",
             RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
                 ? $"lib{_opusEncLib}.dylib"
-                : RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
+                : RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
                     ? $"lib{_opusEncLib}.so"
                     : _opusEncLib);
 
