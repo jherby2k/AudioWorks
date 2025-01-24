@@ -29,7 +29,8 @@ namespace AudioWorks.Extensions.Lame
         const string _lameLib = "mp3lame";
         const string _linuxLibVersion = "0";
 
-        // Use the RID-specific directory except on 32-bit Windows
+        // Use the RID-specific directory, except on 32-bit Windows
+        // On Mac, we need to add the full file name, but on Windows it resolves the file extension properly
         static readonly string _lameLibFullPath = Path.Combine(
             Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
             "runtimes",
@@ -37,7 +38,9 @@ namespace AudioWorks.Extensions.Lame
                 ? "win-x86"
                 : RuntimeInformation.RuntimeIdentifier,
             "native",
-            _lameLib);
+            RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
+            ? $"lib{_lameLib}.dylib"
+            : _lameLib);
 
         public bool Handle()
         {
@@ -65,7 +68,7 @@ namespace AudioWorks.Extensions.Lame
         {
             if (libraryName != _lameLib) return IntPtr.Zero;
 
-            // On Linux, use the system-provided library
+            // On Linux, use the system-provided library.
             return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
                 ? NativeLibrary.Load($"{_lameLib}.so.{_linuxLibVersion}", assembly, searchPath)
                 : NativeLibrary.Load(_lameLibFullPath);
