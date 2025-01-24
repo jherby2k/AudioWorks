@@ -32,9 +32,11 @@ namespace AudioWorks.Extensions.Lame
         // Use the RID-specific directory except on 32-bit Windows
         static readonly string _lameLibFullPath = Path.Combine(
             Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
+            "runtimes",
             RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !Environment.Is64BitProcess
                 ? "win-x86"
                 : RuntimeInformation.RuntimeIdentifier,
+            "native",
             _lameLib);
 
         public bool Handle()
