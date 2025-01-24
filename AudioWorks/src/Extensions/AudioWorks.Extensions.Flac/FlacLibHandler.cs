@@ -14,21 +14,9 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Linq;
-#if OSX
-using System.Diagnostics;
-#endif
-#if !WINDOWS
-using System.Diagnostics.CodeAnalysis;
-#endif
-#if !LINUX
 using System.IO;
-#endif
 using System.Reflection;
 using System.Runtime.InteropServices;
-#if !LINUX
-using System.Runtime.Loader;
-#endif
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
 using Microsoft.Extensions.Logging;
@@ -38,105 +26,49 @@ namespace AudioWorks.Extensions.Flac
     [PrerequisiteHandlerExport]
     public sealed class FlacLibHandler : IPrerequisiteHandler
     {
-#if !WINDOWS
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Native method always returns 0")]
-#endif
+        const string _flacLib = "FLAC";
+        const string _linuxLibVersion = "8";
+
+        // Use the RID-specific directory, except on 32-bit Windows
+        // On Mac, we need to add the full file name, but on Windows it resolves the file extension properly
+        static readonly string _flacLibFullPath = Path.Combine(
+            Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
+            "runtimes",
+            RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !Environment.Is64BitProcess
+                ? "win-x86"
+                : RuntimeInformation.RuntimeIdentifier,
+            "native",
+            RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
+                ? $"lib{_flacLib}.dylib"
+                : _flacLib);
+
         public bool Handle()
         {
             var logger = LoggerManager.LoggerFactory.CreateLogger<FlacLibHandler>();
-#if WINDOWS
-
-            var libPath = Path.Combine(
-                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
-                Environment.Is64BitProcess ? "win-x64" : "win-x86");
-
-            AddUnmanagedLibraryPath(libPath);
-#elif OSX
-
-            var libPath = Path.Combine(
-                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
-                $"macos.{GetOSVersion()}-{GetArch()}");
-
-            AddUnmanagedLibraryPath(libPath);
-#endif
 
             try
             {
-                foreach (var methodInfo in new[]
-                                 { typeof(Encoder.LibFlac), typeof(Decoder.LibFlac), typeof(Metadata.LibFlac) }
-                             .SelectMany(type => type.GetMethods(BindingFlags.NonPublic | BindingFlags.Static)))
-                    Marshal.Prelink(methodInfo);
+                NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), DllImportResolver);
+
+                //TODO log the loaded version
             }
             catch (DllNotFoundException e)
             {
                 logger.LogWarning(e, "The FLAC library could not be found.");
                 return false;
             }
-            catch (EntryPointNotFoundException e)
-            {
-                logger.LogWarning(e, "An expected entry point in the FLAC library was not found.");
-                return false;
-            }
-
-            var module = IntPtr.Zero;
-            try
-            {
-#if WINDOWS
-                module = Kernel32.LoadLibrary(Path.Combine(libPath, "libFLAC.dll"));
-#elif OSX
-                module = LibDL.Open(Path.Combine(libPath, "libFLAC.dylib"), 2);
-#else // LINUX
-                module = LibDL.Open("libFLAC.so.8", 2);
-#endif
-                logger.LogInformation("Using FLAC version {version}.",
-                    Marshal.PtrToStringAnsi(
-                        Marshal.PtrToStructure<IntPtr>(
-#if WINDOWS
-                            Kernel32.GetProcAddress(module, "FLAC__VENDOR_STRING"))));
-#else
-                            LibDL.Sym(module, "FLAC__VENDOR_STRING"))));
-#endif
-            }
-            finally
-            {
-                if (module != IntPtr.Zero)
-#if WINDOWS
-                    Kernel32.FreeLibrary(module);
-#else
-                    LibDL.Close(module);
-#endif
-            }
 
             return true;
         }
 
-#if !LINUX
-        static void AddUnmanagedLibraryPath(string libPath) =>
-            (AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()) as ExtensionLoadContext)?
-            .AddUnmanagedLibraryPath(libPath);
-#endif
-#if OSX
-
-        static string GetOSVersion()
+        static IntPtr DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
         {
-            using (var process = new Process())
-            {
-                process.StartInfo = new ProcessStartInfo("sw_vers", "-productVersion")
-                {
-                    RedirectStandardOutput = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
+            if (libraryName != _flacLib) return IntPtr.Zero;
 
-                process.Start();
-                var result = process.StandardOutput.ReadToEnd();
-                process.WaitForExit();
-                return result.Trim()[..2];
-            }
+            // On Linux, use the system-provided library.
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                ? NativeLibrary.Load($"{_flacLib}.so.{_linuxLibVersion}", assembly, searchPath)
+                : NativeLibrary.Load(_flacLibFullPath);
         }
-
-        static string GetArch() => RuntimeInformation.ProcessArchitecture == Architecture.Arm64 ? "arm64" : "x64";
-#endif
     }
 }

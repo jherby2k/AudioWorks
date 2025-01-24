@@ -22,11 +22,7 @@ namespace AudioWorks.Extensions.Flac.Encoder
     static partial class LibFlac
 #pragma warning restore CA1060
     {
-#if LINUX
-        const string _flacLibrary = "libFLAC.so.8";
-#else
-        const string _flacLibrary = "libFLAC";
-#endif
+        const string _flacLibrary = "FLAC";
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_new")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
