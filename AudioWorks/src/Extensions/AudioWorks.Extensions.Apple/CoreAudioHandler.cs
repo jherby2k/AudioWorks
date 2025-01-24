@@ -13,14 +13,10 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-#if WINDOWS
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Runtime.Loader;
-#endif
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
 using Microsoft.Extensions.Logging;
@@ -32,52 +28,48 @@ namespace AudioWorks.Extensions.Apple
     {
         public bool Handle()
         {
-#if WINDOWS
             var logger = LoggerManager.LoggerFactory.CreateLogger<CoreAudioHandler>();
 
-            var libPath = Path.Combine(
-                Environment.GetEnvironmentVariable("CommonProgramFiles") ?? string.Empty,
-                "Apple",
-                "Apple Application Support");
+            // Core Audio is not available on Linux
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) return false;
 
-            // As of iTunes 12.10.9.3 the library is found inside the iTunes directory
-            if (!Directory.Exists(libPath))
-                libPath = Path.Combine(Environment.GetEnvironmentVariable("ProgramFiles") ?? string.Empty, "iTunes");
-
-            AddUnmanagedLibraryPath(libPath);
             try
             {
-                foreach (var methodInfo in typeof(CoreAudioToolbox).GetMethods(
-                    BindingFlags.NonPublic | BindingFlags.Static))
-                    Marshal.Prelink(methodInfo);
+                NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), DllImportResolver);
+
+                //TODO log the loaded CoreAudio version
             }
-            catch (DirectoryNotFoundException)
+            catch (DllNotFoundException e)
             {
-                logger.LogDebug("CoreAudioToolbox.dll could not be located.");
-                return false;
-            }
-            catch (DllNotFoundException)
-            {
-                logger.LogDebug("CoreAudioToolbox.dll could not be located.");
-                return false;
-            }
-            catch (EntryPointNotFoundException e)
-            {
-                logger.LogWarning(e, "An expected entry point in CoreAudioToolbox.dll was not found.");
+                logger.LogWarning(e, "The Apple Core Audio library could not be found.");
                 return false;
             }
 
-            logger.LogInformation("Using CoreAudio version {version}.",
-                FileVersionInfo.GetVersionInfo(Path.Combine(libPath, "CoreAudioToolbox.dll")).ProductVersion);
-
-#endif
             return true;
         }
-#if WINDOWS
 
-        static void AddUnmanagedLibraryPath(string libPath) =>
-            (AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()) as ExtensionLoadContext)?
-            .AddUnmanagedLibraryPath(libPath);
-#endif
+        static IntPtr DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
+        {
+            if (libraryName != "CoreAudioToolbox") return IntPtr.Zero;
+
+            // On Mac, it's a built-in framework
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                return NativeLibrary.Load("/System/Library/Frameworks/AudioToolbox.framework/AudioToolbox");
+
+            // On Windows, it may be installed with "Apple Application Support"
+            var coreAudioPath = Path.Combine(
+                Environment.GetEnvironmentVariable("CommonProgramFiles") ?? string.Empty,
+                "Apple",
+                "Apple Application Support",
+                "CoreAudioToolbox.dll");
+
+            // It could also be found inside the iTunes directory
+            if (!File.Exists(coreAudioPath))
+                coreAudioPath = Path.Combine(Environment.GetEnvironmentVariable("ProgramFiles") ?? string.Empty, "iTunes");
+
+            return File.Exists(coreAudioPath)
+                ? NativeLibrary.Load(coreAudioPath)
+                : IntPtr.Zero;
+        }
     }
 }

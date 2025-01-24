@@ -22,11 +22,7 @@ namespace AudioWorks.Extensions.Apple
     static partial class CoreAudioToolbox
 #pragma warning restore CA1060
     {
-#if OSX
-        const string _coreAudioLibrary = "/System/Library/Frameworks/AudioToolbox.framework/AudioToolbox";
-#else
         const string _coreAudioLibrary = "CoreAudioToolbox";
-#endif
 
         [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
