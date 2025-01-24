@@ -30,7 +30,7 @@ namespace AudioWorks.Extensions.Lame
         const string _linuxLibVersion = "0";
 
         // Use the RID-specific directory, except on 32-bit Windows
-        // On Mac, we need to add the full file name, but on Windows it resolves the file extension properly
+        // On Mac we need to add the full file name, but on Windows it resolves the file properly
         static readonly string _lameLibFullPath = Path.Combine(
             Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
             "runtimes",
