@@ -68,6 +68,7 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Get-AudioCoverArt");
 
+                // ReSharper disable once AccessToDisposedClosure
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
             }
         }

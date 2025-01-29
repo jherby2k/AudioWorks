@@ -90,6 +90,7 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Clear-AudioMetadata");
 
+                // ReSharper disable once AccessToDisposedClosure
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
             }
         }

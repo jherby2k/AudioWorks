@@ -66,6 +66,7 @@ namespace AudioWorks.Commands.Tests
                 ps.Runspace = moduleFixture.Runspace;
                 ps.AddCommand("Set-AudioMetadata");
 
+                // ReSharper disable once AccessToDisposedClosure
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
             }
         }
@@ -157,6 +158,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("Title", null);
 
                 // Actual exception type ParameterBindingValidationException is Internal
+                // ReSharper disable once AccessToDisposedClosure
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
         }
@@ -208,6 +210,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("Artist", null);
 
                 // Actual exception type ParameterBindingValidationException is Internal
+                // ReSharper disable once AccessToDisposedClosure
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
         }
@@ -259,6 +262,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("Album", null);
 
                 // Actual exception type ParameterBindingValidationException is Internal
+                // ReSharper disable once AccessToDisposedClosure
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
         }
@@ -310,6 +314,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("AlbumArtist", null);
 
                 // Actual exception type ParameterBindingValidationException is Internal
+                // ReSharper disable once AccessToDisposedClosure
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
         }
@@ -361,6 +366,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("Composer", null);
 
                 // Actual exception type ParameterBindingValidationException is Internal
+                // ReSharper disable once AccessToDisposedClosure
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
         }
@@ -412,6 +418,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("Genre", null);
 
                 // Actual exception type ParameterBindingValidationException is Internal
+                // ReSharper disable once AccessToDisposedClosure
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
         }
@@ -463,6 +470,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("Comment", null);
 
                 // Actual exception type ParameterBindingValidationException is Internal
+                // ReSharper disable once AccessToDisposedClosure
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
         }
@@ -515,6 +523,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("Day", null);
 
                 // Actual exception type ParameterBindingValidationException is Internal
+                // ReSharper disable once AccessToDisposedClosure
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
         }
@@ -589,6 +598,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("Month", null);
 
                 // Actual exception type ParameterBindingValidationException is Internal
+                // ReSharper disable once AccessToDisposedClosure
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
         }
@@ -663,6 +673,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("Year", null);
 
                 // Actual exception type ParameterBindingValidationException is Internal
+                // ReSharper disable once AccessToDisposedClosure
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
         }
@@ -737,6 +748,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("TrackNumber", null);
 
                 // Actual exception type ParameterBindingValidationException is Internal
+                // ReSharper disable once AccessToDisposedClosure
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
         }
@@ -848,6 +860,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("TrackCount", null);
 
                 // Actual exception type ParameterBindingValidationException is Internal
+                // ReSharper disable once AccessToDisposedClosure
                 Assert.ThrowsAny<ParameterBindingException>(() => ps.Invoke());
             }
         }

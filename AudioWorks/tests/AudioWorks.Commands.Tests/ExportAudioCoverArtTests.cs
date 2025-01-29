@@ -56,6 +56,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Export-AudioCoverArt")
                     .AddParameter("Path", "Foo");
 
+                // ReSharper disable once AccessToDisposedClosure
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
             }
         }
@@ -69,6 +70,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Export-AudioCoverArt")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object);
 
+                // ReSharper disable once AccessToDisposedClosure
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
             }
         }
@@ -84,6 +86,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("Path", "{Invalid}");
 
                 Assert.IsType<ArgumentException>(
+                    // ReSharper disable once AccessToDisposedClosure
                     Assert.Throws<CmdletInvocationException>(() => ps.Invoke())
                         .InnerException);
             }

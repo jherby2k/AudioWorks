@@ -57,6 +57,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Measure-AudioFile")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object);
 
+                // ReSharper disable once AccessToDisposedClosure
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
             }
         }
@@ -142,6 +143,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Measure-AudioFile")
                     .AddParameter("Analyzer", analyzer);
 
+                // ReSharper disable once AccessToDisposedClosure
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
             }
         }

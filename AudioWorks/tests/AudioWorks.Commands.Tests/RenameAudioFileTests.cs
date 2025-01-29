@@ -59,6 +59,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Rename-AudioFile")
                     .AddParameter("AudioFile", new Mock<ITaggedAudioFile>().Object);
 
+                // ReSharper disable once AccessToDisposedClosure
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
             }
         }
@@ -88,6 +89,7 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Rename-AudioFile")
                     .AddParameter("Name", "Foo");
 
+                // ReSharper disable once AccessToDisposedClosure
                 Assert.Throws<ParameterBindingException>(() => ps.Invoke());
             }
         }
