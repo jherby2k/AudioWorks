@@ -121,7 +121,7 @@ namespace AudioWorks.Extensions.Id3
             var frameDataBuffer = frameSize < 0x40000
                 ? stackalloc byte[(int) frameSize]
                 : new byte[(int) frameSize];
-            reader.Read(frameDataBuffer);
+            reader.BaseStream.ReadExactly(frameDataBuffer);
 
             return FrameFactory.Build(frameId, flags, frameDataBuffer);
         }

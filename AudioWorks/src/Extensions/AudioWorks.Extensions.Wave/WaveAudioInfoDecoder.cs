@@ -51,7 +51,7 @@ namespace AudioWorks.Extensions.Wave
                         throw new AudioInvalidException("Missing 'fmt' chunk.");
 
                     Span<byte> fmtData = stackalloc byte[(int) fmtChunkSize];
-                    reader.Read(fmtData);
+                    stream.ReadExactly(fmtData);
 
                     var dataSize = reader.SeekToChunk("data");
 
