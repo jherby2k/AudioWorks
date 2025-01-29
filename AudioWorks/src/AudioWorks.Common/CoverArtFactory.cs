@@ -99,7 +99,7 @@ namespace AudioWorks.Common
             }
         }
 
-        static ICoverArt GetOrCreate(Stream stream)
+        static CoverArt GetOrCreate(Stream stream)
         {
             var hash = GetHash(stream);
             lock (_internedCovers)

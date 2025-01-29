@@ -23,17 +23,10 @@ namespace AudioWorks.Api
     /// </summary>
     /// <typeparam name="T">Specifies the type of the progress report value.</typeparam>
     /// <seealso cref="IProgress{T}"/>
-    public sealed class SimpleProgress<T> : IProgress<T>
+    /// <param name="handler">The handler to invoke for each reported progress value.</param>
+    public sealed class SimpleProgress<T>(Action<T> handler) : IProgress<T>
     {
-        readonly Action<T> _handler;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SimpleProgress{T}"/> class.
-        /// </summary>
-        /// <param name="handler">The handler to invoke for each reported progress value.</param>
-        public SimpleProgress(Action<T> handler) => _handler = handler;
-
         /// <inheritdoc/>
-        public void Report(T value) => _handler(value);
+        public void Report(T value) => handler(value);
     }
 }

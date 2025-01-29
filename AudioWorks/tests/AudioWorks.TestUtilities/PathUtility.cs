@@ -23,9 +23,9 @@ namespace AudioWorks.TestUtilities
         {
             var rootDirectory = new DirectoryInfo(
                 Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName;
-            if (rootDirectory == null) throw new DirectoryNotFoundException("Unable to locate the test file root directory.");
-
-            return Path.Combine(rootDirectory, "TestFiles");
+            return rootDirectory == null
+                ? throw new DirectoryNotFoundException("Unable to locate the test file root directory.")
+                : Path.Combine(rootDirectory, "TestFiles");
         }
     }
 }

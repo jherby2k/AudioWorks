@@ -13,7 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Management.Automation;
@@ -43,7 +42,7 @@ namespace AudioWorks.Commands
                     return [providerPath];
             }
 
-            return Array.Empty<string>();
+            return [];
         }
 
         internal static void OutputMessages(

@@ -44,7 +44,7 @@ namespace AudioWorks.Api
                 using (var export = factory.CreateExport())
                     return export.Value.SettingInfo;
 
-            return new();
+            return [];
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace AudioWorks.Api
                 using (var export = factory.CreateExport())
                     return export.Value.SettingInfo;
 
-            return new();
+            return [];
         }
 
         /// <summary>

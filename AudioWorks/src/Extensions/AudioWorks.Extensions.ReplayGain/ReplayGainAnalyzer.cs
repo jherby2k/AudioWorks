@@ -72,7 +72,7 @@ namespace AudioWorks.Extensions.ReplayGain
         public AudioMetadata GetGroupResult() => new()
         {
             AlbumPeak = _groupState!.GroupPeak.ToString(CultureInfo.InvariantCulture),
-            AlbumGain = (_referenceLevel - R128Analyzer.GetLoudnessMultiple(_groupState.Handles.ToArray()))
+            AlbumGain = (_referenceLevel - R128Analyzer.GetLoudnessMultiple([.. _groupState.Handles]))
                 .ToString(CultureInfo.InvariantCulture)
         };
     }

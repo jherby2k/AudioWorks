@@ -22,9 +22,11 @@ using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Api
 {
-    sealed class EncodedPath
+    sealed partial class EncodedPath
     {
-        static readonly Regex _replacer = new(@"\{[^{]+\}");
+        [GeneratedRegex(@"\{[^{]+\}")]
+        private static partial Regex ReplacerRegex();
+
         static readonly char[] _invalidChars = Path.GetInvalidFileNameChars();
         readonly string _encoded;
 
@@ -32,7 +34,7 @@ namespace AudioWorks.Api
         {
             var validProperties = typeof(AudioMetadata).GetProperties()
                 .Select(propertyInfo => propertyInfo.Name).ToArray();
-            if (_replacer.Matches(encoded)
+            if (ReplacerRegex().Matches(encoded)
                 .Select(match => match.Value[1..^1])
                 .Except(validProperties).Any())
                 throw new ArgumentException("Parameter contains one or more invalid metadata properties.",
@@ -43,7 +45,7 @@ namespace AudioWorks.Api
 
         internal string ReplaceWith(AudioMetadata metadata)
         {
-            var result = _replacer.Replace(_encoded, match =>
+            var result = ReplacerRegex().Replace(_encoded, match =>
             {
                 var propertyName = match.Value[1..^1];
                 var propertyValue = (string) typeof(AudioMetadata).GetProperty(propertyName)!.GetValue(metadata)!;

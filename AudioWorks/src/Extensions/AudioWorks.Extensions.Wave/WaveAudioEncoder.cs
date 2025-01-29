@@ -31,7 +31,7 @@ namespace AudioWorks.Extensions.Wave
         int _bytesPerSample;
         RiffWriter? _writer;
 
-        public SettingInfoDictionary SettingInfo { get; } = new();
+        public SettingInfoDictionary SettingInfo { get; } = [];
 
         public string FileExtension => ".wav";
 

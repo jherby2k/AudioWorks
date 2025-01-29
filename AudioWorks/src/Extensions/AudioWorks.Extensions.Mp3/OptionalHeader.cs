@@ -21,6 +21,6 @@ namespace AudioWorks.Extensions.Mp3
 
         internal uint ByteCount { get; set; }
 
-        internal bool Incomplete => FrameCount == 0 || ByteCount == 0;
+        internal readonly bool Incomplete => FrameCount == 0 || ByteCount == 0;
     }
 }

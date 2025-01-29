@@ -23,21 +23,14 @@ namespace AudioWorks.Common
     /// Describes a string setting which has a limited number of accepted values.
     /// </summary>
     /// <seealso cref="SettingInfo"/>
-    public sealed class StringSettingInfo : SettingInfo
+    /// <param name="acceptedValues">The accepted values.</param>
+    public sealed class StringSettingInfo(params string[] acceptedValues) : SettingInfo(typeof(string))
     {
         /// <summary>
         /// Gets the accepted values.
         /// </summary>
         /// <value>The accepted values.</value>
-        public IEnumerable<string> AcceptedValues { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StringSettingInfo"/> class.
-        /// </summary>
-        /// <param name="acceptedValues">The accepted values.</param>
-        public StringSettingInfo(params string[] acceptedValues)
-            : base(typeof(string)) =>
-            AcceptedValues = acceptedValues;
+        public IEnumerable<string> AcceptedValues { get; } = acceptedValues;
 
         /// <inheritdoc/>
         public override void Validate(object value)

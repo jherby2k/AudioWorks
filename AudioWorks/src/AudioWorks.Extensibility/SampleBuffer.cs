@@ -234,7 +234,7 @@ namespace AudioWorks.Extensibility
         /// <exception cref="InvalidOperationException">Thrown if the Channels property does not equal 1.</exception>
         public void CopyTo(Span<float> monoDestination)
         {
-            if (_isDisposed) throw new ObjectDisposedException(GetType().ToString());
+            ObjectDisposedException.ThrowIf(_isDisposed, this);
             if (_buffer == null) return;
 
             if (Channels != 1)
@@ -255,7 +255,7 @@ namespace AudioWorks.Extensibility
         /// <exception cref="InvalidOperationException">Thrown if the Channels property does not equal 2.</exception>
         public void CopyTo(Span<float> leftDestination, Span<float> rightDestination)
         {
-            if (_isDisposed) throw new ObjectDisposedException(GetType().ToString());
+            ObjectDisposedException.ThrowIf(_isDisposed, this);
             if (_buffer == null) return;
 
             if (Channels != 2)
@@ -288,7 +288,7 @@ namespace AudioWorks.Extensibility
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="bitsPerSample"/> is out of range.</exception>
         public void CopyTo(Span<int> leftDestination, Span<int> rightDestination, int bitsPerSample)
         {
-            if (_isDisposed) throw new ObjectDisposedException(GetType().ToString());
+            ObjectDisposedException.ThrowIf(_isDisposed, this);
             if (_buffer == null) return;
 
             if (Channels != 2)
@@ -322,7 +322,7 @@ namespace AudioWorks.Extensibility
         /// </exception>
         public void CopyToInterleaved(Span<float> destination)
         {
-            if (_isDisposed) throw new ObjectDisposedException(GetType().ToString());
+            ObjectDisposedException.ThrowIf(_isDisposed, this);
             if (_buffer == null) return;
 
             if (destination.Length < Frames * Channels)
@@ -354,7 +354,7 @@ namespace AudioWorks.Extensibility
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="bitsPerSample"/> is out of range.</exception>
         public void CopyToInterleaved(Span<int> destination, int bitsPerSample)
         {
-            if (_isDisposed) throw new ObjectDisposedException(GetType().ToString());
+            ObjectDisposedException.ThrowIf(_isDisposed, this);
             if (_buffer == null) return;
 
             if (destination.Length < Frames * Channels)
@@ -394,7 +394,7 @@ namespace AudioWorks.Extensibility
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="bitsPerSample"/> is out of range.</exception>
         public void CopyToInterleaved(Span<byte> destination, int bitsPerSample)
         {
-            if (_isDisposed) throw new ObjectDisposedException(GetType().ToString());
+            ObjectDisposedException.ThrowIf(_isDisposed, this);
             if (_buffer == null) return;
 
             if (bitsPerSample is < 1 or > 32)

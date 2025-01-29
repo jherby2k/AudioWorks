@@ -58,7 +58,7 @@ namespace AudioWorks.Extensions.Mp4
                 }
             }
 
-            return result.ToArray();
+            return [.. result];
         }
 
         internal bool DescendToAtom(params string[] hierarchy)

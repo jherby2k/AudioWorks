@@ -23,8 +23,11 @@ namespace AudioWorks.Common
     /// Contains mutable metadata about the audio file.
     /// </summary>
     [Serializable]
-    public class AudioMetadata
+    public partial class AudioMetadata
     {
+        [GeneratedRegex("^[1-9][0-9]{3}$")]
+        private static partial Regex YearRegex();
+
         string _title;
         string _artist;
         string _album;
@@ -185,7 +188,7 @@ namespace AudioWorks.Common
                     _year = string.Empty;
                 else
                 {
-                    if (!Regex.IsMatch(value, "^[1-9][0-9]{3}$"))
+                    if (!YearRegex().IsMatch(value))
                         throw new AudioMetadataInvalidException("Year must be between 1000 and 9999.");
                     _year = value;
                 }
