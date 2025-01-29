@@ -53,16 +53,16 @@ namespace AudioWorks.Extensions.Id3
 
         internal void Deserialize(Stream stream)
         {
-            using (var reader = new TagReader(stream))
+            try
             {
-                try
-                {
-                    // Read the tag identifier
-                    Span<byte> idTag = stackalloc byte[3];
-                    stream.ReadExactly(idTag);
-                    if (_id3.AsSpan().SequenceCompareTo(idTag) != 0)
-                        throw new TagNotFoundException("ID3v2 tag identifier was not found.");
+                // Read the tag identifier
+                Span<byte> idTag = stackalloc byte[3];
+                stream.ReadExactly(idTag);
+                if (_id3.AsSpan().SequenceCompareTo(idTag) != 0)
+                    throw new TagNotFoundException("ID3v2 tag identifier was not found.");
 
+                using (var reader = new TagReader(stream))
+                {
                     // Get the id3v2 version byte
                     Version = reader.ReadByte();
                     if (Version == 0xFF)
@@ -83,10 +83,10 @@ namespace AudioWorks.Extensions.Id3
                     if (TagSize == 0)
                         throw new AudioInvalidException("Corrupt header: tag size can't be zero.");
                 }
-                catch (EndOfStreamException)
-                {
-                    throw new TagNotFoundException("ID3v2 tag identifier was not found.");
-                }
+            }
+            catch (EndOfStreamException)
+            {
+                throw new TagNotFoundException("ID3v2 tag identifier was not found.");
             }
         }
     }
