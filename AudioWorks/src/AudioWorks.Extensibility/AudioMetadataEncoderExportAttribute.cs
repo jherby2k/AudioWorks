@@ -61,14 +61,14 @@ namespace AudioWorks.Extensibility
         public AudioMetadataEncoderExportAttribute(string extension, string format, string description)
             : base(typeof(IAudioMetadataEncoder))
         {
-            ArgumentException.ThrowIfNullOrEmpty(nameof(extension));
+            ArgumentException.ThrowIfNullOrEmpty(extension);
             if (!extension.StartsWith(".", StringComparison.OrdinalIgnoreCase)
                 || extension.Any(char.IsWhiteSpace)
                 // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
                 || extension.Any(character => Path.GetInvalidFileNameChars().Contains(character)))
                 throw new ArgumentException($"'{extension}' is not a valid file extension.", nameof(extension));
-            ArgumentException.ThrowIfNullOrEmpty(nameof(format));
-            ArgumentException.ThrowIfNullOrEmpty(nameof(description));
+            ArgumentException.ThrowIfNullOrEmpty(format);
+            ArgumentException.ThrowIfNullOrEmpty(description);
 
             Extension = extension;
             Format = format;

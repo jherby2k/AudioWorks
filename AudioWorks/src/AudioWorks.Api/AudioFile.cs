@@ -45,7 +45,7 @@ namespace AudioWorks.Api
         /// <exception cref="PathTooLongException">Thrown if <paramref name="path"/> is too long.</exception>
         public AudioFile(string path)
         {
-            ArgumentException.ThrowIfNullOrEmpty(nameof(path));
+            ArgumentException.ThrowIfNullOrEmpty(path);
 
             Path = IO.Path.GetFullPath(path);
             Info = LoadInfo();
@@ -54,7 +54,7 @@ namespace AudioWorks.Api
         /// <inheritdoc/>
         public virtual void Rename(string name, bool replace)
         {
-            ArgumentException.ThrowIfNullOrEmpty(nameof(name));
+            ArgumentException.ThrowIfNullOrEmpty(name);
 
             // If the name isn't changing, do nothing
             if (name.Equals(IO.Path.GetFileNameWithoutExtension(Path), StringComparison.OrdinalIgnoreCase))

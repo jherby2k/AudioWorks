@@ -36,7 +36,7 @@ namespace AudioWorks.Api
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="extension"/> is null.</exception>
         public static SettingInfoDictionary GetSettingInfoByExtension(string extension)
         {
-            ArgumentNullException.ThrowIfNull(nameof(extension));
+            ArgumentNullException.ThrowIfNull(extension);
 
             // Try each encoder that supports this file extension:
             foreach (var factory in ExtensionProviderWrapper.GetFactories<IAudioMetadataEncoder>(
@@ -56,7 +56,7 @@ namespace AudioWorks.Api
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="format"/> is null.</exception>
         public static SettingInfoDictionary GetSettingInfoByFormat(string format)
         {
-            ArgumentNullException.ThrowIfNull(nameof(format));
+            ArgumentNullException.ThrowIfNull(format);
 
             // Try each encoder that supports this format:
             foreach (var factory in ExtensionProviderWrapper.GetFactories<IAudioMetadataEncoder>(

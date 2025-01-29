@@ -47,7 +47,7 @@ namespace AudioWorks.Extensibility
         public AudioDecoderExportAttribute(string extension)
             : base(typeof(IAudioDecoder))
         {
-            ArgumentException.ThrowIfNullOrEmpty(nameof(extension));
+            ArgumentException.ThrowIfNullOrEmpty(extension);
             if (!extension.StartsWith(".", StringComparison.OrdinalIgnoreCase)
                 || extension.Any(char.IsWhiteSpace)
                 // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local

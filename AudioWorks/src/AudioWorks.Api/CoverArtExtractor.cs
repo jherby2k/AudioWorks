@@ -58,7 +58,7 @@ namespace AudioWorks.Api
         /// constructor.</exception>
         public FileInfo? Extract(ITaggedAudioFile audioFile)
         {
-            ArgumentNullException.ThrowIfNull(nameof(audioFile));
+            ArgumentNullException.ThrowIfNull(audioFile);
 
             if (audioFile.Metadata.CoverArt == null) return null;
 

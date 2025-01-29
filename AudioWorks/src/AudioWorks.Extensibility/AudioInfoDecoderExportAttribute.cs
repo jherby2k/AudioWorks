@@ -54,13 +54,13 @@ namespace AudioWorks.Extensibility
         public AudioInfoDecoderExportAttribute(string extension, string format)
             : base(typeof(IAudioInfoDecoder))
         {
-            ArgumentException.ThrowIfNullOrEmpty(nameof(extension));
+            ArgumentException.ThrowIfNullOrEmpty(extension);
             if (!extension.StartsWith(".", StringComparison.OrdinalIgnoreCase)
                 || extension.Any(char.IsWhiteSpace)
                 // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
                 || extension.Any(character => Path.GetInvalidFileNameChars().Contains(character)))
                 throw new ArgumentException($"'{extension}' is not a valid file extension.", nameof(extension));
-            ArgumentException.ThrowIfNullOrEmpty(nameof(format));
+            ArgumentException.ThrowIfNullOrEmpty(format);
 
             Extension = extension;
             Format = format;

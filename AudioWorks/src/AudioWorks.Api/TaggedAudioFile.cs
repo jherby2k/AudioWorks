@@ -67,7 +67,7 @@ namespace AudioWorks.Api
         /// <inheritdoc/>
         public override void Rename(string name, bool replace)
         {
-            ArgumentException.ThrowIfNullOrEmpty(nameof(name));
+            ArgumentException.ThrowIfNullOrEmpty(name);
             base.Rename(new EncodedPath(name).ReplaceWith(Metadata), replace);
         }
 

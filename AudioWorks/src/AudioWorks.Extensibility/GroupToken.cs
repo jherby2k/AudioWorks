@@ -37,7 +37,7 @@ namespace AudioWorks.Extensibility
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="groupState"/> is null.</exception>
         public object GetOrSetGroupState(object groupState)
         {
-            ArgumentNullException.ThrowIfNull(nameof(groupState));
+            ArgumentNullException.ThrowIfNull(groupState);
 
             lock (_syncRoot)
             {

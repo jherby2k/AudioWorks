@@ -69,7 +69,7 @@ namespace AudioWorks.Api
         /// </exception>
         public AudioFileAnalyzer(string name, SettingDictionary? settings = null)
         {
-            ArgumentNullException.ThrowIfNull(nameof(name));
+            ArgumentNullException.ThrowIfNull(name);
 
             _analyzerFactory = ExtensionProviderWrapper.GetFactories<IAudioAnalyzer>("Name", name).SingleOrDefault() ??
                                throw new ArgumentException($"No '{name}' analyzer is available.", nameof(name));
@@ -86,7 +86,7 @@ namespace AudioWorks.Api
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
         public async Task AnalyzeAsync(IEnumerable<ITaggedAudioFile> audioFiles)
         {
-            ArgumentNullException.ThrowIfNull(nameof(audioFiles));
+            ArgumentNullException.ThrowIfNull(audioFiles);
 
             await AnalyzeAsync(audioFiles.ToArray()).ConfigureAwait(false);
         }
@@ -104,7 +104,7 @@ namespace AudioWorks.Api
             CancellationToken cancellationToken,
             IProgress<ProgressToken>? progress = null)
         {
-            ArgumentNullException.ThrowIfNull(nameof(audioFiles));
+            ArgumentNullException.ThrowIfNull(audioFiles);
 
             await AnalyzeAsync(progress, cancellationToken, audioFiles.ToArray()).ConfigureAwait(false);
         }
@@ -143,7 +143,7 @@ namespace AudioWorks.Api
             CancellationToken cancellationToken,
             params ITaggedAudioFile[] audioFiles)
         {
-            ArgumentNullException.ThrowIfNull(nameof(audioFiles));
+            ArgumentNullException.ThrowIfNull(audioFiles);
             // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
             if (audioFiles.Any(audioFile => audioFile == null))
                 throw new ArgumentException("One or more audio files are null.", nameof(audioFiles));

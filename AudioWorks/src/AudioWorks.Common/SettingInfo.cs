@@ -43,7 +43,7 @@ namespace AudioWorks.Common
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
         public virtual void Validate(object value)
         {
-            ArgumentNullException.ThrowIfNull(nameof(value));
+            ArgumentNullException.ThrowIfNull(value);
             if (value.GetType() != ValueType)
                 throw new ArgumentException($"{nameof(value)} is not of type {ValueType}.", nameof(value));
         }

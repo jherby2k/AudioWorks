@@ -66,7 +66,7 @@ namespace AudioWorks.Common
         /// </exception>
         public static ICoverArt GetOrCreate(string path)
         {
-            ArgumentException.ThrowIfNullOrEmpty(nameof(path));
+            ArgumentException.ThrowIfNullOrEmpty(path);
             if (!File.Exists(path))
                 throw new FileNotFoundException($"The file '{path}' cannot be found.", path);
 
@@ -86,7 +86,7 @@ namespace AudioWorks.Common
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="coverArt"/> is null.</exception>
         public static ICoverArt ConvertToLossy(ICoverArt coverArt)
         {
-            ArgumentNullException.ThrowIfNull(nameof(coverArt));
+            ArgumentNullException.ThrowIfNull(coverArt);
 
             if (!coverArt.Lossless) return coverArt;
 

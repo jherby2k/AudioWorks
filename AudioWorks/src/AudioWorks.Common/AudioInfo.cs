@@ -151,7 +151,7 @@ namespace AudioWorks.Common
             int bitRate,
             long frameCount)
         {
-            ArgumentException.ThrowIfNullOrEmpty(nameof(format));
+            ArgumentException.ThrowIfNullOrEmpty(format);
 
             switch (channels)
             {

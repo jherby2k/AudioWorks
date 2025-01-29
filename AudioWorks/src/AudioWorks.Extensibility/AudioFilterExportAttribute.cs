@@ -43,7 +43,7 @@ namespace AudioWorks.Extensibility
         public AudioFilterExportAttribute(string name)
             : base(typeof(IAudioFilter))
         {
-            ArgumentException.ThrowIfNullOrEmpty(nameof(name));
+            ArgumentException.ThrowIfNullOrEmpty(name);
 
             Name = name;
         }

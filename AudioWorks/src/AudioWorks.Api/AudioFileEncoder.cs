@@ -91,7 +91,7 @@ namespace AudioWorks.Api
             string? encodedFileName = null,
             SettingDictionary? settings = null)
         {
-            ArgumentNullException.ThrowIfNull(nameof(name));
+            ArgumentNullException.ThrowIfNull(name);
 
             _encoderFactory = ExtensionProviderWrapper.GetFactories<IAudioEncoder>("Name", name).SingleOrDefault() ??
                               throw new ArgumentException($"No '{name}' encoder is available.", nameof(name));
@@ -114,7 +114,7 @@ namespace AudioWorks.Api
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
         public async Task<IEnumerable<ITaggedAudioFile>> EncodeAsync(IEnumerable<ITaggedAudioFile> audioFiles)
         {
-            ArgumentNullException.ThrowIfNull(nameof(audioFiles));
+            ArgumentNullException.ThrowIfNull(audioFiles);
 
             return await EncodeAsync(audioFiles.ToArray()).ConfigureAwait(false);
         }
@@ -133,7 +133,7 @@ namespace AudioWorks.Api
             CancellationToken cancellationToken,
             IProgress<ProgressToken>? progress = null)
         {
-            ArgumentNullException.ThrowIfNull(nameof(audioFiles));
+            ArgumentNullException.ThrowIfNull(audioFiles);
 
             return await EncodeAsync(progress, cancellationToken, audioFiles.ToArray()).ConfigureAwait(false);
         }
@@ -177,7 +177,7 @@ namespace AudioWorks.Api
             CancellationToken cancellationToken,
             params ITaggedAudioFile[] audioFiles)
         {
-            ArgumentNullException.ThrowIfNull(nameof(audioFiles));
+            ArgumentNullException.ThrowIfNull(audioFiles);
             // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
             if (audioFiles.Any(audioFile => audioFile == null))
                 throw new ArgumentException("One or more audio files are null.", nameof(audioFiles));

@@ -52,8 +52,8 @@ namespace AudioWorks.Extensibility
         public AudioAnalyzerExportAttribute(string name, string description)
             : base(typeof(IAudioAnalyzer))
         {
-            ArgumentException.ThrowIfNullOrEmpty(nameof(name));
-            ArgumentException.ThrowIfNullOrEmpty(nameof(description));
+            ArgumentException.ThrowIfNullOrEmpty(name);
+            ArgumentException.ThrowIfNullOrEmpty(description);
             Name = name;
             Description = description;
         }
