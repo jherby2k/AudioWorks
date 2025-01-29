@@ -20,7 +20,6 @@ using AudioWorks.Api;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
 using AudioWorks.TestUtilities.DataSources;
-using AudioWorks.TestUtilities.DataTypes;
 using Moq;
 using Xunit;
 
@@ -133,7 +132,7 @@ namespace AudioWorks.Commands.Tests
             int index,
             string sourceFileName,
             string encoderName,
-            TestSettingDictionary settings,
+            SettingDictionary settings,
             string[] validHashes)
         {
             var sourceAudioFile = new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", sourceFileName));

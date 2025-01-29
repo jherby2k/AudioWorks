@@ -19,7 +19,6 @@ using System.Text.Json;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
 using AudioWorks.TestUtilities.DataSources;
-using AudioWorks.TestUtilities.DataTypes;
 using Xunit;
 
 namespace AudioWorks.Api.Tests
@@ -85,54 +84,54 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "AudioFile's Info property has the expected Format")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndAudioInfo), MemberType = typeof(ValidFileDataSource))]
-        public void InfoHasExpectedFormat(string fileName, TestAudioInfo expectedAudioInfo) =>
+        public void InfoHasExpectedFormat(string fileName, AudioInfo expectedAudioInfo) =>
             Assert.Equal(
                 expectedAudioInfo.Format,
                 new AudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Info.Format);
 
         [Theory(DisplayName = "AudioFile's Info property has the expected Channels")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndAudioInfo), MemberType = typeof(ValidFileDataSource))]
-        public void InfoHasExpectedChannels(string fileName, TestAudioInfo expectedAudioInfo) =>
+        public void InfoHasExpectedChannels(string fileName, AudioInfo expectedAudioInfo) =>
             Assert.Equal(
                 expectedAudioInfo.Channels,
                 new AudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Info.Channels);
 
         [Theory(DisplayName = "AudioFile's Info property has the expected BitsPerSample")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndAudioInfo), MemberType = typeof(ValidFileDataSource))]
-        public void InfoHasExpectedBitsPerSample(string fileName, TestAudioInfo expectedAudioInfo) =>
+        public void InfoHasExpectedBitsPerSample(string fileName, AudioInfo expectedAudioInfo) =>
             Assert.Equal(
                 expectedAudioInfo.BitsPerSample,
                 new AudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Info.BitsPerSample);
 
         [Theory(DisplayName = "AudioFile's Info property has the expected SampleRate")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndAudioInfo), MemberType = typeof(ValidFileDataSource))]
-        public void InfoHasExpectedSampleRate(string fileName, TestAudioInfo expectedAudioInfo) =>
+        public void InfoHasExpectedSampleRate(string fileName, AudioInfo expectedAudioInfo) =>
             Assert.Equal(
                 expectedAudioInfo.SampleRate,
                 new AudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Info.SampleRate);
 
         [Theory(DisplayName = "AudioFile's Info property has the expected BitRate")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndAudioInfo), MemberType = typeof(ValidFileDataSource))]
-        public void InfoHasExpectedBitRate(string fileName, TestAudioInfo expectedAudioInfo) =>
+        public void InfoHasExpectedBitRate(string fileName, AudioInfo expectedAudioInfo) =>
             Assert.Equal(
                 expectedAudioInfo.BitRate,
                 new AudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Info.BitRate);
 
         [Theory(DisplayName = "AudioFile's Info property has the expected FrameCount")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndAudioInfo), MemberType = typeof(ValidFileDataSource))]
-        public void InfoHasExpectedFrameCount(string fileName, TestAudioInfo expectedAudioInfo) =>
+        public void InfoHasExpectedFrameCount(string fileName, AudioInfo expectedAudioInfo) =>
             Assert.Equal(
-                expectedAudioInfo.SampleCount,
+                expectedAudioInfo.FrameCount,
                 new AudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Info.FrameCount);
 
         [Theory(DisplayName = "AudioFile's Info property has the expected PlayLength")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndAudioInfo), MemberType = typeof(ValidFileDataSource))]
-        public void InfoHasExpectedPlayLength(string fileName, TestAudioInfo expectedAudioInfo) =>
+        public void InfoHasExpectedPlayLength(string fileName, AudioInfo expectedAudioInfo) =>
             Assert.Equal(
-                expectedAudioInfo.SampleCount == 0
+                expectedAudioInfo.FrameCount == 0
                     ? TimeSpan.Zero
                     : new(0, 0,
-                        (int) Math.Round(expectedAudioInfo.SampleCount / (double) expectedAudioInfo.SampleRate)),
+                        (int) Math.Round(expectedAudioInfo.FrameCount / (double) expectedAudioInfo.SampleRate)),
                 new AudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Info.PlayLength);
 
         [Theory(DisplayName = "AudioFile's Rename method throws an exception if the name is null")]

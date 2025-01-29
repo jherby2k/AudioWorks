@@ -14,28 +14,29 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Globalization;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 using AudioWorks.Common;
 using Xunit.Sdk;
 
-namespace AudioWorks.TestUtilities.DataTypes
+namespace AudioWorks.TestUtilities.Serializers
 {
-    public sealed class TestSettingDictionary : SettingDictionary, IXunitSerializable
+    public sealed class SettingDictionarySerializer : IXunitSerializer
     {
-        public void Deserialize(IXunitSerializationInfo info)
+        public bool IsSerializable(Type type, object? value, [NotNullWhen(false)] out string? failureReason)
         {
-            foreach (var item in info.GetValue<string[]>("Items") ?? [])
+            if (type == typeof(SettingDictionary))
             {
-                var splitItem = item.Split('|');
-                Add(splitItem[0],
-                    Convert.ChangeType(splitItem[1], Type.GetType(splitItem[2])!, CultureInfo.InvariantCulture));
+                failureReason = string.Empty;
+                return true;
             }
+
+            failureReason = "Not a SettingDictionary";
+            return false;
         }
 
-        public void Serialize(IXunitSerializationInfo info) =>
-            info.AddValue("Items", this.Select(item =>
-                $"{item.Key}|{item.Value}|{item.Value.GetType().AssemblyQualifiedName}"
-            ).ToArray());
+        public string Serialize(object value) => JsonSerializer.Serialize((SettingDictionary) value);
+
+        public object Deserialize(Type type, string serializedValue) => JsonSerializer.Deserialize<SettingDictionary>(serializedValue) ?? new object();
     }
 }

@@ -20,7 +20,6 @@ using AudioWorks.Api;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
 using AudioWorks.TestUtilities.DataSources;
-using AudioWorks.TestUtilities.DataTypes;
 using AutoMapper;
 using Moq;
 using Xunit;
@@ -209,7 +208,7 @@ namespace AudioWorks.Commands.Tests
 
         [Theory(DisplayName = "Rename-AudioFile renames the file")]
         [MemberData(nameof(RenameValidFileDataSource.Data), MemberType = typeof(RenameValidFileDataSource))]
-        public void RenamesFile(string fileName, TestAudioMetadata metadata, string name, string expectedFileName)
+        public void RenamesFile(string fileName, AudioMetadata metadata, string name, string expectedFileName)
         {
             var path = Path.Combine("Output", "Rename-AudioFile", fileName);
             Directory.CreateDirectory(Path.GetDirectoryName(path)!);

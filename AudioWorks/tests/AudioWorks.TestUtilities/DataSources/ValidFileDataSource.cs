@@ -14,117 +14,55 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System.Linq;
-using AudioWorks.TestUtilities.DataTypes;
+using AudioWorks.Common;
 using Xunit;
 
 namespace AudioWorks.TestUtilities.DataSources
 {
     public static class ValidFileDataSource
     {
-        static readonly TheoryData<string, TestAudioInfo, TestAudioMetadata> _data = new()
+        static readonly TheoryData<string, AudioInfo, AudioMetadata> _data = new()
         {
             #region Wave
 
             {
                 "LPCM 8-bit 8000Hz Stereo.wav",
-                new()
-                {
-                    Format = "LPCM",
-                    Channels = 2,
-                    BitsPerSample = 8,
-                    SampleRate = 8000,
-                    SampleCount = 22515,
-                    BitRate = 128000
-                },
+                AudioInfo.CreateForLossless("LPCM", 2, 8, 8000, 22515),
                 new()
             },
             {
                 "LPCM 16-bit 44100Hz Mono.wav",
-                new()
-                {
-                    Format = "LPCM",
-                    Channels = 1,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 705600
-                },
+                AudioInfo.CreateForLossless("LPCM", 1, 16, 44100, 124112),
                 new()
             },
             {
                 "LPCM 16-bit 44100Hz Stereo.wav",
-                new()
-                {
-                    Format = "LPCM",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 1411200
-                },
+                AudioInfo.CreateForLossless("LPCM", 2, 16, 44100, 124112),
                 new()
             },
             {
                 "LPCM 16-bit 48000Hz Stereo.wav",
-                new()
-                {
-                    Format = "LPCM",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 48000,
-                    SampleCount = 135087,
-                    BitRate = 1536000
-                },
+                AudioInfo.CreateForLossless("LPCM", 2, 16, 48000, 135087),
                 new()
             },
             {
                 "LPCM 24-bit 96000Hz Stereo.wav",
-                new()
-                {
-                    Format = "LPCM",
-                    Channels = 2,
-                    BitsPerSample = 24,
-                    SampleRate = 96000,
-                    SampleCount = 270174,
-                    BitRate = 4608000
-                },
+                AudioInfo.CreateForLossless("LPCM", 2, 24, 96000, 270174),
                 new()
             },
             {
                 "LPCM 16-bit 44100Hz Stereo (extensible).wav",
-                new()
-                {
-                    Format = "LPCM",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 1411200
-                },
+                AudioInfo.CreateForLossless("LPCM", 2, 16, 44100, 124112),
                 new()
             },
             {
                 "A-law 44100Hz Stereo.wav",
-                new()
-                {
-                    Format = "A-law",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 705600
-                },
+                AudioInfo.CreateForLossy("A-law", 2, 44100, 124112, 705600),
                 new()
             },
             {
                 "µ-law 44100Hz Stereo.wav",
-                new()
-                {
-                    Format = "µ-law",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 705600
-                },
+                AudioInfo.CreateForLossy("µ-law", 2, 44100, 124112, 705600),
                 new()
             },
 
@@ -134,80 +72,32 @@ namespace AudioWorks.TestUtilities.DataSources
 
             {
                 "FLAC Level 5 8-bit 8000Hz Stereo.flac",
-                new()
-                {
-                    Format = "FLAC",
-                    Channels = 2,
-                    BitsPerSample = 8,
-                    SampleRate = 8000,
-                    SampleCount = 22515,
-                    BitRate = 128000
-                },
+                AudioInfo.CreateForLossless("FLAC", 2, 8, 8000, 22515),
                 new()
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Mono.flac",
-                new()
-                {
-                    Format = "FLAC",
-                    Channels = 1,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 705600
-                },
+                AudioInfo.CreateForLossless("FLAC", 1, 16, 44100, 124112),
                 new()
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
-                new()
-                {
-                    Format = "FLAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 1411200
-                },
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
                 new()
             },
             {
                 "FLAC Level 5 16-bit 48000Hz Stereo.flac",
-                new()
-                {
-                    Format = "FLAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 48000,
-                    SampleCount = 135087,
-                    BitRate = 1536000
-                },
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 48000, 135087),
                 new()
             },
             {
                 "FLAC Level 5 24-bit 96000Hz Stereo.flac",
-                new()
-                {
-                    Format = "FLAC",
-                    Channels = 2,
-                    BitsPerSample = 24,
-                    SampleRate = 96000,
-                    SampleCount = 270174,
-                    BitRate = 4608000
-                },
+                AudioInfo.CreateForLossless("FLAC", 2, 24, 96000, 270174),
                 new()
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
-                new()
-                {
-                    Format = "FLAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 1411200
-                },
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -230,15 +120,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using mixed-case fields).flac",
-                new()
-                {
-                    Format = "FLAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 1411200
-                },
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -261,15 +143,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using COMMENT).flac",
-                new()
-                {
-                    Format = "FLAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 1411200
-                },
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -292,15 +166,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TOTALTRACKS).flac",
-                new()
-                {
-                    Format = "FLAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 1411200
-                },
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -323,15 +189,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TRACKCOUNT).flac",
-                new()
-                {
-                    Format = "FLAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 1411200
-                },
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -354,15 +212,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using TRACKTOTAL).flac",
-                new()
-                {
-                    Format = "FLAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 1411200
-                },
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -385,15 +235,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using YEAR).flac",
-                new()
-                {
-                    Format = "FLAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 1411200
-                },
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -414,15 +256,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using extended DATE).flac",
-                new()
-                {
-                    Format = "FLAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 1411200
-                },
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -445,15 +279,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using invalid DATE).flac",
-                new()
-                {
-                    Format = "FLAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 1411200
-                },
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -473,15 +299,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using invalid TRACKNUMBER).flac",
-                new()
-                {
-                    Format = "FLAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 1411200
-                },
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -502,15 +320,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using ReplayGain with '+' sign).flac",
-                new()
-                {
-                    Format = "FLAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 1411200
-                },
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -533,15 +343,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using ReplayGain with missing 'dB').flac",
-                new()
-                {
-                    Format = "FLAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 1411200
-                },
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -564,15 +366,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using invalid ReplayGain fields).flac",
-                new()
-                {
-                    Format = "FLAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 1411200
-                },
+                AudioInfo.CreateForLossless("FLAC", 2, 16, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -596,67 +390,27 @@ namespace AudioWorks.TestUtilities.DataSources
 
             {
                 "ALAC 16-bit 44100Hz Mono.m4a",
-                new()
-                {
-                    Format = "ALAC",
-                    Channels = 1,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 122880,
-                    BitRate = 705600
-                },
+                AudioInfo.CreateForLossless("ALAC", 1, 16, 44100, 122880),
                 new()
             },
             {
                 "ALAC 16-bit 44100Hz Stereo.m4a",
-                new()
-                {
-                    Format = "ALAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 122880,
-                    BitRate = 1411200
-                },
+                AudioInfo.CreateForLossless("ALAC", 2, 16, 44100, 122880),
                 new()
             },
             {
                 "ALAC 16-bit 48000Hz Stereo.m4a",
-                new()
-                {
-                    Format = "ALAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 48000,
-                    SampleCount = 131072,
-                    BitRate = 1536000
-                },
+                AudioInfo.CreateForLossless("ALAC", 2, 16, 48000, 131072),
                 new()
             },
             {
                 "ALAC 24-bit 96000Hz Stereo.m4a",
-                new()
-                {
-                    Format = "ALAC",
-                    Channels = 2,
-                    BitsPerSample = 24,
-                    SampleRate = 96000,
-                    SampleCount = 266240,
-                    BitRate = 4608000
-                },
+                AudioInfo.CreateForLossless("ALAC", 2, 24, 96000, 266240),
                 new()
             },
             {
                 "ALAC 16-bit 44100Hz Stereo (Tagged).m4a",
-                new()
-                {
-                    Format = "ALAC",
-                    Channels = 2,
-                    BitsPerSample = 16,
-                    SampleRate = 44100,
-                    SampleCount = 122880,
-                    BitRate = 1411200
-                },
+                AudioInfo.CreateForLossless("ALAC", 2, 16, 44100, 122880),
                 new()
                 {
                     Title = "Test Title",
@@ -680,62 +434,27 @@ namespace AudioWorks.TestUtilities.DataSources
 
             {
                 "QAAC TVBR 91 8000Hz Stereo.m4a",
-                new()
-                {
-                    Format = "AAC",
-                    Channels = 2,
-                    SampleRate = 8000,
-                    SampleCount = 25600,
-                    BitRate = 50795
-                },
+                AudioInfo.CreateForLossy("AAC", 2, 8000, 25600, 50795),
                 new()
             },
             {
                 "QAAC TVBR 91 44100Hz Mono.m4a",
-                new()
-                {
-                    Format = "AAC",
-                    Channels = 1,
-                    SampleRate = 44100,
-                    SampleCount = 126976,
-                    BitRate = 93207
-                },
+                AudioInfo.CreateForLossy("AAC", 1, 44100, 126976, 93207),
                 new()
             },
             {
                 "QAAC TVBR 91 44100Hz Stereo.m4a",
-                new()
-                {
-                    Format = "AAC",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 126976,
-                    BitRate = 183702
-                },
+                AudioInfo.CreateForLossy("AAC", 2, 44100, 126976, 183702),
                 new()
             },
             {
                 "QAAC TVBR 91 48000Hz Stereo.m4a",
-                new()
-                {
-                    Format = "AAC",
-                    Channels = 2,
-                    SampleRate = 48000,
-                    SampleCount = 137216,
-                    BitRate = 197757
-                },
+                AudioInfo.CreateForLossy("AAC", 2, 48000, 137216, 197757),
                 new()
             },
             {
                 "QAAC TVBR 91 44100Hz Stereo (Tagged).m4a",
-                new()
-                {
-                    Format = "AAC",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 126976,
-                    BitRate = 183702
-                },
+                AudioInfo.CreateForLossy("AAC", 2, 44100, 126976, 183702),
                 new()
                 {
                     Title = "Test Title",
@@ -759,119 +478,52 @@ namespace AudioWorks.TestUtilities.DataSources
 
             {
                 "Lame CBR 24 8000Hz Stereo.mp3",
-                new()
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 8000,
-                    SampleCount = 24192,
-                    BitRate = 24571
-                },
+                AudioInfo.CreateForLossy("MP3", 2, 8000, 24192, 24571),
                 new()
             },
             {
                 "Lame CBR 64 44100Hz Mono.mp3",
-                new()
-                {
-                    Format = "MP3",
-                    Channels = 1,
-                    SampleRate = 44100,
-                    SampleCount = 125568,
-                    BitRate = 64582
-                },
+                AudioInfo.CreateForLossy("MP3", 1, 44100, 125568, 64582),
                 new()
             },
             {
                 "Lame CBR 128 44100Hz Stereo.mp3",
-                new()
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 125568,
-                    BitRate = 129170
-                },
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568, 129170),
                 new()
             },
             {
                 "Lame CBR 128 44100Hz Stereo (no header).mp3",
-                new()
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    BitRate = 128000
-                },
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 0, 128000),
                 new()
             },
             {
                 "Lame CBR 128 48000Hz Stereo.mp3",
-                new()
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 48000,
-                    SampleCount = 137088,
-                    BitRate = 129076
-                },
+                AudioInfo.CreateForLossy("MP3", 2, 48000, 137088, 129076),
                 new()
             },
             {
                 "Lame VBR Standard 44100Hz Stereo.mp3",
-                new()
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 125568,
-                    BitRate = 213358
-                },
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568, 213358),
                 new()
             },
             {
                 "Fraunhofer CBR 128 44100Hz Stereo.mp3",
-                new()
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    BitRate = 128000
-                },
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 0, 128000),
                 new()
             },
             {
                 "Fraunhofer VBR 44100Hz Stereo.mp3",
-                new()
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    BitRate = 160000
-                },
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 0, 160000),
                 new()
             },
             {
                 "Fraunhofer VBR 44100Hz Stereo (with header).mp3",
-                new()
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 126720,
-                    BitRate = 143200
-                },
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 126720, 143200),
                 new()
             },
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v1).mp3",
-                new()
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 125568,
-                    BitRate = 129170
-                },
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568, 129170),
                 new()
                 {
                     Title = "Test Title",
@@ -885,14 +537,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v1 missing values).mp3",
-                new()
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 125568,
-                    BitRate = 129170
-                },
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568, 129170),
                 new()
                 {
                     Title = "Test Title",
@@ -903,14 +548,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
-                new()
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 125568,
-                    BitRate = 129170
-                },
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568, 129170),
                 new()
                 {
                     Title = "Test Title",
@@ -933,14 +571,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1 Extended Header).mp3",
-                new()
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 125568,
-                    BitRate = 129170
-                },
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568, 129170),
                 new()
                 {
                     Title = "Test Title",
@@ -963,14 +594,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 UTF16).mp3",
-                new()
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 125568,
-                    BitRate = 129170
-                },
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568, 129170),
                 new()
                 {
                     Title = "Test Title",
@@ -993,14 +617,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 UTF16 Unsynchronised).mp3",
-                new()
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 125568,
-                    BitRate = 129170
-                },
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568, 129170),
                 new()
                 {
                     Title = "Test Title",
@@ -1023,14 +640,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.4 UTF16 Unsynchronised Frames).mp3",
-                new()
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 125568,
-                    BitRate = 129170
-                },
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568, 129170),
                 new()
                 {
                     Title = "Test Title",
@@ -1053,14 +663,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.4 UTF16 Big Endian).mp3",
-                new()
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 125568,
-                    BitRate = 129170
-                },
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568, 129170),
                 new()
                 {
                     Title = "Test Title",
@@ -1083,14 +686,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Lame CBR 128 44100Hz Stereo (ID3v2.4 UTF8).mp3",
-                new()
-                {
-                    Format = "MP3",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 125568,
-                    BitRate = 129170
-                },
+                AudioInfo.CreateForLossy("MP3", 2, 44100, 125568, 129170),
                 new()
                 {
                     Title = "Test Title",
@@ -1118,73 +714,32 @@ namespace AudioWorks.TestUtilities.DataSources
 
             {
                 "Vorbis Quality 3 8000Hz Stereo.ogg",
-                new()
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 8000,
-                    SampleCount = 22515,
-                    BitRate = 31800
-                },
+                AudioInfo.CreateForLossy("Vorbis", 2, 8000, 22515, 31800),
                 new()
             },
             {
                 "Vorbis Quality 3 44100Hz Mono.ogg",
-                new()
-                {
-                    Format = "Vorbis",
-                    Channels = 1,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 80000
-                },
+                AudioInfo.CreateForLossy("Vorbis", 1, 44100, 124112, 80000),
                 new()
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
-                new()
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 112000
-                },
+                AudioInfo.CreateForLossy("Vorbis", 2, 44100, 124112, 112000),
                 new()
             },
             {
                 "Vorbis Quality 3 48000Hz Stereo.ogg",
-                new()
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 48000,
-                    SampleCount = 135087,
-                    BitRate = 112000
-                },
+                AudioInfo.CreateForLossy("Vorbis", 2, 48000, 135087, 112000),
                 new()
             },
             {
                 "Vorbis Quality 3 96000Hz Stereo.ogg",
-                new()
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 96000,
-                    SampleCount = 270174
-                },
+                AudioInfo.CreateForLossy("Vorbis", 2, 96000, 270174),
                 new()
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using defaults).ogg",
-                new()
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 112000
-                },
+                AudioInfo.CreateForLossy("Vorbis", 2, 44100, 124112, 112000),
                 new()
                 {
                     Title = "Test Title",
@@ -1207,14 +762,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using mixed-case fields).ogg",
-                new()
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 112000
-                },
+                AudioInfo.CreateForLossy("Vorbis", 2, 44100, 124112, 112000),
                 new()
                 {
                     Title = "Test Title",
@@ -1237,14 +785,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using COMMENT).ogg",
-                new()
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 112000
-                },
+                AudioInfo.CreateForLossy("Vorbis", 2, 44100, 124112, 112000),
                 new()
                 {
                     Title = "Test Title",
@@ -1267,14 +808,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using TOTALTRACKS).ogg",
-                new()
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 112000
-                },
+                AudioInfo.CreateForLossy("Vorbis", 2, 44100, 124112, 112000),
                 new()
                 {
                     Title = "Test Title",
@@ -1297,14 +831,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using TRACKCOUNT).ogg",
-                new()
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 112000
-                },
+                AudioInfo.CreateForLossy("Vorbis", 2, 44100, 124112, 112000),
                 new()
                 {
                     Title = "Test Title",
@@ -1327,14 +854,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using TRACKTOTAL).ogg",
-                new()
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 112000
-                },
+                AudioInfo.CreateForLossy("Vorbis", 2, 44100, 124112, 112000),
                 new()
                 {
                     Title = "Test Title",
@@ -1357,14 +877,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using YEAR).ogg",
-                new()
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 112000
-                },
+                AudioInfo.CreateForLossy("Vorbis", 2, 44100, 124112, 112000),
                 new()
                 {
                     Title = "Test Title",
@@ -1385,14 +898,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using extended DATE).ogg",
-                new()
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 112000
-                },
+                AudioInfo.CreateForLossy("Vorbis", 2, 44100, 124112, 112000),
                 new()
                 {
                     Title = "Test Title",
@@ -1415,14 +921,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using invalid DATE).ogg",
-                new()
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 112000
-                },
+                AudioInfo.CreateForLossy("Vorbis", 2, 44100, 124112, 112000),
                 new()
                 {
                     Title = "Test Title",
@@ -1442,14 +941,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using invalid TRACKNUMBER).ogg",
-                new()
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 112000
-                },
+                AudioInfo.CreateForLossy("Vorbis", 2, 44100, 124112, 112000),
                 new()
                 {
                     Title = "Test Title",
@@ -1470,14 +962,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using ReplayGain with '+' sign).ogg",
-                new()
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 112000
-                },
+                AudioInfo.CreateForLossy("Vorbis", 2, 44100, 124112, 112000),
                 new()
                 {
                     Title = "Test Title",
@@ -1500,14 +985,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using ReplayGain with missing 'dB').ogg",
-                new()
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 112000
-                },
+                AudioInfo.CreateForLossy("Vorbis", 2, 44100, 124112, 112000),
                 new()
                 {
                     Title = "Test Title",
@@ -1530,14 +1008,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Vorbis Quality 3 44100Hz Stereo (Tagged using invalid ReplayGain fields).ogg",
-                new()
-                {
-                    Format = "Vorbis",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112,
-                    BitRate = 112000
-                },
+                AudioInfo.CreateForLossy("Vorbis", 2, 44100, 124112, 112000),
                 new()
                 {
                     Title = "Test Title",
@@ -1561,68 +1032,32 @@ namespace AudioWorks.TestUtilities.DataSources
 
             {
                 "Opus VBR 8000Hz Stereo.opus",
-                new()
-                {
-                    Format = "Opus",
-                    Channels = 2,
-                    SampleRate = 8000,
-                    SampleCount = 22515
-                },
+                AudioInfo.CreateForLossy("Opus", 2, 8000, 22515),
                 new()
             },
             {
                 "Opus VBR 44100Hz Mono.opus",
-                new()
-                {
-                    Format = "Opus",
-                    Channels = 1,
-                    SampleRate = 44100,
-                    SampleCount = 124112
-                },
+                AudioInfo.CreateForLossy("Opus", 1, 44100, 124112),
                 new()
             },
             {
                 "Opus VBR 44100Hz Stereo.opus",
-                new()
-                {
-                    Format = "Opus",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112
-                },
+                AudioInfo.CreateForLossy("Opus", 2, 44100, 124112),
                 new()
             },
             {
                 "Opus VBR 48000Hz Stereo.opus",
-                new()
-                {
-                    Format = "Opus",
-                    Channels = 2,
-                    SampleRate = 48000,
-                    SampleCount = 135087
-                },
+                AudioInfo.CreateForLossy("Opus", 2, 48000, 135087),
                 new()
             },
             {
                 "Opus VBR 96000Hz Stereo.opus",
-                new()
-                {
-                    Format = "Opus",
-                    Channels = 2,
-                    SampleRate = 96000,
-                    SampleCount = 270174
-                },
+                AudioInfo.CreateForLossy("Opus", 2, 96000, 270174),
                 new()
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using defaults).opus",
-                new()
-                {
-                    Format = "Opus",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112
-                },
+                AudioInfo.CreateForLossy("Opus", 2, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -1641,13 +1076,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using mixed-case fields).opus",
-                new()
-                {
-                    Format = "Opus",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112
-                },
+                AudioInfo.CreateForLossy("Opus", 2, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -1666,13 +1095,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using COMMENT).opus",
-                new()
-                {
-                    Format = "Opus",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112
-                },
+                AudioInfo.CreateForLossy("Opus", 2, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -1691,13 +1114,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using TOTALTRACKS).opus",
-                new()
-                {
-                    Format = "Opus",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112
-                },
+                AudioInfo.CreateForLossy("Opus", 2, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -1716,13 +1133,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using TRACKCOUNT).opus",
-                new()
-                {
-                    Format = "Opus",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112
-                },
+                AudioInfo.CreateForLossy("Opus", 2, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -1741,13 +1152,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using TRACKTOTAL).opus",
-                new()
-                {
-                    Format = "Opus",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112
-                },
+                AudioInfo.CreateForLossy("Opus", 2, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -1766,13 +1171,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using YEAR).opus",
-                new()
-                {
-                    Format = "Opus",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112
-                },
+                AudioInfo.CreateForLossy("Opus", 2, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -1789,13 +1188,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using extended DATE).opus",
-                new()
-                {
-                    Format = "Opus",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112
-                },
+                AudioInfo.CreateForLossy("Opus", 2, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -1814,13 +1207,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using invalid DATE).opus",
-                new()
-                {
-                    Format = "Opus",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112
-                },
+                AudioInfo.CreateForLossy("Opus", 2, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -1836,13 +1223,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using invalid TRACKNUMBER).opus",
-                new()
-                {
-                    Format = "Opus",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112
-                },
+                AudioInfo.CreateForLossy("Opus", 2, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -1859,13 +1240,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using REPLAYGAIN).opus",
-                new()
-                {
-                    Format = "Opus",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112
-                },
+                AudioInfo.CreateForLossy("Opus", 2, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -1888,13 +1263,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using REPLAYGAIN with '+' sign).opus",
-                new()
-                {
-                    Format = "Opus",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112
-                },
+                AudioInfo.CreateForLossy("Opus", 2, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -1917,13 +1286,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using REPLAYGAIN with missing 'dB').opus",
-                new()
-                {
-                    Format = "Opus",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112
-                },
+                AudioInfo.CreateForLossy("Opus", 2, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -1946,13 +1309,7 @@ namespace AudioWorks.TestUtilities.DataSources
             },
             {
                 "Opus VBR 44100Hz Stereo (Tagged using R128).opus",
-                new()
-                {
-                    Format = "Opus",
-                    Channels = 2,
-                    SampleRate = 44100,
-                    SampleCount = 124112
-                },
+                AudioInfo.CreateForLossy("Opus", 2, 44100, 124112),
                 new()
                 {
                     Title = "Test Title",
@@ -1978,10 +1335,10 @@ namespace AudioWorks.TestUtilities.DataSources
         public static TheoryData<string> FileNames =>
             new(_data.Select(item => item.Data.Item1));
 
-        public static TheoryData<string, TestAudioInfo> FileNamesAndAudioInfo =>
+        public static TheoryData<string, AudioInfo> FileNamesAndAudioInfo =>
             new(_data.Select(item => (item.Data.Item1, item.Data.Item2)));
 
-        public static TheoryData<string, TestAudioMetadata> FileNamesAndMetadata =>
+        public static TheoryData<string, AudioMetadata> FileNamesAndMetadata =>
             new(_data.Select(item => (item.Data.Item1, item.Data.Item3)));
     }
 }

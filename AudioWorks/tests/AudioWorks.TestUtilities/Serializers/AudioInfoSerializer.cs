@@ -13,23 +13,30 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 using AudioWorks.Common;
 using Xunit.Sdk;
 
-namespace AudioWorks.TestUtilities.DataTypes
+namespace AudioWorks.TestUtilities.Serializers
 {
-    public sealed class TestAudioMetadata : AudioMetadata, IXunitSerializable
+    public sealed class AudioInfoSerializer : IXunitSerializer
     {
-        public void Deserialize(IXunitSerializationInfo info)
+        public bool IsSerializable(Type type, object? value, [NotNullWhen(false)] out string? failureReason)
         {
-            foreach (var property in GetType().GetProperties())
-                property.SetValue(this, info.GetValue(property.Name));
+            if (type == typeof(AudioInfo))
+            {
+                failureReason = string.Empty;
+                return true;
+            }
+
+            failureReason = "Not an AudioInfo";
+            return false;
         }
 
-        public void Serialize(IXunitSerializationInfo info)
-        {
-            foreach (var property in GetType().GetProperties())
-                info.AddValue(property.Name, property.GetValue(this));
-        }
+        public string Serialize(object value) => JsonSerializer.Serialize((AudioInfo) value);
+
+        public object Deserialize(Type type, string serializedValue) => JsonSerializer.Deserialize<AudioInfo>(serializedValue) ?? new object();
     }
 }

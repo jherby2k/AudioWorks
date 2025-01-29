@@ -20,7 +20,6 @@ using System.Threading.Tasks;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
 using AudioWorks.TestUtilities.DataSources;
-using AudioWorks.TestUtilities.DataTypes;
 using Xunit;
 
 namespace AudioWorks.Api.Tests
@@ -53,8 +52,8 @@ namespace AudioWorks.Api.Tests
         public async Task AnalyzeAsyncCreatesExpectedMetadata(
             string fileName,
             string analyzerName,
-            TestSettingDictionary settings,
-            TestAudioMetadata validMetadata)
+            SettingDictionary settings,
+            AudioMetadata validMetadata)
         {
             var audioFile = new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
 
@@ -68,8 +67,8 @@ namespace AudioWorks.Api.Tests
         public async Task AnalyzeAsyncCreatesExpectedMetadataForGroup(
             string[] fileNames,
             string analyzerName,
-            TestSettingDictionary settings,
-            TestAudioMetadata[] validMetadata)
+            SettingDictionary settings,
+            AudioMetadata[] validMetadata)
         {
             var audioFiles = fileNames.Select(fileName =>
                     new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)))

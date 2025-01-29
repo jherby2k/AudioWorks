@@ -13,14 +13,14 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using AudioWorks.TestUtilities.DataTypes;
+using AudioWorks.Common;
 using Xunit;
 
 namespace AudioWorks.TestUtilities.DataSources
 {
     public static class AnalyzeGroupDataSource
     {
-        public static TheoryData<string[], string, TestSettingDictionary, TestAudioMetadata[]> Data { get; } = new()
+        public static TheoryData<string[], string, SettingDictionary, AudioMetadata[]> Data { get; } = new()
         {
             // 8000Hz Stereo, default (simple) peaks
             {

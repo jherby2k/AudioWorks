@@ -20,7 +20,6 @@ using System.Threading.Tasks;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
 using AudioWorks.TestUtilities.DataSources;
-using AudioWorks.TestUtilities.DataTypes;
 using Xunit;
 
 namespace AudioWorks.Api.Tests
@@ -67,7 +66,7 @@ namespace AudioWorks.Api.Tests
             int index,
             string sourceFileName,
             string encoderName,
-            TestSettingDictionary settings,
+            SettingDictionary settings,
             string[] validHashes)
         {
             var results = (await new AudioFileEncoder(
@@ -89,7 +88,7 @@ namespace AudioWorks.Api.Tests
             int index,
             string sourceFileName,
             string encoderName,
-            TestSettingDictionary settings,
+            SettingDictionary settings,
             string[] validHashes)
         {
             var results = (await new AudioFileEncoder(

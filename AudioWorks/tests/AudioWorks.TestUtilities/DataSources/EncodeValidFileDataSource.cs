@@ -17,14 +17,14 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 #endif
 using System.Linq;
-using AudioWorks.TestUtilities.DataTypes;
+using AudioWorks.Common;
 using Xunit;
 
 namespace AudioWorks.TestUtilities.DataSources
 {
     public static class EncodeValidFileDataSource
     {
-        static readonly TheoryData<string, string, TestSettingDictionary, string[]> _data = new()
+        static readonly TheoryData<string, string, SettingDictionary, string[]> _data = new()
         {
             #region Wave Encoding
 
@@ -2258,7 +2258,7 @@ namespace AudioWorks.TestUtilities.DataSources
             #endregion
         };
 
-        public static TheoryData<int, string, string, TestSettingDictionary, string[]> Data =>
+        public static TheoryData<int, string, string, SettingDictionary, string[]> Data =>
             new(_data.Select((item, index) =>
                 (index, item.Data.Item1, item.Data.Item2, item.Data.Item3, item.Data.Item4)));
     }

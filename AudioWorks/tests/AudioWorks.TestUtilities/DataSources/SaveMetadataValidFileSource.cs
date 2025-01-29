@@ -15,14 +15,14 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Linq;
-using AudioWorks.TestUtilities.DataTypes;
+using AudioWorks.Common;
 using Xunit;
 
 namespace AudioWorks.TestUtilities.DataSources
 {
     public static class SaveMetadataValidFileSource
     {
-        static readonly TheoryData<string, TestAudioMetadata, string, TestSettingDictionary, string[]> _data = new()
+        static readonly TheoryData<string, AudioMetadata, string, SettingDictionary, string[]> _data = new()
         {
             #region FLAC
 
@@ -1500,7 +1500,7 @@ namespace AudioWorks.TestUtilities.DataSources
             #endregion
         };
 
-        public static TheoryData<int, string, TestAudioMetadata, string, TestSettingDictionary, string[]> Data =>
+        public static TheoryData<int, string, AudioMetadata, string, SettingDictionary, string[]> Data =>
             new(_data.Select((item, index) =>
                 (index, item.Data.Item1, item.Data.Item2, item.Data.Item3, item.Data.Item4, item.Data.Item5)));
     }

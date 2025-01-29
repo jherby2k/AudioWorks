@@ -20,7 +20,6 @@ using AudioWorks.Api;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
 using AudioWorks.TestUtilities.DataSources;
-using AudioWorks.TestUtilities.DataTypes;
 using AutoMapper;
 using Moq;
 using Xunit;
@@ -187,7 +186,7 @@ namespace AudioWorks.Commands.Tests
         public void CreatesExpectedOutput(
             int index,
             string fileName,
-            TestAudioMetadata metadata,
+            AudioMetadata metadata,
             string imageFileName,
             SettingDictionary settings,
             string[] validHashes)

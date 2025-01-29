@@ -19,7 +19,6 @@ using System.Text.Json;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
 using AudioWorks.TestUtilities.DataSources;
-using AudioWorks.TestUtilities.DataTypes;
 using AutoMapper;
 using Xunit;
 
@@ -63,112 +62,112 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "TaggedAudioFile's Metadata property has the expected Title")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
-        public void MetadataHasExpectedTitle(string fileName, TestAudioMetadata expectedMetadata) =>
+        public void MetadataHasExpectedTitle(string fileName, AudioMetadata expectedMetadata) =>
             Assert.Equal(
                 expectedMetadata.Title,
                 new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Metadata.Title);
 
         [Theory(DisplayName = "TaggedAudioFile's Metadata property has the expected Artist")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
-        public void MetadataHasExpectedArtist(string fileName, TestAudioMetadata expectedMetadata) =>
+        public void MetadataHasExpectedArtist(string fileName, AudioMetadata expectedMetadata) =>
             Assert.Equal(
                 expectedMetadata.Artist,
                 new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Metadata.Artist);
 
         [Theory(DisplayName = "TaggedAudioFile's Metadata property has the expected Album")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
-        public void MetadataHasExpectedAlbum(string fileName, TestAudioMetadata expectedMetadata) =>
+        public void MetadataHasExpectedAlbum(string fileName, AudioMetadata expectedMetadata) =>
             Assert.Equal(
                 expectedMetadata.Album,
                 new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Metadata.Album);
 
         [Theory(DisplayName = "TaggedAudioFile's Metadata property has the expected AlbumArtist")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
-        public void MetadataHasExpectedAlbumArtist(string fileName, TestAudioMetadata expectedMetadata) =>
+        public void MetadataHasExpectedAlbumArtist(string fileName, AudioMetadata expectedMetadata) =>
             Assert.Equal(
                 expectedMetadata.AlbumArtist,
                 new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Metadata.AlbumArtist);
 
         [Theory(DisplayName = "TaggedAudioFile's Metadata property has the expected Composer")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
-        public void MetadataHasExpectedComposer(string fileName, TestAudioMetadata expectedMetadata) =>
+        public void MetadataHasExpectedComposer(string fileName, AudioMetadata expectedMetadata) =>
             Assert.Equal(
                 expectedMetadata.Composer,
                 new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Metadata.Composer);
 
         [Theory(DisplayName = "TaggedAudioFile's Metadata property has the expected Genre")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
-        public void MetadataHasExpectedGenre(string fileName, TestAudioMetadata expectedMetadata) =>
+        public void MetadataHasExpectedGenre(string fileName, AudioMetadata expectedMetadata) =>
             Assert.Equal(
                 expectedMetadata.Genre,
                 new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Metadata.Genre);
 
         [Theory(DisplayName = "TaggedAudioFile's Metadata property has the expected Comment")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
-        public void MetadataHasExpectedComment(string fileName, TestAudioMetadata expectedMetadata) =>
+        public void MetadataHasExpectedComment(string fileName, AudioMetadata expectedMetadata) =>
             Assert.Equal(
                 expectedMetadata.Comment,
                 new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Metadata.Comment);
 
         [Theory(DisplayName = "TaggedAudioFile's Metadata property has the expected Day")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
-        public void MetadataHasExpectedDay(string fileName, TestAudioMetadata expectedMetadata) =>
+        public void MetadataHasExpectedDay(string fileName, AudioMetadata expectedMetadata) =>
             Assert.Equal(
                 expectedMetadata.Day,
                 new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Metadata.Day);
 
         [Theory(DisplayName = "TaggedAudioFile's Metadata property has the expected Month")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
-        public void MetadataHasExpectedMonth(string fileName, TestAudioMetadata expectedMetadata) =>
+        public void MetadataHasExpectedMonth(string fileName, AudioMetadata expectedMetadata) =>
             Assert.Equal(
                 expectedMetadata.Month,
                 new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Metadata.Month);
 
         [Theory(DisplayName = "TaggedAudioFile's Metadata property has the expected Year")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
-        public void MetadataHasExpectedYear(string fileName, TestAudioMetadata expectedMetadata) =>
+        public void MetadataHasExpectedYear(string fileName, AudioMetadata expectedMetadata) =>
             Assert.Equal(
                 expectedMetadata.Year,
                 new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Metadata.Year);
 
         [Theory(DisplayName = "TaggedAudioFile's Metadata property has the expected TrackNumber")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
-        public void MetadataHasExpectedTrackNumber(string fileName, TestAudioMetadata expectedMetadata) =>
+        public void MetadataHasExpectedTrackNumber(string fileName, AudioMetadata expectedMetadata) =>
             Assert.Equal(
                 expectedMetadata.TrackNumber,
                 new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Metadata.TrackNumber);
 
         [Theory(DisplayName = "TaggedAudioFile's Metadata property has the expected TrackCount")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
-        public void MetadataHasExpectedTrackCount(string fileName, TestAudioMetadata expectedMetadata) =>
+        public void MetadataHasExpectedTrackCount(string fileName, AudioMetadata expectedMetadata) =>
             Assert.Equal(
                 expectedMetadata.TrackCount,
                 new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Metadata.TrackCount);
 
         [Theory(DisplayName = "TaggedAudioFile's Metadata property has the expected TrackPeak")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
-        public void MetadataHasExpectedTrackPeak(string fileName, TestAudioMetadata expectedMetadata) =>
+        public void MetadataHasExpectedTrackPeak(string fileName, AudioMetadata expectedMetadata) =>
             Assert.Equal(
                 expectedMetadata.TrackPeak,
                 new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Metadata.TrackPeak);
 
         [Theory(DisplayName = "TaggedAudioFile's Metadata property has the expected AlbumPeak")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
-        public void MetadataHasExpectedAlbumPeak(string fileName, TestAudioMetadata expectedMetadata) =>
+        public void MetadataHasExpectedAlbumPeak(string fileName, AudioMetadata expectedMetadata) =>
             Assert.Equal(
                 expectedMetadata.AlbumPeak,
                 new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Metadata.AlbumPeak);
 
         [Theory(DisplayName = "TaggedAudioFile's Metadata property has the expected TrackGain")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
-        public void MetadataHasExpectedTrackGain(string fileName, TestAudioMetadata expectedMetadata) =>
+        public void MetadataHasExpectedTrackGain(string fileName, AudioMetadata expectedMetadata) =>
             Assert.Equal(
                 expectedMetadata.TrackGain,
                 new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Metadata.TrackGain);
 
         [Theory(DisplayName = "TaggedAudioFile's Metadata property has the expected AlbumGain")]
         [MemberData(nameof(ValidFileDataSource.FileNamesAndMetadata), MemberType = typeof(ValidFileDataSource))]
-        public void MetadataHasExpectedAlbumGain(string fileName, TestAudioMetadata expectedMetadata) =>
+        public void MetadataHasExpectedAlbumGain(string fileName, AudioMetadata expectedMetadata) =>
             Assert.Equal(
                 expectedMetadata.AlbumGain,
                 new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)).Metadata.AlbumGain);
@@ -243,7 +242,7 @@ namespace AudioWorks.Api.Tests
 
         [Theory(DisplayName = "TaggedAudioFile's Rename method renames the file")]
         [MemberData(nameof(RenameValidFileDataSource.Data), MemberType = typeof(RenameValidFileDataSource))]
-        public void RenameRenamesFile(string fileName, TestAudioMetadata metadata, string name, string expectedFileName)
+        public void RenameRenamesFile(string fileName, AudioMetadata metadata, string name, string expectedFileName)
         {
             var path = Path.Combine("Output", "Rename", fileName);
             Directory.CreateDirectory(Path.GetDirectoryName(path)!);
@@ -274,9 +273,9 @@ namespace AudioWorks.Api.Tests
         public void SaveMetadataCreatesExpectedOutput(
             int index,
             string fileName,
-            TestAudioMetadata metadata,
+            AudioMetadata metadata,
             string imageFileName,
-            TestSettingDictionary settings,
+            SettingDictionary settings,
             string[] validHashes)
         {
             var sourceDirectory = Path.Combine(PathUtility.GetTestFileRoot(), "Valid");
