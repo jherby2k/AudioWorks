@@ -67,9 +67,7 @@ namespace AudioWorks.Api
         /// <inheritdoc/>
         public override void Rename(string name, bool replace)
         {
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentNullException(nameof(name), "Value cannot be null or empty.");
-
+            ArgumentException.ThrowIfNullOrEmpty(nameof(name));
             base.Rename(new EncodedPath(name).ReplaceWith(Metadata), replace);
         }
 

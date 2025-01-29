@@ -77,7 +77,7 @@ namespace AudioWorks.Common
         /// <inheritdoc/>
         public virtual void Add(string key, object value)
         {
-            if (value == null) throw new ArgumentNullException(nameof(value));
+            ArgumentNullException.ThrowIfNull(nameof(value));
             _dictionary.Add(key, value);
         }
 

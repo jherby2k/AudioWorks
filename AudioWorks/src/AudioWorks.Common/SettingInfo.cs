@@ -40,9 +40,10 @@ namespace AudioWorks.Common
         /// Validates the specified value.
         /// </summary>
         /// <param name="value">The value.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null.</exception>
         public virtual void Validate(object value)
         {
-            if (value == null) throw new ArgumentNullException(nameof(value));
+            ArgumentNullException.ThrowIfNull(nameof(value));
             if (value.GetType() != ValueType)
                 throw new ArgumentException($"{nameof(value)} is not of type {ValueType}.", nameof(value));
         }

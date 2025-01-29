@@ -57,7 +57,8 @@ namespace AudioWorks.Common
         /// <see cref="ICoverArt"/> instance.
         /// </remarks>
         /// <param name="path">The fully-qualified path to the file.</param>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="path"/> is null or empty.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="path"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="path"/> is empty.</exception>
         /// <exception cref="FileNotFoundException">Thrown if <paramref name="path"/> does not exist.</exception>
         /// <exception cref="ImageUnsupportedException">Thrown if <paramref name="path"/> is not in a supported image
         /// format.</exception>
@@ -65,8 +66,7 @@ namespace AudioWorks.Common
         /// </exception>
         public static ICoverArt GetOrCreate(string path)
         {
-            if (string.IsNullOrEmpty(path))
-                throw new ArgumentNullException(nameof(path), "Value cannot be null or empty.");
+            ArgumentException.ThrowIfNullOrEmpty(nameof(path));
             if (!File.Exists(path))
                 throw new FileNotFoundException($"The file '{path}' cannot be found.", path);
 
@@ -86,7 +86,7 @@ namespace AudioWorks.Common
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="coverArt"/> is null.</exception>
         public static ICoverArt ConvertToLossy(ICoverArt coverArt)
         {
-            if (coverArt == null) throw new ArgumentNullException(nameof(coverArt));
+            ArgumentNullException.ThrowIfNull(nameof(coverArt));
 
             if (!coverArt.Lossless) return coverArt;
 

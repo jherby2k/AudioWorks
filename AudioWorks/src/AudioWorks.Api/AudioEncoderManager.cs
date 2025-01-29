@@ -36,7 +36,7 @@ namespace AudioWorks.Api
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="name"/> is null.</exception>
         public static SettingInfoDictionary GetSettingInfo(string name)
         {
-            if (name == null) throw new ArgumentNullException(nameof(name));
+            ArgumentNullException.ThrowIfNull(nameof(name));
 
             // Try each encoder that supports this file extension:
             foreach (var factory in ExtensionProviderWrapper.GetFactories<IAudioEncoder>(

@@ -36,7 +36,8 @@ namespace AudioWorks.Api
         /// Initializes a new instance of the <see cref="AudioFile"/> class.
         /// </summary>
         /// <param name="path">The fully-qualified path to the file.</param>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="path"/> is null or empty.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="path"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="path"/> is empty.</exception>
         /// <exception cref="FileNotFoundException">Thrown if <paramref name="path"/> does not exist.</exception>
         /// <exception cref="DirectoryNotFoundException">Throw in the directory does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">Thrown if <paramref name="path"/> cannot be accessed due to
@@ -44,8 +45,7 @@ namespace AudioWorks.Api
         /// <exception cref="PathTooLongException">Thrown if <paramref name="path"/> is too long.</exception>
         public AudioFile(string path)
         {
-            if (string.IsNullOrEmpty(path))
-                throw new ArgumentNullException(nameof(path), "Value cannot be null or empty.");
+            ArgumentException.ThrowIfNullOrEmpty(nameof(path));
 
             Path = IO.Path.GetFullPath(path);
             Info = LoadInfo();
@@ -54,8 +54,7 @@ namespace AudioWorks.Api
         /// <inheritdoc/>
         public virtual void Rename(string name, bool replace)
         {
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentNullException(nameof(name), "Value cannot be null or empty.");
+            ArgumentException.ThrowIfNullOrEmpty(nameof(name));
 
             // If the name isn't changing, do nothing
             if (name.Equals(IO.Path.GetFileNameWithoutExtension(Path), StringComparison.OrdinalIgnoreCase))

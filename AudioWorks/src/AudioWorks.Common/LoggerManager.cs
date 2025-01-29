@@ -46,7 +46,7 @@ namespace AudioWorks.Common
         [CLSCompliant(false)]
         public static T AddSingletonProvider<T>(Func<T> createProviderFunc) where T : ILoggerProvider
         {
-            if (createProviderFunc == null) throw new ArgumentNullException(nameof(createProviderFunc));
+            ArgumentNullException.ThrowIfNull(nameof(createProviderFunc));
 
             lock (_providerSingletons)
             {

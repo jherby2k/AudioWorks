@@ -132,8 +132,7 @@ namespace AudioWorks.Common
             get => _day;
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value));
+                ArgumentNullException.ThrowIfNull(nameof(value));
                 if (string.IsNullOrEmpty(value))
                     _day = string.Empty;
                 else
@@ -157,8 +156,7 @@ namespace AudioWorks.Common
             get => _month;
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value));
+                ArgumentNullException.ThrowIfNull(nameof(value));
                 if (string.IsNullOrEmpty(value))
                     _month = string.Empty;
                 else
@@ -182,8 +180,7 @@ namespace AudioWorks.Common
             get => _year;
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value));
+                ArgumentNullException.ThrowIfNull(nameof(value));
                 if (string.IsNullOrEmpty(value))
                     _year = string.Empty;
                 else
@@ -207,8 +204,7 @@ namespace AudioWorks.Common
             get => _trackNumber;
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value));
+                ArgumentNullException.ThrowIfNull(nameof(value));
                 if (string.IsNullOrEmpty(value))
                     _trackNumber = string.Empty;
                 else
@@ -232,8 +228,7 @@ namespace AudioWorks.Common
             get => _trackCount;
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value));
+                ArgumentNullException.ThrowIfNull(nameof(value));
                 if (string.IsNullOrEmpty(value))
                     _trackCount = string.Empty;
                 else
@@ -257,8 +252,7 @@ namespace AudioWorks.Common
             get => _trackPeak;
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value));
+                ArgumentNullException.ThrowIfNull(nameof(value));
                 if (string.IsNullOrEmpty(value))
                     _trackPeak = string.Empty;
                 else
@@ -282,8 +276,7 @@ namespace AudioWorks.Common
             get => _albumPeak;
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value));
+                ArgumentNullException.ThrowIfNull(nameof(value));
                 if (string.IsNullOrEmpty(value))
                     _albumPeak = string.Empty;
                 else
@@ -308,8 +301,7 @@ namespace AudioWorks.Common
             get => _trackGain;
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value));
+                ArgumentNullException.ThrowIfNull(nameof(value));
                 if (string.IsNullOrEmpty(value))
                     _trackGain = string.Empty;
                 else
@@ -334,8 +326,7 @@ namespace AudioWorks.Common
             get => _albumGain;
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value));
+                ArgumentNullException.ThrowIfNull(nameof(value));
                 if (string.IsNullOrEmpty(value))
                     _albumGain = string.Empty;
                 else
@@ -384,7 +375,7 @@ namespace AudioWorks.Common
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="metadata"/> is null.</exception>
         public AudioMetadata(AudioMetadata metadata)
         {
-            if (metadata == null) throw new ArgumentNullException(nameof(metadata));
+            ArgumentNullException.ThrowIfNull(nameof(metadata));
 
             _title = metadata.Title;
             _artist = metadata.Artist;

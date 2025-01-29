@@ -55,20 +55,20 @@ namespace AudioWorks.Extensibility
         /// <param name="format">The name of the format written by this metadata encoder.</param>
         /// <param name="description">A description of the format written by this metadata encoder.</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="extension"/>, <paramref name="format"/> or
-        /// <paramref name="description"/> is null or empty.</exception>
-        /// <exception cref="ArgumentException">Thrown if <paramref name="extension"/> is not a valid file extension.
-        /// </exception>
+        /// <paramref name="description"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="extension"/> is not a valid file extension,
+        /// or <paramref name="format"/> or <paramref name="description"/> is empty.</exception>
         public AudioMetadataEncoderExportAttribute(string extension, string format, string description)
             : base(typeof(IAudioMetadataEncoder))
         {
-            if (string.IsNullOrEmpty(extension)) throw new ArgumentNullException(nameof(extension));
+            ArgumentException.ThrowIfNullOrEmpty(nameof(extension));
             if (!extension.StartsWith(".", StringComparison.OrdinalIgnoreCase)
                 || extension.Any(char.IsWhiteSpace)
                 // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
                 || extension.Any(character => Path.GetInvalidFileNameChars().Contains(character)))
                 throw new ArgumentException($"'{extension}' is not a valid file extension.", nameof(extension));
-            if (string.IsNullOrEmpty(format)) throw new ArgumentNullException(nameof(format));
-            if (string.IsNullOrEmpty(description)) throw new ArgumentNullException(nameof(description));
+            ArgumentException.ThrowIfNullOrEmpty(nameof(format));
+            ArgumentException.ThrowIfNullOrEmpty(nameof(description));
 
             Extension = extension;
             Format = format;

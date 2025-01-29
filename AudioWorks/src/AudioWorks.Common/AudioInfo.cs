@@ -138,7 +138,8 @@ namespace AudioWorks.Common
         /// <param name="sampleRate"></param>
         /// <param name="bitRate"></param>
         /// <param name="frameCount"></param>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="format"/> is null or empty.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="format"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="format"/> is empty.</exception>
         /// <exception cref="AudioInvalidException">Thrown if one or more parameters is out of valid range.</exception>
         /// <exception cref="AudioUnsupportedException">Thrown if one or more parameters is out of the range supported
         /// by AudioWorks.</exception>
@@ -150,8 +151,8 @@ namespace AudioWorks.Common
             int bitRate,
             long frameCount)
         {
-            if (string.IsNullOrEmpty(format))
-                throw new ArgumentNullException(nameof(format), "The format cannot be null or empty.");
+            ArgumentException.ThrowIfNullOrEmpty(nameof(format));
+
             switch (channels)
             {
                 case < 1:

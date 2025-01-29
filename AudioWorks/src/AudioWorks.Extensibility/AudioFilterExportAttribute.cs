@@ -38,11 +38,12 @@ namespace AudioWorks.Extensibility
         /// Initializes a new instance of the <see cref="AudioFilterExportAttribute"/> class.
         /// </summary>
         /// <param name="name">The filter name.</param>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="name"/> is null or empty.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="name"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="name"/> is empty.</exception>
         public AudioFilterExportAttribute(string name)
             : base(typeof(IAudioFilter))
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+            ArgumentException.ThrowIfNullOrEmpty(nameof(name));
 
             Name = name;
         }

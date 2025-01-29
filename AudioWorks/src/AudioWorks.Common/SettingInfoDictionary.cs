@@ -34,7 +34,7 @@ namespace AudioWorks.Common
         /// <exception cref="ArgumentException">Thrown if one or more settings are not valid.</exception>
         public void ValidateSettings(SettingDictionary settings)
         {
-            if (settings == null) throw new ArgumentNullException(nameof(settings));
+            ArgumentNullException.ThrowIfNull(nameof(settings));
 
             foreach (var setting in settings)
             {

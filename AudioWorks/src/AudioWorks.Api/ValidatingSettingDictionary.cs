@@ -57,7 +57,7 @@ namespace AudioWorks.Api
 
         void Validate(string key, object value)
         {
-            if (key == null) throw new ArgumentNullException(nameof(key));
+            ArgumentNullException.ThrowIfNull(nameof(key));
 
             if (!_settingInfos.TryGetValue(key, out var settingInfo))
                 throw new ArgumentException($"{key} is not a supported setting.", nameof(key));

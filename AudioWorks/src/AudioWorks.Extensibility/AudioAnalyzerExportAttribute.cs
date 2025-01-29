@@ -46,13 +46,14 @@ namespace AudioWorks.Extensibility
         /// <param name="name">The analyzer name.</param>
         /// <param name="description">The analyzer description.</param>
         /// <exception cref="ArgumentNullException">Thrown if either <paramref name="name"/> or
-        /// <paramref name="description"/> is null or empty.</exception>
+        /// <paramref name="description"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if either <paramref name="name"/> or
+        /// <paramref name="description"/> is empty.</exception>
         public AudioAnalyzerExportAttribute(string name, string description)
             : base(typeof(IAudioAnalyzer))
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
-            if (string.IsNullOrEmpty(description)) throw new ArgumentNullException(nameof(description));
-
+            ArgumentException.ThrowIfNullOrEmpty(nameof(name));
+            ArgumentException.ThrowIfNullOrEmpty(nameof(description));
             Name = name;
             Description = description;
         }

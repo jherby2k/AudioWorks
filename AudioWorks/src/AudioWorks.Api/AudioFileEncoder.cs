@@ -91,8 +91,7 @@ namespace AudioWorks.Api
             string? encodedFileName = null,
             SettingDictionary? settings = null)
         {
-            if (name == null)
-                throw new ArgumentNullException(nameof(name));
+            ArgumentNullException.ThrowIfNull(nameof(name));
 
             _encoderFactory = ExtensionProviderWrapper.GetFactories<IAudioEncoder>("Name", name).SingleOrDefault() ??
                               throw new ArgumentException($"No '{name}' encoder is available.", nameof(name));
@@ -115,7 +114,7 @@ namespace AudioWorks.Api
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
         public async Task<IEnumerable<ITaggedAudioFile>> EncodeAsync(IEnumerable<ITaggedAudioFile> audioFiles)
         {
-            if (audioFiles == null) throw new ArgumentNullException(nameof(audioFiles));
+            ArgumentNullException.ThrowIfNull(nameof(audioFiles));
 
             return await EncodeAsync(audioFiles.ToArray()).ConfigureAwait(false);
         }
@@ -134,7 +133,7 @@ namespace AudioWorks.Api
             CancellationToken cancellationToken,
             IProgress<ProgressToken>? progress = null)
         {
-            if (audioFiles == null) throw new ArgumentNullException(nameof(audioFiles));
+            ArgumentNullException.ThrowIfNull(nameof(audioFiles));
 
             return await EncodeAsync(progress, cancellationToken, audioFiles.ToArray()).ConfigureAwait(false);
         }
@@ -178,7 +177,7 @@ namespace AudioWorks.Api
             CancellationToken cancellationToken,
             params ITaggedAudioFile[] audioFiles)
         {
-            if (audioFiles == null) throw new ArgumentNullException(nameof(audioFiles));
+            ArgumentNullException.ThrowIfNull(nameof(audioFiles));
             // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
             if (audioFiles.Any(audioFile => audioFile == null))
                 throw new ArgumentException("One or more audio files are null.", nameof(audioFiles));

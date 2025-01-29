@@ -40,13 +40,13 @@ namespace AudioWorks.Extensibility
         /// Initializes a new instance of the <see cref="AudioMetadataDecoderExportAttribute"/> class.
         /// </summary>
         /// <param name="extension">The file extension.</param>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="extension"/> is null or empty.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="extension"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if <paramref name="extension"/> is not a valid file extension.
         /// </exception>
         public AudioMetadataDecoderExportAttribute(string extension)
             : base(typeof(IAudioMetadataDecoder))
         {
-            if (string.IsNullOrEmpty(extension)) throw new ArgumentNullException(nameof(extension));
+            ArgumentException.ThrowIfNullOrEmpty(nameof(extension));
             if (!extension.StartsWith(".", StringComparison.OrdinalIgnoreCase)
                 || extension.Any(char.IsWhiteSpace)
                 // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
