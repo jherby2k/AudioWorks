@@ -19,10 +19,9 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using AudioWorks.Extensions.Opus;
 using Microsoft.Extensions.Logging;
 
-namespace AudioWorks.Extensions.Vorbis
+namespace AudioWorks.Extensions.Opus
 {
     [PrerequisiteHandlerExport]
     public sealed class OpusLibHandler : IPrerequisiteHandler
