@@ -55,31 +55,38 @@ namespace AudioWorks.Extensions.Id3
         {
             using (var reader = new TagReader(stream))
             {
-                // Read the tag identifier
-                Span<byte> idTag = stackalloc byte[3];
-                stream.ReadExactly(idTag);
-                if (_id3.AsSpan().SequenceCompareTo(idTag) != 0)
+                try
+                {
+                    // Read the tag identifier
+                    Span<byte> idTag = stackalloc byte[3];
+                    stream.ReadExactly(idTag);
+                    if (_id3.AsSpan().SequenceCompareTo(idTag) != 0)
+                        throw new TagNotFoundException("ID3v2 tag identifier was not found.");
+
+                    // Get the id3v2 version byte
+                    Version = reader.ReadByte();
+                    if (Version == 0xFF)
+                        throw new AudioInvalidException("Corrupt header: invalid ID3v2 version.");
+
+                    // Get the id3v2 revision byte
+                    if (reader.ReadByte() == 0xFF)
+                        throw new AudioInvalidException("Corrupt header: invalid ID3v2 revision.");
+
+                    // Parse the flag byte
+                    var id3Flags = (byte) (0xF0 & reader.ReadByte());
+                    Unsynchronisation = (id3Flags & 0b1000_0000) > 0;
+                    HasExtendedHeader = (id3Flags & 0b0100_0000) > 0;
+                    _hasFooter = (id3Flags & 0b0001_0000) > 0;
+
+                    // Get the id3v2 size, swap and un-sync the integer
+                    TagSize = reader.ReadUInt32SyncSafe();
+                    if (TagSize == 0)
+                        throw new AudioInvalidException("Corrupt header: tag size can't be zero.");
+                }
+                catch (EndOfStreamException)
+                {
                     throw new TagNotFoundException("ID3v2 tag identifier was not found.");
-
-                // Get the id3v2 version byte
-                Version = reader.ReadByte();
-                if (Version == 0xFF)
-                    throw new AudioInvalidException("Corrupt header: invalid ID3v2 version.");
-
-                // Get the id3v2 revision byte
-                if (reader.ReadByte() == 0xFF)
-                    throw new AudioInvalidException("Corrupt header: invalid ID3v2 revision.");
-
-                // Parse the flag byte
-                var id3Flags = (byte) (0xF0 & reader.ReadByte());
-                Unsynchronisation = (id3Flags & 0b1000_0000) > 0;
-                HasExtendedHeader = (id3Flags & 0b0100_0000) > 0;
-                _hasFooter = (id3Flags & 0b0001_0000) > 0;
-
-                // Get the id3v2 size, swap and un-sync the integer
-                TagSize = reader.ReadUInt32SyncSafe();
-                if (TagSize == 0)
-                    throw new AudioInvalidException("Corrupt header: tag size can't be zero.");
+                }
             }
         }
     }
