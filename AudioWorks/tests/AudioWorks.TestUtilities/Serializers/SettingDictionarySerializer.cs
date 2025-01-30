@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using AudioWorks.Common;
@@ -37,6 +38,28 @@ namespace AudioWorks.TestUtilities.Serializers
 
         public string Serialize(object value) => JsonSerializer.Serialize((SettingDictionary) value);
 
-        public object Deserialize(Type type, string serializedValue) => JsonSerializer.Deserialize<SettingDictionary>(serializedValue) ?? new object();
+        public object Deserialize(Type type, string serializedValue)
+        {
+            var intermediate = JsonSerializer.Deserialize<IDictionary<string, JsonElement>>(serializedValue) ??
+                               new Dictionary<string, JsonElement>();
+            var result = new SettingDictionary();
+
+            // System.Text.Json does not support polymorphic object deserialization by design, so extract known types only
+            foreach (var item in intermediate)
+                if (item.Value.TryGetInt32(out var intValue))
+                    result.Add(item.Key, intValue);
+                else if (item.Value.TryGetDateTime(out var dateValue))
+                    result.Add(item.Key, dateValue);
+                else
+                {
+                    var stringValue = item.Value.ToString();
+                    if (bool.TryParse(stringValue, out var boolValue))
+                        result.Add(item.Key, boolValue);
+                    else
+                        result.Add(item.Key, stringValue);
+                }
+
+            return result;
+        }
     }
 }
