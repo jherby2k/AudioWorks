@@ -15,14 +15,18 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
 using AudioWorks.Common;
+using Newtonsoft.Json;
 using Xunit.Sdk;
 
 namespace AudioWorks.TestUtilities.Serializers
 {
     public sealed class SettingDictionarySerializer : IXunitSerializer
     {
+#pragma warning disable CA2326
+        static readonly JsonSerializerSettings _settings = new() { TypeNameHandling = TypeNameHandling.Auto };
+#pragma warning restore CA2326
+
         public bool IsSerializable(Type type, object? value, [NotNullWhen(false)] out string? failureReason)
         {
             if (type == typeof(SettingDictionary))
@@ -35,8 +39,9 @@ namespace AudioWorks.TestUtilities.Serializers
             return false;
         }
 
-        public string Serialize(object value) => JsonSerializer.Serialize((SettingDictionary) value);
+        public string Serialize(object value) => JsonConvert.SerializeObject(value, _settings);
 
-        public object Deserialize(Type type, string serializedValue) => JsonSerializer.Deserialize<SettingDictionary>(serializedValue) ?? new object();
+        public object Deserialize(Type type, string serializedValue) =>
+            JsonConvert.DeserializeObject(serializedValue, _settings) ?? new object();
     }
 }
