@@ -39,7 +39,7 @@ namespace AudioWorks.Common
         {
             ArgumentNullException.ThrowIfNull(value);
             if (value.GetType() != ValueType)
-                throw new ArgumentException($"{nameof(value)} is not of type {ValueType}.", nameof(value));
+                throw new ArgumentException($"{nameof(value)} is a {value.GetType()} and not a {ValueType}.", nameof(value));
         }
     }
 }
