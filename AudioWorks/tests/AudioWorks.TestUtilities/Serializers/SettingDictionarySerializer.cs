@@ -46,17 +46,22 @@ namespace AudioWorks.TestUtilities.Serializers
 
             // System.Text.Json does not support polymorphic object deserialization by design, so extract known types only
             foreach (var item in intermediate)
-                if (item.Value.TryGetInt32(out var intValue))
-                    result.Add(item.Key, intValue);
-                else if (item.Value.TryGetDateTime(out var dateValue))
-                    result.Add(item.Key, dateValue);
-                else
+                switch (item.Value.ValueKind)
                 {
-                    var stringValue = item.Value.ToString();
-                    if (bool.TryParse(stringValue, out var boolValue))
-                        result.Add(item.Key, boolValue);
-                    else
-                        result.Add(item.Key, stringValue);
+                    case JsonValueKind.Number:
+                        if (item.Value.TryGetInt32(out var intValue))
+                            result.Add(item.Key, intValue);
+                        break;
+                    case JsonValueKind.True or JsonValueKind.False:
+                        if (bool.TryParse(item.Value.ToString(), out var boolValue))
+                            result.Add(item.Key, boolValue);
+                        break;
+                    case JsonValueKind.String:
+                        if (item.Value.TryGetDateTime(out var dateValue))
+                            result.Add(item.Key, dateValue);
+                        else
+                            result.Add(item.Key, item.Value.ToString());
+                        break;
                 }
 
             return result;
