@@ -40,9 +40,9 @@ namespace AudioWorks.TestUtilities.Serializers
 
         public object Deserialize(Type type, string serializedValue)
         {
-            var intermediate = JsonSerializer.Deserialize<IDictionary<string, JsonElement>>(serializedValue) ??
-                               new Dictionary<string, JsonElement>();
+            var intermediate = JsonSerializer.Deserialize<IDictionary<string, JsonElement>>(serializedValue);
             var result = new SettingDictionary();
+            if (intermediate == null) return result;
 
             // System.Text.Json does not support polymorphic object deserialization by design, so extract known types only
             foreach (var item in intermediate)
