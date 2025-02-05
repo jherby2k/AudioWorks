@@ -15,6 +15,9 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\StrongName.snk</AssemblyOriginatorKeyFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NuspecProperties>$(NuspecProperties);Authors=$(Authors)</NuspecProperties>
+    <NuspecProperties>$(NuspecProperties);license=$(PackageLicenseExpression)</NuspecProperties>
+    <NuspecProperties>$(NuspecProperties);ProjectUrl=$(PackageProjectUrl)</NuspecProperties>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">

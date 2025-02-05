@@ -11,6 +11,7 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <ContinuousIntegrationBuild Condition="'$(TF_BUILD)'=='true'">true</ContinuousIntegrationBuild>
+    <NuspecProperties>$(NuspecProperties);Copyright=$(Copyright)</NuspecProperties>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(OS)'=='Windows_NT'">

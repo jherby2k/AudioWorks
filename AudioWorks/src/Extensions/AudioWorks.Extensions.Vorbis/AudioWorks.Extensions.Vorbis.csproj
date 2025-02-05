@@ -5,6 +5,11 @@
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <Description>Provides Ogg Vorbis encoding and metadata functionality for AudioWorks.</Description>
+    <NuspecFile>..\PackWithRuntimes.nuspec</NuspecFile>
+    <NuspecProperties>$(NuspecProperties);Configuration=$(Configuration)</NuspecProperties>
+    <NuspecProperties>$(NuspecProperties);Id=$(MSBuildProjectName)</NuspecProperties>
+    <NuspecProperties>$(NuspecProperties);Version=$(FileVersion)</NuspecProperties>
+    <NuspecProperties>$(NuspecProperties);Description=$(Description)</NuspecProperties>
   </PropertyGroup>
 
   <ItemGroup>

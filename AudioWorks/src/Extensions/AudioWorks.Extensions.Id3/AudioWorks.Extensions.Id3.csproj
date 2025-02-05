@@ -5,6 +5,11 @@
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <Description>Provides ID3 metadata functionality for AudioWorks.</Description>
+    <NuspecFile>..\PackWithCodePages.nuspec</NuspecFile>
+    <NuspecProperties>$(NuspecProperties);Configuration=$(Configuration)</NuspecProperties>
+    <NuspecProperties>$(NuspecProperties);Id=$(MSBuildProjectName)</NuspecProperties>
+    <NuspecProperties>$(NuspecProperties);Version=$(FileVersion)</NuspecProperties>
+    <NuspecProperties>$(NuspecProperties);Description=$(Description)</NuspecProperties>
   </PropertyGroup>
 
   <ItemGroup>
