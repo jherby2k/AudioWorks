@@ -25,7 +25,7 @@ namespace AudioWorks.Commands.Tests
     // ReSharper disable once ClassNeverInstantiated.Global
     public sealed class ModuleFixture : IDisposable
     {
-        const string _moduleProject = "AudioWorks.Commands";
+        const string _module = "AudioWorks.Commands.dll";
 
         internal Runspace Runspace { get; }
 
@@ -36,7 +36,7 @@ namespace AudioWorks.Commands.Tests
             state.ExecutionPolicy = ExecutionPolicy.Bypass;
 #endif
             state.ImportPSModule(
-                Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).FullName, _moduleProject)
+                Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).FullName, _module)
             );
 
             Runspace = RunspaceFactory.CreateRunspace(state);

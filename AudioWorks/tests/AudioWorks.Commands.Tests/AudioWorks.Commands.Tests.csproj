@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\AudioWorks.Api\AudioWorks.Api.csproj" />
+    <ProjectReference Include="..\..\src\AudioWorks.Commands\AudioWorks.Commands.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
     <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.Apple\AudioWorks.Extensions.Apple.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
     <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.Flac\AudioWorks.Extensions.Flac.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
     <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.Id3\AudioWorks.Extensions.Id3.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
@@ -26,10 +27,5 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="3.0.1" PrivateAssets="all" />
     <PackageReference Include="xunit.v3" Version="1.0.1" />
   </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Condition="'$(OS)'=='Windows_NT'" Command="powershell -ExecutionPolicy Bypass -File &quot;$(ProjectDir)CopyModule.ps1&quot; -Configuration $(Configuration) -ArtifactRoot &quot;$(ProjectDir)..\..\src\artifacts&quot; -OutputRoot $(OutDir)" />
-    <Exec Condition="'$(OS)'!='Windows_NT'" Command="pwsh -File &quot;$(ProjectDir)CopyModule.ps1&quot; -Configuration $(Configuration) -ArtifactRoot &quot;$(ProjectDir)../../src/artifacts&quot; -OutputRoot $(OutDir)" />
-  </Target>
 
 </Project>
