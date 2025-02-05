@@ -7,26 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="AudioWorks.Commands.psd1">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="AudioWorks.Commands.psm1">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="AudioWorks.Commands.format.ps1xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="COPYING">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.Management.Automation" Version="7.4.7" PrivateAssets="all" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <None Update="AudioWorks.Commands.psd1" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="AudioWorks.Commands.psm1" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="AudioWorks.Commands.format.ps1xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="COPYING" CopyToOutputDirectory="PreserveNewest" />
     <ProjectReference Include="..\AudioWorks.Api\AudioWorks.Api.csproj" />
+    <PackageReference Include="System.Management.Automation" Version="7.4.7" PrivateAssets="all" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

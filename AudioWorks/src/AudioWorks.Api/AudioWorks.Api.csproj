@@ -19,83 +19,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Icon.png">
-      <PackagePath>\</PackagePath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Pack>true</Pack>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
+    <None Include="Icon.png" PackagePath="\" CopyToOutputDirectory="PreserveNewest" Pack="true" />
+    <ProjectReference Include="..\AudioWorks.Extensibility\AudioWorks.Extensibility.csproj" />
+    <ProjectReference Include="..\Extensions\AudioWorks.Extensions.Apple\AudioWorks.Extensions.Apple.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\Extensions\AudioWorks.Extensions.Flac\AudioWorks.Extensions.Flac.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\Extensions\AudioWorks.Extensions.Id3\AudioWorks.Extensions.Id3.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\Extensions\AudioWorks.Extensions.Lame\AudioWorks.Extensions.Lame.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\Extensions\AudioWorks.Extensions.Mp3\AudioWorks.Extensions.Mp3.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\Extensions\AudioWorks.Extensions.Mp4\AudioWorks.Extensions.Mp4.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\Extensions\AudioWorks.Extensions.Opus\AudioWorks.Extensions.Opus.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\Extensions\AudioWorks.Extensions.ReplayGain\AudioWorks.Extensions.ReplayGain.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\Extensions\AudioWorks.Extensions.Vorbis\AudioWorks.Extensions.Vorbis.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\Extensions\AudioWorks.Extensions.Wave\AudioWorks.Extensions.Wave.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
     <PackageReference Include="AudioWorks.Extensibility" Version="2.0.0" />
     <PackageReference Include="System.Threading.Tasks.Dataflow" Version="8.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\AudioWorks.Extensibility\AudioWorks.Extensibility.csproj" />
-    <ProjectReference Include="..\Extensions\AudioWorks.Extensions.Flac\AudioWorks.Extensions.Flac.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <OutputItemType>Content</OutputItemType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Targets>Build;DebugSymbolsProjectOutputGroup</Targets>
-    </ProjectReference>
-    <ProjectReference Include="..\Extensions\AudioWorks.Extensions.Id3\AudioWorks.Extensions.Id3.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <OutputItemType>Content</OutputItemType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Targets>Build;DebugSymbolsProjectOutputGroup</Targets>
-    </ProjectReference>
-    <ProjectReference Include="..\Extensions\AudioWorks.Extensions.Lame\AudioWorks.Extensions.Lame.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <OutputItemType>Content</OutputItemType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Targets>Build;DebugSymbolsProjectOutputGroup</Targets>
-    </ProjectReference>
-    <ProjectReference Include="..\Extensions\AudioWorks.Extensions.Mp3\AudioWorks.Extensions.Mp3.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <OutputItemType>Content</OutputItemType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Targets>Build;DebugSymbolsProjectOutputGroup</Targets>
-    </ProjectReference>
-    <ProjectReference Include="..\Extensions\AudioWorks.Extensions.Mp4\AudioWorks.Extensions.Mp4.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <OutputItemType>Content</OutputItemType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Targets>Build;DebugSymbolsProjectOutputGroup</Targets>
-    </ProjectReference>
-    <ProjectReference Include="..\Extensions\AudioWorks.Extensions.Opus\AudioWorks.Extensions.Opus.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <OutputItemType>Content</OutputItemType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Targets>Build;DebugSymbolsProjectOutputGroup</Targets>
-    </ProjectReference>
-    <ProjectReference Include="..\Extensions\AudioWorks.Extensions.ReplayGain\AudioWorks.Extensions.ReplayGain.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <OutputItemType>Content</OutputItemType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Targets>Build;DebugSymbolsProjectOutputGroup</Targets>
-    </ProjectReference>
-    <ProjectReference Include="..\Extensions\AudioWorks.Extensions.Vorbis\AudioWorks.Extensions.Vorbis.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <OutputItemType>Content</OutputItemType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Targets>Build;DebugSymbolsProjectOutputGroup</Targets>
-    </ProjectReference>
-    <ProjectReference Include="..\Extensions\AudioWorks.Extensions.Wave\AudioWorks.Extensions.Wave.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <OutputItemType>Content</OutputItemType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Targets>Build;DebugSymbolsProjectOutputGroup</Targets>
-    </ProjectReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="!$([MSBuild]::IsOSPlatform('Linux'))">
-    <ProjectReference Include="..\Extensions\AudioWorks.Extensions.Apple\AudioWorks.Extensions.Apple.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <OutputItemType>Content</OutputItemType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Targets>Build;DebugSymbolsProjectOutputGroup</Targets>
-    </ProjectReference>
   </ItemGroup>
 
 </Project>

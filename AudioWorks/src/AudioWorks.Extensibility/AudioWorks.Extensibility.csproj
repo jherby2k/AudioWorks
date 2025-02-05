@@ -15,13 +15,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AudioWorks.Common\AudioWorks.Common.csproj" />
     <PackageReference Include="AudioWorks.Common" Version="2.0.0" />
     <PackageReference Include="System.Composition" Version="8.0.0" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\AudioWorks.Common\AudioWorks.Common.csproj" />
   </ItemGroup>
 
 </Project>

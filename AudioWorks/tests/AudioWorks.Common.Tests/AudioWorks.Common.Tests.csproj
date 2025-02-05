@@ -1,15 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\AudioWorks.Common\AudioWorks.Common.csproj" />
+    <ProjectReference Include="..\AudioWorks.TestUtilities\AudioWorks.TestUtilities.csproj" />
     <PackageReference Include="coverlet.collector" Version="6.0.4" PrivateAssets="all" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.0.1" PrivateAssets="all" />
     <PackageReference Include="xunit.v3" Version="1.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\AudioWorks.Common\AudioWorks.Common.csproj" />
-    <ProjectReference Include="..\AudioWorks.TestUtilities\AudioWorks.TestUtilities.csproj" />
   </ItemGroup>
 
 </Project>
