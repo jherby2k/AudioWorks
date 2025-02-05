@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\AudioWorks.Extensibility\AudioWorks.Extensibility.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\..\AudioWorks.Extensibility\AudioWorks.Extensibility.csproj"/>
   </ItemGroup>
 
 </Project>

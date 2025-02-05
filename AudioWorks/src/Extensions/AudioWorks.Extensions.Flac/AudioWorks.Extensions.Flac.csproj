@@ -7,7 +7,7 @@
   
   <ItemGroup>
     <Content Include="runtimes\**" PackagePath="runtimes" CopyToOutputDirectory="PreserveNewest" />
-    <ProjectReference Include="..\..\AudioWorks.Extensibility\AudioWorks.Extensibility.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\..\AudioWorks.Extensibility\AudioWorks.Extensibility.csproj" />
   </ItemGroup>
 
 </Project>
