@@ -7,10 +7,6 @@
     <Description>Public types used by the AudioWorks API. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\AudioWorks.Common.xml</DocumentationFile>
-  </PropertyGroup>
-
   <ItemGroup>
     <!-- Logging held back for PowerShell 7.4 compatibility -->
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.1" />

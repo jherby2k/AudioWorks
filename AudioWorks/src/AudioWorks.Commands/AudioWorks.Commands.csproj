@@ -4,6 +4,7 @@
     <VersionPrefix>2.0.0</VersionPrefix>
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
@@ -17,8 +18,8 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'=='Release'">
-    <Exec Condition="'$(OS)'=='Windows_NT'" Command="powershell -ExecutionPolicy Bypass -File &quot;$(ProjectDir)PublishModule.ps1&quot; -ProjectDir $(ProjectDir) -Configuration $(Configuration) -Framework $(TargetFramework) -Destination $(PackageOutputPath)\AudioWorks.Commands" />
-    <Exec Condition="'$(OS)'!='Windows_NT'" Command="pwsh -File &quot;$(ProjectDir)PublishModule.ps1&quot; -ProjectDir $(ProjectDir) -Configuration $(Configuration) -Framework $(TargetFramework) -Destination $(PackageOutputPath)/AudioWorks.Commands" />
+    <Exec Condition="'$(OS)'=='Windows_NT'" Command="powershell -ExecutionPolicy Bypass -File &quot;$(ProjectDir)PublishModule.ps1&quot; -ProjectDir $(ProjectDir) -Configuration $(Configuration) -Framework $(TargetFramework) -Destination $(PackageOutputPath)\$(MSBuildProjectName)" />
+    <Exec Condition="'$(OS)'!='Windows_NT'" Command="pwsh -File &quot;$(ProjectDir)PublishModule.ps1&quot; -ProjectDir $(ProjectDir) -Configuration $(Configuration) -Framework $(TargetFramework) -Destination $(PackageOutputPath)/$(MSBuildProjectName)" />
   </Target>
 
 </Project>

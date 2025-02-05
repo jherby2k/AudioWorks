@@ -5,6 +5,7 @@
   <PropertyGroup>
     <ArtifactsPath>$(MSBuildThisFileDirectory)..\artifacts</ArtifactsPath>
     <AssemblyOriginatorKeyFile>..\..\StrongName.snk</AssemblyOriginatorKeyFile>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
   </PropertyGroup>
 
 </Project>
