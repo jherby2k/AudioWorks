@@ -5,13 +5,10 @@
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <Description>The AudioWorks extension API. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>StrongName.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\AudioWorks.Extensibility.xml</DocumentationFile>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

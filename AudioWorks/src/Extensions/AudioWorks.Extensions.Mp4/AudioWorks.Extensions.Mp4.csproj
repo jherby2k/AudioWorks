@@ -3,6 +3,8 @@
   <PropertyGroup>
     <VersionPrefix>2.0.0</VersionPrefix>
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <Description>Provides iTunes-style MP4 metadata functionality for AudioWorks.</Description>
   </PropertyGroup>
 
   <ItemGroup>
