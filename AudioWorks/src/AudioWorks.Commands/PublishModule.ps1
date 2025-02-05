@@ -29,14 +29,16 @@ Write-Host "Clearing $Destination..."
 
 if (Test-Path $Destination) { Remove-Item -Path $Destination -Recurse -ErrorAction Stop }
 
-# Workaround for non-referenced extension content:
-$apiProjectDir = Split-Path -Path $ProjectDir -Parent | Join-Path -ChildPath AudioWorks.Api
-dotnet publish "$apiProjectDir" --no-build -c $Configuration -f $Framework -o "$(Join-Path -Path $Destination -ChildPath $Framework)"
-
 Write-Host "Publishing $Framework PowerShell module to $Destination..."
 
 dotnet publish "$ProjectDir" --no-build -c $Configuration -f $Framework -o "$(Join-Path -Path $Destination -ChildPath $Framework)"
-Write-Host $(Join-Path -Path $Destination -ChildPath $Framework)
+
+Write-Host "Publishing extensions to $Destination..."
+
+foreach ($dir in Get-ChildItem -Path $(Split-Path -Path $ProjectDir -Parent | Join-Path -ChildPath Extensions) -Directory) {
+    dotnet publish "$($dir.FullName)" --no-build -c $Configuration -f $Framework -o "$(Join-Path -Path $Destination -ChildPath $Framework)"
+}
+
 Copy-Item -Path $(Join-Path -Path $Destination -ChildPath $Framework | Join-Path -ChildPath *) -Destination $Destination -Include "*.psd1", "*.psm1", "*.ps1xml", "COPYING" -ErrorAction Stop
 Remove-Item -Path $(Join-Path -Path $Destination -ChildPath $Framework | Join-Path -ChildPath *) -Include "*.psd1", "*.psm1", "*.ps1xml", "*.xml", "*.pdb", "*.deps.json", "COPYING", "Icon.png" -ErrorAction Stop
 

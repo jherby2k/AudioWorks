@@ -1,6 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\AudioWorks.Api\AudioWorks.Api.csproj" />
+    <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.Apple\AudioWorks.Extensions.Apple.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.Flac\AudioWorks.Extensions.Flac.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.Id3\AudioWorks.Extensions.Id3.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.Lame\AudioWorks.Extensions.Lame.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.Mp3\AudioWorks.Extensions.Mp3.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.Mp4\AudioWorks.Extensions.Mp4.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.Opus\AudioWorks.Extensions.Opus.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.ReplayGain\AudioWorks.Extensions.ReplayGain.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.Vorbis\AudioWorks.Extensions.Vorbis.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.Wave\AudioWorks.Extensions.Wave.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\AudioWorks.TestUtilities\AudioWorks.TestUtilities.csproj" />
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="coverlet.collector" Version="6.0.4" PrivateAssets="all" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
@@ -8,11 +20,6 @@
     <PackageReference Include="ObjectsComparer" Version="1.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.0.1" PrivateAssets="all" />
     <PackageReference Include="xunit.v3" Version="1.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\AudioWorks.Api\AudioWorks.Api.csproj" />
-    <ProjectReference Include="..\AudioWorks.TestUtilities\AudioWorks.TestUtilities.csproj" />
   </ItemGroup>
 
 </Project>
