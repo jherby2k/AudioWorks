@@ -16,7 +16,7 @@
     <PackageReference Include="System.Management.Automation" Version="7.4.7" PrivateAssets="all" />
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'=='Release'">
     <Exec Condition="'$(OS)'=='Windows_NT'" Command="powershell -ExecutionPolicy Bypass -File &quot;$(ProjectDir)PublishModule.ps1&quot; -ProjectDir $(ProjectDir) -Configuration $(Configuration) -Framework $(TargetFramework) -Destination $(PackageOutputPath)\AudioWorks.Commands" />
     <Exec Condition="'$(OS)'!='Windows_NT'" Command="pwsh -File &quot;$(ProjectDir)PublishModule.ps1&quot; -ProjectDir $(ProjectDir) -Configuration $(Configuration) -Framework $(TargetFramework) -Destination $(PackageOutputPath)/AudioWorks.Commands" />
   </Target>
