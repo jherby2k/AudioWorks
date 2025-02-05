@@ -4,14 +4,9 @@
     <VersionPrefix>2.0.0</VersionPrefix>
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
   </PropertyGroup>
-
+  
   <ItemGroup>
-    <None Include="runtimes\*\*\*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
+    <Content Include="runtimes\**" PackagePath="runtimes" CopyToOutputDirectory="PreserveNewest" />
     <ProjectReference Include="..\..\AudioWorks.Extensibility\AudioWorks.Extensibility.csproj" PrivateAssets="all" />
   </ItemGroup>
 
