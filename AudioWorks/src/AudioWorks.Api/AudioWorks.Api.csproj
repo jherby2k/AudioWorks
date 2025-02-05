@@ -3,7 +3,7 @@
   <PropertyGroup>
     <VersionPrefix>2.0.0</VersionPrefix>
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <Description>The primary AudioWorks API. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
     <PackageIcon>Icon.png</PackageIcon>
     <PackageTags>music encode decode convert export tag cover art FLAC MP3 ID3 Lame MP4 AAC Apple ALAC Ogg Vorbis Opus ReplayGain EBUR128</PackageTags>

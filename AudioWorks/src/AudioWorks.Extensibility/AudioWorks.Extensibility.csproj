@@ -3,7 +3,7 @@
   <PropertyGroup>
     <VersionPrefix>2.0.0</VersionPrefix>
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <Description>The AudioWorks extension API. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>StrongName.snk</AssemblyOriginatorKeyFile>
