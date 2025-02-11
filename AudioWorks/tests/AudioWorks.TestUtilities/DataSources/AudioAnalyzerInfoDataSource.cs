@@ -13,15 +13,16 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System.Collections.Generic;
 using Xunit;
 
 namespace AudioWorks.TestUtilities.DataSources
 {
     public static class AudioAnalyzerInfoDataSource
     {
-        public static TheoryData<string, string> Data { get; } = new()
-        {
-            { "ReplayGain", "ReplayGain 2.0" }
-        };
+        public static IEnumerable<TheoryDataRow<string, string>> Data { get; } =
+        [
+            new("ReplayGain", "ReplayGain 2.0")
+        ];
     }
 }

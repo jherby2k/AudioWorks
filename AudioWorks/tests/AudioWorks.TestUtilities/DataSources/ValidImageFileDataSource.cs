@@ -13,6 +13,7 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -20,9 +21,9 @@ namespace AudioWorks.TestUtilities.DataSources
 {
     public static class ValidImageFileDataSource
     {
-        static readonly TheoryData<string, int, int, int, bool, string, string> _data = new()
-        {
-            {
+        static readonly IEnumerable<TheoryDataRow<string, int, int, int, bool, string, string>> _data =
+        [
+            new(
                 "Bitmap 24-bit 1280 x 935.bmp",
                 1280,
                 935,
@@ -30,8 +31,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 true,
                 "image/png",
                 "9315650A78F4292A5527586198C4F3C8"
-            },
-            {
+            ),
+            new(
                 "PNG 24-bit 1280 x 935.png",
                 1280,
                 935,
@@ -39,8 +40,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 true,
                 "image/png",
                 "85E02F6C2BCF8112E16E63660CADFE02"
-            },
-            {
+            ),
+            new(
                 "JPEG 24-bit 1280 x 935.jpg",
                 1280,
                 935,
@@ -48,28 +49,34 @@ namespace AudioWorks.TestUtilities.DataSources
                 false,
                 "image/jpeg",
                 "4BFBE209E1183AE63DBBED12EEE773B8"
-            }
-        };
+            )
+        ];
 
-        public static TheoryData<string> FileNames =>
-            new(_data.Select(item => item.Data.Item1));
+        public static IEnumerable<TheoryDataRow<string>> FileNames =>
+            _data.Select(item => new TheoryDataRow<string>(item.Data.Item1)
+                { Skip = item.Skip });
 
-        public static TheoryData<string, int> FileNamesAndWidth =>
-            new(_data.Select(item => (item.Data.Item1, item.Data.Item2)));
+        public static IEnumerable<TheoryDataRow<string, int>> FileNamesAndWidth =>
+            _data.Select(item => new TheoryDataRow<string, int>(item.Data.Item1, item.Data.Item2)
+                { Skip = item.Skip });
 
-        public static TheoryData<string, int> FileNamesAndHeight =>
-            new(_data.Select(item => (item.Data.Item1, item.Data.Item3)));
+        public static IEnumerable<TheoryDataRow<string, int>> FileNamesAndHeight =>
+            _data.Select(item => new TheoryDataRow<string, int>(item.Data.Item1, item.Data.Item3)
+                { Skip = item.Skip });
 
-        public static TheoryData<string, int> FileNamesAndColorDepth =>
-            new(_data.Select(item => (item.Data.Item1, item.Data.Item4)));
+        public static IEnumerable<TheoryDataRow<string, int>> FileNamesAndColorDepth =>
+            _data.Select(item => new TheoryDataRow<string, int>(item.Data.Item1, item.Data.Item4)
+                { Skip = item.Skip });
 
-        public static TheoryData<string, bool> FileNamesAndLossless =>
-            new(_data.Select(item => (item.Data.Item1, item.Data.Item5)));
+        public static IEnumerable<TheoryDataRow<string, bool>> FileNamesAndLossless =>
+            _data.Select(item => new TheoryDataRow<string, bool>(item.Data.Item1, item.Data.Item5)
+                { Skip = item.Skip });
 
-        public static TheoryData<string, string> FileNamesAndMimeType =>
-            new(_data.Select(item => (item.Data.Item1, item.Data.Item6)));
+        public static IEnumerable<TheoryDataRow<string, string>> FileNamesAndMimeType =>
+            _data.Select(item => new TheoryDataRow<string, string>(item.Data.Item1, item.Data.Item6)
+                { Skip = item.Skip });
 
-        public static TheoryData<string, string> FileNamesAndDataHash =>
-            new(_data.Select(item => (item.Data.Item1, item.Data.Item7)));
+        public static IEnumerable<TheoryDataRow<string, string>> FileNamesAndDataHash =>
+            _data.Select(item => new TheoryDataRow<string, string>(item.Data.Item1, item.Data.Item7));
     }
 }

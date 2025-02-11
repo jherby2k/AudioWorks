@@ -13,20 +13,21 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System.Collections.Generic;
 using Xunit;
 
 namespace AudioWorks.TestUtilities.DataSources
 {
     public static class AudioFileFormatInfoDataSource
     {
-        public static TheoryData<string, string> Data { get; } = new()
-        {
-            { ".wav", "Waveform Audio" },
-            { ".flac", "FLAC" },
-            { ".m4a", "MPEG-4 Audio" },
-            { ".mp3", "MPEG Audio Layer 3" },
-            { ".ogg", "Ogg Vorbis" },
-            { ".opus", "Opus" }
-        };
+        public static IEnumerable<TheoryDataRow<string, string>> Data { get; } =
+        [
+            new(".wav", "Waveform Audio"),
+            new(".flac", "FLAC"),
+            new(".m4a", "MPEG-4 Audio"),
+            new(".mp3", "MPEG Audio Layer 3"),
+            new(".ogg", "Ogg Vorbis"),
+            new(".opus", "Opus")
+        ];
     }
 }

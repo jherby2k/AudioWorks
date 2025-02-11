@@ -13,6 +13,7 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -20,9 +21,9 @@ namespace AudioWorks.TestUtilities.DataSources
 {
     public static class ValidFileWithCoverArtDataSource
     {
-        static readonly TheoryData<string, int, int, int, bool, string, string> _data = new()
-        {
-            {
+        static readonly IEnumerable<TheoryDataRow<string, int, int, int, bool, string, string>> _data =
+        [
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
                 1280,
                 935,
@@ -30,8 +31,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 true,
                 "image/png",
                 "85E02F6C2BCF8112E16E63660CADFE02"
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 1280,
                 935,
@@ -39,8 +40,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 false,
                 "image/jpeg",
                 "4BFBE209E1183AE63DBBED12EEE773B8"
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 0,
                 0,
@@ -48,8 +49,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 false,
                 string.Empty,
                 string.Empty
-            },
-            {
+            ),
+            new(
                 "ALAC 16-bit 44100Hz Stereo (Covr atom - PNG).m4a",
                 1280,
                 935,
@@ -57,8 +58,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 true,
                 "image/png",
                 "85E02F6C2BCF8112E16E63660CADFE02"
-            },
-            {
+            ),
+            new(
                 "ALAC 16-bit 44100Hz Stereo (Covr atom - JPEG).m4a",
                 1280,
                 935,
@@ -66,8 +67,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 false,
                 "image/jpeg",
                 "4BFBE209E1183AE63DBBED12EEE773B8"
-            },
-            {
+            ),
+            new(
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 0,
                 0,
@@ -75,8 +76,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 false,
                 string.Empty,
                 string.Empty
-            },
-            {
+            ),
+            new(
                 "Lame CBR 128 44100Hz Stereo (APIC frame - PNG).mp3",
                 1280,
                 935,
@@ -84,8 +85,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 true,
                 "image/png",
                 "85E02F6C2BCF8112E16E63660CADFE02"
-            },
-            {
+            ),
+            new(
                 "Lame CBR 128 44100Hz Stereo (APIC frame - JPEG).mp3",
                 1280,
                 935,
@@ -93,8 +94,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 false,
                 "image/jpeg",
                 "4BFBE209E1183AE63DBBED12EEE773B8"
-            },
-            {
+            ),
+            new(
                 "Lame CBR 128 44100Hz Stereo.mp3",
                 0,
                 0,
@@ -102,8 +103,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 false,
                 string.Empty,
                 string.Empty
-            },
-            {
+            ),
+            new(
                 "Vorbis Quality 3 44100Hz Stereo (PICTURE comment - PNG).ogg",
                 1280,
                 935,
@@ -111,8 +112,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 true,
                 "image/png",
                 "85E02F6C2BCF8112E16E63660CADFE02"
-            },
-            {
+            ),
+            new(
                 "Vorbis Quality 3 44100Hz Stereo (PICTURE comment - JPEG).ogg",
                 1280,
                 935,
@@ -120,8 +121,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 false,
                 "image/jpeg",
                 "4BFBE209E1183AE63DBBED12EEE773B8"
-            },
-            {
+            ),
+            new(
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
                 0,
                 0,
@@ -129,8 +130,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 false,
                 string.Empty,
                 string.Empty
-            },
-            {
+            ),
+            new(
                 "Opus VBR 44100Hz Stereo (PICTURE comment - PNG).opus",
                 1280,
                 935,
@@ -138,8 +139,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 true,
                 "image/png",
                 "85E02F6C2BCF8112E16E63660CADFE02"
-            },
-            {
+            ),
+            new(
                 "Opus VBR 44100Hz Stereo (PICTURE comment - JPEG).opus",
                 1280,
                 935,
@@ -147,8 +148,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 false,
                 "image/jpeg",
                 "4BFBE209E1183AE63DBBED12EEE773B8"
-            },
-            {
+            ),
+            new(
                 "Opus VBR 44100Hz Stereo.opus",
                 0,
                 0,
@@ -156,20 +157,24 @@ namespace AudioWorks.TestUtilities.DataSources
                 false,
                 string.Empty,
                 string.Empty
-            }
-        };
+            )
+        ];
 
-        public static TheoryData<string, int> FileNamesAndWidth =>
-            new(_data.Select(item => (item.Data.Item1, item.Data.Item2)));
+        public static IEnumerable<TheoryDataRow<string, int>> FileNamesAndWidth =>
+            _data.Select(item => new TheoryDataRow<string, int>(item.Data.Item1, item.Data.Item2)
+                { Skip = item.Skip });
 
-        public static TheoryData<string, int> FileNamesAndHeight =>
-            new(_data.Select(item => (item.Data.Item1, item.Data.Item3)));
+        public static IEnumerable<TheoryDataRow<string, int>> FileNamesAndHeight =>
+            _data.Select(item => new TheoryDataRow<string, int>(item.Data.Item1, item.Data.Item3)
+                { Skip = item.Skip });
 
-        public static TheoryData<string, int> FileNamesAndColorDepth =>
-            new(_data.Select(item => (item.Data.Item1, item.Data.Item4)));
+        public static IEnumerable<TheoryDataRow<string, int>> FileNamesAndColorDepth =>
+            _data.Select(item => new TheoryDataRow<string, int>(item.Data.Item1, item.Data.Item4)
+                { Skip = item.Skip });
 
-        public static TheoryData<string, bool> FileNamesAndLossless =>
-            new(_data.Select(item => (item.Data.Item1, item.Data.Item5)));
+        public static IEnumerable<TheoryDataRow<string, bool>> FileNamesAndLossless =>
+            _data.Select(item => new TheoryDataRow<string, bool>(item.Data.Item1, item.Data.Item5)
+                { Skip = item.Skip });
 
         public static TheoryData<string, string> FileNamesAndMimeType =>
             new(_data.Select(item => (item.Data.Item1, item.Data.Item6)));

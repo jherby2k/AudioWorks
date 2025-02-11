@@ -13,13 +13,14 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System.Collections.Generic;
 using Xunit;
 
 namespace AudioWorks.TestUtilities.DataSources
 {
     public static class InvalidImageFileDataSource
     {
-        public static TheoryData<string> Data { get; } =
+        public static IEnumerable<TheoryDataRow<string>> Data { get; } =
         [
             "Not an Image.bmp"
         ];

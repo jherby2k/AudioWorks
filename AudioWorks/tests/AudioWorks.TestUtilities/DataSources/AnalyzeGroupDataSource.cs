@@ -13,6 +13,7 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System.Collections.Generic;
 using AudioWorks.Common;
 using Xunit;
 
@@ -20,10 +21,10 @@ namespace AudioWorks.TestUtilities.DataSources
 {
     public static class AnalyzeGroupDataSource
     {
-        public static TheoryData<string[], string, SettingDictionary, AudioMetadata[]> Data { get; } = new()
-        {
+        public static IEnumerable<TheoryDataRow<string[], string, SettingDictionary, AudioMetadata[]>> Data { get; } =
+        [
             // 8000Hz Stereo, default (simple) peaks
-            {
+            new(
                 [
                     "Track 1 LPCM 8-bit 8000Hz Stereo.wav",
                     "Track 2 LPCM 8-bit 8000Hz Stereo.wav",
@@ -54,10 +55,10 @@ namespace AudioWorks.TestUtilities.DataSources
                         AlbumGain = "-5.90"
                     }
                 ]
-            },
+            ),
 
             // 8000Hz Stereo, interpolated peaks
-            {
+            new(
                 [
                     "Track 1 LPCM 8-bit 8000Hz Stereo.wav",
                     "Track 2 LPCM 8-bit 8000Hz Stereo.wav",
@@ -91,10 +92,10 @@ namespace AudioWorks.TestUtilities.DataSources
                         AlbumGain = "-5.90"
                     }
                 ]
-            },
+            ),
 
             // 44100Hz Mono, default (simple) peaks
-            {
+            new(
                 [
                     "Track 1 LPCM 16-bit 44100Hz Mono.wav",
                     "Track 2 LPCM 16-bit 44100Hz Mono.wav",
@@ -125,10 +126,10 @@ namespace AudioWorks.TestUtilities.DataSources
                         AlbumGain = "-1.83"
                     }
                 ]
-            },
+            ),
 
             // 44100Hz Mono, interpolated peaks
-            {
+            new(
                 [
                     "Track 1 LPCM 16-bit 44100Hz Mono.wav",
                     "Track 2 LPCM 16-bit 44100Hz Mono.wav",
@@ -162,10 +163,10 @@ namespace AudioWorks.TestUtilities.DataSources
                         AlbumGain = "-1.83"
                     }
                 ]
-            },
+            ),
 
             // 44100Hz Stereo, default (simple) peaks
-            {
+            new(
                 [
                     "Track 1 LPCM 16-bit 44100Hz Stereo.wav",
                     "Track 2 LPCM 16-bit 44100Hz Stereo.wav",
@@ -196,10 +197,10 @@ namespace AudioWorks.TestUtilities.DataSources
                         AlbumGain = "-5.70"
                     }
                 ]
-            },
+            ),
 
             // 44100Hz Stereo, interpolated peaks
-            {
+            new(
                 [
                     "Track 1 LPCM 16-bit 44100Hz Stereo.wav",
                     "Track 2 LPCM 16-bit 44100Hz Stereo.wav",
@@ -233,10 +234,10 @@ namespace AudioWorks.TestUtilities.DataSources
                         AlbumGain = "-5.70"
                     }
                 ]
-            },
+            ),
 
             // 48000Hz Stereo, default (simple) peaks
-            {
+            new(
                 [
                     "Track 1 LPCM 16-bit 48000Hz Stereo.wav",
                     "Track 2 LPCM 16-bit 48000Hz Stereo.wav",
@@ -267,10 +268,10 @@ namespace AudioWorks.TestUtilities.DataSources
                         AlbumGain = "-5.69"
                     }
                 ]
-            },
+            ),
 
             // 48000Hz Stereo, interpolated peaks
-            {
+            new(
                 [
                     "Track 1 LPCM 16-bit 48000Hz Stereo.wav",
                     "Track 2 LPCM 16-bit 48000Hz Stereo.wav",
@@ -304,10 +305,10 @@ namespace AudioWorks.TestUtilities.DataSources
                         AlbumGain = "-5.69"
                     }
                 ]
-            },
+            ),
 
             // 96000Hz Stereo, default (simple) peaks
-            {
+            new(
                 [
                     "Track 1 LPCM 24-bit 96000Hz Stereo.wav",
                     "Track 2 LPCM 24-bit 96000Hz Stereo.wav",
@@ -338,10 +339,10 @@ namespace AudioWorks.TestUtilities.DataSources
                         AlbumGain = "-5.67"
                     }
                 ]
-            },
+            ),
 
             // 96000Hz Stereo, interpolated peaks
-            {
+            new(
                 [
                     "Track 1 LPCM 24-bit 96000Hz Stereo.wav",
                     "Track 2 LPCM 24-bit 96000Hz Stereo.wav",
@@ -375,10 +376,10 @@ namespace AudioWorks.TestUtilities.DataSources
                         AlbumGain = "-5.67"
                     }
                 ]
-            },
+            ),
 
             // 44100Hz Stereo, simple peaks (explicit)
-            {
+            new(
                 [
                     "Track 1 LPCM 16-bit 44100Hz Stereo.wav",
                     "Track 2 LPCM 16-bit 44100Hz Stereo.wav",
@@ -412,7 +413,7 @@ namespace AudioWorks.TestUtilities.DataSources
                         AlbumGain = "-5.70"
                     }
                 ]
-            }
-        };
+            )
+        ];
     }
 }

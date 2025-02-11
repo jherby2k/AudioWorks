@@ -13,6 +13,7 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -20,12 +21,12 @@ namespace AudioWorks.TestUtilities.DataSources
 {
     public static class SaveMetadataUnsupportedFileDataSource
     {
-        static readonly TheoryData<string> _data =
+        static readonly IEnumerable<TheoryDataRow<string>> _data =
         [
             "LPCM 16-bit 44100Hz Stereo.wav"
         ];
 
-        public static TheoryData<int, string> Data =>
-            new(_data.Select((item, index) => (index, item.Data)));
+        public static IEnumerable<TheoryDataRow<int, string>> Data =>
+            _data.Select((item, index) => new TheoryDataRow<int, string>(index, item.Data) { Skip = item.Skip });
     }
 }
