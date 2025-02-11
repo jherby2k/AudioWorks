@@ -14,14 +14,4 @@
     <NuspecProperties>$(NuspecProperties);Copyright=$(Copyright)</NuspecProperties>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(OS)'=='Windows_NT'">
-    <DefineConstants>WINDOWS</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
-    <DefineConstants>LINUX</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('OSX'))">
-    <DefineConstants>OSX</DefineConstants>
-  </PropertyGroup>
-
 </Project>
