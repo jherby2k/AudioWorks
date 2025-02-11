@@ -13,7 +13,9 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using AudioWorks.Common;
 using Xunit;
 
@@ -21,18 +23,18 @@ namespace AudioWorks.TestUtilities.DataSources
 {
     public static class RenameValidFileDataSource
     {
-        public static TheoryData<string, AudioMetadata, string, string> Data { get; } = new()
-        {
+        public static IEnumerable<TheoryDataRow<string, AudioMetadata, string, string>> Data { get; } =
+        [
             // Basic rename
-            {
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 new(),
                 "Testing 123",
                 "Testing 123.wav"
-            },
+            ),
 
             // Metadata substitution
-            {
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 new()
                 {
@@ -40,10 +42,10 @@ namespace AudioWorks.TestUtilities.DataSources
                 },
                 "{Title}",
                 "Test Title.wav"
-            },
+            ),
 
             // Composite of multiple metadata fields
-            {
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 new()
                 {
@@ -52,42 +54,49 @@ namespace AudioWorks.TestUtilities.DataSources
                 },
                 "{Title} by {Artist}",
                 "Test Title by Test Artist.wav"
-            },
+            ),
 
             // Requested metadata not present
-            {
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 new(),
                 "{Title} by {Artist}",
                 "Unknown Title by Unknown Artist.wav"
-            },
+            ),
 
-            // Metadata with invalid characters
-            {
+            // Metadata with invalid characters on Windows
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 new()
                 {
                     Title = "Test Title <> with |invalid \"characters\""
                 },
                 "{Title}",
-#if WINDOWS
                 "Test Title with invalid characters.wav"
-#else
-                // These characters are all valid on Linux and OSX
+            ) { Skip = !RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "Windows only" : null },
+
+            // Metadata with invalid characters on Windows
+            new(
+                "LPCM 16-bit 44100Hz Stereo.wav",
+                new()
+                {
+                    Title = "Test Title <> with |invalid \"characters\""
+                },
+                "{Title}",
+                // These characters are all valid on Linux and MacOS
                 "Test Title <> with |invalid \"characters\".wav"
-#endif
-            },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "Linux and MacOS only" : null },
 
             // New name matches old
-            {
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 new(),
                 "LPCM 16-bit 44100Hz Stereo",
                 "LPCM 16-bit 44100Hz Stereo.wav"
-            }
-        };
+            )
+        ];
 
-        public static TheoryData<string> FileNames =>
-            new(Data.Select(item => item.Data.Item1).Distinct());
+        public static IEnumerable<TheoryDataRow<string>> FileNames =>
+            Data.Select(item => new TheoryDataRow<string>(item.Data.Item1) { Skip = item.Skip }).Distinct();
     }
 }
