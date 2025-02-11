@@ -13,10 +13,10 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-#if !LINUX
 using System;
-#endif
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using AudioWorks.Common;
 using Xunit;
 
@@ -24,139 +24,136 @@ namespace AudioWorks.TestUtilities.DataSources
 {
     public static class EncodeValidFileDataSource
     {
-        static readonly TheoryData<string, string, SettingDictionary, string[]> _data = new()
-        {
+        static readonly IEnumerable<TheoryDataRow<string, string, SettingDictionary, string[]>> _data =
+        [
             #region Wave Encoding
 
-            {
+            new(
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "Wave",
                 [],
                 [
                     "818EE6CBF16F76F923D33650E7A52708"
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "Wave",
                 [],
                 [
                     "509B83828F13945E4121E4C4897A8649"
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Wave",
                 [],
                 [
                     "5D4B869CD72BE208BC7B47F35E13BE9A"
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "Wave",
                 [],
                 [
                     "EFBC44B9FA9C04449D67ECD16CB7F3D8"
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "Wave",
                 [],
                 [
                     "D55BD1987676A7D6C2A04BF09C10F64F"
                 ]
-            },
-            {
+            ),
+            new(
                 "A-law 44100Hz Stereo.wav",
                 "Wave",
                 [],
                 [
                     "47B031C7D8246F557E0CB37E4DB3F528"
                 ]
-            },
-            {
+            ),
+            new(
                 "µ-law 44100Hz Stereo.wav",
                 "Wave",
                 [],
                 [
                     "FCA4C53C5F98B061CE9C9186A303D816"
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Mono.flac",
                 "Wave",
                 [],
                 [
                     "509B83828F13945E4121E4C4897A8649"
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
                 "Wave",
                 [],
                 [
                     "5D4B869CD72BE208BC7B47F35E13BE9A"
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 48000Hz Stereo.flac",
                 "Wave",
                 [],
                 [
                     "EFBC44B9FA9C04449D67ECD16CB7F3D8"
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 24-bit 96000Hz Stereo.flac",
                 "Wave",
                 [],
                 [
                     "D55BD1987676A7D6C2A04BF09C10F64F"
                 ]
-            },
-
-#if !LINUX
-            {
+            ),
+            new(
                 "ALAC 16-bit 44100Hz Mono.m4a",
                 "Wave",
                 [],
                 [
                     "509B83828F13945E4121E4C4897A8649"
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "ALAC 16-bit 44100Hz Stereo.m4a",
                 "Wave",
                 [],
                 [
                     "5D4B869CD72BE208BC7B47F35E13BE9A"
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "ALAC 16-bit 48000Hz Stereo.m4a",
                 "Wave",
                 [],
                 [
                     "EFBC44B9FA9C04449D67ECD16CB7F3D8"
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "ALAC 24-bit 96000Hz Stereo.m4a",
                 "Wave",
                 [],
                 [
                     "D55BD1987676A7D6C2A04BF09C10F64F"
                 ]
-            },
-#endif
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
 
             #endregion
 
             #region FLAC Encoding
 
-            {
+            new(
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "FLAC",
                 [],
@@ -164,8 +161,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "42070347011D5067A9D962DA3237EF63", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "97F11C51935BE000AA567BBE7016FC77" // FLAC 1.5.0
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "FLAC",
                 [],
@@ -173,8 +170,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "0771EF09959F087FACE194A4479F5107", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "461AF682423E65561DE50B9962A8B6C6" // FLAC 1.5.0
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
                 [],
@@ -182,8 +179,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "F2330345274ED2E624338FF7C168F19D" // FLAC 1.5.0
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "FLAC",
                 [],
@@ -191,8 +188,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "F0F075E05A3AFB67403CCF373932BCCA", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "38104D38BB21F1BCE802DE668DA3AFBA" // FLAC 1.5.0
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "FLAC",
                 [],
@@ -200,8 +197,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "D3A7B834DCE97F0709AEFCA45A24F5B6", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "638690EE580F50587670316311EDA42B" // FLAC 1.5.0
                 ]
-            },
-            {
+            ),
+            new(
                 "A-law 44100Hz Stereo.wav",
                 "FLAC",
                 [],
@@ -209,8 +206,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "10F6AC75659ECFE81D3C07D8D3074538", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "66172FD30E61A7C8F238FBAB63C35F84" // FLAC 1.5.0
                 ]
-            },
-            {
+            ),
+            new(
                 "µ-law 44100Hz Stereo.wav",
                 "FLAC",
                 [],
@@ -218,8 +215,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "FCBAB8A8C261456CF6F87E603B237426", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "F688C60BF5CBAEE877B5A740C869CCCE" // FLAC 1.5.0
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "FLAC",
                 [],
@@ -227,8 +224,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "2F2F341FEECB7842F7FA9CE6CB110C67", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "F5C01B16C0AF727E9A8216A38B22C4C6" // FLAC 1.5.0
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
                 "FLAC",
                 [],
@@ -236,8 +233,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "A48820F5E30B5C21A881E01209257E21", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "A52137CCA928D57F77F766045990EDC1" // FLAC 1.5.0
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "FLAC",
                 [],
@@ -245,8 +242,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "D90693A520FA14AC987272ACB6CD8996", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "593F01D46F19AD1CA640A9A399F43D42" // FLAC 1.5.0
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
                 new()
@@ -258,8 +255,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "F2330345274ED2E624338FF7C168F19D" // FLAC 1.5.0
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
                 new()
@@ -271,8 +268,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "A58022B124B427771041A96F65D8DF21", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "9B411E686F79D1B717C578E0C69D2EF0" // FLAC 1.5.0
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
                 new()
@@ -284,8 +281,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "F341E56E68A0A168B779A4EBFD41422D", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "FF30446E3088C154E0AACFC2A673CC36" // FLAC 1.5.0
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
                 new()
@@ -297,8 +294,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "F2330345274ED2E624338FF7C168F19D" // FLAC 1.5.0
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
                 new()
@@ -310,8 +307,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "986464F3AC48E00D00B8ECF3AF3FD6BC", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "6EEB0FA0BBFC98829CB111381FB8E309" // FLAC 1.5.0
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
                 new()
@@ -323,8 +320,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "F2330345274ED2E624338FF7C168F19D" // FLAC 1.5.0
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
                 new()
@@ -336,8 +333,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "F2330345274ED2E624338FF7C168F19D" // FLAC 1.5.0
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
                 new()
@@ -349,8 +346,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "662592BD8B3853B6FEC4E188F7D0F246", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "05FBB295EF9AF8A9EA035E4E3200FC49" // FLAC 1.5.0
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "FLAC",
                 new()
@@ -362,15 +359,13 @@ namespace AudioWorks.TestUtilities.DataSources
                     "455753A51355171BF22CCC78647235B4", // FLAC 1.3.3 (Ubuntu 20.04 and 22.04)
                     "7ED8352862D82E5138639385C96DA321" // FLAC 1.5.0
                 ]
-            },
+            ),
 
             #endregion
 
-#if !LINUX
-
             #region ALAC Encoding
 
-            {
+            new(
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "ALAC",
                 new()
@@ -382,8 +377,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "24C88B615C59F3054FF0A44C677987FA", // MacOS 11
                     "50F7F27DBCCE5874118C3DE9B0F0306D"
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ALAC",
                 new()
@@ -395,8 +390,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "04244493BA087CD69BAD989927BD1595", // MacOS 11
                     "4A2E22037B18F3318920EA47BA76825C"
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "ALAC",
                 new()
@@ -408,8 +403,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "8522CA9ADFA8E200FDF5936AEF62EA43", // MacOS 11
                     "C299C20C8EF4ED5B6B5664E6B81C3244"
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "ALAC",
                 new()
@@ -421,8 +416,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "1BB62FEE2C66905CFBB6FEC048BF9772", // MacOS 11
                     "26442948986C55394D8AE960E66101C3"
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "A-law 44100Hz Stereo.wav",
                 "ALAC",
                 new()
@@ -434,8 +429,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "B55FDF0750DE71AA26781CA565222D05", // MacOS 11
                     "40626FB4389C8CF567C0BF74621036BD"
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "µ-law 44100Hz Stereo.wav",
                 "ALAC",
                 new()
@@ -447,8 +442,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "8D7D0F67E43BECA4B9EE8AC0D552C01F", // MacOS 11
                     "26B6F5A519F858AB695C5090E7B98451"
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "ALAC",
                 new()
@@ -460,8 +455,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "C88E17FEC4F9AE6C0F8ED21E423E60D3", // MacOS 11
                     "C8E2DD6861F837C845A52A4C34523C85"
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
                 "ALAC",
                 new()
@@ -473,8 +468,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "826418694704C310B1FFFDE1D1874839", // MacOS 11
                     "FAF8B7679D0B2446D83BA248CB491410"
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "ALAC",
                 new()
@@ -486,8 +481,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "E170FAAB89D07557FC15F472715168A0", // MacOS 11
                     "38406F719F6EF9E5F5D4E7862AA5C351"
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ALAC",
                 new()
@@ -500,8 +495,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "B9F0B2D3BCB6FD612829084D8C42C2AA", // MacOS 11
                     "2F72E377036957C669D858AEA26DF62F"
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ALAC",
                 new()
@@ -514,8 +509,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "EF39C30FA5D1106F655DC55806D8CB44", // MacOS 11
                     "F57326FFFD308ED69B83F7F451938D55"
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ALAC",
                 new()
@@ -529,8 +524,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "04244493BA087CD69BAD989927BD1595", // MacOS 11
                     "4A2E22037B18F3318920EA47BA76825C"
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ALAC",
                 new()
@@ -544,8 +539,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "771DAECD27700570C845116672E7DACC", // MacOS 11
                     "03305CCE91A686386908415EF35BDE0D"
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ALAC",
                 new()
@@ -559,13 +554,13 @@ namespace AudioWorks.TestUtilities.DataSources
                     "DF3747EF579BFC71DC15CC0399E8F347", // MacOS 11
                     "815E83D61745D4E117E12D31543C47BF"
                 ]
-            },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
 
             #endregion
 
             #region Apple AAC Encoding
 
-            {
+            new(
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "AppleAAC",
                 new()
@@ -581,8 +576,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "75D127D9FCD7720CBE92C0670A93A880", // 64-bit Windows on Intel
                     "F1E4C1E4386B0DD4B233284E4E2363D8" // 64-bit Windows on AMD
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
                 new()
@@ -598,8 +593,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "1D0F379EC9C47267569F88729569D407", // 64-bit Windows on Intel
                     "C40C18B162E7429F60C62DF6A23071D6" // 64-bit Windows on AMD
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "AppleAAC",
                 new()
@@ -615,8 +610,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "E0A80A6B32CD5A8FA5C62B44F28C4A87", // 64-bit Windows on Intel
                     "CA58A161F472C9038E29DB08BC8B41CC" // 64-bit Windows on AMD
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "AppleAAC",
                 new()
@@ -632,8 +627,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "ED307F76DD052720321284BAD8876AB2", // 64-bit Windows on Intel
                     "155983F671E0ACD36DC482A283A8EDBE" // 64-bit Windows on AMD
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "A-law 44100Hz Stereo.wav",
                 "AppleAAC",
                 new()
@@ -649,8 +644,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "369DAA1350BB9C45BAF84F7769221F00", // 64-bit Windows on Intel
                     "B90925A2DA13F80969FB7E6FEF7E81E0" // 64-bit Windows on AMD
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "µ-law 44100Hz Stereo.wav",
                 "AppleAAC",
                 new()
@@ -666,8 +661,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "A86E9A3D4A9479A44F852FA42BA0C9C2", // 64-bit Windows on Intel
                     "437164350E18B65669094C81C9335C4E" // 64-bit Windows on AMD
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "AppleAAC",
                 new()
@@ -683,8 +678,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "102A8F21E39D364419B9CF5BFB386631", // 64-bit Windows on Intel
                     "EB34F55D3D94E569E99C12BD8FCF5BBF" // 64-bit Windows on AMD
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
                 "AppleAAC",
                 new()
@@ -700,8 +695,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "AAF40EB4D4AC1832D979D6EBDE9C5BDD", // 64-bit Windows on Intel
                     "FC1903FEEBCC293C1995CFF357BC3579" // 64-bit Windows on AMD
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "AppleAAC",
                 new()
@@ -717,8 +712,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "2863A63E2060267B6A6151CA90239BC6", // 64-bit Windows on Intel
                     "76BFBCEB5644AEA27C774D00D35A2B66" // 64-bit Windows on AMD
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
                 new()
@@ -736,8 +731,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "1D0F379EC9C47267569F88729569D407", // 64-bit Windows on Intel
                     "C40C18B162E7429F60C62DF6A23071D6" // 64-bit Windows on AMD
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
                 new()
@@ -755,8 +750,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "93D67A9C673E7ABE3929846DBE5DBF97", // 64-bit Windows on Intel
                     "FC6792AF620BF4CFB49222B1747B4859" // 64-bit Windows on AMD
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
                 new()
@@ -774,8 +769,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "A1CD6AC102BA40A728B2C7E00B1E786D", // 64-bit Windows on Intel
                     "288B9B3FE4FCC212491B9A370757FC46" // 64-bit Windows on AMD
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
                 new()
@@ -793,8 +788,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "38D28BD3802566CB30D3B824D7FF593F", // 64-bit Windows on Intel
                     "2D6F2B1043E1276764605C70E94A9EAE" // 64-bit Windows on AMD
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "AppleAAC",
                 new()
@@ -809,8 +804,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "9E77C0824474E3600F1A919715609A1B", // 32-bit Windows
                     "2321A80FDC5F36A1860523948548F8E5" // 64-bit Windows
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
                 new()
@@ -828,8 +823,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "2AD5FC82A78732A66B8F04387D7D412B", // 64-bit Windows on Intel
                     "58E298B32860D9A30E1F31B3D164A3AC" // 64-bit Windows on AMD
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "AppleAAC",
                 new()
@@ -847,8 +842,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "298A2B946AA53102FD025DDD9D273B21", // 64-bit Windows on Intel
                     "8853121A36B39C0A607B5FE219A8EFD8" // 64-bit Windows on AMD
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "AppleAAC",
                 new()
@@ -866,8 +861,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "96E46C6CF7126E26E58224D5F55850F2", // 64-bit Windows on Intel
                     "60DEF5D19AF12B0962777B0B38CBA79A" // 64-bit Windows on AMD
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "AppleAAC",
                 new()
@@ -885,8 +880,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "96E46C6CF7126E26E58224D5F55850F2", // 64-bit Windows on Intel
                     "60DEF5D19AF12B0962777B0B38CBA79A" // 64-bit Windows on AMD
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "AppleAAC",
                 new()
@@ -904,8 +899,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "D4A9A3FFC75AC0383B68BADA43E23C3D", // 64-bit Windows on Intel
                     "2B2F9D57CFA1F3A0D63D261AD4750468" // 64-bit Windows on AMD
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "AppleAAC",
                 new()
@@ -924,8 +919,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "08686D04EFF88BC663C469F2DD224020", // 64-bit Windows on Intel
                     "85FBE50C3C18EFAB46DE754068F359BC" // 64-bit Windows on AMD
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
                 new()
@@ -943,8 +938,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "1D0F379EC9C47267569F88729569D407", // 64-bit Windows on Intel
                     "C40C18B162E7429F60C62DF6A23071D6" // 64-bit Windows on AMD
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "AppleAAC",
                 new()
@@ -962,8 +957,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "B49EC8F6428A1CDEBA4F0728FC1BF8E5", // 64-bit Windows on Intel
                     "A65D4DA9DB98F2DEF066508818C680CD" // 64-bit Windows on AMD
                 ]
-            },
-            {
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "AppleAAC",
                 new()
@@ -981,15 +976,13 @@ namespace AudioWorks.TestUtilities.DataSources
                     "19940A1BA1D575D9E165584C24A955F4", // 64-bit Windows on Intel
                     "8107A1714777E243320A2E72F8F1D6D7" // 64-bit Windows on AMD
                 ]
-            },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
 
             #endregion
 
-#endif
-
             #region Lame MP3 Encoding
 
-            {
+            new(
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "LameMP3",
                 [],
@@ -997,8 +990,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "F2BD0875E273743A8908F96DCCFDFC44", // Lame 3.100 (Ubuntu and MacOS)
                     "7CB68FB7ACC70E8CD928E7DB437B16FE" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "LameMP3",
                 [],
@@ -1006,8 +999,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "1CB5B915B3A72CBE76087E16F96A0A3E", // Lame 3.100 (Ubuntu and MacOS)
                     "537DE5BA83AAF6542B2E29C74D405EC2" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
                 [],
@@ -1015,8 +1008,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS)
                     "EF2FAA877F1DE84DC87015F841103263" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "LameMP3",
                 [],
@@ -1024,8 +1017,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "1454732B48913F2A3898164BA366DA01", // Lame 3.100 (Ubuntu and MacOS)
                     "D6C2622620E83D442C80AADBE6B45921" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "LameMP3",
                 [],
@@ -1033,8 +1026,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "AD56C3A1ACD627DBDA4B5A28AFE0355D", // Lame 3.100 (Ubuntu and MacOS)
                     "5BCC0ED414809596507ECFEDEBD4454D" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "A-law 44100Hz Stereo.wav",
                 "LameMP3",
                 [],
@@ -1042,8 +1035,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "0190385E444B8576C297E1DE837279F1", // Lame 3.100 (Ubuntu and MacOS)
                     "C43AEE67905D09300EE49323D6330426" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "µ-law 44100Hz Stereo.wav",
                 "LameMP3",
                 [],
@@ -1051,8 +1044,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "3CE431DA62AC5204B9FAE63BD8E2B4A8", // Lame 3.100 (Ubuntu and MacOS)
                     "CC60AD39342F059B4F590988F192FE8D" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
                 [],
@@ -1060,8 +1053,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "F737A24D4F60E5B3229689CC15FF10EE", // Lame 3.100 (Ubuntu and MacOS)
                     "EA2FE7549FB7A1971265FA27B88D0285" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
                 "LameMP3",
                 [],
@@ -1069,8 +1062,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "E19CC567ECA5EA8CC06AB204F0A6DCFB", // Lame 3.100 (Ubuntu and MacOS)
                     "6E47BB49242784E79114392F240D1318" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "LameMP3",
                 [],
@@ -1078,8 +1071,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "FB1B7DECB2C2A2C9CAA1FBB917A81472", // Lame 3.100 (Ubuntu and MacOS)
                     "A4306E31052226EFD081D5D5FA80F62B" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
                 new()
@@ -1091,8 +1084,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "F737A24D4F60E5B3229689CC15FF10EE", // Lame 3.100 (Ubuntu and MacOS)
                     "EA2FE7549FB7A1971265FA27B88D0285" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
                 new()
@@ -1104,8 +1097,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "F69CCDFC32565F97130CBAEABFF0D13C", // Lame 3.100 (Ubuntu and MacOS)
                     "BAB786013527E61F4719BBC1F6682C92" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
                 new()
@@ -1117,8 +1110,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "F737A24D4F60E5B3229689CC15FF10EE", // Lame 3.100 (Ubuntu and MacOS)
                     "EA2FE7549FB7A1971265FA27B88D0285" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
                 new()
@@ -1130,8 +1123,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "EA1232E970C83FCDDE00D4C1D51F0446", // Lame 3.100 (Ubuntu and MacOS)
                     "B3402C50D24A82004D50DC0172E81BC1" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
                 new()
@@ -1143,8 +1136,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "388108BB7EE76567E9869F4CE9786CE9", // Lame 3.100 (Ubuntu and MacOS)
                     "B0AC00BF6DFDA60BAD712FD3F9DFED21" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
                 new()
@@ -1157,8 +1150,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "388108BB7EE76567E9869F4CE9786CE9", // Lame 3.100 (Ubuntu and MacOS)
                     "B0AC00BF6DFDA60BAD712FD3F9DFED21" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
                 new()
@@ -1171,8 +1164,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "388108BB7EE76567E9869F4CE9786CE9", // Lame 3.100 (Ubuntu and MacOS)
                     "B0AC00BF6DFDA60BAD712FD3F9DFED21" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
                 new()
@@ -1184,8 +1177,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "F737A24D4F60E5B3229689CC15FF10EE", // Lame 3.100 (Ubuntu and MacOS)
                     "EA2FE7549FB7A1971265FA27B88D0285" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
                 new()
@@ -1197,8 +1190,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "ED3A9531742553641B112C0D0A41F099", // Lame 3.100 (Ubuntu and MacOS)
                     "ADA8A213D1219A92937453878EEA3D18" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
                 new()
@@ -1210,8 +1203,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "6645726904A761FDF324711CFD21D477", // Lame 3.100 (Ubuntu and MacOS)
                     "47A50D9D488F78F43577BB5BBA0BD783" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
                 new()
@@ -1223,8 +1216,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS)
                     "EF2FAA877F1DE84DC87015F841103263" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
                 new()
@@ -1236,8 +1229,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS)
                     "EF2FAA877F1DE84DC87015F841103263" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
                 new()
@@ -1249,8 +1242,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS)
                     "EF2FAA877F1DE84DC87015F841103263" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
                 new()
@@ -1262,8 +1255,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS)
                     "EF2FAA877F1DE84DC87015F841103263" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
                 new()
@@ -1275,8 +1268,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "65D418A236D86A8CE33E07A76C98DF08", // Lame 3.100 (Ubuntu and MacOS)
                     "BB8B33BD589DA49D751C883B8A0FF653" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
                 new()
@@ -1288,8 +1281,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "5DE234656056DFDAAD30E4DA9FD26366", // Lame 3.100 (Ubuntu and MacOS)
                     "3B10B6430B2A823C58F16953F5B33E9C" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
                 new()
@@ -1301,8 +1294,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "2BBC83E74AB1A4EB150BC6E1EB9920B5", // Lame 3.100 (Ubuntu and MacOS)
                     "2ACEB0816512B4300D13E9329F76D752" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
                 new()
@@ -1314,8 +1307,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "BEB5029A08011BCEDFFA99173B763E7F", // Lame 3.100 (Ubuntu and MacOS)
                     "E9525D2505684DDB3F9FDDE7B550577E" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
                 new()
@@ -1327,8 +1320,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6", // Lame 3.100 (Ubuntu and MacOS)
                     "54E8544993C1E818C72DE5AC00DEABF5" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
                 new()
@@ -1341,8 +1334,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6", // Lame 3.100 (Ubuntu and MacOS)
                     "54E8544993C1E818C72DE5AC00DEABF5" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
                 new()
@@ -1355,8 +1348,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "EACCA2FD6404ACA1AB46027FAE6A667B", // Lame 3.100 (Ubuntu and MacOS)
                     "AAE7CB7E1E4EAAF5ED19F8B986647298" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
                 new()
@@ -1368,8 +1361,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS)
                     "EF2FAA877F1DE84DC87015F841103263" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
                 new()
@@ -1382,8 +1375,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6", // Lame 3.100 (Ubuntu and MacOS)
                     "54E8544993C1E818C72DE5AC00DEABF5" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "LameMP3",
                 new()
@@ -1395,8 +1388,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS)
                     "EF2FAA877F1DE84DC87015F841103263" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
                 new()
@@ -1409,8 +1402,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "49CB061F4DE93D7F88D3B656458C7003", // Lame 3.100 (Ubuntu)
                     "F3F89801873BDC7D9E403C160051B457" // Lame 3.100 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "LameMP3",
                 new()
@@ -1423,13 +1416,13 @@ namespace AudioWorks.TestUtilities.DataSources
                     "E804988EFC1EA58704E6C78B42CE1DF6", // Lame 3.100 (Ubuntu)
                     "026C2587049104F0FFF72EB8E49F87AB" // Lame 3.100 (Windows)
                 ]
-            },
+            ),
 
             #endregion
 
             #region Ogg Vorbis Encoding
 
-            {
+            new(
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "Vorbis",
                 new()
@@ -1442,8 +1435,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "F187C28A4A37DF469CF96EBC8565CC21", // Vorbis 1.3.7 (MacOS on ARM)
                     "E6FBBBCE3847BC9C9EB45A89A7D7DDA6" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "Vorbis",
                 new()
@@ -1458,8 +1451,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "62C6F8889AA6CBE4A80750EFF33D9FDA", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "3C12BC37F57BB2C4542A92ABD52EA27D" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
                 new()
@@ -1473,8 +1466,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "E912A2A65C6272335DF116937A0549A6", // Vorbis 1.3.7 (MacOS on ARM)
                     "57E0997F13613A8C64306230A031D912" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "Vorbis",
                 new()
@@ -1488,8 +1481,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "C1D824314622416360560019BD79F519", // Vorbis 1.3.7 (MacOS on ARM)
                     "A75601BC8CABA65EADD866211A1EF536" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "Vorbis",
                 new()
@@ -1503,8 +1496,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "2A14B596BBE04A8391249A4276753F10", // Vorbis 1.3.7 (MacOS on ARM)
                     "5EF3AF9F00AB434F1A0A08482DE2C0DE" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "A-law 44100Hz Stereo.wav",
                 "Vorbis",
                 new()
@@ -1518,8 +1511,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "2C8DB7597ED25C3494B89E5FBCC75508", // Vorbis 1.3.7 (MacOS on ARM)
                     "DB770934E3E57E832BFFA1C1C85E065F" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "µ-law 44100Hz Stereo.wav",
                 "Vorbis",
                 new()
@@ -1534,8 +1527,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "4E69AF464154872795B7AD87BA762870", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "38EB06F6C7055EC41221129C2440E823" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "Vorbis",
                 new()
@@ -1549,8 +1542,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "ED7CAFD6D69FFF643E01219D1E9696E7", // Vorbis 1.3.7 (MacOS on ARM)
                     "AB097FDBAA6B8516129A17ED1C5BDC21" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
                 "Vorbis",
                 new()
@@ -1564,8 +1557,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "CD4B255CDC3C689C8A2242FDE5F912C7", // Vorbis 1.3.7 (MacOS on ARM)
                     "725AC9661D2A9AABE9508DEBEDA99BA9" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "Vorbis",
                 new()
@@ -1579,8 +1572,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "CD4B255CDC3C689C8A2242FDE5F912C7", // Vorbis 1.3.7 (MacOS on ARM)
                     "F25060DBEAB99B219CDB5EC54D37AD1C" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
                 new()
@@ -1595,8 +1588,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "E7BE0862210C0010541BE605901D4A6D", // Vorbis 1.3.7 (MacOS on ARM)
                     "8224BAEA06E788DF37EFC01CCCD479C8" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
                 new()
@@ -1611,8 +1604,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "9DEA359E04D151021DC995764B8C428E", // Vorbis 1.3.7 (MacOS on ARM)
                     "C77B164D4E60453D679F35551FD3BF02" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
                 new()
@@ -1628,8 +1621,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "E912A2A65C6272335DF116937A0549A6", // Vorbis 1.3.7 (MacOS on ARM)
                     "57E0997F13613A8C64306230A031D912" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
                 new()
@@ -1647,8 +1640,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "55B7584D23DE2667374ABB9C3C571875" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
 
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
                 new()
@@ -1665,8 +1658,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "4B2B694BD0D42994F4A1911FBCB2ABF8", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "9E45D7B37055FD59650839F5BEAB1ED0" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
                 new()
@@ -1682,8 +1675,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "CAEAE4C932830A8C0A41BC5C79DC80D5", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "53E545072EC0FDA11D100BA1DE9EBC0A" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
                 new()
@@ -1700,8 +1693,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "215FA0E953F4BB520A46A3B44B68CC92", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "8E0D0279037DC9DCC286050A2930427A" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
                 new()
@@ -1717,8 +1710,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "84E389F08890621CF00AF8DD2D7C77DB", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "EC75AF6E1F0EFEA7E87ED7B40EFA415A" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
                 new()
@@ -1735,8 +1728,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "84E389F08890621CF00AF8DD2D7C77DB", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "EC75AF6E1F0EFEA7E87ED7B40EFA415A" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
                 new()
@@ -1753,8 +1746,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "C84819FCFA2F25FCDB3E5490E54949B4", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "3FA511E9C941DFB1E61A98418C27F383" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
                 new()
@@ -1770,8 +1763,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "E912A2A65C6272335DF116937A0549A6", // Vorbis 1.3.7 (MacOS on ARM)
                     "57E0997F13613A8C64306230A031D912" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
                 new()
@@ -1788,8 +1781,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "84E389F08890621CF00AF8DD2D7C77DB", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "EC75AF6E1F0EFEA7E87ED7B40EFA415A" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Vorbis",
                 new()
@@ -1805,8 +1798,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "E912A2A65C6272335DF116937A0549A6", // Vorbis 1.3.7 (MacOS on ARM)
                     "57E0997F13613A8C64306230A031D912" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "Vorbis",
                 new()
@@ -1822,8 +1815,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "805F62BDFE149898E21C9448F4335BAC", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "64478AA7F8E2052608AE10624A3C396B" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "Vorbis",
                 new()
@@ -1840,13 +1833,13 @@ namespace AudioWorks.TestUtilities.DataSources
                     "34BA39848B7D78D7FE1D2B30999DF6A9", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "F1F317505EE9AD557FBF2DB31777AAAB" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
-            },
+            ),
 
             #endregion
 
             #region Opus Encoding
 
-            {
+            new(
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "Opus",
                 new()
@@ -1862,8 +1855,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "A2EDE18F0E554FDC9EE5DD9C62622236", // Opus 1.5.2 (64-bit Windows on Intel)
                     "BA67EF14D54C77C508A44C0B08D01261" // Opus 1.5.2 (64-bit Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "Opus",
                 new()
@@ -1877,8 +1870,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "6F0174BCFBF9AE02ACFCC0B2E3B834B8", // Opus 1.5.2 (Windows on Intel)
                     "D40EF4C25A4F36F96A715D2C2D5084BF" // Opus 1.5.2 (Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
                 new()
@@ -1894,8 +1887,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "BF310174502CDAD081F13998FB901865", // Opus 1.5.2 (64-bit Windows on Intel)
                     "AB19CD2D3E02D331600240F8FC9D56CC" // Opus 1.5.2 (64-bit Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "Opus",
                 new()
@@ -1911,8 +1904,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "F4D51B165CDACF9CC1740A023FC832F7", // Opus 1.5.2 (64-bit Windows on Intel)
                     "7136AEEC7C21613DC83A006AA79DC260" // Opus 1.5.2 (64-bit Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "Opus",
                 new()
@@ -1928,8 +1921,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "48D4A34C2C1BB5B6F1230BFE64764ED6", // Opus 1.5.2 (64-bit Windows on Intel)
                     "FD5836D8C677561A65CA77CB9A2898EA" // Opus 1.5.2 (64-bit Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "A-law 44100Hz Stereo.wav",
                 "Opus",
                 new()
@@ -1946,8 +1939,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "AE7BD2C79045C6DD3AFD6D20A98902D6", // Opus 1.5.2 (64-bit Windows on Intel)
                     "0BBEC9BAABF1C61003A65E6174CE7A71" // Opus 1.5.2 (64-bit Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "µ-law 44100Hz Stereo.wav",
                 "Opus",
                 new()
@@ -1964,8 +1957,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "DCB3078A6720C49D9726C64C0DCCCD7E", // Opus 1.5.2 (64-bit Windows on Intel)
                     "7300DC516256ED2274BDCE4F782872E2" // Opus 1.5.2 (64-bit Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "Opus",
                 new()
@@ -1981,8 +1974,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "F6F88CF0DC907202CE5F91CC706A8ADD", // Opus 1.5.2 (64-bit Windows on Intel)
                     "3C64C7A9670C2DACEE22ED461A1FC1C5" // Opus 1.5.2 (64-bit Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
                 "Opus",
                 new()
@@ -1999,8 +1992,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "013902EE71579EDC9C477629381B5706", // Opus 1.5.2 (64-bit Windows on Intel)
                     "73C936BA1F0ACCD5246BBDFA17702259" // Opus 1.5.2 (64-bit Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "Opus",
                 new()
@@ -2016,8 +2009,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "BDD151A5D31382F430EA2139D18DD46A", // Opus 1.5.2 (64-bit Windows on Intel)
                     "9A0971BA58A017AC3C01ED4AAC60FFE7" // Opus 1.5.2 (64-bit Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
                 new()
@@ -2034,8 +2027,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "828B1323F1F7F6E9589249130098DB64", // Opus 1.5.2 (64-bit Windows on Intel)
                     "67D4E04F3A749124E32EE6ED7134865B" // Opus 1.5.2 (64-bit Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
                 new()
@@ -2052,8 +2045,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "4195302C28B204B94F945E14A4A9672B", // Opus 1.5.2 (64-bit Windows on Intel)
                     "D2DE03FC8DCCAE320BB7FF8432A6EF31" // Opus 1.5.2 (64-bit Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
                 new()
@@ -2067,8 +2060,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "39009C873167E72F3ACD4DC0085A3183", // Opus 1.5.2 (MacOS)
                     "A531829330D15594D94053B54404E137" // Opus 1.5.2 (Windows)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
                 new()
@@ -2086,8 +2079,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "CA4D9FA683B85ADCF4132828402D9994", // Opus 1.5.2 (64-bit Windows on Intel)
                     "39E7219F6438D312C01F244231E3CCD3" // Opus 1.5.2 (64-bit Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
                 new()
@@ -2105,8 +2098,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "BF310174502CDAD081F13998FB901865", // Opus 1.5.2 (64-bit Windows on Intel)
                     "AB19CD2D3E02D331600240F8FC9D56CC" // Opus 1.5.2 (64-bit Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
                 new()
@@ -2124,8 +2117,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "1C8382776908484524B1F8287A133A1F", // Opus 1.5.2 (64-bit Windows on Intel)
                     "9262170234B68A66E7FC8CEFC012EB63" // Opus 1.5.2 (64-bit Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
                 new()
@@ -2143,8 +2136,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "682884B45E806A93559FD12B759992D7", // Opus 1.5.2 (64-bit Windows on Intel)
                     "F4228369593D13A85161D84CFCB9E749" // Opus 1.5.2 (64-bit Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
                 new()
@@ -2160,8 +2153,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "47CA0622B6C24FEF2BDA687457AF6EE3", // Opus 1.5.2 (Windows on Intel)
                     "D56071729C7BE8B2B93AF0B8BD3AC3AB" // Opus 1.5.2 (Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
                 new()
@@ -2178,8 +2171,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "47CA0622B6C24FEF2BDA687457AF6EE3", // Opus 1.5.2 (Windows on Intel)
                     "D56071729C7BE8B2B93AF0B8BD3AC3AB" // Opus 1.5.2 (Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
                 new()
@@ -2196,8 +2189,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "C1E6A103E4499035344A3B913611C0E0", // Opus 1.5.2 (Windows on Intel)
                     "B2F7F592DD68C92B20D577E4D9AEE7AB" // Opus 1.5.2 (Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "Opus",
                 new()
@@ -2215,8 +2208,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "BF310174502CDAD081F13998FB901865", // Opus 1.5.2 (64-bit Windows on Intel)
                     "AB19CD2D3E02D331600240F8FC9D56CC" // Opus 1.5.2 (64-bit Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "Opus",
                 new()
@@ -2234,8 +2227,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "D6414CE58A6E7C07C17C9CC11A8CD966", // Opus 1.5.2 (64-bit Windows on Intel)
                     "CA783515424077C81C2654A5F4037B0D" // Opus 1.5.2 (64-bit Windows on AMD)
                 ]
-            },
-            {
+            ),
+            new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "Opus",
                 new()
@@ -2253,13 +2246,14 @@ namespace AudioWorks.TestUtilities.DataSources
                     "1C7A4661C5DD9C5CD8FC8CED950E2C80", // Opus 1.5.2 (64-bit Windows on Intel)
                     "09059F0610AB711E2F3B1B8EAB838A67" // Opus 1.5.2 (64-bit Windows on AMD)
                 ]
-            }
+            )
 
             #endregion
-        };
+        ];
 
-        public static TheoryData<int, string, string, SettingDictionary, string[]> Data =>
-            new(_data.Select((item, index) =>
-                (index, item.Data.Item1, item.Data.Item2, item.Data.Item3, item.Data.Item4)));
+        public static IEnumerable<TheoryDataRow<int, string, string, SettingDictionary, string[]>> Data =>
+            _data.Select((item, index) =>
+                new TheoryDataRow<int, string, string, SettingDictionary, string[]>(index, item.Data.Item1,
+                    item.Data.Item2, item.Data.Item3, item.Data.Item4) { Skip = item.Skip });
     }
 }
