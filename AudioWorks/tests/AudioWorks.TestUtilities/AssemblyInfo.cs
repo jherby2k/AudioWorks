@@ -14,5 +14,11 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using AudioWorks.Common;
+using AudioWorks.TestUtilities.Serializers;
+using Xunit.Sdk;
 
 [assembly: CLSCompliant(false)]
+[assembly: RegisterXunitSerializer(typeof(AudioInfoSerializer), typeof(AudioInfo))]
+[assembly: RegisterXunitSerializer(typeof(AudioMetadataSerializer), typeof(AudioMetadata))]
+[assembly: RegisterXunitSerializer(typeof(SettingDictionarySerializer), typeof(SettingDictionary))]
