@@ -6,7 +6,7 @@
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <Description>Provides Wave audio encoding and decoding functionality for AudioWorks.</Description>
     <NuspecFile>..\Pack.nuspec</NuspecFile>
-    <NuspecProperties>$(NuspecProperties);Configuration=$(Configuration)</NuspecProperties>
+    <NuspecProperties>$(NuspecProperties);Configuration=$(Configuration.ToLowerInvariant())</NuspecProperties>
     <NuspecProperties>$(NuspecProperties);Id=$(MSBuildProjectName)</NuspecProperties>
     <NuspecProperties>$(NuspecProperties);Version=$(FileVersion)</NuspecProperties>
     <NuspecProperties>$(NuspecProperties);Description=$(Description)</NuspecProperties>
