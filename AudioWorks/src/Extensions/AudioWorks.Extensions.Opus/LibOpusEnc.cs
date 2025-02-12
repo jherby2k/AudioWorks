@@ -13,7 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
@@ -39,17 +38,17 @@ namespace AudioWorks.Extensions.Opus
         [LibraryImport(_opusEncLibrary, EntryPoint = "ope_comments_add_picture_from_memory")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static partial int CommentsAddPictureFromMemory(
-            OpusCommentsHandle handle, [In] byte[] data, IntPtr size, int pictureType, IntPtr description);
+            OpusCommentsHandle handle, [In] byte[] data, nint size, int pictureType, nint description);
 
         [LibraryImport(_opusEncLibrary, EntryPoint = "ope_comments_destroy")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial void CommentsDestroy(IntPtr handle);
+        internal static partial void CommentsDestroy(nint handle);
 
         [LibraryImport(_opusEncLibrary, EntryPoint = "ope_encoder_create_callbacks")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static partial OpusEncoderHandle CreateCallbacks(
             ref OpusEncoderCallbacks callbacks,
-            IntPtr userData,
+            nint userData,
             OpusCommentsHandle comments,
             int rate,
             int channels,
@@ -77,7 +76,7 @@ namespace AudioWorks.Extensions.Opus
         internal static partial int ControlGetArm64(
             OpusEncoderHandle handle,
             EncoderControlRequest request,
-            IntPtr register2, IntPtr register3, IntPtr register4, IntPtr register5, IntPtr register6, IntPtr register7,
+            nint register2, nint register3, nint register4, nint register5, nint register6, nint register7,
             out int value);
 
         [LibraryImport(_opusEncLibrary, EntryPoint = "ope_encoder_ctl")]
@@ -89,11 +88,11 @@ namespace AudioWorks.Extensions.Opus
         internal static partial int ControlSetArm64(
             OpusEncoderHandle handle,
             EncoderControlRequest request,
-            IntPtr register2, IntPtr register3, IntPtr register4, IntPtr register5, IntPtr register6, IntPtr register7,
+            nint register2, nint register3, nint register4, nint register5, nint register6, nint register7,
             int argument);
 
         [LibraryImport(_opusEncLibrary, EntryPoint = "ope_encoder_destroy")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial void Destroy(IntPtr handle);
+        internal static partial void Destroy(nint handle);
     }
 }

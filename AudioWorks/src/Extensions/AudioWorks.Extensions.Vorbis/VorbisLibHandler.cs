@@ -94,7 +94,7 @@ namespace AudioWorks.Extensions.Vorbis
             return true;
         }
 
-        static IntPtr DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath) =>
+        static nint DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath) =>
             libraryName switch
             {
                 // On Linux, use the system-provided libogg
@@ -103,7 +103,7 @@ namespace AudioWorks.Extensions.Vorbis
                     : NativeLibrary.Load(_oggLibFullPath),
                 _vorbisLib => NativeLibrary.Load(_vorbisLibFullPath),
                 _vorbisEncLib => NativeLibrary.Load(_vorbisEncLibFullPath),
-                _ => IntPtr.Zero
+                _ => nint.Zero
             };
     }
 }

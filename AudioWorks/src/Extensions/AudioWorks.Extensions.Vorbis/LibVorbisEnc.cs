@@ -13,7 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
@@ -27,7 +26,7 @@ namespace AudioWorks.Extensions.Vorbis
         [LibraryImport(_vorbisEncLibrary, EntryPoint = "vorbis_encode_init")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static partial int EncodeInit(
-            IntPtr info,
+            nint info,
             CLong channels,
             CLong sampleRate,
             CLong maximumBitRate,
@@ -37,6 +36,6 @@ namespace AudioWorks.Extensions.Vorbis
         [LibraryImport(_vorbisEncLibrary, EntryPoint = "vorbis_encode_init_vbr")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static partial int EncodeInitVbr(
-            IntPtr info, CLong channels, CLong rate, float baseQuality);
+            nint info, CLong channels, CLong rate, float baseQuality);
     }
 }

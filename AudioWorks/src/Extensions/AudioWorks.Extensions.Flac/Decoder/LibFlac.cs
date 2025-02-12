@@ -33,15 +33,15 @@ namespace AudioWorks.Extensions.Flac.Decoder
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static unsafe partial int StreamDecoderInitStream(
             StreamDecoderHandle handle,
-            delegate* unmanaged<IntPtr, byte*, int*, IntPtr, DecoderReadStatus> readCallback,
-            delegate* unmanaged<IntPtr, ulong, IntPtr, DecoderSeekStatus> seekCallback,
-            delegate* unmanaged<IntPtr, ulong*, IntPtr, DecoderTellStatus> tellCallback,
-            delegate* unmanaged<IntPtr, ulong*, IntPtr, DecoderLengthStatus> lengthCallback,
-            delegate* unmanaged<IntPtr, IntPtr, int> eofCallback,
+            delegate* unmanaged<nint, byte*, int*, nint, DecoderReadStatus> readCallback,
+            delegate* unmanaged<nint, ulong, nint, DecoderSeekStatus> seekCallback,
+            delegate* unmanaged<nint, ulong*, nint, DecoderTellStatus> tellCallback,
+            delegate* unmanaged<nint, ulong*, nint, DecoderLengthStatus> lengthCallback,
+            delegate* unmanaged<nint, nint, int> eofCallback,
             StreamDecoderWriteCallback writeCallback,
             StreamDecoderMetadataCallback? metadataCallback,
-            delegate* unmanaged<IntPtr, DecoderErrorStatus, IntPtr, void> errorCallback,
-            IntPtr userData);
+            delegate* unmanaged<nint, DecoderErrorStatus, nint, void> errorCallback,
+            nint userData);
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_set_metadata_respond")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
@@ -70,14 +70,14 @@ namespace AudioWorks.Extensions.Flac.Decoder
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_delete")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial void StreamDecoderDelete(IntPtr handle);
+        internal static partial void StreamDecoderDelete(nint handle);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate DecoderWriteStatus StreamDecoderWriteCallback(
-            IntPtr handle, ref Frame frame, IntPtr buffer, IntPtr userData);
+            nint handle, ref Frame frame, nint buffer, nint userData);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate void StreamDecoderMetadataCallback(
-            IntPtr handle, ref MetadataBlock metadataBlock, IntPtr userData);
+            nint handle, ref MetadataBlock metadataBlock, nint userData);
     }
 }

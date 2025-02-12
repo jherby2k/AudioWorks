@@ -13,7 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Lame
@@ -26,7 +25,7 @@ namespace AudioWorks.Extensions.Lame
 
         [LibraryImport(_lameLibrary, EntryPoint = "get_lame_version")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial IntPtr GetVersion();
+        internal static partial nint GetVersion();
 
         [LibraryImport(_lameLibrary, EntryPoint = "lame_init")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
@@ -80,10 +79,10 @@ namespace AudioWorks.Extensions.Lame
 
         [LibraryImport(_lameLibrary, EntryPoint = "lame_get_lametag_frame")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial UIntPtr GetLameTagFrame(EncoderHandle handle, ref byte buffer, UIntPtr bufferSize);
+        internal static partial nuint GetLameTagFrame(EncoderHandle handle, ref byte buffer, nuint bufferSize);
 
         [LibraryImport(_lameLibrary, EntryPoint = "lame_close")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial void Close(IntPtr handle);
+        internal static partial void Close(nint handle);
     }
 }

@@ -119,7 +119,7 @@ namespace AudioWorks.Extensions.Vorbis
                 samples = _replayGainExport.Value.Process(samples);
 
             // Request an unmanaged buffer for each channel, then copy the samples to them
-            var buffers = new Span<IntPtr>(_encoder!.GetBuffer(samples.Frames).ToPointer(), samples.Channels);
+            var buffers = new Span<nint>(_encoder!.GetBuffer(samples.Frames).ToPointer(), samples.Channels);
             if (samples.Channels == 1)
             {
                 var monoBuffer = new Span<float>(buffers[0].ToPointer(), samples.Frames);
@@ -166,7 +166,7 @@ namespace AudioWorks.Extensions.Vorbis
 
             while (_encoder.BlockOut())
             {
-                _encoder.Analysis(IntPtr.Zero);
+                _encoder.Analysis(nint.Zero);
                 _encoder.AddBlock();
 
                 while (_encoder.FlushPacket(out var packet))

@@ -21,7 +21,7 @@ namespace AudioWorks.Extensions.Vorbis
 {
     sealed class OggStream : IDisposable
     {
-        readonly IntPtr _state;
+        readonly nint _state;
 
         internal int SerialNumber => Marshal.PtrToStructure<OggStreamState>(_state).SerialNumber.Value.ToInt32();
 

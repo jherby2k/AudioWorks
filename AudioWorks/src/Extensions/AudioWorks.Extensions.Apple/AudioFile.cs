@@ -43,7 +43,7 @@ namespace AudioWorks.Extensions.Apple
             _stream = stream;
             _endOfData = stream.Length;
 
-            CoreAudioToolbox.AudioFileOpenWithCallbacks(IntPtr.Zero,
+            CoreAudioToolbox.AudioFileOpenWithCallbacks(nint.Zero,
                 _readCallback, null, _getSizeCallback, null,
                 fileType, out var handle);
             Handle = handle;
@@ -59,13 +59,13 @@ namespace AudioWorks.Extensions.Apple
 
             _stream = stream;
 
-            CoreAudioToolbox.AudioFileInitializeWithCallbacks(IntPtr.Zero,
+            CoreAudioToolbox.AudioFileInitializeWithCallbacks(nint.Zero,
                 _readCallback, _writeCallback, _getSizeCallback, _setSizeCallback,
                 fileType, ref description, 0, out var handle);
             Handle = handle;
         }
 
-        internal IntPtr GetProperty(AudioFilePropertyId id, uint size)
+        internal nint GetProperty(AudioFilePropertyId id, uint size)
         {
             // Callers must release this!
             var unmanagedValue = Marshal.AllocHGlobal((int) size);
@@ -99,7 +99,7 @@ namespace AudioWorks.Extensions.Apple
             AudioStreamPacketDescription[] packetDescriptions,
             long startingPacket,
             ref uint packets,
-            IntPtr data) =>
+            nint data) =>
             CoreAudioToolbox.AudioFileReadPacketData(Handle, false, ref numBytes, packetDescriptions,
                 startingPacket, ref packets, data);
 
@@ -111,16 +111,16 @@ namespace AudioWorks.Extensions.Apple
 
         public void Dispose() => Dispose(true);
 
-        AudioFileStatus ReadCallback(IntPtr userData, long position, uint requestCount, byte[] buffer, out uint actualCount)
+        AudioFileStatus ReadCallback(nint userData, long position, uint requestCount, byte[] buffer, out uint actualCount)
         {
             _stream.Position = position;
             actualCount = (uint) _stream.Read(buffer, 0, (int) requestCount);
             return actualCount == 0 ? AudioFileStatus.EndOfFileError : AudioFileStatus.Ok;
         }
 
-        long GetSizeCallback(IntPtr userData) => _endOfData;
+        long GetSizeCallback(nint userData) => _endOfData;
 
-        AudioFileStatus WriteCallback(IntPtr userData, long position, uint requestCount, byte[] buffer, out uint actualCount)
+        AudioFileStatus WriteCallback(nint userData, long position, uint requestCount, byte[] buffer, out uint actualCount)
         {
             _stream.Position = position;
             _stream.Write(buffer, 0, (int) requestCount);
@@ -129,7 +129,7 @@ namespace AudioWorks.Extensions.Apple
             return AudioFileStatus.Ok;
         }
 
-        AudioFileStatus SetSizeCallback(IntPtr userData, long size)
+        AudioFileStatus SetSizeCallback(nint userData, long size)
         {
             _endOfData = size;
             return AudioFileStatus.Ok;

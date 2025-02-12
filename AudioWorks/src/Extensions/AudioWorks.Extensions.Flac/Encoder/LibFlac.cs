@@ -67,22 +67,22 @@ namespace AudioWorks.Extensions.Flac.Encoder
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static partial bool StreamEncoderSetMetadata(
-            StreamEncoderHandle handle, [In] IntPtr[] metaData, uint blocks);
+            StreamEncoderHandle handle, [In] nint[] metaData, uint blocks);
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_init_stream")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static unsafe partial int StreamEncoderInitStream(
             StreamEncoderHandle handle,
-            delegate* unmanaged<IntPtr, byte*, int, uint, uint, IntPtr, EncoderWriteStatus> writeCallback,
-            delegate* unmanaged<IntPtr, ulong, IntPtr, EncoderSeekStatus> seekCallback,
-            delegate* unmanaged<IntPtr, ulong*, IntPtr, EncoderTellStatus> tellCallback,
-            delegate* unmanaged<IntPtr, IntPtr, IntPtr, void> metadataCallback,
-            IntPtr userData);
+            delegate* unmanaged<nint, byte*, int, uint, uint, nint, EncoderWriteStatus> writeCallback,
+            delegate* unmanaged<nint, ulong, nint, EncoderSeekStatus> seekCallback,
+            delegate* unmanaged<nint, ulong*, nint, EncoderTellStatus> tellCallback,
+            delegate* unmanaged<nint, nint, nint, void> metadataCallback,
+            nint userData);
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_process")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static partial bool StreamEncoderProcess(StreamEncoderHandle handle, in IntPtr buffer, uint samples);
+        internal static partial bool StreamEncoderProcess(StreamEncoderHandle handle, in nint buffer, uint samples);
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_process_interleaved")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
@@ -101,6 +101,6 @@ namespace AudioWorks.Extensions.Flac.Encoder
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_delete")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial void StreamEncoderDelete(IntPtr handle);
+        internal static partial void StreamEncoderDelete(nint handle);
     }
 }

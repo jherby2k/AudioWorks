@@ -77,7 +77,7 @@ namespace AudioWorks.Extensions.Vorbis
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
         internal void HeaderOut(
-            IntPtr dspState,
+            nint dspState,
             out OggPacket first,
             out OggPacket second,
             out OggPacket third) =>

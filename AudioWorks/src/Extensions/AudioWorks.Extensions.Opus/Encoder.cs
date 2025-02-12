@@ -149,7 +149,7 @@ namespace AudioWorks.Extensions.Opus
         };
 
         [UnmanagedCallersOnly]
-        static unsafe int WriteCallback(IntPtr userData, byte* buffer, int length)
+        static unsafe int WriteCallback(nint userData, byte* buffer, int length)
         {
             var outputStream = (Stream) GCHandle.FromIntPtr(userData).Target!;
             outputStream.Write(new(buffer, length));
@@ -157,7 +157,7 @@ namespace AudioWorks.Extensions.Opus
         }
 
         [UnmanagedCallersOnly]
-        static int CloseCallback(IntPtr userData) => 0;
+        static int CloseCallback(nint userData) => 0;
 
         void FlushHeaders()
         {
@@ -183,14 +183,14 @@ namespace AudioWorks.Extensions.Opus
             // HACK ope_encoder_ctl needs the variadic argument pushed to the stack on ARM64
             RuntimeInformation.ProcessArchitecture == Architecture.Arm64
                 ? LibOpusEnc.ControlGetArm64(_encoderHandle, request,
-                    IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, out value)
+                    nint.Zero, nint.Zero, nint.Zero, nint.Zero, nint.Zero, nint.Zero, out value)
                 : LibOpusEnc.ControlGet(_encoderHandle, request, out value);
 
         int OpusEncoderControlSet(EncoderControlRequest request, int argument) =>
             // HACK ope_encoder_ctl needs the variadic argument pushed to the stack on ARM64
             RuntimeInformation.ProcessArchitecture == Architecture.Arm64
                 ? LibOpusEnc.ControlSetArm64(_encoderHandle, request,
-                    IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, argument)
+                    nint.Zero, nint.Zero, nint.Zero, nint.Zero, nint.Zero, nint.Zero, argument)
                 : LibOpusEnc.ControlSet(_encoderHandle, request, argument);
     }
 }

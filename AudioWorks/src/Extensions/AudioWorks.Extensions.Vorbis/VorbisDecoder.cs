@@ -21,7 +21,7 @@ namespace AudioWorks.Extensions.Vorbis
 {
     sealed unsafe class VorbisDecoder : IDisposable
     {
-        readonly IntPtr _info = Marshal.AllocHGlobal(sizeof(VorbisInfo));
+        readonly nint _info = Marshal.AllocHGlobal(sizeof(VorbisInfo));
 
         internal VorbisDecoder() => LibVorbis.InfoInit(_info);
 

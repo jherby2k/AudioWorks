@@ -65,9 +65,9 @@ namespace AudioWorks.Extensions.ReplayGain
             return true;
         }
 
-        static IntPtr DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
+        static nint DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
         {
-            if (libraryName != _ebur128Lib) return IntPtr.Zero;
+            if (libraryName != _ebur128Lib) return nint.Zero;
 
             // On Linux, use the system-provided library.
             return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)

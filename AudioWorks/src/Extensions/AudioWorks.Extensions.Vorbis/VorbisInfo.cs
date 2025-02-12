@@ -13,7 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
@@ -35,6 +34,6 @@ namespace AudioWorks.Extensions.Vorbis
 
         readonly CLong BitRateWindow;
 
-        readonly IntPtr CodecSetup;
+        readonly nint CodecSetup;
     }
 }

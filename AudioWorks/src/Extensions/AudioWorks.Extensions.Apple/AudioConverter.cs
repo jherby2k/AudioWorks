@@ -45,10 +45,10 @@ namespace AudioWorks.Extensions.Apple
             ref uint packetSize,
             ref AudioBufferListSingle outputBuffer,
             AudioStreamPacketDescription[]? packetDescriptions) =>
-            CoreAudioToolbox.AudioConverterFillComplexBuffer(_handle, _inputCallback, IntPtr.Zero,
+            CoreAudioToolbox.AudioConverterFillComplexBuffer(_handle, _inputCallback, nint.Zero,
                 ref packetSize, ref outputBuffer, packetDescriptions);
 
-        internal void SetProperty(AudioConverterPropertyId propertyId, uint size, IntPtr data) =>
+        internal void SetProperty(AudioConverterPropertyId propertyId, uint size, nint data) =>
             CoreAudioToolbox.AudioConverterSetProperty(_handle, propertyId, size, data);
 
         public void Dispose()
@@ -61,11 +61,11 @@ namespace AudioWorks.Extensions.Apple
         }
 
         unsafe AudioConverterStatus InputCallback(
-            IntPtr handle,
+            nint handle,
             ref uint numberPackets,
             ref AudioBufferListSingle data,
-            IntPtr packetDescriptions,
-            IntPtr userData)
+            nint packetDescriptions,
+            nint userData)
         {
             if (_buffer == null)
             {
@@ -89,7 +89,7 @@ namespace AudioWorks.Extensions.Apple
 
             // If this conversion requires packet descriptions, provide them
             // ReSharper disable once InvertIf
-            if (packetDescriptions != IntPtr.Zero)
+            if (packetDescriptions != nint.Zero)
             {
                 _descriptionsHandle = GCHandle.Alloc(inputDescriptions, GCHandleType.Pinned);
                 Marshal.WriteIntPtr(packetDescriptions, _descriptionsHandle.AddrOfPinnedObject());

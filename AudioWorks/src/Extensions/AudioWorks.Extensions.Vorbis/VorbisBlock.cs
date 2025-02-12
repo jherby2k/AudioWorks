@@ -13,7 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
@@ -21,7 +20,7 @@ namespace AudioWorks.Extensions.Vorbis
     [StructLayout(LayoutKind.Sequential)]
     readonly struct VorbisBlock
     {
-        readonly IntPtr Pcm;
+        readonly nint Pcm;
 
         readonly OggPackBuffer OggPackBuffer;
 
@@ -41,9 +40,9 @@ namespace AudioWorks.Extensions.Vorbis
 
         readonly long Sequence;
 
-        readonly IntPtr DspState;
+        readonly nint DspState;
 
-        readonly IntPtr LocalStore;
+        readonly nint LocalStore;
 
         readonly CLong LocalTop;
 
@@ -51,7 +50,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         readonly CLong TotalUse;
 
-        readonly IntPtr Reap;
+        readonly nint Reap;
 
         readonly CLong GlueBits;
 
@@ -61,6 +60,6 @@ namespace AudioWorks.Extensions.Vorbis
 
         readonly CLong ResBits;
 
-        readonly IntPtr Internal;
+        readonly nint Internal;
     }
 }

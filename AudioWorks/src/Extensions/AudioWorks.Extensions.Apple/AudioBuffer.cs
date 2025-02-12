@@ -13,7 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Apple
@@ -25,6 +24,6 @@ namespace AudioWorks.Extensions.Apple
 
         internal uint DataByteSize;
 
-        internal IntPtr Data;
+        internal nint Data;
     }
 }

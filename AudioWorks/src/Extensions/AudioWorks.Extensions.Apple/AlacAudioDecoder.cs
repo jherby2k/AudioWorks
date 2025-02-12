@@ -33,7 +33,7 @@ namespace AudioWorks.Extensions.Apple
         AudioFile? _audioFile;
         AudioStreamBasicDescription _outputDescription;
         AudioConverter? _converter;
-        IntPtr _magicCookie;
+        nint _magicCookie;
 
         public bool Finished { get; private set; }
 
@@ -114,7 +114,7 @@ namespace AudioWorks.Extensions.Apple
             };
         }
 
-        static IntPtr GetMagicCookie(AudioFile audioFile, AudioConverter converter)
+        static nint GetMagicCookie(AudioFile audioFile, AudioConverter converter)
         {
             var dataSize = audioFile.GetPropertyInfo(AudioFilePropertyId.MagicCookieData);
             var cookie = audioFile.GetProperty(AudioFilePropertyId.MagicCookieData, dataSize);

@@ -13,7 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Opus
@@ -26,6 +25,6 @@ namespace AudioWorks.Extensions.Opus
 
         [LibraryImport(_opusLibrary, EntryPoint = "opus_get_version_string")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial IntPtr GetVersion();
+        internal static partial nint GetVersion();
     }
 }

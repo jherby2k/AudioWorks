@@ -21,10 +21,10 @@ namespace AudioWorks.Extensions.Vorbis
 {
     sealed unsafe class VorbisEncoder : IDisposable
     {
-        readonly IntPtr _info = Marshal.AllocHGlobal(sizeof(VorbisInfo));
-        readonly IntPtr _block = Marshal.AllocHGlobal(sizeof(VorbisBlock));
+        readonly nint _info = Marshal.AllocHGlobal(sizeof(VorbisInfo));
+        readonly nint _block = Marshal.AllocHGlobal(sizeof(VorbisBlock));
 
-        internal IntPtr DspState { get; } = Marshal.AllocHGlobal(sizeof(VorbisDspState));
+        internal nint DspState { get; } = Marshal.AllocHGlobal(sizeof(VorbisDspState));
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native methods are always expected to return 0")]
@@ -47,7 +47,7 @@ namespace AudioWorks.Extensions.Vorbis
             LibVorbis.BlockInit(DspState, _block);
         }
 
-        internal IntPtr GetBuffer(int samples) => LibVorbis.AnalysisBuffer(DspState, samples);
+        internal nint GetBuffer(int samples) => LibVorbis.AnalysisBuffer(DspState, samples);
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
@@ -57,7 +57,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]
-        internal void Analysis(IntPtr packet) => LibVorbis.Analysis(_block, packet);
+        internal void Analysis(nint packet) => LibVorbis.Analysis(_block, packet);
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method is always expected to return 0")]

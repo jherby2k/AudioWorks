@@ -85,7 +85,7 @@ namespace AudioWorks.Extensions.Apple
             _audioFile = new(GetOutputDescription(inputDescription), AudioFileType.M4A, stream);
             _audioFile.SetProperty(ExtendedAudioFilePropertyId.ClientDataFormat, inputDescription);
 
-            var converter = _audioFile.GetProperty<IntPtr>(ExtendedAudioFilePropertyId.AudioConverter);
+            var converter = _audioFile.GetProperty<nint>(ExtendedAudioFilePropertyId.AudioConverter);
 
             var logger = LoggerManager.LoggerFactory.CreateLogger<AacAudioEncoder>();
 
@@ -131,7 +131,7 @@ namespace AudioWorks.Extensions.Apple
             }
 
             // Setting the ConverterConfig property to null resynchronizes the converter settings
-            _audioFile.SetProperty(ExtendedAudioFilePropertyId.ConverterConfig, IntPtr.Zero);
+            _audioFile.SetProperty(ExtendedAudioFilePropertyId.ConverterConfig, nint.Zero);
         }
 
         public unsafe void Submit(SampleBuffer samples)
@@ -237,7 +237,7 @@ namespace AudioWorks.Extensions.Apple
             _replayGainExport.Value.Initialize(info, metadata, settings);
         }
 
-        static void SetConverterProperty<T>(IntPtr converter, AudioConverterPropertyId propertyId, T value)
+        static void SetConverterProperty<T>(nint converter, AudioConverterPropertyId propertyId, T value)
             where T : struct
         {
             var unmanagedValueSize = Marshal.SizeOf<T>();

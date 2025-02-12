@@ -104,7 +104,7 @@ namespace AudioWorks.Extensions.Lame
             _stream.Position = _startPosition;
 
             byte empty = 0;
-            var bufferSize = LibMp3Lame.GetLameTagFrame(_handle, ref empty, UIntPtr.Zero);
+            var bufferSize = LibMp3Lame.GetLameTagFrame(_handle, ref empty, nuint.Zero);
             Span<byte> buffer = stackalloc byte[(int) bufferSize.ToUInt32()];
             _stream.Write(buffer[..(int) LibMp3Lame.GetLameTagFrame(
                 _handle,

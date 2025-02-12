@@ -70,7 +70,7 @@ namespace AudioWorks.Extensions.Opus
                 coverArt.Data,
                 new(coverArt.Data.Length),
                 -1,
-                IntPtr.Zero);
+                nint.Zero);
             if (error != 0)
                 throw new AudioEncodingException($"Opus encountered error {error} writing the cover art.");
         }
@@ -78,7 +78,7 @@ namespace AudioWorks.Extensions.Opus
         internal unsafe OggPacket GetHeader() => new()
         {
             Packet = Marshal.ReadIntPtr(Handle.DangerousGetHandle()).ToPointer(),
-            Bytes = new(Marshal.ReadInt32(Handle.DangerousGetHandle(), sizeof(IntPtr))),
+            Bytes = new(Marshal.ReadInt32(Handle.DangerousGetHandle(), sizeof(nint))),
             PacketNumber = 1
         };
 

@@ -13,7 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Opus
@@ -21,8 +20,8 @@ namespace AudioWorks.Extensions.Opus
     [StructLayout(LayoutKind.Sequential)]
     unsafe struct OpusEncoderCallbacks
     {
-        internal delegate* unmanaged<IntPtr, byte*, int, int> Write;
+        internal delegate* unmanaged<nint, byte*, int, int> Write;
 
-        internal delegate* unmanaged<IntPtr, int> Close;
+        internal delegate* unmanaged<nint, int> Close;
     }
 }

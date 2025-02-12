@@ -94,7 +94,7 @@ namespace AudioWorks.Extensions.Opus
             return true;
         }
 
-        static IntPtr DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath) =>
+        static nint DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath) =>
             libraryName switch
             {
                 // On Linux, use the system-provided libogg and libopus
@@ -105,7 +105,7 @@ namespace AudioWorks.Extensions.Opus
                     ? NativeLibrary.Load($"{_opusLib}.so.{_linuxOpusLibVersion}", assembly, searchPath)
                     : NativeLibrary.Load(_opusLibFullPath),
                 _opusEncLib => NativeLibrary.Load(_opusEncLibFullPath),
-                _ => IntPtr.Zero
+                _ => nint.Zero
             };
     }
 }

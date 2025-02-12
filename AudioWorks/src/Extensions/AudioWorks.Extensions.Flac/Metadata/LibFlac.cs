@@ -65,7 +65,7 @@ namespace AudioWorks.Extensions.Flac.Metadata
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__metadata_object_delete")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial void MetadataObjectDelete(IntPtr handle);
+        internal static partial void MetadataObjectDelete(nint handle);
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__metadata_chain_new")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
@@ -75,7 +75,7 @@ namespace AudioWorks.Extensions.Flac.Metadata
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static partial bool MetadataChainReadWithCallbacks(
-            MetadataChainHandle handle, IntPtr ioHandle, IoCallbacks callbacks);
+            MetadataChainHandle handle, nint ioHandle, IoCallbacks callbacks);
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__metadata_chain_check_if_tempfile_needed")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
@@ -89,7 +89,7 @@ namespace AudioWorks.Extensions.Flac.Metadata
         internal static partial bool MetadataChainWriteWithCallbacks(
             MetadataChainHandle handle,
             [MarshalAs(UnmanagedType.Bool)] bool usePadding,
-            IntPtr ioHandle,
+            nint ioHandle,
             IoCallbacks callbacks);
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__metadata_chain_write_with_callbacks_and_tempfile")]
@@ -98,14 +98,14 @@ namespace AudioWorks.Extensions.Flac.Metadata
         internal static partial bool MetadataChainWriteWithCallbacksAndTempFile(
             MetadataChainHandle handle,
             [MarshalAs(UnmanagedType.Bool)] bool usePadding,
-            IntPtr ioHandle,
+            nint ioHandle,
             IoCallbacks callbacks,
-            IntPtr tempIoHandle,
+            nint tempIoHandle,
             IoCallbacks tempCallbacks);
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__metadata_chain_delete")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial void MetadataChainDelete(IntPtr handle);
+        internal static partial void MetadataChainDelete(nint handle);
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__metadata_iterator_new")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
@@ -123,7 +123,7 @@ namespace AudioWorks.Extensions.Flac.Metadata
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__metadata_iterator_get_block")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial IntPtr MetadataIteratorGetBlock(MetadataIteratorHandle handle);
+        internal static partial nint MetadataIteratorGetBlock(MetadataIteratorHandle handle);
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__metadata_iterator_insert_block_after")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
@@ -139,6 +139,6 @@ namespace AudioWorks.Extensions.Flac.Metadata
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__metadata_iterator_delete")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial void MetadataIteratorDelete(IntPtr handle);
+        internal static partial void MetadataIteratorDelete(nint handle);
     }
 }

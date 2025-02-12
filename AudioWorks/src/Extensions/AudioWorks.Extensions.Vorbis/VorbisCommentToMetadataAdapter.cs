@@ -24,7 +24,7 @@ namespace AudioWorks.Extensions.Vorbis
     {
         internal unsafe VorbisCommentToMetadataAdapter(VorbisComment vorbisComment)
         {
-            var commentPtrs = new Span<IntPtr>(vorbisComment.UserComments.ToPointer(), vorbisComment.Comments);
+            var commentPtrs = new Span<nint>(vorbisComment.UserComments.ToPointer(), vorbisComment.Comments);
             var commentLengths = new Span<int>(vorbisComment.CommentLengths.ToPointer(), vorbisComment.Comments);
 
             for (var i = 0; i < vorbisComment.Comments; i++)

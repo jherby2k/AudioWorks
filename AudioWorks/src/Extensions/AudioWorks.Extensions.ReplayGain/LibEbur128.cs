@@ -13,7 +13,6 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.ReplayGain
@@ -34,7 +33,7 @@ namespace AudioWorks.Extensions.ReplayGain
 
         [LibraryImport(_ebur128Library, EntryPoint = "ebur128_add_frames_float")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial Ebur128Error AddFramesFloat(StateHandle handle, in float source, UIntPtr frames);
+        internal static partial Ebur128Error AddFramesFloat(StateHandle handle, in float source, nuint frames);
 
         [LibraryImport(_ebur128Library, EntryPoint = "ebur128_sample_peak")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
@@ -51,10 +50,10 @@ namespace AudioWorks.Extensions.ReplayGain
         [LibraryImport(_ebur128Library, EntryPoint = "ebur128_loudness_global_multiple")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static partial Ebur128Error LoudnessGlobalMultiple(
-            [In] IntPtr[] handles, UIntPtr count, out double result);
+            [In] nint[] handles, nuint count, out double result);
 
         [LibraryImport(_ebur128Library, EntryPoint = "ebur128_destroy")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial void Destroy(ref IntPtr handle);
+        internal static partial void Destroy(ref nint handle);
     }
 }

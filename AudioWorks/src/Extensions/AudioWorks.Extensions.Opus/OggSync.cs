@@ -21,7 +21,7 @@ namespace AudioWorks.Extensions.Opus
 {
     sealed class OggSync : IDisposable
     {
-        readonly IntPtr _state;
+        readonly nint _state;
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
             Justification = "Native method always returns 0")]

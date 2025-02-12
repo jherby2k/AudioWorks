@@ -48,9 +48,9 @@ namespace AudioWorks.Extensions.Apple
             return true;
         }
 
-        static IntPtr DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
+        static nint DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
         {
-            if (libraryName != "CoreAudioToolbox") return IntPtr.Zero;
+            if (libraryName != "CoreAudioToolbox") return nint.Zero;
 
             // On Mac, it's a built-in framework
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
@@ -69,7 +69,7 @@ namespace AudioWorks.Extensions.Apple
 
             return File.Exists(coreAudioPath)
                 ? NativeLibrary.Load(coreAudioPath)
-                : IntPtr.Zero;
+                : nint.Zero;
         }
     }
 }

@@ -27,7 +27,7 @@ namespace AudioWorks.Extensions.Apple
         [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static partial AudioFileStatus AudioFileOpenWithCallbacks(
-            IntPtr userData,
+            nint userData,
             AudioFileReadCallback readCallback,
             AudioFileWriteCallback? writeCallback,
             AudioFileGetSizeCallback getSizeCallback,
@@ -38,7 +38,7 @@ namespace AudioWorks.Extensions.Apple
         [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static partial AudioFileStatus AudioFileInitializeWithCallbacks(
-            IntPtr userData,
+            nint userData,
             AudioFileReadCallback readCallback,
             AudioFileWriteCallback writeCallback,
             AudioFileGetSizeCallback getSizeCallback,
@@ -54,7 +54,7 @@ namespace AudioWorks.Extensions.Apple
             AudioFileHandle handle,
             AudioFilePropertyId id,
             ref uint size,
-            IntPtr data);
+            nint data);
 
         [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
@@ -73,12 +73,12 @@ namespace AudioWorks.Extensions.Apple
             [In, Out] AudioStreamPacketDescription[] packetDescriptions,
             long startingPacket,
             ref uint packets,
-            IntPtr data);
+            nint data);
 
         [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static partial AudioFileStatus AudioFileClose(
-            IntPtr handle);
+            nint handle);
 
         [LibraryImport(_coreAudioLibrary, EntryPoint = "ExtAudioFileWrapAudioFileID")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
@@ -93,7 +93,7 @@ namespace AudioWorks.Extensions.Apple
             ExtendedAudioFileHandle handle,
             ExtendedAudioFilePropertyId id,
             ref uint size,
-            IntPtr data);
+            nint data);
 
         [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
@@ -101,7 +101,7 @@ namespace AudioWorks.Extensions.Apple
             ExtendedAudioFileHandle handle,
             ExtendedAudioFilePropertyId id,
             uint size,
-            IntPtr data);
+            nint data);
 
         [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
@@ -113,7 +113,7 @@ namespace AudioWorks.Extensions.Apple
         [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static partial ExtendedAudioFileStatus ExtAudioFileDispose(
-            IntPtr handle);
+            nint handle);
 
         [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
@@ -127,7 +127,7 @@ namespace AudioWorks.Extensions.Apple
         internal static partial AudioConverterStatus AudioConverterFillComplexBuffer(
             AudioConverterHandle handle,
             AudioConverterComplexInputCallback inputCallback,
-            IntPtr userData,
+            nint userData,
             ref uint packetSize,
             ref AudioBufferListSingle outputData,
             [In, Out] AudioStreamPacketDescription[]? packetDescriptions);
@@ -138,23 +138,23 @@ namespace AudioWorks.Extensions.Apple
             AudioConverterHandle handle,
             AudioConverterPropertyId id,
             uint size,
-            IntPtr data);
+            nint data);
 
         [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static partial AudioConverterStatus AudioConverterSetProperty(
-            IntPtr handle,
+            nint handle,
             AudioConverterPropertyId id,
             uint size,
-            IntPtr data);
+            nint data);
 
         [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial AudioConverterStatus AudioConverterDispose(IntPtr handle);
+        internal static partial AudioConverterStatus AudioConverterDispose(nint handle);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate AudioFileStatus AudioFileReadCallback(
-            IntPtr userData,
+            nint userData,
             long position,
             uint requestCount,
             [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] buffer,
@@ -162,7 +162,7 @@ namespace AudioWorks.Extensions.Apple
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate AudioFileStatus AudioFileWriteCallback(
-            IntPtr userData,
+            nint userData,
             long position,
             uint requestCount,
             [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] buffer,
@@ -170,19 +170,19 @@ namespace AudioWorks.Extensions.Apple
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate long AudioFileGetSizeCallback(
-            IntPtr userData);
+            nint userData);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate AudioFileStatus AudioFileSetSizeCallback(
-            IntPtr userData,
+            nint userData,
             long size);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate AudioConverterStatus AudioConverterComplexInputCallback(
-            IntPtr handle,
+            nint handle,
             ref uint numberPackets,
             ref AudioBufferListSingle data,
-            IntPtr packetDescriptions,
-            IntPtr userData);
+            nint packetDescriptions,
+            nint userData);
     }
 }

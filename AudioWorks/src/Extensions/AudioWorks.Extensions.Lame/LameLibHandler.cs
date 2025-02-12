@@ -64,9 +64,9 @@ namespace AudioWorks.Extensions.Lame
             return true;
         }
 
-        static IntPtr DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
+        static nint DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
         {
-            if (libraryName != _lameLib) return IntPtr.Zero;
+            if (libraryName != _lameLib) return nint.Zero;
 
             // On Linux, use the system-provided library.
             return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
