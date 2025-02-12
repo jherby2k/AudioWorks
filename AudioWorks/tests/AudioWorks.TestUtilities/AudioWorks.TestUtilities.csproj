@@ -6,9 +6,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\AudioWorks.Common\AudioWorks.Common.csproj" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
-    <PackageReference Include="xunit.v3.extensibility.core" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit.v3.extensibility.core" />
   </ItemGroup>
 
 </Project>
