@@ -4,7 +4,6 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
 </Project>
