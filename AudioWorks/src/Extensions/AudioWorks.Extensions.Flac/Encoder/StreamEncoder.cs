@@ -49,10 +49,10 @@ namespace AudioWorks.Extensions.Flac.Encoder
         internal void SetCompressionLevel(uint compressionLevel) =>
             LibFlac.StreamEncoderSetCompressionLevel(_handle, compressionLevel);
 
-        internal void SetMetadata(IEnumerable<MetadataObject> metadataBlocks)
+        internal void SetMetadata(IEnumerable<MetadataObject> metadataObjects)
         {
-            var blockPointers = metadataBlocks.Select(block => block.Handle.DangerousGetHandle()).ToArray();
-            LibFlac.StreamEncoderSetMetadata(_handle, blockPointers, (uint) blockPointers.Length);
+            var handles = metadataObjects.Select(o => o.Handle.DangerousGetHandle()).ToArray();
+            LibFlac.StreamEncoderSetMetadata(_handle, handles, (uint) handles.Length);
         }
 
         [SuppressMessage("Performance", "CA1806:Do not ignore method results",
