@@ -17,6 +17,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
+using AudioWorks.Extensions.Flac.Metadata;
 
 namespace AudioWorks.Extensions.Flac.Decoder
 {
@@ -113,7 +114,7 @@ namespace AudioWorks.Extensions.Flac.Decoder
             nint userData) =>
             DecoderWriteStatus.Continue;
 
-        protected virtual void MetadataCallback(nint handle, nint metadataBlock, nint userData)
+        protected virtual void MetadataCallback(nint handle, ref MetadataBlock metadataBlock, nint userData)
         {
         }
 

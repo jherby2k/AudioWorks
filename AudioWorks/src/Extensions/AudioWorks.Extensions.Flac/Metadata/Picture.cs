@@ -18,7 +18,7 @@ using System.Runtime.InteropServices;
 namespace AudioWorks.Extensions.Flac.Metadata
 {
     [StructLayout(LayoutKind.Sequential)]
-    readonly struct Picture
+    readonly unsafe struct Picture
     {
         internal readonly PictureType Type;
 
@@ -36,6 +36,6 @@ namespace AudioWorks.Extensions.Flac.Metadata
 
         internal readonly uint DataLength;
 
-        internal readonly nint Data;
+        internal readonly byte* Data;
     }
 }

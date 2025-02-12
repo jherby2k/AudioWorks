@@ -34,18 +34,16 @@ namespace AudioWorks.Extensions.Flac.Decoder
         internal void SetMetadataRespond(MetadataType type) =>
             LibFlac.StreamDecoderSetMetadataRespond(Handle, type);
 
-        protected override unsafe void MetadataCallback(nint handle, nint metadataBlock, nint userData)
+        protected override unsafe void MetadataCallback(nint handle, ref MetadataBlock metadataBlock, nint userData)
         {
             // ReSharper disable once SwitchStatementMissingSomeCases
-            switch ((MetadataType) Marshal.ReadInt32(metadataBlock))
+            switch (metadataBlock.Type)
             {
                 case MetadataType.VorbisComment:
-                    var vorbisComment = Marshal.PtrToStructure<MetadataBlock>(metadataBlock).VorbisComment;
-                    for (var commentIndex = 0; commentIndex < vorbisComment.Count; commentIndex++)
+                    foreach (var entry in new Span<VorbisCommentEntry>(
+                                 metadataBlock.VorbisComment.Comments,
+                                 (int) metadataBlock.VorbisComment.Count))
                     {
-                        var entry = Marshal.PtrToStructure<VorbisCommentEntry>(nint.Add(vorbisComment.Comments,
-                            commentIndex * sizeof(VorbisCommentEntry)));
-
                         var entryString = Utf8StringMarshaller.ConvertToManaged(entry.Entry) ?? string.Empty;
                         var delimiter = entryString.IndexOf('=', StringComparison.OrdinalIgnoreCase);
                         AudioMetadata.Set(entryString[..delimiter], entryString[(delimiter + 1)..]);
@@ -54,10 +52,10 @@ namespace AudioWorks.Extensions.Flac.Decoder
                     break;
 
                 case MetadataType.Picture:
-                    var picture = Marshal.PtrToStructure<MetadataBlock>(metadataBlock).Picture;
-                    if (picture.Type is PictureType.CoverFront or PictureType.Other)
-                        AudioMetadata.CoverArt = CoverArtFactory.GetOrCreate(
-                            new Span<byte>(picture.Data.ToPointer(), (int) picture.DataLength));
+                    if (metadataBlock.Picture.Type is PictureType.CoverFront or PictureType.Other)
+                        AudioMetadata.CoverArt = CoverArtFactory.GetOrCreate(new Span<byte>(
+                            metadataBlock.Picture.Data,
+                            (int) metadataBlock.Picture.DataLength));
                     break;
             }
         }

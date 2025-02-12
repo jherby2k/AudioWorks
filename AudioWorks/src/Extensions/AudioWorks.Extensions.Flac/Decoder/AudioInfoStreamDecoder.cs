@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System.IO;
-using System.Runtime.InteropServices;
 using AudioWorks.Common;
 using AudioWorks.Extensions.Flac.Metadata;
 
@@ -29,18 +28,12 @@ namespace AudioWorks.Extensions.Flac.Decoder
         {
         }
 
-        protected override void MetadataCallback(nint handle, nint metadataBlock, nint userData)
-        {
-            if ((MetadataType) Marshal.ReadInt32(metadataBlock) != MetadataType.StreamInfo)
-                return;
-
-            var streamInfo = Marshal.PtrToStructure<MetadataBlock>(metadataBlock).StreamInfo;
+        protected override void MetadataCallback(nint handle, ref MetadataBlock metadataBlock, nint userData) =>
             AudioInfo = AudioInfo.CreateForLossless(
                 "FLAC",
-                (int) streamInfo.Channels,
-                (int) streamInfo.BitsPerSample,
-                (int) streamInfo.SampleRate,
-                (long) streamInfo.TotalSamples);
-        }
+                (int) metadataBlock.StreamInfo.Channels,
+                (int) metadataBlock.StreamInfo.BitsPerSample,
+                (int) metadataBlock.StreamInfo.SampleRate,
+                (long) metadataBlock.StreamInfo.TotalSamples);
     }
 }

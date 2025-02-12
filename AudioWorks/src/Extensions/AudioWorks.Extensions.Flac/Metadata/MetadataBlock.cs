@@ -21,7 +21,7 @@ namespace AudioWorks.Extensions.Flac.Metadata
     readonly struct MetadataBlock
     {
         [FieldOffset(0)]
-        readonly MetadataType Type;
+        internal readonly MetadataType Type;
 
         [FieldOffset(4)]
         readonly bool IsLast;

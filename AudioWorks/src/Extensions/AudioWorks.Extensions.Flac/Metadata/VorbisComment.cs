@@ -18,12 +18,12 @@ using System.Runtime.InteropServices;
 namespace AudioWorks.Extensions.Flac.Metadata
 {
     [StructLayout(LayoutKind.Sequential)]
-    readonly struct VorbisComment
+    readonly unsafe struct VorbisComment
     {
         readonly VorbisCommentEntry Vendor;
 
         internal readonly uint Count;
 
-        internal readonly nint Comments;
+        internal readonly VorbisCommentEntry* Comments;
     }
 }
