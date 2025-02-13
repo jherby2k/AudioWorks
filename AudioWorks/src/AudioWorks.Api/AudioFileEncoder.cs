@@ -35,14 +35,40 @@ namespace AudioWorks.Api
         readonly EncodedPath? _encodedFileName;
         readonly EncodedPath? _encodedDirectoryName;
         readonly ExportFactory<IAudioEncoder> _encoderFactory;
-        int _maxDegreeOfParallelism = Environment.ProcessorCount;
+        readonly int _maxDegreeOfParallelism = Environment.ProcessorCount;
+        readonly SettingDictionary _settings;
+
+        /// <summary>
+        /// Gets or sets the encoded file name.
+        /// </summary>
+        /// <value>The encoded file name, if set; otherwise, an empty string.</value>
+        /// <exception cref="ArgumentException">
+        /// Thrown if <paramref name="value"/> is not properly formatted.
+        /// </exception>
+        public string EncodedFileName
+        {
+            get => _encodedFileName?.ToString() ?? string.Empty;
+            init => _encodedFileName = string.IsNullOrEmpty(value) ? null : new(value);
+        }
+
+        /// <summary>
+        /// Gets or sets the encoded directory name.
+        /// </summary>
+        /// <value>The encoded directory name, if set; otherwise, an empty string.</value>
+        /// <exception cref="ArgumentException">
+        /// Thrown if <paramref name="value"/> is not properly formatted.
+        /// </exception>
+        public string EncodedDirectoryName
+        {
+            get => _encodedDirectoryName?.ToString() ?? string.Empty;
+            init => _encodedDirectoryName = new(value);
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether existing files should be overwritten.
         /// </summary>
         /// <value><c>true</c> if files should be overwritten; otherwise, <c>false</c>.</value>
-        // ReSharper disable once PropertyCanBeMadeInitOnly.Global
-        public bool Overwrite { get; set; }
+        public bool Overwrite { get; init; }
 
         /// <summary>
         /// Gets or sets the maximum degree of parallelism. The default value is equal to
@@ -53,10 +79,9 @@ namespace AudioWorks.Api
         public int MaxDegreeOfParallelism
         {
             get => _maxDegreeOfParallelism;
-            set
+            init
             {
-                if (value < 1)
-                    throw new ArgumentOutOfRangeException(nameof(value), value, "Minimum value is 1.");
+                ArgumentOutOfRangeException.ThrowIfNegativeOrZero(value);
 
                 _maxDegreeOfParallelism = value;
             }
@@ -67,42 +92,42 @@ namespace AudioWorks.Api
         /// true, and should only be disabled for testing or troubleshooting purposes.
         /// </summary>
         /// <value><c>false</c> if optimizations should be skipped; otherwise, <c>true</c>.</value>
-        public bool UseOptimizations { get; set; } = true;
+        public bool UseOptimizations { get; init; } = true;
 
         /// <summary>
-        /// Gets the settings.
+        /// Gets or sets the encoder settings.
         /// </summary>
         /// <value>The settings.</value>
-        public SettingDictionary Settings { get; }
+        /// <exception cref="ArgumentNullException">Thrown if <see paramref="value"/> is null.</exception>
+        public SettingDictionary Settings
+        {
+            get => _settings;
+            init
+            {
+                ArgumentNullException.ThrowIfNull(value);
+
+                using (var export = _encoderFactory.CreateExport())
+                    _settings = new ValidatingSettingDictionary(export.Value.SettingInfo, value);
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioFileEncoder"/> class.
         /// </summary>
         /// <param name="name">The name of the encoder.</param>
-        /// <param name="encodedDirectoryName">The encoded directory name, or null.</param>
-        /// <param name="encodedFileName">The encode file name, or null.</param>
-        /// <param name="settings">The settings.</param>
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="name"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if <see paramref="name"/> is not the name of an available encoder.
         /// </exception>
         public AudioFileEncoder(
-            string name,
-            string? encodedDirectoryName = null,
-            string? encodedFileName = null,
-            SettingDictionary? settings = null)
+            string name)
         {
             ArgumentNullException.ThrowIfNull(name);
 
             _encoderFactory = ExtensionProviderWrapper.GetFactories<IAudioEncoder>("Name", name).SingleOrDefault() ??
                               throw new ArgumentException($"No '{name}' encoder is available.", nameof(name));
 
-            if (encodedDirectoryName != null)
-                _encodedDirectoryName = new(encodedDirectoryName);
-            if (encodedFileName != null)
-                _encodedFileName = new(encodedFileName);
-
             using (var export = _encoderFactory.CreateExport())
-                Settings = new ValidatingSettingDictionary(export.Value.SettingInfo, settings);
+                _settings = new ValidatingSettingDictionary(export.Value.SettingInfo, []);
         }
 
         /// <summary>

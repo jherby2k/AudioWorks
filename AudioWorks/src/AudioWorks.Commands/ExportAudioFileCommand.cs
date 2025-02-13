@@ -55,12 +55,10 @@ namespace AudioWorks.Commands
 
         protected override void EndProcessing()
         {
-            var encoder = new AudioFileEncoder(
-                Encoder!,
-                SessionState.Path.GetUnresolvedProviderPathFromPSPath(Path),
-                Name,
-                SettingAdapter.ParametersToSettings(_parameters))
-            {
+            var encoder = new AudioFileEncoder(Encoder!) {
+                EncodedDirectoryName = SessionState.Path.GetUnresolvedProviderPathFromPSPath(Path),
+                EncodedFileName = Name ?? string.Empty,
+                Settings = SettingAdapter.ParametersToSettings(_parameters),
                 Overwrite = Force,
                 MaxDegreeOfParallelism = MaxDegreeOfParallelism
             };

@@ -23,9 +23,9 @@ namespace AudioWorks.Commands
 {
     static class SettingAdapter
     {
-        internal static SettingDictionary? ParametersToSettings(RuntimeDefinedParameterDictionary? parameters)
+        internal static SettingDictionary ParametersToSettings(RuntimeDefinedParameterDictionary? parameters)
         {
-            if (parameters == null) return null;
+            if (parameters == null) return [];
 
             var result = new SettingDictionary();
             foreach (var parameter in parameters.Where(p => p.Value.IsSet))

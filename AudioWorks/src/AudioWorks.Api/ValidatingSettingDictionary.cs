@@ -23,11 +23,9 @@ namespace AudioWorks.Api
     {
         readonly SettingInfoDictionary _settingInfos;
 
-        internal ValidatingSettingDictionary(SettingInfoDictionary settingInfos, SettingDictionary? settings = null)
+        internal ValidatingSettingDictionary(SettingInfoDictionary settingInfos, SettingDictionary settings)
         {
             _settingInfos = settingInfos;
-
-            if (settings == null) return;
 
             foreach (var setting in settings)
                 Add(setting);

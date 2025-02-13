@@ -1,4 +1,4 @@
-/* Copyright © 2018 Jeremy Herbison
+/* Copyright ï¿½ 2018 Jeremy Herbison
 
 This file is part of AudioWorks.
 
@@ -31,29 +31,35 @@ namespace AudioWorks.Api.Tests
 
         [Fact(DisplayName = "AudioFileEncoder's constructor throws an exception if the name is null")]
         public void ConstructorNameNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => new AudioFileEncoder(null!));
+            Assert.Throws<ArgumentNullException>(() =>
+                new AudioFileEncoder(null!));
 
         [Fact(DisplayName = "AudioFileEncoder's constructor throws an exception if the name is unsupported")]
         public void ConstructorNameUnsupportedThrowsException() =>
-            Assert.Throws<ArgumentException>(() => new AudioFileEncoder("Foo"));
+            Assert.Throws<ArgumentException>(() =>
+                new AudioFileEncoder("Foo"));
 
         [Fact(DisplayName =
             "AudioFileEncoder's constructor throws an exception if encodedDirectoryName references an invalid metadata field")]
         public void ConstructorEncodedDirectoryNameInvalidThrowsException() =>
-            Assert.Throws<ArgumentException>(() => new AudioFileEncoder("Wave", null, "{Invalid}"));
+            Assert.Throws<ArgumentException>(() =>
+                new AudioFileEncoder("Wave") { EncodedDirectoryName = "{Invalid}" });
 
         [Fact(DisplayName = "AudioFileEncoder's constructor throws an exception if an unexpected setting is provided")]
         public void ConstructorUnexpectedSettingThrowsException() =>
             Assert.Throws<ArgumentException>(() =>
-                new AudioFileEncoder("Wave", null, null, new() { ["Foo"] = "Bar" }));
+                new AudioFileEncoder("Wave") { Settings = new() { ["Foo"] = "Bar" } });
 
-        [Fact(DisplayName = "AudioFileEncoder's MaxDegreeOfParallelism property throws an exception if it is less than 1")]
+        [Fact(DisplayName =
+            "AudioFileEncoder's MaxDegreeOfParallelism property throws an exception if it is less than 1")]
         public void MaxDegreeOfParallelismTooLowThrowsException() =>
-            Assert.Throws<ArgumentOutOfRangeException>(() => new AudioFileEncoder("Wave").MaxDegreeOfParallelism = 0);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new AudioFileEncoder("Wave") { MaxDegreeOfParallelism = 0 });
 
         [Fact(DisplayName = "AudioFileEncoder's Settings property throws an exception if an unexpected setting is provided")]
         public void SettingsUnexpectedSettingThrowsException() =>
-            Assert.Throws<ArgumentException>(() => new AudioFileEncoder("Wave").Settings["Foo"] = "Bar");
+            Assert.Throws<ArgumentException>(() =>
+                new AudioFileEncoder("Wave").Settings["Foo"] = "Bar");
 
         [Fact(DisplayName = "AudioFileEncoder's Encode method throws an exception if an audio file is null")]
         public async Task EncodeAsyncNullAudioFileThrowsException() =>
@@ -69,12 +75,13 @@ namespace AudioWorks.Api.Tests
             SettingDictionary settings,
             string[] validHashes)
         {
-            var results = (await new AudioFileEncoder(
-                        encoderName,
-                        Path.Combine("Output", "Encode", "Valid"),
-                        $"{index:000} - {Path.GetFileNameWithoutExtension(sourceFileName)}",
-                        settings)
-                    { Overwrite = true }
+            var results = (await new AudioFileEncoder(encoderName)
+                {
+                    EncodedDirectoryName = Path.Combine("Output", "Encode", "Valid"),
+                    EncodedFileName = $"{index:000} - {Path.GetFileNameWithoutExtension(sourceFileName)}",
+                    Settings = settings,
+                    Overwrite = true
+                }
                 .EncodeAsync(new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", sourceFileName)))
                 .ConfigureAwait(true)).ToArray();
 
@@ -91,12 +98,13 @@ namespace AudioWorks.Api.Tests
             SettingDictionary settings,
             string[] validHashes)
         {
-            var results = (await new AudioFileEncoder(
-                        encoderName,
-                        Path.Combine("Output", "Encode", "Valid"),
-                        $"{index:000} - {Path.GetFileNameWithoutExtension(sourceFileName)}",
-                        settings)
-                    { Overwrite = true, UseOptimizations = false }
+            var results = (await new AudioFileEncoder(encoderName)
+                {
+                    EncodedDirectoryName = Path.Combine("Output", "Encode", "Valid"),
+                    EncodedFileName = $"{index:000} - {Path.GetFileNameWithoutExtension(sourceFileName)}",
+                    Settings = settings,
+                    Overwrite = true, UseOptimizations = false
+                }
                 .EncodeAsync(new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", sourceFileName)))
                 .ConfigureAwait(true)).ToArray();
 

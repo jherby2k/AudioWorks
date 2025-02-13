@@ -49,8 +49,11 @@ namespace AudioWorks.Commands
 
         protected override void EndProcessing()
         {
-            var analyzer = new AudioFileAnalyzer(Analyzer!, SettingAdapter.ParametersToSettings(_parameters))
-                { MaxDegreeOfParallelism = MaxDegreeOfParallelism };
+            var analyzer = new AudioFileAnalyzer(Analyzer!)
+            {
+                Settings = SettingAdapter.ParametersToSettings(_parameters),
+                MaxDegreeOfParallelism = MaxDegreeOfParallelism
+            };
 
             var activity = $"Performing {Analyzer} analysis on {_audioFiles.Count} audio files";
             var totalFrames = (double) _audioFiles.Sum(audioFile => audioFile.Info.FrameCount);

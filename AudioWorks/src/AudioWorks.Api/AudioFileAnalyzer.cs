@@ -33,7 +33,8 @@ namespace AudioWorks.Api
     public sealed class AudioFileAnalyzer
     {
         readonly ExportFactory<IAudioAnalyzer> _analyzerFactory;
-        int _maxDegreeOfParallelism = Environment.ProcessorCount;
+        readonly int _maxDegreeOfParallelism = Environment.ProcessorCount;
+        readonly SettingDictionary _settings;
 
         /// <summary>
         /// Gets or sets the maximum degree of parallelism. The default value is equal to
@@ -44,30 +45,39 @@ namespace AudioWorks.Api
         public int MaxDegreeOfParallelism
         {
             get => _maxDegreeOfParallelism;
-            set
+            init
             {
-                if (value < 1)
-                    throw new ArgumentOutOfRangeException(nameof(value), value, "Minimum value is 1.");
+                ArgumentOutOfRangeException.ThrowIfNegativeOrZero(value);
 
                 _maxDegreeOfParallelism = value;
             }
         }
 
         /// <summary>
-        /// Gets the settings.
+        /// Gets or sets the analyzer settings.
         /// </summary>
         /// <value>The settings.</value>
-        public SettingDictionary Settings { get; }
+        /// <exception cref="ArgumentNullException">Thrown if <see paramref="value"/> is null.</exception>
+        public SettingDictionary Settings
+        {
+            get => _settings;
+            init
+            {
+                ArgumentNullException.ThrowIfNull(value);
+
+                using (var export = _analyzerFactory.CreateExport())
+                    _settings = new ValidatingSettingDictionary(export.Value.SettingInfo, value);
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioFileAnalyzer"/> class.
         /// </summary>
         /// <param name="name">The name of the analyzer.</param>
-        /// <param name="settings">The settings.</param>
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="name"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if <see paramref="name"/> is not the name of an available analyzer.
         /// </exception>
-        public AudioFileAnalyzer(string name, SettingDictionary? settings = null)
+        public AudioFileAnalyzer(string name)
         {
             ArgumentNullException.ThrowIfNull(name);
 
@@ -75,7 +85,7 @@ namespace AudioWorks.Api
                                throw new ArgumentException($"No '{name}' analyzer is available.", nameof(name));
 
             using (var export = _analyzerFactory.CreateExport())
-                Settings = new ValidatingSettingDictionary(export.Value.SettingInfo, settings);
+                _settings = new ValidatingSettingDictionary(export.Value.SettingInfo, []);
         }
 
         /// <summary>

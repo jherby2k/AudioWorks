@@ -1,4 +1,4 @@
-/* Copyright © 2018 Jeremy Herbison
+/* Copyright ï¿½ 2018 Jeremy Herbison
 
 This file is part of AudioWorks.
 
@@ -31,16 +31,24 @@ namespace AudioWorks.Api.Tests
 
         [Fact(DisplayName = "AudioFileAnalyzer's constructor throws an exception if the name is null")]
         public void ConstructorNameNullThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => new AudioFileAnalyzer(null!));
+            Assert.Throws<ArgumentNullException>(() =>
+                new AudioFileAnalyzer(null!));
 
         [Fact(DisplayName = "AudioFileAnalyzer's constructor throws an exception if the name is unsupported")]
         public void ConstructorNameUnsupportedThrowsException() =>
-            Assert.Throws<ArgumentException>(() => new AudioFileAnalyzer("Foo"));
+            Assert.Throws<ArgumentException>(() =>
+                new AudioFileAnalyzer("Foo"));
 
-        [Fact(DisplayName = "AudioFileAnalyzer's MaxDegreeOfParallelism property throws an exception if it is less than 1")]
+        [Fact(DisplayName =
+            "AudioFileAnalyzer's MaxDegreeOfParallelism property throws an exception if it is less than 1")]
         public void MaxDegreeOfParallelismTooLowThrowsException() =>
             Assert.Throws<ArgumentOutOfRangeException>(() =>
-                new AudioFileAnalyzer("ReplayGain").MaxDegreeOfParallelism = 0);
+                new AudioFileAnalyzer("ReplayGain") { MaxDegreeOfParallelism = 0 });
+
+        [Fact(DisplayName = "AudioFileAnalyzer's Settings property throws an exception if an unexpected setting is provided")]
+        public void SettingsUnexpectedSettingThrowsException() =>
+            Assert.Throws<ArgumentException>(() =>
+                new AudioFileAnalyzer("ReplayGain").Settings["Foo"] = "Bar");
 
         [Fact(DisplayName = "AudioFileEncoder's Encode method throws an exception if an audio file is null")]
         public async Task AnalyzeAsyncNullAudioFileThrowsException() =>
@@ -57,7 +65,8 @@ namespace AudioWorks.Api.Tests
         {
             var audioFile = new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
 
-            await new AudioFileAnalyzer(analyzerName, settings).AnalyzeAsync(audioFile).ConfigureAwait(true);
+            await new AudioFileAnalyzer(analyzerName) { Settings = settings }
+                .AnalyzeAsync(audioFile).ConfigureAwait(true);
 
             Assert.Equivalent(validMetadata, audioFile.Metadata);
         }
@@ -74,7 +83,8 @@ namespace AudioWorks.Api.Tests
                     new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)))
                 .ToArray<ITaggedAudioFile>();
 
-            await new AudioFileAnalyzer(analyzerName, settings).AnalyzeAsync(audioFiles).ConfigureAwait(true);
+            await new AudioFileAnalyzer(analyzerName) { Settings = settings }
+                .AnalyzeAsync(audioFiles).ConfigureAwait(true);
 
             Assert.Equivalent(validMetadata, audioFiles.Select(audioFile => audioFile.Metadata));
         }
