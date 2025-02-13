@@ -133,15 +133,15 @@ namespace AudioWorks.Api
         /// <summary>
         /// Encodes the specified audio files.
         /// </summary>
-        /// <param name="audioFiles">The audio files.</param>
-        /// <returns>A new audio file.</returns>
+        /// <param name="audioFiles">The source audio files.</param>
+        /// <returns>The new audio files.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
         public async Task<IEnumerable<ITaggedAudioFile>> EncodeAsync(IEnumerable<ITaggedAudioFile> audioFiles)
         {
             ArgumentNullException.ThrowIfNull(audioFiles);
 
-            return await EncodeAsync(audioFiles.ToArray()).ConfigureAwait(false);
+            return await EncodeAsync([.. audioFiles]).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace AudioWorks.Api
         /// <param name="audioFiles">The audio files.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <param name="progress">The progress queue, or <c>null</c>.</param>
-        /// <returns>A new audio file.</returns>
+        /// <returns>The new audio files.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
         public async Task<IEnumerable<ITaggedAudioFile>> EncodeAsync(
@@ -160,14 +160,14 @@ namespace AudioWorks.Api
         {
             ArgumentNullException.ThrowIfNull(audioFiles);
 
-            return await EncodeAsync(progress, cancellationToken, audioFiles.ToArray()).ConfigureAwait(false);
+            return await EncodeAsync(progress, cancellationToken, [.. audioFiles]).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Encodes the specified audio files.
         /// </summary>
-        /// <param name="audioFiles">The audio files.</param>
-        /// <returns>A new audio file.</returns>
+        /// <param name="audioFiles">The source audio files.</param>
+        /// <returns>The new audio files.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
         public async Task<IEnumerable<ITaggedAudioFile>> EncodeAsync(params ITaggedAudioFile[] audioFiles) =>
@@ -176,23 +176,10 @@ namespace AudioWorks.Api
         /// <summary>
         /// Encodes the specified audio files.
         /// </summary>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <param name="audioFiles">The audio files.</param>
-        /// <returns>A new audio file.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
-        /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
-        public async Task<IEnumerable<ITaggedAudioFile>> EncodeAsync(
-            CancellationToken cancellationToken,
-            params ITaggedAudioFile[] audioFiles) =>
-            await EncodeAsync(null, cancellationToken, audioFiles).ConfigureAwait(false);
-
-        /// <summary>
-        /// Encodes the specified audio files.
-        /// </summary>
         /// <param name="progress">The progress queue, or <c>null</c>.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <param name="audioFiles">The audio files.</param>
-        /// <returns>A new audio file.</returns>
+        /// <param name="audioFiles">The source audio files.</param>
+        /// <returns>The new audio files.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
         [SuppressMessage("Maintainability", "CA1506:Avoid excessive class coupling", Justification =

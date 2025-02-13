@@ -98,7 +98,7 @@ namespace AudioWorks.Api
         {
             ArgumentNullException.ThrowIfNull(audioFiles);
 
-            await AnalyzeAsync(audioFiles.ToArray()).ConfigureAwait(false);
+            await AnalyzeAsync([.. audioFiles]).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace AudioWorks.Api
         {
             ArgumentNullException.ThrowIfNull(audioFiles);
 
-            await AnalyzeAsync(progress, cancellationToken, audioFiles.ToArray()).ConfigureAwait(false);
+            await AnalyzeAsync(progress, cancellationToken, [.. audioFiles]).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -126,17 +126,7 @@ namespace AudioWorks.Api
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
         public async Task AnalyzeAsync(params ITaggedAudioFile[] audioFiles) =>
-            await AnalyzeAsync(CancellationToken.None, audioFiles).ConfigureAwait(false);
-
-        /// <summary>
-        /// Analyzes the specified audio files.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <param name="audioFiles">The audio files.</param>
-        /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
-        /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
-        public async Task AnalyzeAsync(CancellationToken cancellationToken, params ITaggedAudioFile[] audioFiles) =>
-            await AnalyzeAsync(null, cancellationToken, audioFiles).ConfigureAwait(false);
+            await AnalyzeAsync(null, CancellationToken.None, audioFiles).ConfigureAwait(false);
 
         /// <summary>
         /// Analyzes the specified audio files.
