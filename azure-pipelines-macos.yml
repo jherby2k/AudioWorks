@@ -10,12 +10,13 @@ trigger:
     - LICENSE
     - azure-pipelines-windows.yml
     - azure-pipelines-linux.yml
+    - .github/*
 
 pr:
     - dev
 
 pool:
-  vmImage: macOS-15
+  vmImage: macOS-latest
 
 variables:
 - name: buildConfiguration

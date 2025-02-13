@@ -10,6 +10,7 @@ trigger:
     - LICENSE
     - azure-pipelines-linux.yml
     - azure-pipelines-macos.yml
+    - .github/*
 
 pr:
     - dev
