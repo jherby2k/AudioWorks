@@ -42,8 +42,7 @@ namespace AudioWorks.Api
         /// Gets or sets the encoded file name.
         /// </summary>
         /// <value>The encoded file name, if set; otherwise, an empty string.</value>
-        /// <exception cref="ArgumentException">
-        /// Thrown if <paramref name="value"/> is not properly formatted.
+        /// <exception cref="ArgumentException">Thrown if <paramref name="value"/> is not properly formatted.
         /// </exception>
         public string EncodedFileName
         {
@@ -55,8 +54,7 @@ namespace AudioWorks.Api
         /// Gets or sets the encoded directory name.
         /// </summary>
         /// <value>The encoded directory name, if set; otherwise, an empty string.</value>
-        /// <exception cref="ArgumentException">
-        /// Thrown if <paramref name="value"/> is not properly formatted.
+        /// <exception cref="ArgumentException">Thrown if <paramref name="value"/> is not properly formatted.
         /// </exception>
         public string EncodedDirectoryName
         {
