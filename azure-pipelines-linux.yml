@@ -16,7 +16,7 @@ pr:
     - dev
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: ubuntu-24.04
 
 variables:
 - name: buildConfiguration
