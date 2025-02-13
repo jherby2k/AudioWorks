@@ -17,7 +17,6 @@ using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
-using System.Runtime.Intrinsics.X86;
 
 namespace AudioWorks.Extensibility
 {
@@ -233,10 +232,10 @@ namespace AudioWorks.Extensibility
             Span<float> destination,
             bool optimize)
         {
-            // Vectorized implementation is about 3x faster with AVX2
-            if (optimize && Avx2.IsSupported)
+            // Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
+            if (optimize && Vector256.IsHardwareAccelerated)
             {
-                var controlVector = Vector256.Create(0, 2, 1, 3, 4, 6, 5, 7);
+                var indices = Vector256.Create(0, 4, 1, 5, 2, 6, 3, 7);
                 var leftSrcVectors = MemoryMarshal.Cast<float, Vector256<float>>(leftSource);
                 var rightSrcVectors = MemoryMarshal.Cast<float, Vector256<float>>(rightSource);
                 var destVectors = MemoryMarshal.Cast<float, Vector256<float>>(destination);
@@ -244,15 +243,10 @@ namespace AudioWorks.Extensibility
                 var destVectorIndex = 0;
                 for (var srcVectorIndex = 0; srcVectorIndex < leftSrcVectors.Length; srcVectorIndex++)
                 {
-                    // This is more complicated than it should be because AVX uses 128-bit lanes for shuffles
-                    var shuffled1 = Avx.Shuffle(leftSrcVectors[srcVectorIndex], rightSrcVectors[srcVectorIndex],
-                        0b01000100);
-                    var shuffled2 = Avx.Shuffle(leftSrcVectors[srcVectorIndex], rightSrcVectors[srcVectorIndex],
-                        0b11101110);
-                    destVectors[destVectorIndex++] = Avx2.PermuteVar8x32(
-                        Vector256.Create(shuffled1.GetLower(), shuffled2.GetLower()), controlVector);
-                    destVectors[destVectorIndex++] = Avx2.PermuteVar8x32(
-                        Vector256.Create(shuffled1.GetUpper(), shuffled2.GetUpper()), controlVector);
+                    var lowerVector = Vector256.Create(leftSrcVectors[srcVectorIndex].GetLower(), rightSrcVectors[srcVectorIndex].GetLower());
+                    var upperVector = Vector256.Create(leftSrcVectors[srcVectorIndex].GetUpper(), rightSrcVectors[srcVectorIndex].GetUpper());
+                    destVectors[destVectorIndex++] = Vector256.Shuffle(lowerVector, indices);
+                    destVectors[destVectorIndex++] = Vector256.Shuffle(upperVector, indices);
                 }
 
                 for (int frameIndex = leftSrcVectors.Length * Vector256<float>.Count,
@@ -280,10 +274,10 @@ namespace AudioWorks.Extensibility
             Span<float> rightDestination,
             bool optimize)
         {
-            // Vectorized implementation is about 3x faster with AVX2
-            if (optimize && Avx2.IsSupported)
+            // Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
+            if (optimize && Vector256.IsHardwareAccelerated)
             {
-                var controlVector = Vector256.Create(0, 2, 4, 6, 1, 3, 5, 7);
+                var indices = Vector256.Create(0, 2, 4, 6, 1, 3, 5, 7);
                 var srcVectors = MemoryMarshal.Cast<float, Vector256<float>>(source);
                 var leftDestVectors = MemoryMarshal.Cast<float, Vector256<float>>(leftDestination);
                 var rightDestVectors = MemoryMarshal.Cast<float, Vector256<float>>(rightDestination);
@@ -291,10 +285,10 @@ namespace AudioWorks.Extensibility
                 var srcVectorIndex = 0;
                 for (var destVectorIndex = 0; destVectorIndex < leftDestVectors.Length; destVectorIndex++)
                 {
-                    var permuted1 = Avx2.PermuteVar8x32(srcVectors[srcVectorIndex++], controlVector);
-                    var permuted2 = Avx2.PermuteVar8x32(srcVectors[srcVectorIndex++], controlVector);
-                    leftDestVectors[destVectorIndex] = Vector256.Create(permuted1.GetLower(), permuted2.GetLower());
-                    rightDestVectors[destVectorIndex] = Vector256.Create(permuted1.GetUpper(), permuted2.GetUpper());
+                    var shuffled1 = Vector256.Shuffle(srcVectors[srcVectorIndex++], indices);
+                    var shuffled2 = Vector256.Shuffle(srcVectors[srcVectorIndex++], indices);
+                    leftDestVectors[destVectorIndex] = Vector256.Create(shuffled1.GetLower(), shuffled2.GetLower());
+                    rightDestVectors[destVectorIndex] = Vector256.Create(shuffled1.GetUpper(), shuffled2.GetUpper());
                 }
 
                 for (int destIndex = leftDestVectors.Length * Vector256<float>.Count,
