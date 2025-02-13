@@ -16,6 +16,7 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Buffers;
 using System.Runtime.InteropServices;
+using System.Threading.Channels;
 
 namespace AudioWorks.Extensibility
 {
@@ -77,9 +78,8 @@ namespace AudioWorks.Extensibility
         /// </exception>
         public SampleBuffer(ReadOnlySpan<float> interleavedSamples, int channels)
         {
-            if (channels is < 1 or > 2)
-                throw new ArgumentOutOfRangeException(nameof(channels),
-                    $"{nameof(channels)} must be 1 or 2.");
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(channels);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(channels, 2);
             if (interleavedSamples.Length % channels != 0)
                 throw new ArgumentException($"{nameof(interleavedSamples)} has an invalid length.",
                     nameof(interleavedSamples));
@@ -103,9 +103,8 @@ namespace AudioWorks.Extensibility
         /// </exception>
         public SampleBuffer(ReadOnlySpan<int> monoSamples, int bitsPerSample)
         {
-            if (bitsPerSample is < 1 or > 32)
-                throw new ArgumentOutOfRangeException(nameof(bitsPerSample),
-                    $"{nameof(bitsPerSample)} is out of range.");
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(bitsPerSample);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(bitsPerSample, 32);
 
             Channels = 1;
             Frames = monoSamples.Length;
@@ -129,9 +128,8 @@ namespace AudioWorks.Extensibility
             if (leftSamples.Length != rightSamples.Length)
                 throw new ArgumentException(
                     $"{nameof(rightSamples)} does not match the length of {nameof(leftSamples)}", nameof(rightSamples));
-            if (bitsPerSample is < 1 or > 32)
-                throw new ArgumentOutOfRangeException(nameof(bitsPerSample),
-                    $"{nameof(bitsPerSample)} is out of range.");
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(bitsPerSample);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(bitsPerSample, 32);
 
             Channels = 2;
             Frames = leftSamples.Length;
@@ -153,12 +151,10 @@ namespace AudioWorks.Extensibility
         /// <paramref name="bitsPerSample"/> is out of range.</exception>
         public SampleBuffer(ReadOnlySpan<int> interleavedSamples, int channels, int bitsPerSample)
         {
-            if (channels is < 1 or > 2)
-                throw new ArgumentOutOfRangeException(nameof(channels),
-                    $"{nameof(channels)} must be 1 or 2.");
-            if (bitsPerSample is < 1 or > 32)
-                throw new ArgumentOutOfRangeException(nameof(bitsPerSample),
-                    $"{nameof(bitsPerSample)} is out of range.");
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(channels);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(channels, 2);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(bitsPerSample);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(bitsPerSample, 32);
             if (interleavedSamples.Length % channels != 0)
                 throw new ArgumentException($"{nameof(interleavedSamples)} has an invalid length.",
                     nameof(interleavedSamples));
@@ -185,12 +181,11 @@ namespace AudioWorks.Extensibility
         /// <paramref name="bitsPerSample"/> is out of range.</exception>
         public SampleBuffer(ReadOnlySpan<byte> interleavedSamples, int channels, int bitsPerSample)
         {
-            if (channels is < 1 or > 2)
-                throw new ArgumentOutOfRangeException(nameof(channels),
-                    $"{nameof(channels)} must be 1 or 2.");
-            if (bitsPerSample is < 1 or > 32)
-                throw new ArgumentOutOfRangeException(nameof(bitsPerSample),
-                    $"{nameof(bitsPerSample)} is out of range.");
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(channels);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(channels, 2);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(bitsPerSample);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(bitsPerSample, 32);
+
             var bytesPerSample = (int) Math.Ceiling(bitsPerSample / 8.0);
             if (interleavedSamples.Length % (channels * bytesPerSample) != 0)
                 throw new ArgumentException($"{nameof(interleavedSamples)} has an invalid length.",
@@ -360,8 +355,8 @@ namespace AudioWorks.Extensibility
             if (destination.Length < Frames * Channels)
                 throw new ArgumentException("destination is not long enough to store the samples.",
                     nameof(destination));
-            if (bitsPerSample is < 1 or > 32)
-                throw new ArgumentOutOfRangeException(nameof(bitsPerSample), "bitsPerSample is out of range.");
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(bitsPerSample);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(bitsPerSample, 32);
 
             if (Channels == 1 || IsInterleaved)
                 SampleProcessor.Convert(
@@ -397,8 +392,8 @@ namespace AudioWorks.Extensibility
             ObjectDisposedException.ThrowIf(_isDisposed, this);
             if (_buffer == null) return;
 
-            if (bitsPerSample is < 1 or > 32)
-                throw new ArgumentOutOfRangeException(nameof(bitsPerSample), "bitsPerSample is out of range.");
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(bitsPerSample);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(bitsPerSample, 32);
             var bytesPerSample = (int) Math.Ceiling(bitsPerSample / 8.0);
             if (destination.Length < Frames * Channels * bytesPerSample)
                 throw new ArgumentException("destination is not long enough to store the samples.",

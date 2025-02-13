@@ -40,13 +40,12 @@ namespace AudioWorks.Common
         /// </summary>
         /// <param name="minValue">The minimum value for the integer.</param>
         /// <param name="maxValue">The maximum value for the integer.</param>
-        /// <exception cref="ArgumentException">Thrown if <paramref name="minValue"/> is larger than
-        /// <paramref name="maxValue"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="minValue"/> is greater than or
+        /// equal to <paramref name="maxValue"/>.</exception>
         public IntSettingInfo(int minValue, int maxValue)
             : base(typeof(int))
         {
-            if (minValue >= maxValue)
-                throw new ArgumentException($"{nameof(maxValue)} must be larger than {nameof(minValue)}.");
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(minValue, maxValue);
 
             MinValue = minValue;
             MaxValue = maxValue;
@@ -57,10 +56,8 @@ namespace AudioWorks.Common
         {
             base.Validate(value);
 
-            if ((int) value > MaxValue)
-                throw new ArgumentOutOfRangeException(nameof(value), $"Maximum value is {MaxValue}.");
-            if ((int) value < MinValue)
-                throw new ArgumentOutOfRangeException(nameof(value), $"Minimum value is {MinValue}.");
+            ArgumentOutOfRangeException.ThrowIfGreaterThan((int) value, MaxValue);
+            ArgumentOutOfRangeException.ThrowIfLessThan((int) value, MinValue);
         }
     }
 }
