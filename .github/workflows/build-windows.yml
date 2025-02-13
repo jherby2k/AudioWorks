@@ -38,10 +38,10 @@ jobs:
       run: dotnet restore AudioWorks\AudioWorks.sln
 
     - name: Build
-      run: dotnet build AudioWorks\AudioWorks.sln --no-restore
+      run: dotnet build AudioWorks\AudioWorks.sln --configuration Release --no-restore
 
     - name: Test
-      run: dotnet test AudioWorks\AudioWorks.sln --no-build --verbosity normal --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*
+      run: dotnet test AudioWorks\AudioWorks.sln --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*
 
     - name: ReportGenerator
       uses: danielpalme/ReportGenerator-GitHub-Action@5.4.4
