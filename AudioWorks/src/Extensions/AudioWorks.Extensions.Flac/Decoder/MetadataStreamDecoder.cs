@@ -15,7 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using AudioWorks.Common;
 using AudioWorks.Extensions.Flac.Metadata;
