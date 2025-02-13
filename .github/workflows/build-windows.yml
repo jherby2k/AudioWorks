@@ -3,6 +3,8 @@ name: Build and Test on Windows
 on:
   push:
     branches: [ "main", "dev" ]
+    paths-ignore:
+      - 'azure-pipelines-*.yml'
   pull_request:
     branches: [ "main", "dev" ]
 
@@ -18,7 +20,7 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore AudioWorks\AudioWorks.sln
     - name: Build
       run: dotnet build AudioWorks\AudioWorks.sln --no-restore
     - name: Test
