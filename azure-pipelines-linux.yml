@@ -40,7 +40,7 @@ steps:
   displayName: Build $(buildConfiguration) configuration
 
 - script: |
-    sudo apt-get install --yes libebur128-1
+    sudo apt-get install --yes libopus0 libebur128-1
   displayName: Download and install prerequisites
 
 - task: DotNetCoreCLI@2
