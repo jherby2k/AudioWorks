@@ -604,7 +604,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 },
                 [
                     "9B639E598FBF1E82299E60D0260D9017", // MacOS on Intel
-                    "13BB443AE1F220DF897615F96EF0A0D2", // MacOS on ARM
+                    "886286A0A3516BDC86C1AF5C3E9A676A", // MacOS on ARM
                     "CB39DFBF414790022574435C2D30297D", // 32-bit Windows on Intel
                     "EB0DA4A098888A34C2F77A2A65D2E337", // 32-bit Windows on AMD
                     "E0A80A6B32CD5A8FA5C62B44F28C4A87", // 64-bit Windows on Intel
@@ -655,7 +655,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 },
                 [
                     "E29517B127D5D1EEFB28C08E746A32BF", // MacOS on Intel
-                    "7B13752769B0DCF9A5054C462D18CB40", // MacOS on AMD
+                    "C5C7CBCFBAA60956EBFB4F3D0A7D07D0", // MacOS on AMD
                     "D41235E8E642C5773C499DCE06A72CC8", // 32-bit Windows on Intel
                     "C7FD479EFD340F30F3DE645205FA3BC5", // 32-bit Windows on AMD
                     "A86E9A3D4A9479A44F852FA42BA0C9C2", // 64-bit Windows on Intel
@@ -689,7 +689,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 },
                 [
                     "7B0E359B3C464CD7A26FDFE457715DD4", // MacOS on Intel
-                    "B1BD1E3A78B5E47CAAE8462B13720EDE", // MacOS on ARM
+                    "9ADEDA620A2A4C6FF5AE143C3CF9B95F", // MacOS on ARM
                     "937750181287505A92B933F8A815D4C2", // 32-bit Windows on Intel
                     "B6A891E92CF4D1FF747716CAB6F617DA", // 32-bit Windows on AMD
                     "AAF40EB4D4AC1832D979D6EBDE9C5BDD", // 64-bit Windows on Intel
@@ -744,7 +744,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 },
                 [
                     "CBDAABA391433EDAF676BFEDCE1C0E2C", // MacOS on Intel
-                    "E11E1E49987AA13BA2DE91237256AAAF", // MacOS on ARM
+                    "05271FF8F0A44F51B99E73E979E58559", // MacOS on ARM
                     "78299761793D1A6EC79CBB9233156FD8", // 32-bit Windows on Intel
                     "E53BA332FDCFBE927A81040DB480688B", // 32-bit Windows on AMD
                     "93D67A9C673E7ABE3929846DBE5DBF97", // 64-bit Windows on Intel
