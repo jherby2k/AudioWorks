@@ -1878,7 +1878,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "2D31A0D707D3A9AB865DB00095EB08AE", // Opus 1.3.1 (Ubuntu 22.04)
+                    "2D31A0D707D3A9AB865DB00095EB08AE", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
+                    "5E705C21EEB25418F69F54E33CF65156", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "4477BA0E09EF52AC239EE55FF44DA2A0", // Opus 1.5.2 (MacOS on Intel)
                     "589BB547277DB56BD75F4273AB6AEC9E", // Opus 1.5.2 (MacOS on ARM)
                     "47359005DE5203C8AF0FDDE7F34713D9", // Opus 1.5.2 (32-bit Windows on Intel)
@@ -1895,7 +1896,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "C22E87F617B51970785E9A4C43C9FC48", // Opus 1.3.1 (Ubuntu 22.04)
+                    "C22E87F617B51970785E9A4C43C9FC48", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
+                    "B68DA72E32DD0B6A89138679E8716876", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "A96ECE9F6FC5F2977202F2489A105967", // Opus 1.5.2 (MacOS on Intel)
                     "6BD64F39FFAF07B20DB88618621C68CB", // Opus 1.5.2 (MacOS on ARM)
                     "6F0174BCFBF9AE02ACFCC0B2E3B834B8", // Opus 1.5.2 (Windows on Intel)
@@ -1910,7 +1912,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "0C6BF7ECB9F757DB8F8AF485137BD2C8", // Opus 1.3.1 (Ubuntu 22.04)
+                    "0C6BF7ECB9F757DB8F8AF485137BD2C8", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
+                    "9DA2DC35F1B9FBC9FAEF343788BB9E41", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "54A2DC75ED7879D6B890D50F4CB34603", // Opus 1.5.2 (MacOS on Intel)
                     "297F37DFFE222B31663A46099038C9A0", // Opus 1.5.2 (MacOS on ARM)
                     "E105170CA90D2D427A6431ACB8D5A16C", // Opus 1.5.2 (32-bit Windows on Intel)
@@ -1927,7 +1930,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "BD5F090F921BCC80F05FCBF5725D8E0E", // Opus 1.3.1 (Ubuntu 22.04)
+                    "BD5F090F921BCC80F05FCBF5725D8E0E", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
+                    "FDE97144EB743A401CD274613B32D085", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "FB5BA2E0CF0A5738942A622FEE822D4E", // Opus 1.5.2 (MacOS on Intel)
                     "F9160B718B747C099AC754CA8DE48140", // Opus 1.5.2 (MacOS on ARM)
                     "AB158A17CCED018828790DAA396BAB93", // Opus 1.5.2 (32-bit Windows on Intel)
@@ -1944,7 +1948,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "8A8FA9C452D9EBBCF8554EE3E270A538", // Opus 1.3.1 (Ubuntu 22.04)
+                    "8A8FA9C452D9EBBCF8554EE3E270A538", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
+                    "F7CB34EAF50E121D9474AE51E43BBB5B", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "2821951FD04D0E164FBF6E6604B85F86", // Opus 1.5.2 (MacOS on Intel)
                     "E13E2159ADA7DC7A516BF31B373B0B46", // Opus 1.5.2 (MacOS on ARM)
                     "DA42257349612217D56C05879F45DD52", // Opus 1.5.2 (32-bit Windows on Intel)
@@ -1997,7 +2002,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "5501D7D9730B0722C310D5263AFBEB77", // Opus 1.3.1 (Ubuntu 22.04)
+                    "5501D7D9730B0722C310D5263AFBEB77", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
+                    "5A2C444BCD2F8D898E369DFA78D2336D", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "C110F6EFE538B370E49ECBAE4B40C8C2", // Opus 1.5.2 (MacOS on Intel)
                     "BE70C5469607ECD9F28F7282BCE77E87", // Opus 1.5.2 (MacOS on ARM)
                     "C461EAB699527B90A919D2B26979A30A", // Opus 1.5.2 (32-bit Windows on Intel)
@@ -2032,7 +2038,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "0ADBC105EA51C62CB1ED53B978B33415", // Opus 1.3.1 (Ubuntu 22.04)
+                    "0ADBC105EA51C62CB1ED53B978B33415", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
+                    "E170CC2F31A402071E26892426AEC65B", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "BA2DB653CD22442197C80828E35B694E", // Opus 1.5.2 (MacOS on Intel)
                     "0DFDBEE9CEE589AE748705268B0B7FD8", // Opus 1.5.2 (MacOS on ARM)
                     "AA83D462884ABCC559AFAB31D08652CA", // Opus 1.5.2 (32-bit Windows on Intel)
@@ -2050,7 +2057,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = int.MinValue
                 },
                 [
-                    "CDE65307AACEA4F40F22FF925622D14E", // Opus 1.3.1 (Ubuntu 22.04)
+                    "CDE65307AACEA4F40F22FF925622D14E", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
+                    "503CA160DEC071D27F058FAE56273C29", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "6C30D9BB7917BAEB1934A89C4874ADAC", // Opus 1.5.2 (MacOS on Intel)
                     "7ECA1147747494E00A668CB62C1C2CB9", // Opus 1.5.2 (MacOS on ARM)
                     "C768F0F87DAD97B1FF7C0A03FE6C2950", // Opus 1.5.2 (32-bit Windows on Intel)
@@ -2068,7 +2076,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = int.MaxValue
                 },
                 [
-                    "3AA89123958BA0DF1611539BC909DD0B", // Opus 1.3.1 (Ubuntu 22.04)
+                    "3AA89123958BA0DF1611539BC909DD0B", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
+                    "E83E5634833A567959243B09B9AF666B", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "49452D1FB45FAB63ACCA4D7B98FC3421", // Opus 1.5.2 (MacOS on Intel)
                     "8126956A0E09653509F8C13EA1CDDB41", // Opus 1.5.2 (MacOS on ARM)
                     "B3D8AECD20CEC76CD140DA44979A60E4", // Opus 1.5.2 (32-bit Windows on Intel)
@@ -2103,7 +2112,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "785D39E686216F4958B8103B62E9E321", // Opus 1.3.1 (Ubuntu 22.04)
+                    "785D39E686216F4958B8103B62E9E321", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
+                    "2DBEDA9428C2522EFF60481B5446FA47", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "015FC5B8C914D876461F7C481B313083", // Opus 1.5.2 (MacOS on Intel)
                     "62DE12E6046BE4A01F698A13C6C00261", // Opus 1.5.2 (MacOS on ARM)
                     "6B422669A0FCB242E0E15204F5FDCC47", // Opus 1.3.1 (32-bit Windows on Intel)
@@ -2122,7 +2132,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "0C6BF7ECB9F757DB8F8AF485137BD2C8", // Opus 1.3.1 (Ubuntu 22.04)
+                    "0C6BF7ECB9F757DB8F8AF485137BD2C8", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
+                    "9DA2DC35F1B9FBC9FAEF343788BB9E41", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "54A2DC75ED7879D6B890D50F4CB34603", // Opus 1.5.2 (MacOS on Intel)
                     "297F37DFFE222B31663A46099038C9A0", // Opus 1.5.2 (MacOS on ARM)
                     "E105170CA90D2D427A6431ACB8D5A16C", // Opus 1.5.2 (32-bit Windows on Intel)
@@ -2141,7 +2152,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "B98AC6052E465C5A226D8D2905B535EC", // Opus 1.3.1 (Ubuntu 22.04)
+                    "B98AC6052E465C5A226D8D2905B535EC", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
+                    "713E85741D7499561FA4424B5EF74EE7", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "6EED767F4AD005A03CCE4535E62836D3", // Opus 1.5.2 (MacOS on Intel)
                     "EDA7AE4F7F715EF9A6808E5D547A6F0A", // Opus 1.5.2 (MacOS on ARM)
                     "93110D453D9EF4DF0EF57B0B758092D7", // Opus 1.5.2 (32-bit Windows on Intel)
@@ -2160,7 +2172,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "687B2402BF33EDB0EAD683235E309BC8", // Opus 1.3.1 (Ubuntu 22.04)
+                    "687B2402BF33EDB0EAD683235E309BC8", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
+                    "9948DAE5FCE1CF7D6298C293E3D71B0F", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "69CB6F9E36304A413E772A64F8930EF8", // Opus 1.5.2 (MacOS on Intel)
                     "29706654639E3EB000623EC6A7543DB8", // Opus 1.5.2 (MacOS on ARM)
                     "3CE799E222F941AC4BE899AB1B5236B4", // Opus 1.5.2 (32-bit Windows on Intel)
@@ -2179,7 +2192,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "8FC7BCF02EDB42E9785797FD2C9A71D6", // Opus 1.3.1 (Ubuntu 22.04)
+                    "8FC7BCF02EDB42E9785797FD2C9A71D6", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
+                    "BD1629D7E9272CAA8AEAC20FD576B7C6", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "8A770140717C859BE50E5A65C9FD0591", // Opus 1.5.2 (MacOS on Intel)
                     "F380C4287A80A5A255C86DC2B578C5F7", // Opus 1.5.2 (MacOS on ARM)
                     "47CA0622B6C24FEF2BDA687457AF6EE3", // Opus 1.5.2 (Windows on Intel)
@@ -2197,7 +2211,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "8FC7BCF02EDB42E9785797FD2C9A71D6", // Opus 1.3.1 (Ubuntu 22.04)
+                    "8FC7BCF02EDB42E9785797FD2C9A71D6", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
+                    "BD1629D7E9272CAA8AEAC20FD576B7C6", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "8A770140717C859BE50E5A65C9FD0591", // Opus 1.5.2 (MacOS on Intel)
                     "F380C4287A80A5A255C86DC2B578C5F7", // Opus 1.5.2 (MacOS on ARM)
                     "47CA0622B6C24FEF2BDA687457AF6EE3", // Opus 1.5.2 (Windows on Intel)
@@ -2215,7 +2230,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "84D72BBEF86EA7611518CF2862FC94BD", // Opus 1.3.1 (Ubuntu 22.04)
+                    "84D72BBEF86EA7611518CF2862FC94BD", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
+                    "56A43E329A39A3CC568348116F5134F3", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "D6B5EDF579DBAFF63BD7892C9BA58ADD", // Opus 1.5.2 (MacOS on Intel)
                     "4FFADA4C9433B47ABD862305B21B9A5D", // Opus 1.5.2 (MacOS on ARM)
                     "C1E6A103E4499035344A3B913611C0E0", // Opus 1.5.2 (Windows on Intel)
@@ -2232,7 +2248,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "0C6BF7ECB9F757DB8F8AF485137BD2C8", // Opus 1.3.1 (Ubuntu 22.04)
+                    "0C6BF7ECB9F757DB8F8AF485137BD2C8", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
+                    "9DA2DC35F1B9FBC9FAEF343788BB9E41", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "54A2DC75ED7879D6B890D50F4CB34603", // Opus 1.5.2 (MacOS on Intel)
                     "297F37DFFE222B31663A46099038C9A0", // Opus 1.5.2 (MacOS on ARM)
                     "E105170CA90D2D427A6431ACB8D5A16C", // Opus 1.5.2 (32-bit Windows on Intel)
@@ -2251,7 +2268,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "B6029E9FC954A8722A1B10700F80EA19", // Opus 1.3.1 (Ubuntu 22.04)
+                    "B6029E9FC954A8722A1B10700F80EA19", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
+                    "1CE1BF9EA0D643C0CDB9B8C8A1492B58", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "33E6FD8F8DC37F80C467DF3EF820D424", // Opus 1.5.2 (MacOS on Intel)
                     "5928D94B6117889982136833918FEBA6", // Opus 1.5.2 (MacOS on ARM)
                     "E199F6D24770B47A9AF906F3ECA8E863", // Opus 1.5.2 (32-bit Windows on Intel)
@@ -2270,7 +2288,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "EF6A93BC1F10A15E5F45255F36E90F3A", // Opus 1.3.1 (Ubuntu 22.04)
+                    "EF6A93BC1F10A15E5F45255F36E90F3A", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
+                    "5B7586B7F6F2DFCCA28E3A1D4C75690A", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "070E63A0E8A8A6F69B5C4DF9A7D1C82A", // Opus 1.5.2 (MacOS on Intel)
                     "C145ED6B764A2B208355F9D4B7D5E6A3", // Opus 1.5.2 (MacOS on ARM)
                     "E8199A697B010856D7ED9F4C67A82481", // Opus 1.5.2 (32-bit Windows on Intel)
