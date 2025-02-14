@@ -46,16 +46,16 @@ jobs:
       run: dotnet build AudioWorks\AudioWorks.sln --configuration Release --no-restore
 
     - name: Test AudioWorks.Common
-      run: dotnet test AudioWorks\tests\AudioWorks.Common.Tests\AudioWorks.Common.Tests.csproj --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage"
+      run: dotnet test AudioWorks\tests\AudioWorks.Common.Tests\AudioWorks.Common.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
     - name: Test AudioWorks.Extensibility
-      run: dotnet test AudioWorks\tests\AudioWorks.Extensibility.Tests\AudioWorks.Extensibility.Tests.csproj --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage"
+      run: dotnet test AudioWorks\tests\AudioWorks.Extensibility.Tests\AudioWorks.Extensibility.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
     - name: Test AudioWorks.Api
-      run: dotnet test AudioWorks\tests\AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage"
+      run: dotnet test AudioWorks\tests\AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
     - name: Test AudioWorks.Commands
-      run: dotnet test AudioWorks\tests\AudioWorks.Commands.Tests\AudioWorks.Commands.Tests.csproj --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage"
+      run: dotnet test AudioWorks\tests\AudioWorks.Commands.Tests\AudioWorks.Commands.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
     - name: ReportGenerator
       uses: danielpalme/ReportGenerator-GitHub-Action@5.4.4
@@ -101,16 +101,16 @@ jobs:
       run: dotnet build AudioWorks/AudioWorks.sln --configuration Release --no-restore
 
     - name: Test AudioWorks.Common
-      run: dotnet test AudioWorks/tests/AudioWorks.Common.Tests/AudioWorks.Common.Tests.csproj --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage"
+      run: dotnet test AudioWorks/tests/AudioWorks.Common.Tests/AudioWorks.Common.Tests.csproj --configuration Release --collect:"XPlat Code Coverage"
 
     - name: Test AudioWorks.Extensibility
-      run: dotnet test AudioWorks/tests/AudioWorks.Extensibility.Tests/AudioWorks.Extensibility.Tests.csproj --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage"
+      run: dotnet test AudioWorks/tests/AudioWorks.Extensibility.Tests/AudioWorks.Extensibility.Tests.csproj --configuration Release --collect:"XPlat Code Coverage"
 
     - name: Test AudioWorks.Api
-      run: dotnet test AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage"
+      run: dotnet test AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
     - name: Test AudioWorks.Commands
-      run: dotnet test AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage"
+      run: dotnet test AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
     - name: ReportGenerator
       uses: danielpalme/ReportGenerator-GitHub-Action@5.4.4
@@ -153,16 +153,16 @@ jobs:
       run: dotnet build AudioWorks/AudioWorks.sln --configuration Release --no-restore
 
     - name: Test AudioWorks.Common
-      run: dotnet test AudioWorks/tests/AudioWorks.Common.Tests/AudioWorks.Common.Tests.csproj --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage"
+      run: dotnet test AudioWorks/tests/AudioWorks.Common.Tests/AudioWorks.Common.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
     - name: Test AudioWorks.Extensibility
-      run: dotnet test AudioWorks/tests/AudioWorks.Extensibility.Tests/AudioWorks.Extensibility.Tests.csproj --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage"
+      run: dotnet test AudioWorks/tests/AudioWorks.Extensibility.Tests/AudioWorks.Extensibility.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
     - name: Test AudioWorks.Api
-      run: dotnet test AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage"
+      run: dotnet test AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
     - name: Test AudioWorks.Commands
-      run: dotnet test AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage"
+      run: dotnet test AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
     - name: ReportGenerator
       uses: danielpalme/ReportGenerator-GitHub-Action@5.4.4
