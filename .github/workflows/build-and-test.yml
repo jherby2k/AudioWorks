@@ -81,11 +81,11 @@ jobs:
     - name: Upload coverage report artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: CoverageReport # Artifact name        
-        path: coveragereport # Directory containing files to upload
+        name: Coverage Report for Windows
+        path: coveragereport
 
-    - name: Publish coverage in build summary # Only applicable if 'MarkdownSummaryGithub' or one of the other Markdown report types is generated
-      run: cat coveragereport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY # Adjust path and filename if necessary
+    - name: Publish coverage in build summary
+      run: cat coveragereport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
       shell: bash
 
 
@@ -147,11 +147,11 @@ jobs:
     - name: Upload coverage report artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: CoverageReport # Artifact name        
-        path: coveragereport # Directory containing files to upload
+        name: Coverage Report for Ubuntu
+        path: coveragereport
 
-    - name: Publish coverage in build summary # Only applicable if 'MarkdownSummaryGithub' or one of the other Markdown report types is generated
-      run: cat coveragereport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY # Adjust path and filename if necessary
+    - name: Publish coverage in build summary
+      run: cat coveragereport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
       shell: bash
 
 
@@ -210,9 +210,9 @@ jobs:
     - name: Upload coverage report artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: CoverageReport # Artifact name        
-        path: coveragereport # Directory containing files to upload
+        name: Coverage Report for Mac
+        path: coveragereport
 
-    - name: Publish coverage in build summary # Only applicable if 'MarkdownSummaryGithub' or one of the other Markdown report types is generated
-      run: cat coveragereport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY # Adjust path and filename if necessary
+    - name: Publish coverage in build summary
+      run: cat coveragereport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
       shell: bash
