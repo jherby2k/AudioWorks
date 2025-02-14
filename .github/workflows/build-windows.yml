@@ -5,6 +5,9 @@ on:
     branches: [ "main", "dev" ]
     paths-ignore:
       - 'azure-pipelines-*.yml'
+      - .gitignore.txt
+      - README.md
+      - LICENSE
   pull_request:
     branches: [ "main", "dev" ]
 
