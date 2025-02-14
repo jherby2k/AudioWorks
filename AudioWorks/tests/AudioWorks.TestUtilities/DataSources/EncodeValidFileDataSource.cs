@@ -1430,7 +1430,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 },
                 [
                     "49CB061F4DE93D7F88D3B656458C7003", // Lame 3.100 (Ubuntu and MacOS on Intel)
-                    "A478C869EB25627FD94360E82CD853FA", // Lame 3.100 (MacOS on ARM)
+                    "7EDA9190AE98D184FC9BEB0085740EB1", // Lame 3.100 (MacOS on ARM)
                     "F3F89801873BDC7D9E403C160051B457" // Lame 3.100 (Windows)
                 ]
             ),
@@ -2088,7 +2088,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 },
                 [
                     "1F81AFD1976BAB56F31A4599A8AD8FF1", // Opus 1.3.1 (Ubuntu 22.04)
-                    "39009C873167E72F3ACD4DC0085A3183", // Opus 1.5.2 (MacOS)
+                    "39009C873167E72F3ACD4DC0085A3183", // Opus 1.5.2 (MacOS on Intel)
+                    "359005FF5CCC013B0FC6154D699C82E4", // Opus 1.5.2 (MacOS on ARM)
                     "A531829330D15594D94053B54404E137" // Opus 1.5.2 (Windows)
                 ]
             ),
