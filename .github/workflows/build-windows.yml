@@ -40,13 +40,22 @@ jobs:
     - name: Build
       run: dotnet build AudioWorks\AudioWorks.sln --configuration Release --no-restore
 
-    - name: Test
-      run: dotnet test AudioWorks\AudioWorks.sln --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*
+    - name: Test AudioWorks.Common
+      run: dotnet test AudioWorks\tests\AudioWorks.Common.Tests\AudioWorks.Common.Tests.csproj --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*
+
+    - name: Test AudioWorks.Extensibility
+      run: dotnet test AudioWorks\tests\AudioWorks.Extensibility.Tests\AudioWorks.Extensibility.Tests.csproj --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*
+
+    - name: Test AudioWorks.Api
+      run: dotnet test AudioWorks\tests\AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*
+
+    - name: Test AudioWorks.Commands
+      run: dotnet test AudioWorks\tests\AudioWorks.Commands.Tests\AudioWorks.Commands.Tests.csproj --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[AudioWorks.*.Tests]*,[AudioWorks.TestUtilities]*
 
     - name: ReportGenerator
       uses: danielpalme/ReportGenerator-GitHub-Action@5.4.4
       with:
-        reports: 'coverage.xml' # REQUIRED # The coverage reports that should be parsed (separated by semicolon). Globbing is supported.
+        reports: '*\coverage.cobertura.xml' # REQUIRED # The coverage reports that should be parsed (separated by semicolon). Globbing is supported.
         targetdir: 'coveragereport' # REQUIRED # The directory where the generated report should be saved.
         reporttypes: 'HtmlInline;Cobertura' # The output formats and scope (separated by semicolon) Values: Badges, Clover, Cobertura, OpenCover, CsvSummary, Html, Html_Dark, Html_Light, Html_BlueRed, HtmlChart, HtmlInline, HtmlInline_AzurePipelines, HtmlInline_AzurePipelines_Dark, HtmlInline_AzurePipelines_Light, HtmlSummary, Html_BlueRed_Summary, JsonSummary, CodeClimate, Latex, LatexSummary, lcov, MarkdownSummary, MarkdownAssembliesSummary, MarkdownSummaryGithub, MarkdownDeltaSummary, MHtml, SvgChart, SonarQube, TeamCitySummary, TextSummary, TextDeltaSummary, Xml, XmlSummary
         sourcedirs: '' # Optional directories which contain the corresponding source code (separated by semicolon). The source directories are used if coverage report contains classes without path information.
