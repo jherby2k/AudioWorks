@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <LangVersion>12.0</LangVersion>
     <Nullable>enable</Nullable>
-    <Revision>$(BUILD_BUILDID)</Revision>
+    <Revision>$(GITHUB_RUN_NUMBER)</Revision>
     <Revision Condition="'$(Revision)'==''">0</Revision>
     <Product>AudioWorks</Product>
     <Copyright>© 2018 Jeremy Herbison</Copyright>
