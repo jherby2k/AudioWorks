@@ -612,7 +612,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 "PNG 24-bit 1280 x 935.png",
                 [],
                 [
-                    "1F72E87B05DA969322B0501DF63B6905"
+                    "1F72E87B05DA969322B0501DF63B6905", // Intel
+                    "902BF760BB86246A8EA1890E31E6802E" // ARM
                 ]
             ),
 
@@ -1051,7 +1052,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 "PNG 24-bit 1280 x 935.png",
                 [],
                 [
-                    "DFB1301AEF575A97D738485F9542DC05"
+                    "DFB1301AEF575A97D738485F9542DC05", // Intel
+                    "D1FDCC69B8BF283754790E3B0745482B" // ARM
                 ]
             ),
 
@@ -1278,7 +1280,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "FC6665047AC5EE74B3A64B08F7C15264", // Vorbis 1.3.7 AoTuV + Lancer (Windows and Ubuntu)
-                    "8E3BEF265FA8D9C8632A1CB4B5155156" // Vorbis 1.3.7 (MacOS)
+                    "8E3BEF265FA8D9C8632A1CB4B5155156", // Vorbis 1.3.7 (MacOS on Intel)
+                    "9924B82CBA5C2A07AA4BCA87E51651BD" // Vorbis 1.3.7 (MacOS on ARM)
                 ]
             ),
 
@@ -1482,7 +1485,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "F152E6100DC6002C78DDCC6DF83D8880", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
-                    "E7E9C4686F7B92FC843FEDA3522C961B" // Opus 1.5.2 (MacOS and Windows)
+                    "E7E9C4686F7B92FC843FEDA3522C961B", // Opus 1.5.2 (MacOS and Windows on Intel)
+                    "14460A58ACC0BF9ED0BBC2122B6557D1" // Opus 1.5.2 (MacOS on ARM)
                 ]
             ),
 

@@ -996,7 +996,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 "LameMP3",
                 [],
                 [
-                    "1CB5B915B3A72CBE76087E16F96A0A3E", // Lame 3.100 (Ubuntu and MacOS)
+                    "1CB5B915B3A72CBE76087E16F96A0A3E", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "05E1A0F79265E0FF0322A1A65DA6DFA5", // Lame 3.100 (MacOS on ARM)
                     "537DE5BA83AAF6542B2E29C74D405EC2" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1005,7 +1006,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 "LameMP3",
                 [],
                 [
-                    "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS)
+                    "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "28C1A2D0545741D0FF6AA071083E49F5", // Lame 3.100 (MacOS on ARM)
                     "EF2FAA877F1DE84DC87015F841103263" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1014,7 +1016,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 "LameMP3",
                 [],
                 [
-                    "1454732B48913F2A3898164BA366DA01", // Lame 3.100 (Ubuntu and MacOS)
+                    "1454732B48913F2A3898164BA366DA01", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "451B8138407172CADFD10A7A1E783645", // Lame 3.100 (MacOS on ARM)
                     "D6C2622620E83D442C80AADBE6B45921" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1023,7 +1026,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 "LameMP3",
                 [],
                 [
-                    "AD56C3A1ACD627DBDA4B5A28AFE0355D", // Lame 3.100 (Ubuntu and MacOS)
+                    "AD56C3A1ACD627DBDA4B5A28AFE0355D", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "1838180F6D0A46F7A8B5EFB746DBA483", // Lame 3.100 (MacOS on ARM)
                     "5BCC0ED414809596507ECFEDEBD4454D" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1032,7 +1036,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 "LameMP3",
                 [],
                 [
-                    "0190385E444B8576C297E1DE837279F1", // Lame 3.100 (Ubuntu and MacOS)
+                    "0190385E444B8576C297E1DE837279F1", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "C8CC25D47A44B8670073A4850D3CFB08", // Lame 3.100 (MacOS on ARM)
                     "C43AEE67905D09300EE49323D6330426" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1041,7 +1046,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 "LameMP3",
                 [],
                 [
-                    "3CE431DA62AC5204B9FAE63BD8E2B4A8", // Lame 3.100 (Ubuntu and MacOS)
+                    "3CE431DA62AC5204B9FAE63BD8E2B4A8", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "0B65CAFF2DB22905D4553AF986C71684", // Lame 3.100 (MacOS on ARM)
                     "CC60AD39342F059B4F590988F192FE8D" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1050,7 +1056,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 "LameMP3",
                 [],
                 [
-                    "F737A24D4F60E5B3229689CC15FF10EE", // Lame 3.100 (Ubuntu and MacOS)
+                    "F737A24D4F60E5B3229689CC15FF10EE", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "3BDEC21C3B97533614AEE77A2BD8BC50", // Lame 3.100 (MacOS on ARM)
                     "EA2FE7549FB7A1971265FA27B88D0285" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1059,7 +1066,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 "LameMP3",
                 [],
                 [
-                    "E19CC567ECA5EA8CC06AB204F0A6DCFB", // Lame 3.100 (Ubuntu and MacOS)
+                    "E19CC567ECA5EA8CC06AB204F0A6DCFB", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "61C8CBA12A4A4756C0A0AA5F1F7BE425", // Lame 3.100 (MacOS on ARM)
                     "6E47BB49242784E79114392F240D1318" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1068,7 +1076,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 "LameMP3",
                 [],
                 [
-                    "FB1B7DECB2C2A2C9CAA1FBB917A81472", // Lame 3.100 (Ubuntu and MacOS)
+                    "FB1B7DECB2C2A2C9CAA1FBB917A81472", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "D6A4A2E9487D4EC2F8CECA50DCEE1DCA", // Lame 3.100 (MacOS on ARM)
                     "A4306E31052226EFD081D5D5FA80F62B" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1081,7 +1090,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagVersion"] = "2.3"
                 },
                 [
-                    "F737A24D4F60E5B3229689CC15FF10EE", // Lame 3.100 (Ubuntu and MacOS)
+                    "F737A24D4F60E5B3229689CC15FF10EE", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "3BDEC21C3B97533614AEE77A2BD8BC50", // Lame 3.100 (MacOS on ARM)
                     "EA2FE7549FB7A1971265FA27B88D0285" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1094,7 +1104,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagVersion"] = "2.4"
                 },
                 [
-                    "F69CCDFC32565F97130CBAEABFF0D13C", // Lame 3.100 (Ubuntu and MacOS)
+                    "F69CCDFC32565F97130CBAEABFF0D13C", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "402B56D552DD68BA4EC83BF2ED09999C", // Lame 3.100 (MacOS on ARM)
                     "BAB786013527E61F4719BBC1F6682C92" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1107,7 +1118,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagEncoding"] = "Latin1"
                 },
                 [
-                    "F737A24D4F60E5B3229689CC15FF10EE", // Lame 3.100 (Ubuntu and MacOS)
+                    "F737A24D4F60E5B3229689CC15FF10EE", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "3BDEC21C3B97533614AEE77A2BD8BC50", // Lame 3.100 (MacOS on ARM)
                     "EA2FE7549FB7A1971265FA27B88D0285" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1120,7 +1132,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagEncoding"] = "UTF16"
                 },
                 [
-                    "EA1232E970C83FCDDE00D4C1D51F0446", // Lame 3.100 (Ubuntu and MacOS)
+                    "EA1232E970C83FCDDE00D4C1D51F0446", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "8C4155ED7430FA903380E3FE3F2D3251", // Lame 3.100 (MacOS on ARM)
                     "B3402C50D24A82004D50DC0172E81BC1" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1133,7 +1146,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagEncoding"] = "UTF8"
                 },
                 [
-                    "388108BB7EE76567E9869F4CE9786CE9", // Lame 3.100 (Ubuntu and MacOS)
+                    "388108BB7EE76567E9869F4CE9786CE9", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "F90889088302F49BD11FD31C3EB25893", // Lame 3.100 (MacOS on ARM)
                     "B0AC00BF6DFDA60BAD712FD3F9DFED21" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1147,7 +1161,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagEncoding"] = "UTF8"
                 },
                 [
-                    "388108BB7EE76567E9869F4CE9786CE9", // Lame 3.100 (Ubuntu and MacOS)
+                    "388108BB7EE76567E9869F4CE9786CE9", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "F90889088302F49BD11FD31C3EB25893", // Lame 3.100 (MacOS on ARM)
                     "B0AC00BF6DFDA60BAD712FD3F9DFED21" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1161,7 +1176,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagEncoding"] = "UTF8"
                 },
                 [
-                    "388108BB7EE76567E9869F4CE9786CE9", // Lame 3.100 (Ubuntu and MacOS)
+                    "388108BB7EE76567E9869F4CE9786CE9", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "F90889088302F49BD11FD31C3EB25893", // Lame 3.100 (MacOS on ARM)
                     "B0AC00BF6DFDA60BAD712FD3F9DFED21" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1174,7 +1190,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagPadding"] = 2048
                 },
                 [
-                    "F737A24D4F60E5B3229689CC15FF10EE", // Lame 3.100 (Ubuntu and MacOS)
+                    "F737A24D4F60E5B3229689CC15FF10EE", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "3BDEC21C3B97533614AEE77A2BD8BC50", // Lame 3.100 (MacOS on ARM)
                     "EA2FE7549FB7A1971265FA27B88D0285" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1187,7 +1204,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagPadding"] = 0
                 },
                 [
-                    "ED3A9531742553641B112C0D0A41F099", // Lame 3.100 (Ubuntu and MacOS)
+                    "ED3A9531742553641B112C0D0A41F099", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "9924C0FA5FAA974195001279136E05F1", // Lame 3.100 (MacOS on ARM)
                     "ADA8A213D1219A92937453878EEA3D18" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1200,7 +1218,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagPadding"] = 16_777_216
                 },
                 [
-                    "6645726904A761FDF324711CFD21D477", // Lame 3.100 (Ubuntu and MacOS)
+                    "6645726904A761FDF324711CFD21D477", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "5000A32754845F65E655B92081A5F639", // Lame 3.100 (MacOS on ARM)
                     "47A50D9D488F78F43577BB5BBA0BD783" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1213,7 +1232,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagVersion"] = "2.4"
                 },
                 [
-                    "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS)
+                    "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "28C1A2D0545741D0FF6AA071083E49F5", // Lame 3.100 (MacOS on ARM)
                     "EF2FAA877F1DE84DC87015F841103263" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1226,7 +1246,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagEncoding"] = "UTF16"
                 },
                 [
-                    "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS)
+                    "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "28C1A2D0545741D0FF6AA071083E49F5", // Lame 3.100 (MacOS on ARM)
                     "EF2FAA877F1DE84DC87015F841103263" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1239,7 +1260,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagPadding"] = 100
                 },
                 [
-                    "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS)
+                    "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "28C1A2D0545741D0FF6AA071083E49F5", // Lame 3.100 (MacOS on ARM)
                     "EF2FAA877F1DE84DC87015F841103263" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1252,7 +1274,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["VBRQuality"] = 3
                 },
                 [
-                    "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS)
+                    "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "28C1A2D0545741D0FF6AA071083E49F5", // Lame 3.100 (MacOS on ARM)
                     "EF2FAA877F1DE84DC87015F841103263" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1278,7 +1301,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["VBRQuality"] = 0
                 },
                 [
-                    "5DE234656056DFDAAD30E4DA9FD26366", // Lame 3.100 (Ubuntu and MacOS)
+                    "5DE234656056DFDAAD30E4DA9FD26366", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "A26B3F367DE55447F2DC22243143BE64", // Lame 3.100 (MacOS on ARM)
                     "3B10B6430B2A823C58F16953F5B33E9C" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1304,7 +1328,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["BitRate"] = 320
                 },
                 [
-                    "BEB5029A08011BCEDFFA99173B763E7F", // Lame 3.100 (Ubuntu and MacOS)
+                    "BEB5029A08011BCEDFFA99173B763E7F", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "261E79502AA11D01992FFC73FA9CAAC5", // Lame 3.100 (MacOS on ARM)
                     "E9525D2505684DDB3F9FDDE7B550577E" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1317,7 +1342,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["BitRate"] = 128
                 },
                 [
-                    "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6", // Lame 3.100 (Ubuntu and MacOS)
+                    "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "96041DD62546602F0B09C3E499672AD9", // Lame 3.100 (MacOS on ARM)
                     "54E8544993C1E818C72DE5AC00DEABF5" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1331,7 +1357,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ForceCBR"] = false
                 },
                 [
-                    "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6", // Lame 3.100 (Ubuntu and MacOS)
+                    "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "96041DD62546602F0B09C3E499672AD9", // Lame 3.100 (MacOS on ARM)
                     "54E8544993C1E818C72DE5AC00DEABF5" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1345,7 +1372,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ForceCBR"] = true
                 },
                 [
-                    "EACCA2FD6404ACA1AB46027FAE6A667B", // Lame 3.100 (Ubuntu and MacOS)
+                    "EACCA2FD6404ACA1AB46027FAE6A667B", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "E1F9B6ED40E9186DC77F2A9B24A3ABBA", // Lame 3.100 (MacOS on ARM)
                     "AAE7CB7E1E4EAAF5ED19F8B986647298" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1358,7 +1386,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ForceCBR"] = true
                 },
                 [
-                    "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS)
+                    "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "28C1A2D0545741D0FF6AA071083E49F5", // Lame 3.100 (MacOS on ARM)
                     "EF2FAA877F1DE84DC87015F841103263" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1372,7 +1401,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["BitRate"] = 128
                 },
                 [
-                    "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6", // Lame 3.100 (Ubuntu and MacOS)
+                    "AD0C6C5DE14F77D2CFEE3F27EEA6B0C6", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "96041DD62546602F0B09C3E499672AD9", // Lame 3.100 (MacOS on ARM)
                     "54E8544993C1E818C72DE5AC00DEABF5" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1385,7 +1415,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ApplyGain"] = "Track"
                 },
                 [
-                    "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS)
+                    "10E44CEE38E66E9737677BE52E7A286D", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "28C1A2D0545741D0FF6AA071083E49F5", // Lame 3.100 (MacOS on ARM)
                     "EF2FAA877F1DE84DC87015F841103263" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1398,8 +1429,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ApplyGain"] = "Track"
                 },
                 [
-                    "8D5A9BA2D974BCDEFB50A3DA7E134335", // Lame 3.100 (MacOS)
-                    "49CB061F4DE93D7F88D3B656458C7003", // Lame 3.100 (Ubuntu)
+                    "49CB061F4DE93D7F88D3B656458C7003", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "A478C869EB25627FD94360E82CD853FA", // Lame 3.100 (MacOS on ARM)
                     "F3F89801873BDC7D9E403C160051B457" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1412,8 +1443,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ApplyGain"] = "Album"
                 },
                 [
-                    "94E8EF913253B83D35E760A8C81C18BA", // Lame 3.100 (MacOS)
-                    "E804988EFC1EA58704E6C78B42CE1DF6", // Lame 3.100 (Ubuntu)
+                    "E804988EFC1EA58704E6C78B42CE1DF6", // Lame 3.100 (Ubuntu and MacOS on Intel)
+                    "A478C869EB25627FD94360E82CD853FA", // Lame 3.100 (MacOS on ARM)
                     "026C2587049104F0FFF72EB8E49F87AB" // Lame 3.100 (Windows)
                 ]
             ),
@@ -1432,7 +1463,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "00502CA1BD9BE8137FCF75518D8EC5AC", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu)
                     "2BEFC8DFC5C86F305FBB1126CC2B2D0D", // Vorbis 1.3.7 (MacOS on Intel)
-                    "F187C28A4A37DF469CF96EBC8565CC21", // Vorbis 1.3.7 (MacOS on ARM)
+                    "42AE26A3799A5A52BD1B321F2AACED2C", // Vorbis 1.3.7 (MacOS on ARM)
                     "E6FBBBCE3847BC9C9EB45A89A7D7DDA6" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
             ),
@@ -1447,7 +1478,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "1A3784BD4B5A5F7324F0F19119EC8829", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
                     "EFC7217481D26BB0828C6E4BE7D2D414", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
                     "E8B8006C5EC2A3D50555B85F367F4922", // Vorbis 1.3.7 (MacOS on Intel)
-                    "4759435E55E2DF81B20F6DD929330EE5", // Vorbis 1.3.7 (MacOS on ARM)
+                    "C5121F731129DA41F0AEA13FFE368BF2", // Vorbis 1.3.7 (MacOS on ARM)
                     "62C6F8889AA6CBE4A80750EFF33D9FDA", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "3C12BC37F57BB2C4542A92ABD52EA27D" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
@@ -1463,7 +1494,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "F041B26255F501A83ECD8C6C7EBCE55D", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
                     "C2C9FE067F40025DDF41B868350F28A5", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
                     "7757FDE8D2A84D6AA7406F9CA3D840D3", // Vorbis 1.3.7 (MacOS on Intel)
-                    "E912A2A65C6272335DF116937A0549A6", // Vorbis 1.3.7 (MacOS on ARM)
+                    "C047BADC1EAC8CFE817AB6D0A9930567", // Vorbis 1.3.7 (MacOS on ARM)
                     "57E0997F13613A8C64306230A031D912" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
             ),
@@ -1478,7 +1509,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "AA03C92A5ED981484D17EA96D87B9331", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
                     "BDCF3199D9F7457000B8D2BDFB757579", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
                     "6D4108CB330E72038EA67B4D7B335AF9", // Vorbis 1.3.7 (MacOS on Intel)
-                    "C1D824314622416360560019BD79F519", // Vorbis 1.3.7 (MacOS on ARM)
+                    "292C568DF9F16641A4052A7246481683", // Vorbis 1.3.7 (MacOS on ARM)
                     "A75601BC8CABA65EADD866211A1EF536" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
             ),
@@ -1493,7 +1524,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "5C6A8AC9FE704864E8ABC4F1654F65D7", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
                     "F796497F75425D1928C66B88F3F24232", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
                     "239E03B5B24AA65E6335303DF50FB3A2", // Vorbis 1.3.7 (MacOS on Intel)
-                    "2A14B596BBE04A8391249A4276753F10", // Vorbis 1.3.7 (MacOS on ARM)
+                    "80580AAF03164EC5206F330140978B8A", // Vorbis 1.3.7 (MacOS on ARM)
                     "5EF3AF9F00AB434F1A0A08482DE2C0DE" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
             ),
@@ -1508,7 +1539,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "9153B9D26FA0A06AD1515B5660055CA3", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
                     "6DD98044F88A9535595D2B2D16D1A787", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
                     "D48672C42031B4419ADC0F420D503A47", // Vorbis 1.3.7 (MacOS on Intel)
-                    "2C8DB7597ED25C3494B89E5FBCC75508", // Vorbis 1.3.7 (MacOS on ARM)
+                    "8DEB628166FB64F5A1CA05DEFA83D21F", // Vorbis 1.3.7 (MacOS on ARM)
                     "DB770934E3E57E832BFFA1C1C85E065F" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
             ),
@@ -1523,7 +1554,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "9A93109BCB1025791DCA8B63E9EFE3B6", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
                     "3E40EB8AEB86CA5E3C76525E1E03D0FD", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
                     "4721899D9DDAF7394B1A679F753F81CF", // Vorbis 1.3.7 (MacOS on Intel)
-                    "856219EF1D9C77A64FE0994B7373C848", // Vorbis 1.3.7 (MacOS on ARM)
+                    "5A8780449BAD236AA4DC1C4A02D780E0", // Vorbis 1.3.7 (MacOS on ARM)
                     "4E69AF464154872795B7AD87BA762870", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "38EB06F6C7055EC41221129C2440E823" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
@@ -1539,7 +1570,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "91ADF87CA8AE3D1669EA65D30BB083D8", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
                     "19AF57343851DC074CDD23039C577BC2", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
                     "F6D78BE21567DD9244848160A2BD3889", // Vorbis 1.3.7 (MacOS on Intel)
-                    "ED7CAFD6D69FFF643E01219D1E9696E7", // Vorbis 1.3.7 (MacOS on ARM)
+                    "EE7EF3B2ED9DE0F2C21EFB29B08AEC0A", // Vorbis 1.3.7 (MacOS on ARM)
                     "AB097FDBAA6B8516129A17ED1C5BDC21" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
             ),
@@ -1554,7 +1585,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "E571643A52713B7696C5217696836ABC", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
                     "BD1777F28C923D15E00840C2725EB14A", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
                     "46F9042BE0BD04F4509E76B927DC0D71", // Vorbis 1.3.7 (MacOS on Intel)
-                    "CD4B255CDC3C689C8A2242FDE5F912C7", // Vorbis 1.3.7 (MacOS on ARM)
+                    "51F554DDF4CE99C21261FE78041BC901", // Vorbis 1.3.7 (MacOS on ARM)
                     "725AC9661D2A9AABE9508DEBEDA99BA9" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
             ),
@@ -1569,7 +1600,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "0AA286B6A6896263E9182853FFA2DD52", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
                     "8A4B07CF14C30DF85BCBDCD91A597424", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
                     "AD172F94045E0970A71F8C439EEEA6C9", // Vorbis 1.3.7 (MacOS on Intel)
-                    "CD4B255CDC3C689C8A2242FDE5F912C7", // Vorbis 1.3.7 (MacOS on ARM)
+                    "24B2E2A64AB7B019B80EC00F038EF42E", // Vorbis 1.3.7 (MacOS on ARM)
                     "F25060DBEAB99B219CDB5EC54D37AD1C" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
             ),
@@ -1585,7 +1616,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "ABC75E49AF00624847D66A441068199F", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
                     "8EB74661170103394BB0737E102B978A", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
                     "88C186B7AA3DC3A55CD430FFF8AADCB1", // Vorbis 1.3.7 (MacOS on Intel)
-                    "E7BE0862210C0010541BE605901D4A6D", // Vorbis 1.3.7 (MacOS on ARM)
+                    "762E8B1010603BE9EE62836B033AF317", // Vorbis 1.3.7 (MacOS on ARM)
                     "8224BAEA06E788DF37EFC01CCCD479C8" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
             ),
@@ -1601,7 +1632,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "9B499871B3788480810EB00DDF08054F", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
                     "171C2CA1CDB8C004B15A4D1D6C2C7375", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
                     "74D8326F97A08EBCCC7FF754FE37464F", // Vorbis 1.3.7 (MacOS on Intel)
-                    "9DEA359E04D151021DC995764B8C428E", // Vorbis 1.3.7 (MacOS on ARM)
+                    "5733DEA0D33C4EF12A9C7CB9D9971089", // Vorbis 1.3.7 (MacOS on ARM)
                     "C77B164D4E60453D679F35551FD3BF02" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
             ),
@@ -1618,7 +1649,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "F041B26255F501A83ECD8C6C7EBCE55D", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
                     "C2C9FE067F40025DDF41B868350F28A5", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
                     "7757FDE8D2A84D6AA7406F9CA3D840D3", // Vorbis 1.3.7 (MacOS on Intel)
-                    "E912A2A65C6272335DF116937A0549A6", // Vorbis 1.3.7 (MacOS on ARM)
+                    "C047BADC1EAC8CFE817AB6D0A9930567", // Vorbis 1.3.7 (MacOS on ARM)
                     "57E0997F13613A8C64306230A031D912" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
             ),
@@ -1635,7 +1666,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "E3B0B6AE0805022FAA88EC50199E9D05", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
                     "DFDCDBBC24E1DC2EE1411CE40D7DF3FE", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
                     "9DEF0BAB12400A25E06EA7CA8C32CCC6", // Vorbis 1.3.7 (MacOS on Intel)
-                    "483C59AF294602813322BFF28BF554A5", // Vorbis 1.3.7 (MacOS on ARM)
+                    "EAE93C9DE28D76AAEC6CB2F131B85728", // Vorbis 1.3.7 (MacOS on ARM)
                     "79C966C3D6728C49723640C0D7B9330B", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "55B7584D23DE2667374ABB9C3C571875" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
 
@@ -1654,7 +1685,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "08A958E00D3797F33ABB2F098556DE43", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
                     "EC722CED6079EC8609552686C911FFFE", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
                     "1C21FEE55AC987FE8ACA1865353DC833", // Vorbis 1.3.7 (MacOS on Intel)
-                    "25AEE91A747018638A34DC630D24B3FC", // Vorbis 1.3.7 (MacOS on ARM)
+                    "75B55AE3DD2871B490D5138066B3384E", // Vorbis 1.3.7 (MacOS on ARM)
                     "4B2B694BD0D42994F4A1911FBCB2ABF8", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "9E45D7B37055FD59650839F5BEAB1ED0" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
@@ -1671,7 +1702,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "749518EA6F95A089787DD414855DDBC0", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu)
                     "68B19B197BDAFA73A45EBF67CD961CA9", // Vorbis 1.3.7 (MacOS on Intel)
-                    "1CBA6651221C34E9ECDB314A653D05E0", // Vorbis 1.3.7 (MacOS on ARM)
+                    "52F3F5EBE126FF751CF482FFB630E84E", // Vorbis 1.3.7 (MacOS on ARM)
                     "CAEAE4C932830A8C0A41BC5C79DC80D5", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "53E545072EC0FDA11D100BA1DE9EBC0A" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
@@ -1689,7 +1720,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "0E233828AF5FD1010188AC4C63DF40BC", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
                     "057D14E2F3F8C9F2FD44EE29222A7BD3", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
                     "D37BB84F2008B1B467D54C618495C4CE", // Vorbis 1.3.7 (MacOS on Intel)
-                    "9631DB55B39F79E82ECC05E27EE8928B", // Vorbis 1.3.7 (MacOS on ARM)
+                    "1421DDEC0E70551ED9A4BC0A4902F534", // Vorbis 1.3.7 (MacOS on ARM)
                     "215FA0E953F4BB520A46A3B44B68CC92", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "8E0D0279037DC9DCC286050A2930427A" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
@@ -1706,7 +1737,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "70ECB3839EC4DC7A7ECEA48241E2407D", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu)
                     "577FA5EA45715260728A894592EEAED9", // Vorbis 1.3.7 (MacOS on Intel)
-                    "5008E6BEB9E483B5190D778129D5C1C4", // Vorbis 1.3.7 (MacOS on ARM)
+                    "649206BD1B573A8478CFA3BACFC349F9", // Vorbis 1.3.7 (MacOS on ARM)
                     "84E389F08890621CF00AF8DD2D7C77DB", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "EC75AF6E1F0EFEA7E87ED7B40EFA415A" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
@@ -1724,7 +1755,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "70ECB3839EC4DC7A7ECEA48241E2407D", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu)
                     "577FA5EA45715260728A894592EEAED9", // Vorbis 1.3.7 (MacOS on Intel)
-                    "5008E6BEB9E483B5190D778129D5C1C4", // Vorbis 1.3.7 (MacOS on ARM)
+                    "649206BD1B573A8478CFA3BACFC349F9", // Vorbis 1.3.7 (MacOS on ARM)
                     "84E389F08890621CF00AF8DD2D7C77DB", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "EC75AF6E1F0EFEA7E87ED7B40EFA415A" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
@@ -1742,7 +1773,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "E67F4AB32814D96B1BA65652E5E11E56", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu)
                     "D23564C9639B7C6490E59163C37B9C83", // Vorbis 1.3.7 (MacOS on Intel)
-                    "D4974D63DD5B7326BD2143801C3DC610", // Vorbis 1.3.7 (MacOS on ARM)
+                    "1193BA985E76832529BBFAEA037858BF", // Vorbis 1.3.7 (MacOS on ARM)
                     "C84819FCFA2F25FCDB3E5490E54949B4", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "3FA511E9C941DFB1E61A98418C27F383" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
@@ -1760,7 +1791,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "F041B26255F501A83ECD8C6C7EBCE55D", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
                     "C2C9FE067F40025DDF41B868350F28A5", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
                     "7757FDE8D2A84D6AA7406F9CA3D840D3", // Vorbis 1.3.7 (MacOS on Intel)
-                    "E912A2A65C6272335DF116937A0549A6", // Vorbis 1.3.7 (MacOS on ARM)
+                    "C047BADC1EAC8CFE817AB6D0A9930567", // Vorbis 1.3.7 (MacOS on ARM)
                     "57E0997F13613A8C64306230A031D912" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
             ),
@@ -1777,7 +1808,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "70ECB3839EC4DC7A7ECEA48241E2407D", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu)
                     "577FA5EA45715260728A894592EEAED9", // Vorbis 1.3.7 (MacOS on Intel)
-                    "5008E6BEB9E483B5190D778129D5C1C4", // Vorbis 1.3.7 (MacOS on ARM)
+                    "649206BD1B573A8478CFA3BACFC349F9", // Vorbis 1.3.7 (MacOS on ARM)
                     "84E389F08890621CF00AF8DD2D7C77DB", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "EC75AF6E1F0EFEA7E87ED7B40EFA415A" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
@@ -1795,7 +1826,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "F041B26255F501A83ECD8C6C7EBCE55D", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
                     "C2C9FE067F40025DDF41B868350F28A5", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
                     "7757FDE8D2A84D6AA7406F9CA3D840D3", // Vorbis 1.3.7 (MacOS on Intel)
-                    "E912A2A65C6272335DF116937A0549A6", // Vorbis 1.3.7 (MacOS on ARM)
+                    "C047BADC1EAC8CFE817AB6D0A9930567", // Vorbis 1.3.7 (MacOS on ARM)
                     "57E0997F13613A8C64306230A031D912" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                 ]
             ),
@@ -1811,7 +1842,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "39443EC16B23C3B5159CD199E83AD092", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu)
                     "466D9535B74B53EA088F13FF9720268C", // Vorbis 1.3.7 (MacOS on Intel)
-                    "A637C5C3C53C717092D518B1F47963D5", // Vorbis 1.3.7 (MacOS on ARM)
+                    "810FAABD5DFA17D845BB3D294C8635BE", // Vorbis 1.3.7 (MacOS on ARM)
                     "805F62BDFE149898E21C9448F4335BAC", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "64478AA7F8E2052608AE10624A3C396B" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
@@ -1829,7 +1860,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "7FF678CC731484D0B16E7FC01301EE7E", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
                     "9F4297E686E3A938051AB8C753476521", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
                     "488A2980F20619FE0206CFBB1767CBAC", // Vorbis 1.3.7 (MacOS on Intel)
-                    "8F7096C15F10B9EB3CA0DFA0E044877E", // Vorbis 1.3.7 (MacOS on ARM)
+                    "70D18A8C9941807E7E09E5B76BCFFECA", // Vorbis 1.3.7 (MacOS on ARM)
                     "34BA39848B7D78D7FE1D2B30999DF6A9", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
                     "F1F317505EE9AD557FBF2DB31777AAAB" // Vorbis 1.3.7 AoTuV + Lancer (Windows on AMD)
                 ]
@@ -1849,7 +1880,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "2D31A0D707D3A9AB865DB00095EB08AE", // Opus 1.3.1 (Ubuntu 22.04)
                     "4477BA0E09EF52AC239EE55FF44DA2A0", // Opus 1.5.2 (MacOS on Intel)
-                    "FB641D1DA3D800E22BD22C7983D83325", // Opus 1.3.1 (MacOS on ARM)
+                    "589BB547277DB56BD75F4273AB6AEC9E", // Opus 1.5.2 (MacOS on ARM)
                     "47359005DE5203C8AF0FDDE7F34713D9", // Opus 1.5.2 (32-bit Windows on Intel)
                     "ADB9E5F7EADCD228D63F97351F7456B0", // Opus 1.5.2 (32-bit Windows on AMD)
                     "A2EDE18F0E554FDC9EE5DD9C62622236", // Opus 1.5.2 (64-bit Windows on Intel)
@@ -1866,7 +1897,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "C22E87F617B51970785E9A4C43C9FC48", // Opus 1.3.1 (Ubuntu 22.04)
                     "A96ECE9F6FC5F2977202F2489A105967", // Opus 1.5.2 (MacOS on Intel)
-                    "86C499288EADAAB469F3E7FA63628AD1", // Opus 1.3.1 (MacOS on ARM)
+                    "6BD64F39FFAF07B20DB88618621C68CB", // Opus 1.5.2 (MacOS on ARM)
                     "6F0174BCFBF9AE02ACFCC0B2E3B834B8", // Opus 1.5.2 (Windows on Intel)
                     "D40EF4C25A4F36F96A715D2C2D5084BF" // Opus 1.5.2 (Windows on AMD)
                 ]
@@ -1881,7 +1912,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "0C6BF7ECB9F757DB8F8AF485137BD2C8", // Opus 1.3.1 (Ubuntu 22.04)
                     "54A2DC75ED7879D6B890D50F4CB34603", // Opus 1.5.2 (MacOS on Intel)
-                    "DF1CE487259E093896FB4BDB74A6B1E3", // Opus 1.3.1 (MacOS on ARM)
+                    "297F37DFFE222B31663A46099038C9A0", // Opus 1.5.2 (MacOS on ARM)
                     "E105170CA90D2D427A6431ACB8D5A16C", // Opus 1.5.2 (32-bit Windows on Intel)
                     "8A9F6B6464C10B76DC880BAF4DF1AA3B", // Opus 1.5.2 (32-bit Windows on AMD)
                     "BF310174502CDAD081F13998FB901865", // Opus 1.5.2 (64-bit Windows on Intel)
@@ -1898,7 +1929,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "BD5F090F921BCC80F05FCBF5725D8E0E", // Opus 1.3.1 (Ubuntu 22.04)
                     "FB5BA2E0CF0A5738942A622FEE822D4E", // Opus 1.5.2 (MacOS on Intel)
-                    "5074AE45A08E36CAF8FC0AB1B50F117C", // Opus 1.3.1 (MacOS on ARM)
+                    "F9160B718B747C099AC754CA8DE48140", // Opus 1.5.2 (MacOS on ARM)
                     "AB158A17CCED018828790DAA396BAB93", // Opus 1.5.2 (32-bit Windows on Intel)
                     "348B339AB9B26FC3185112CFFC784479", // Opus 1.5.2 (32-bit Windows on AMD)
                     "F4D51B165CDACF9CC1740A023FC832F7", // Opus 1.5.2 (64-bit Windows on Intel)
@@ -1915,7 +1946,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "8A8FA9C452D9EBBCF8554EE3E270A538", // Opus 1.3.1 (Ubuntu 22.04)
                     "2821951FD04D0E164FBF6E6604B85F86", // Opus 1.5.2 (MacOS on Intel)
-                    "FC74891978B6213CDF3807C6D0130E82", // Opus 1.3.1 (MacOS on ARM)
+                    "E13E2159ADA7DC7A516BF31B373B0B46", // Opus 1.5.2 (MacOS on ARM)
                     "DA42257349612217D56C05879F45DD52", // Opus 1.5.2 (32-bit Windows on Intel)
                     "66F597B809F3331DEA291B8F147A3B6B", // Opus 1.5.2 (32-bit Windows on AMD)
                     "48D4A34C2C1BB5B6F1230BFE64764ED6", // Opus 1.5.2 (64-bit Windows on Intel)
@@ -1933,7 +1964,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "CD27FFC8398F52FB2F5984085D2215AC", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
                     "2018DEFDE09A503E0734CD57B0E19FC4", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "5A972613B661C285E44AB07D8416DC0A", // Opus 1.5.2 (MacOS on Intel)
-                    "4190DC99A4B49887AA3E5BC9E15DC1C8", // Opus 1.3.1 (MacOS on ARM)
+                    "F4695DEB0385B2BF9720D65140910251", // Opus 1.5.2 (MacOS on ARM)
                     "8BB79D2D7415D4082679D416B2F41D93", // Opus 1.5.2 (32-bit Windows on Intel)
                     "CA97D1381E6BC36AB0A1880339C6A0E7", // Opus 1.5.2 (32-bit Windows on AMD)
                     "AE7BD2C79045C6DD3AFD6D20A98902D6", // Opus 1.5.2 (64-bit Windows on Intel)
@@ -1951,7 +1982,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "9ED53495B32D47496C1C88B75D2FEF5F", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
                     "EF85B330CBC8A8931C2827A81F2E1532", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "D432F9BAABD834950984D4DFB1F446FA", // Opus 1.5.2 (MacOS on Intel)
-                    "5A928AED6645BDF1A8CBA3C2EEB7E90F", // Opus 1.3.1 (MacOS on ARM)
+                    "07C3F6B6F9ED9FBA9550F0BF53984EC5", // Opus 1.5.2 (MacOS on ARM)
                     "F8C93268C74883B727D78FBDB38F831F", // Opus 1.5.2 (32-bit Windows on Intel)
                     "7691A7F85D7F6FBFC3C3C1AA4F1D291A", // Opus 1.5.2 (32-bit Windows on AMD)
                     "DCB3078A6720C49D9726C64C0DCCCD7E", // Opus 1.5.2 (64-bit Windows on Intel)
@@ -1968,7 +1999,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "5501D7D9730B0722C310D5263AFBEB77", // Opus 1.3.1 (Ubuntu 22.04)
                     "C110F6EFE538B370E49ECBAE4B40C8C2", // Opus 1.5.2 (MacOS on Intel)
-                    "CB28DA52EF8451F944D8ED642D438292", // Opus 1.3.1 (MacOS on ARM)
+                    "BE70C5469607ECD9F28F7282BCE77E87", // Opus 1.5.2 (MacOS on ARM)
                     "C461EAB699527B90A919D2B26979A30A", // Opus 1.5.2 (32-bit Windows on Intel)
                     "F8E8DE9329CE7869197512B31ABCB9EC", // Opus 1.5.2 (32-bit Windows on AMD)
                     "F6F88CF0DC907202CE5F91CC706A8ADD", // Opus 1.5.2 (64-bit Windows on Intel)
@@ -1986,7 +2017,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "E00313922D18720824C1B0BB443E8679", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
                     "AFE05CB9E10ECE0CE4A267B01E91AA7C", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "1A3E6E580E6CED2A176855154F117F55", // Opus 1.5.2 (MacOS on Intel)
-                    "2D7ABAB485382CFA8AD0DA8437304185", // Opus 1.3.1 (MacOS on ARM)
+                    "0D7E4E8ADAEBB92DAC1949BA2C7446EF", // Opus 1.5.2 (MacOS on ARM)
                     "F24CCDB06BAFA257E2276FC09D2E3100", // Opus 1.5.2 (32-bit Windows on Intel)
                     "14EB0889A6F92036165A3676F9D7E240", // Opus 1.5.2 (32-bit Windows on AMD)
                     "013902EE71579EDC9C477629381B5706", // Opus 1.5.2 (64-bit Windows on Intel)
@@ -2003,7 +2034,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "0ADBC105EA51C62CB1ED53B978B33415", // Opus 1.3.1 (Ubuntu 22.04)
                     "BA2DB653CD22442197C80828E35B694E", // Opus 1.5.2 (MacOS on Intel)
-                    "2D7ABAB485382CFA8AD0DA8437304185", // Opus 1.3.1 (MacOS on ARM)
+                    "0DFDBEE9CEE589AE748705268B0B7FD8", // Opus 1.5.2 (MacOS on ARM)
                     "AA83D462884ABCC559AFAB31D08652CA", // Opus 1.5.2 (32-bit Windows on Intel)
                     "2B14B7A07466F519B4411D1E21A16DEB", // Opus 1.5.2 (32-bit Windows on AMD)
                     "BDD151A5D31382F430EA2139D18DD46A", // Opus 1.5.2 (64-bit Windows on Intel)
@@ -2021,7 +2052,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "CDE65307AACEA4F40F22FF925622D14E", // Opus 1.3.1 (Ubuntu 22.04)
                     "6C30D9BB7917BAEB1934A89C4874ADAC", // Opus 1.5.2 (MacOS on Intel)
-                    "F2FDC3B2D196D551919F3FC85120DA15", // Opus 1.3.1 (MacOS on ARM)
+                    "7ECA1147747494E00A668CB62C1C2CB9", // Opus 1.5.2 (MacOS on ARM)
                     "C768F0F87DAD97B1FF7C0A03FE6C2950", // Opus 1.5.2 (32-bit Windows on Intel)
                     "42E4106E48A192A9BC6D2EDE7B9C9A49", // Opus 1.5.2 (32-bit Windows on AMD)
                     "828B1323F1F7F6E9589249130098DB64", // Opus 1.5.2 (64-bit Windows on Intel)
@@ -2039,7 +2070,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "3AA89123958BA0DF1611539BC909DD0B", // Opus 1.3.1 (Ubuntu 22.04)
                     "49452D1FB45FAB63ACCA4D7B98FC3421", // Opus 1.5.2 (MacOS on Intel)
-                    "A7F53EB258E068E6B9B6C6A1D756E342", // Opus 1.3.1 (MacOS on ARM)
+                    "8126956A0E09653509F8C13EA1CDDB41", // Opus 1.5.2 (MacOS on ARM)
                     "B3D8AECD20CEC76CD140DA44979A60E4", // Opus 1.5.2 (32-bit Windows on Intel)
                     "F16D71E1988E3DF6E8D02C555D080E5F", // Opus 1.5.2 (32-bit Windows on AMD)
                     "4195302C28B204B94F945E14A4A9672B", // Opus 1.5.2 (64-bit Windows on Intel)
@@ -2073,7 +2104,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "785D39E686216F4958B8103B62E9E321", // Opus 1.3.1 (Ubuntu 22.04)
                     "015FC5B8C914D876461F7C481B313083", // Opus 1.5.2 (MacOS on Intel)
-                    "4F1E3A4F58E62CB2F9DF5D0C3AED689D", // Opus 1.3.1 (MacOS on ARM)
+                    "62DE12E6046BE4A01F698A13C6C00261", // Opus 1.5.2 (MacOS on ARM)
                     "6B422669A0FCB242E0E15204F5FDCC47", // Opus 1.3.1 (32-bit Windows on Intel)
                     "C8CBDCD05703BDC8E61072ECE4A34521", // Opus 1.5.2 (32-bit Windows on AMD)
                     "CA4D9FA683B85ADCF4132828402D9994", // Opus 1.5.2 (64-bit Windows on Intel)
@@ -2092,7 +2123,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "0C6BF7ECB9F757DB8F8AF485137BD2C8", // Opus 1.3.1 (Ubuntu 22.04)
                     "54A2DC75ED7879D6B890D50F4CB34603", // Opus 1.5.2 (MacOS on Intel)
-                    "DF1CE487259E093896FB4BDB74A6B1E3", // Opus 1.3.1 (MacOS on ARM)
+                    "297F37DFFE222B31663A46099038C9A0", // Opus 1.5.2 (MacOS on ARM)
                     "E105170CA90D2D427A6431ACB8D5A16C", // Opus 1.5.2 (32-bit Windows on Intel)
                     "8A9F6B6464C10B76DC880BAF4DF1AA3B", // Opus 1.5.2 (32-bit Windows on AMD)
                     "BF310174502CDAD081F13998FB901865", // Opus 1.5.2 (64-bit Windows on Intel)
@@ -2111,7 +2142,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "B98AC6052E465C5A226D8D2905B535EC", // Opus 1.3.1 (Ubuntu 22.04)
                     "6EED767F4AD005A03CCE4535E62836D3", // Opus 1.5.2 (MacOS on Intel)
-                    "532F344E999193C4F59D1CDBF511C7DE", // Opus 1.3.1 (MacOS on ARM)
+                    "EDA7AE4F7F715EF9A6808E5D547A6F0A", // Opus 1.5.2 (MacOS on ARM)
                     "93110D453D9EF4DF0EF57B0B758092D7", // Opus 1.5.2 (32-bit Windows on Intel)
                     "A74FA40F2DD860E515BE360C42558A2D", // Opus 1.5.2 (32-bit Windows on AMD)
                     "1C8382776908484524B1F8287A133A1F", // Opus 1.5.2 (64-bit Windows on Intel)
@@ -2130,7 +2161,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "687B2402BF33EDB0EAD683235E309BC8", // Opus 1.3.1 (Ubuntu 22.04)
                     "69CB6F9E36304A413E772A64F8930EF8", // Opus 1.5.2 (MacOS on Intel)
-                    "D9E874A3511506C2A8021FF77DEAED23", // Opus 1.3.1 (MacOS on ARM)
+                    "29706654639E3EB000623EC6A7543DB8", // Opus 1.5.2 (MacOS on ARM)
                     "3CE799E222F941AC4BE899AB1B5236B4", // Opus 1.5.2 (32-bit Windows on Intel)
                     "7554FB04DC120221749C1EE818CA6906", // Opus 1.5.2 (32-bit Windows on AMD)
                     "682884B45E806A93559FD12B759992D7", // Opus 1.5.2 (64-bit Windows on Intel)
@@ -2149,7 +2180,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "8FC7BCF02EDB42E9785797FD2C9A71D6", // Opus 1.3.1 (Ubuntu 22.04)
                     "8A770140717C859BE50E5A65C9FD0591", // Opus 1.5.2 (MacOS on Intel)
-                    "B1D166A87EF5F03FDC80E8571B9FC70E", // Opus 1.3.1 (MacOS on ARM)
+                    "F380C4287A80A5A255C86DC2B578C5F7", // Opus 1.5.2 (MacOS on ARM)
                     "47CA0622B6C24FEF2BDA687457AF6EE3", // Opus 1.5.2 (Windows on Intel)
                     "D56071729C7BE8B2B93AF0B8BD3AC3AB" // Opus 1.5.2 (Windows on AMD)
                 ]
@@ -2167,7 +2198,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "8FC7BCF02EDB42E9785797FD2C9A71D6", // Opus 1.3.1 (Ubuntu 22.04)
                     "8A770140717C859BE50E5A65C9FD0591", // Opus 1.5.2 (MacOS on Intel)
-                    "B1D166A87EF5F03FDC80E8571B9FC70E", // Opus 1.3.1 (MacOS on ARM)
+                    "F380C4287A80A5A255C86DC2B578C5F7", // Opus 1.5.2 (MacOS on ARM)
                     "47CA0622B6C24FEF2BDA687457AF6EE3", // Opus 1.5.2 (Windows on Intel)
                     "D56071729C7BE8B2B93AF0B8BD3AC3AB" // Opus 1.5.2 (Windows on AMD)
                 ]
@@ -2185,7 +2216,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "84D72BBEF86EA7611518CF2862FC94BD", // Opus 1.3.1 (Ubuntu 22.04)
                     "D6B5EDF579DBAFF63BD7892C9BA58ADD", // Opus 1.5.2 (MacOS on Intel)
-                    "3FBE634F53A90A6E5E26325A49BD20E5", // Opus 1.3.1 (MacOS on ARM)
+                    "4FFADA4C9433B47ABD862305B21B9A5D", // Opus 1.5.2 (MacOS on ARM)
                     "C1E6A103E4499035344A3B913611C0E0", // Opus 1.5.2 (Windows on Intel)
                     "B2F7F592DD68C92B20D577E4D9AEE7AB" // Opus 1.5.2 (Windows on AMD)
                 ]
@@ -2202,7 +2233,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "0C6BF7ECB9F757DB8F8AF485137BD2C8", // Opus 1.3.1 (Ubuntu 22.04)
                     "54A2DC75ED7879D6B890D50F4CB34603", // Opus 1.5.2 (MacOS on Intel)
-                    "DF1CE487259E093896FB4BDB74A6B1E3", // Opus 1.3.1 (MacOS on ARM)
+                    "297F37DFFE222B31663A46099038C9A0", // Opus 1.5.2 (MacOS on ARM)
                     "E105170CA90D2D427A6431ACB8D5A16C", // Opus 1.5.2 (32-bit Windows on Intel)
                     "8A9F6B6464C10B76DC880BAF4DF1AA3B", // Opus 1.5.2 (32-bit Windows on AMD)
                     "BF310174502CDAD081F13998FB901865", // Opus 1.5.2 (64-bit Windows on Intel)
@@ -2221,7 +2252,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "B6029E9FC954A8722A1B10700F80EA19", // Opus 1.3.1 (Ubuntu 22.04)
                     "33E6FD8F8DC37F80C467DF3EF820D424", // Opus 1.5.2 (MacOS on Intel)
-                    "A9E1172F6E94329BC82ACAD85B83F3F0", // Opus 1.3.1 (MacOS on ARM)
+                    "5928D94B6117889982136833918FEBA6", // Opus 1.5.2 (MacOS on ARM)
                     "E199F6D24770B47A9AF906F3ECA8E863", // Opus 1.5.2 (32-bit Windows on Intel)
                     "C05063029AD8645A38F639F92B573B81", // Opus 1.5.2 (32-bit Windows on AMD)
                     "D6414CE58A6E7C07C17C9CC11A8CD966", // Opus 1.5.2 (64-bit Windows on Intel)
@@ -2240,7 +2271,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "EF6A93BC1F10A15E5F45255F36E90F3A", // Opus 1.3.1 (Ubuntu 22.04)
                     "070E63A0E8A8A6F69B5C4DF9A7D1C82A", // Opus 1.5.2 (MacOS on Intel)
-                    "8AF396D9A1F7648C2FDC7DFCC1AF35F6", // Opus 1.3.1 (MacOS on ARM)
+                    "C145ED6B764A2B208355F9D4B7D5E6A3", // Opus 1.5.2 (MacOS on ARM)
                     "E8199A697B010856D7ED9F4C67A82481", // Opus 1.5.2 (32-bit Windows on Intel)
                     "5A71D9D8779039B3C5EB689A58C3C5FB", // Opus 1.5.2 (32-bit Windows on AMD)
                     "1C7A4661C5DD9C5CD8FC8CED950E2C80", // Opus 1.5.2 (64-bit Windows on Intel)
