@@ -97,6 +97,6 @@ namespace AudioWorks.TestUtilities.DataSources
         ];
 
         public static IEnumerable<TheoryDataRow<string>> FileNames =>
-            Data.Select(item => new TheoryDataRow<string>(item.Data.Item1) { Skip = item.Skip }).Distinct();
+            Data.Select(item => item.Data.Item1).Distinct().Select(item => new TheoryDataRow<string>(item));
     }
 }

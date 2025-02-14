@@ -24,7 +24,6 @@ namespace AudioWorks.TestUtilities.DataSources
         public static IEnumerable<TheoryDataRow<string, string>> Data { get; } =
         [
             new("Wave", "Waveform Audio File Format"),
-            new("Wave", "Waveform Audio File Format"),
             new("FLAC", "Free Lossless Audio Codec"),
             new("ALAC", "Apple Lossless Audio Codec")
                 { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },

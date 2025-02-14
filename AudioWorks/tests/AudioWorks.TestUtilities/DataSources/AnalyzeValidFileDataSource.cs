@@ -13,6 +13,7 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AudioWorks.Common;
@@ -198,11 +199,10 @@ namespace AudioWorks.TestUtilities.DataSources
         ];
 
         public static IEnumerable<TheoryDataRow<string>> Analyzers =>
-            Data.Select(item =>
-                new TheoryDataRow<string>(item.Data.Item1) { Skip = item.Skip }).Distinct();
+            Data.Select(item => item.Data.Item1).Distinct().Select(item => new TheoryDataRow<string>(item));
 
         public static IEnumerable<TheoryDataRow<string, string>> FileNamesAndAnalyzers =>
-            Data.Select(item =>
-                new TheoryDataRow<string, string>(item.Data.Item1, item.Data.Item2) { Skip = item.Skip }).Distinct();
+            Data.Select(item => Tuple.Create(item.Data.Item1, item.Data.Item2)).Distinct().Select(item =>
+                new TheoryDataRow<string, string>(item.Item1, item.Item2));
     }
 }
