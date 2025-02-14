@@ -10,7 +10,7 @@
     <Copyright>© 2018 Jeremy Herbison</Copyright>
     <NeutralLanguage>en-US</NeutralLanguage>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <ContinuousIntegrationBuild Condition="'$(TF_BUILD)'=='true'">true</ContinuousIntegrationBuild>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
     <NuspecProperties>$(NuspecProperties);Copyright=$(Copyright)</NuspecProperties>
   </PropertyGroup>
 
