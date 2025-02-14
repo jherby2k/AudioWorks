@@ -576,7 +576,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "75D127D9FCD7720CBE92C0670A93A880", // 64-bit Windows on Intel
                     "F1E4C1E4386B0DD4B233284E4E2363D8" // 64-bit Windows on AMD
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
             new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
@@ -593,7 +593,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "1D0F379EC9C47267569F88729569D407", // 64-bit Windows on Intel
                     "C40C18B162E7429F60C62DF6A23071D6" // 64-bit Windows on AMD
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
             new(
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "AppleAAC",
@@ -610,7 +610,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "E0A80A6B32CD5A8FA5C62B44F28C4A87", // 64-bit Windows on Intel
                     "CA58A161F472C9038E29DB08BC8B41CC" // 64-bit Windows on AMD
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
             new(
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "AppleAAC",
@@ -627,7 +627,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "ED307F76DD052720321284BAD8876AB2", // 64-bit Windows on Intel
                     "155983F671E0ACD36DC482A283A8EDBE" // 64-bit Windows on AMD
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
             new(
                 "A-law 44100Hz Stereo.wav",
                 "AppleAAC",
@@ -644,7 +644,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "369DAA1350BB9C45BAF84F7769221F00", // 64-bit Windows on Intel
                     "B90925A2DA13F80969FB7E6FEF7E81E0" // 64-bit Windows on AMD
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
             new(
                 "µ-law 44100Hz Stereo.wav",
                 "AppleAAC",
@@ -661,7 +661,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "A86E9A3D4A9479A44F852FA42BA0C9C2", // 64-bit Windows on Intel
                     "437164350E18B65669094C81C9335C4E" // 64-bit Windows on AMD
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
             new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "AppleAAC",
@@ -678,7 +678,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "102A8F21E39D364419B9CF5BFB386631", // 64-bit Windows on Intel
                     "EB34F55D3D94E569E99C12BD8FCF5BBF" // 64-bit Windows on AMD
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
             new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - PNG).flac",
                 "AppleAAC",
@@ -695,7 +695,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "AAF40EB4D4AC1832D979D6EBDE9C5BDD", // 64-bit Windows on Intel
                     "FC1903FEEBCC293C1995CFF357BC3579" // 64-bit Windows on AMD
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
             new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
                 "AppleAAC",
@@ -712,7 +712,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "2863A63E2060267B6A6151CA90239BC6", // 64-bit Windows on Intel
                     "76BFBCEB5644AEA27C774D00D35A2B66" // 64-bit Windows on AMD
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
             new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
@@ -731,7 +731,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "1D0F379EC9C47267569F88729569D407", // 64-bit Windows on Intel
                     "C40C18B162E7429F60C62DF6A23071D6" // 64-bit Windows on AMD
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
             new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
@@ -750,7 +750,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "93D67A9C673E7ABE3929846DBE5DBF97", // 64-bit Windows on Intel
                     "FC6792AF620BF4CFB49222B1747B4859" // 64-bit Windows on AMD
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
             new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
@@ -769,7 +769,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "A1CD6AC102BA40A728B2C7E00B1E786D", // 64-bit Windows on Intel
                     "288B9B3FE4FCC212491B9A370757FC46" // 64-bit Windows on AMD
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
             new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
@@ -788,7 +788,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "38D28BD3802566CB30D3B824D7FF593F", // 64-bit Windows on Intel
                     "2D6F2B1043E1276764605C70E94A9EAE" // 64-bit Windows on AMD
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
             new(
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "AppleAAC",
@@ -804,7 +804,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "9E77C0824474E3600F1A919715609A1B", // 32-bit Windows
                     "2321A80FDC5F36A1860523948548F8E5" // 64-bit Windows
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
             new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
@@ -823,7 +823,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "2AD5FC82A78732A66B8F04387D7D412B", // 64-bit Windows on Intel
                     "58E298B32860D9A30E1F31B3D164A3AC" // 64-bit Windows on AMD
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
             new(
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "AppleAAC",
@@ -842,7 +842,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "298A2B946AA53102FD025DDD9D273B21", // 64-bit Windows on Intel
                     "8853121A36B39C0A607B5FE219A8EFD8" // 64-bit Windows on AMD
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
             new(
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "AppleAAC",
@@ -861,7 +861,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "96E46C6CF7126E26E58224D5F55850F2", // 64-bit Windows on Intel
                     "60DEF5D19AF12B0962777B0B38CBA79A" // 64-bit Windows on AMD
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
             new(
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "AppleAAC",
@@ -880,7 +880,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "96E46C6CF7126E26E58224D5F55850F2", // 64-bit Windows on Intel
                     "60DEF5D19AF12B0962777B0B38CBA79A" // 64-bit Windows on AMD
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
             new(
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "AppleAAC",
@@ -899,7 +899,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "D4A9A3FFC75AC0383B68BADA43E23C3D", // 64-bit Windows on Intel
                     "2B2F9D57CFA1F3A0D63D261AD4750468" // 64-bit Windows on AMD
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
             new(
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "AppleAAC",
@@ -919,7 +919,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "08686D04EFF88BC663C469F2DD224020", // 64-bit Windows on Intel
                     "85FBE50C3C18EFAB46DE754068F359BC" // 64-bit Windows on AMD
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
             new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
@@ -938,7 +938,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "1D0F379EC9C47267569F88729569D407", // 64-bit Windows on Intel
                     "C40C18B162E7429F60C62DF6A23071D6" // 64-bit Windows on AMD
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
             new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "AppleAAC",
@@ -957,7 +957,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "B49EC8F6428A1CDEBA4F0728FC1BF8E5", // 64-bit Windows on Intel
                     "A65D4DA9DB98F2DEF066508818C680CD" // 64-bit Windows on AMD
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
             new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (Tagged using defaults).flac",
                 "AppleAAC",
@@ -976,7 +976,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "19940A1BA1D575D9E165584C24A955F4", // 64-bit Windows on Intel
                     "8107A1714777E243320A2E72F8F1D6D7" // 64-bit Windows on AMD
                 ]
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
+            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : "Currently getting different results on different machines" },
 
             #endregion
 
