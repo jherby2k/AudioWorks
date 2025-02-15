@@ -79,6 +79,8 @@ namespace AudioWorks.Extensions.Opus
                 "native",
                 RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
                     ? $"lib{libraryName}.dylib"
-                    : libraryName);
+                    : RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                        ? $"lib{libraryName}.so"
+                        : libraryName);
     }
 }
