@@ -27,7 +27,8 @@ namespace AudioWorks.Extensions.Flac
     public sealed class FlacLibHandler : IPrerequisiteHandler
     {
         const string _flacLib = "FLAC";
-        const string _linuxLibVersion = "8";
+        const int _linuxLibMaxVersion = 14;
+        const int _linuxLibMinVersion = 8;
 
         // Use the RID-specific directory, except on 32-bit Windows
         // On Mac we need to add the full file name, but on Windows it resolves the file properly
@@ -65,10 +66,13 @@ namespace AudioWorks.Extensions.Flac
         {
             if (libraryName != _flacLib) return nint.Zero;
 
-            // On Linux, use the system-provided library.
-            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
-                ? NativeLibrary.Load($"{_flacLib}.so.{_linuxLibVersion}", assembly, searchPath)
-                : NativeLibrary.Load(_flacLibFullPath);
+            // On Linux, use whichever system-provided library is available
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                for (var version = _linuxLibMaxVersion; version >= _linuxLibMinVersion; version--)
+                    if (NativeLibrary.TryLoad($"{_flacLib}.so.{version}", assembly, searchPath, out var result))
+                        return result;
+
+            return NativeLibrary.Load(_flacLibFullPath);
         }
     }
 }
