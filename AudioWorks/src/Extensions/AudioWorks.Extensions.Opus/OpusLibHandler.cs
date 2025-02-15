@@ -27,51 +27,10 @@ namespace AudioWorks.Extensions.Opus
     public sealed class OpusLibHandler : IPrerequisiteHandler
     {
         const string _oggLib = "ogg";
-        const string _linuxOggLibVersion = "0";
         const string _opusLib = "opus";
-        const string _linuxOpusLibVersion = "0";
         const string _opusEncLib = "opusenc";
-
-        // Use the RID-specific directory, except on 32-bit Windows
-        // On Mac we need to add the full file name, but on Windows it resolves the file properly
-        static readonly string _oggLibFullPath = Path.Combine(
-            Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
-            "runtimes",
-            RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !Environment.Is64BitProcess
-                ? "win-x86"
-                : RuntimeInformation.RuntimeIdentifier,
-            "native",
-            RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
-                ? $"lib{_oggLib}.dylib"
-                : _oggLib);
-
-        // Use the RID-specific directory, except on 32-bit Windows
-        // On Mac we need to add the full file name, but on Windows it resolves the file properly
-        static readonly string _opusLibFullPath = Path.Combine(
-            Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
-            "runtimes",
-            RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !Environment.Is64BitProcess
-                ? "win-x86"
-                : RuntimeInformation.RuntimeIdentifier,
-            "native",
-            RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
-                ? $"lib{_opusLib}.dylib"
-                : _opusLib);
-
-        // Use the RID-specific directory, except on 32-bit Windows
-        // On Mac and Linux we need to add the full file name, but on Windows it resolves the file properly
-        static readonly string _opusEncLibFullPath = Path.Combine(
-            Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
-            "runtimes",
-            RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !Environment.Is64BitProcess
-                ? "win-x86"
-                : RuntimeInformation.RuntimeIdentifier,
-            "native",
-            RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
-                ? $"lib{_opusEncLib}.dylib"
-                : RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
-                    ? $"lib{_opusEncLib}.so"
-                    : _opusEncLib);
+        const int _linuxOggLibVersion = 0;
+        const int _linuxOpusLibVersion = 0;
 
         public bool Handle()
         {
@@ -100,12 +59,26 @@ namespace AudioWorks.Extensions.Opus
                 // On Linux, use the system-provided libogg and libopus
                 _oggLib => RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
                     ? NativeLibrary.Load($"{_oggLib}.so.{_linuxOggLibVersion}", assembly, searchPath)
-                    : NativeLibrary.Load(_oggLibFullPath),
+                    : NativeLibrary.Load(GetLibFullPath(_oggLib)),
                 _opusLib => RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
                     ? NativeLibrary.Load($"{_opusLib}.so.{_linuxOpusLibVersion}", assembly, searchPath)
-                    : NativeLibrary.Load(_opusLibFullPath),
-                _opusEncLib => NativeLibrary.Load(_opusEncLibFullPath),
+                    : NativeLibrary.Load(GetLibFullPath(_opusLib)),
+                _opusEncLib => NativeLibrary.Load(GetLibFullPath(_opusEncLib)),
                 _ => nint.Zero
             };
+
+        static string GetLibFullPath(string libraryName) =>
+            Path.Combine(
+                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
+                "runtimes",
+                RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !Environment.Is64BitProcess
+                    ? "win-x86"
+                    : RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                        ? "linux-x64"
+                        : RuntimeInformation.RuntimeIdentifier,
+                "native",
+                RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
+                    ? $"lib{libraryName}.dylib"
+                    : libraryName);
     }
 }
