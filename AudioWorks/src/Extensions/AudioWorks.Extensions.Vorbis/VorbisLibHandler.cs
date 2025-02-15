@@ -27,52 +27,11 @@ namespace AudioWorks.Extensions.Vorbis
     public sealed class VorbisLibHandler : IPrerequisiteHandler
     {
         const string _oggLib = "ogg";
-        const string _linuxOggLibVersion = "0";
         const string _vorbisLib = "vorbis";
         const string _vorbisEncLib = "vorbisenc";
-
-        // Use the RID-specific directory, except on 32-bit Windows
-        // On Mac we need to add the full file name, but on Windows it resolves the file properly
-        static readonly string _oggLibFullPath = Path.Combine(
-            Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
-            "runtimes",
-            RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !Environment.Is64BitProcess
-                ? "win-x86"
-                : RuntimeInformation.RuntimeIdentifier,
-            "native",
-            RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
-                ? $"lib{_oggLib}.dylib"
-                : _oggLib);
-
-        // Use the RID-specific directory, except on 32-bit Windows
-        // On Mac and Linux we need to use the full file name, but on Windows it resolves the file properly
-        static readonly string _vorbisLibFullPath = Path.Combine(
-            Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
-            "runtimes",
-            RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !Environment.Is64BitProcess
-                ? "win-x86"
-                : RuntimeInformation.RuntimeIdentifier,
-            "native",
-            RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
-                ? $"lib{_vorbisLib}.dylib"
-                : RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
-                    ? $"lib{_vorbisLib}.so"
-                    : _vorbisLib);
-
-        // On Windows, these functions are actually in vorbis.dll
-        // On Mac and Linux we need to add the full file name, but on Windows it resolves the file properly
-        static readonly string _vorbisEncLibFullPath = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-            ? _vorbisLibFullPath
-            : Path.Combine(
-                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
-                "runtimes",
-                RuntimeInformation.RuntimeIdentifier,
-                "native",
-                RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
-                    ? $"lib{_vorbisEncLib}.dylib"
-                    : RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
-                        ? $"lib{_vorbisEncLib}.so"
-                        : _vorbisEncLib);
+        const int _linuxOggLibVersion = 0;
+        const int _linuxVorbisLibVersion = 0;
+        const int _linuxVorbisEncLibVersion = 2;
 
         public bool Handle()
         {
@@ -97,13 +56,27 @@ namespace AudioWorks.Extensions.Vorbis
         static nint DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath) =>
             libraryName switch
             {
-                // On Linux, use the system-provided libogg
+                // On Linux, use the system-provided library
                 _oggLib => RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
                     ? NativeLibrary.Load($"{_oggLib}.so.{_linuxOggLibVersion}", assembly, searchPath)
-                    : NativeLibrary.Load(_oggLibFullPath),
-                _vorbisLib => NativeLibrary.Load(_vorbisLibFullPath),
-                _vorbisEncLib => NativeLibrary.Load(_vorbisEncLibFullPath),
+                    : NativeLibrary.Load(GetLibFullPath(_oggLib)),
+                _vorbisLib => RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                    ? NativeLibrary.Load($"{_vorbisLib}.so.{_linuxVorbisLibVersion}", assembly, searchPath)
+                    : NativeLibrary.Load(GetLibFullPath(_vorbisLib)),
+                _vorbisEncLib => RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                    ? NativeLibrary.Load($"{_vorbisEncLib}.so.{_linuxVorbisEncLibVersion}", assembly, searchPath)
+                    : NativeLibrary.Load(GetLibFullPath(RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? _vorbisLib : _vorbisEncLib)),
                 _ => nint.Zero
             };
+
+        static string GetLibFullPath(string libraryName) =>
+            Path.Combine(
+                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
+                "runtimes",
+                RuntimeInformation.RuntimeIdentifier,
+                "native",
+                RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
+                    ? $"lib{libraryName}.dylib"
+                    : libraryName);
     }
 }
