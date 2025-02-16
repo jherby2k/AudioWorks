@@ -92,7 +92,7 @@ jobs:
         dotnet-version: 8.0.x
 
     - name: Install library dependencies
-      run: sudo apt-get install --yes libflac8 libmp3lame0 libopus0 libebur128-1 libvorbisenc2
+      run: sudo apt-get install --yes libflac12t64 libmp3lame0 libopus0 libopusenc0 libebur128-1 libvorbisenc2
 
     - name: Restore Nuget dependencies
       run: dotnet restore AudioWorks/AudioWorks.sln
