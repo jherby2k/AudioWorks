@@ -1461,7 +1461,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "00502CA1BD9BE8137FCF75518D8EC5AC", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu)
+                    "E9053894172DBB87E7D13196DAB64E5A", // Vorbis 1.3.7 (Ubuntu)
                     "2BEFC8DFC5C86F305FBB1126CC2B2D0D", // Vorbis 1.3.7 (MacOS on Intel)
                     "42AE26A3799A5A52BD1B321F2AACED2C", // Vorbis 1.3.7 (MacOS on ARM)
                     "E6FBBBCE3847BC9C9EB45A89A7D7DDA6" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
@@ -1475,8 +1475,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "1A3784BD4B5A5F7324F0F19119EC8829", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
-                    "EFC7217481D26BB0828C6E4BE7D2D414", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
+                    "12848C43AB864D84D152EA23AEAE79C3", // Vorbis 1.3.7 (Ubuntu)
                     "E8B8006C5EC2A3D50555B85F367F4922", // Vorbis 1.3.7 (MacOS on Intel)
                     "C5121F731129DA41F0AEA13FFE368BF2", // Vorbis 1.3.7 (MacOS on ARM)
                     "62C6F8889AA6CBE4A80750EFF33D9FDA", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
@@ -1491,8 +1490,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "F041B26255F501A83ECD8C6C7EBCE55D", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
-                    "C2C9FE067F40025DDF41B868350F28A5", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
+                    "3D91DE53C8A8C95AAA12C795F6EFB1B6", // Vorbis 1.3.7 (Ubuntu)
                     "7757FDE8D2A84D6AA7406F9CA3D840D3", // Vorbis 1.3.7 (MacOS on Intel)
                     "C047BADC1EAC8CFE817AB6D0A9930567", // Vorbis 1.3.7 (MacOS on ARM)
                     "57E0997F13613A8C64306230A031D912" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
@@ -1506,8 +1504,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "AA03C92A5ED981484D17EA96D87B9331", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
-                    "BDCF3199D9F7457000B8D2BDFB757579", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
+                    "1C976845289D0EEFDA1A204359B97C86", // Vorbis 1.3.7 (Ubuntu)
                     "6D4108CB330E72038EA67B4D7B335AF9", // Vorbis 1.3.7 (MacOS on Intel)
                     "292C568DF9F16641A4052A7246481683", // Vorbis 1.3.7 (MacOS on ARM)
                     "A75601BC8CABA65EADD866211A1EF536" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
@@ -1521,8 +1518,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "5C6A8AC9FE704864E8ABC4F1654F65D7", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
-                    "F796497F75425D1928C66B88F3F24232", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
+                    "33E265E6265758F5A7B0A64DF5D72539", // Vorbis 1.3.7 (Ubuntu)
                     "239E03B5B24AA65E6335303DF50FB3A2", // Vorbis 1.3.7 (MacOS on Intel)
                     "80580AAF03164EC5206F330140978B8A", // Vorbis 1.3.7 (MacOS on ARM)
                     "5EF3AF9F00AB434F1A0A08482DE2C0DE" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
@@ -1536,8 +1532,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "9153B9D26FA0A06AD1515B5660055CA3", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
-                    "6DD98044F88A9535595D2B2D16D1A787", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
+                    "C63EBF41E7FEC502ABF7C16934A6D399", // Vorbis 1.3.7 (Ubuntu)
                     "D48672C42031B4419ADC0F420D503A47", // Vorbis 1.3.7 (MacOS on Intel)
                     "8DEB628166FB64F5A1CA05DEFA83D21F", // Vorbis 1.3.7 (MacOS on ARM)
                     "DB770934E3E57E832BFFA1C1C85E065F" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
@@ -1551,8 +1546,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "9A93109BCB1025791DCA8B63E9EFE3B6", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
-                    "3E40EB8AEB86CA5E3C76525E1E03D0FD", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
+                    "558A9BA3B4FAB6DE9BB990592F236D6E", // Vorbis 1.3.7 (Ubuntu)
                     "4721899D9DDAF7394B1A679F753F81CF", // Vorbis 1.3.7 (MacOS on Intel)
                     "5A8780449BAD236AA4DC1C4A02D780E0", // Vorbis 1.3.7 (MacOS on ARM)
                     "4E69AF464154872795B7AD87BA762870", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
@@ -1567,8 +1561,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "91ADF87CA8AE3D1669EA65D30BB083D8", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
-                    "19AF57343851DC074CDD23039C577BC2", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
+                    "B7F70C664E4644F9CE338110FECAD49B", // Vorbis 1.3.7 (Ubuntu)
                     "F6D78BE21567DD9244848160A2BD3889", // Vorbis 1.3.7 (MacOS on Intel)
                     "EE7EF3B2ED9DE0F2C21EFB29B08AEC0A", // Vorbis 1.3.7 (MacOS on ARM)
                     "AB097FDBAA6B8516129A17ED1C5BDC21" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
@@ -1582,8 +1575,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "E571643A52713B7696C5217696836ABC", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
-                    "C906B3F3D26E708013634529145B0724", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
+                    "F6D1AB2B773DEFF78A5E9081D5AE1BF2", // Vorbis 1.3.7 (Ubuntu)
                     "46F9042BE0BD04F4509E76B927DC0D71", // Vorbis 1.3.7 (MacOS on Intel)
                     "51F554DDF4CE99C21261FE78041BC901", // Vorbis 1.3.7 (MacOS on ARM)
                     "725AC9661D2A9AABE9508DEBEDA99BA9" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
@@ -1597,8 +1589,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "0AA286B6A6896263E9182853FFA2DD52", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
-                    "8A4B07CF14C30DF85BCBDCD91A597424", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
+                    "85E79650FAB8FA19E9389A8481897154", // Vorbis 1.3.7 (Ubuntu)
                     "AD172F94045E0970A71F8C439EEEA6C9", // Vorbis 1.3.7 (MacOS on Intel)
                     "24B2E2A64AB7B019B80EC00F038EF42E", // Vorbis 1.3.7 (MacOS on ARM)
                     "F25060DBEAB99B219CDB5EC54D37AD1C" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
@@ -1613,8 +1604,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = int.MinValue
                 },
                 [
-                    "ABC75E49AF00624847D66A441068199F", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
-                    "8EB74661170103394BB0737E102B978A", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
+                    "6228EC13C97965B94784DBAA85F45F43", // Vorbis 1.3.7 (Ubuntu)
                     "88C186B7AA3DC3A55CD430FFF8AADCB1", // Vorbis 1.3.7 (MacOS on Intel)
                     "762E8B1010603BE9EE62836B033AF317", // Vorbis 1.3.7 (MacOS on ARM)
                     "8224BAEA06E788DF37EFC01CCCD479C8" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
@@ -1629,8 +1619,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = int.MaxValue
                 },
                 [
-                    "9B499871B3788480810EB00DDF08054F", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
-                    "171C2CA1CDB8C004B15A4D1D6C2C7375", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
+                    "23A7A31647E7228018B1E191263A68F7", // Vorbis 1.3.7 (Ubuntu)
                     "74D8326F97A08EBCCC7FF754FE37464F", // Vorbis 1.3.7 (MacOS on Intel)
                     "5733DEA0D33C4EF12A9C7CB9D9971089", // Vorbis 1.3.7 (MacOS on ARM)
                     "C77B164D4E60453D679F35551FD3BF02" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
@@ -1646,8 +1635,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "F041B26255F501A83ECD8C6C7EBCE55D", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
-                    "C2C9FE067F40025DDF41B868350F28A5", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
+                    "3D91DE53C8A8C95AAA12C795F6EFB1B6", // Vorbis 1.3.7 (Ubuntu)
                     "7757FDE8D2A84D6AA7406F9CA3D840D3", // Vorbis 1.3.7 (MacOS on Intel)
                     "C047BADC1EAC8CFE817AB6D0A9930567", // Vorbis 1.3.7 (MacOS on ARM)
                     "57E0997F13613A8C64306230A031D912" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
@@ -1663,8 +1651,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "E3B0B6AE0805022FAA88EC50199E9D05", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
-                    "DFDCDBBC24E1DC2EE1411CE40D7DF3FE", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
+                    "43AB3A7CEC20702370DE422F9DD7E40C", // Vorbis 1.3.7 (Ubuntu)
                     "9DEF0BAB12400A25E06EA7CA8C32CCC6", // Vorbis 1.3.7 (MacOS on Intel)
                     "EAE93C9DE28D76AAEC6CB2F131B85728", // Vorbis 1.3.7 (MacOS on ARM)
                     "79C966C3D6728C49723640C0D7B9330B", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
@@ -1682,8 +1669,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "08A958E00D3797F33ABB2F098556DE43", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
-                    "EC722CED6079EC8609552686C911FFFE", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
+                    "4FD538B06DF0A26D6D2437EF19EACD12", // Vorbis 1.3.7 (Ubuntu)
                     "1C21FEE55AC987FE8ACA1865353DC833", // Vorbis 1.3.7 (MacOS on Intel)
                     "75B55AE3DD2871B490D5138066B3384E", // Vorbis 1.3.7 (MacOS on ARM)
                     "4B2B694BD0D42994F4A1911FBCB2ABF8", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
@@ -1700,7 +1686,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "749518EA6F95A089787DD414855DDBC0", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu)
+                    "03D504E716FAD14A824F721FFB77E50E", // Vorbis 1.3.7 (Ubuntu)
                     "68B19B197BDAFA73A45EBF67CD961CA9", // Vorbis 1.3.7 (MacOS on Intel)
                     "52F3F5EBE126FF751CF482FFB630E84E", // Vorbis 1.3.7 (MacOS on ARM)
                     "CAEAE4C932830A8C0A41BC5C79DC80D5", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
@@ -1717,8 +1703,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "0E233828AF5FD1010188AC4C63DF40BC", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
-                    "057D14E2F3F8C9F2FD44EE29222A7BD3", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
+                    "D17E9A4C98EBEC4D45DEE59015AF487F", // Vorbis 1.3.7 (Ubuntu)
                     "D37BB84F2008B1B467D54C618495C4CE", // Vorbis 1.3.7 (MacOS on Intel)
                     "1421DDEC0E70551ED9A4BC0A4902F534", // Vorbis 1.3.7 (MacOS on ARM)
                     "215FA0E953F4BB520A46A3B44B68CC92", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
@@ -1735,7 +1720,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "70ECB3839EC4DC7A7ECEA48241E2407D", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu)
+                    "087FD165DDF3DA8938E51EF1CE4C2FAA", // Vorbis 1.3.7 (Ubuntu)
                     "577FA5EA45715260728A894592EEAED9", // Vorbis 1.3.7 (MacOS on Intel)
                     "649206BD1B573A8478CFA3BACFC349F9", // Vorbis 1.3.7 (MacOS on ARM)
                     "84E389F08890621CF00AF8DD2D7C77DB", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
@@ -1753,7 +1738,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "70ECB3839EC4DC7A7ECEA48241E2407D", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu)
+                    "087FD165DDF3DA8938E51EF1CE4C2FAA", // Vorbis 1.3.7 (Ubuntu)
                     "577FA5EA45715260728A894592EEAED9", // Vorbis 1.3.7 (MacOS on Intel)
                     "649206BD1B573A8478CFA3BACFC349F9", // Vorbis 1.3.7 (MacOS on ARM)
                     "84E389F08890621CF00AF8DD2D7C77DB", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
@@ -1771,7 +1756,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "E67F4AB32814D96B1BA65652E5E11E56", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu)
+                    "DD3034237ED6F61F14C6DB2061CD902C", // Vorbis 1.3.7 (Ubuntu)
                     "D23564C9639B7C6490E59163C37B9C83", // Vorbis 1.3.7 (MacOS on Intel)
                     "1193BA985E76832529BBFAEA037858BF", // Vorbis 1.3.7 (MacOS on ARM)
                     "C84819FCFA2F25FCDB3E5490E54949B4", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
@@ -1788,8 +1773,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "F041B26255F501A83ECD8C6C7EBCE55D", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
-                    "C2C9FE067F40025DDF41B868350F28A5", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
+                    "3D91DE53C8A8C95AAA12C795F6EFB1B6", // Vorbis 1.3.7 (Ubuntu)
                     "7757FDE8D2A84D6AA7406F9CA3D840D3", // Vorbis 1.3.7 (MacOS on Intel)
                     "C047BADC1EAC8CFE817AB6D0A9930567", // Vorbis 1.3.7 (MacOS on ARM)
                     "57E0997F13613A8C64306230A031D912" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
@@ -1806,7 +1790,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "70ECB3839EC4DC7A7ECEA48241E2407D", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu)
+                    "087FD165DDF3DA8938E51EF1CE4C2FAA", // Vorbis 1.3.7 (Ubuntu)
                     "577FA5EA45715260728A894592EEAED9", // Vorbis 1.3.7 (MacOS on Intel)
                     "649206BD1B573A8478CFA3BACFC349F9", // Vorbis 1.3.7 (MacOS on ARM)
                     "84E389F08890621CF00AF8DD2D7C77DB", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
@@ -1823,8 +1807,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "F041B26255F501A83ECD8C6C7EBCE55D", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
-                    "C2C9FE067F40025DDF41B868350F28A5", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
+                    "3D91DE53C8A8C95AAA12C795F6EFB1B6", // Vorbis 1.3.7 (Ubuntu)
                     "7757FDE8D2A84D6AA7406F9CA3D840D3", // Vorbis 1.3.7 (MacOS on Intel)
                     "C047BADC1EAC8CFE817AB6D0A9930567", // Vorbis 1.3.7 (MacOS on ARM)
                     "57E0997F13613A8C64306230A031D912" // Vorbis 1.3.7 AoTuV + Lancer (Windows)
@@ -1840,7 +1823,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "39443EC16B23C3B5159CD199E83AD092", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu)
+                    "778AE9B25F7FA5598BE66FA576DF2DAF", // Vorbis 1.3.7 (Ubuntu)
                     "466D9535B74B53EA088F13FF9720268C", // Vorbis 1.3.7 (MacOS on Intel)
                     "810FAABD5DFA17D845BB3D294C8635BE", // Vorbis 1.3.7 (MacOS on ARM)
                     "805F62BDFE149898E21C9448F4335BAC", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
@@ -1857,8 +1840,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "7FF678CC731484D0B16E7FC01301EE7E", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on Intel)
-                    "9F4297E686E3A938051AB8C753476521", // Vorbis 1.3.7 AoTuV + Lancer (Ubuntu on AMD)
+                    "C98D63CFCCAD898FE5716DE13C7D52A5", // Vorbis 1.3.7 (Ubuntu)
                     "488A2980F20619FE0206CFBB1767CBAC", // Vorbis 1.3.7 (MacOS on Intel)
                     "70D18A8C9941807E7E09E5B76BCFFECA", // Vorbis 1.3.7 (MacOS on ARM)
                     "34BA39848B7D78D7FE1D2B30999DF6A9", // Vorbis 1.3.7 AoTuV + Lancer (Windows on Intel)
