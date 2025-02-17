@@ -42,7 +42,7 @@ jobs:
       shell: cmd
 
     - name: Run QAAC
-      run: \qaac_2.83\x64\qaac64.exe -v 128 --no-smart-padding -q 2 AudioWorks\tests\TestFiles\Valid\LPCM 16-bit 44100Hz Mono.wav" -o qaac64.m4a
+      run: qaac_2.83\x64\qaac64.exe -v 128 --no-smart-padding -q 2 "AudioWorks\tests\TestFiles\Valid\LPCM 16-bit 44100Hz Mono.wav" -o qaac64.m4a
 
     - name: Upload QAAC output
       uses: actions/upload-artifact@v4
