@@ -4,7 +4,6 @@ on:
   push:
     branches: [ "main", "dev" ]
     paths-ignore:
-      - 'azure-pipelines-*.yml'
       - .gitignore.txt
       - README.md
       - LICENSE
