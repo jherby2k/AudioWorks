@@ -51,6 +51,13 @@ jobs:
     - name: Test AudioWorks.Api
       run: dotnet test AudioWorks\tests\AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
+    - name: Upload coverage report artifacts
+      if: success() || failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: Encoding test output for Windows
+        path: 'AudioWorks\tests\AudioWorks.Api.Tests\bin\Release\net8.0\Output\Encode\Valid'
+
     - name: Test AudioWorks.Commands
       run: dotnet test AudioWorks\tests\AudioWorks.Commands.Tests\AudioWorks.Commands.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
@@ -103,6 +110,13 @@ jobs:
     - name: Test AudioWorks.Api
       run: dotnet test AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
+    - name: Upload coverage report artifacts
+      if: success() || failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: Encoding test output for Windows
+        path: 'AudioWorks/tests/AudioWorks.Api.Tests/bin/Release/net8.0/Output/Encode/Valid'
+
     - name: Test AudioWorks.Commands
       run: dotnet test AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
@@ -150,6 +164,13 @@ jobs:
 
     - name: Test AudioWorks.Api
       run: dotnet test AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
+
+    - name: Upload coverage report artifacts
+      if: success() || failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: Encoding test output for Windows
+        path: 'AudioWorks/tests/AudioWorks.Api.Tests/bin/Release/net8.0/Output/Encode/Valid'
 
     - name: Test AudioWorks.Commands
       run: dotnet test AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
