@@ -27,24 +27,12 @@ jobs:
         $ProgressPreference = 'SilentlyContinue'
         Invoke-WebRequest -Uri https://audioworks.blob.core.windows.net/prerequisites/AppleApplicationSupport.msi -OutFile AppleApplicationSupport.msi
         Invoke-WebRequest -Uri https://audioworks.blob.core.windows.net/prerequisites/AppleApplicationSupport64.msi -OutFile AppleApplicationSupport64.msi
-        Invoke-WebRequest -Uri https://github.com/nu774/qaac/releases/download/v2.83/qaac_2.83.zip  -OutFile qaac_2.83.zip
-        Expand-Archive qaac_2.83.zip -Verbose
-    
+
     - name: Install external dependencies
       run: |
         msiexec /i AppleApplicationSupport.msi /qb-
         msiexec /i AppleApplicationSupport64.msi /qb-
       shell: cmd
-
-    - name: Run QAAC
-      run: qaac_2.83\qaac_2.83\x64\qaac64.exe -v 128 --no-smart-padding -q 2 "AudioWorks\tests\TestFiles\Valid\LPCM 16-bit 44100Hz Mono.wav" -o qaac64.m4a
-      shell: cmd
-
-    - name: Upload QAAC output
-      uses: actions/upload-artifact@v4
-      with:
-        name: QAAC output for Windows
-        path: qaac64.m4a
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
@@ -102,13 +90,13 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
+    - name: Install library dependencies
+      run: sudo apt-get install --yes libflac12t64 libmp3lame0 libopus0 libopusenc0 libebur128-1 libvorbisenc2
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
-
-    - name: Install library dependencies
-      run: sudo apt-get install --yes libflac12t64 libmp3lame0 libopus0 libopusenc0 libebur128-1 libvorbisenc2
 
     - name: Build
       run: dotnet build AudioWorks/AudioWorks.sln --configuration Release
