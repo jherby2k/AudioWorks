@@ -393,8 +393,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
                 [
-                    "24C88B615C59F3054FF0A44C677987FA", // MacOS 11
-                    "50F7F27DBCCE5874118C3DE9B0F0306D"
+                    "24C88B615C59F3054FF0A44C677987FA", // MacOS
+                    "50F7F27DBCCE5874118C3DE9B0F0306D" // Windows
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -406,8 +406,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
                 [
-                    "04244493BA087CD69BAD989927BD1595", // MacOS 11
-                    "4A2E22037B18F3318920EA47BA76825C"
+                    "04244493BA087CD69BAD989927BD1595", // MacOS
+                    "4A2E22037B18F3318920EA47BA76825C" // Windows
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -419,8 +419,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
                 [
-                    "8522CA9ADFA8E200FDF5936AEF62EA43", // MacOS 11
-                    "C299C20C8EF4ED5B6B5664E6B81C3244"
+                    "8522CA9ADFA8E200FDF5936AEF62EA43", // MacOS
+                    "C299C20C8EF4ED5B6B5664E6B81C3244" // Windows
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -432,8 +432,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
                 [
-                    "1BB62FEE2C66905CFBB6FEC048BF9772", // MacOS 11
-                    "26442948986C55394D8AE960E66101C3"
+                    "1BB62FEE2C66905CFBB6FEC048BF9772", // MacOS
+                    "26442948986C55394D8AE960E66101C3" // Windows
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -445,8 +445,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
                 [
-                    "B55FDF0750DE71AA26781CA565222D05", // MacOS 11
-                    "40626FB4389C8CF567C0BF74621036BD"
+                    "B55FDF0750DE71AA26781CA565222D05", // MacOS
+                    "40626FB4389C8CF567C0BF74621036BD" // Windows
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -458,8 +458,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
                 [
-                    "8D7D0F67E43BECA4B9EE8AC0D552C01F", // MacOS 11
-                    "26B6F5A519F858AB695C5090E7B98451"
+                    "8D7D0F67E43BECA4B9EE8AC0D552C01F", // MacOS
+                    "26B6F5A519F858AB695C5090E7B98451" // Windows
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -471,8 +471,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
                 [
-                    "C88E17FEC4F9AE6C0F8ED21E423E60D3", // MacOS 11
-                    "C8E2DD6861F837C845A52A4C34523C85"
+                    "C88E17FEC4F9AE6C0F8ED21E423E60D3", // MacOS
+                    "C8E2DD6861F837C845A52A4C34523C85" // Windows
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -484,8 +484,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
                 [
-                    "826418694704C310B1FFFDE1D1874839", // MacOS 11
-                    "FAF8B7679D0B2446D83BA248CB491410"
+                    "826418694704C310B1FFFDE1D1874839", // MacOS
+                    "FAF8B7679D0B2446D83BA248CB491410" // Windows
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -497,8 +497,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
                 [
-                    "E170FAAB89D07557FC15F472715168A0", // MacOS 11
-                    "38406F719F6EF9E5F5D4E7862AA5C351"
+                    "E170FAAB89D07557FC15F472715168A0", // MacOS
+                    "38406F719F6EF9E5F5D4E7862AA5C351" // Windows
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -511,8 +511,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
                 [
-                    "B9F0B2D3BCB6FD612829084D8C42C2AA", // MacOS 11
-                    "2F72E377036957C669D858AEA26DF62F"
+                    "B9F0B2D3BCB6FD612829084D8C42C2AA", // MacOS
+                    "2F72E377036957C669D858AEA26DF62F" // Windows
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -525,8 +525,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ModificationTime"] = new DateTime(2018, 12, 1)
                 },
                 [
-                    "EF39C30FA5D1106F655DC55806D8CB44", // MacOS 11
-                    "F57326FFFD308ED69B83F7F451938D55"
+                    "EF39C30FA5D1106F655DC55806D8CB44", // MacOS
+                    "F57326FFFD308ED69B83F7F451938D55" // Windows
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -540,8 +540,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
                 [
-                    "04244493BA087CD69BAD989927BD1595", // MacOS 11
-                    "4A2E22037B18F3318920EA47BA76825C"
+                    "04244493BA087CD69BAD989927BD1595", // MacOS
+                    "4A2E22037B18F3318920EA47BA76825C" // Windows
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -555,8 +555,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
                 [
-                    "771DAECD27700570C845116672E7DACC", // MacOS 11
-                    "03305CCE91A686386908415EF35BDE0D"
+                    "771DAECD27700570C845116672E7DACC", // MacOS
+                    "03305CCE91A686386908415EF35BDE0D" // Windows
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -570,8 +570,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
                 [
-                    "DF3747EF579BFC71DC15CC0399E8F347", // MacOS 11
-                    "815E83D61745D4E117E12D31543C47BF"
+                    "DF3747EF579BFC71DC15CC0399E8F347", // MacOS
+                    "815E83D61745D4E117E12D31543C47BF" // Windows
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
 
