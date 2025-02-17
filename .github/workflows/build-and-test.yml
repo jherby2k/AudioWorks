@@ -110,7 +110,7 @@ jobs:
     - name: Test AudioWorks.Api
       run: dotnet test AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
-    - name: Upload coverage report artifacts
+    - name: Upload test output
       if: success() || failure()
       uses: actions/upload-artifact@v4
       with:
@@ -165,7 +165,7 @@ jobs:
     - name: Test AudioWorks.Api
       run: dotnet test AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
-    - name: Upload coverage report artifacts
+    - name: Upload test output
       if: success() || failure()
       uses: actions/upload-artifact@v4
       with:
