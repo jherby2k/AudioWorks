@@ -12,7 +12,7 @@ You will need [PowerShell 7.4+](https://aka.ms/powershell). "Windows PowerShell"
  
 #### On Windows:
 * For AAC and Apple Lossless (ALAC) support, you need Apple's Core Audio library:
-   * Go to [iTunes](https://www.apple.com/itunes), ignore the recommendation to visit the Windows Store, scroll down to *Looking for other versions* and download iTunes64Setup.exe.
+   * Go to [the iTunes download page](https://www.apple.com/itunes), ignore the recommendation to visit the Windows Store, scroll down to *Looking for other versions* and download iTunes64Setup.exe.
    * Either install iTunes, or just extract the required libraries via [these instructions](https://github.com/nu774/makeportable).
 
 #### On Ubuntu 24.04 (other distros should also work, but are untested):
