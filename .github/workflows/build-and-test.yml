@@ -56,7 +56,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Test output for Windows
-        path: 'AudioWorks\tests\AudioWorks.Api.Tests\bin\Release\net8.0\Output'
+        path: 'AudioWorks\tests\AudioWorks.Api.Tests\bin\Release\net8.0\Output\Encode\Valid'
 
     - name: Test AudioWorks.Commands
       run: dotnet test AudioWorks\tests\AudioWorks.Commands.Tests\AudioWorks.Commands.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
@@ -115,7 +115,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Test output for Ubuntu
-        path: 'AudioWorks/tests/AudioWorks.Api.Tests/bin/Release/net8.0/Output'
+        path: 'AudioWorks/tests/AudioWorks.Api.Tests/bin/Release/net8.0/Output/Encode/Valid'
 
     - name: Test AudioWorks.Commands
       run: dotnet test AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
@@ -170,7 +170,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Test output for Mac
-        path: 'AudioWorks/tests/AudioWorks.Api.Tests/bin/Release/net8.0/Output'
+        path: 'AudioWorks/tests/AudioWorks.Api.Tests/bin/Release/net8.0/Output/Encode/Valid'
 
     - name: Test AudioWorks.Commands
       run: dotnet test AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
