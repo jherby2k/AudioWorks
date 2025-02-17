@@ -1334,8 +1334,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "D22BBFDDCB298A427057253C4E833057", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
-                    "83EAAF39634A97A730D4359E23CEE33F" // Opus 1.5.2 (MacOS and Windows)
+                    "D22BBFDDCB298A427057253C4E833057", // Opus 1.3.1 (Ubuntu 22.04)
+                    "E5F10FBB8E805E7713EB907CF46A0BAD", // Opus 1.4.0 (Ubuntu 24.04)
+                    "83EAAF39634A97A730D4359E23CEE33F" // Opus 1.5.2
                 ]
             ),
 
@@ -1359,8 +1360,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
-                    "A298D22F719E0B950B31310E05BC1B66" // Opus 1.5.2 (MacOS and Windows)
+                    "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (Ubuntu 22.04)
+                    "948794A7B0122E3E9DB7CCB2A5846552", // Opus 1.4.0 (Ubuntu 24.04)
+                    "A298D22F719E0B950B31310E05BC1B66" // Opus 1.5.2
                 ]
             ),
 
@@ -1384,8 +1386,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
-                    "A298D22F719E0B950B31310E05BC1B66" // Opus 1.5.2 (MacOS and Windows)
+                    "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (Ubuntu 22.04)
+                    "948794A7B0122E3E9DB7CCB2A5846552", // Opus 1.4.0 (Ubuntu 24.04)
+                    "A298D22F719E0B950B31310E05BC1B66" // Opus 1.5.2
                 ]
             ),
 
@@ -1409,8 +1412,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "166F1DD0C71E2CCCF226157A34791E1B", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
-                    "8F3233D946C369EA87132A3EDB50071E" // Opus 1.5.2 (MacOS and Windows)
+                    "166F1DD0C71E2CCCF226157A34791E1B", // Opus 1.3.1 (Ubuntu 22.04)
+                    "9E9DA2F8EC05F9E6F6359997066957A9", // Opus 1.4.0 (Ubuntu 24.04)
+                    "8F3233D946C369EA87132A3EDB50071E" // Opus 1.5.2
                 ]
             ),
 
@@ -1434,8 +1438,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "8EA7FC13A2F214CADF3A1D447EF5CB65", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
-                    "41253CA69E1D124E2CAC11B5D945EC67" // Opus 1.5.2 (MacOS and Windows)
+                    "8EA7FC13A2F214CADF3A1D447EF5CB65", // Opus 1.3.1 (Ubuntu 22.04)
+                    "8ABDE938610E273AD1D4C27061D4FC95", // Opus 1.4.0 (Ubuntu 24.04)
+                    "41253CA69E1D124E2CAC11B5D945EC67" // Opus 1.5.2
                 ]
             ),
 
@@ -1460,8 +1465,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "BB50765E7DB79BDEADFC81E771101FD7", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
-                    "56AD6E2C6333F2A033914E9CF6FBA6CB" // Opus 1.5.2 (MacOS and Windows)
+                    "BB50765E7DB79BDEADFC81E771101FD7", // Opus 1.3.1 (Ubuntu 22.04)
+                    "5693A0AB09AF57652430067D0EF88EF8", // Opus 1.4.0 (Ubuntu 24.04)
+                    "56AD6E2C6333F2A033914E9CF6FBA6CB" // Opus 1.5.2
                 ]
             ),
 
@@ -1472,8 +1478,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "367DB09F8408583579F918061FCB6322", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
-                    "CF85C82F03F478E096F1248F792D0B1E" // Opus 1.5.2 (MacOS and Windows)
+                    "367DB09F8408583579F918061FCB6322", // Opus 1.3.1 (Ubuntu 22.04)
+                    "D35A7D280213995902B314BB911069E7", // Opus 1.4.0 (Ubuntu 24.04)
+                    "CF85C82F03F478E096F1248F792D0B1E" // Opus 1.5.2
                 ]
             ),
 
@@ -1484,8 +1491,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "22D33DFB735C5B7805AB26C7A04CDA86", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
-                    "507E009E734B28534500E143CEA74EFD" // Opus 1.5.2 (MacOS and Windows)
+                    "22D33DFB735C5B7805AB26C7A04CDA86", // Opus 1.3.1 (Ubuntu 22.04)
+                    "1EEAB4BD3BB3EFD3BBEABBF84051C89B", // Opus 1.4.0 (Ubuntu 24.04)
+                    "507E009E734B28534500E143CEA74EFD" // Opus 1.5.2
                 ]
             ),
 
@@ -1496,9 +1504,10 @@ namespace AudioWorks.TestUtilities.DataSources
                 "PNG 24-bit 1280 x 935.png",
                 [],
                 [
-                    "F152E6100DC6002C78DDCC6DF83D8880", // Opus 1.3.1 (Ubuntu 20.04 and 22.04)
-                    "E7E9C4686F7B92FC843FEDA3522C961B", // Opus 1.5.2 (MacOS and Windows on Intel)
-                    "14460A58ACC0BF9ED0BBC2122B6557D1" // Opus 1.5.2 (MacOS on ARM)
+                    "F152E6100DC6002C78DDCC6DF83D8880", // Opus 1.3.1 (Ubuntu 22.04)
+                    "171BFABBE94A1AC2B93FA9656F03F8AA", // Opus 1.4.0 (Ubuntu 24.04)
+                    "E7E9C4686F7B92FC843FEDA3522C961B", // Opus 1.5.2 (Intel)
+                    "14460A58ACC0BF9ED0BBC2122B6557D1" // Opus 1.5.2 (ARM)
                 ]
             ),
 
@@ -1509,8 +1518,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 "JPEG 24-bit 1280 x 935.jpg",
                 [],
                 [
-                    "CABF32D411EA5FA9458A79B6DC2C2D69", // Opus 1.3.1 (Ubuntu 20.04)
-                    "EDBD61E6DED683084D781F9F3C578D25" // Opus 1.5.2 (MacOS and Windows)
+                    "CABF32D411EA5FA9458A79B6DC2C2D69", // Opus 1.3.1 (Ubuntu 22.04)
+                    "12FB32A06A03385E67764158F2809835", // Opus 1.4.0 (Ubuntu 24.04)
+                    "EDBD61E6DED683084D781F9F3C578D25" // Opus 1.5.2
                 ]
             )
 
