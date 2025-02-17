@@ -124,7 +124,6 @@ jobs:
 
     - name: Publish coverage in build summary
       run: cat coveragereport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
-      shell: bash
 
 
   mac:
@@ -173,4 +172,3 @@ jobs:
 
     - name: Publish coverage in build summary
       run: cat coveragereport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
-      shell: bash
