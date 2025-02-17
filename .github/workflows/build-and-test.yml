@@ -22,9 +22,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Print CPU information
-      run: lscpu
-      shell: bash
+    - uses: kenchan0130/actions-system-info@master
+      id: system-info
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
