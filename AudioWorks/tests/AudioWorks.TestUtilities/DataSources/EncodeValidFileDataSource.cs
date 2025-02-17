@@ -159,7 +159,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "42070347011D5067A9D962DA3237EF63", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "5C1655ACED0E208FC231C92C678FD87B" // FLAC 1.4.3
+                    "5C1655ACED0E208FC231C92C678FD87B", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "97F11C51935BE000AA567BBE7016FC77" // FLAC 1.5.0
                 ]
             ),
             new(
@@ -168,7 +169,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "0771EF09959F087FACE194A4479F5107", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "0B2A54ACAA983961889A83EF85942C5D" // FLAC 1.4.3
+                    "0B2A54ACAA983961889A83EF85942C5D", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "461AF682423E65561DE50B9962A8B6C6" // FLAC 1.5.0
                 ]
             ),
             new(
@@ -177,7 +179,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "F86AA899D869835AB05C17699F7F30DC" // FLAC 1.4.3
+                    "F86AA899D869835AB05C17699F7F30DC", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "F2330345274ED2E624338FF7C168F19D" // FLAC 1.5.0
                 ]
             ),
             new(
@@ -186,7 +189,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "F0F075E05A3AFB67403CCF373932BCCA", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "4CF8F4F9A26506718F891820268284DD" // FLAC 1.4.3
+                    "4CF8F4F9A26506718F891820268284DD", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "38104D38BB21F1BCE802DE668DA3AFBA" // FLAC 1.5.0
                 ]
             ),
             new(
@@ -195,7 +199,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "D3A7B834DCE97F0709AEFCA45A24F5B6", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "99355C1C3DD53802AB84425043CF1831" // FLAC 1.4.3
+                    "99355C1C3DD53802AB84425043CF1831", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "638690EE580F50587670316311EDA42B" // FLAC 1.5.0
                 ]
             ),
             new(
@@ -204,7 +209,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "10F6AC75659ECFE81D3C07D8D3074538", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "F7A6A7DC6610B277E302387A9E38FB32" // FLAC 1.4.3
+                    "F7A6A7DC6610B277E302387A9E38FB32", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "66172FD30E61A7C8F238FBAB63C35F84" // FLAC 1.5.0
                 ]
             ),
             new(
@@ -213,7 +219,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "FCBAB8A8C261456CF6F87E603B237426", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "2ED7D0E99EA9072FB4415FF1510D3056" // FLAC 1.4.3
+                    "2ED7D0E99EA9072FB4415FF1510D3056", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "F688C60BF5CBAEE877B5A740C869CCCE" // FLAC 1.5.0
                 ]
             ),
             new(
@@ -222,7 +229,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "2F2F341FEECB7842F7FA9CE6CB110C67", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "D75493F3FFF379D7A14F5B0BFA5AFB8A" // FLAC 1.4.3
+                    "D75493F3FFF379D7A14F5B0BFA5AFB8A", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "F5C01B16C0AF727E9A8216A38B22C4C6" // FLAC 1.5.0
                 ]
             ),
             new(
@@ -231,7 +239,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "A48820F5E30B5C21A881E01209257E21", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "A7E0AA5D079DCBF97B3C03B76FA2E645" // FLAC 1.4.3
+                    "A7E0AA5D079DCBF97B3C03B76FA2E645", // FLAC 1.4.3  (Ubuntu 24.04)
+                    "A52137CCA928D57F77F766045990EDC1" // FLAC 1.5.0
                 ]
             ),
             new(
@@ -240,7 +249,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "D90693A520FA14AC987272ACB6CD8996", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "1ED46D08800E000E7D4FFD6B3E776C2C" // FLAC 1.4.3
+                    "1ED46D08800E000E7D4FFD6B3E776C2C", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "593F01D46F19AD1CA640A9A399F43D42" // FLAC 1.5.0
                 ]
             ),
             new(
@@ -253,7 +263,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 },
                 [
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "F86AA899D869835AB05C17699F7F30DC" // FLAC 1.4.3
+                    "F86AA899D869835AB05C17699F7F30DC", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "F2330345274ED2E624338FF7C168F19D" // FLAC 1.5.0
                 ]
             ),
             new(
@@ -266,7 +277,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 },
                 [
                     "A58022B124B427771041A96F65D8DF21", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "FED4E3CA9AB4BF04C528E16D6D19EB44" // FLAC 1.4.3
+                    "FED4E3CA9AB4BF04C528E16D6D19EB44", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "9B411E686F79D1B717C578E0C69D2EF0" // FLAC 1.5.0
                 ]
             ),
             new(
@@ -279,7 +291,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 },
                 [
                     "F341E56E68A0A168B779A4EBFD41422D", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "3C563D2DAF004BF8C01139C6D5A7CA8F" // FLAC 1.4.3
+                    "3C563D2DAF004BF8C01139C6D5A7CA8F", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "FF30446E3088C154E0AACFC2A673CC36" // FLAC 1.5.0
                 ]
             ),
             new(
@@ -292,7 +305,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 },
                 [
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "F86AA899D869835AB05C17699F7F30DC" // FLAC 1.4.3
+                    "F86AA899D869835AB05C17699F7F30DC", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "F2330345274ED2E624338FF7C168F19D" // FLAC 1.5.0
                 ]
             ),
             new(
@@ -305,7 +319,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 },
                 [
                     "986464F3AC48E00D00B8ECF3AF3FD6BC", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "46D403F89E109773996223F339570D74" // FLAC 1.4.3
+                    "46D403F89E109773996223F339570D74", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "6EEB0FA0BBFC98829CB111381FB8E309" // FLAC 1.5.0
                 ]
             ),
             new(
@@ -318,7 +333,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 },
                 [
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "F86AA899D869835AB05C17699F7F30DC" // FLAC 1.4.3
+                    "F86AA899D869835AB05C17699F7F30DC", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "F2330345274ED2E624338FF7C168F19D" // FLAC 1.5.0
                 ]
             ),
             new(
@@ -331,7 +347,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 },
                 [
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "F86AA899D869835AB05C17699F7F30DC" // FLAC 1.4.3
+                    "F86AA899D869835AB05C17699F7F30DC", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "F2330345274ED2E624338FF7C168F19D" // FLAC 1.5.0
                 ]
             ),
             new(
@@ -344,7 +361,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 },
                 [
                     "662592BD8B3853B6FEC4E188F7D0F246", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "A1A977792BBC0D92B12674A42AAE614F" // FLAC 1.4.3
+                    "A1A977792BBC0D92B12674A42AAE614F", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "05FBB295EF9AF8A9EA035E4E3200FC49" // FLAC 1.5.0
                 ]
             ),
             new(
@@ -357,7 +375,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 },
                 [
                     "455753A51355171BF22CCC78647235B4", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "B74DC40E795B96904E4DE801F98F1162" // FLAC 1.4.3
+                    "B74DC40E795B96904E4DE801F98F1162", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "7ED8352862D82E5138639385C96DA321" // FLAC 1.5.0
                 ]
             ),
 
