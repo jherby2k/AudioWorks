@@ -22,9 +22,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: CPU info
-      run: WMIC CPU Get /Format:List
-
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -35,12 +32,23 @@ jobs:
         $ProgressPreference = 'SilentlyContinue'
         Invoke-WebRequest -Uri https://audioworks.blob.core.windows.net/prerequisites/AppleApplicationSupport.msi -OutFile AppleApplicationSupport.msi
         Invoke-WebRequest -Uri https://audioworks.blob.core.windows.net/prerequisites/AppleApplicationSupport64.msi -OutFile AppleApplicationSupport64.msi
+        Invoke-WebRequest -Uri https://github.com/nu774/qaac/releases/download/v2.83/qaac_2.83.zip  -OutFile qaac_2.83.zip
+        Expand-Archive qaac_2.83.zip
     
     - name: Install external dependencies
       run: |
         msiexec /i AppleApplicationSupport.msi /qb-
         msiexec /i AppleApplicationSupport64.msi /qb-
       shell: cmd
+
+    - name: Run QAAC
+      run: \qaac_2.83\x64\qaac64.exe -v 128 --no-smart-padding -q 2 AudioWorks\tests\TestFiles\Valid\LPCM 16-bit 44100Hz Mono.wav" -o qaac64.m4a
+
+    - name: Upload QAAC output
+      uses: actions/upload-artifact@v4
+      with:
+        name: QAAC output for Windows
+        path: qaac64.m4a
 
     - name: Build
       run: dotnet build AudioWorks\AudioWorks.sln --configuration Release
@@ -54,7 +62,7 @@ jobs:
     - name: Test AudioWorks.Api
       run: dotnet test AudioWorks\tests\AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
-    - name: Upload coverage report artifacts
+    - name: Upload test output
       if: success() || failure()
       uses: actions/upload-artifact@v4
       with:
