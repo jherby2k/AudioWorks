@@ -91,6 +91,9 @@ jobs:
       with:
         dotnet-version: 8.0.x
 
+    - name: Print CPU information
+      run: lscpu
+
     - name: Install library dependencies
       run: sudo apt-get install --yes libflac12t64 libmp3lame0 libopus0 libopusenc0 libebur128-1 libvorbisenc2
 
