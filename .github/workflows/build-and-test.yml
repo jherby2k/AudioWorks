@@ -39,11 +39,8 @@ jobs:
         msiexec /i AppleApplicationSupport64.msi /qb-
       shell: cmd
 
-    - name: Restore Nuget dependencies
-      run: dotnet restore AudioWorks\AudioWorks.sln
-
     - name: Build
-      run: dotnet build AudioWorks\AudioWorks.sln --configuration Release --no-restore
+      run: dotnet build AudioWorks\AudioWorks.sln --configuration Release
 
     - name: Test AudioWorks.Common
       run: dotnet test AudioWorks\tests\AudioWorks.Common.Tests\AudioWorks.Common.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
@@ -94,11 +91,8 @@ jobs:
     - name: Install library dependencies
       run: sudo apt-get install --yes libflac12t64 libmp3lame0 libopus0 libopusenc0 libebur128-1 libvorbisenc2
 
-    - name: Restore Nuget dependencies
-      run: dotnet restore AudioWorks/AudioWorks.sln
-
     - name: Build
-      run: dotnet build AudioWorks/AudioWorks.sln --configuration Release --no-restore
+      run: dotnet build AudioWorks/AudioWorks.sln --configuration Release
 
     - name: Test AudioWorks.Common
       run: dotnet test AudioWorks/tests/AudioWorks.Common.Tests/AudioWorks.Common.Tests.csproj --configuration Release --collect:"XPlat Code Coverage"
@@ -146,11 +140,8 @@ jobs:
       with:
         dotnet-version: 8.0.x
 
-    - name: Restore Nuget dependencies
-      run: dotnet restore AudioWorks/AudioWorks.sln
-
     - name: Build
-      run: dotnet build AudioWorks/AudioWorks.sln --configuration Release --no-restore
+      run: dotnet build AudioWorks/AudioWorks.sln --configuration Release
 
     - name: Test AudioWorks.Common
       run: dotnet test AudioWorks/tests/AudioWorks.Common.Tests/AudioWorks.Common.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
