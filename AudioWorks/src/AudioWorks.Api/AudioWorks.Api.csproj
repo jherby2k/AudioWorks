@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Icon.png" PackagePath="\" CopyToOutputDirectory="PreserveNewest" Pack="true" />
+    <None Include="Icon.png" PackagePath="\" Pack="true" />
     <None Include="Readme.md" PackagePath="\" Pack="true"/>
     <ProjectReference Include="..\AudioWorks.Extensibility\AudioWorks.Extensibility.csproj" />
     <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.Apple\AudioWorks.Extensions.Apple.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" Targets="Build;DebugSymbolsProjectOutputGroup" />

@@ -40,7 +40,7 @@ foreach ($dir in Get-ChildItem -Path $(Split-Path -Path $ProjectDir -Parent | Jo
 }
 
 Copy-Item -Path $(Join-Path -Path $Destination -ChildPath $Framework | Join-Path -ChildPath *) -Destination $Destination -Include "*.psd1", "*.psm1", "*.ps1xml", "COPYING" -ErrorAction Stop
-Remove-Item -Path $(Join-Path -Path $Destination -ChildPath $Framework | Join-Path -ChildPath *) -Include "*.psd1", "*.psm1", "*.ps1xml", "*.xml", "*.pdb", "*.deps.json", "COPYING", "Icon.png" -ErrorAction Stop
+Remove-Item -Path $(Join-Path -Path $Destination -ChildPath $Framework | Join-Path -ChildPath *) -Include "*.psd1", "*.psm1", "*.ps1xml", "*.xml", "*.pdb", "*.deps.json", "COPYING" -ErrorAction Stop
 
 Write-Host "Generating help file..."
 
