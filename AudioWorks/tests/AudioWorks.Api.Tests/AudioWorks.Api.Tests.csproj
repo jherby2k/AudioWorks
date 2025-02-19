@@ -2,6 +2,16 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\AudioWorks.Api\AudioWorks.Api.csproj" />
+    <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.Apple\AudioWorks.Extensions.Apple.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" Targets="Build;DebugSymbolsProjectOutputGroup" />
+    <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.Flac\AudioWorks.Extensions.Flac.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" Targets="Build;DebugSymbolsProjectOutputGroup" />
+    <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.Id3\AudioWorks.Extensions.Id3.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" Targets="Build;DebugSymbolsProjectOutputGroup" />
+    <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.Lame\AudioWorks.Extensions.Lame.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" Targets="Build;DebugSymbolsProjectOutputGroup" />
+    <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.Mp3\AudioWorks.Extensions.Mp3.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" Targets="Build;DebugSymbolsProjectOutputGroup" />
+    <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.Mp4\AudioWorks.Extensions.Mp4.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" Targets="Build;DebugSymbolsProjectOutputGroup" />
+    <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.Opus\AudioWorks.Extensions.Opus.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" Targets="Build;DebugSymbolsProjectOutputGroup" />
+    <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.ReplayGain\AudioWorks.Extensions.ReplayGain.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" Targets="Build;DebugSymbolsProjectOutputGroup" />
+    <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.Vorbis\AudioWorks.Extensions.Vorbis.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" Targets="Build;DebugSymbolsProjectOutputGroup" />
+    <ProjectReference Include="..\..\src\Extensions\AudioWorks.Extensions.Wave\AudioWorks.Extensions.Wave.csproj" ReferenceOutputAssembly="false" OutputItemType="content" CopyToOutputDirectory="PreserveNewest" Targets="Build;DebugSymbolsProjectOutputGroup" />
     <ProjectReference Include="..\AudioWorks.TestUtilities\AudioWorks.TestUtilities.csproj" />
     <PackageReference Include="AutoMapper" />
     <PackageReference Include="coverlet.collector" PrivateAssets="all" />
