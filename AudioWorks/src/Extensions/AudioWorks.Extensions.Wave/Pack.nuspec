@@ -12,7 +12,7 @@
     <readme>Readme.md</readme>
     <dependencies>
       <group targetFramework="net8.0">
-        <dependency id="AudioWorks.Extensibility" version="2.0.0" exclude="Build,Analyzers" />
+        <dependency id="AudioWorks.Extensibility" version="2.0.0" />
       </group>
     </dependencies>
     <contentFiles>
