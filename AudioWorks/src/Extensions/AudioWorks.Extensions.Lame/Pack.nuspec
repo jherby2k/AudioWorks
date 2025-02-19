@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>$Id$</id>
+    <version>$Version$</version>
+    <authors>$Authors$</authors>
+    <description>$Description$</description>
+    <copyright>$copyright$</copyright>
+    <license type="expression">$license$</license>
+    <projectUrl>$ProjectUrl$</projectUrl>
+    <tags>$Tags$</tags>
+    <readme>Readme.md</readme>
+    <dependencies>
+      <group targetFramework="net8.0">
+        <dependency id="AudioWorks.Extensibility" version="2.0.0" exclude="Build,Analyzers" />
+        <dependency id="AudioWorks.Extensions.Id3" version="2.0.0" exclude="Build,Analyzers" />
+        <dependency id="AudioWorks.Extensions.Mp3" version="2.0.0" exclude="Build,Analyzers" />
+        <dependency id="AudioWorks.Extensions.ReplayGain" version="2.0.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <contentFiles>
+      <files include="any/net8.0/$id$.dll" buildAction="Content" copyToOutput="true" />
+    </contentFiles>
+  </metadata>
+  <files>
+    <file src="Readme.md" />
+    <file src="..\..\artifacts\bin\$id$\$configuration$\$id$.dll" target="content" />
+    <file src="..\..\artifacts\bin\$id$\$configuration$\$id$.dll" target="contentFiles/any/net8.0" />
+    <file src="..\..\artifacts\bin\$id$\$configuration$\runtimes\**" target="runtimes" />
+  </files>
+</package>

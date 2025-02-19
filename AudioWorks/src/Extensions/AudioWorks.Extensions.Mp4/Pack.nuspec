@@ -12,6 +12,7 @@
     <readme>Readme.md</readme>
     <dependencies>
       <group targetFramework="net8.0">
+        <dependency id="System.Text.Encoding.CodePages" version="8.0.0" exclude="Build,Analyzers" />
         <dependency id="AudioWorks.Extensibility" version="2.0.0" exclude="Build,Analyzers" />
       </group>
     </dependencies>
@@ -20,8 +21,8 @@
     </contentFiles>
   </metadata>
   <files>
-    <file src="$id$\Readme.md" />
-    <file src="..\artifacts\bin\$id$\$configuration$\$id$.dll" target="content" />
-    <file src="..\artifacts\bin\$id$\$configuration$\$id$.dll" target="contentFiles/any/net8.0" />
+    <file src="Readme.md" />
+    <file src="..\..\artifacts\bin\$id$\$configuration$\$id$.dll" target="content" />
+    <file src="..\..\artifacts\bin\$id$\$configuration$\$id$.dll" target="contentFiles/any/net8.0" />
   </files>
 </package>

@@ -21,8 +21,8 @@
     </contentFiles>
   </metadata>
   <files>
-    <file src="$id$\Readme.md" />
-    <file src="..\artifacts\bin\$id$\$configuration$\$id$.dll" target="content" />
-    <file src="..\artifacts\bin\$id$\$configuration$\$id$.dll" target="contentFiles/any/net8.0" />
+    <file src="Readme.md" />
+    <file src="..\..\artifacts\bin\$id$\$configuration$\$id$.dll" target="content" />
+    <file src="..\..\artifacts\bin\$id$\$configuration$\$id$.dll" target="contentFiles/any/net8.0" />
   </files>
 </package>
