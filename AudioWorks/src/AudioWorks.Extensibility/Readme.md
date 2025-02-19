@@ -1,6 +1,6 @@
 ## About
 
-This is a dependency of AudioWorks, a is cross-platform, multi-format audio conversion and tagging suite.
+This is a dependency of AudioWorks, a cross-platform, multi-format audio conversion and tagging suite.
 
 You should normally consume [AudioWorks.Api](https://www.nuget.org/packages/AudioWorks.Api/) instead of this package directly.
 

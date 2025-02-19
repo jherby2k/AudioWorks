@@ -1,8 +1,8 @@
 ## About
 
-This is a dependency of AudioWorks, a is cross-platform, multi-format audio conversion and tagging suite.
+Provides Wave audio encoding and decoding functionality for AudioWorks.
 
-You should normally consume [AudioWorks.Api](https://www.nuget.org/packages/AudioWorks.Api/) instead of this package directly.
+You should normally consume [AudioWorks.Api](https://www.nuget.org/packages/AudioWorks.Api/) in addition to this package.
 
 More documentation is available on [the GitHub repository](https://github.com/jherby2k/AudioWorks).
 
@@ -13,6 +13,10 @@ The main types provided by this library are:
 * `WaveAudioDecoder`
 * `WaveAudioInfoDecoder`
 * `WaveAudioEncoder`
+
+## Related Packages
+
+* The AudioWorks API: [AudioWorks.Api](https://www.nuget.org/packages/AudioWorks.Api/)
 
 ## Feedback
 

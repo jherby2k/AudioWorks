@@ -1,8 +1,8 @@
 ## About
 
-This is a dependency of AudioWorks, a is cross-platform, multi-format audio conversion and tagging suite.
+Provides MP3 reading functionality for AudioWorks.
 
-You should normally consume [AudioWorks.Api](https://www.nuget.org/packages/AudioWorks.Api/) instead of this package directly.
+You should normally consume [AudioWorks.Api](https://www.nuget.org/packages/AudioWorks.Api/) in addition to this package.
 
 More documentation is available on [the GitHub repository](https://github.com/jherby2k/AudioWorks).
 
@@ -11,6 +11,12 @@ More documentation is available on [the GitHub repository](https://github.com/jh
 The main types provided by this library are:
 
 * `Mp3AudioInfoDecoder`
+
+## Related Packages
+
+* The AudioWorks API: [AudioWorks.Api](https://www.nuget.org/packages/AudioWorks.Api/)
+* ID3 metadata: [AudioWorks.Extensions.Id3](https://www.nuget.org/packages/AudioWorks.Extensions.Id3/)
+* MP3 encoding: [AudioWorks.Extensions.Lame](https://www.nuget.org/packages/AudioWorks.Extensions.Lame/)
 
 ## Feedback
 
