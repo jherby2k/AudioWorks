@@ -8,7 +8,7 @@
     <NuspecFile>..\PackWithRuntimes.nuspec</NuspecFile>
     <NuspecProperties>$(NuspecProperties);Configuration=$(Configuration.ToLowerInvariant())</NuspecProperties>
     <NuspecProperties>$(NuspecProperties);Id=$(MSBuildProjectName)</NuspecProperties>
-    <NuspecProperties>$(NuspecProperties);Version=$(FileVersion)</NuspecProperties>
+    <NuspecProperties>$(NuspecProperties);Version=$(VersionPrefix)</NuspecProperties>
     <NuspecProperties>$(NuspecProperties);Description=$(Description)</NuspecProperties>
   </PropertyGroup>
 
