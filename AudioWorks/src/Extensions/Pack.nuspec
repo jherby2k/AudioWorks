@@ -9,6 +9,7 @@
     <license type="expression">$license$</license>
     <projectUrl>$ProjectUrl$</projectUrl>
     <tags>$Tags$</tags>
+    <readme>Readme.md</readme>
     <dependencies>
       <group targetFramework="net8.0">
         <dependency id="AudioWorks.Extensibility" version="2.0.0" exclude="Build,Analyzers" />
@@ -19,6 +20,7 @@
     </contentFiles>
   </metadata>
   <files>
+    <file src="$id$\Readme.md" />
     <file src="..\artifacts\bin\$id$\$configuration$\$id$.dll" target="content" />
     <file src="..\artifacts\bin\$id$\$configuration$\$id$.dll" target="contentFiles/any/net8.0" />
   </files>

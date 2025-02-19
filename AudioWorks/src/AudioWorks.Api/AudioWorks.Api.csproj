@@ -7,10 +7,12 @@
     <Description>The primary AudioWorks API. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
     <PackageIcon>Icon.png</PackageIcon>
     <PackageTags>music encode decode convert export tag cover art FLAC MP3 ID3 Lame MP4 AAC Apple ALAC Ogg Vorbis Opus ReplayGain EBUR128</PackageTags>
+    <PackageReadmeFile>Readme.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="Icon.png" PackagePath="\" CopyToOutputDirectory="PreserveNewest" Pack="true" />
+    <None Include="Readme.md" PackagePath="\" Pack="true"/>
     <ProjectReference Include="..\AudioWorks.Extensibility\AudioWorks.Extensibility.csproj" />
     <PackageReference Include="AudioWorks.Extensibility" Version="2.0.0" />
     <PackageReference Include="System.Threading.Tasks.Dataflow" Version="8.0.1" />

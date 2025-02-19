@@ -5,9 +5,11 @@
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <Description>The AudioWorks extension API. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
+    <PackageReadmeFile>Readme.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Readme.md" PackagePath="\" Pack="true"/>
     <ProjectReference Include="..\AudioWorks.Common\AudioWorks.Common.csproj" />
     <PackageReference Include="AudioWorks.Common" Version="2.0.0" />
     <PackageReference Include="System.Composition" Version="8.0.0" />
