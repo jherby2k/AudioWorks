@@ -8,14 +8,45 @@ More documentation is available on [the GitHub repository](https://github.com/jh
 
 ## How to Use
 
+### Encode a file
+
 ```csharp
 var flacFiles = new DirectoryInfo($"path to an album")
     .GetFiles("*.flac")
     .Select(file => new TaggedAudioFile(file.FullName));
 
-# Export the files to Opus format
-var opusEncoder = new AudioFileEncoder("Opus");
+# Export the files to Opus format, organized into directories and named according to metadata
+var opusEncoder = new AudioFileEncoder("Opus")
+{
+    EncodedDirectoryName = @"C:\Output\{Album} by {Artist}",
+    EncodedFileName = "{TrackNumber} - {Title}",
+    Overwrite = true,
+    Settings = new()
+    {
+        ["SignalType"] = "Speech",
+        ["BitRate"] = 32
+    }
+};
 await opusEncoder.EncodeAsync(flacFiles);
+```
+
+### Set metadata (tags)
+
+```csharp
+var flacFiles = new DirectoryInfo($"path to an album")
+    .GetFiles("*.flac")
+    .Select(file => new TaggedAudioFile(file.FullName));
+
+# Add ReplayGain tags, analyzing the files as a single album
+var replayGainAnalyzer = new AudioFileAnalyzer("ReplayGain");
+await replayGainAnalyzer.AnalyzeAsync(flacFiles);
+
+# Set the artist as well, then persist the new tags to disk
+foreach (var flacFile in flacFiles)
+{
+    flacFile.Metadata.Artist = "Iron Butterfly";
+    flacFile.SaveMetadata();
+}
 ```
 
 ## Key Features
@@ -35,16 +66,18 @@ The main types provided by this library are:
 
 ## Related Packages
 
-* AAC (encoding) and Apple Lossless (encoding and decoding): [AudioWorks.Extensions.Apple](https://www.nuget.org/packages/AudioWorks.Extensions.Apple/)
-* FLAC encoding, decoding and metadata: [AudioWorks.Extensions.Flac](https://www.nuget.org/packages/AudioWorks.Extensions.Flac/)
-* ID3 metadata: [AudioWorks.Extensions.Id3](https://www.nuget.org/packages/AudioWorks.Extensions.Id3/)
-* MP3 encoding: [AudioWorks.Extensions.Lame](https://www.nuget.org/packages/AudioWorks.Extensions.Lame/)
-* MP3 reading: [AudioWorks.Extensions.Mp3](https://www.nuget.org/packages/AudioWorks.Extensions.Mp3/)
-* iTunes-style MP4 metadata: [AudioWorks.Extensions.Mp4](https://www.nuget.org/packages/AudioWorks.Extensions.Mp4/)
-* Opus encoding and metadata: [AudioWorks.Extensions.Opus](https://www.nuget.org/packages/AudioWorks.Extensions.Opus/)
-* ReplayGain and EBU R 128 analysis: [AudioWorks.Extensions.ReplayGain](https://www.nuget.org/packages/AudioWorks.Extensions.ReplayGain/)
-* Ogg Vorbis encoding and metadata: [AudioWorks.Extensions.Vorbis](https://www.nuget.org/packages/AudioWorks.Extensions.Vorbis/)
-* Wave audio encoding and decoding: [AudioWorks.Extensions.Wave](https://www.nuget.org/packages/AudioWorks.Extensions.Wave/)
+### Extensions providing audio formats
+
+* AAC and Apple Lossless: [AudioWorks.Extensions.Apple](https://www.nuget.org/packages/AudioWorks.Extensions.Apple/)
+* FLAC: [AudioWorks.Extensions.Flac](https://www.nuget.org/packages/AudioWorks.Extensions.Flac/)
+* MP3: [AudioWorks.Extensions.Lame](https://www.nuget.org/packages/AudioWorks.Extensions.Lame/)
+* Opus: [AudioWorks.Extensions.Opus](https://www.nuget.org/packages/AudioWorks.Extensions.Opus/)
+* Ogg Vorbis: [AudioWorks.Extensions.Vorbis](https://www.nuget.org/packages/AudioWorks.Extensions.Vorbis/)
+* Wave: [AudioWorks.Extensions.Wave](https://www.nuget.org/packages/AudioWorks.Extensions.Wave/)
+
+### Extensions providing analysis
+
+* ReplayGain: [AudioWorks.Extensions.ReplayGain](https://www.nuget.org/packages/AudioWorks.Extensions.ReplayGain/)
 
 ## Feedback
 
