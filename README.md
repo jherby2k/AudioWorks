@@ -16,7 +16,7 @@ You will need [PowerShell 7.4+](https://aka.ms/powershell). "Windows PowerShell"
    * Either install iTunes, or just extract the required libraries via [these instructions](https://github.com/nu774/makeportable).
 
 #### On Ubuntu 24.04 (other distros should also work, but are untested):
-* Install all dependencies with `apt install libflac12t64 libmp3lame0 libopus0 libvorbisenc2 libopusenc0 libebur128-1`
+* Install all dependencies with `apt install libflac12t64 libmp3lame0 libvorbisenc2 libopusenc0 libebur128-1`
 
 A standard installation should only be missing libopusenc and libebur128.
 
