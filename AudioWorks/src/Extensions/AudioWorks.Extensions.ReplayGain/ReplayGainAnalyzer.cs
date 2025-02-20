@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using AudioWorks.Common;
@@ -31,10 +32,10 @@ namespace AudioWorks.Extensions.ReplayGain
         R128Analyzer? _analyzer;
         GroupState? _groupState;
 
-        public SettingInfoDictionary SettingInfo { get; } = new()
+        public SettingInfoDictionary SettingInfo { get; } = new(new Dictionary<string, SettingInfo>
         {
             ["PeakAnalysis"] = new StringSettingInfo("Simple", "Interpolated")
-        };
+        });
 
         [SuppressMessage("Usage", "CA2000:Dispose objects before losing scope", Justification =
             "GroupState is disposed by the GroupToken, outside this method.")]

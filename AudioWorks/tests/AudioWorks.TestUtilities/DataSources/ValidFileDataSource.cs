@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using AudioWorks.Common;
 using Xunit;
@@ -1335,6 +1336,10 @@ namespace AudioWorks.TestUtilities.DataSources
 
         public static IEnumerable<TheoryDataRow<string>> FileNames =>
             _data.Select(item => new TheoryDataRow<string>(item.Data.Item1) { Skip = item.Skip });
+
+        public static IEnumerable<TheoryDataRow<string>> FileNamesSaveCompatible =>
+            _data.Where(item => !Path.GetExtension(item.Data.Item1).Equals(".wav", System.StringComparison.OrdinalIgnoreCase))
+                .Select(item => new TheoryDataRow<string>(item.Data.Item1) { Skip = item.Skip });
 
         public static IEnumerable<TheoryDataRow<string, AudioInfo>> FileNamesAndAudioInfo =>
             _data.Select(item => new TheoryDataRow<string, AudioInfo>(item.Data.Item1, item.Data.Item2)

@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Collections.Generic;
 using System.Composition;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -43,7 +44,7 @@ namespace AudioWorks.Extensions.Apple
         {
             get
             {
-                var result = new SettingInfoDictionary
+                var result = new Dictionary<string, SettingInfo>
                 {
                     ["VBRQuality"] = new IntSettingInfo(0, 14),
                     ["BitRate"] = new IntSettingInfo(32, 320),
@@ -67,7 +68,7 @@ namespace AudioWorks.Extensions.Apple
                         foreach (var settingInfo in export.Value.SettingInfo)
                             result.Add(settingInfo.Key, settingInfo.Value);
 
-                return result;
+                return new SettingInfoDictionary(result);
             }
         }
 

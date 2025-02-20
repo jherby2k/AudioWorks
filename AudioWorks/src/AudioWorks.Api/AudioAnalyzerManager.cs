@@ -34,17 +34,17 @@ namespace AudioWorks.Api
         /// <param name="name">The name of the analyzer.</param>
         /// <returns>Information about the available settings.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="name"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if <see paramref="name"/> is not the name of an available analyzer.
+        /// </exception>
         public static SettingInfoDictionary GetSettingInfo(string name)
         {
             ArgumentNullException.ThrowIfNull(name);
 
-            // Try each encoder that supports this file extension:
-            foreach (var factory in ExtensionProviderWrapper.GetFactories<IAudioAnalyzer>(
-                "Name", name))
-                using (var export = factory.CreateExport())
-                    return export.Value.SettingInfo;
+            var factory = ExtensionProviderWrapper.GetFactories<IAudioAnalyzer>("Name", name).SingleOrDefault()
+                ?? throw new ArgumentException($"No '{name}' analyzer is available.", nameof(name));
 
-            return [];
+            using (var export = factory.CreateExport())
+                return export.Value.SettingInfo;
         }
 
         /// <summary>

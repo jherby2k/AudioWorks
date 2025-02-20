@@ -34,17 +34,17 @@ namespace AudioWorks.Api
         /// <param name="name">The name of the encoder.</param>
         /// <returns>Information about the available settings.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="name"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if <see paramref="name"/> is not the name of an available encoder.
+        /// </exception>
         public static SettingInfoDictionary GetSettingInfo(string name)
         {
             ArgumentNullException.ThrowIfNull(name);
 
-            // Try each encoder that supports this file extension:
-            foreach (var factory in ExtensionProviderWrapper.GetFactories<IAudioEncoder>(
-                "Name", name))
-                using (var export = factory.CreateExport())
-                    return export.Value.SettingInfo;
+            var factory = ExtensionProviderWrapper.GetFactories<IAudioEncoder>("Name", name).SingleOrDefault()
+                ?? throw new ArgumentException($"No '{name}' encoder is available.", nameof(name));
 
-            return [];
+            using (var export = factory.CreateExport())
+                return export.Value.SettingInfo;
         }
 
         /// <summary>

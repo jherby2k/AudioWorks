@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
@@ -31,14 +32,14 @@ namespace AudioWorks.Extensions.Opus
         MetadataToOpusCommentAdapter? _comments;
         Encoder? _encoder;
 
-        public SettingInfoDictionary SettingInfo => new()
+        public SettingInfoDictionary SettingInfo => new(new Dictionary<string, SettingInfo>
         {
             ["ApplyGain"] = new StringSettingInfo("Track", "Album"),
             ["BitRate"] = new IntSettingInfo(5, 512),
             ["ControlMode"] = new StringSettingInfo("Variable", "Constrained", "Constant"),
             ["SignalType"] = new StringSettingInfo("Music", "Speech"),
             ["SerialNumber"] = new IntSettingInfo(int.MinValue, int.MaxValue)
-        };
+        });
 
         public string FileExtension => ".opus";
 

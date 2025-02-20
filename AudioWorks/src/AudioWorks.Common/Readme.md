@@ -14,6 +14,7 @@ The main types provided by this library are:
 * `AudioMetadata`
 * `CoverArt`
 * `SettingDictionary`
+* `SettingInfoDictionary`
 
 ## Feedback
 

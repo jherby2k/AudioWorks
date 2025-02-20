@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
@@ -30,10 +31,10 @@ namespace AudioWorks.Extensions.ReplayGain
     {
         float _scale = 1;
 
-        public SettingInfoDictionary SettingInfo { get; } = new()
+        public SettingInfoDictionary SettingInfo { get; } = new(new Dictionary<string, SettingInfo>
         {
             ["ApplyGain"] = new StringSettingInfo("Track", "Album")
-        };
+        });
 
         public void Initialize(AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {

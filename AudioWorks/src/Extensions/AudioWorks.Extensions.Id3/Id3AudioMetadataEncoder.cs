@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
@@ -28,12 +29,12 @@ namespace AudioWorks.Extensions.Id3
     [AudioMetadataEncoderExport(".mp3", "ID3", "ID3 version 2.x")]
     sealed class Id3AudioMetadataEncoder : IAudioMetadataEncoder
     {
-        public SettingInfoDictionary SettingInfo { get; } = new()
+        public SettingInfoDictionary SettingInfo { get; } = new(new Dictionary<string, SettingInfo>
         {
             ["TagVersion"] = new StringSettingInfo("2.3", "2.4"),
             ["TagEncoding"] = new StringSettingInfo("Latin1", "UTF16", "UTF8"),
             ["TagPadding"] = new IntSettingInfo(0, 16_777_216)
-        };
+        });
 
         public void WriteMetadata(Stream stream, AudioMetadata metadata, SettingDictionary settings)
         {

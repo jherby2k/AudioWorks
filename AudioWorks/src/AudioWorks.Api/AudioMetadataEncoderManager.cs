@@ -34,6 +34,8 @@ namespace AudioWorks.Api
         /// <param name="extension">The file extension.</param>
         /// <returns>Information about the available settings.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="extension"/> is null.</exception>
+        /// <exception cref="AudioUnsupportedException">Thrown if there is no metadata encoder for
+        /// <see paramref="extension"/>files.</exception>
         public static SettingInfoDictionary GetSettingInfoByExtension(string extension)
         {
             ArgumentNullException.ThrowIfNull(extension);
@@ -44,7 +46,7 @@ namespace AudioWorks.Api
                 using (var export = factory.CreateExport())
                     return export.Value.SettingInfo;
 
-            return [];
+            throw new AudioUnsupportedException($"No metadata encoders are available for '{extension}' files.");
         }
 
         /// <summary>
@@ -54,6 +56,8 @@ namespace AudioWorks.Api
         /// <param name="format">The format.</param>
         /// <returns>Information about the available settings.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="format"/> is null.</exception>
+        /// <exception cref="AudioUnsupportedException">Thrown if there is no metadata encoder for
+        /// <see paramref="format"/>files.</exception>
         public static SettingInfoDictionary GetSettingInfoByFormat(string format)
         {
             ArgumentNullException.ThrowIfNull(format);
@@ -64,7 +68,7 @@ namespace AudioWorks.Api
                 using (var export = factory.CreateExport())
                     return export.Value.SettingInfo;
 
-            return [];
+            throw new AudioUnsupportedException($"No metadata encoders are available for '{format}' files.");
         }
 
         /// <summary>

@@ -13,6 +13,7 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -26,10 +27,10 @@ namespace AudioWorks.Extensions.Flac.Metadata
     [AudioMetadataEncoderExport(".flac", "FLAC", "FLAC")]
     sealed class FlacAudioMetadataEncoder : IAudioMetadataEncoder
     {
-        public SettingInfoDictionary SettingInfo { get; } = new()
+        public SettingInfoDictionary SettingInfo { get; } = new(new Dictionary<string, SettingInfo>
         {
             ["Padding"] = new IntSettingInfo(0, 16_777_216)
-        };
+        });
 
         public void WriteMetadata(Stream stream, AudioMetadata metadata, SettingDictionary settings)
         {

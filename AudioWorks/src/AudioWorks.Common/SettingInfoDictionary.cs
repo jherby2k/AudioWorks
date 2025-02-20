@@ -15,17 +15,25 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace AudioWorks.Common
 {
     /// <summary>
-    /// Represents a dictionary of strings and <see cref="SettingInfo"/> objects describing the settings which you can
-    /// pass to various methods.
+    /// Represents a read-only dictionary of strings and <see cref="SettingInfo"/> objects describing the valid
+    /// settings you can pass to certain methods.
     /// </summary>
-    /// <seealso cref="Dictionary{String, SettingInfo}"/>
-    public sealed class SettingInfoDictionary : Dictionary<string, SettingInfo>
+    /// <seealso cref="ReadOnlyDictionary{String, SettingInfo}"/>
+    public sealed class SettingInfoDictionary(IDictionary<string, SettingInfo> dictionary)
+        : ReadOnlyDictionary<string, SettingInfo>(dictionary)
     {
+        /// <summary>
+        /// Gets an empty <see cref="SettingInfoDictionary"/>.
+        /// </summary>
+        /// <value>An empty <see cref="SettingInfoDictionary"/>.</value>
+        public new static SettingInfoDictionary Empty { get; } = new SettingInfoDictionary(new Dictionary<string, SettingInfo>());
+
         /// <summary>
         /// Validates a settings dictionary against this <see cref="SettingInfoDictionary"/>.
         /// </summary>

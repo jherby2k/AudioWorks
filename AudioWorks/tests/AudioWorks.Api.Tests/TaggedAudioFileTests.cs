@@ -305,7 +305,7 @@ namespace AudioWorks.Api.Tests
         }
 
         [Theory(DisplayName = "TaggedAudioFile's SaveMetadata method throws an exception if an unexpected setting is provided")]
-        [MemberData(nameof(ValidFileDataSource.FileNames), MemberType = typeof(ValidFileDataSource))]
+        [MemberData(nameof(ValidFileDataSource.FileNamesSaveCompatible), MemberType = typeof(ValidFileDataSource))]
         public void SaveMetadataUnexpectedSettingThrowsException(string fileName) =>
             Assert.Throws<ArgumentException>(() =>
                 new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName))

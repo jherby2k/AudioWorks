@@ -33,12 +33,12 @@ namespace AudioWorks.Extensions.Flac.Encoder
         StreamEncoder? _encoder;
         int _bitsPerSample;
 
-        public SettingInfoDictionary SettingInfo { get; } = new()
+        public SettingInfoDictionary SettingInfo { get; } = new(new Dictionary<string, SettingInfo>
         {
             ["CompressionLevel"] = new IntSettingInfo(0, 8),
             ["SeekPointInterval"] = new IntSettingInfo(0, 600),
             ["Padding"] = new IntSettingInfo(0, 16_775_369)
-        };
+        });
 
         public string FileExtension => ".flac";
 

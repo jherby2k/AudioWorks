@@ -61,7 +61,7 @@ namespace AudioWorks.Api
                         return;
                     }
 
-            throw new AudioUnsupportedException("No supporting extensions are available.");
+            throw new AudioUnsupportedException($"No metadata encoders are available for '{extension}' files.");
         }
 
         /// <inheritdoc/>

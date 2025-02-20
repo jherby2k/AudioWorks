@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -27,12 +28,12 @@ namespace AudioWorks.Extensions.Mp4
     [AudioMetadataEncoderExport(".m4a", "iTunes", "iTunes-compatible MPEG-4")]
     sealed class ItunesAudioMetadataEncoder : IAudioMetadataEncoder
     {
-        public SettingInfoDictionary SettingInfo { get; } = new()
+        public SettingInfoDictionary SettingInfo { get; } = new(new Dictionary<string, SettingInfo>
         {
             ["CreationTime"] = new DateTimeSettingInfo(),
             ["ModificationTime"] = new DateTimeSettingInfo(),
             ["Padding"] = new IntSettingInfo(0, 16_777_216)
-        };
+        });
 
         public void WriteMetadata(Stream stream, AudioMetadata metadata, SettingDictionary settings)
         {

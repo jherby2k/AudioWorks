@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Collections.Generic;
 using System.Composition;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -40,7 +41,7 @@ namespace AudioWorks.Extensions.Vorbis
         {
             get
             {
-                var result = new SettingInfoDictionary
+                var result = new Dictionary<string, SettingInfo>
                 {
                     ["SerialNumber"] = new IntSettingInfo(int.MinValue, int.MaxValue),
                     ["Quality"] = new IntSettingInfo(-1, 10),
@@ -57,7 +58,7 @@ namespace AudioWorks.Extensions.Vorbis
                         foreach (var settingInfo in export.Value.SettingInfo)
                             result.Add(settingInfo.Key, settingInfo.Value);
 
-                return result;
+                return new SettingInfoDictionary(result);
             }
         }
 
