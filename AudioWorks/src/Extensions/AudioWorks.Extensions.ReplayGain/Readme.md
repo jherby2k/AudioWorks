@@ -6,6 +6,14 @@ You should normally consume [AudioWorks.Api](https://www.nuget.org/packages/Audi
 
 More documentation is available on [the GitHub repository](https://github.com/jherby2k/AudioWorks).
 
+## External Dependencies
+
+On Linux, you will need libebur128. For Ubuntu 24.04:
+
+```bash
+sudo apt-get install libebur128-1
+```
+
 ## Main Types
 
 The main types provided by this library are:

@@ -6,6 +6,14 @@ You should normally consume [AudioWorks.Api](https://www.nuget.org/packages/Audi
 
 More documentation is available on [the GitHub repository](https://github.com/jherby2k/AudioWorks).
 
+## External Dependencies
+
+On Linux, you will need libflac. For Ubuntu 24.04:
+
+```bash
+sudo apt-get install libflac12t64
+```
+
 ## Main Types
 
 The main types provided by this library are:

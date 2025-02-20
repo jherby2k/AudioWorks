@@ -4,9 +4,15 @@ Provides AAC (encoding) and Apple Lossless (encoding and decoding) functionality
 
 You should normally consume [AudioWorks.Api](https://www.nuget.org/packages/AudioWorks.Api/) in addition to this package.
 
-On Windows, this extension requires the Apple Core Audio library. It does not work on Linux.
-
 More documentation is available on [the GitHub repository](https://github.com/jherby2k/AudioWorks).
+
+## External Dependencies
+
+On Windows, this extension requires the Apple Core Audio library.
+   * Go to [the iTunes download page](https://www.apple.com/itunes), ignore the recommendation to visit the Windows Store, scroll down to *Looking for other versions* and download iTunes64Setup.exe.
+   * Either install iTunes, or just extract the required libraries via [these instructions](https://github.com/nu774/makeportable).
+
+This extension is not available on Linux.
 
 ## Main Types
 
