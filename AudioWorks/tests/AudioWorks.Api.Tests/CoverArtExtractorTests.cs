@@ -29,16 +29,19 @@ namespace AudioWorks.Api.Tests
 
         [Fact(DisplayName = "CoverArtExtractor's constructor throws an exception if encodedDirectoryName references an invalid metadata field")]
         public void ConstructorEncodedDirectoryNameInvalidThrowsException() =>
-            Assert.Throws<ArgumentException>(() => new CoverArtExtractor("{Invalid}"));
+            Assert.Throws<ArgumentException>(() =>
+                new CoverArtExtractor() { EncodedDirectoryName = "{Invalid}" });
 
         [Theory(DisplayName = "CoverArtExtractor's Extract method creates the expected image file")]
         [MemberData(nameof(ValidFileWithCoverArtDataSource.IndexedFileNamesAndDataHash), MemberType = typeof(ValidFileWithCoverArtDataSource))]
         public void ExtractCreatesExpectedImageFile(int index, string sourceFileName, string expectedHash)
         {
-            var result = new CoverArtExtractor(
-                        Path.Combine("Output", "Extract"),
-                        $"{index:000} - {Path.GetFileNameWithoutExtension(sourceFileName)}")
-                    { Overwrite = true }
+            var result = new CoverArtExtractor()
+            {
+                EncodedDirectoryName = Path.Combine("Output", "Extract"),
+                EncodedFileName = $"{index:000} - {Path.GetFileNameWithoutExtension(sourceFileName)}",
+                Overwrite = true
+            }
                 .Extract(new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", sourceFileName)));
 
             Assert.Equal(expectedHash, result == null ? string.Empty : HashUtility.CalculateHash(result.FullName));

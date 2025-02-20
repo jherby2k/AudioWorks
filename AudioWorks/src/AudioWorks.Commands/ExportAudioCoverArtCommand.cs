@@ -41,7 +41,12 @@ namespace AudioWorks.Commands
         {
             base.BeginProcessing();
 
-            _extractor = new(SessionState.Path.GetUnresolvedProviderPathFromPSPath(Path), Name) { Overwrite = Force };
+            _extractor = new()
+            {
+                EncodedDirectoryName = SessionState.Path.GetUnresolvedProviderPathFromPSPath(Path),
+                EncodedFileName = Name ?? string.Empty,
+                Overwrite = Force
+            };
         }
 
         protected override void ProcessRecord()

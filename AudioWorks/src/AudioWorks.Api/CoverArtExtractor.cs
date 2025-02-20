@@ -28,24 +28,34 @@ namespace AudioWorks.Api
         readonly EncodedPath? _encodedDirectoryName;
 
         /// <summary>
+        /// Gets or sets the encoded file name.
+        /// </summary>
+        /// <value>The encoded file name, if set; otherwise, an empty string.</value>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="value"/> is not properly formatted.
+        /// </exception>
+        public string EncodedFileName
+        {
+            get => _encodedFileName?.ToString() ?? string.Empty;
+            init => _encodedFileName = string.IsNullOrEmpty(value) ? null : new(value);
+        }
+
+        /// <summary>
+        /// Gets or sets the encoded directory name.
+        /// </summary>
+        /// <value>The encoded directory name, if set; otherwise, an empty string.</value>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="value"/> is not properly formatted.
+        /// </exception>
+        public string EncodedDirectoryName
+        {
+            get => _encodedDirectoryName?.ToString() ?? string.Empty;
+            init => _encodedDirectoryName = new(value);
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether existing files should be overwritten.
         /// </summary>
         /// <value><c>true</c> if files should be overwritten; otherwise, <c>false</c>.</value>
-        // ReSharper disable once PropertyCanBeMadeInitOnly.Global
-        public bool Overwrite { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CoverArtExtractor"/> class.
-        /// </summary>
-        /// <param name="encodedDirectoryName">The encoded directory name, or null.</param>
-        /// <param name="encodedFileName">The encode file name, or null.</param>
-        public CoverArtExtractor(string? encodedDirectoryName = null, string? encodedFileName = null)
-        {
-            if (encodedDirectoryName != null)
-                _encodedDirectoryName = new(encodedDirectoryName);
-            if (encodedFileName != null)
-                _encodedFileName = new(encodedFileName);
-        }
+        public bool Overwrite { get; init; }
 
         /// <summary>
         /// Extracts the specified audio file's cover art to an image file. This method returns null if cover art is
