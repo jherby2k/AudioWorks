@@ -147,7 +147,7 @@ jobs:
 
   mac:
     name: Mac
-    runs-on: macos-latest
+    runs-on: macos-14
 
     steps:
     - name: Checkout
