@@ -62,7 +62,7 @@ namespace AudioWorks.Extensions.Flac
                     else // On Linux, use whichever system-provided library is available
                         for (var version = _linuxLibMaxVersion; version >= _linuxLibMinVersion; version--)
                         {
-                            module = LibDl.DlOpen($"lib{_flacLib}.so.{version}", 1);
+                            module = LibDl.DlOpen($"lib{_flacLib}.so.{version}", 2);
                             if (module != nint.Zero)
                                 break;
                         }
