@@ -27,8 +27,10 @@ namespace AudioWorks.Extensions.Flac
     public sealed class FlacLibHandler : IPrerequisiteHandler
     {
         const string _flacLib = "FLAC";
-        const int _linuxLibMaxVersion = 14;
-        const int _linuxLibMinVersion = 8;
+        const string _dlLib = "dl";
+        const int _linuxFlacLibMaxVersion = 14;
+        const int _linuxFlacLibMinVersion = 8;
+        const int _linuxDlLibVersion = 2;
 
         // Use the RID-specific directory, except on 32-bit Windows
         // On Mac we need to add the full file name, but on Windows it resolves the file properly
@@ -60,7 +62,12 @@ namespace AudioWorks.Extensions.Flac
                     else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                         module = LibDl.DlOpen(_flacLibFullPath, 1);
                     else // On Linux, use whichever system-provided library is available
-                        module = LibDl.DlOpen($"lib{_flacLib}.so.14", 2);
+                        for (var version = _linuxFlacLibMaxVersion; version >= _linuxFlacLibMinVersion; version--)
+                        {
+                            module = LibDl.DlOpen($"lib{_flacLib}.so.{version}", 1);
+                            if (module != nint.Zero)
+                                break;
+                        }
 
                     logger.LogInformation("Using FLAC version {version}.",
                         Marshal.PtrToStringAnsi(Marshal.PtrToStructure<nint>(
@@ -88,11 +95,15 @@ namespace AudioWorks.Extensions.Flac
 
         static nint DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
         {
+            // Linux needs help finding libdl
+            if (libraryName == _dlLib && RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                return NativeLibrary.Load($"{_dlLib}.so.{_linuxDlLibVersion}", assembly, searchPath);
+            
             if (libraryName != _flacLib) return nint.Zero;
 
             // On Linux, use whichever system-provided library is available
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                for (var version = _linuxLibMaxVersion; version >= _linuxLibMinVersion; version--)
+                for (var version = _linuxFlacLibMaxVersion; version >= _linuxFlacLibMinVersion; version--)
                     if (NativeLibrary.TryLoad($"{_flacLib}.so.{version}", assembly, searchPath, out var result))
                         return result;
 

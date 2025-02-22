@@ -21,7 +21,7 @@ namespace AudioWorks.Extensions.Flac
     static partial class LibDl
 #pragma warning restore CA1060
     {
-        const string _dlLibrary = "libdl";
+        const string _dlLibrary = "dl";
 
         [LibraryImport(_dlLibrary, EntryPoint = "dlopen")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
