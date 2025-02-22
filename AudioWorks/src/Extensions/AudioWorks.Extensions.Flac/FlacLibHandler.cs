@@ -60,12 +60,7 @@ namespace AudioWorks.Extensions.Flac
                     else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                         module = LibDl.DlOpen(_flacLibFullPath, 1);
                     else // On Linux, use whichever system-provided library is available
-                        for (var version = _linuxLibMaxVersion; version >= _linuxLibMinVersion; version--)
-                        {
-                            module = LibDl.DlOpen($"lib{_flacLib}.so.{version}", 2);
-                            if (module != nint.Zero)
-                                break;
-                        }
+                        module = LibDl.DlOpen($"lib{_flacLib}.so.14", 2);
 
                     logger.LogInformation("Using FLAC version {version}.",
                         Marshal.PtrToStringAnsi(Marshal.PtrToStructure<nint>(
