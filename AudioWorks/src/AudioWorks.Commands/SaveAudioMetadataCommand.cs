@@ -78,15 +78,23 @@ namespace AudioWorks.Commands
 
         public object? GetDynamicParameters()
         {
-            if (Format != null)
+            try
+            {
+                if (Format != null)
+                    return _parameters = SettingAdapter.SettingInfoToParameters(
+                        AudioMetadataEncoderManager.GetSettingInfoByFormat(Format));
+
+                // AudioFile parameter may not be bound yet
+                if (AudioFile == null) return null;
+
                 return _parameters = SettingAdapter.SettingInfoToParameters(
-                    AudioMetadataEncoderManager.GetSettingInfoByFormat(Format));
-
-            // AudioFile parameter may not be bound yet
-            if (AudioFile == null) return null;
-
-            return _parameters = SettingAdapter.SettingInfoToParameters(
-                AudioMetadataEncoderManager.GetSettingInfoByExtension(Path.GetExtension(AudioFile.Path)));
+                    AudioMetadataEncoderManager.GetSettingInfoByExtension(Path.GetExtension(AudioFile.Path)));
+            }
+            catch (AudioUnsupportedException)
+            {
+                // Some formats (Wave) don't support metadata
+                return null;
+            }
         }
     }
 }
