@@ -145,8 +145,8 @@ jobs:
       run: cat coveragereport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
 
 
-  mac:
-    name: Mac
+  mac_arm:
+    name: Mac on ARM
     runs-on: macos-14
 
     steps:
@@ -174,7 +174,7 @@ jobs:
       if: success() || failure()
       uses: actions/upload-artifact@v4
       with:
-        name: Test output for Mac
+        name: Test output for Mac on ARM
         path: 'AudioWorks/tests/AudioWorks.Api.Tests/bin/Release/net8.0/Output/Encode/Valid/'
 
     - name: Test AudioWorks.Commands
@@ -193,7 +193,62 @@ jobs:
     - name: Upload coverage report artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: Coverage Report for Mac
+        name: Coverage Report for Mac on ARM
+        path: coveragereport
+
+    - name: Publish coverage in build summary
+      run: cat coveragereport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+
+
+  mac_intel:
+    name: Mac on Intel
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Build
+      run: dotnet build AudioWorks/AudioWorks.sln --configuration Release
+
+    - name: Test AudioWorks.Common
+      run: dotnet test AudioWorks/tests/AudioWorks.Common.Tests/AudioWorks.Common.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
+
+    - name: Test AudioWorks.Extensibility
+      run: dotnet test AudioWorks/tests/AudioWorks.Extensibility.Tests/AudioWorks.Extensibility.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
+
+    - name: Test AudioWorks.Api
+      run: dotnet test AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
+
+    - name: Upload test output
+      if: success() || failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: Test output for Mac on Intel
+        path: 'AudioWorks/tests/AudioWorks.Api.Tests/bin/Release/net8.0/Output/Encode/Valid/'
+
+    - name: Test AudioWorks.Commands
+      run: dotnet test AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
+
+    - name: ReportGenerator
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.4.4
+      with:
+        reports: '${{ github.workspace }}/**/coverage.cobertura.xml'
+        targetdir: 'coveragereport'
+        reporttypes: 'HtmlInline;Cobertura;MarkdownSummaryGithub;'
+        assemblyfilters: '-*.Tests;-*.TestUtilities'
+        filefilters: '-*.g.cs'
+        tag: '${{ github.run_number }}_${{ github.run_id }}'
+
+    - name: Upload coverage report artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: Coverage Report for Mac on Intel
         path: coveragereport
 
     - name: Publish coverage in build summary
