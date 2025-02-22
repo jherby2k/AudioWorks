@@ -147,7 +147,7 @@ jobs:
 
   mac_arm:
     name: Mac on ARM
-    runs-on: macos-14
+    runs-on: macos-latest
 
     steps:
     - name: Checkout
@@ -202,7 +202,7 @@ jobs:
 
   mac_intel:
     name: Mac on Intel
-    runs-on: macos-latest
+    runs-on: macos-13
 
     steps:
     - name: Checkout
