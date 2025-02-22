@@ -51,7 +51,37 @@ namespace AudioWorks.Extensions.Flac
             {
                 NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), DllImportResolver);
 
-                //TODO log the loaded version
+                var module = nint.Zero;
+
+                try
+                {
+                    // On Linux, use whichever system-provided library is available
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                        for (var version = _linuxLibMaxVersion; version >= _linuxLibMinVersion; version--)
+                        {
+                            module = LibDl.DlOpen($"{_flacLib}.so.{version}", 2);
+                            if (module != nint.Zero)
+                                break;
+                        }
+
+                    module = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                        ? Kernel32.LoadLibrary(_flacLibFullPath)
+                        : LibDl.DlOpen(_flacLibFullPath, 2);
+
+                    logger.LogInformation("Using FLAC version {version}.",
+                        Marshal.PtrToStringAnsi(Marshal.PtrToStructure<nint>(
+                            RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                            ? Kernel32.GetProcAddress(module, "FLAC__VENDOR_STRING")
+                            : LibDl.DlSym(module, "FLAC__VENDOR_STRING"))));
+                }
+                finally
+                {
+                    if (module != nint.Zero)
+                        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                            Kernel32.FreeLibrary(module);
+                        else
+                            _ = LibDl.DlClose(module);
+                }
             }
             catch (DllNotFoundException e)
             {
