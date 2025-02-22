@@ -87,7 +87,7 @@ jobs:
       shell: bash
 
 
-  linux:
+  ubuntu:
     name: Ubuntu
     runs-on: ubuntu-latest
 
