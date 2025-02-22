@@ -55,18 +55,17 @@ namespace AudioWorks.Extensions.Flac
 
                 try
                 {
-                    // On Linux, use whichever system-provided library is available
-                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                        module = Kernel32.LoadLibrary(_flacLibFullPath);
+                    else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                        module = LibDl.DlOpen(_flacLibFullPath, 1);
+                    else // On Linux, use whichever system-provided library is available
                         for (var version = _linuxLibMaxVersion; version >= _linuxLibMinVersion; version--)
                         {
                             module = LibDl.DlOpen($"lib{_flacLib}.so.{version}", 1);
                             if (module != nint.Zero)
                                 break;
                         }
-
-                    module = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                        ? Kernel32.LoadLibrary(_flacLibFullPath)
-                        : LibDl.DlOpen(_flacLibFullPath, 1);
 
                     logger.LogInformation("Using FLAC version {version}.",
                         Marshal.PtrToStringAnsi(Marshal.PtrToStructure<nint>(
