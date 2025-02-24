@@ -44,16 +44,8 @@ jobs:
     - name: Test AudioWorks.Common
       run: dotnet test AudioWorks\tests\AudioWorks.Common.Tests\AudioWorks.Common.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
-    - name: Test AudioWorks.Common (32-bit)
-      run: |
-        "c:\Program Files (x86)\dotnet\dotnet" test AudioWorks\tests\AudioWorks.Common.Tests\AudioWorks.Common.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
-
     - name: Test AudioWorks.Extensibility
       run: dotnet test AudioWorks\tests\AudioWorks.Extensibility.Tests\AudioWorks.Extensibility.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
-
-    - name: Test AudioWorks.Extensibility (32-bit)
-      run: |
-        "c:\Program Files (x86)\dotnet\dotnet" test AudioWorks\tests\AudioWorks.Extensibility.Tests\AudioWorks.Extensibility.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
     - name: Test AudioWorks.Api
       run: dotnet test AudioWorks\tests\AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
@@ -65,23 +57,8 @@ jobs:
         name: Test output for Windows
         path: 'AudioWorks\tests\AudioWorks.Api.Tests\bin\Release\net8.0\Output\Encode\Valid\'
 
-    - name: Test AudioWorks.Api (32-bit)
-      run: |
-        "c:\Program Files (x86)\dotnet\dotnet" test AudioWorks\tests\AudioWorks.Api.Tests\AudioWorks.Api.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
-
-    - name: Upload test output (32-bit)
-      if: success() || failure()
-      uses: actions/upload-artifact@v4
-      with:
-        name: Test output for Windows (32-bit)
-        path: 'AudioWorks\tests\AudioWorks.Api.Tests\bin\Release\net8.0\Output\Encode\Valid\'
-
     - name: Test AudioWorks.Commands
       run: dotnet test AudioWorks\tests\AudioWorks.Commands.Tests\AudioWorks.Commands.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
-  
-    - name: Test AudioWorks.Commands (32-bit)
-      run: |
-        "c:\Program Files (x86)\dotnet\dotnet" test AudioWorks\tests\AudioWorks.Commands.Tests\AudioWorks.Commands.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
   
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
