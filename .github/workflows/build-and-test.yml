@@ -31,11 +31,6 @@ jobs:
         msiexec /i AppleApplicationSupport64.msi /qb-
       shell: cmd
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
-
     - name: Build
       run: dotnet build AudioWorks\AudioWorks.sln --configuration Release
 
@@ -96,11 +91,6 @@ jobs:
     - name: Install library dependencies
       run: sudo apt-get install --yes libflac12t64 libmp3lame0 libopusenc0 libebur128-1 libvorbisenc2
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
-
     - name: Build
       run: dotnet build AudioWorks/AudioWorks.sln --configuration Release
 
@@ -151,11 +141,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
-
     - name: Build
       run: dotnet build AudioWorks/AudioWorks.sln --configuration Release
 
@@ -205,11 +190,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
 
     - name: Build
       run: dotnet build AudioWorks/AudioWorks.sln --configuration Release
