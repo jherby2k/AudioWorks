@@ -24,12 +24,10 @@ jobs:
     - name: Download external dependencies
       run: |
         $ProgressPreference = 'SilentlyContinue'
-        Invoke-WebRequest -Uri https://audioworks.blob.core.windows.net/prerequisites/AppleApplicationSupport.msi -OutFile AppleApplicationSupport.msi
         Invoke-WebRequest -Uri https://audioworks.blob.core.windows.net/prerequisites/AppleApplicationSupport64.msi -OutFile AppleApplicationSupport64.msi
 
     - name: Install external dependencies
       run: |
-        msiexec /i AppleApplicationSupport.msi /qb-
         msiexec /i AppleApplicationSupport64.msi /qb-
       shell: cmd
 
