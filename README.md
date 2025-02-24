@@ -11,9 +11,7 @@ AudioWorks runs on Windows, MacOS, and Linux.
 You will need [PowerShell 7.4+](https://aka.ms/powershell). "Windows PowerShell" (aka PowerShell 5.1) which is included with Windows, is no longer supported.
  
 #### On Windows:
-* For AAC and Apple Lossless (ALAC) support, you need Apple's Core Audio library:
-   * Go to [the iTunes download page](https://www.apple.com/itunes), ignore the recommendation to visit the Windows Store, scroll down to *Looking for other versions* and download iTunes64Setup.exe.
-   * Either install iTunes, or just extract the required libraries via [these instructions](https://github.com/nu774/makeportable).
+* For AAC and Apple Lossless (ALAC) support, [you need Apple's Core Audio library](https://github.com/jherby2k/AudioWorks/wiki/Apple-Core-Audio-dependency)
 
 #### On Ubuntu 24.04 (other distros should also work, but are untested):
 * Install all dependencies with `apt install libflac12t64 libmp3lame0 libvorbisenc2 libopusenc0 libebur128-1`
