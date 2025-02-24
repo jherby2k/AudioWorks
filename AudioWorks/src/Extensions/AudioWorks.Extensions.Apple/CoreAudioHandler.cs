@@ -26,6 +26,8 @@ namespace AudioWorks.Extensions.Apple
     [PrerequisiteHandlerExport]
     public sealed class CoreAudioHandler : IPrerequisiteHandler
     {
+        const string _coreAudioLib = "CoreAudioToolbox";
+
         public bool Handle()
         {
             var logger = LoggerManager.LoggerFactory.CreateLogger<CoreAudioHandler>();
@@ -50,7 +52,7 @@ namespace AudioWorks.Extensions.Apple
 
         static nint DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
         {
-            if (libraryName != "CoreAudioToolbox") return nint.Zero;
+            if (libraryName != _coreAudioLib) return nint.Zero;
 
             // On Mac, it's a built-in framework
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
@@ -61,11 +63,14 @@ namespace AudioWorks.Extensions.Apple
                 Environment.GetEnvironmentVariable("CommonProgramFiles") ?? string.Empty,
                 "Apple",
                 "Apple Application Support",
-                "CoreAudioToolbox.dll");
+                $"{_coreAudioLib}.dll");
 
             // It could also be found inside the iTunes directory
             if (!File.Exists(coreAudioPath))
-                coreAudioPath = Path.Combine(Environment.GetEnvironmentVariable("ProgramFiles") ?? string.Empty, "iTunes");
+                coreAudioPath = Path.Combine(
+                    Environment.GetEnvironmentVariable("ProgramFiles") ?? string.Empty,
+                    "iTunes",
+                    $"{_coreAudioLib}.dll");
 
             return File.Exists(coreAudioPath)
                 ? NativeLibrary.Load(coreAudioPath)
