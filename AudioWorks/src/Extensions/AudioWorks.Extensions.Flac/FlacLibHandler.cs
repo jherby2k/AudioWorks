@@ -72,8 +72,8 @@ namespace AudioWorks.Extensions.Flac
                     logger.LogInformation("Using FLAC version {version}.",
                         Marshal.PtrToStringAnsi(Marshal.PtrToStructure<nint>(
                             RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                            ? Kernel32.GetProcAddress(module, "FLAC__VENDOR_STRING")
-                            : LibDl.DlSym(module, "FLAC__VENDOR_STRING"))));
+                            ? Kernel32.GetProcAddress(module, "FLAC__VERSION_STRING")
+                            : LibDl.DlSym(module, "FLAC__VERSION_STRING"))));
                 }
                 finally
                 {
