@@ -8,14 +8,14 @@ More documentation is available on [the GitHub repository](https://github.com/jh
 
 ## How to Use
 
-### Encode a file
+### Encode some files
 
 ```csharp
-var flacFiles = new DirectoryInfo($"path to an album")
+var flacFiles = new DirectoryInfo("<path to an album>")
     .GetFiles("*.flac")
     .Select(file => new TaggedAudioFile(file.FullName));
 
-# Export the files to Opus format, organized into directories and named according to metadata
+// Export the files to Opus format, organized into directories and named according to metadata
 var opusEncoder = new AudioFileEncoder("Opus")
 {
     EncodedDirectoryName = @"C:\Output\{Album} by {Artist}",
@@ -33,15 +33,15 @@ await opusEncoder.EncodeAsync(flacFiles);
 ### Set metadata (tags)
 
 ```csharp
-var flacFiles = new DirectoryInfo($"path to an album")
+var flacFiles = new DirectoryInfo("<path to an album>")
     .GetFiles("*.flac")
     .Select(file => new TaggedAudioFile(file.FullName));
 
-# Add ReplayGain tags, analyzing the files as a single album
+// Add ReplayGain tags, analyzing the files as a single album
 var replayGainAnalyzer = new AudioFileAnalyzer("ReplayGain");
 await replayGainAnalyzer.AnalyzeAsync(flacFiles);
 
-# Set the artist as well, then persist the new tags to disk
+// Set the artist as well, then persist the new tags to disk
 foreach (var flacFile in flacFiles)
 {
     flacFile.Metadata.Artist = "Iron Butterfly";
