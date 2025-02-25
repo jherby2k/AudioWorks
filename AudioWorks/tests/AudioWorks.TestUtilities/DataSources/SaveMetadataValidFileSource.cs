@@ -785,7 +785,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 ]
             ),
 
-            // Existing tag
+            // Existing v2.3 tag
             new(
                 "Lame CBR 128 44100Hz Stereo (ID3v2.3 Latin1).mp3",
                 new()
@@ -811,6 +811,35 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "FF55C184441BFF19D872D0B7767AC981"
+                ]
+            ),
+
+            // Existing v2.4 tag
+            new(
+                "Lame CBR 128 44100Hz Stereo (ID3v2.4 Latin1).mp3",
+                new()
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "Test Comment",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
+                },
+                string.Empty,
+                [],
+                [
+                    "A4804CBDB7CFC412065F957ADC332610"
                 ]
             ),
 

@@ -41,13 +41,14 @@ namespace AudioWorks.Extensions.Id3
         {
             var logger = LoggerManager.LoggerFactory.CreateLogger<Id3AudioMetadataEncoder>();
 
-            var existingTagLength = GetExistingTagLength(stream);
+            var existingTag = GetExistingTag(stream);
 
             var encoding = "Latin1";
             if (settings.TryGetValue("TagEncoding", out string? encodingValue))
                 encoding = encodingValue!;
 
-            var version = 3;
+            // Default to the existing tag version, if present. Otherwise use 2.3 for compatibility
+            var version = existingTag == null ? 3 : existingTag.Header.Version;
             if (settings.TryGetValue("TagVersion", out string? versionValue))
             {
                 if (versionValue!.Equals("2.3", StringComparison.Ordinal) &&
@@ -68,6 +69,10 @@ namespace AudioWorks.Extensions.Id3
             // Force version 2.4 when UTF-8 is requested
             if (encoding.Equals("UTF8", StringComparison.Ordinal))
                 version = 4;
+
+            var existingTagLength = existingTag == null
+                ? 0
+                : existingTag.Header.TagSizeWithHeaderFooter - existingTag.Header.PaddingSize;
 
             var tagModel = new MetadataToTagModelAdapter(metadata, version, encoding);
             if (tagModel.Frames.Count > 0)
@@ -109,16 +114,15 @@ namespace AudioWorks.Extensions.Id3
                 : tagModel.Header.TagSizeWithHeaderFooter + tagModel.Header.PaddingSize;
         }
 
-        static uint GetExistingTagLength(Stream stream)
+        static TagModel? GetExistingTag(Stream stream)
         {
             try
             {
-                var existingTag = TagManager.Deserialize(stream);
-                return existingTag.Header.TagSizeWithHeaderFooter - existingTag.Header.PaddingSize;
+                return TagManager.Deserialize(stream);
             }
             catch (TagNotFoundException)
             {
-                return 0;
+                return null;
             }
         }
 
