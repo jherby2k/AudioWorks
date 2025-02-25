@@ -86,9 +86,15 @@ namespace AudioWorks.Extensions.Id3
                 tagModel.UpdateSize();
 
                 if (!settings.ContainsKey("TagPadding") && existingTagLength >= tagModel.Header.TagSizeWithHeaderFooter)
+                {
+                    logger.LogDebug("Existing tag will be overwritten in-place.");
                     Overwrite(stream, existingTagLength, tagModel);
+                }
                 else
+                {
+                    logger.LogDebug("Entire file will be re-written with the new tag.");
                     FullRewrite(stream, existingTagLength, tagModel);
+                }
             }
             else if (existingTagLength > 0)
             {
