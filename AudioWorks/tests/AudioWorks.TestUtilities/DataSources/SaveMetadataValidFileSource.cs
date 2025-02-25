@@ -910,6 +910,196 @@ namespace AudioWorks.TestUtilities.DataSources
                 ]
             ),
 
+            // Multibyte characters present (implicit UTF-16)
+            new(
+                "Lame CBR 128 44100Hz Stereo.mp3",
+                new()
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "テストコメント",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
+                },
+                string.Empty,
+                [],
+                [
+                    "68313157D01EB3242DC2F4E4E92C8567"
+                ]
+            ),
+
+            // Multibyte characters present (explicit UTF-16)
+            new(
+                "Lame CBR 128 44100Hz Stereo.mp3",
+                new()
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "テストコメント",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
+                },
+                string.Empty,
+                new()
+                {
+                    ["TagEncoding"] = "UTF16"
+                },
+                [
+                    "68313157D01EB3242DC2F4E4E92C8567"
+                ]
+            ),
+
+            // Multibyte characters present (overridden as UTF-16)
+            new(
+                "Lame CBR 128 44100Hz Stereo.mp3",
+                new()
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "テストコメント",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
+                },
+                string.Empty,
+                new()
+                {
+                    ["TagEncoding"] = "Latin1"
+                },
+                [
+                    "68313157D01EB3242DC2F4E4E92C8567"
+                ]
+            ),
+
+            // Multibyte characters present (explicit UTF-8)
+            new(
+                "Lame CBR 128 44100Hz Stereo.mp3",
+                new()
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "テストコメント",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
+                },
+                string.Empty,
+                new()
+                {
+                    ["TagEncoding"] = "UTF8"
+                },
+                [
+                    "D2B0132D51EFB5F6033BD78A704DEC8A"
+                ]
+            ),
+
+            // Multibyte characters present (implicit UTF-8)
+            new(
+                "Lame CBR 128 44100Hz Stereo.mp3",
+                new()
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "テストコメント",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
+                },
+                string.Empty,
+                new()
+                {
+                    ["TagVersion"] = "2.4"
+                },
+                [
+                    "D2B0132D51EFB5F6033BD78A704DEC8A"
+                ]
+            ),
+
+            // Multibyte characters present (overridden as UTF-8)
+            new(
+                "Lame CBR 128 44100Hz Stereo.mp3",
+                new()
+                {
+                    Title = "Test Title",
+                    Artist = "Test Artist",
+                    Album = "Test Album",
+                    AlbumArtist = "Test Album Artist",
+                    Composer = "Test Composer",
+                    Genre = "Test Genre",
+                    Comment = "テストコメント",
+                    Day = "31",
+                    Month = "01",
+                    Year = "2017",
+                    TrackNumber = "01",
+                    TrackCount = "12",
+                    TrackPeak = "0.5",
+                    AlbumPeak = "0.6",
+                    TrackGain = "0.7",
+                    AlbumGain = "0.8"
+                },
+                string.Empty,
+                new()
+                {
+                    ["TagVersion"] = "2.4",
+                    ["TagEncoding"] = "Latin1"
+                },
+                [
+                    "D2B0132D51EFB5F6033BD78A704DEC8A"
+                ]
+            ),
+
             // Default padding (explicit)
             new(
                 "Lame CBR 128 44100Hz Stereo.mp3",

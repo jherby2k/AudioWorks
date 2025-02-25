@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using System.Text;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
@@ -38,6 +39,8 @@ namespace AudioWorks.Extensions.Id3
 
         public void WriteMetadata(Stream stream, AudioMetadata metadata, SettingDictionary settings)
         {
+            var logger = LoggerManager.LoggerFactory.CreateLogger<Id3AudioMetadataEncoder>();
+
             var existingTagLength = GetExistingTagLength(stream);
 
             var encoding = "Latin1";
@@ -49,13 +52,17 @@ namespace AudioWorks.Extensions.Id3
             {
                 if (versionValue!.Equals("2.3", StringComparison.Ordinal) &&
                     encoding.Equals("UTF8", StringComparison.Ordinal))
-                {
-                    var logger = LoggerManager.LoggerFactory.CreateLogger<Id3AudioMetadataEncoder>();
                     logger.LogWarning("ID3 version 2.3 tags don't support UTF-8. Using version 2.4.");
-                }
 
                 if (versionValue.Equals("2.4", StringComparison.Ordinal))
                     version = 4;
+            }
+
+            // Use unicode if there are multibyte characters present
+            if (encoding == "Latin1" && ContainsUnicode(metadata))
+            {
+                encoding = version == 3 ? "UTF16" : "UTF8";
+                logger.LogWarning("Multibyte characters detected. Using {encoding} encoding instead of Latin1.", encoding);
             }
 
             // Force version 2.4 when UTF-8 is requested
@@ -140,5 +147,15 @@ namespace AudioWorks.Extensions.Id3
                 tempStream.CopyTo(stream);
             }
         }
+
+        static bool ContainsUnicode(AudioMetadata metadata) => ContainsUnicode(metadata.Title) ||
+                                                               ContainsUnicode(metadata.Artist) ||
+                                                               ContainsUnicode(metadata.Album) ||
+                                                               ContainsUnicode(metadata.AlbumArtist) ||
+                                                               ContainsUnicode(metadata.Composer) ||
+                                                               ContainsUnicode(metadata.Genre) ||
+                                                               ContainsUnicode(metadata.Comment);
+
+        static bool ContainsUnicode(string input) => input.Any(c => c > 255);
     }
 }
