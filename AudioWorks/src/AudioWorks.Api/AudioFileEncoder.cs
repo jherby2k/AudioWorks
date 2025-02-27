@@ -201,7 +201,7 @@ namespace AudioWorks.Api
 
             // Encoding can happen in parallel
             var encodeBlock = new TransformBlock<(ITaggedAudioFile audioFile, string outputPath), ITaggedAudioFile>(
-                message =>
+                async message =>
                 {
                     var tempOutputPath = Path.Combine(
                         Path.GetDirectoryName(message.outputPath)!,
@@ -223,7 +223,7 @@ namespace AudioWorks.Api
                                 new(message.audioFile.Metadata),
                                 Settings);
 
-                            encoderExport.Value.ProcessSamples(
+                            await encoderExport.Value.ProcessSamples(
                                 message.audioFile.Path,
                                 progress == null
                                     ? null
@@ -233,7 +233,7 @@ namespace AudioWorks.Api
                                         AudioFilesCompleted = audioFilesCompleted,
                                         FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
                                     })),
-                                cancellationToken);
+                                cancellationToken).ConfigureAwait(false);
 
                             encoderExport.Value.Finish();
 

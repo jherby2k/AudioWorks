@@ -177,9 +177,9 @@ namespace AudioWorks.Api
                 // Analysis can happen in parallel
                 var analyzeBlock = new TransformBlock<
                     (ITaggedAudioFile audioFile, IAudioAnalyzer analyzer), (ITaggedAudioFile, IAudioAnalyzer)>(
-                    message =>
+                    async message =>
                     {
-                        message.analyzer.ProcessSamples(
+                        await message.analyzer.ProcessSamples(
                             message.audioFile.Path,
                             progress == null
                                 ? null
@@ -189,7 +189,7 @@ namespace AudioWorks.Api
                                     AudioFilesCompleted = audioFilesCompleted,
                                     FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
                                 })),
-                            cancellationToken);
+                            cancellationToken).ConfigureAwait(false);
 
                         CopyStringProperties(message.analyzer.GetResult(), message.audioFile.Metadata);
 
