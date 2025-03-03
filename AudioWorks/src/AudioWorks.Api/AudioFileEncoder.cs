@@ -33,7 +33,7 @@ namespace AudioWorks.Api
         readonly EncodedPath? _encodedFileName;
         readonly EncodedPath? _encodedDirectoryName;
         readonly ExportFactory<IAudioEncoder> _encoderFactory;
-        readonly int _maxDegreeOfParallelism = Environment.ProcessorCount;
+        readonly int _maxDegreeOfParallelism = (int) Math.Round(Environment.ProcessorCount * 1.5);
         readonly SettingDictionary _settings;
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace AudioWorks.Api
 
         /// <summary>
         /// Gets or sets the maximum degree of parallelism. The default value is equal to
-        /// <see cref="Environment.ProcessorCount"/>.
+        /// <see cref="Environment.ProcessorCount"/> * 1.5.
         /// </summary>
         /// <value>The maximum degree of parallelism.</value>
         /// <exception cref="ArgumentOutOfRangeException">Throw in <paramref name="value"/> is less than 1.</exception>

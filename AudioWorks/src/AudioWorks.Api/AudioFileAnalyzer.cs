@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using AudioWorks.Common;
@@ -30,12 +31,12 @@ namespace AudioWorks.Api
     public sealed class AudioFileAnalyzer
     {
         readonly ExportFactory<IAudioAnalyzer> _analyzerFactory;
-        readonly int _maxDegreeOfParallelism = Environment.ProcessorCount;
+        readonly int _maxDegreeOfParallelism = (int) Math.Round(Environment.ProcessorCount * 1.5);
         readonly SettingDictionary _settings;
 
         /// <summary>
         /// Gets or sets the maximum degree of parallelism. The default value is equal to
-        /// <see cref="Environment.ProcessorCount"/>.
+        /// <see cref="Environment.ProcessorCount"/> * 1.5.
         /// </summary>
         /// <value>The maximum degree of parallelism.</value>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is less than 1.</exception>
