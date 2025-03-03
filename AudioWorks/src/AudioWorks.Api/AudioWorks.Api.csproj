@@ -14,7 +14,6 @@
     <None Include="Icon.png" PackagePath="\" Pack="true" />
     <None Include="Readme.md" PackagePath="\" Pack="true"/>
     <ProjectReference Include="..\AudioWorks.Extensibility\AudioWorks.Extensibility.csproj" />
-    <PackageReference Include="System.Threading.Tasks.Dataflow" Version="8.0.1" />
   </ItemGroup>
 
 </Project>

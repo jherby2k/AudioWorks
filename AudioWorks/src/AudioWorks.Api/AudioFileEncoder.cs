@@ -16,12 +16,10 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Collections.Generic;
 using System.Composition;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
 
@@ -180,8 +178,6 @@ namespace AudioWorks.Api
         /// <returns>The new audio files.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
-        [SuppressMessage("Maintainability", "CA1506:Avoid excessive class coupling", Justification =
-            "Method is considered maintainable.")]
         public async Task<IEnumerable<ITaggedAudioFile>> EncodeAsync(
             IProgress<ProgressToken>? progress,
             CancellationToken cancellationToken,
@@ -199,12 +195,19 @@ namespace AudioWorks.Api
             var audioFilesCompleted = 0;
             var totalFramesCompleted = 0L;
 
-            // Encoding can happen in parallel
-            var encodeBlock = new TransformBlock<(ITaggedAudioFile audioFile, string outputPath), ITaggedAudioFile>(
-                async message =>
+            var outputPaths = GenerateOutputPaths(audioFiles);
+            var results = new TaggedAudioFile[audioFiles.Length];
+
+            await Parallel.ForAsync(0, audioFiles.Length,
+                new ParallelOptions
+                {
+                    CancellationToken = cancellationToken,
+                    MaxDegreeOfParallelism = MaxDegreeOfParallelism
+                },
+                async (i, c) =>
                 {
                     var tempOutputPath = Path.Combine(
-                        Path.GetDirectoryName(message.outputPath)!,
+                        Path.GetDirectoryName(outputPaths[i])!,
                         Path.GetRandomFileName());
 
                     try
@@ -219,12 +222,12 @@ namespace AudioWorks.Api
                             // Copy the source metadata, so it can't be modified
                             encoderExport.Value.Initialize(
                                 outputStream,
-                                message.audioFile.Info,
-                                new(message.audioFile.Metadata),
+                                audioFiles[i].Info,
+                                new(audioFiles[i].Metadata),
                                 Settings);
 
                             await encoderExport.Value.ProcessSamples(
-                                message.audioFile.Path,
+                                audioFiles[i].Path,
                                 progress == null
                                     ? null
                                     : new SimpleProgress<int>(framesCompleted => progress.Report(new()
@@ -233,17 +236,16 @@ namespace AudioWorks.Api
                                         AudioFilesCompleted = audioFilesCompleted,
                                         FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
                                     })),
-                                cancellationToken).ConfigureAwait(false);
+                                c).ConfigureAwait(false);
 
                             encoderExport.Value.Finish();
-
-                            Interlocked.Increment(ref audioFilesCompleted);
                         }
                         finally
                         {
                             // Dispose the encoder before closing the stream
                             encoderExport.Dispose();
-                            outputStream?.Dispose();
+                            if (outputStream != null)
+                                await outputStream.DisposeAsync().ConfigureAwait(false);
                         }
                     }
                     catch (Exception)
@@ -255,25 +257,30 @@ namespace AudioWorks.Api
                     }
 
                     // Rename the temporary file to the final name
-                    File.Delete(message.outputPath);
-                    File.Move(tempOutputPath, message.outputPath);
+                    File.Delete(outputPaths[i]);
+                    File.Move(tempOutputPath, outputPaths[i]);
 
-                    return new TaggedAudioFile(message.outputPath);
-                },
-                new()
-                {
-                    MaxDegreeOfParallelism = MaxDegreeOfParallelism,
-                    SingleProducerConstrained = true,
-                    CancellationToken = cancellationToken
-                });
+                    results[i] = new(outputPaths[i]);
 
-            var batchBlock = new BatchBlock<ITaggedAudioFile>(audioFiles.Length);
-            encodeBlock.LinkTo(batchBlock, new() { PropagateCompletion = true });
+                    Interlocked.Increment(ref audioFilesCompleted);
+                }).ConfigureAwait(false);
 
-            string outputExtension;
+            progress?.Report(new()
+            {
+                AudioFilesCompleted = audioFilesCompleted,
+                FramesCompleted = totalFramesCompleted
+            });
+
+            return results;
+        }
+
+        string[] GenerateOutputPaths(ITaggedAudioFile[] audioFiles)
+        {
+            string fileExtension;
             using (var export = _encoderFactory.CreateExport())
-                outputExtension = export.Value.FileExtension;
-            var uniqueOutputPaths = new List<string>(audioFiles.Length);
+                fileExtension = export.Value.FileExtension;
+
+            var result = new List<string>(audioFiles.Length);
 
             // File names need to be worked out sequentially, in case of conflicts
             foreach (var audioFile in audioFiles)
@@ -282,42 +289,20 @@ namespace AudioWorks.Api
                     Directory.CreateDirectory(_encodedDirectoryName?.ReplaceWith(audioFile.Metadata) ??
                                               Path.GetDirectoryName(audioFile.Path)!).FullName,
                     (_encodedFileName?.ReplaceWith(audioFile.Metadata) ??
-                     Path.GetFileNameWithoutExtension(audioFile.Path)) + outputExtension), uniqueOutputPaths);
+                     Path.GetFileNameWithoutExtension(audioFile.Path)) + fileExtension), result);
+
+                result.Add(outputPath);
 
                 if (File.Exists(outputPath) && !Overwrite)
                     throw new IOException($"The file '{outputPath}' already exists.");
-
-                await encodeBlock.SendAsync((audioFile, outputPath), cancellationToken).ConfigureAwait(false);
             }
 
-            try
-            {
-                var result = await batchBlock.ReceiveAsync(cancellationToken).ConfigureAwait(false);
-
-                progress?.Report(new()
-                {
-                    AudioFilesCompleted = audioFilesCompleted,
-                    FramesCompleted = totalFramesCompleted
-                });
-
-                return result;
-            }
-            catch (InvalidOperationException)
-            {
-                // Throw the real exception that caused the pipeline to cancel
-                if (batchBlock.Completion.Exception != null)
-                    throw batchBlock.Completion.Exception.GetBaseException();
-                throw;
-            }
+            return [.. result];
         }
 
-        static string GetUniquePath(string path, List<string> uniquePaths)
-        {
-            if (uniquePaths.Contains(path, StringComparer.OrdinalIgnoreCase))
-                path = $"{Path.ChangeExtension(path, null)}~{uniquePaths.Count}{Path.GetExtension(path)}";
-
-            uniquePaths.Add(path);
-            return path;
-        }
+        static string GetUniquePath(string path, List<string> existingPaths) =>
+            existingPaths.Contains(path, StringComparer.OrdinalIgnoreCase)
+                ? $"{Path.ChangeExtension(path, null)}~{existingPaths.Count}{Path.GetExtension(path)}"
+                : path;
     }
 }
