@@ -49,7 +49,7 @@ namespace AudioWorks.Commands
         public SwitchParameter Force { get; set; }
 
         [Parameter, ValidateRange(1, int.MaxValue)]
-        public int MaxDegreeOfParallelism { get; set; } = Environment.ProcessorCount;
+        public int MaxDegreeOfParallelism { get; set; } = (int) Math.Round(Environment.ProcessorCount * 1.5);
 
         protected override void ProcessRecord() => _sourceAudioFiles.Add(AudioFile!);
 
