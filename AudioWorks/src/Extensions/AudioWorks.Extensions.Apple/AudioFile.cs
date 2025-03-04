@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
 
@@ -73,10 +74,13 @@ namespace AudioWorks.Extensions.Apple
             return unmanagedValue;
         }
 
-        internal T GetProperty<T>(AudioFilePropertyId id) where T : unmanaged
+        internal T GetProperty<
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors |
+                                        DynamicallyAccessedMemberTypes.NonPublicConstructors)]
+            T>(AudioFilePropertyId id) where T : unmanaged
         {
-            var size = (uint) Marshal.SizeOf(typeof(T));
-            var unmanagedValue = Marshal.AllocHGlobal((int)size);
+            var size = (uint) Marshal.SizeOf<T>();
+            var unmanagedValue = Marshal.AllocHGlobal((int) size);
             try
             {
                 CoreAudioToolbox.AudioFileGetProperty(Handle, id, ref size, unmanagedValue);
