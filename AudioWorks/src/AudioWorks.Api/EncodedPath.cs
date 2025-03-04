@@ -55,7 +55,7 @@ namespace AudioWorks.Api
                     return $"Unknown {propertyName}";
 
                 var sanitizedPropertyValue =
-                    new string(propertyValue.Where(character => !_invalidChars.Contains(character)).ToArray());
+                    new string([.. propertyValue.Where(character => !_invalidChars.Contains(character))]);
 
                 // Remove any double spaces introduced in sanitization
                 if (sanitizedPropertyValue.Contains("  ", StringComparison.Ordinal) &&
