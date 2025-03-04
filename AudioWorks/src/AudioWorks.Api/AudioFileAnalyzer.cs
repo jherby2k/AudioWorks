@@ -51,6 +51,13 @@ namespace AudioWorks.Api
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether various performance optimizations will be applied. This defaults to
+        /// true, and should only be disabled for testing or troubleshooting purposes.
+        /// </summary>
+        /// <value><c>false</c> if optimizations should be skipped; otherwise, <c>true</c>.</value>
+        public bool UseOptimizations { get; init; } = true;
+
+        /// <summary>
         /// Gets or sets the analyzer settings.
         /// </summary>
         /// <value>The settings.</value>
@@ -142,6 +149,8 @@ namespace AudioWorks.Api
             // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
             if (audioFiles.Any(audioFile => audioFile == null))
                 throw new ArgumentException("One or more audio files are null.", nameof(audioFiles));
+
+            SampleBuffer.UseOptimizations = UseOptimizations;
 
             progress?.Report(new() { AudioFilesCompleted = 0, FramesCompleted = 0 });
 
