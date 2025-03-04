@@ -19,6 +19,18 @@ namespace AudioWorks.TestUtilities
 {
     public static class PathUtility
     {
+        public static string GetMime(string path) =>
+            Path.GetExtension(path) switch
+            {
+                ".wav" => "audio/wav",
+                ".flac" => "audio/flac",
+                ".m4a" => "audio/mp4",
+                ".mp3" => "audio/mpeg",
+                ".ogg" => "audio/ogg",
+                ".opus" => "audio/ogg",
+                _ => "application/octet-stream",
+            };
+
         public static string GetTestFileRoot()
         {
             var rootDirectory = new DirectoryInfo(

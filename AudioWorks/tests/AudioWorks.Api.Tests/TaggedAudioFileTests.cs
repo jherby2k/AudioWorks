@@ -16,6 +16,7 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.IO;
 using System.Text.Json;
+using System.Threading;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
 using AudioWorks.TestUtilities.DataSources;
@@ -288,6 +289,13 @@ namespace AudioWorks.Api.Tests
                 audioFile.Metadata.CoverArt = CoverArtFactory.GetOrCreate(Path.Combine(sourceDirectory, imageFileName));
 
             audioFile.SaveMetadata(settings);
+
+            var resultData = File.ReadAllBytes(audioFile.Path);
+
+            TestContext.Current.AddAttachment(
+                Path.GetFileNameWithoutExtension(audioFile.Path),
+                resultData,
+                PathUtility.GetMime(audioFile.Path));
 
             Assert.Contains(HashUtility.CalculateHash(audioFile.Path), validHashes);
         }

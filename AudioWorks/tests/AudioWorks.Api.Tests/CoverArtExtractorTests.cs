@@ -44,7 +44,18 @@ namespace AudioWorks.Api.Tests
             }
                 .Extract(new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", sourceFileName)));
 
-            Assert.Equal(expectedHash, result == null ? string.Empty : HashUtility.CalculateHash(result.FullName));
+            byte[]? resultData = null;
+
+            if (result != null)
+            {
+                resultData = File.ReadAllBytes(result.FullName);
+                TestContext.Current.AddAttachment(
+                    Path.GetFileNameWithoutExtension(result.Name),
+                    resultData,
+                    PathUtility.GetMime(result.FullName));
+            }
+
+            Assert.Equal(expectedHash, result == null ? string.Empty : HashUtility.CalculateHash(resultData));
         }
     }
 }

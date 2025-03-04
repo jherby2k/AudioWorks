@@ -16,6 +16,7 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AudioWorks.Common;
 using AudioWorks.TestUtilities;
@@ -76,17 +77,26 @@ namespace AudioWorks.Api.Tests
             string[] validHashes)
         {
             var results = (await new AudioFileEncoder(encoderName)
-                {
-                    EncodedDirectoryName = Path.Combine("Output", "Encode", "Valid"),
-                    EncodedFileName = $"{index:000} - {Path.GetFileNameWithoutExtension(sourceFileName)}",
-                    Settings = settings,
-                    Overwrite = true
-                }
+            {
+                EncodedDirectoryName = Path.Combine("Output", "Encode", "Valid"),
+                EncodedFileName = $"{index:000} - {Path.GetFileNameWithoutExtension(sourceFileName)}",
+                Settings = settings,
+                Overwrite = true
+            }
                 .EncodeAsync(new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", sourceFileName)))
                 .ConfigureAwait(true)).ToArray();
 
             Assert.Single(results);
-            Assert.Contains(HashUtility.CalculateHash(results[0].Path), validHashes);
+
+            var resultPath = results[0].Path;
+            var resultData = await File.ReadAllBytesAsync(resultPath, CancellationToken.None);
+
+            TestContext.Current.AddAttachment(
+                Path.GetFileNameWithoutExtension(resultPath),
+                resultData,
+                PathUtility.GetMime(resultPath));
+
+            Assert.Contains(HashUtility.CalculateHash(resultData), validHashes);
         }
 
         [Theory(DisplayName = "AudioFileEncoder's Encode method creates the expected audio file without optimization")]
