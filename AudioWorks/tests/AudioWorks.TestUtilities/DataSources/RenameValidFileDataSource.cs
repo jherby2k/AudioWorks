@@ -69,21 +69,20 @@ namespace AudioWorks.TestUtilities.DataSources
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 new()
                 {
-                    Title = "Test Title <> with |invalid \"characters\""
+                    Title = "Test Title <> [with] |invalid \"characters\""
                 },
                 "{Title}",
                 "Test Title with invalid characters.wav"
             ) { Skip = !RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "Windows only" : null },
 
-            // Metadata with invalid characters on Windows
+            // Metadata with invalid characters on Linux and MacOS
             new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 new()
                 {
-                    Title = "Test Title <> with |invalid \"characters\""
+                    Title = "Test Title <> [with] |invalid \"characters\""
                 },
                 "{Title}",
-                // These characters are all valid on Linux and MacOS
                 "Test Title <> with |invalid \"characters\".wav"
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "Linux and MacOS only" : null },
 

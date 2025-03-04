@@ -27,7 +27,8 @@ namespace AudioWorks.Api
         [GeneratedRegex(@"\{[^{]+\}")]
         private static partial Regex ReplacerRegex();
 
-        static readonly char[] _invalidChars = Path.GetInvalidFileNameChars();
+        // '[' and ']' are included because they don't work well in PowerShell
+        static readonly char[] _invalidChars = [.. Path.GetInvalidFileNameChars(), '[', ']'];
         readonly string _encoded;
 
         internal EncodedPath(string encoded)
