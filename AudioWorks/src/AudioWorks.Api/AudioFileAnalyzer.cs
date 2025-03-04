@@ -21,6 +21,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
+using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Api
 {
@@ -152,6 +153,12 @@ namespace AudioWorks.Api
 
             SampleBuffer.UseOptimizations = UseOptimizations;
 
+            var logger = LoggerManager.LoggerFactory.CreateLogger<AudioFileAnalyzer>();
+            logger.LogDebug("Preparing to analyze {count} audio file(s).", audioFiles.Length);
+            logger.LogDebug("Optimizations are {optimized}.", UseOptimizations ? "enabled" : "disabled");
+            logger.LogDebug("Analyzing up to {maxParallel} file(s) in parallel.",
+                Math.Min(_maxDegreeOfParallelism, audioFiles.Length));
+
             progress?.Report(new() { AudioFilesCompleted = 0, FramesCompleted = 0 });
 
             var audioFilesCompleted = 0;
@@ -201,6 +208,8 @@ namespace AudioWorks.Api
 
                     for (var i = 0; i < audioFiles.Length; i++)
                         CopyStringProperties(analyzerExports[i].Value.GetGroupResult(), audioFiles[i].Metadata);
+
+                    logger.LogDebug("Finished analyzing {count} audio file(s).", audioFiles.Length);
                 }
                 finally
                 {
