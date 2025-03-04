@@ -53,28 +53,22 @@ namespace AudioWorks.TestUtilities.DataSources
         ];
 
         public static IEnumerable<TheoryDataRow<string>> FileNames =>
-            _data.Select(item => new TheoryDataRow<string>(item.Data.Item1)
-                { Skip = item.Skip });
+            _data.Select(item => new TheoryDataRow<string>(item.Data.Item1));
 
         public static IEnumerable<TheoryDataRow<string, int>> FileNamesAndWidth =>
-            _data.Select(item => new TheoryDataRow<string, int>(item.Data.Item1, item.Data.Item2)
-                { Skip = item.Skip });
+            _data.Select(item => new TheoryDataRow<string, int>(item.Data.Item1, item.Data.Item2));
 
         public static IEnumerable<TheoryDataRow<string, int>> FileNamesAndHeight =>
-            _data.Select(item => new TheoryDataRow<string, int>(item.Data.Item1, item.Data.Item3)
-                { Skip = item.Skip });
+            _data.Select(item => new TheoryDataRow<string, int>(item.Data.Item1, item.Data.Item3));
 
         public static IEnumerable<TheoryDataRow<string, int>> FileNamesAndColorDepth =>
-            _data.Select(item => new TheoryDataRow<string, int>(item.Data.Item1, item.Data.Item4)
-                { Skip = item.Skip });
+            _data.Select(item => new TheoryDataRow<string, int>(item.Data.Item1, item.Data.Item4));
 
         public static IEnumerable<TheoryDataRow<string, bool>> FileNamesAndLossless =>
-            _data.Select(item => new TheoryDataRow<string, bool>(item.Data.Item1, item.Data.Item5)
-                { Skip = item.Skip });
+            _data.Select(item => new TheoryDataRow<string, bool>(item.Data.Item1, item.Data.Item5));
 
         public static IEnumerable<TheoryDataRow<string, string>> FileNamesAndMimeType =>
-            _data.Select(item => new TheoryDataRow<string, string>(item.Data.Item1, item.Data.Item6)
-                { Skip = item.Skip });
+            _data.Select(item => new TheoryDataRow<string, string>(item.Data.Item1, item.Data.Item6));
 
         public static IEnumerable<TheoryDataRow<string, string>> FileNamesAndDataHash =>
             _data.Select(item => new TheoryDataRow<string, string>(item.Data.Item1, item.Data.Item7));

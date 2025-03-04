@@ -1749,7 +1749,6 @@ namespace AudioWorks.TestUtilities.DataSources
         public static IEnumerable<TheoryDataRow<int, string, AudioMetadata, string, SettingDictionary, string[]>> Data =>
             _data.Select((item, index) =>
                 new TheoryDataRow<int, string, AudioMetadata, string, SettingDictionary, string[]>(
-                        index, item.Data.Item1, item.Data.Item2, item.Data.Item3, item.Data.Item4, item.Data.Item5)
-                    { Skip = item.Skip });
+                        index, item.Data.Item1, item.Data.Item2, item.Data.Item3, item.Data.Item4, item.Data.Item5));
     }
 }

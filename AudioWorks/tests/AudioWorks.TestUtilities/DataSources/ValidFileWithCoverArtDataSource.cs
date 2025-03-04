@@ -161,28 +161,25 @@ namespace AudioWorks.TestUtilities.DataSources
         ];
 
         public static IEnumerable<TheoryDataRow<string, int>> FileNamesAndWidth =>
-            _data.Select(item => new TheoryDataRow<string, int>(item.Data.Item1, item.Data.Item2)
-                { Skip = item.Skip });
+            _data.Select(item => new TheoryDataRow<string, int>(item.Data.Item1, item.Data.Item2));
 
         public static IEnumerable<TheoryDataRow<string, int>> FileNamesAndHeight =>
-            _data.Select(item => new TheoryDataRow<string, int>(item.Data.Item1, item.Data.Item3)
-                { Skip = item.Skip });
+            _data.Select(item => new TheoryDataRow<string, int>(item.Data.Item1, item.Data.Item3));
 
         public static IEnumerable<TheoryDataRow<string, int>> FileNamesAndColorDepth =>
-            _data.Select(item => new TheoryDataRow<string, int>(item.Data.Item1, item.Data.Item4)
-                { Skip = item.Skip });
+            _data.Select(item => new TheoryDataRow<string, int>(item.Data.Item1, item.Data.Item4));
 
         public static IEnumerable<TheoryDataRow<string, bool>> FileNamesAndLossless =>
-            _data.Select(item => new TheoryDataRow<string, bool>(item.Data.Item1, item.Data.Item5)
-                { Skip = item.Skip });
+            _data.Select(item => new TheoryDataRow<string, bool>(item.Data.Item1, item.Data.Item5));
 
-        public static TheoryData<string, string> FileNamesAndMimeType =>
-            new(_data.Select(item => (item.Data.Item1, item.Data.Item6)));
+        public static IEnumerable<TheoryDataRow<string, string>> FileNamesAndMimeType =>
+            _data.Select(item => new TheoryDataRow<string, string>(item.Data.Item1, item.Data.Item6));
 
-        public static TheoryData<string, string> FileNamesAndDataHash =>
-            new(_data.Select(item => (item.Data.Item1, item.Data.Item7)));
+        public static IEnumerable<TheoryDataRow<string, string>> FileNamesAndDataHash =>
+            _data.Select(item => new TheoryDataRow<string, string>(item.Data.Item1, item.Data.Item7));
 
-        public static TheoryData<int, string, string> IndexedFileNamesAndDataHash =>
-            new(_data.Select((item, index) => (index, item.Data.Item1, item.Data.Item7)));
+        public static IEnumerable<TheoryDataRow<int, string, string>> IndexedFileNamesAndDataHash =>
+            _data.Select((item, index) =>
+                new TheoryDataRow<int, string, string>(index, item.Data.Item1, item.Data.Item7));
     }
 }

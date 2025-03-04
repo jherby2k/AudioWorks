@@ -13,6 +13,7 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -1358,18 +1359,16 @@ namespace AudioWorks.TestUtilities.DataSources
         ];
 
         public static IEnumerable<TheoryDataRow<string>> FileNames =>
-            _data.Select(item => new TheoryDataRow<string>(item.Data.Item1) { Skip = item.Skip });
+            _data.Select(item => new TheoryDataRow<string>(item.Data.Item1));
 
         public static IEnumerable<TheoryDataRow<string>> FileNamesSaveCompatible =>
-            _data.Where(item => !Path.GetExtension(item.Data.Item1).Equals(".wav", System.StringComparison.OrdinalIgnoreCase))
-                .Select(item => new TheoryDataRow<string>(item.Data.Item1) { Skip = item.Skip });
+            _data.Where(item => !Path.GetExtension(item.Data.Item1).Equals(".wav", StringComparison.OrdinalIgnoreCase))
+                .Select(item => new TheoryDataRow<string>(item.Data.Item1));
 
         public static IEnumerable<TheoryDataRow<string, AudioInfo>> FileNamesAndAudioInfo =>
-            _data.Select(item => new TheoryDataRow<string, AudioInfo>(item.Data.Item1, item.Data.Item2)
-                { Skip = item.Skip });
+            _data.Select(item => new TheoryDataRow<string, AudioInfo>(item.Data.Item1, item.Data.Item2));
 
         public static IEnumerable<TheoryDataRow<string, AudioMetadata>> FileNamesAndMetadata =>
-            _data.Select(item => new TheoryDataRow<string, AudioMetadata>(item.Data.Item1, item.Data.Item3)
-                { Skip = item.Skip });
+            _data.Select(item => new TheoryDataRow<string, AudioMetadata>(item.Data.Item1, item.Data.Item3));
     }
 }

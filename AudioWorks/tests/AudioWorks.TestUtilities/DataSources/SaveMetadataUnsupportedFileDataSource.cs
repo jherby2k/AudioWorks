@@ -27,6 +27,6 @@ namespace AudioWorks.TestUtilities.DataSources
         ];
 
         public static IEnumerable<TheoryDataRow<int, string>> Data =>
-            _data.Select((item, index) => new TheoryDataRow<int, string>(index, item.Data) { Skip = item.Skip });
+            _data.Select((item, index) => new TheoryDataRow<int, string>(index, item.Data));
     }
 }
