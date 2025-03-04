@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using SixLabors.ImageSharp;
@@ -44,9 +45,9 @@ namespace AudioWorks.Common
         public string FileExtension { get; }
 
         /// <inheritdoc/>
-#pragma warning disable CA1819
+        [SuppressMessage("Performance", "CA1819:Properties should not return arrays",
+            Justification = "Property is part of a Data Transfer Object")]
         public byte[] Data { get; }
-#pragma warning restore CA1819
 
         internal CoverArt(Stream stream)
         {

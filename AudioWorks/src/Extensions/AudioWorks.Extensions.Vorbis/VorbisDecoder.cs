@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
@@ -25,10 +24,8 @@ namespace AudioWorks.Extensions.Vorbis
 
         internal VorbisDecoder() => LibVorbis.InfoInit(_info);
 
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Native method is always expected to return 0")]
         internal void HeaderIn(in VorbisComment comment, in OggPacket packet) =>
-            LibVorbis.SynthesisHeaderIn(_info, comment, packet);
+            _ = LibVorbis.SynthesisHeaderIn(_info, comment, packet);
 
         internal VorbisInfo GetInfo() => Marshal.PtrToStructure<VorbisInfo>(_info);
 

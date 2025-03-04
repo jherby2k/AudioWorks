@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
@@ -26,45 +25,35 @@ namespace AudioWorks.Extensions.Vorbis
 
         internal nint DspState { get; } = Marshal.AllocHGlobal(sizeof(VorbisDspState));
 
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Native methods are always expected to return 0")]
         internal VorbisEncoder(int channels, int sampleRate, float baseQuality)
         {
             LibVorbis.InfoInit(_info);
-            LibVorbisEnc.EncodeInitVbr(_info, new(channels), new(sampleRate), baseQuality);
-            LibVorbis.AnalysisInit(DspState, _info);
-            LibVorbis.BlockInit(DspState, _block);
+            _ = LibVorbisEnc.EncodeInitVbr(_info, new(channels), new(sampleRate), baseQuality);
+            _ = LibVorbis.AnalysisInit(DspState, _info);
+            _ = LibVorbis.BlockInit(DspState, _block);
         }
 
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Native methods are always expected to return 0")]
         internal VorbisEncoder(int channels, int sampleRate, int maxBitRate, int nominalBitRate, int minBitRate)
         {
             LibVorbis.InfoInit(_info);
-            LibVorbisEnc.EncodeInit(_info,
+            _ = LibVorbisEnc.EncodeInit(_info,
                 new(channels), new(sampleRate), new(maxBitRate), new(nominalBitRate), new(minBitRate));
-            LibVorbis.AnalysisInit(DspState, _info);
-            LibVorbis.BlockInit(DspState, _block);
+            _ = LibVorbis.AnalysisInit(DspState, _info);
+            _ = LibVorbis.BlockInit(DspState, _block);
         }
 
         internal nint GetBuffer(int samples) => LibVorbis.AnalysisBuffer(DspState, samples);
 
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Native method is always expected to return 0")]
-        internal void Wrote(int samples) => LibVorbis.AnalysisWrote(DspState, samples);
+        internal void Wrote(int samples) => _ = LibVorbis.AnalysisWrote(DspState, samples);
 
         internal bool BlockOut() => LibVorbis.AnalysisBlockOut(DspState, _block) == 1;
 
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Native method is always expected to return 0")]
-        internal void Analysis(nint packet) => LibVorbis.Analysis(_block, packet);
+        internal void Analysis(nint packet) => _ = LibVorbis.Analysis(_block, packet);
 
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Native method is always expected to return 0")]
-        internal void AddBlock() => LibVorbis.BitrateAddBlock(_block);
+        internal void AddBlock() => _ = LibVorbis.BitrateAddBlock(_block);
 
         internal bool FlushPacket(out OggPacket packet) =>
-            LibVorbis.BitrateFlushPacket(DspState, out packet) == 1;
+            _ = LibVorbis.BitrateFlushPacket(DspState, out packet) == 1;
 
         public void Dispose()
         {

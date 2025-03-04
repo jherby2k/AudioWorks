@@ -25,9 +25,9 @@ namespace AudioWorks.Extensions.Flac.Decoder
     {
         readonly LibFlac.StreamDecoderWriteCallback _writeCallback;
         readonly LibFlac.StreamDecoderMetadataCallback _metadataCallback;
-#pragma warning disable CA2213 // Disposable fields should be disposed
+        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed",
+            Justification = "Type does not have dispose ownership")]
         readonly Stream _stream;
-#pragma warning restore CA2213 // Disposable fields should be disposed
         GCHandle _streamHandle;
 
         protected StreamDecoderHandle Handle { get; } = LibFlac.StreamDecoderNew();
@@ -40,14 +40,12 @@ namespace AudioWorks.Extensions.Flac.Decoder
             _stream = stream;
         }
 
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Native method is always expected to return 0")]
         internal void Initialize()
         {
             // The callbacks have to be static, so pass the output stream through as userData
             _streamHandle = GCHandle.Alloc(_stream);
 
-            LibFlac.StreamDecoderInitStream(Handle,
+            _ = LibFlac.StreamDecoderInitStream(Handle,
                 &ReadCallback,
                 &SeekCallback,
                 &TellCallback,

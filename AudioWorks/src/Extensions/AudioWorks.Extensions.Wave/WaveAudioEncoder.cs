@@ -22,8 +22,8 @@ using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensions.Wave
 {
-    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
-        "Instances are created via MEF.")]
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes",
+        Justification = "Instances are created via MEF")]
     [AudioEncoderExport("Wave", "Waveform Audio File Format")]
     sealed class WaveAudioEncoder : IAudioEncoder, IDisposable
     {

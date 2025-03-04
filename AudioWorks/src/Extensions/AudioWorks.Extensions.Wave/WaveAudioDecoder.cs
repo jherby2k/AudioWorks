@@ -22,8 +22,8 @@ using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.Wave
 {
-    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
-        "Instances are created via MEF.")]
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes",
+        Justification = "Instances are created via MEF")]
     [AudioDecoderExport(".wav")]
     sealed class WaveAudioDecoder : IAudioDecoder, IDisposable
     {

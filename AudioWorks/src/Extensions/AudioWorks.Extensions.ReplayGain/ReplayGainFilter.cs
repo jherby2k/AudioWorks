@@ -24,8 +24,8 @@ using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.ReplayGain
 {
-    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
-        "Instances are created via MEF.")]
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes",
+        Justification = "Instances are created via MEF")]
     [AudioFilterExport("ReplayGain")]
     sealed class ReplayGainFilter : IAudioFilter
     {

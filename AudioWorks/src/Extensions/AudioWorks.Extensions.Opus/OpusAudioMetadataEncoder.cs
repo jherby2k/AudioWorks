@@ -22,8 +22,8 @@ using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.Opus
 {
-    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
-        "Instances are created via MEF.")]
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes",
+        Justification = "Instances are created via MEF")]
     [AudioMetadataEncoderExport(".opus", "Opus", "Opus Comments")]
     sealed class OpusAudioMetadataEncoder : IAudioMetadataEncoder
     {

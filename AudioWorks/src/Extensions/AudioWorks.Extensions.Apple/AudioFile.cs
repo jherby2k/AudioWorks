@@ -28,9 +28,9 @@ namespace AudioWorks.Extensions.Apple
         readonly CoreAudioToolbox.AudioFileWriteCallback? _writeCallback;
         readonly CoreAudioToolbox.AudioFileSetSizeCallback? _setSizeCallback;
         // ReSharper restore PrivateFieldCanBeConvertedToLocalVariable
-#pragma warning disable CA2213 // Disposable fields should be disposed
+        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed",
+            Justification = "Type does not have dispose ownership")]
         readonly Stream _stream;
-#pragma warning restore CA2213 // Disposable fields should be disposed
         long _endOfData;
 
         protected AudioFileHandle Handle { get; }

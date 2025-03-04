@@ -28,9 +28,9 @@ namespace AudioWorks.Extensions.Flac.Encoder
     sealed class StreamEncoder : IDisposable
     {
         readonly StreamEncoderHandle _handle = LibFlac.StreamEncoderNew();
-#pragma warning disable CA2213 // Disposable fields should be disposed
+        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed",
+                    Justification = "Type does not have dispose ownership")]
         readonly Stream _stream;
-#pragma warning restore CA2213 // Disposable fields should be disposed
         GCHandle _streamHandle;
 
         internal StreamEncoder(Stream stream) => _stream = stream;
@@ -55,14 +55,12 @@ namespace AudioWorks.Extensions.Flac.Encoder
             LibFlac.StreamEncoderSetMetadata(_handle, handles, (uint) handles.Length);
         }
 
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Native method is always expected to return 0")]
         internal unsafe void Initialize()
         {
             // The callbacks have to be static, so pass the output stream through as userData
             _streamHandle = GCHandle.Alloc(_stream);
 
-            LibFlac.StreamEncoderInitStream(
+            _ = LibFlac.StreamEncoderInitStream(
                 _handle, &WriteCallback, &SeekCallback, &TellCallback, null, GCHandle.ToIntPtr(_streamHandle));
         }
 

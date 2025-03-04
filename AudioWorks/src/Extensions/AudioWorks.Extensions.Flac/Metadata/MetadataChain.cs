@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
 
@@ -22,9 +23,9 @@ namespace AudioWorks.Extensions.Flac.Metadata
     sealed class MetadataChain : IDisposable
     {
         static readonly IoCallbacks _callbacks = InitializeCallbacks();
-#pragma warning disable CA2213 // Disposable fields should be disposed
+        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed",
+                    Justification = "Type does not have dispose ownership")]
         readonly Stream _stream;
-#pragma warning restore CA2213 // Disposable fields should be disposed
         readonly MetadataChainHandle _handle = LibFlac.MetadataChainNew();
 
         internal MetadataChain(Stream stream) => _stream = stream;

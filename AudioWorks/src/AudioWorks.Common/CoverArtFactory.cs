@@ -15,7 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -122,8 +121,6 @@ namespace AudioWorks.Common
             }
         }
 
-        [SuppressMessage("Microsoft.Security", "CA5351:Do not use insecure cryptographic algorithm MD5.",
-            Justification = "Usage is not security critical")]
         static string GetHash(Stream stream)
         {
             using (var md5 = MD5.Create())

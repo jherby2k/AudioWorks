@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using AudioWorks.TestUtilities;
 using Xunit;
@@ -31,20 +30,16 @@ namespace AudioWorks.Common.Tests
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata{ Title = null! });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Title")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidTitle()
         {
-            new AudioMetadata { Title = "Test Title" };
+            _ = new AudioMetadata { Title = "Test Title" };
             Assert.True(true);
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Title")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyTitle()
         {
-            new AudioMetadata { Title = string.Empty };
+            _ = new AudioMetadata { Title = string.Empty };
             Assert.True(true);
         }
 
@@ -62,20 +57,16 @@ namespace AudioWorks.Common.Tests
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Artist = null! });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Artist")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidArtist()
         {
-            new AudioMetadata { Artist = "Test Artist" };
+            _ = new AudioMetadata { Artist = "Test Artist" };
             Assert.True(true);
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Artist")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyArtist()
         {
-            new AudioMetadata { Artist = string.Empty };
+            _ = new AudioMetadata { Artist = string.Empty };
             Assert.True(true);
         }
 
@@ -93,20 +84,16 @@ namespace AudioWorks.Common.Tests
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Album = null! });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Album")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidAlbum()
         {
-            new AudioMetadata { Album = "Test Album" };
+            _ = new AudioMetadata { Album = "Test Album" };
             Assert.True(true);
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Album")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyAlbum()
         {
-            new AudioMetadata { Album = string.Empty };
+            _ = new AudioMetadata { Album = string.Empty };
             Assert.True(true);
         }
 
@@ -124,20 +111,16 @@ namespace AudioWorks.Common.Tests
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { AlbumArtist = null! });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid AlbumArtist")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidAlbumArtist()
         {
-            new AudioMetadata { AlbumArtist = "Test Album Artist" };
+            _ = new AudioMetadata { AlbumArtist = "Test Album Artist" };
             Assert.True(true);
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty AlbumArtist")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyAlbumArtist()
         {
-            new AudioMetadata { AlbumArtist = string.Empty };
+            _ = new AudioMetadata { AlbumArtist = string.Empty };
             Assert.True(true);
         }
 
@@ -155,20 +138,16 @@ namespace AudioWorks.Common.Tests
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Composer = null! });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Composer")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidComposer()
         {
-            new AudioMetadata { Composer = "Test Composer" };
+            _ = new AudioMetadata { Composer = "Test Composer" };
             Assert.True(true);
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Composer")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyComposer()
         {
-            new AudioMetadata { Composer = string.Empty };
+            _ = new AudioMetadata { Composer = string.Empty };
             Assert.True(true);
         }
 
@@ -186,20 +165,16 @@ namespace AudioWorks.Common.Tests
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Genre = null! });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Genre")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidGenre()
         {
-            new AudioMetadata { Genre = "Test Genre" };
+            _ = new AudioMetadata { Genre = "Test Genre" };
             Assert.True(true);
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Genre")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyGenre()
         {
-            new AudioMetadata { Genre = string.Empty };
+            _ = new AudioMetadata { Genre = string.Empty };
             Assert.True(true);
         }
 
@@ -217,20 +192,16 @@ namespace AudioWorks.Common.Tests
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata { Comment = null! });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Comment")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidComment()
         {
-            new AudioMetadata { Comment = "Test Comment" };
+            _ = new AudioMetadata { Comment = "Test Comment" };
             Assert.True(true);
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Comment")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyComment()
         {
-            new AudioMetadata { Comment = string.Empty };
+            _ = new AudioMetadata { Comment = string.Empty };
             Assert.True(true);
         }
 
@@ -260,20 +231,16 @@ namespace AudioWorks.Common.Tests
             Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { Day = "##" });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Day")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidDay()
         {
-            new AudioMetadata { Day = "31" };
+            _ = new AudioMetadata { Day = "31" };
             Assert.True(true);
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Day")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyDay()
         {
-            new AudioMetadata { Day = string.Empty };
+            _ = new AudioMetadata { Day = string.Empty };
             Assert.True(true);
         }
 
@@ -307,20 +274,16 @@ namespace AudioWorks.Common.Tests
             Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { Month = "##" });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Month")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidMonth()
         {
-            new AudioMetadata { Month = "12" };
+            _ = new AudioMetadata { Month = "12" };
             Assert.True(true);
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Month")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyMonth()
         {
-            new AudioMetadata { Month = string.Empty };
+            _ = new AudioMetadata { Month = string.Empty };
             Assert.True(true);
         }
 
@@ -358,20 +321,16 @@ namespace AudioWorks.Common.Tests
             Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { Year = "0100" });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid Year")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidYear()
         {
-            new AudioMetadata { Year = "2000" };
+            _ = new AudioMetadata { Year = "2000" };
             Assert.True(true);
         }
 
         [Fact(DisplayName = "AudioMetadata accepts an empty Year")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyYear()
         {
-            new AudioMetadata { Year = string.Empty };
+            _ = new AudioMetadata { Year = string.Empty };
             Assert.True(true);
         }
 
@@ -401,11 +360,9 @@ namespace AudioWorks.Common.Tests
             Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { TrackNumber = "##" });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid TrackNumber")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidTrackNumber()
         {
-            new AudioMetadata { TrackNumber = "1" };
+            _ = new AudioMetadata { TrackNumber = "1" };
             Assert.True(true);
         }
 
@@ -414,11 +371,9 @@ namespace AudioWorks.Common.Tests
             Assert.Equal("01", new AudioMetadata { TrackNumber = "1" }.TrackNumber);
 
         [Fact(DisplayName = "AudioMetadata accepts an empty TrackNumber")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyTrackNumber()
         {
-            new AudioMetadata { TrackNumber = string.Empty };
+            _ = new AudioMetadata { TrackNumber = string.Empty };
             Assert.True(true);
         }
 
@@ -448,11 +403,9 @@ namespace AudioWorks.Common.Tests
             Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { TrackCount = "##" });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid TrackCount")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidTrackCount()
         {
-            new AudioMetadata { TrackCount = "1" };
+            _ = new AudioMetadata { TrackCount = "1" };
             Assert.True(true);
         }
 
@@ -461,11 +414,9 @@ namespace AudioWorks.Common.Tests
             Assert.Equal("01", new AudioMetadata { TrackCount = "1" }.TrackCount);
 
         [Fact(DisplayName = "AudioMetadata accepts an empty TrackCount")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyTrackCount()
         {
-            new AudioMetadata { TrackCount = string.Empty };
+            _ = new AudioMetadata { TrackCount = string.Empty };
             Assert.True(true);
         }
 
@@ -491,11 +442,9 @@ namespace AudioWorks.Common.Tests
             Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { TrackPeak = "##" });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid TrackPeak")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidTrackPeak()
         {
-            new AudioMetadata { TrackPeak = "0.5" };
+            _ = new AudioMetadata { TrackPeak = "0.5" };
             Assert.True(true);
         }
 
@@ -504,11 +453,9 @@ namespace AudioWorks.Common.Tests
             Assert.Equal("0.500000", new AudioMetadata { TrackPeak = "0.5" }.TrackPeak);
 
         [Fact(DisplayName = "AudioMetadata accepts an empty TrackPeak")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyTrackPeak()
         {
-            new AudioMetadata { TrackPeak = string.Empty };
+            _ = new AudioMetadata { TrackPeak = string.Empty };
             Assert.True(true);
         }
 
@@ -534,11 +481,9 @@ namespace AudioWorks.Common.Tests
             Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { AlbumPeak = "##" });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid AlbumPeak")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidAlbumPeak()
         {
-            new AudioMetadata { AlbumPeak = "0.6" };
+            _ = new AudioMetadata { AlbumPeak = "0.6" };
             Assert.True(true);
         }
 
@@ -547,11 +492,9 @@ namespace AudioWorks.Common.Tests
             Assert.Equal("0.600000", new AudioMetadata { AlbumPeak = "0.6" }.AlbumPeak);
 
         [Fact(DisplayName = "AudioMetadata accepts an empty AlbumPeak")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyAlbumPeak()
         {
-            new AudioMetadata { AlbumPeak = string.Empty };
+            _ = new AudioMetadata { AlbumPeak = string.Empty };
             Assert.True(true);
         }
 
@@ -573,11 +516,9 @@ namespace AudioWorks.Common.Tests
             Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { TrackGain = "##" });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid TrackGain")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidTrackGain()
         {
-            new AudioMetadata { TrackGain = "0.7" };
+            _ = new AudioMetadata { TrackGain = "0.7" };
             Assert.True(true);
         }
 
@@ -586,11 +527,9 @@ namespace AudioWorks.Common.Tests
             Assert.Equal("0.70", new AudioMetadata { TrackGain = "0.7" }.TrackGain);
 
         [Fact(DisplayName = "AudioMetadata accepts an empty TrackGain")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyTrackGain()
         {
-            new AudioMetadata { TrackGain = string.Empty };
+            _ = new AudioMetadata { TrackGain = string.Empty };
             Assert.True(true);
         }
 
@@ -612,11 +551,9 @@ namespace AudioWorks.Common.Tests
             Assert.Throws<AudioMetadataInvalidException>(() => new AudioMetadata { AlbumGain = "##" });
 
         [Fact(DisplayName = "AudioMetadata accepts a valid AlbumGain")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsValidAlbumGain()
         {
-            new AudioMetadata { AlbumGain = "0.8" };
+            _ = new AudioMetadata { AlbumGain = "0.8" };
             Assert.True(true);
         }
 
@@ -625,11 +562,9 @@ namespace AudioWorks.Common.Tests
             Assert.Equal("0.80", new AudioMetadata { AlbumGain = "0.8" }.AlbumGain);
 
         [Fact(DisplayName = "AudioMetadata accepts an empty AlbumGain")]
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Test confirms instantiation works without error")]
         public void AcceptsEmptyAlbumGain()
         {
-            new AudioMetadata { AlbumGain = string.Empty };
+            _ = new AudioMetadata { AlbumGain = string.Empty };
             Assert.True(true);
         }
 

@@ -21,7 +21,7 @@ namespace AudioWorks.Api
     /// Represents progress for an asynchronous activity.
     /// </summary>
     [SuppressMessage("Performance", "CA1815:Override equals and operator equals on value types",
-        Justification = "Instances will not be compared.")]
+        Justification = "Instances will not be compared")]
     public readonly struct ProgressToken
     {
         /// <summary>

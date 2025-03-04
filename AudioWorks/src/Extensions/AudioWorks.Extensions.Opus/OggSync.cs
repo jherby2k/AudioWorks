@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Opus
@@ -23,12 +22,10 @@ namespace AudioWorks.Extensions.Opus
     {
         readonly nint _state;
 
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Native method always returns 0")]
         internal unsafe OggSync()
         {
             _state = Marshal.AllocHGlobal(sizeof(OggSyncState));
-            LibOgg.SyncInit(_state);
+            _ = LibOgg.SyncInit(_state);
         }
 
         internal bool PageOut(out OggPage page) => LibOgg.SyncPageOut(_state, out page) == 1;
@@ -36,10 +33,8 @@ namespace AudioWorks.Extensions.Opus
         internal unsafe void* Buffer(int size) =>
             LibOgg.SyncBuffer(_state, new(size));
 
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Native method is always expected to return 0")]
         internal void Wrote(int bytes) =>
-            LibOgg.SyncWrote(_state, new(bytes));
+            _ = LibOgg.SyncWrote(_state, new(bytes));
 
         public void Dispose()
         {
@@ -47,11 +42,9 @@ namespace AudioWorks.Extensions.Opus
             GC.SuppressFinalize(this);
         }
 
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Native method always returns 0")]
         void FreeUnmanaged()
         {
-            LibOgg.SyncClear(_state);
+            _ = LibOgg.SyncClear(_state);
             Marshal.FreeHGlobal(_state);
         }
 

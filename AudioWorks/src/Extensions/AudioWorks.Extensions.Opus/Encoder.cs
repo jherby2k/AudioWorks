@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
 using AudioWorks.Common;
@@ -22,9 +23,9 @@ namespace AudioWorks.Extensions.Opus
 {
     sealed class Encoder : IDisposable
     {
-#pragma warning disable CA2213 // Disposable fields should be disposed
+        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed",
+                    Justification = "Type does not have dispose ownership")]
         readonly Stream _outputStream;
-#pragma warning restore CA2213 // Disposable fields should be disposed
         readonly int _channels;
         readonly int _totalSeconds;
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable

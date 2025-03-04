@@ -13,6 +13,8 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace AudioWorks.Common
 {
     /// <summary>
@@ -60,8 +62,8 @@ namespace AudioWorks.Common
         /// Gets the raw image data.
         /// </summary>
         /// <value>The data.</value>
-#pragma warning disable CA1819
+        [SuppressMessage("Performance", "CA1819:Properties should not return arrays",
+                    Justification = "Property is part of a Data Transfer Object")]
         byte[] Data { get; }
-#pragma warning restore CA1819
     }
 }

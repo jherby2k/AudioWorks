@@ -30,7 +30,6 @@ namespace AudioWorks.Extensibility
 
         [ImportMany]
         // ReSharper disable once UnassignedGetOnlyAutoProperty
-        // ReSharper disable once UnusedAutoPropertyAccessor.Local
         internal IEnumerable<ExportFactory<T, IDictionary<string, object>>> Factories { get; private set; }
 
 #pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
