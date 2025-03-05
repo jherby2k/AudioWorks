@@ -158,7 +158,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "FLAC",
                 [],
                 [
-                    "42070347011D5067A9D962DA3237EF63", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "67-3A-41-2C-F5-3B-C6-24", // FLAC 1.3.3 (Ubuntu 22.04)
                     "EA-F9-18-34-14-93-E5-34", // FLAC 1.4.3 (Ubuntu 24.04)
                     "77-85-5F-1C-76-D9-FF-95" // FLAC 1.5.0
                 ]
@@ -168,7 +168,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "FLAC",
                 [],
                 [
-                    "0771EF09959F087FACE194A4479F5107", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "04-F0-CB-82-FF-F6-27-95", // FLAC 1.3.3 (Ubuntu 22.04)
                     "2F-E2-E5-7D-46-45-1E-FE", // FLAC 1.4.3 (Ubuntu 24.04)
                     "BE-A7-E3-09-E9-B9-DD-45" // FLAC 1.5.0
                 ]
@@ -178,7 +178,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "FLAC",
                 [],
                 [
-                    "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "C2-FB-C1-A8-1E-4A-FF-3B", // FLAC 1.3.3 (Ubuntu 22.04)
                     "A2-10-C8-F2-50-2F-8C-2D", // FLAC 1.4.3 (Ubuntu 24.04)
                     "E2-02-89-EC-91-66-2A-35" // FLAC 1.5.0
                 ]
@@ -188,7 +188,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "FLAC",
                 [],
                 [
-                    "F0F075E05A3AFB67403CCF373932BCCA", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "DB-7B-58-FC-11-F1-A4-8B", // FLAC 1.3.3 (Ubuntu 22.04)
                     "64-EF-2F-36-1C-D6-C5-A4", // FLAC 1.4.3 (Ubuntu 24.04)
                     "4E-A1-65-5B-D2-F8-57-F6" // FLAC 1.5.0
                 ]
@@ -198,7 +198,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "FLAC",
                 [],
                 [
-                    "D3A7B834DCE97F0709AEFCA45A24F5B6", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "FF-B4-0D-B9-F9-9A-7B-79", // FLAC 1.3.3 (Ubuntu 22.04)
                     "DB-91-51-55-39-C4-DE-F2", // FLAC 1.4.3 (Ubuntu 24.04)
                     "EF-36-3E-CE-6B-73-D7-A4" // FLAC 1.5.0
                 ]
@@ -208,7 +208,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "FLAC",
                 [],
                 [
-                    "10F6AC75659ECFE81D3C07D8D3074538", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "6A-19-19-4A-E3-71-E3-95", // FLAC 1.3.3 (Ubuntu 22.04)
                     "30-56-D7-7A-03-CA-9E-06", // FLAC 1.4.3 (Ubuntu 24.04)
                     "A2-42-13-03-B7-3E-7B-D5" // FLAC 1.5.0
                 ]
@@ -218,7 +218,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "FLAC",
                 [],
                 [
-                    "FCBAB8A8C261456CF6F87E603B237426", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "73-AE-57-E4-9C-B6-54-B5", // FLAC 1.3.3 (Ubuntu 22.04)
                     "41-DE-C9-E0-B9-DB-E8-8C", // FLAC 1.4.3 (Ubuntu 24.04)
                     "8F-D9-39-8A-97-1D-98-49" // FLAC 1.5.0
                 ]
@@ -228,7 +228,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "FLAC",
                 [],
                 [
-                    "2F2F341FEECB7842F7FA9CE6CB110C67", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "92-78-07-20-32-FB-A4-A1", // FLAC 1.3.3 (Ubuntu 22.04)
                     "67-73-BF-B8-6F-36-2E-7E", // FLAC 1.4.3 (Ubuntu 24.04)
                     "0B-39-56-AB-84-D6-9E-95" // FLAC 1.5.0
                 ]
@@ -238,7 +238,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "FLAC",
                 [],
                 [
-                    "A48820F5E30B5C21A881E01209257E21", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "18-8A-91-25-28-9C-20-CC", // FLAC 1.3.3 (Ubuntu 22.04)
                     "8F-C3-6F-2A-AF-46-EC-61", // FLAC 1.4.3  (Ubuntu 24.04)
                     "3C-6F-52-00-B7-B9-BF-B6" // FLAC 1.5.0
                 ]
@@ -248,7 +248,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "FLAC",
                 [],
                 [
-                    "D90693A520FA14AC987272ACB6CD8996", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "74-8F-22-E4-6B-97-8F-D7", // FLAC 1.3.3 (Ubuntu 22.04)
                     "0E-6D-7B-32-64-8F-AC-18", // FLAC 1.4.3 (Ubuntu 24.04)
                     "8C-1F-BF-4E-9B-32-A5-F0" // FLAC 1.5.0
                 ]
@@ -262,7 +262,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["CompressionLevel"] = 5
                 },
                 [
-                    "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "C2-FB-C1-A8-1E-4A-FF-3B", // FLAC 1.3.3 (Ubuntu 22.04)
                     "A2-10-C8-F2-50-2F-8C-2D", // FLAC 1.4.3 (Ubuntu 24.04)
                     "E2-02-89-EC-91-66-2A-35" // FLAC 1.5.0
                 ]
@@ -276,7 +276,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["CompressionLevel"] = 0
                 },
                 [
-                    "A58022B124B427771041A96F65D8DF21", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "99-98-53-36-8F-15-6C-4C", // FLAC 1.3.3 (Ubuntu 22.04)
                     "EC-17-4A-C8-C4-8F-D3-AE", // FLAC 1.4.3 (Ubuntu 24.04)
                     "BC-D8-DE-03-33-9D-45-7D" // FLAC 1.5.0
                 ]
@@ -290,7 +290,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["CompressionLevel"] = 8
                 },
                 [
-                    "F341E56E68A0A168B779A4EBFD41422D", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "95-D2-FF-25-7C-74-1B-86", // FLAC 1.3.3 (Ubuntu 22.04)
                     "09-E9-A5-AF-D7-08-4A-68", // FLAC 1.4.3 (Ubuntu 24.04)
                     "DF-8E-EF-4F-3C-F9-78-93" // FLAC 1.5.0
                 ]
@@ -304,7 +304,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SeekPointInterval"] = 10
                 },
                 [
-                    "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "C2-FB-C1-A8-1E-4A-FF-3B", // FLAC 1.3.3 (Ubuntu 22.04)
                     "A2-10-C8-F2-50-2F-8C-2D", // FLAC 1.4.3 (Ubuntu 24.04)
                     "E2-02-89-EC-91-66-2A-35" // FLAC 1.5.0
                 ]
@@ -318,7 +318,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SeekPointInterval"] = 0
                 },
                 [
-                    "986464F3AC48E00D00B8ECF3AF3FD6BC", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "60-2C-A4-D8-C2-61-4B-A5", // FLAC 1.3.3 (Ubuntu 22.04)
                     "82-4F-D8-9B-2F-A2-43-00", // FLAC 1.4.3 (Ubuntu 24.04)
                     "03-BC-0C-AC-77-14-86-A9" // FLAC 1.5.0
                 ]
@@ -332,7 +332,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SeekPointInterval"] = 600
                 },
                 [
-                    "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "C2-FB-C1-A8-1E-4A-FF-3B", // FLAC 1.3.3 (Ubuntu 22.04)
                     "A2-10-C8-F2-50-2F-8C-2D", // FLAC 1.4.3 (Ubuntu 24.04)
                     "E2-02-89-EC-91-66-2A-35" // FLAC 1.5.0
                 ]
@@ -346,7 +346,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["Padding"] = 8192
                 },
                 [
-                    "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "C2-FB-C1-A8-1E-4A-FF-3B", // FLAC 1.3.3 (Ubuntu 22.04)
                     "A2-10-C8-F2-50-2F-8C-2D", // FLAC 1.4.3 (Ubuntu 24.04)
                     "E2-02-89-EC-91-66-2A-35" // FLAC 1.5.0
                 ]
@@ -360,7 +360,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["Padding"] = 0
                 },
                 [
-                    "662592BD8B3853B6FEC4E188F7D0F246", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "18-53-4C-9C-DB-14-4D-0A", // FLAC 1.3.3 (Ubuntu 22.04)
                     "CA-71-17-17-4F-3B-49-06", // FLAC 1.4.3 (Ubuntu 24.04)
                     "03-5D-35-08-D6-4F-54-FB" // FLAC 1.5.0
                 ]
@@ -374,7 +374,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["Padding"] = 16_775_369
                 },
                 [
-                    "455753A51355171BF22CCC78647235B4", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "72-95-92-9B-D3-4A-D0-05", // FLAC 1.3.3 (Ubuntu 22.04)
                     "7A-6C-C4-81-BA-09-50-31", // FLAC 1.4.3 (Ubuntu 24.04)
                     "3D-30-B1-95-DC-0E-94-A2" // FLAC 1.5.0
                 ]
@@ -1901,8 +1901,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "2D31A0D707D3A9AB865DB00095EB08AE", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
-                    "5E705C21EEB25418F69F54E33CF65156", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
+                    "4D-18-86-BA-F9-3E-C4-A5", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "99-E7-6E-6D-61-01-97-69", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "EA-8B-4F-7A-A7-AD-B8-01", // Opus 1.5.2 (MacOS on Intel)
                     "BC-18-10-E5-D9-B0-B6-C4", // Opus 1.5.2 (MacOS on ARM)
@@ -1920,8 +1919,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "C22E87F617B51970785E9A4C43C9FC48", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
-                    "B68DA72E32DD0B6A89138679E8716876", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
+                    "18-66-64-09-DF-53-24-26", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "26-8D-CE-A9-BD-22-F7-DF", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "0D-70-48-A1-81-1E-04-FB", // Opus 1.5.2 (MacOS on Intel)
                     "54-D7-D7-08-3D-DF-80-83", // Opus 1.5.2 (MacOS on ARM)
@@ -1937,8 +1935,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "0C6BF7ECB9F757DB8F8AF485137BD2C8", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
-                    "9DA2DC35F1B9FBC9FAEF343788BB9E41", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
+                    "13-77-D7-3E-62-41-3E-5A", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "6A-EE-F6-02-4C-E2-FE-83", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "26-CB-03-BB-31-D8-6F-79", // Opus 1.5.2 (MacOS on Intel)
                     "E4-11-3B-34-D9-6A-05-CF", // Opus 1.5.2 (MacOS on ARM)
@@ -1956,8 +1953,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "BD5F090F921BCC80F05FCBF5725D8E0E", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
-                    "FDE97144EB743A401CD274613B32D085", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
+                    "54-00-2E-64-5E-A3-CB-1F", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "1F-10-2A-07-1B-A1-16-A6", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "79-BF-E6-84-59-14-7C-09", // Opus 1.5.2 (MacOS on Intel)
                     "05-0B-39-E2-A3-5A-63-C4", // Opus 1.5.2 (MacOS on ARM)
@@ -1975,8 +1971,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "8A8FA9C452D9EBBCF8554EE3E270A538", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
-                    "F7CB34EAF50E121D9474AE51E43BBB5B", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
+                    "92-4B-3F-32-9B-B1-0A-ED", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "38-49-4D-D7-07-67-B0-1F", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "9D-8C-40-EB-5C-E5-2D-66", // Opus 1.5.2 (MacOS on Intel)
                     "5D-94-59-FE-62-39-63-5D", // Opus 1.5.2 (MacOS on ARM)
@@ -1994,8 +1989,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "CD27FFC8398F52FB2F5984085D2215AC", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
-                    "2018DEFDE09A503E0734CD57B0E19FC4", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
+                    "1E-6A-6E-4B-67-D1-F5-BB", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "9D-F3-E4-58-82-19-17-C2", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "25-06-66-0A-E7-C9-2D-DA", // Opus 1.5.2 (MacOS on Intel)
                     "AD-44-82-D4-73-01-9C-9E", // Opus 1.5.2 (MacOS on ARM)
@@ -2013,8 +2007,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "9ED53495B32D47496C1C88B75D2FEF5F", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
-                    "EF85B330CBC8A8931C2827A81F2E1532", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
+                    "5E-BF-ED-40-0E-B4-78-BF", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "6B-DD-C0-E2-E9-94-00-88", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "E7-EF-9B-A1-6C-3F-C0-94", // Opus 1.5.2 (MacOS on Intel)
                     "26-FC-82-7E-3F-85-C9-CA", // Opus 1.5.2 (MacOS on ARM)
@@ -2032,8 +2025,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "5501D7D9730B0722C310D5263AFBEB77", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
-                    "5A2C444BCD2F8D898E369DFA78D2336D", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
+                    "32-05-62-75-0B-54-4A-9D", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "76-D6-E9-EF-06-6D-67-96", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "CC-8F-52-F1-EA-62-C7-C1", // Opus 1.5.2 (MacOS on Intel)
                     "30-EC-A5-6C-64-65-2E-7B", // Opus 1.5.2 (MacOS on ARM)
@@ -2051,8 +2043,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "E00313922D18720824C1B0BB443E8679", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
-                    "281EBF57BE8284D42EC19338E0FA5AFF", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
+                    "3A-67-4E-24-B8-A3-E1-45", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "9C-2E-E2-DC-D4-3B-91-3B", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "FF-D9-AF-4A-50-EE-C6-D6", // Opus 1.5.2 (MacOS on Intel)
                     "38-04-12-50-66-56-7C-8F", // Opus 1.5.2 (MacOS on ARM)
@@ -2070,8 +2061,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "0ADBC105EA51C62CB1ED53B978B33415", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
-                    "E170CC2F31A402071E26892426AEC65B", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
+                    "59-61-98-BE-00-DF-DE-C0", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "BE-BA-6B-6B-E6-A3-AA-D6", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "ED-EB-4E-BE-C3-E6-A6-D5", // Opus 1.5.2 (MacOS on Intel)
                     "B6-1C-64-4E-0C-1B-48-E9", // Opus 1.5.2 (MacOS on ARM)
@@ -2090,8 +2080,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = int.MinValue
                 },
                 [
-                    "CDE65307AACEA4F40F22FF925622D14E", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
-                    "503CA160DEC071D27F058FAE56273C29", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
+                    "06-66-0A-F6-AF-07-4C-2B", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "7D-A8-9F-03-65-EC-2E-C8", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "65-D7-87-94-A9-E9-E7-BD", // Opus 1.5.2 (MacOS on Intel)
                     "64-24-6F-D3-84-A1-EF-1C", // Opus 1.5.2 (MacOS on ARM)
@@ -2110,8 +2099,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = int.MaxValue
                 },
                 [
-                    "3AA89123958BA0DF1611539BC909DD0B", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
-                    "E83E5634833A567959243B09B9AF666B", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
+                    "51-FF-C3-03-D8-B2-98-39", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "5E-77-C4-DD-72-BA-FE-D5", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "E9-3C-9C-89-CE-C6-DD-71", // Opus 1.5.2 (MacOS on Intel)
                     "04-73-D9-F3-C4-63-83-E6", // Opus 1.5.2 (MacOS on ARM)
@@ -2131,7 +2119,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "1F81AFD1976BAB56F31A4599A8AD8FF1", // Opus 1.3.1 (Ubuntu 22.04)
+                    "2B-0E-A7-92-42-A8-30-FB", // Opus 1.3.1 (Ubuntu 22.04)
                     "4E-56-99-1B-2A-FE-B4-BF", // Opus 1.4.0 (Ubuntu 24.04)
                     "9B-89-72-86-CF-FC-9E-DE", // Opus 1.5.2 (MacOS on Intel)
                     "6A-04-91-67-5A-F7-FD-F1", // Opus 1.5.2 (MacOS on ARM)
@@ -2148,8 +2136,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "785D39E686216F4958B8103B62E9E321", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
-                    "2DBEDA9428C2522EFF60481B5446FA47", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
+                    "C0-80-59-CC-D2-7D-08-AA", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "50-15-21-02-0E-28-68-F6", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "D2-74-4E-6F-86-57-ED-B0", // Opus 1.5.2 (MacOS on Intel)
                     "1F-4A-FC-4B-5A-89-AF-64", // Opus 1.5.2 (MacOS on ARM)
@@ -2169,8 +2156,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "0C6BF7ECB9F757DB8F8AF485137BD2C8", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
-                    "9DA2DC35F1B9FBC9FAEF343788BB9E41", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
+                    "13-77-D7-3E-62-41-3E-5A", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "6A-EE-F6-02-4C-E2-FE-83", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "26-CB-03-BB-31-D8-6F-79", // Opus 1.5.2 (MacOS on Intel)
                     "E4-11-3B-34-D9-6A-05-CF", // Opus 1.5.2 (MacOS on ARM)
@@ -2190,8 +2176,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "B98AC6052E465C5A226D8D2905B535EC", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
-                    "713E85741D7499561FA4424B5EF74EE7", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
+                    "19-5D-E0-D8-D5-6D-E0-1E", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "48-31-E2-1D-B6-08-37-A9", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "3A-83-E3-04-6E-54-7C-B1", // Opus 1.5.2 (MacOS on Intel)
                     "A3-8E-11-D6-B9-DD-9C-C9", // Opus 1.5.2 (MacOS on ARM)
@@ -2211,8 +2196,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "687B2402BF33EDB0EAD683235E309BC8", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
-                    "9948DAE5FCE1CF7D6298C293E3D71B0F", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
+                    "1D-F1-A9-CE-D8-8E-23-F0", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "D6-71-3B-9F-80-3B-DB-2C", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "C2-DB-76-2D-08-CA-C5-B1", // Opus 1.5.2 (MacOS on Intel)
                     "5C-82-04-7E-53-90-E0-07", // Opus 1.5.2 (MacOS on ARM)
@@ -2232,8 +2216,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "8FC7BCF02EDB42E9785797FD2C9A71D6", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
-                    "BD1629D7E9272CAA8AEAC20FD576B7C6", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
+                    "FD-6D-78-EB-8E-7E-C8-AE", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "B1-4C-57-71-E1-72-82-CC", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "6D-4D-93-AD-68-72-DC-82", // Opus 1.5.2 (MacOS on Intel)
                     "78-4D-24-AF-8D-A2-62-5A", // Opus 1.5.2 (MacOS on ARM)
@@ -2252,8 +2235,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "8FC7BCF02EDB42E9785797FD2C9A71D6", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
-                    "BD1629D7E9272CAA8AEAC20FD576B7C6", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
+                    "FD-6D-78-EB-8E-7E-C8-AE", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "B1-4C-57-71-E1-72-82-CC", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "6D-4D-93-AD-68-72-DC-82", // Opus 1.5.2 (MacOS on Intel)
                     "78-4D-24-AF-8D-A2-62-5A", // Opus 1.5.2 (MacOS on ARM)
@@ -2272,8 +2254,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "84D72BBEF86EA7611518CF2862FC94BD", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
-                    "56A43E329A39A3CC568348116F5134F3", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
+                    "7A-B8-FF-08-6E-DC-6C-2B", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "07-CC-93-B7-3B-3C-F9-46", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "07-48-7A-BE-D6-C1-64-6B", // Opus 1.5.2 (MacOS on Intel)
                     "A2-1E-D0-33-0A-AE-1F-85", // Opus 1.5.2 (MacOS on ARM)
@@ -2291,8 +2272,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "0C6BF7ECB9F757DB8F8AF485137BD2C8", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
-                    "9DA2DC35F1B9FBC9FAEF343788BB9E41", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
+                    "13-77-D7-3E-62-41-3E-5A", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "6A-EE-F6-02-4C-E2-FE-83", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "26-CB-03-BB-31-D8-6F-79", // Opus 1.5.2 (MacOS on Intel)
                     "E4-11-3B-34-D9-6A-05-CF", // Opus 1.5.2 (MacOS on ARM)
@@ -2312,8 +2292,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "B6029E9FC954A8722A1B10700F80EA19", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
-                    "1CE1BF9EA0D643C0CDB9B8C8A1492B58", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
+                    "C9-41-5E-A2-A8-67-FF-65", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "C1-01-89-41-A0-DD-C0-55", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "F2-39-7D-F4-8F-BF-AB-83", // Opus 1.5.2 (MacOS on Intel)
                     "A8-35-6E-0F-7B-E9-C2-13", // Opus 1.5.2 (MacOS on ARM)
@@ -2333,8 +2312,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["SerialNumber"] = 1
                 },
                 [
-                    "EF6A93BC1F10A15E5F45255F36E90F3A", // Opus 1.3.1 (Ubuntu 22.04 on Intel)
-                    "5B7586B7F6F2DFCCA28E3A1D4C75690A", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
+                    "DE-EE-83-C7-63-E3-B2-B1", // Opus 1.3.1 (Ubuntu 22.04 on AMD)
                     "3C-8F-1B-DD-22-D9-F0-D9", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "F1-BF-D8-0A-3F-2F-CD-85", // Opus 1.5.2 (MacOS on Intel)
                     "77-CB-F0-A8-49-89-A8-7F", // Opus 1.5.2 (MacOS on ARM)
