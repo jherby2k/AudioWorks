@@ -80,9 +80,9 @@ jobs:
       shell: bash
 
 
-  ubuntu:
-    name: Ubuntu
-    runs-on: ubuntu-latest
+  ubuntu_2404:
+    name: Ubuntu 24.04
+    runs-on: ubuntu-24.04
 
     steps:
     - name: Checkout
@@ -107,7 +107,7 @@ jobs:
       if: success() || failure()
       uses: actions/upload-artifact@v4
       with:
-        name: Test output for Ubuntu
+        name: Test output for Ubuntu 24.04
         path: 'AudioWorks/tests/AudioWorks.Api.Tests/bin/Release/net8.0/Output/Encode/Valid/'
 
     - name: Test AudioWorks.Commands
@@ -126,7 +126,60 @@ jobs:
     - name: Upload coverage report artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: Coverage Report for Ubuntu
+        name: Coverage Report for Ubuntu 24.04
+        path: coveragereport
+
+    - name: Publish coverage in build summary
+      run: cat coveragereport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+
+
+  ubuntu_2204:
+    name: Ubuntu 22.04
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Install library dependencies
+      run: sudo apt-get install --yes libflac8 libmp3lame0 libopus0 libebur128-1
+
+    - name: Build
+      run: dotnet build AudioWorks/AudioWorks.sln --configuration Release
+
+    - name: Test AudioWorks.Common
+      run: dotnet test AudioWorks/tests/AudioWorks.Common.Tests/AudioWorks.Common.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
+
+    - name: Test AudioWorks.Extensibility
+      run: dotnet test AudioWorks/tests/AudioWorks.Extensibility.Tests/AudioWorks.Extensibility.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
+
+    - name: Test AudioWorks.Api
+      run: dotnet test AudioWorks/tests/AudioWorks.Api.Tests/AudioWorks.Api.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
+
+    - name: Upload test output
+      if: success() || failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: Test output for Ubuntu 22.04
+        path: 'AudioWorks/tests/AudioWorks.Api.Tests/bin/Release/net8.0/Output/Encode/Valid/'
+
+    - name: Test AudioWorks.Commands
+      run: dotnet test AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
+
+    - name: ReportGenerator
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.4.4
+      with:
+        reports: '${{ github.workspace }}/**/coverage.cobertura.xml'
+        targetdir: 'coveragereport'
+        reporttypes: 'HtmlInline;Cobertura;MarkdownSummaryGithub;'
+        assemblyfilters: '-*.Tests;-*.TestUtilities'
+        filefilters: '-*.g.cs'
+        tag: '${{ github.run_number }}_${{ github.run_id }}'
+
+    - name: Upload coverage report artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: Coverage Report for Ubuntu 22.04
         path: coveragereport
 
     - name: Publish coverage in build summary
