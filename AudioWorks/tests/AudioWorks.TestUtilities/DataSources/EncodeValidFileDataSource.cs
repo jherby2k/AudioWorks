@@ -591,7 +591,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "A7-D2-2A-61-0A-DB-A2-DA", // MacOS on Intel
                     "B5-89-9B-F2-95-78-53-99", // MacOS on ARM
                     "09CD8B8C8E9D8BC09121D8C9F871F9B7", // 32-bit Windows on Intel
-                    "AA-14-94-9A-39-F1-26-3D", // 32-bit Windows on AMD
+                    "AA-14-94-9A-39-F1-26-3D", // 32-bit Windows on Ryzen 5600X
                     "75D127D9FCD7720CBE92C0670A93A880", // 64-bit Windows on Intel
                     "35-3E-A8-A6-1A-E4-37-4D", // 64-bit Windows on Ryzen 5600X
                     "D0-C1-81-B9-A5-D6-F1-31" // 64-bit Windows on EPYC 7763
@@ -609,7 +609,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "D8-F1-C9-8F-AA-70-66-A1", // MacOS on Intel
                     "9A-43-DD-A6-8B-BA-9B-40", // MacOS on ARM
                     "9A0F6E1984B428F236E1209C13AED4D1", // 32-bit Windows on Intel
-                    "6D-AA-6B-37-21-F5-DF-31", // 32-bit Windows on AMD
+                    "6D-AA-6B-37-21-F5-DF-31", // 32-bit Windows on Ryzen 5600X
                     "1D0F379EC9C47267569F88729569D407", // 64-bit Windows on Intel
                     "A9-EE-1D-11-BE-F6-D3-C9", // 64-bit Windows on Ryzen 5600X
                     "BD-E6-79-C8-B1-B3-3E-C1" // 64-bit Windows on EPYC 7763
@@ -627,7 +627,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "D1-80-5C-EC-9E-42-F8-1B", // MacOS on Intel
                     "75-6D-55-ED-B8-4F-24-03", // MacOS on ARM
                     "CB39DFBF414790022574435C2D30297D", // 32-bit Windows on Intel
-                    "3D-90-DA-92-BC-41-4B-5A", // 32-bit Windows on AMD
+                    "3D-90-DA-92-BC-41-4B-5A", // 32-bit Windows on Ryzen 5600X
                     "E0A80A6B32CD5A8FA5C62B44F28C4A87", // 64-bit Windows on Intel
                     "E3-95-7F-57-F1-93-A9-14", // 64-bit Windows on Ryzen 5600X
                     "A3-EE-43-38-A8-9C-83-91" // 64-bit Windows on EPYC 7763
@@ -645,7 +645,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "7E-D4-AF-E9-78-EB-FC-9B", // MacOS on Intel
                     "76-46-87-88-6A-22-09-58", // MacOS on ARM
                     "E0C34EA1479C8979D3AF3A2C98D4E699", // 32-bit Windows on Intel
-                    "53-18-0D-CD-CE-FF-8E-D9", // 32-bit Windows on AMD
+                    "53-18-0D-CD-CE-FF-8E-D9", // 32-bit Windows on Ryzen 5600X
                     "ED307F76DD052720321284BAD8876AB2", // 64-bit Windows on Intel
                     "85-67-33-D1-41-55-69-38", // 64-bit Windows on Ryzen 5600X
                     "42-1F-5C-AE-32-8B-4B-1E" // 64-bit Windows on EPYC 7763
@@ -662,11 +662,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "01-85-13-DD-A6-C5-6E-CA", // MacOS on Intel
                     "34-53-29-45-43-61-6B-20", // MacOS on ARM
-                    "6E08F885FEC4094041F6A0B4A02F10AB", // 32-bit Windows on Intel
-                    "194D40FBCAE58B4A01095DD89CE70A2D", // 32-bit Windows on AMD
-                    "369DAA1350BB9C45BAF84F7769221F00", // 64-bit Windows on Intel
-                    "E9-41-0A-C8-25-11-86-F7", // 64-bit Windows on Ryzen 5600X
-                    "C6-7A-19-E1-7A-97-5F-2D" // 64-bit Windows on EPYC 7763
+                    "6E08F885FEC4094041F6A0B4A02F10AB", // Windows on Intel
+                    "E9-41-0A-C8-25-11-86-F7", // Windows on Ryzen 5600X
+                    "C6-7A-19-E1-7A-97-5F-2D" // Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -681,7 +679,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "9C-A0-7E-3B-B2-D1-BC-C4", // MacOS on Intel
                     "BA-17-CA-F1-AB-A7-77-AF", // MacOS on AMD
                     "D41235E8E642C5773C499DCE06A72CC8", // 32-bit Windows on Intel
-                    "CA-F9-FB-5A-AD-F2-FF-C2", // 32-bit Windows on AMD
+                    "CA-F9-FB-5A-AD-F2-FF-C2", // 32-bit Windows on Ryzen 5600X
                     "A86E9A3D4A9479A44F852FA42BA0C9C2", // 64-bit Windows on Intel
                     "72-0B-E6-82-18-51-F2-4C", // 64-bit Windows on Ryzen 5600X
                     "53-F4-E9-DC-D6-BB-AF-D4" // 64-bit Windows on EPYC 7763
@@ -699,7 +697,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "3B-A6-EA-0B-2D-EA-2A-FF", // MacOS on Intel
                     "42-55-FB-C0-30-95-32-6E", // MacOS on ARM
                     "7BAD797AA7C5F71C7168C24077271029", // 32-bit Windows on Intel
-                    "54-D1-D2-6B-FF-E6-65-38", // 32-bit Windows on AMD
+                    "54-D1-D2-6B-FF-E6-65-38", // 32-bit Windows on Ryzen 5600X
                     "102A8F21E39D364419B9CF5BFB386631", // 64-bit Windows on Intel
                     "90-99-EF-1F-75-05-BB-1B", // 64-bit Windows on Ryzen 5600X
                     "F5-71-CE-E7-3A-0D-1F-92" // 64-bit Windows on EPYC 7763
@@ -717,7 +715,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "02-DE-4C-F4-43-02-18-D9", // MacOS on Intel
                     "30-2D-BF-95-3E-A3-D3-9F", // MacOS on ARM
                     "937750181287505A92B933F8A815D4C2", // 32-bit Windows on Intel
-                    "38-C0-2C-7D-67-59-C1-96", // 32-bit Windows on AMD
+                    "38-C0-2C-7D-67-59-C1-96", // 32-bit Windows on Ryzen 5600X
                     "AAF40EB4D4AC1832D979D6EBDE9C5BDD", // 64-bit Windows on Intel
                     "6B-B4-0A-03-39-1C-F0-DF", // 64-bit Windows on Ryzen 5600X
                     "59-5F-A0-8F-29-95-A0-7F" // 64-bit Windows on EPYC 7763
@@ -735,7 +733,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "43-C3-33-19-80-7C-BE-C6", // MacOS on Intel
                     "A8-2C-79-F9-B6-A0-A7-C0", // MacOS on ARM
                     "9AC3DEF9B464D0E1AB2D4F91C1A08B83", // 32-bit Windows on Intel
-                    "CA-20-41-98-E4-02-3E-0C", // 32-bit Windows on AMD
+                    "CA-20-41-98-E4-02-3E-0C", // 32-bit Windows on Ryzen 5600X
                     "2863A63E2060267B6A6151CA90239BC6", // 64-bit Windows on Intel
                     "CC-E3-27-EB-55-D5-11-6B", // 64-bit Windows on Ryzen 5600X
                     "AD-38-A6-16-DA-76-0F-C6" // 64-bit Windows on EPYC 7763
@@ -755,7 +753,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "D8-F1-C9-8F-AA-70-66-A1", // MacOS on Intel
                     "9A-43-DD-A6-8B-BA-9B-40", // MacOS on ARM
                     "9A0F6E1984B428F236E1209C13AED4D1", // 32-bit Windows on Intel
-                    "6D-AA-6B-37-21-F5-DF-31", // 32-bit Windows on AMD
+                    "6D-AA-6B-37-21-F5-DF-31", // 32-bit Windows on Ryzen 5600X
                     "1D0F379EC9C47267569F88729569D407", // 64-bit Windows on Intel
                     "A9-EE-1D-11-BE-F6-D3-C9", // 64-bit Windows on Ryzen 5600X
                     "BD-E6-79-C8-B1-B3-3E-C1" // 64-bit Windows on EPYC 7763
@@ -774,11 +772,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "33-E2-A2-75-A5-22-0E-BA", // MacOS on Intel
                     "55-44-84-FA-BE-5A-16-28", // MacOS on ARM
-                    "78299761793D1A6EC79CBB9233156FD8", // 32-bit Windows on Intel
-                    "E53BA332FDCFBE927A81040DB480688B", // 32-bit Windows on AMD
-                    "93D67A9C673E7ABE3929846DBE5DBF97", // 64-bit Windows on Intel
-                    "03-CE-28-10-F4-67-A7-B7", // 64-bit Windows on Ryzen 5600X
-                    "38-18-6E-0B-2B-E2-C2-4A" // 64-bit Windows on EPYC 7763
+                    "78299761793D1A6EC79CBB9233156FD8", // Windows on Intel
+                    "03-CE-28-10-F4-67-A7-B7", // Windows on Ryzen 5600X
+                    "38-18-6E-0B-2B-E2-C2-4A" // Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -795,7 +791,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "E6-E2-90-70-75-10-CC-18", // MacOS on Intel
                     "62-51-EB-63-F8-7F-E5-60", // MacOS on ARM
                     "7EDD94F25082AEEE82B2AA87E795AB6D", // 32-bit Windows on Intel
-                    "9D-FD-71-7F-11-4C-7C-D7", // 32-bit Windows on AMD
+                    "9D-FD-71-7F-11-4C-7C-D7", // 32-bit Windows on Ryzen 5600X
                     "A1CD6AC102BA40A728B2C7E00B1E786D", // 64-bit Windows on Intel
                     "C5-49-22-F7-D8-22-EA-64", // 64-bit Windows on Ryzen 5600X
                     "41-D2-1B-97-BC-22-00-E4" // 64-bit Windows on EPYC 7763
@@ -815,7 +811,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "3A-2C-E0-BB-C8-3C-2A-F8", // MacOS on Intel
                     "1F-C0-6A-65-96-20-03-09", // MacOS on ARM
                     "0177BB1DEB19854CA8495C4CBBB25366", // 32-bit Windows on Intel
-                    "7A-92-5E-0F-FF-CE-D0-FC", // 32-bit Windows on AMD
+                    "7A-92-5E-0F-FF-CE-D0-FC", // 32-bit Windows on Ryzen 5600X
                     "38D28BD3802566CB30D3B824D7FF593F", // 64-bit Windows on Intel
                     "FA-0F-C7-19-0F-26-BB-AA", // 64-bit Windows on Ryzen 5600X
                     "B8-42-9B-41-89-06-AC-B6" // 64-bit Windows on EPYC 7763
@@ -833,8 +829,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 },
                 [
                     "A7-0C-58-93-A1-D3-56-04", // MacOS
-                    "9E77C0824474E3600F1A919715609A1B", // 32-bit Windows
-                    "04-50-78-A0-C1-3F-32-A7" // 64-bit Windows
+                    "04-50-78-A0-C1-3F-32-A7" // Windows
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -851,7 +846,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "A3-1E-42-BB-E4-C7-B1-90", // MacOS on Intel
                     "40-B8-14-8A-F0-D3-D4-64", // MacOS on ARM
                     "EBD496E30A953A8D0FE11C2609EFABC3", // 32-bit Windows on Intel
-                    "E9-3C-D8-9E-D6-48-4E-7D", // 32-bit Windows on AMD
+                    "E9-3C-D8-9E-D6-48-4E-7D", // 32-bit Windows on Ryzen 5600X
                     "2AD5FC82A78732A66B8F04387D7D412B", // 64-bit Windows on Intel
                     "66-48-1D-33-22-43-53-FF", // 64-bit Windows on Ryzen 5600X
                     "F1-A4-9F-B8-8E-59-B0-BF" // 64-bit Windows on EPYC 7763
@@ -871,7 +866,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "E7-E6-F3-09-69-F4-0B-C9", // MacOS on Intel
                     "58-CB-13-FF-D5-D1-18-EB", // MacOS on ARM
                     "DE5F94EC1EACB75A3D049AE9960A7ACB", // 32-bit Windows on Intel
-                    "97-CE-44-9B-71-22-CC-C9", // 32-bit Windows on AMD
+                    "97-CE-44-9B-71-22-CC-C9", // 32-bit Windows on Ryzen 5600X
                     "298A2B946AA53102FD025DDD9D273B21", // 64-bit Windows on Intel
                     "FF-B3-B1-3F-D0-D9-26-A1", // 64-bit Windows on Ryzen 5600X
                     "79-05-CC-7A-EE-CF-1A-E6" // 64-bit Windows on EPYC 7763
@@ -952,7 +947,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "61-11-48-3A-D6-7F-C3-28", // MacOS on Intel
                     "A3-32-D7-07-D1-E5-55-80", // MacOS on ARM
                     "365D7E965534C8690B4694B27D0CF1C9", // 32-bit Windows on Intel
-                    "98-55-BA-2D-4A-72-F1-1A", // 32-bit Windows on AMD
+                    "98-55-BA-2D-4A-72-F1-1A", // 32-bit Windows on Ryzen 5600X
                     "08686D04EFF88BC663C469F2DD224020", // 64-bit Windows on Intel
                     "BC-47-2F-B6-C5-50-ED-17", // 64-bit Windows on Ryzen 5600X
                     "AE-A9-BC-CB-C8-16-55-F6" // 64-bit Windows on EPYC 7763
@@ -972,7 +967,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "D8-F1-C9-8F-AA-70-66-A1", // MacOS on Intel
                     "9A-43-DD-A6-8B-BA-9B-40", // MacOS on ARM
                     "9A0F6E1984B428F236E1209C13AED4D1", // 32-bit Windows on Intel
-                    "6D-AA-6B-37-21-F5-DF-31", // 32-bit Windows on AMD
+                    "6D-AA-6B-37-21-F5-DF-31", // 32-bit Windows on Ryzen 5600X
                     "1D0F379EC9C47267569F88729569D407", // 64-bit Windows on Intel
                     "A9-EE-1D-11-BE-F6-D3-C9", // 64-bit Windows on Ryzen 5600X
                     "BD-E6-79-C8-B1-B3-3E-C1" // 64-bit Windows on EPYC 7763
@@ -992,7 +987,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "F7-57-90-77-62-D5-F6-4B", // MacOS on Intel
                     "A6-88-93-15-5B-B8-3B-CA", // MacOS on ARM
                     "DDA8DBB070EA36F77455A41A2628B6AA", // 32-bit Windows on Intel
-                    "F2-7E-DD-D0-8F-A4-88-B5", // 32-bit Windows on AMD
+                    "F2-7E-DD-D0-8F-A4-88-B5", // 32-bit Windows on Ryzen 5600X
                     "B49EC8F6428A1CDEBA4F0728FC1BF8E5", // 64-bit Windows on Intel
                     "C9-58-58-74-36-AD-27-F5", // 64-bit Windows on Ryzen 5600X
                     "03-6D-BD-AB-2C-26-82-33" // 64-bit Windows on EPYC 7763
@@ -1012,7 +1007,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "56-91-5D-62-00-A0-10-10", // MacOS on Intel
                     "E1-76-F5-FC-7C-A7-5C-F6", // MacOS on ARM
                     "5502D724D98AA24FE49FA8AFB0FC63A6", // 32-bit Windows on Intel
-                    "6A-C8-FA-AB-6D-4D-B2-A5", // 32-bit Windows on AMD
+                    "6A-C8-FA-AB-6D-4D-B2-A5", // 32-bit Windows on Ryzen 5600X
                     "19940A1BA1D575D9E165584C24A955F4", // 64-bit Windows on Intel
                     "34-90-BE-A7-5B-15-FA-72", // 64-bit Windows on Ryzen 5600X
                     "BD-40-59-07-7A-39-ED-D4" // 64-bit Windows on EPYC 7763
