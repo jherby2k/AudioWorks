@@ -53,7 +53,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "BAE0A61EB5C4912A4793C8B259ED5633", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "1F5FEC2305DE58CE9BA73AFC9E5017AA", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "1F-93-A8-53-FB-3B-B0-22", // FLAC 1.4.3 (Ubuntu 24.04)
                     "2A-41-22-DD-B8-14-0C-D3" // FLAC 1.5.0
                 ]
             ),
@@ -83,7 +83,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "FDB702CF53676594BDD9FBEC77F154A3", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "CB5A4B3F94A3F5A2B152B909A6EC2D8C", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "0C-50-86-D5-AB-CD-71-64", // FLAC 1.4.3 (Ubuntu 24.04)
                     "23-9C-CB-3F-66-6D-10-6C" // FLAC 1.5.0
                 ]
             ),
@@ -113,7 +113,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "FDB702CF53676594BDD9FBEC77F154A3", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "CB5A4B3F94A3F5A2B152B909A6EC2D8C", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "0C-50-86-D5-AB-CD-71-64", // FLAC 1.4.3 (Ubuntu 24.04)
                     "23-9C-CB-3F-66-6D-10-6C" // FLAC 1.5.0
                 ]
             ),
@@ -143,7 +143,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "A05D916A5C03E9599CBC9A9F6989FDB0", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "C238388B2E5ED6E8026FBFE7A60B6AC0", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "BF-10-71-E4-53-3D-9C-EC", // FLAC 1.4.3 (Ubuntu 24.04)
                     "F3-5B-84-04-C2-48-ED-2F" // FLAC 1.5.0
                 ]
             ),
@@ -173,7 +173,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "0917BADDD895CCFD370BB222AF216E7B", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "B4969C097EBD1D6F1CE704C652FC7A0A", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "B7-98-8D-AF-91-08-55-27", // FLAC 1.4.3 (Ubuntu 24.04)
                     "69-92-C3-94-61-D2-99-5E" // FLAC 1.5.0
                 ]
             ),
@@ -204,7 +204,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "BAE0A61EB5C4912A4793C8B259ED5633", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "1F5FEC2305DE58CE9BA73AFC9E5017AA", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "1F-93-A8-53-FB-3B-B0-22", // FLAC 1.4.3 (Ubuntu 24.04)
                     "2A-41-22-DD-B8-14-0C-D3" // FLAC 1.5.0
                 ]
             ),
@@ -238,7 +238,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 },
                 [
                     "41092DD891ABD71749834EAF571D30D5", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "3E07F2D9194BB9BCE6C7EA4434AB9F78", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "F2-23-FD-31-4D-D5-57-CF", // FLAC 1.4.3 (Ubuntu 24.04)
                     "C8-60-60-FE-8E-09-84-43" // FLAC 1.5.0
                 ]
             ),
@@ -272,7 +272,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 },
                 [
                     "D6EF71E33501C350CD5378D55BC25D8C", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "39928199B6A8F6B399C9C09E103E812C", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "9B-D5-D5-28-77-5A-0E-AD", // FLAC 1.4.3 (Ubuntu 24.04)
                     "7E-CE-CD-BA-95-58-65-5E" // FLAC 1.5.0
                 ]
             ),
@@ -285,7 +285,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "A5B12EAFE3014399E04E427CA756234B", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "60-66-EA-A0-B4-EC-85-FE", // FLAC 1.4.3 (Ubuntu 24.04)
                     "CC-E4-C6-E8-D5-98-2C-50" // FLAC 1.5.0
                 ]
             ),
@@ -298,7 +298,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "A5B12EAFE3014399E04E427CA756234B", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "60-66-EA-A0-B4-EC-85-FE", // FLAC 1.4.3 (Ubuntu 24.04)
                     "CC-E4-C6-E8-D5-98-2C-50" // FLAC 1.5.0
                 ]
             ),
@@ -311,7 +311,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "1399992DC07E38EBCD3F5DB1AF48B8C3", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "1F6BDDA2A2585E5E84B4A9F5CFB344C0", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "C2-09-C9-DA-B4-96-7E-FF", // FLAC 1.4.3 (Ubuntu 24.04)
                     "EA-A4-B8-36-7D-F9-C7-4C" // FLAC 1.5.0
                 ]
             ),
@@ -324,7 +324,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "BB1A252DAA1100EA9D0B4658DE863A86", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "5CADC0776BE4E84F683DB333057E54E1", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "57-39-62-59-3A-82-7D-5B", // FLAC 1.4.3 (Ubuntu 24.04)
                     "8E-9B-49-2B-B0-19-E5-65" // FLAC 1.5.0
                 ]
             ),
@@ -1329,7 +1329,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "16-A6-44-C7-4D-4A-D6-28", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
-                    "4AA6D9C63E0CFD18F450A99819E28811" // Vorbis 1.3.7 (MacOS and Ubuntu)
+                    "DF-99-54-20-04-92-45-96" // Vorbis 1.3.7 (MacOS and Ubuntu)
                 ]
             ),
 
@@ -1358,7 +1358,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "C0-88-80-B1-9F-D2-0E-F5", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
-                    "2CFA7B065217D20087B138681D587899" // Vorbis 1.3.7 (MacOS and Ubuntu)
+                    "33-BD-B0-E3-16-03-0A-E2" // Vorbis 1.3.7 (MacOS and Ubuntu)
                 ]
             ),
 
@@ -1387,7 +1387,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "C0-88-80-B1-9F-D2-0E-F5", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
-                    "2CFA7B065217D20087B138681D587899" // Vorbis 1.3.7 (MacOS and Ubuntu)
+                    "33-BD-B0-E3-16-03-0A-E2" // Vorbis 1.3.7 (MacOS and Ubuntu)
                 ]
             ),
 
@@ -1416,7 +1416,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "D7-99-7E-50-17-9D-8A-91", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
-                    "D87431EDDF5977239830E5BC9BCF042A" // Vorbis 1.3.7 (MacOS and Ubuntu)
+                    "68-64-92-28-3D-9B-BE-CE" // Vorbis 1.3.7 (MacOS and Ubuntu)
                 ]
             ),
 
@@ -1444,8 +1444,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "A44D6CC373B6F34D65EADBB32C94C566", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
-                    "FD-F6-85-33-B3-E4-9A-44" // Vorbis 1.3.7 (MacOS and Ubuntu)
+                    "FD-F6-85-33-B3-E4-9A-44", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
+                    "02-49-45-A0-E6-C8-24-65" // Vorbis 1.3.7 (MacOS and Ubuntu)
                 ]
             ),
 
@@ -1474,8 +1474,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "BD9FBB0769E89FC46E37BB48A7F8A62F", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
-                    "16-A6-44-C7-4D-4A-D6-28" // Vorbis 1.3.7 (MacOS and Ubuntu)
+                    "16-A6-44-C7-4D-4A-D6-28", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
+                    "DF-99-54-20-04-92-45-96" // Vorbis 1.3.7 (MacOS and Ubuntu)
                 ]
             ),
 
@@ -1486,8 +1486,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "D225108B66480DC5F4368F6CD605AD7C", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
-                    "58-4F-37-65-C3-D1-39-CE" // Vorbis 1.3.7 (MacOS and Ubuntu)
+                    "58-4F-37-65-C3-D1-39-CE", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
+                    "14-46-94-9D-94-B4-99-9F" // Vorbis 1.3.7 (MacOS and Ubuntu)
                 ]
             ),
 
@@ -1498,8 +1498,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "D225108B66480DC5F4368F6CD605AD7C", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
-                    "58-4F-37-65-C3-D1-39-CE" // Vorbis 1.3.7 (MacOS and Ubuntu)
+                    "58-4F-37-65-C3-D1-39-CE", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
+                    "14-46-94-9D-94-B4-99-9F" // Vorbis 1.3.7 (MacOS and Ubuntu)
                 ]
             ),
 
@@ -1511,7 +1511,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "7D-E9-01-03-FF-5B-14-4D", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
-                    "8E3BEF265FA8D9C8632A1CB4B5155156", // Vorbis 1.3.7 (MacOS and Ubuntu on Intel)
+                    "80-0C-7E-A6-86-25-15-E1", // Vorbis 1.3.7 (MacOS and Ubuntu on Intel)
                     "9924B82CBA5C2A07AA4BCA87E51651BD" // Vorbis 1.3.7 (MacOS on ARM)
                 ]
             ),
@@ -1524,7 +1524,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "A3-5F-BD-C2-CB-CF-1C-C3", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
-                    "36C4695F1C9FBD9E018E98FB4A132D83" // Vorbis 1.3.7 (MacOS and Ubuntu)
+                    "C4-9D-42-B4-A8-D2-A0-9D" // Vorbis 1.3.7 (MacOS and Ubuntu)
                 ]
             ),
 
@@ -1554,7 +1554,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "D22BBFDDCB298A427057253C4E833057", // Opus 1.3.1 (Ubuntu 22.04)
-                    "E5F10FBB8E805E7713EB907CF46A0BAD", // Opus 1.4.0 (Ubuntu 24.04)
+                    "EC-82-E8-0B-85-21-C4-73", // Opus 1.4.0 (Ubuntu 24.04)
                     "57-56-1E-D3-88-59-8A-3B" // Opus 1.5.2
                 ]
             ),
@@ -1580,7 +1580,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (Ubuntu 22.04)
-                    "948794A7B0122E3E9DB7CCB2A5846552", // Opus 1.4.0 (Ubuntu 24.04)
+                    "9F-D8-65-86-39-BE-97-CC", // Opus 1.4.0 (Ubuntu 24.04)
                     "DB-24-7A-6E-D5-A7-D9-62" // Opus 1.5.2
                 ]
             ),
@@ -1606,7 +1606,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (Ubuntu 22.04)
-                    "948794A7B0122E3E9DB7CCB2A5846552", // Opus 1.4.0 (Ubuntu 24.04)
+                    "9F-D8-65-86-39-BE-97-CC", // Opus 1.4.0 (Ubuntu 24.04)
                     "DB-24-7A-6E-D5-A7-D9-62" // Opus 1.5.2
                 ]
             ),
@@ -1632,7 +1632,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "166F1DD0C71E2CCCF226157A34791E1B", // Opus 1.3.1 (Ubuntu 22.04)
-                    "9E9DA2F8EC05F9E6F6359997066957A9", // Opus 1.4.0 (Ubuntu 24.04)
+                    "28-DF-77-23-AF-DB-27-69", // Opus 1.4.0 (Ubuntu 24.04)
                     "39-76-55-AE-E3-AB-5F-98" // Opus 1.5.2
                 ]
             ),
@@ -1658,7 +1658,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "8EA7FC13A2F214CADF3A1D447EF5CB65", // Opus 1.3.1 (Ubuntu 22.04)
-                    "8ABDE938610E273AD1D4C27061D4FC95", // Opus 1.4.0 (Ubuntu 24.04)
+                    "13-BF-62-84-06-2C-9E-77", // Opus 1.4.0 (Ubuntu 24.04)
                     "89-44-76-37-67-35-C5-11" // Opus 1.5.2
                 ]
             ),
@@ -1685,7 +1685,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "BB50765E7DB79BDEADFC81E771101FD7", // Opus 1.3.1 (Ubuntu 22.04)
-                    "5693A0AB09AF57652430067D0EF88EF8", // Opus 1.4.0 (Ubuntu 24.04)
+                    "17-9A-09-36-5A-B2-E4-E2", // Opus 1.4.0 (Ubuntu 24.04)
                     "AD-2C-39-1F-8B-7F-55-FE" // Opus 1.5.2
                 ]
             ),
@@ -1698,7 +1698,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "367DB09F8408583579F918061FCB6322", // Opus 1.3.1 (Ubuntu 22.04)
-                    "D35A7D280213995902B314BB911069E7", // Opus 1.4.0 (Ubuntu 24.04)
+                    "44-25-76-F8-74-C9-A2-F8", // Opus 1.4.0 (Ubuntu 24.04)
                     "D3-AA-F1-4B-AB-E3-6A-E1" // Opus 1.5.2
                 ]
             ),
@@ -1711,7 +1711,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "22D33DFB735C5B7805AB26C7A04CDA86", // Opus 1.3.1 (Ubuntu 22.04)
-                    "1EEAB4BD3BB3EFD3BBEABBF84051C89B", // Opus 1.4.0 (Ubuntu 24.04)
+                    "46-C7-BE-A2-D0-19-35-0E", // Opus 1.4.0 (Ubuntu 24.04)
                     "69-1C-BC-A0-14-50-7E-F4" // Opus 1.5.2
                 ]
             ),
@@ -1724,7 +1724,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "F152E6100DC6002C78DDCC6DF83D8880", // Opus 1.3.1 (Ubuntu 22.04)
-                    "171BFABBE94A1AC2B93FA9656F03F8AA", // Opus 1.4.0 (Ubuntu 24.04)
+                    "7A-5A-1C-65-EB-FC-54-36", // Opus 1.4.0 (Ubuntu 24.04)
                     "FC-00-36-0A-1E-9A-C9-89", // Opus 1.5.2 (Intel)
                     "14460A58ACC0BF9ED0BBC2122B6557D1" // Opus 1.5.2 (ARM)
                 ]
@@ -1738,7 +1738,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "CABF32D411EA5FA9458A79B6DC2C2D69", // Opus 1.3.1 (Ubuntu 22.04)
-                    "12FB32A06A03385E67764158F2809835", // Opus 1.4.0 (Ubuntu 24.04)
+                    "A2-E6-3B-0F-2B-3A-5F-F1", // Opus 1.4.0 (Ubuntu 24.04)
                     "3E-3D-BD-8A-3C-D5-15-B5" // Opus 1.5.2
                 ]
             )
