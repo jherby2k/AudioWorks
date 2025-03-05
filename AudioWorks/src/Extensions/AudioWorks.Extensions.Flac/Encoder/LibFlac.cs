@@ -73,10 +73,10 @@ namespace AudioWorks.Extensions.Flac.Encoder
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static unsafe partial int StreamEncoderInitStream(
             StreamEncoderHandle handle,
-            delegate* unmanaged<nint, byte*, int, uint, uint, nint, EncoderWriteStatus> writeCallback,
-            delegate* unmanaged<nint, ulong, nint, EncoderSeekStatus> seekCallback,
-            delegate* unmanaged<nint, ulong*, nint, EncoderTellStatus> tellCallback,
-            delegate* unmanaged<nint, nint, nint, void> metadataCallback,
+            delegate* unmanaged[Cdecl]<nint, byte*, int, uint, uint, nint, EncoderWriteStatus> writeCallback,
+            delegate* unmanaged[Cdecl]<nint, ulong, nint, EncoderSeekStatus> seekCallback,
+            delegate* unmanaged[Cdecl]<nint, ulong*, nint, EncoderTellStatus> tellCallback,
+            delegate* unmanaged[Cdecl]<nint, nint, nint, void> metadataCallback,
             nint userData);
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_process")]

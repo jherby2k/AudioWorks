@@ -101,7 +101,7 @@ namespace AudioWorks.Extensions.Flac.Encoder
             _streamHandle.Free();
         }
 
-        [UnmanagedCallersOnly]
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static unsafe EncoderWriteStatus WriteCallback(
             nint handle,
             byte* buffer,
@@ -115,7 +115,7 @@ namespace AudioWorks.Extensions.Flac.Encoder
             return EncoderWriteStatus.Ok;
         }
 
-        [UnmanagedCallersOnly]
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static EncoderSeekStatus SeekCallback(nint handle, ulong absoluteOffset, nint userData)
         {
             var stream = (Stream) GCHandle.FromIntPtr(userData).Target!;
@@ -123,7 +123,7 @@ namespace AudioWorks.Extensions.Flac.Encoder
             return EncoderSeekStatus.Ok;
         }
 
-        [UnmanagedCallersOnly]
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static unsafe EncoderTellStatus TellCallback(nint handle, ulong* absoluteOffset, nint userData)
         {
             var stream = (Stream) GCHandle.FromIntPtr(userData).Target!;

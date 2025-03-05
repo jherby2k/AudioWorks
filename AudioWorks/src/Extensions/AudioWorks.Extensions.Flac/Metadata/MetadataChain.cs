@@ -16,6 +16,7 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Flac.Metadata
@@ -94,7 +95,7 @@ namespace AudioWorks.Extensions.Flac.Metadata
             Eof = &EofCallback
         };
 
-        [UnmanagedCallersOnly]
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static unsafe nint ReadCallback(void* readBuffer, nint bufferSize, nint numberOfRecords, nint handle)
         {
             var stream = (Stream) GCHandle.FromIntPtr(handle).Target!;
@@ -102,7 +103,7 @@ namespace AudioWorks.Extensions.Flac.Metadata
             return new(bytesRead);
         }
 
-        [UnmanagedCallersOnly]
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static unsafe nint WriteCallback(void* writeBuffer, nint bufferSize, nint numberOfRecords, nint handle)
         {
             var stream = (Stream) GCHandle.FromIntPtr(handle).Target!;
@@ -110,7 +111,7 @@ namespace AudioWorks.Extensions.Flac.Metadata
             return numberOfRecords;
         }
 
-        [UnmanagedCallersOnly]
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static int SeekCallback(nint handle, long offset, SeekOrigin whence)
         {
             var stream = (Stream) GCHandle.FromIntPtr(handle).Target!;
@@ -118,14 +119,14 @@ namespace AudioWorks.Extensions.Flac.Metadata
             return 0;
         }
 
-        [UnmanagedCallersOnly]
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static long TellCallback(nint handle)
         {
             var stream = (Stream) GCHandle.FromIntPtr(handle).Target!;
             return stream.Position;
         }
 
-        [UnmanagedCallersOnly]
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static int EofCallback(nint handle)
         {
             var stream = (Stream) GCHandle.FromIntPtr(handle).Target!;

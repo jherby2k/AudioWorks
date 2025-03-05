@@ -16,6 +16,7 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using AudioWorks.Common;
 
@@ -149,7 +150,7 @@ namespace AudioWorks.Extensions.Opus
             Close = &CloseCallback
         };
 
-        [UnmanagedCallersOnly]
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static unsafe int WriteCallback(nint userData, byte* buffer, int length)
         {
             var outputStream = (Stream) GCHandle.FromIntPtr(userData).Target!;
@@ -157,7 +158,7 @@ namespace AudioWorks.Extensions.Opus
             return 0;
         }
 
-        [UnmanagedCallersOnly]
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static int CloseCallback(nint userData) => 0;
 
         void FlushHeaders()

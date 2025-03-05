@@ -33,14 +33,14 @@ namespace AudioWorks.Extensions.Flac.Decoder
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static unsafe partial int StreamDecoderInitStream(
             StreamDecoderHandle handle,
-            delegate* unmanaged<nint, byte*, int*, nint, DecoderReadStatus> readCallback,
-            delegate* unmanaged<nint, ulong, nint, DecoderSeekStatus> seekCallback,
-            delegate* unmanaged<nint, ulong*, nint, DecoderTellStatus> tellCallback,
-            delegate* unmanaged<nint, ulong*, nint, DecoderLengthStatus> lengthCallback,
-            delegate* unmanaged<nint, nint, int> eofCallback,
+            delegate* unmanaged[Cdecl]<nint, byte*, int*, nint, DecoderReadStatus> readCallback,
+            delegate* unmanaged[Cdecl]<nint, ulong, nint, DecoderSeekStatus> seekCallback,
+            delegate* unmanaged[Cdecl]<nint, ulong*, nint, DecoderTellStatus> tellCallback,
+            delegate* unmanaged[Cdecl]<nint, ulong*, nint, DecoderLengthStatus> lengthCallback,
+            delegate* unmanaged[Cdecl]<nint, nint, int> eofCallback,
             StreamDecoderWriteCallback writeCallback,
             StreamDecoderMetadataCallback? metadataCallback,
-            delegate* unmanaged<nint, DecoderErrorStatus, nint, void> errorCallback,
+            delegate* unmanaged[Cdecl]<nint, DecoderErrorStatus, nint, void> errorCallback,
             nint userData);
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_set_metadata_respond")]

@@ -399,6 +399,7 @@ dotnet_diagnostic.ca5400.severity = warning
 dotnet_diagnostic.ca5401.severity = warning
 dotnet_diagnostic.ca5402.severity = warning
 dotnet_diagnostic.ca5403.severity = warning
+dotnet_diagnostic.cs3016.severity = none
 dotnet_diagnostic.il3000.severity = warning
 dotnet_diagnostic.il3001.severity = warning
 

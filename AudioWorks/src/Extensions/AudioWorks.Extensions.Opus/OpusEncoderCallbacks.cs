@@ -20,8 +20,8 @@ namespace AudioWorks.Extensions.Opus
     [StructLayout(LayoutKind.Sequential)]
     unsafe struct OpusEncoderCallbacks
     {
-        internal delegate* unmanaged<nint, byte*, int, int> Write;
+        internal delegate* unmanaged[Cdecl]<nint, byte*, int, int> Write;
 
-        internal delegate* unmanaged<nint, int> Close;
+        internal delegate* unmanaged[Cdecl]<nint, int> Close;
     }
 }
