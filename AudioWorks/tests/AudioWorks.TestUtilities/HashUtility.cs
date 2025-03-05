@@ -14,32 +14,22 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Security.Cryptography;
+using System.IO.Hashing;
 
 namespace AudioWorks.TestUtilities
 {
     public static class HashUtility
     {
-        [SuppressMessage("Microsoft.Security", "CA5351:Do not use insecure cryptographic algorithm MD5.",
-            Justification = "This method is not security critical")]
         public static string CalculateHash(string filePath)
         {
-            using (var md5 = MD5.Create())
+            var algorithm = new XxHash3();
             using (var fileStream = File.OpenRead(filePath))
-                return BitConverter.ToString(md5.ComputeHash(fileStream))
-                    .Replace("-", string.Empty, StringComparison.Ordinal);
+                algorithm.Append(fileStream);
+            return BitConverter.ToString(algorithm.GetCurrentHash());
         }
 
-        [SuppressMessage("Microsoft.Security", "CA5351:Do not use insecure cryptographic algorithm MD5.",
-            Justification = "This method is not security critical")]
-        public static string CalculateHash(byte[]? data)
-        {
-            if (data == null) return string.Empty;
-
-            return BitConverter.ToString(MD5.HashData(data))
-                .Replace("-", string.Empty, StringComparison.OrdinalIgnoreCase);
-        }
+        public static string CalculateHash(byte[]? data) =>
+            data == null ? string.Empty : BitConverter.ToString(XxHash3.Hash(data));
     }
 }

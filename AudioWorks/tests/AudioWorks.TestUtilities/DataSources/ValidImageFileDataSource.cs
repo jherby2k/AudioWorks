@@ -30,7 +30,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 24,
                 true,
                 "image/png",
-                "9315650A78F4292A5527586198C4F3C8"
+                "E8-AF-71-02-FB-5C-2D-88"
             ),
             new(
                 "PNG 24-bit 1280 x 935.png",
@@ -39,7 +39,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 24,
                 true,
                 "image/png",
-                "85E02F6C2BCF8112E16E63660CADFE02"
+                "35-89-B2-C4-CE-E7-26-D7"
             ),
             new(
                 "JPEG 24-bit 1280 x 935.jpg",
@@ -48,7 +48,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 24,
                 false,
                 "image/jpeg",
-                "4BFBE209E1183AE63DBBED12EEE773B8"
+                "AE-52-88-3D-B7-60-8D-BB"
             )
         ];
 

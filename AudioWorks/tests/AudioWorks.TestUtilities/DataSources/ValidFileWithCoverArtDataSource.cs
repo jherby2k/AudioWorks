@@ -30,7 +30,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 24,
                 true,
                 "image/png",
-                "85E02F6C2BCF8112E16E63660CADFE02"
+                "35-89-B2-C4-CE-E7-26-D7"
             ),
             new(
                 "FLAC Level 5 16-bit 44100Hz Stereo (PICTURE block - JPEG).flac",
@@ -39,7 +39,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 24,
                 false,
                 "image/jpeg",
-                "4BFBE209E1183AE63DBBED12EEE773B8"
+                "AE-52-88-3D-B7-60-8D-BB"
             ),
             new(
                 "FLAC Level 5 16-bit 44100Hz Stereo.flac",
@@ -57,7 +57,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 24,
                 true,
                 "image/png",
-                "85E02F6C2BCF8112E16E63660CADFE02"
+                "35-89-B2-C4-CE-E7-26-D7"
             ),
             new(
                 "ALAC 16-bit 44100Hz Stereo (Covr atom - JPEG).m4a",
@@ -66,7 +66,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 24,
                 false,
                 "image/jpeg",
-                "4BFBE209E1183AE63DBBED12EEE773B8"
+                "AE-52-88-3D-B7-60-8D-BB"
             ),
             new(
                 "ALAC 16-bit 44100Hz Stereo.m4a",
@@ -84,7 +84,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 24,
                 true,
                 "image/png",
-                "85E02F6C2BCF8112E16E63660CADFE02"
+                "35-89-B2-C4-CE-E7-26-D7"
             ),
             new(
                 "Lame CBR 128 44100Hz Stereo (APIC frame - JPEG).mp3",
@@ -93,7 +93,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 24,
                 false,
                 "image/jpeg",
-                "4BFBE209E1183AE63DBBED12EEE773B8"
+                "AE-52-88-3D-B7-60-8D-BB"
             ),
             new(
                 "Lame CBR 128 44100Hz Stereo.mp3",
@@ -111,7 +111,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 24,
                 true,
                 "image/png",
-                "85E02F6C2BCF8112E16E63660CADFE02"
+                "35-89-B2-C4-CE-E7-26-D7"
             ),
             new(
                 "Vorbis Quality 3 44100Hz Stereo (PICTURE comment - JPEG).ogg",
@@ -120,7 +120,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 24,
                 false,
                 "image/jpeg",
-                "4BFBE209E1183AE63DBBED12EEE773B8"
+                "AE-52-88-3D-B7-60-8D-BB"
             ),
             new(
                 "Vorbis Quality 3 44100Hz Stereo.ogg",
@@ -138,7 +138,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 24,
                 true,
                 "image/png",
-                "85E02F6C2BCF8112E16E63660CADFE02"
+                "35-89-B2-C4-CE-E7-26-D7"
             ),
             new(
                 "Opus VBR 44100Hz Stereo (PICTURE comment - JPEG).opus",
@@ -147,7 +147,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 24,
                 false,
                 "image/jpeg",
-                "4BFBE209E1183AE63DBBED12EEE773B8"
+                "AE-52-88-3D-B7-60-8D-BB"
             ),
             new(
                 "Opus VBR 44100Hz Stereo.opus",
