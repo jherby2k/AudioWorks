@@ -319,7 +319,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 },
                 [
                     "986464F3AC48E00D00B8ECF3AF3FD6BC", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "70-23-C1-4C-76-D0-97-9B", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "82-4F-D8-9B-2F-A2-43-00", // FLAC 1.4.3 (Ubuntu 24.04)
                     "03-BC-0C-AC-77-14-86-A9" // FLAC 1.5.0
                 ]
             ),
@@ -594,7 +594,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "AA-14-94-9A-39-F1-26-3D", // 32-bit Windows on AMD
                     "75D127D9FCD7720CBE92C0670A93A880", // 64-bit Windows on Intel
                     "35-3E-A8-A6-1A-E4-37-4D", // 64-bit Windows on Ryzen 5600X
-                    "79-05-CC-7A-EE-CF-1A-E6" // 64-bit Windows on EPYC 7763
+                    "D0-C1-81-B9-A5-D6-F1-31" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -630,7 +630,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "3D-90-DA-92-BC-41-4B-5A", // 32-bit Windows on AMD
                     "E0A80A6B32CD5A8FA5C62B44F28C4A87", // 64-bit Windows on Intel
                     "E3-95-7F-57-F1-93-A9-14", // 64-bit Windows on Ryzen 5600X
-                    "38-18-6E-0B-2B-E2-C2-4A" // 64-bit Windows on EPYC 7763
+                    "A3-EE-43-38-A8-9C-83-91" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -1015,7 +1015,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "6A-C8-FA-AB-6D-4D-B2-A5", // 32-bit Windows on AMD
                     "19940A1BA1D575D9E165584C24A955F4", // 64-bit Windows on Intel
                     "34-90-BE-A7-5B-15-FA-72", // 64-bit Windows on Ryzen 5600X
-                    "BD-E6-79-C8-B1-B3-3E-C1" // 64-bit Windows on EPYC 7763
+                    "BD-40-59-07-7A-39-ED-D4" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
 
