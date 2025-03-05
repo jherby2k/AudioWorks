@@ -625,7 +625,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "96-5A-C2-F0-3A-B9-F7-25", // Intel
-                    "902BF760BB86246A8EA1890E31E6802E" // ARM
+                    "2C-E4-1D-38-31-48-BB-F2" // ARM
                 ]
             ),
 
@@ -1284,7 +1284,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "94-C7-0A-15-23-0B-29-78", // Intel
-                    "D1FDCC69B8BF283754790E3B0745482B" // ARM
+                    "FA-C5-BF-D3-7E-4C-39-A8" // ARM
                 ]
             ),
 
@@ -1512,7 +1512,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [
                     "7D-E9-01-03-FF-5B-14-4D", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
                     "80-0C-7E-A6-86-25-15-E1", // Vorbis 1.3.7 (MacOS and Ubuntu on Intel)
-                    "9924B82CBA5C2A07AA4BCA87E51651BD" // Vorbis 1.3.7 (MacOS on ARM)
+                    "CD-D4-7B-99-FE-2A-E3-22" // Vorbis 1.3.7 (MacOS on ARM)
                 ]
             ),
 
@@ -1726,7 +1726,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "F152E6100DC6002C78DDCC6DF83D8880", // Opus 1.3.1 (Ubuntu 22.04)
                     "7A-5A-1C-65-EB-FC-54-36", // Opus 1.4.0 (Ubuntu 24.04)
                     "FC-00-36-0A-1E-9A-C9-89", // Opus 1.5.2 (Intel)
-                    "14460A58ACC0BF9ED0BBC2122B6557D1" // Opus 1.5.2 (ARM)
+                    "E1-3A-2C-E7-53-03-A2-02" // Opus 1.5.2 (ARM)
                 ]
             ),
 
