@@ -594,7 +594,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "AA-14-94-9A-39-F1-26-3D", // 32-bit Windows on AMD
                     "75D127D9FCD7720CBE92C0670A93A880", // 64-bit Windows on Intel
                     "35-3E-A8-A6-1A-E4-37-4D", // 64-bit Windows on Ryzen 5600X
-                    "E4178DFAC692316A8AAF8D08D754E230" // 64-bit Windows on EPYC 7763
+                    "79-05-CC-7A-EE-CF-1A-E6" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -612,7 +612,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "6D-AA-6B-37-21-F5-DF-31", // 32-bit Windows on AMD
                     "1D0F379EC9C47267569F88729569D407", // 64-bit Windows on Intel
                     "A9-EE-1D-11-BE-F6-D3-C9", // 64-bit Windows on Ryzen 5600X
-                    "33E9833987EE2BF27E2C2B28FAEFE3DB" // 64-bit Windows on EPYC 7763
+                    "BD-E6-79-C8-B1-B3-3E-C1" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -630,7 +630,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "3D-90-DA-92-BC-41-4B-5A", // 32-bit Windows on AMD
                     "E0A80A6B32CD5A8FA5C62B44F28C4A87", // 64-bit Windows on Intel
                     "E3-95-7F-57-F1-93-A9-14", // 64-bit Windows on Ryzen 5600X
-                    "04D7006A40626AE7E52FBC6ABFC5AB82" // 64-bit Windows on EPYC 7763
+                    "38-18-6E-0B-2B-E2-C2-4A" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -648,7 +648,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "53-18-0D-CD-CE-FF-8E-D9", // 32-bit Windows on AMD
                     "ED307F76DD052720321284BAD8876AB2", // 64-bit Windows on Intel
                     "85-67-33-D1-41-55-69-38", // 64-bit Windows on Ryzen 5600X
-                    "16AB3A070CCD2BE26A821EDFCCB1DB8A" // 64-bit Windows on EPYC 7763
+                    "42-1F-5C-AE-32-8B-4B-1E" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -665,7 +665,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "6E08F885FEC4094041F6A0B4A02F10AB", // 32-bit Windows on Intel
                     "194D40FBCAE58B4A01095DD89CE70A2D", // 32-bit Windows on AMD
                     "369DAA1350BB9C45BAF84F7769221F00", // 64-bit Windows on Intel
-                    "E9-41-0A-C8-25-11-86-F7" // 64-bit Windows on AMD
+                    "E9-41-0A-C8-25-11-86-F7", // 64-bit Windows on Ryzen 5600X
+                    "C6-7A-19-E1-7A-97-5F-2D" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -683,7 +684,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "CA-F9-FB-5A-AD-F2-FF-C2", // 32-bit Windows on AMD
                     "A86E9A3D4A9479A44F852FA42BA0C9C2", // 64-bit Windows on Intel
                     "72-0B-E6-82-18-51-F2-4C", // 64-bit Windows on Ryzen 5600X
-                    "B575737F74EFCF9F208BCAC93E325ABA" // 64-bit Windows on EPYC 7763
+                    "53-F4-E9-DC-D6-BB-AF-D4" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -701,7 +702,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "54-D1-D2-6B-FF-E6-65-38", // 32-bit Windows on AMD
                     "102A8F21E39D364419B9CF5BFB386631", // 64-bit Windows on Intel
                     "90-99-EF-1F-75-05-BB-1B", // 64-bit Windows on Ryzen 5600X
-                    "E6DF15DCA4E63C67DE254DF5268B9BA3" // 64-bit Windows on EPYC 7763
+                    "F5-71-CE-E7-3A-0D-1F-92" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -719,7 +720,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "38-C0-2C-7D-67-59-C1-96", // 32-bit Windows on AMD
                     "AAF40EB4D4AC1832D979D6EBDE9C5BDD", // 64-bit Windows on Intel
                     "6B-B4-0A-03-39-1C-F0-DF", // 64-bit Windows on Ryzen 5600X
-                    "4FD2E10EF9390B9338171D8E83B3CB9F" // 64-bit Windows on EPYC 7763
+                    "59-5F-A0-8F-29-95-A0-7F" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -737,7 +738,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "CA-20-41-98-E4-02-3E-0C", // 32-bit Windows on AMD
                     "2863A63E2060267B6A6151CA90239BC6", // 64-bit Windows on Intel
                     "CC-E3-27-EB-55-D5-11-6B", // 64-bit Windows on Ryzen 5600X
-                    "AFBA08886BCC7401D3BD2915E5083A9B" // 64-bit Windows on EPYC 7763
+                    "AD-38-A6-16-DA-76-0F-C6" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -757,7 +758,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "6D-AA-6B-37-21-F5-DF-31", // 32-bit Windows on AMD
                     "1D0F379EC9C47267569F88729569D407", // 64-bit Windows on Intel
                     "A9-EE-1D-11-BE-F6-D3-C9", // 64-bit Windows on Ryzen 5600X
-                    "33E9833987EE2BF27E2C2B28FAEFE3DB" // 64-bit Windows on EPYC 7763
+                    "BD-E6-79-C8-B1-B3-3E-C1" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -776,7 +777,8 @@ namespace AudioWorks.TestUtilities.DataSources
                     "78299761793D1A6EC79CBB9233156FD8", // 32-bit Windows on Intel
                     "E53BA332FDCFBE927A81040DB480688B", // 32-bit Windows on AMD
                     "93D67A9C673E7ABE3929846DBE5DBF97", // 64-bit Windows on Intel
-                    "03-CE-28-10-F4-67-A7-B7" // 64-bit Windows on AMD
+                    "03-CE-28-10-F4-67-A7-B7", // 64-bit Windows on Ryzen 5600X
+                    "38-18-6E-0B-2B-E2-C2-4A" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -796,7 +798,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "9D-FD-71-7F-11-4C-7C-D7", // 32-bit Windows on AMD
                     "A1CD6AC102BA40A728B2C7E00B1E786D", // 64-bit Windows on Intel
                     "C5-49-22-F7-D8-22-EA-64", // 64-bit Windows on Ryzen 5600X
-                    "8F91A56C65E270F4E2694DBFB88BA01F" // 64-bit Windows on EPYC 7763
+                    "41-D2-1B-97-BC-22-00-E4" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -816,7 +818,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "7A-92-5E-0F-FF-CE-D0-FC", // 32-bit Windows on AMD
                     "38D28BD3802566CB30D3B824D7FF593F", // 64-bit Windows on Intel
                     "FA-0F-C7-19-0F-26-BB-AA", // 64-bit Windows on Ryzen 5600X
-                    "E606F4AAEE6B94FB85E75EFF06B4F4A7" // 64-bit Windows on EPYC 7763
+                    "B8-42-9B-41-89-06-AC-B6" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -852,7 +854,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "E9-3C-D8-9E-D6-48-4E-7D", // 32-bit Windows on AMD
                     "2AD5FC82A78732A66B8F04387D7D412B", // 64-bit Windows on Intel
                     "66-48-1D-33-22-43-53-FF", // 64-bit Windows on Ryzen 5600X
-                    "2BAF9813F2A9BA975F918B3C248F0745" // 64-bit Windows on EPYC 7763
+                    "F1-A4-9F-B8-8E-59-B0-BF" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -872,7 +874,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "97-CE-44-9B-71-22-CC-C9", // 32-bit Windows on AMD
                     "298A2B946AA53102FD025DDD9D273B21", // 64-bit Windows on Intel
                     "FF-B3-B1-3F-D0-D9-26-A1", // 64-bit Windows on Ryzen 5600X
-                    "8814F7DB0AC6247DF45E32200B050933" // 64-bit Windows on EPYC 7763
+                    "79-05-CC-7A-EE-CF-1A-E6" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -892,7 +894,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "D4-96-9B-4B-59-5F-B5-CE", // 32-bit Windows
                     "96E46C6CF7126E26E58224D5F55850F2", // 64-bit Windows on Intel
                     "5B-E0-72-79-CF-69-6E-91", // 64-bit Windows on Ryzen 5600X
-                    "31A39465557533AA9D2E6F4985AFF237" // 64-bit Windows on EPYC 7763
+                    "0A-9B-19-DA-40-0A-D1-0F" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -912,7 +914,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "D4-96-9B-4B-59-5F-B5-CE", // 32-bit Windows
                     "96E46C6CF7126E26E58224D5F55850F2", // 64-bit Windows on Intel
                     "5B-E0-72-79-CF-69-6E-91", // 64-bit Windows on Ryzen 5600X
-                    "31A39465557533AA9D2E6F4985AFF237" // 64-bit Windows on EPYC 7763
+                    "0A-9B-19-DA-40-0A-D1-0F" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -932,7 +934,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "47-ED-90-FB-48-2E-19-55", // 32-bit Windows
                     "D4A9A3FFC75AC0383B68BADA43E23C3D", // 64-bit Windows on Intel
                     "B8-F5-05-D4-50-4C-35-AA", // 64-bit Windows on Ryzen 5600X
-                    "EBDEAB5BAC8FBA910667D3664192EA07" // 64-bit Windows on EPYC 7763
+                    "2B-8C-3C-6F-C7-46-66-66" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -953,7 +955,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "98-55-BA-2D-4A-72-F1-1A", // 32-bit Windows on AMD
                     "08686D04EFF88BC663C469F2DD224020", // 64-bit Windows on Intel
                     "BC-47-2F-B6-C5-50-ED-17", // 64-bit Windows on Ryzen 5600X
-                    "CEF70CE95C604B6720A66F9A3AFB0FB3" // 64-bit Windows on EPYC 7763
+                    "AE-A9-BC-CB-C8-16-55-F6" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -973,7 +975,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "6D-AA-6B-37-21-F5-DF-31", // 32-bit Windows on AMD
                     "1D0F379EC9C47267569F88729569D407", // 64-bit Windows on Intel
                     "A9-EE-1D-11-BE-F6-D3-C9", // 64-bit Windows on Ryzen 5600X
-                    "33E9833987EE2BF27E2C2B28FAEFE3DB" // 64-bit Windows on EPYC 7763
+                    "BD-E6-79-C8-B1-B3-3E-C1" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -993,7 +995,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "F2-7E-DD-D0-8F-A4-88-B5", // 32-bit Windows on AMD
                     "B49EC8F6428A1CDEBA4F0728FC1BF8E5", // 64-bit Windows on Intel
                     "C9-58-58-74-36-AD-27-F5", // 64-bit Windows on Ryzen 5600X
-                    "970D928358381E6D6631430F3922FB99" // 64-bit Windows on EPYC 7763
+                    "03-6D-BD-AB-2C-26-82-33" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
@@ -1013,7 +1015,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "6A-C8-FA-AB-6D-4D-B2-A5", // 32-bit Windows on AMD
                     "19940A1BA1D575D9E165584C24A955F4", // 64-bit Windows on Intel
                     "34-90-BE-A7-5B-15-FA-72", // 64-bit Windows on Ryzen 5600X
-                    "5BF9F9B72A1FED24330665C592934812" // 64-bit Windows on EPYC 7763
+                    "BD-E6-79-C8-B1-B3-3E-C1" // 64-bit Windows on EPYC 7763
                 ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
 
