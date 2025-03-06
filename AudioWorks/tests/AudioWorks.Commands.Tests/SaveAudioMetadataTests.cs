@@ -26,7 +26,8 @@ using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    public sealed class SaveAudioMetadataTests(ModuleFixture moduleFixture) : IClassFixture<ModuleFixture>
+    public sealed class SaveAudioMetadataTests(ModuleFixture moduleFixture, ITestOutputHelper output)
+        : IClassFixture<ModuleFixture>
     {
         readonly IMapper _mapper = new MapperConfiguration(
             config => config.CreateMap<AudioMetadata, AudioMetadata>()).CreateMapper();
@@ -215,6 +216,7 @@ namespace AudioWorks.Commands.Tests
                         ps.AddParameter(item.Key, item.Value);
 
                 ps.Invoke();
+                output.WriteStreams(ps);
             }
 
             Assert.Contains(HashUtility.CalculateHash(audioFile.Path), validHashes);

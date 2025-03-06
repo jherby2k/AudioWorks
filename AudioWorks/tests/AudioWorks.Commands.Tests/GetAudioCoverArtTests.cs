@@ -23,7 +23,8 @@ using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    public sealed class GetAudioCoverArtTests(ModuleFixture moduleFixture) : IClassFixture<ModuleFixture>
+    public sealed class GetAudioCoverArtTests(ModuleFixture moduleFixture, ITestOutputHelper output)
+        : IClassFixture<ModuleFixture>
     {
         [Fact(DisplayName = "Get-AudioCoverArt command exists")]
         public void CommandExists()
@@ -162,7 +163,10 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Get-AudioCoverArt")
                     .AddArgument(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
 
-                Assert.IsType<CoverArt>(ps.Invoke()[0].BaseObject, false);
+                var result = ps.Invoke();
+                output.WriteStreams(ps);
+
+                Assert.IsType<CoverArt>(result[0].BaseObject, false);
             }
         }
 

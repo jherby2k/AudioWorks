@@ -23,7 +23,8 @@ using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    public sealed class GetAudioFileTests(ModuleFixture moduleFixture) : IClassFixture<ModuleFixture>
+    public sealed class GetAudioFileTests(ModuleFixture moduleFixture, ITestOutputHelper output)
+        : IClassFixture<ModuleFixture>
     {
         [Fact(DisplayName = "Get-AudioFile command exists")]
         public void CommandExists()
@@ -204,7 +205,10 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Get-AudioFile")
                     .AddArgument(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
 
-                Assert.IsType<ITaggedAudioFile>(ps.Invoke()[0].BaseObject, false);
+                var result = ps.Invoke();
+                output.WriteStreams(ps);
+
+                Assert.IsType<ITaggedAudioFile>(result[0].BaseObject, false);
             }
         }
 
@@ -220,7 +224,10 @@ namespace AudioWorks.Commands.Tests
                 ps.AddStatement();
                 ps.AddCommand("Get-AudioFile")
                     .AddArgument(fileName);
+
                 var result = ps.Invoke();
+                output.WriteStreams(ps);
+
                 ps.Commands.Clear();
                 ps.AddCommand("Pop-Location");
 

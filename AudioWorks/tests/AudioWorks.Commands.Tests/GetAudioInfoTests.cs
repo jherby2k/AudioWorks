@@ -25,7 +25,8 @@ using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    public sealed class GetAudioInfoTests(ModuleFixture moduleFixture) : IClassFixture<ModuleFixture>
+    public sealed class GetAudioInfoTests(ModuleFixture moduleFixture, ITestOutputHelper output)
+        : IClassFixture<ModuleFixture>
     {
         [Fact(DisplayName = "Get-AudioInfo command exists")]
         public void CommandExists()
@@ -142,7 +143,10 @@ namespace AudioWorks.Commands.Tests
                 ps.AddCommand("Get-AudioInfo")
                     .AddArgument(new AudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)));
 
-                Assert.IsType<AudioInfo>(ps.Invoke()[0].BaseObject, false);
+                var result = ps.Invoke();
+                output.WriteStreams(ps);
+
+                Assert.IsType<AudioInfo>(result[0].BaseObject, false);
             }
         }
     }
