@@ -69,7 +69,7 @@ namespace AudioWorks.Extensions.Opus
 
         static string GetLibFullPath(string libraryName) =>
             Path.Combine(
-                AppContext.BaseDirectory,
+                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
                 "runtimes",
                 RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !Environment.Is64BitProcess
                     ? "win-x86"

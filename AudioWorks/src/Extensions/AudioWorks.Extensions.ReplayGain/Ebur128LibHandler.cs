@@ -32,7 +32,7 @@ namespace AudioWorks.Extensions.ReplayGain
         // Use the RID-specific directory, except on 32-bit Windows
         // On Mac we need to add the full file name, but on Windows it resolves the file properly
         static readonly string _ebur128LibFullPath = Path.Combine(
-            AppContext.BaseDirectory,
+            Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
             "runtimes",
             RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !Environment.Is64BitProcess
                 ? "win-x86"

@@ -71,7 +71,7 @@ namespace AudioWorks.Extensions.Vorbis
 
         static string GetLibFullPath(string libraryName) =>
             Path.Combine(
-                AppContext.BaseDirectory,
+                Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath)!,
                 "runtimes",
                 RuntimeInformation.RuntimeIdentifier,
                 "native",
