@@ -14,8 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using AudioWorks.Common;
-using AudioWorks.TestUtilities;
 using AudioWorks.TestUtilities.DataSources;
 using Xunit;
 
@@ -23,9 +21,6 @@ namespace AudioWorks.Api.Tests
 {
     public sealed class AudioEncoderManagerTests
     {
-        public AudioEncoderManagerTests(ITestOutputHelper outputHelper) =>
-            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
-
         [Theory(DisplayName = "AudioEncoderManager's GetEncoderInfo method returns the audio encoders")]
         [MemberData(nameof(AudioEncoderInfoDataSource.Data), MemberType = typeof(AudioEncoderInfoDataSource))]
         public void GetEncoderInfoReturnsAudioEncoders(string expectedName, string expectedDescription) =>

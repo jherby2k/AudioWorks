@@ -15,17 +15,12 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Linq;
-using AudioWorks.Common;
-using AudioWorks.TestUtilities;
 using Xunit;
 
 namespace AudioWorks.Extensibility.Tests
 {
     public sealed class SampleBufferTests
     {
-        public SampleBufferTests(ITestOutputHelper outputHelper) =>
-            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
-
         [Fact(DisplayName = "SampleBuffer.Empty returns an empty SampleBuffer")]
         public void SampleBufferEmptyReturnsEmpty() =>
             Assert.Equal(0, SampleBuffer.Empty.Frames);

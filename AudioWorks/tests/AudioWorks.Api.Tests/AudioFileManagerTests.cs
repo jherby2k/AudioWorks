@@ -14,8 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using AudioWorks.Common;
-using AudioWorks.TestUtilities;
 using AudioWorks.TestUtilities.DataSources;
 using Xunit;
 
@@ -23,9 +21,6 @@ namespace AudioWorks.Api.Tests
 {
     public sealed class AudioFileManagerTests
     {
-        public AudioFileManagerTests(ITestOutputHelper outputHelper) =>
-            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
-
         [Theory(DisplayName = "AudioFileManager's GetFormatInfo method returns the audio file formats")]
         [MemberData(nameof(AudioFileFormatInfoDataSource.Data), MemberType = typeof(AudioFileFormatInfoDataSource))]
         public void GetFormatInfoReturnsAudioFileFormats(string expectedExtension, string expectedFormat) =>

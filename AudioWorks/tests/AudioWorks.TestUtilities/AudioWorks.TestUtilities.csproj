@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\AudioWorks.Common\AudioWorks.Common.csproj" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="xunit.v3.extensibility.core" />
   </ItemGroup>
 

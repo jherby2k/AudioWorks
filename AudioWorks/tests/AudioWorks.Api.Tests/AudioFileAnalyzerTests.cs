@@ -26,9 +26,6 @@ namespace AudioWorks.Api.Tests
 {
     public sealed class AudioFileAnalyzerTests
     {
-        public AudioFileAnalyzerTests(ITestOutputHelper outputHelper) =>
-            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
-
         [Fact(DisplayName = "AudioFileAnalyzer's constructor throws an exception if the name is null")]
         public void ConstructorNameNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() =>

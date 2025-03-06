@@ -15,16 +15,12 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Text.Json;
-using AudioWorks.TestUtilities;
 using Xunit;
 
 namespace AudioWorks.Common.Tests
 {
     public sealed class AudioMetadataTests
     {
-        public AudioMetadataTests(ITestOutputHelper outputHelper) =>
-            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
-
         [Fact(DisplayName = "AudioMetadata throws an exception if Title is null")]
         public void TitleNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => new AudioMetadata{ Title = null! });

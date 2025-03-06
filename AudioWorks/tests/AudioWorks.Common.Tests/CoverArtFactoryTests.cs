@@ -23,9 +23,6 @@ namespace AudioWorks.Common.Tests
 {
     public sealed class CoverArtFactoryTests
     {
-        public CoverArtFactoryTests(ITestOutputHelper outputHelper) =>
-            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
-
         [Fact(DisplayName = "CoverArtFactory's Create method throws an exception if the path is null")]
         public void CreateDataNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => CoverArtFactory.GetOrCreate((byte[]?) null));
