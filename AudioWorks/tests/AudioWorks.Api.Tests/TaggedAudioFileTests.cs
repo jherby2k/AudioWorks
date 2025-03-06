@@ -293,7 +293,7 @@ namespace AudioWorks.Api.Tests
                 resultData,
                 PathUtility.GetMime(audioFile.Path));
 
-            Assert.Contains(HashUtility.CalculateHash(audioFile.Path), validHashes);
+            Assert.Contains(HashUtility.CalculateHash(resultData), validHashes);
         }
 
         [Theory(DisplayName = "TaggedAudioFile's SaveMetadata method throws an exception if the file is unsupported")]
