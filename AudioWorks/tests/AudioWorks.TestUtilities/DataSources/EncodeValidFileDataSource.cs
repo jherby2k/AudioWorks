@@ -130,7 +130,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 [],
                 [
                     "07-B0-94-C5-7C-28-85-1C"
-                ]   
+                ]
             ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null },
             new(
                 "ALAC 16-bit 48000Hz Stereo.m4a",
