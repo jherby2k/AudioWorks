@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>2.0.0</VersionPrefix>
+    <VersionPrefix>2.1.0</VersionPrefix>
     <FileVersion>$(VersionPrefix).$(Revision)</FileVersion>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <Description>The primary AudioWorks API. AudioWorks is a cross-platform, multi-format audio conversion and tagging suite.</Description>
