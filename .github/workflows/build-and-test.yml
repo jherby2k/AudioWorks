@@ -7,6 +7,7 @@ on:
       - .gitignore.txt
       - README.md
       - LICENSE
+      - .github/dependabot.yml
   pull_request:
     branches: [ "main", "dev" ]
 
