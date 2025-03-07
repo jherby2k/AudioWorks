@@ -390,3 +390,32 @@ jobs:
 
     - name: Publish coverage in build summary
       run: cat CoverageReport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs: [ windows, ubuntu_2404, ubuntu_2204, mac_arm, mac_intel ]
+
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: Build artifacts
+          path: artifacts
+
+      - name: Publish NuGet packages
+        env:
+            APIKEY: ${{ secrets.NUGET_APIKEY }}
+        run: |
+          foreach ($file in (Get-ChildItem -Path artifacts -Filter *.*nupkg)) {
+              dotnet nuget push $file --api-key $env:APIKEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+          }
+        shell: pwsh
+
+      - name: Publish PowerShell module
+        env:
+          APIKEY: ${{ secrets.PSGALLERY_APIKEY }}
+        run: Publish-Module -Path artifacts/AudioWorks.Commands -NuGetApiKey $env:APIKEY
+        shell: pwsh
