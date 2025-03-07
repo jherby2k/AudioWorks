@@ -14,8 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using AudioWorks.Common;
-using AudioWorks.TestUtilities;
 using AudioWorks.TestUtilities.DataSources;
 using Xunit;
 
@@ -23,9 +21,6 @@ namespace AudioWorks.Api.Tests
 {
     public sealed class AudioAnalyzerManagerTests
     {
-        public AudioAnalyzerManagerTests(ITestOutputHelper outputHelper) =>
-            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
-
         [Theory(DisplayName = "AudioAnalyzerManager's GetAnalyzerInfo method returns the audio analyzers")]
         [MemberData(nameof(AudioAnalyzerInfoDataSource.Data), MemberType = typeof(AudioAnalyzerInfoDataSource))]
         public void GetAnalyzerInfoReturnsAudioAnalyzers(string expectedName, string expectedDescription) =>

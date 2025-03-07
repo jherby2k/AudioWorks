@@ -25,14 +25,14 @@ using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.Vorbis
 {
-    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
-        "Instances are created via MEF.")]
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes",
+        Justification = "Instances are created via MEF")]
     [AudioEncoderExport("Vorbis", "Ogg Vorbis")]
     sealed class VorbisAudioEncoder : IAudioEncoder, IDisposable
     {
-#pragma warning disable CA2213 // Disposable fields should be disposed
+        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed",
+                    Justification = "Type does not have dispose ownership")]
         Stream? _outputStream;
-#pragma warning restore CA2213 // Disposable fields should be disposed
         OggStream? _oggStream;
         VorbisEncoder? _encoder;
         Export<IAudioFilter>? _replayGainExport;

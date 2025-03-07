@@ -14,16 +14,15 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Composition;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
+using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Api
 {
@@ -33,12 +32,12 @@ namespace AudioWorks.Api
     public sealed class AudioFileAnalyzer
     {
         readonly ExportFactory<IAudioAnalyzer> _analyzerFactory;
-        readonly int _maxDegreeOfParallelism = Environment.ProcessorCount;
+        readonly int _maxDegreeOfParallelism = (int) Math.Round(Environment.ProcessorCount * 1.5);
         readonly SettingDictionary _settings;
 
         /// <summary>
         /// Gets or sets the maximum degree of parallelism. The default value is equal to
-        /// <see cref="Environment.ProcessorCount"/>.
+        /// <see cref="Environment.ProcessorCount"/> * 1.5.
         /// </summary>
         /// <value>The maximum degree of parallelism.</value>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is less than 1.</exception>
@@ -51,6 +50,18 @@ namespace AudioWorks.Api
 
                 _maxDegreeOfParallelism = value;
             }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether various performance optimizations will be applied. This defaults to
+        /// true, and should only be disabled for testing or troubleshooting purposes.
+        /// </summary>
+        /// <value><c>false</c> if optimizations should be skipped; otherwise, <c>true</c>.</value>
+        [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Would be a breaking change.")]
+        public bool UseOptimizations
+        {
+            get => SampleBuffer.UseOptimizations;
+            init => SampleBuffer.UseOptimizations = value;
         }
 
         /// <summary>
@@ -136,8 +147,6 @@ namespace AudioWorks.Api
         /// <param name="audioFiles">The audio files.</param>
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
-        [SuppressMessage("Maintainability", "CA1506:Avoid excessive class coupling", Justification =
-            "Method is considered maintainable.")]
         public async Task AnalyzeAsync(
             IProgress<ProgressToken>? progress,
             CancellationToken cancellationToken,
@@ -148,6 +157,12 @@ namespace AudioWorks.Api
             if (audioFiles.Any(audioFile => audioFile == null))
                 throw new ArgumentException("One or more audio files are null.", nameof(audioFiles));
 
+            var logger = LoggerManager.LoggerFactory.CreateLogger<AudioFileAnalyzer>();
+            logger.LogDebug("Preparing to analyze {count} audio file(s).", audioFiles.Length);
+            logger.LogDebug("Optimizations are {optimized}.", UseOptimizations ? "enabled" : "disabled");
+            logger.LogDebug("Analyzing up to {maxParallel} file(s) in parallel.",
+                Math.Min(_maxDegreeOfParallelism, audioFiles.Length));
+
             progress?.Report(new() { AudioFilesCompleted = 0, FramesCompleted = 0 });
 
             var audioFilesCompleted = 0;
@@ -155,81 +170,54 @@ namespace AudioWorks.Api
 
             using (var groupToken = new GroupToken())
             {
-                var disposableExports = new ConcurrentBag<IDisposable>();
-                var linkOptions = new DataflowLinkOptions { PropagateCompletion = true };
-
-                // Initialization should be sequential
-                var initializeBlock = new TransformBlock<ITaggedAudioFile, (ITaggedAudioFile, IAudioAnalyzer)>(
-                    audioFile =>
-                    {
-                        var analyzerExport = _analyzerFactory.CreateExport();
-                        disposableExports.Add(analyzerExport);
-                        // ReSharper disable once AccessToDisposedClosure
-                        analyzerExport.Value.Initialize(audioFile.Info, Settings, groupToken);
-                        return (audioFile, analyzerExport.Value);
-                    },
-                    new()
-                    {
-                        SingleProducerConstrained = true,
-                        CancellationToken = cancellationToken
-                    });
-
-                // Analysis can happen in parallel
-                var analyzeBlock = new TransformBlock<
-                    (ITaggedAudioFile audioFile, IAudioAnalyzer analyzer), (ITaggedAudioFile, IAudioAnalyzer)>(
-                    message =>
-                    {
-                        message.analyzer.ProcessSamples(
-                            message.audioFile.Path,
-                            progress == null
-                                ? null
-                                : new SimpleProgress<int>(framesCompleted => progress.Report(new()
-                                {
-                                    // ReSharper disable once AccessToModifiedClosure
-                                    AudioFilesCompleted = audioFilesCompleted,
-                                    FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
-                                })),
-                            cancellationToken);
-
-                        CopyStringProperties(message.analyzer.GetResult(), message.audioFile.Metadata);
-
-                        Interlocked.Increment(ref audioFilesCompleted);
-
-                        return message;
-                    },
-                    new()
-                    {
-                        MaxDegreeOfParallelism = MaxDegreeOfParallelism,
-                        SingleProducerConstrained = true
-                    });
-                initializeBlock.LinkTo(analyzeBlock, linkOptions);
-
-                var batchBlock = new BatchBlock<(ITaggedAudioFile, IAudioAnalyzer)>(audioFiles.Length);
-                analyzeBlock.LinkTo(batchBlock, linkOptions);
-
-                var groupResultBlock = new ActionBlock<(ITaggedAudioFile, IAudioAnalyzer)[]>(group =>
-                    {
-                        foreach (var (audioFile, analyzer) in group)
-                            CopyStringProperties(analyzer.GetGroupResult(), audioFile.Metadata);
-                    },
-                    new() { SingleProducerConstrained = true });
-                batchBlock.LinkTo(groupResultBlock, linkOptions);
+                var analyzerExports = new Export<IAudioAnalyzer>[audioFiles.Length];
 
                 try
                 {
-                    foreach (var audioFile in audioFiles)
-                        await initializeBlock.SendAsync(audioFile, cancellationToken).ConfigureAwait(false);
-                    initializeBlock.Complete();
+                    // Initialization should be sequential
+                    for (var i = 0; i < audioFiles.Length; i++)
+                    {
+                        var export = _analyzerFactory.CreateExport();
+                        export.Value.Initialize(audioFiles[i].Info, Settings, groupToken);
+                        analyzerExports[i] = export;
+                    }
 
-                    await groupResultBlock.Completion.ConfigureAwait(false);
-                }
-                catch (AggregateException e)
-                {
-                    throw e.GetBaseException();
+                    // Analysis can happen in parallel
+                    await Parallel.ForAsync(0, audioFiles.Length,
+                        new ParallelOptions
+                        {
+                            CancellationToken = cancellationToken,
+                            MaxDegreeOfParallelism = MaxDegreeOfParallelism
+                        },
+                        async (i, c) =>
+                        {
+                            var analyzer = analyzerExports[i].Value;
+
+                            await analyzer.ProcessSamples(
+                                audioFiles[i].Path,
+                                progress == null
+                                    ? null
+                                    : new SimpleProgress<int>(framesCompleted => progress.Report(new()
+                                    {
+                                        // ReSharper disable once AccessToModifiedClosure
+                                        AudioFilesCompleted = audioFilesCompleted,
+                                        FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
+                                    })),
+                                c).ConfigureAwait(false);
+
+                            CopyStringProperties(analyzer.GetResult(), audioFiles[i].Metadata);
+
+                            Interlocked.Increment(ref audioFilesCompleted);
+                        }).ConfigureAwait(false);
+
+                    for (var i = 0; i < audioFiles.Length; i++)
+                        CopyStringProperties(analyzerExports[i].Value.GetGroupResult(), audioFiles[i].Metadata);
+
+                    logger.LogDebug("Finished analyzing {count} audio file(s).", audioFiles.Length);
                 }
                 finally
                 {
-                    foreach (var export in disposableExports)
+                    foreach (var export in analyzerExports)
                         export.Dispose();
                 }
             }

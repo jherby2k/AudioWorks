@@ -87,7 +87,7 @@ Accept wildcard characters: False
 ### -MaxDegreeOfParallelism
 Sets the maximum degree of parallelism.
 
-Defaults to the logical processor count.
+Defaults to the logical processor count * 1.5.
 
 ```yaml
 Type: Int32

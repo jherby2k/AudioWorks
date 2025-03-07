@@ -13,13 +13,14 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Flac.Encoder
 {
-#pragma warning disable CA1060
+    [SuppressMessage("Design", "CA1060:Move pinvokes to native methods class",
+        Justification = "Following latest native interop best practices")]
     static partial class LibFlac
-#pragma warning restore CA1060
     {
         const string _flacLibrary = "FLAC";
 
@@ -72,10 +73,10 @@ namespace AudioWorks.Extensions.Flac.Encoder
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static unsafe partial int StreamEncoderInitStream(
             StreamEncoderHandle handle,
-            delegate* unmanaged<nint, byte*, int, uint, uint, nint, EncoderWriteStatus> writeCallback,
-            delegate* unmanaged<nint, ulong, nint, EncoderSeekStatus> seekCallback,
-            delegate* unmanaged<nint, ulong*, nint, EncoderTellStatus> tellCallback,
-            delegate* unmanaged<nint, nint, nint, void> metadataCallback,
+            delegate* unmanaged[Cdecl]<nint, byte*, int, uint, uint, nint, EncoderWriteStatus> writeCallback,
+            delegate* unmanaged[Cdecl]<nint, ulong, nint, EncoderSeekStatus> seekCallback,
+            delegate* unmanaged[Cdecl]<nint, ulong*, nint, EncoderTellStatus> tellCallback,
+            delegate* unmanaged[Cdecl]<nint, nint, nint, void> metadataCallback,
             nint userData);
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_process")]

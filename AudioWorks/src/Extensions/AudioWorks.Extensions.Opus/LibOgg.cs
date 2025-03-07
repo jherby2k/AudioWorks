@@ -13,13 +13,14 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Opus
 {
-#pragma warning disable CA1060
+    [SuppressMessage("Design", "CA1060:Move pinvokes to native methods class",
+            Justification = "Following latest native interop best practices")]
     static partial class LibOgg
-#pragma warning restore CA1060
     {
         const string _oggLibrary = "ogg";
 

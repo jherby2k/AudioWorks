@@ -64,28 +64,18 @@ namespace AudioWorks.TestUtilities.DataSources
                 "Unknown Title by Unknown Artist.wav"
             ),
 
-            // Metadata with invalid characters on Windows
+            // Metadata with invalid characters
             new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 new()
                 {
-                    Title = "Test Title <> with |invalid \"characters\""
+                    Title = "Test Title <> [with] |invalid \"characters\""
                 },
                 "{Title}",
-                "Test Title with invalid characters.wav"
-            ) { Skip = !RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "Windows only" : null },
-
-            // Metadata with invalid characters on Windows
-            new(
-                "LPCM 16-bit 44100Hz Stereo.wav",
-                new()
-                {
-                    Title = "Test Title <> with |invalid \"characters\""
-                },
-                "{Title}",
-                // These characters are all valid on Linux and MacOS
-                "Test Title <> with |invalid \"characters\".wav"
-            ) { Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "Linux and MacOS only" : null },
+                RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                    ? "Test Title with invalid characters.wav"
+                    : "Test Title <> with |invalid \"characters\".wav"
+            ),
 
             // New name matches old
             new(

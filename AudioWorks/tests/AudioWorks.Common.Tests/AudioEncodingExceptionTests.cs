@@ -14,16 +14,12 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using AudioWorks.TestUtilities;
 using Xunit;
 
 namespace AudioWorks.Common.Tests
 {
     public sealed class AudioEncodingExceptionTests
     {
-        public AudioEncodingExceptionTests(ITestOutputHelper outputHelper) =>
-            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
-
         [Fact(DisplayName = "AudioEncodingException is an AudioException")]
         public void IsAudioException() =>
             Assert.IsType<AudioException>(new AudioEncodingException(), false);

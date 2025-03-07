@@ -15,16 +15,12 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Text.Json;
-using AudioWorks.TestUtilities;
 using Xunit;
 
 namespace AudioWorks.Common.Tests
 {
     public sealed class AudioInfoTests
     {
-        public AudioInfoTests(ITestOutputHelper outputHelper) =>
-            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
-
         [Fact(DisplayName = "AudioInfo throws an exception if the Format is null")]
         public void FormatNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() => AudioInfo.CreateForLossless(null!, 2, 16, 44100));

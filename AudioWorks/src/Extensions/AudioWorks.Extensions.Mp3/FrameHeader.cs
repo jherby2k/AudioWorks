@@ -22,7 +22,7 @@ namespace AudioWorks.Extensions.Mp3
     sealed class FrameHeader
     {
         [SuppressMessage("Performance", "CA1814:Prefer jagged arrays over multidimensional",
-            Justification = "Does not waste space.")]
+            Justification = "Does not waste space")]
         static readonly int[,] _bitRateTable =
         {
             { 0, 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320 },
@@ -30,7 +30,7 @@ namespace AudioWorks.Extensions.Mp3
         };
 
         [SuppressMessage("Performance", "CA1814:Prefer jagged arrays over multidimensional",
-            Justification = "Does not waste space.")]
+            Justification = "Does not waste space")]
         static readonly int[,] _sampleRateTable =
         {
             { 44100, 48000, 32000 },

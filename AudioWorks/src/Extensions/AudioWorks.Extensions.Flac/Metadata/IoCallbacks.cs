@@ -21,16 +21,16 @@ namespace AudioWorks.Extensions.Flac.Metadata
     [StructLayout(LayoutKind.Sequential)]
     unsafe struct IoCallbacks
     {
-        internal delegate* unmanaged<void*, nint, nint, nint, nint> Read;
+        internal delegate* unmanaged[Cdecl]<void*, nint, nint, nint, nint> Read;
 
-        internal delegate* unmanaged<void*, nint, nint, nint, nint> Write;
+        internal delegate* unmanaged[Cdecl]<void*, nint, nint, nint, nint> Write;
 
-        internal delegate* unmanaged<nint, long, SeekOrigin, int> Seek;
+        internal delegate* unmanaged[Cdecl]<nint, long, SeekOrigin, int> Seek;
 
-        internal delegate* unmanaged<nint, long> Tell;
+        internal delegate* unmanaged[Cdecl]<nint, long> Tell;
 
-        internal delegate* unmanaged<nint, int> Eof;
+        internal delegate* unmanaged[Cdecl]<nint, int> Eof;
 
-        internal delegate* unmanaged<nint, int> Close;
+        internal delegate* unmanaged[Cdecl]<nint, int> Close;
     }
 }

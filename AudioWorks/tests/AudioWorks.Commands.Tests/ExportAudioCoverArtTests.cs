@@ -25,7 +25,8 @@ using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    public sealed class ExportAudioCoverArtTests(ModuleFixture moduleFixture) : IClassFixture<ModuleFixture>
+    public sealed class ExportAudioCoverArtTests(ModuleFixture moduleFixture, ITestOutputHelper output)
+        : IClassFixture<ModuleFixture>
     {
         [Fact(DisplayName = "Export-AudioCoverArt command exists")]
         public void CommandExists()
@@ -124,6 +125,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("Force");
 
                 var result = ps.Invoke();
+                output.WriteStreams(ps);
 
                 if (string.IsNullOrEmpty(expectedHash))
                     Assert.Empty(result);

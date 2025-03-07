@@ -28,9 +28,9 @@ namespace AudioWorks.Extensions.Flac.Encoder
     sealed class StreamEncoder : IDisposable
     {
         readonly StreamEncoderHandle _handle = LibFlac.StreamEncoderNew();
-#pragma warning disable CA2213 // Disposable fields should be disposed
+        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed",
+                    Justification = "Type does not have dispose ownership")]
         readonly Stream _stream;
-#pragma warning restore CA2213 // Disposable fields should be disposed
         GCHandle _streamHandle;
 
         internal StreamEncoder(Stream stream) => _stream = stream;
@@ -55,14 +55,12 @@ namespace AudioWorks.Extensions.Flac.Encoder
             LibFlac.StreamEncoderSetMetadata(_handle, handles, (uint) handles.Length);
         }
 
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Native method is always expected to return 0")]
         internal unsafe void Initialize()
         {
             // The callbacks have to be static, so pass the output stream through as userData
             _streamHandle = GCHandle.Alloc(_stream);
 
-            LibFlac.StreamEncoderInitStream(
+            _ = LibFlac.StreamEncoderInitStream(
                 _handle, &WriteCallback, &SeekCallback, &TellCallback, null, GCHandle.ToIntPtr(_streamHandle));
         }
 
@@ -103,7 +101,7 @@ namespace AudioWorks.Extensions.Flac.Encoder
             _streamHandle.Free();
         }
 
-        [UnmanagedCallersOnly]
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static unsafe EncoderWriteStatus WriteCallback(
             nint handle,
             byte* buffer,
@@ -117,7 +115,7 @@ namespace AudioWorks.Extensions.Flac.Encoder
             return EncoderWriteStatus.Ok;
         }
 
-        [UnmanagedCallersOnly]
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static EncoderSeekStatus SeekCallback(nint handle, ulong absoluteOffset, nint userData)
         {
             var stream = (Stream) GCHandle.FromIntPtr(userData).Target!;
@@ -125,7 +123,7 @@ namespace AudioWorks.Extensions.Flac.Encoder
             return EncoderSeekStatus.Ok;
         }
 
-        [UnmanagedCallersOnly]
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static unsafe EncoderTellStatus TellCallback(nint handle, ulong* absoluteOffset, nint userData)
         {
             var stream = (Stream) GCHandle.FromIntPtr(userData).Target!;

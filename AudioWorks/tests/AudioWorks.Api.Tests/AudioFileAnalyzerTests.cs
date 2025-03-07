@@ -26,9 +26,6 @@ namespace AudioWorks.Api.Tests
 {
     public sealed class AudioFileAnalyzerTests
     {
-        public AudioFileAnalyzerTests(ITestOutputHelper outputHelper) =>
-            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
-
         [Fact(DisplayName = "AudioFileAnalyzer's constructor throws an exception if the name is null")]
         public void ConstructorNameNullThrowsException() =>
             Assert.Throws<ArgumentNullException>(() =>
@@ -65,8 +62,29 @@ namespace AudioWorks.Api.Tests
         {
             var audioFile = new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
 
-            await new AudioFileAnalyzer(analyzerName) { Settings = settings }
-                .AnalyzeAsync(audioFile).ConfigureAwait(true);
+            await new AudioFileAnalyzer(analyzerName)
+            {
+                Settings = settings
+            }.AnalyzeAsync(audioFile).ConfigureAwait(true);
+
+            Assert.Equivalent(validMetadata, audioFile.Metadata);
+        }
+
+        [Theory(DisplayName = "AudioFileAnalyzer's Analyze method creates the expected metadata without optimization")]
+        [MemberData(nameof(AnalyzeValidFileDataSource.Data), MemberType = typeof(AnalyzeValidFileDataSource))]
+        public async Task AnalyzeAsyncCreatesExpectedMetadataWithoutOptimization(
+            string fileName,
+            string analyzerName,
+            SettingDictionary settings,
+            AudioMetadata validMetadata)
+        {
+            var audioFile = new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName));
+
+            await new AudioFileAnalyzer(analyzerName)
+            {
+                Settings = settings,
+                UseOptimizations = false
+            }.AnalyzeAsync(audioFile).ConfigureAwait(true);
 
             Assert.Equivalent(validMetadata, audioFile.Metadata);
         }
@@ -83,8 +101,10 @@ namespace AudioWorks.Api.Tests
                     new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", fileName)))
                 .ToArray<ITaggedAudioFile>();
 
-            await new AudioFileAnalyzer(analyzerName) { Settings = settings }
-                .AnalyzeAsync(audioFiles).ConfigureAwait(true);
+            await new AudioFileAnalyzer(analyzerName)
+            {
+                Settings = settings
+            }.AnalyzeAsync(audioFiles).ConfigureAwait(true);
 
             Assert.Equivalent(validMetadata, audioFiles.Select(audioFile => audioFile.Metadata));
         }

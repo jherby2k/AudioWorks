@@ -14,7 +14,9 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Flac.Metadata
@@ -22,9 +24,9 @@ namespace AudioWorks.Extensions.Flac.Metadata
     sealed class MetadataChain : IDisposable
     {
         static readonly IoCallbacks _callbacks = InitializeCallbacks();
-#pragma warning disable CA2213 // Disposable fields should be disposed
+        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed",
+                    Justification = "Type does not have dispose ownership")]
         readonly Stream _stream;
-#pragma warning restore CA2213 // Disposable fields should be disposed
         readonly MetadataChainHandle _handle = LibFlac.MetadataChainNew();
 
         internal MetadataChain(Stream stream) => _stream = stream;
@@ -93,7 +95,7 @@ namespace AudioWorks.Extensions.Flac.Metadata
             Eof = &EofCallback
         };
 
-        [UnmanagedCallersOnly]
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static unsafe nint ReadCallback(void* readBuffer, nint bufferSize, nint numberOfRecords, nint handle)
         {
             var stream = (Stream) GCHandle.FromIntPtr(handle).Target!;
@@ -101,7 +103,7 @@ namespace AudioWorks.Extensions.Flac.Metadata
             return new(bytesRead);
         }
 
-        [UnmanagedCallersOnly]
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static unsafe nint WriteCallback(void* writeBuffer, nint bufferSize, nint numberOfRecords, nint handle)
         {
             var stream = (Stream) GCHandle.FromIntPtr(handle).Target!;
@@ -109,7 +111,7 @@ namespace AudioWorks.Extensions.Flac.Metadata
             return numberOfRecords;
         }
 
-        [UnmanagedCallersOnly]
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static int SeekCallback(nint handle, long offset, SeekOrigin whence)
         {
             var stream = (Stream) GCHandle.FromIntPtr(handle).Target!;
@@ -117,14 +119,14 @@ namespace AudioWorks.Extensions.Flac.Metadata
             return 0;
         }
 
-        [UnmanagedCallersOnly]
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static long TellCallback(nint handle)
         {
             var stream = (Stream) GCHandle.FromIntPtr(handle).Target!;
             return stream.Position;
         }
 
-        [UnmanagedCallersOnly]
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static int EofCallback(nint handle)
         {
             var stream = (Stream) GCHandle.FromIntPtr(handle).Target!;

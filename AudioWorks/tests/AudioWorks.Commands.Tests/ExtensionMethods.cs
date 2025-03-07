@@ -1,4 +1,4 @@
-﻿/* Copyright © 2019 Jeremy Herbison
+﻿/* Copyright © 2025 Jeremy Herbison
 
 This file is part of AudioWorks.
 
@@ -13,14 +13,21 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
-using System;
+using System.Management.Automation;
+using Xunit;
 
-namespace AudioWorks.TestUtilities
+namespace AudioWorks.Commands.Tests
 {
-    sealed class NullScope : IDisposable
+    static class ExtensionMethods
     {
-        public void Dispose()
+        internal static void WriteStreams(this ITestOutputHelper output, PowerShell ps)
         {
+            foreach (var info in ps.Streams.Information)
+                if (info.MessageData is string message)
+                    output.WriteLine(message);
+
+            foreach (var warning in ps.Streams.Warning)
+                output.WriteLine($"Warning: {warning.Message}");
         }
     }
 }

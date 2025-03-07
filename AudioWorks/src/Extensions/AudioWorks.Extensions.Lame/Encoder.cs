@@ -24,9 +24,9 @@ namespace AudioWorks.Extensions.Lame
     sealed class Encoder : IDisposable
     {
         readonly EncoderHandle _handle = LibMp3Lame.Init();
-#pragma warning disable CA2213 // Disposable fields should be disposed
+        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed",
+                    Justification = "Type does not have dispose ownership")]
         readonly Stream _stream;
-#pragma warning restore CA2213 // Disposable fields should be disposed
         long _startPosition;
 
         internal Encoder(Stream stream) => _stream = stream;
@@ -45,12 +45,10 @@ namespace AudioWorks.Extensions.Lame
 
         internal void SetVbrQuality(float quality) => LibMp3Lame.SetVbrQuality(_handle, quality);
 
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Native method is always expected to return 0")]
         internal void InitializeParameters()
         {
             _startPosition = _stream.Position;
-            LibMp3Lame.InitParams(_handle);
+            _ = LibMp3Lame.InitParams(_handle);
         }
 
         internal void Encode(ReadOnlySpan<float> leftSamples, ReadOnlySpan<float> rightSamples)

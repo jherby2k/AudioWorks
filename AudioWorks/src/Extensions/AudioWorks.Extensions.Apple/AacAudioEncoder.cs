@@ -115,7 +115,10 @@ namespace AudioWorks.Extensions.Apple
                     if (controlModeValue!.Equals("Average", StringComparison.OrdinalIgnoreCase))
                         controlMode = BitrateControlMode.LongTermAverage;
                     else if (controlModeValue.Equals("Constant", StringComparison.OrdinalIgnoreCase))
+                    {
                         controlMode = BitrateControlMode.Constant;
+                        logger.LogWarning("Constant bitrate mode can produce audible errors due to a bug in Core Audio.");
+                    }
                 SetConverterProperty(converter, AudioConverterPropertyId.BitRateControlMode, (uint) controlMode);
             }
             else

@@ -52,9 +52,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "BAE0A61EB5C4912A4793C8B259ED5633", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "1F5FEC2305DE58CE9BA73AFC9E5017AA", // FLAC 1.4.3 (Ubuntu 24.04)
-                    "5BDE9BFB7CBF4D6C72ED6AB0536F0531" // FLAC 1.5.0
+                    "AF-3A-82-82-CA-64-A3-89", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "1F-93-A8-53-FB-3B-B0-22", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "2A-41-22-DD-B8-14-0C-D3" // FLAC 1.5.0
                 ]
             ),
 
@@ -82,9 +82,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "FDB702CF53676594BDD9FBEC77F154A3", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "CB5A4B3F94A3F5A2B152B909A6EC2D8C", // FLAC 1.4.3 (Ubuntu 24.04)
-                    "7AD768E9DCE6309C075B6773440C6078" // FLAC 1.5.0
+                    "2E-3D-66-54-54-94-EC-27", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "0C-50-86-D5-AB-CD-71-64", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "23-9C-CB-3F-66-6D-10-6C" // FLAC 1.5.0
                 ]
             ),
 
@@ -112,9 +112,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "FDB702CF53676594BDD9FBEC77F154A3", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "CB5A4B3F94A3F5A2B152B909A6EC2D8C", // FLAC 1.4.3 (Ubuntu 24.04)
-                    "7AD768E9DCE6309C075B6773440C6078" // FLAC 1.5.0
+                    "2E-3D-66-54-54-94-EC-27", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "0C-50-86-D5-AB-CD-71-64", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "23-9C-CB-3F-66-6D-10-6C" // FLAC 1.5.0
                 ]
             ),
 
@@ -142,9 +142,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "A05D916A5C03E9599CBC9A9F6989FDB0", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "C238388B2E5ED6E8026FBFE7A60B6AC0", // FLAC 1.4.3 (Ubuntu 24.04)
-                    "A5996ABC8200AEA6224154C4C9FFF80E" // FLAC 1.5.0
+                    "8B-52-E4-4F-02-7C-EA-7A", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "BF-10-71-E4-53-3D-9C-EC", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "F3-5B-84-04-C2-48-ED-2F" // FLAC 1.5.0
                 ]
             ),
 
@@ -172,9 +172,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "0917BADDD895CCFD370BB222AF216E7B", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "B4969C097EBD1D6F1CE704C652FC7A0A", // FLAC 1.4.3 (Ubuntu 24.04)
-                    "41BE4EC1472C81FC3BE743B261318DC3" // FLAC 1.5.0
+                    "A2-C5-A7-7E-4A-55-FB-EE", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "B7-98-8D-AF-91-08-55-27", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "69-92-C3-94-61-D2-99-5E" // FLAC 1.5.0
                 ]
             ),
 
@@ -203,9 +203,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "BAE0A61EB5C4912A4793C8B259ED5633", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "1F5FEC2305DE58CE9BA73AFC9E5017AA", // FLAC 1.4.3 (Ubuntu 24.04)
-                    "5BDE9BFB7CBF4D6C72ED6AB0536F0531" // FLAC 1.5.0
+                    "AF-3A-82-82-CA-64-A3-89", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "1F-93-A8-53-FB-3B-B0-22", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "2A-41-22-DD-B8-14-0C-D3" // FLAC 1.5.0
                 ]
             ),
 
@@ -237,9 +237,9 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["Padding"] = 0
                 },
                 [
-                    "41092DD891ABD71749834EAF571D30D5", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "3E07F2D9194BB9BCE6C7EA4434AB9F78", // FLAC 1.4.3 (Ubuntu 24.04)
-                    "6B2003CB815E9C721182573FAA272277" // FLAC 1.5.0
+                    "CC-73-52-3E-62-0F-59-5A", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "F2-23-FD-31-4D-D5-57-CF", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "C8-60-60-FE-8E-09-84-43" // FLAC 1.5.0
                 ]
             ),
 
@@ -271,9 +271,9 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["Padding"] = 100
                 },
                 [
-                    "D6EF71E33501C350CD5378D55BC25D8C", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "39928199B6A8F6B399C9C09E103E812C", // FLAC 1.4.3 (Ubuntu 24.04)
-                    "2786D4E63DAE0149BCFA61E8E46990F5" // FLAC 1.5.0
+                    "A7-80-B9-87-39-E1-6C-19", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "9B-D5-D5-28-77-5A-0E-AD", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "7E-CE-CD-BA-95-58-65-5E" // FLAC 1.5.0
                 ]
             ),
 
@@ -284,9 +284,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "A5B12EAFE3014399E04E427CA756234B", // FLAC 1.4.3 (Ubuntu 24.04)
-                    "F756C83EC680541471607F5951B81E00" // FLAC 1.5.0
+                    "C2-FB-C1-A8-1E-4A-FF-3B", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "60-66-EA-A0-B4-EC-85-FE", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "CC-E4-C6-E8-D5-98-2C-50" // FLAC 1.5.0
                 ]
             ),
 
@@ -297,9 +297,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "734954C2D360CD6D6C4F7FE23F6970AF", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "A5B12EAFE3014399E04E427CA756234B", // FLAC 1.4.3 (Ubuntu 24.04)
-                    "F756C83EC680541471607F5951B81E00" // FLAC 1.5.0
+                    "C2-FB-C1-A8-1E-4A-FF-3B", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "60-66-EA-A0-B4-EC-85-FE", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "CC-E4-C6-E8-D5-98-2C-50" // FLAC 1.5.0
                 ]
             ),
 
@@ -310,9 +310,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 "PNG 24-bit 1280 x 935.png",
                 [],
                 [
-                    "1399992DC07E38EBCD3F5DB1AF48B8C3", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "1F6BDDA2A2585E5E84B4A9F5CFB344C0", // FLAC 1.4.3 (Ubuntu 24.04)
-                    "66737301BCB46D60CABE66EFBF443912" // FLAC 1.5.0
+                    "C6-D0-76-A4-3C-7A-8F-4D", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "C2-09-C9-DA-B4-96-7E-FF", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "EA-A4-B8-36-7D-F9-C7-4C" // FLAC 1.5.0
                 ]
             ),
 
@@ -323,9 +323,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 "JPEG 24-bit 1280 x 935.jpg",
                 [],
                 [
-                    "BB1A252DAA1100EA9D0B4658DE863A86", // FLAC 1.3.3 (Ubuntu 22.04)
-                    "5CADC0776BE4E84F683DB333057E54E1", // FLAC 1.4.3 (Ubuntu 24.04)
-                    "5E10B93E6314AF54329A47EABAF9B020" // FLAC 1.5.0
+                    "DF-13-9A-85-CD-B9-D1-67", // FLAC 1.3.3 (Ubuntu 22.04)
+                    "57-39-62-59-3A-82-7D-5B", // FLAC 1.4.3 (Ubuntu 24.04)
+                    "8E-9B-49-2B-B0-19-E5-65" // FLAC 1.5.0
                 ]
             ),
 
@@ -358,7 +358,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "7F7316891B26F9FC3DE7D2D1304F9CFE"
+                    "A3-D6-48-6B-CA-E2-D5-97"
                 ]
             ),
 
@@ -386,7 +386,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "9957A905E53C3D2411A3A4BF3DA4DBA3"
+                    "4B-68-BF-33-FB-B8-27-0A"
                 ]
             ),
 
@@ -414,7 +414,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "9957A905E53C3D2411A3A4BF3DA4DBA3"
+                    "4B-68-BF-33-FB-B8-27-0A"
                 ]
             ),
 
@@ -442,7 +442,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "847E8C85293966F62132E8F851FA7BAE"
+                    "FC-3B-0D-B7-04-75-55-AC"
                 ]
             ),
 
@@ -470,7 +470,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "BD8C422B4F08A50532168922680B0C2E"
+                    "43-32-C2-41-EA-7F-33-1A"
                 ]
             ),
 
@@ -499,7 +499,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "7F7316891B26F9FC3DE7D2D1304F9CFE"
+                    "A3-D6-48-6B-CA-E2-D5-97"
                 ]
             ),
 
@@ -513,7 +513,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["CreationTime"] = new DateTime(2018, 9, 1)
                 },
                 [
-                    "4AF6E13DD50245A06F6FEA52F2325C47"
+                    "A3-73-CA-C2-70-83-6A-70"
                 ]
             ),
 
@@ -527,7 +527,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ModificationTime"] = new DateTime(2018, 9, 1)
                 },
                 [
-                    "D196EAFE7E8617F867136C526718CEF2"
+                    "6A-8E-6E-E5-07-28-ED-FA"
                 ]
             ),
 
@@ -538,7 +538,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "090FD975097BAFC4164370A3DEA9E696"
+                    "B6-5C-98-7A-12-EC-75-EC"
                 ]
             ),
 
@@ -549,7 +549,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "090FD975097BAFC4164370A3DEA9E696"
+                    "B6-5C-98-7A-12-EC-75-EC"
                 ]
             ),
 
@@ -563,7 +563,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["Padding"] = 2048
                 },
                 [
-                    "090FD975097BAFC4164370A3DEA9E696"
+                    "B6-5C-98-7A-12-EC-75-EC"
                 ]
             ),
 
@@ -577,7 +577,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["Padding"] = 0
                 },
                 [
-                    "2A66A8458C32EC663AE48C6294E829AB"
+                    "B9-71-63-FE-29-1D-0A-E6"
                 ]
             ),
 
@@ -591,7 +591,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["Padding"] = 16_777_216
                 },
                 [
-                    "D4615919A461B54512B3863ADD487D4B"
+                    "31-4B-2C-9A-B1-33-BF-6F"
                 ]
             ),
 
@@ -602,7 +602,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "PNG 24-bit 1280 x 935.png",
                 [],
                 [
-                    "767F47AEEA8A8F85DA214D51E0751CD5"
+                    "25-9F-C1-64-8C-2E-38-6D"
                 ]
             ),
 
@@ -613,7 +613,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "JPEG 24-bit 1280 x 935.jpg",
                 [],
                 [
-                    "D419908A6F39E2D402BFDE1CB4DA8821"
+                    "6F-52-4E-59-2F-BA-30-BD"
                 ]
             ),
 
@@ -624,8 +624,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 "PNG 24-bit 1280 x 935.png",
                 [],
                 [
-                    "1F72E87B05DA969322B0501DF63B6905", // Intel
-                    "902BF760BB86246A8EA1890E31E6802E" // ARM
+                    "96-5A-C2-F0-3A-B9-F7-25", // Intel
+                    "2C-E4-1D-38-31-48-BB-F2" // ARM
                 ]
             ),
 
@@ -636,7 +636,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "JPEG 24-bit 1280 x 935.jpg",
                 [],
                 [
-                    "679251C0E61FC8EB10286525FE64F60F"
+                    "BD-89-E8-65-5C-A4-96-2C"
                 ]
             ),
 
@@ -669,7 +669,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "23C89D97086DD52D0B12AF0D215CB204"
+                    "57-8E-2B-BB-F9-74-44-92"
                 ]
             ),
 
@@ -697,7 +697,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "63C6147CC1AEDC8C79CEA3A64A4D1D70"
+                    "E0-43-FB-65-FB-BB-87-31"
                 ]
             ),
 
@@ -725,7 +725,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "63C6147CC1AEDC8C79CEA3A64A4D1D70"
+                    "E0-43-FB-65-FB-BB-87-31"
                 ]
             ),
 
@@ -753,7 +753,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "436A20F9A295581E7ADA1124C4DDC457"
+                    "85-56-8B-7E-07-58-A4-60"
                 ]
             ),
 
@@ -781,7 +781,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "A6AA8BE5A043577E1DEA4607343E4625"
+                    "DE-60-49-12-77-CB-03-89"
                 ]
             ),
 
@@ -810,7 +810,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "FF55C184441BFF19D872D0B7767AC981"
+                    "A8-14-E8-04-B0-98-53-2E"
                 ]
             ),
 
@@ -839,7 +839,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "A4804CBDB7CFC412065F957ADC332610"
+                    "5E-A0-8C-95-72-D8-E2-86"
                 ]
             ),
 
@@ -871,7 +871,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagVersion"] = "2.4"
                 },
                 [
-                    "4E76656E1CF33B1D92C6C52637531B87"
+                    "6A-E3-42-4C-20-8F-32-0C"
                 ]
             ),
 
@@ -903,7 +903,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagEncoding"] = "UTF16"
                 },
                 [
-                    "59304C396353DF87B20EAFBBA3E4E7E4"
+                    "74-62-41-91-56-57-DA-6E"
                 ]
             ),
 
@@ -935,7 +935,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagEncoding"] = "UTF8"
                 },
                 [
-                    "1431406FBB1BB1E8442304A8D5C00B72"
+                    "02-C3-B4-52-A5-9C-96-B6"
                 ]
             ),
 
@@ -964,7 +964,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "68313157D01EB3242DC2F4E4E92C8567"
+                    "8B-AA-30-14-4E-B9-98-13"
                 ]
             ),
 
@@ -996,7 +996,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagEncoding"] = "UTF16"
                 },
                 [
-                    "68313157D01EB3242DC2F4E4E92C8567"
+                    "8B-AA-30-14-4E-B9-98-13"
                 ]
             ),
 
@@ -1028,7 +1028,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagEncoding"] = "Latin1"
                 },
                 [
-                    "68313157D01EB3242DC2F4E4E92C8567"
+                    "8B-AA-30-14-4E-B9-98-13"
                 ]
             ),
 
@@ -1060,7 +1060,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagEncoding"] = "UTF8"
                 },
                 [
-                    "D2B0132D51EFB5F6033BD78A704DEC8A"
+                    "F7-4C-9F-78-16-83-0D-A1"
                 ]
             ),
 
@@ -1092,7 +1092,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagVersion"] = "2.4"
                 },
                 [
-                    "D2B0132D51EFB5F6033BD78A704DEC8A"
+                    "F7-4C-9F-78-16-83-0D-A1"
                 ]
             ),
 
@@ -1125,7 +1125,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagEncoding"] = "Latin1"
                 },
                 [
-                    "D2B0132D51EFB5F6033BD78A704DEC8A"
+                    "F7-4C-9F-78-16-83-0D-A1"
                 ]
             ),
 
@@ -1157,7 +1157,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagPadding"] = 2048
                 },
                 [
-                    "23C89D97086DD52D0B12AF0D215CB204"
+                    "57-8E-2B-BB-F9-74-44-92"
                 ]
             ),
 
@@ -1189,7 +1189,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagPadding"] = 0
                 },
                 [
-                    "A477DAEDA5B65A77443433E50525AC5C"
+                    "50-14-36-22-35-FA-EF-56"
                 ]
             ),
 
@@ -1221,7 +1221,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["TagPadding"] = 16_777_216
                 },
                 [
-                    "5B6CB7B9912D212ACD37BEE11BA34AC5"
+                    "5F-49-B9-DF-FA-CC-2E-DE"
                 ]
             ),
 
@@ -1250,7 +1250,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "23C89D97086DD52D0B12AF0D215CB204"
+                    "57-8E-2B-BB-F9-74-44-92"
                 ]
             ),
 
@@ -1261,7 +1261,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "3EA0A7381A4AD97A317205F1026AC938"
+                    "46-88-09-DE-2B-11-6E-1A"
                 ]
             ),
 
@@ -1272,7 +1272,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "963D578D818C25DE5FEE6625BE7BFA98"
+                    "1D-D7-43-D4-6C-86-16-62"
                 ]
             ),
 
@@ -1283,8 +1283,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 "PNG 24-bit 1280 x 935.png",
                 [],
                 [
-                    "DFB1301AEF575A97D738485F9542DC05", // Intel
-                    "D1FDCC69B8BF283754790E3B0745482B" // ARM
+                    "94-C7-0A-15-23-0B-29-78", // Intel
+                    "FA-C5-BF-D3-7E-4C-39-A8" // ARM
                 ]
             ),
 
@@ -1295,7 +1295,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 "JPEG 24-bit 1280 x 935.jpg",
                 [],
                 [
-                    "1BF5C0A314A84C08A71E620ECFAC27FF"
+                    "9A-46-83-DD-6B-29-CE-F1"
                 ]
             ),
 
@@ -1328,8 +1328,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "BD9FBB0769E89FC46E37BB48A7F8A62F", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
-                    "4AA6D9C63E0CFD18F450A99819E28811" // Vorbis 1.3.7 (MacOS and Ubuntu)
+                    "16-A6-44-C7-4D-4A-D6-28", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
+                    "DF-99-54-20-04-92-45-96" // Vorbis 1.3.7 (MacOS and Ubuntu)
                 ]
             ),
 
@@ -1357,8 +1357,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "4BCB964FA118AE894302C5D9318EBB3E", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
-                    "2CFA7B065217D20087B138681D587899" // Vorbis 1.3.7 (MacOS and Ubuntu)
+                    "C0-88-80-B1-9F-D2-0E-F5", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
+                    "33-BD-B0-E3-16-03-0A-E2" // Vorbis 1.3.7 (MacOS and Ubuntu)
                 ]
             ),
 
@@ -1386,8 +1386,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "4BCB964FA118AE894302C5D9318EBB3E", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
-                    "2CFA7B065217D20087B138681D587899" // Vorbis 1.3.7 (MacOS and Ubuntu)
+                    "C0-88-80-B1-9F-D2-0E-F5", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
+                    "33-BD-B0-E3-16-03-0A-E2" // Vorbis 1.3.7 (MacOS and Ubuntu)
                 ]
             ),
 
@@ -1415,8 +1415,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "E84E26FA84319808E2DD078BDE0561CB", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
-                    "D87431EDDF5977239830E5BC9BCF042A" // Vorbis 1.3.7 (MacOS and Ubuntu)
+                    "D7-99-7E-50-17-9D-8A-91", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
+                    "68-64-92-28-3D-9B-BE-CE" // Vorbis 1.3.7 (MacOS and Ubuntu)
                 ]
             ),
 
@@ -1444,8 +1444,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "A44D6CC373B6F34D65EADBB32C94C566", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
-                    "C9C6B75D075FA0B9B398FFCB760A002D" // Vorbis 1.3.7 (MacOS and Ubuntu)
+                    "FD-F6-85-33-B3-E4-9A-44", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
+                    "02-49-45-A0-E6-C8-24-65" // Vorbis 1.3.7 (MacOS and Ubuntu)
                 ]
             ),
 
@@ -1474,8 +1474,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "BD9FBB0769E89FC46E37BB48A7F8A62F", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
-                    "4AA6D9C63E0CFD18F450A99819E28811" // Vorbis 1.3.7 (MacOS and Ubuntu)
+                    "16-A6-44-C7-4D-4A-D6-28", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
+                    "DF-99-54-20-04-92-45-96" // Vorbis 1.3.7 (MacOS and Ubuntu)
                 ]
             ),
 
@@ -1486,8 +1486,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "D225108B66480DC5F4368F6CD605AD7C", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
-                    "3FDD942360BA5074F9CF7303E80AA4D0" // Vorbis 1.3.7 (MacOS and Ubuntu)
+                    "58-4F-37-65-C3-D1-39-CE", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
+                    "14-46-94-9D-94-B4-99-9F" // Vorbis 1.3.7 (MacOS and Ubuntu)
                 ]
             ),
 
@@ -1498,8 +1498,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "D225108B66480DC5F4368F6CD605AD7C", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
-                    "3FDD942360BA5074F9CF7303E80AA4D0" // Vorbis 1.3.7 (MacOS and Ubuntu)
+                    "58-4F-37-65-C3-D1-39-CE", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
+                    "14-46-94-9D-94-B4-99-9F" // Vorbis 1.3.7 (MacOS and Ubuntu)
                 ]
             ),
 
@@ -1510,9 +1510,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 "PNG 24-bit 1280 x 935.png",
                 [],
                 [
-                    "FC6665047AC5EE74B3A64B08F7C15264", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
-                    "8E3BEF265FA8D9C8632A1CB4B5155156", // Vorbis 1.3.7 (MacOS and Ubuntu on Intel)
-                    "9924B82CBA5C2A07AA4BCA87E51651BD" // Vorbis 1.3.7 (MacOS on ARM)
+                    "7D-E9-01-03-FF-5B-14-4D", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
+                    "80-0C-7E-A6-86-25-15-E1", // Vorbis 1.3.7 (MacOS and Ubuntu on Intel)
+                    "CD-D4-7B-99-FE-2A-E3-22" // Vorbis 1.3.7 (MacOS on ARM)
                 ]
             ),
 
@@ -1523,8 +1523,8 @@ namespace AudioWorks.TestUtilities.DataSources
                 "JPEG 24-bit 1280 x 935.jpg",
                 [],
                 [
-                    "CA3A8F152FFC10FE460E6DBD2DB2F090", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
-                    "36C4695F1C9FBD9E018E98FB4A132D83" // Vorbis 1.3.7 (MacOS and Ubuntu)
+                    "A3-5F-BD-C2-CB-CF-1C-C3", // Vorbis 1.3.7 AoTuV + Lancer (Windows)
+                    "C4-9D-42-B4-A8-D2-A0-9D" // Vorbis 1.3.7 (MacOS and Ubuntu)
                 ]
             ),
 
@@ -1553,9 +1553,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "D22BBFDDCB298A427057253C4E833057", // Opus 1.3.1 (Ubuntu 22.04)
-                    "E5F10FBB8E805E7713EB907CF46A0BAD", // Opus 1.4.0 (Ubuntu 24.04)
-                    "83EAAF39634A97A730D4359E23CEE33F" // Opus 1.5.2
+                    "C9-B4-B0-83-AD-49-AF-40", // Opus 1.3.1 (Ubuntu 22.04)
+                    "EC-82-E8-0B-85-21-C4-73", // Opus 1.4.0 (Ubuntu 24.04)
+                    "57-56-1E-D3-88-59-8A-3B" // Opus 1.5.2
                 ]
             ),
 
@@ -1579,9 +1579,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (Ubuntu 22.04)
-                    "948794A7B0122E3E9DB7CCB2A5846552", // Opus 1.4.0 (Ubuntu 24.04)
-                    "A298D22F719E0B950B31310E05BC1B66" // Opus 1.5.2
+                    "0B-F6-81-EC-C7-83-2B-99", // Opus 1.3.1 (Ubuntu 22.04)
+                    "9F-D8-65-86-39-BE-97-CC", // Opus 1.4.0 (Ubuntu 24.04)
+                    "DB-24-7A-6E-D5-A7-D9-62" // Opus 1.5.2
                 ]
             ),
 
@@ -1605,9 +1605,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "B181BB7AF0A3E37C3A262B942FD197FC", // Opus 1.3.1 (Ubuntu 22.04)
-                    "948794A7B0122E3E9DB7CCB2A5846552", // Opus 1.4.0 (Ubuntu 24.04)
-                    "A298D22F719E0B950B31310E05BC1B66" // Opus 1.5.2
+                    "0B-F6-81-EC-C7-83-2B-99", // Opus 1.3.1 (Ubuntu 22.04)
+                    "9F-D8-65-86-39-BE-97-CC", // Opus 1.4.0 (Ubuntu 24.04)
+                    "DB-24-7A-6E-D5-A7-D9-62" // Opus 1.5.2
                 ]
             ),
 
@@ -1631,9 +1631,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "166F1DD0C71E2CCCF226157A34791E1B", // Opus 1.3.1 (Ubuntu 22.04)
-                    "9E9DA2F8EC05F9E6F6359997066957A9", // Opus 1.4.0 (Ubuntu 24.04)
-                    "8F3233D946C369EA87132A3EDB50071E" // Opus 1.5.2
+                    "50-98-B1-5D-E0-92-64-C5", // Opus 1.3.1 (Ubuntu 22.04)
+                    "28-DF-77-23-AF-DB-27-69", // Opus 1.4.0 (Ubuntu 24.04)
+                    "39-76-55-AE-E3-AB-5F-98" // Opus 1.5.2
                 ]
             ),
 
@@ -1657,9 +1657,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "8EA7FC13A2F214CADF3A1D447EF5CB65", // Opus 1.3.1 (Ubuntu 22.04)
-                    "8ABDE938610E273AD1D4C27061D4FC95", // Opus 1.4.0 (Ubuntu 24.04)
-                    "41253CA69E1D124E2CAC11B5D945EC67" // Opus 1.5.2
+                    "54-B3-49-64-05-D9-57-0E", // Opus 1.3.1 (Ubuntu 22.04)
+                    "13-BF-62-84-06-2C-9E-77", // Opus 1.4.0 (Ubuntu 24.04)
+                    "89-44-76-37-67-35-C5-11" // Opus 1.5.2
                 ]
             ),
 
@@ -1684,9 +1684,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "BB50765E7DB79BDEADFC81E771101FD7", // Opus 1.3.1 (Ubuntu 22.04)
-                    "5693A0AB09AF57652430067D0EF88EF8", // Opus 1.4.0 (Ubuntu 24.04)
-                    "56AD6E2C6333F2A033914E9CF6FBA6CB" // Opus 1.5.2
+                    "22-33-C1-62-7D-9A-3F-D4", // Opus 1.3.1 (Ubuntu 22.04)
+                    "17-9A-09-36-5A-B2-E4-E2", // Opus 1.4.0 (Ubuntu 24.04)
+                    "AD-2C-39-1F-8B-7F-55-FE" // Opus 1.5.2
                 ]
             ),
 
@@ -1697,9 +1697,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "367DB09F8408583579F918061FCB6322", // Opus 1.3.1 (Ubuntu 22.04)
-                    "D35A7D280213995902B314BB911069E7", // Opus 1.4.0 (Ubuntu 24.04)
-                    "CF85C82F03F478E096F1248F792D0B1E" // Opus 1.5.2
+                    "46-AB-BF-EC-52-AF-8B-BC", // Opus 1.3.1 (Ubuntu 22.04)
+                    "44-25-76-F8-74-C9-A2-F8", // Opus 1.4.0 (Ubuntu 24.04)
+                    "D3-AA-F1-4B-AB-E3-6A-E1" // Opus 1.5.2
                 ]
             ),
 
@@ -1710,9 +1710,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 string.Empty,
                 [],
                 [
-                    "22D33DFB735C5B7805AB26C7A04CDA86", // Opus 1.3.1 (Ubuntu 22.04)
-                    "1EEAB4BD3BB3EFD3BBEABBF84051C89B", // Opus 1.4.0 (Ubuntu 24.04)
-                    "507E009E734B28534500E143CEA74EFD" // Opus 1.5.2
+                    "EF-63-42-BA-25-71-42-DF", // Opus 1.3.1 (Ubuntu 22.04)
+                    "46-C7-BE-A2-D0-19-35-0E", // Opus 1.4.0 (Ubuntu 24.04)
+                    "69-1C-BC-A0-14-50-7E-F4" // Opus 1.5.2
                 ]
             ),
 
@@ -1723,10 +1723,10 @@ namespace AudioWorks.TestUtilities.DataSources
                 "PNG 24-bit 1280 x 935.png",
                 [],
                 [
-                    "F152E6100DC6002C78DDCC6DF83D8880", // Opus 1.3.1 (Ubuntu 22.04)
-                    "171BFABBE94A1AC2B93FA9656F03F8AA", // Opus 1.4.0 (Ubuntu 24.04)
-                    "E7E9C4686F7B92FC843FEDA3522C961B", // Opus 1.5.2 (Intel)
-                    "14460A58ACC0BF9ED0BBC2122B6557D1" // Opus 1.5.2 (ARM)
+                    "DE-E0-24-25-09-74-66-9D", // Opus 1.3.1 (Ubuntu 22.04)
+                    "7A-5A-1C-65-EB-FC-54-36", // Opus 1.4.0 (Ubuntu 24.04)
+                    "FC-00-36-0A-1E-9A-C9-89", // Opus 1.5.2 (Intel)
+                    "E1-3A-2C-E7-53-03-A2-02" // Opus 1.5.2 (ARM)
                 ]
             ),
 
@@ -1737,9 +1737,9 @@ namespace AudioWorks.TestUtilities.DataSources
                 "JPEG 24-bit 1280 x 935.jpg",
                 [],
                 [
-                    "CABF32D411EA5FA9458A79B6DC2C2D69", // Opus 1.3.1 (Ubuntu 22.04)
-                    "12FB32A06A03385E67764158F2809835", // Opus 1.4.0 (Ubuntu 24.04)
-                    "EDBD61E6DED683084D781F9F3C578D25" // Opus 1.5.2
+                    "6A-BE-38-6F-7A-74-8D-A9", // Opus 1.3.1 (Ubuntu 22.04)
+                    "A2-E6-3B-0F-2B-3A-5F-F1", // Opus 1.4.0 (Ubuntu 24.04)
+                    "3E-3D-BD-8A-3C-D5-15-B5" // Opus 1.5.2
                 ]
             )
 
@@ -1749,7 +1749,6 @@ namespace AudioWorks.TestUtilities.DataSources
         public static IEnumerable<TheoryDataRow<int, string, AudioMetadata, string, SettingDictionary, string[]>> Data =>
             _data.Select((item, index) =>
                 new TheoryDataRow<int, string, AudioMetadata, string, SettingDictionary, string[]>(
-                        index, item.Data.Item1, item.Data.Item2, item.Data.Item3, item.Data.Item4, item.Data.Item5)
-                    { Skip = item.Skip });
+                        index, item.Data.Item1, item.Data.Item2, item.Data.Item3, item.Data.Item4, item.Data.Item5));
     }
 }

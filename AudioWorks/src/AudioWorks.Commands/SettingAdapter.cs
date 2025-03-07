@@ -56,7 +56,7 @@ namespace AudioWorks.Commands
 
                     // String settings have set validation
                     case StringSettingInfo stringSettingInfo:
-                        attributes.Add(new ValidateSetAttribute(stringSettingInfo.AcceptedValues.ToArray()));
+                        attributes.Add(new ValidateSetAttribute([.. stringSettingInfo.AcceptedValues]));
                         goto default;
 
                     default:

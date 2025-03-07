@@ -24,8 +24,8 @@ using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Extensions.Flac.Encoder
 {
-    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
-        "Instances are created via MEF.")]
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes",
+        Justification = "Instances are created via MEF")]
     [AudioEncoderExport("FLAC", "Free Lossless Audio Codec")]
     sealed class FlacAudioEncoder : IAudioEncoder, IDisposable
     {

@@ -26,7 +26,8 @@ using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    public sealed class MeasureAudioFileTests(ModuleFixture moduleFixture) : IClassFixture<ModuleFixture>
+    public sealed class MeasureAudioFileTests(ModuleFixture moduleFixture, ITestOutputHelper output)
+        : IClassFixture<ModuleFixture>
     {
         [Fact(DisplayName = "Measure-AudioFile command exists")]
         public void CommandExists()
@@ -253,6 +254,7 @@ namespace AudioWorks.Commands.Tests
                         ps.AddParameter(item.Key, item.Value);
 
                 ps.Invoke();
+                output.WriteStreams(ps);
             }
 
             Assert.Equivalent(validMetadata, audioFile.Metadata);
@@ -290,6 +292,7 @@ namespace AudioWorks.Commands.Tests
                         ps.AddParameter(item.Key, item.Value);
 
                 ps.Invoke();
+                output.WriteStreams(ps);
             }
 
             Assert.Equivalent(validMetadata, audioFiles.Select(audioFile => audioFile.Metadata));

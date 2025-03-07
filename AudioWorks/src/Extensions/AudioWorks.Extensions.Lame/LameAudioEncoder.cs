@@ -24,8 +24,8 @@ using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.Lame
 {
-    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
-        "Instances are created via MEF.")]
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes",
+        Justification = "Instances are created via MEF")]
     [AudioEncoderExport("LameMP3", "Lame MPEG Audio Layer 3")]
     sealed class LameAudioEncoder : IAudioEncoder, IDisposable
     {

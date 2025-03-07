@@ -15,10 +15,9 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.IO.Hashing;
 using System.Linq;
-using System.Security.Cryptography;
 using SixLabors.ImageSharp;
 
 namespace AudioWorks.Common
@@ -122,16 +121,12 @@ namespace AudioWorks.Common
             }
         }
 
-        [SuppressMessage("Microsoft.Security", "CA5351:Do not use insecure cryptographic algorithm MD5.",
-            Justification = "Usage is not security critical")]
         static string GetHash(Stream stream)
         {
-            using (var md5 = MD5.Create())
-            {
-                var result = BitConverter.ToString(md5.ComputeHash(stream));
-                stream.Position = 0;
-                return result;
-            }
+            var algorithm = new XxHash3();
+            algorithm.Append(stream);
+            stream.Position = 0;
+            return BitConverter.ToString(algorithm.GetCurrentHash());
         }
     }
 }

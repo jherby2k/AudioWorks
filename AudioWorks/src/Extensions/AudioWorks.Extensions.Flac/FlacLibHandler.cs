@@ -98,7 +98,7 @@ namespace AudioWorks.Extensions.Flac
             // Linux needs help finding libdl
             if (libraryName == _dlLib && RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return NativeLibrary.Load($"{_dlLib}.so.{_linuxDlLibVersion}", assembly, searchPath);
-            
+
             if (libraryName != _flacLib) return nint.Zero;
 
             // On Linux, use whichever system-provided library is available

@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
 
@@ -27,9 +28,9 @@ namespace AudioWorks.Extensions.Apple
         readonly CoreAudioToolbox.AudioFileWriteCallback? _writeCallback;
         readonly CoreAudioToolbox.AudioFileSetSizeCallback? _setSizeCallback;
         // ReSharper restore PrivateFieldCanBeConvertedToLocalVariable
-#pragma warning disable CA2213 // Disposable fields should be disposed
+        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed",
+            Justification = "Type does not have dispose ownership")]
         readonly Stream _stream;
-#pragma warning restore CA2213 // Disposable fields should be disposed
         long _endOfData;
 
         protected AudioFileHandle Handle { get; }
@@ -73,10 +74,13 @@ namespace AudioWorks.Extensions.Apple
             return unmanagedValue;
         }
 
-        internal T GetProperty<T>(AudioFilePropertyId id) where T : unmanaged
+        internal T GetProperty<
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors |
+                                        DynamicallyAccessedMemberTypes.NonPublicConstructors)]
+            T>(AudioFilePropertyId id) where T : unmanaged
         {
-            var size = (uint) Marshal.SizeOf(typeof(T));
-            var unmanagedValue = Marshal.AllocHGlobal((int)size);
+            var size = (uint) Marshal.SizeOf<T>();
+            var unmanagedValue = Marshal.AllocHGlobal((int) size);
             try
             {
                 CoreAudioToolbox.AudioFileGetProperty(Handle, id, ref size, unmanagedValue);

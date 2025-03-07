@@ -23,8 +23,8 @@ using AudioWorks.Extensibility;
 
 namespace AudioWorks.Extensions.Mp4
 {
-    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification =
-        "Instances are created via MEF.")]
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes",
+        Justification = "Instances are created via MEF")]
     [AudioMetadataEncoderExport(".m4a", "iTunes", "iTunes-compatible MPEG-4")]
     sealed class ItunesAudioMetadataEncoder : IAudioMetadataEncoder
     {

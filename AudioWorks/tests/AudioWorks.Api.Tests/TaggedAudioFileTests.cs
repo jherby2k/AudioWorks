@@ -28,11 +28,8 @@ namespace AudioWorks.Api.Tests
     {
         readonly IMapper _mapper;
 
-        public TaggedAudioFileTests(ITestOutputHelper outputHelper)
-        {
-            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
+        public TaggedAudioFileTests() =>
             _mapper = new MapperConfiguration(config => config.CreateMap<AudioMetadata, AudioMetadata>()).CreateMapper();
-        }
 
         [Fact(DisplayName = "TaggedAudioFile's constructor throws an exception if the path is null")]
         public void ConstructorPathNullThrowsException() =>
@@ -289,7 +286,14 @@ namespace AudioWorks.Api.Tests
 
             audioFile.SaveMetadata(settings);
 
-            Assert.Contains(HashUtility.CalculateHash(audioFile.Path), validHashes);
+            var resultData = File.ReadAllBytes(audioFile.Path);
+
+            TestContext.Current.AddAttachment(
+                Path.GetFileNameWithoutExtension(audioFile.Path),
+                resultData,
+                PathUtility.GetMime(audioFile.Path));
+
+            Assert.Contains(HashUtility.CalculateHash(resultData), validHashes);
         }
 
         [Theory(DisplayName = "TaggedAudioFile's SaveMetadata method throws an exception if the file is unsupported")]

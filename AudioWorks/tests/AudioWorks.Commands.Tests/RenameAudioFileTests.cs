@@ -26,7 +26,8 @@ using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    public sealed class RenameAudioFileTests(ModuleFixture moduleFixture) : IClassFixture<ModuleFixture>
+    public sealed class RenameAudioFileTests(ModuleFixture moduleFixture, ITestOutputHelper output)
+        : IClassFixture<ModuleFixture>
     {
         readonly IMapper _mapper = new MapperConfiguration(config => config.CreateMap<AudioMetadata, AudioMetadata>()).CreateMapper();
 
@@ -226,6 +227,7 @@ namespace AudioWorks.Commands.Tests
                     .AddParameter("Force");
 
                 ps.Invoke();
+                output.WriteStreams(ps);
 
                 Assert.Equal(expectedFileName, Path.GetFileName(audioFile.Path));
             }

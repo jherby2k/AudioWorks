@@ -21,9 +21,9 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
+using Microsoft.Extensions.Logging;
 
 namespace AudioWorks.Api
 {
@@ -35,7 +35,7 @@ namespace AudioWorks.Api
         readonly EncodedPath? _encodedFileName;
         readonly EncodedPath? _encodedDirectoryName;
         readonly ExportFactory<IAudioEncoder> _encoderFactory;
-        readonly int _maxDegreeOfParallelism = Environment.ProcessorCount;
+        readonly int _maxDegreeOfParallelism = (int) Math.Round(Environment.ProcessorCount * 1.5);
         readonly SettingDictionary _settings;
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace AudioWorks.Api
 
         /// <summary>
         /// Gets or sets the maximum degree of parallelism. The default value is equal to
-        /// <see cref="Environment.ProcessorCount"/>.
+        /// <see cref="Environment.ProcessorCount"/> * 1.5.
         /// </summary>
         /// <value>The maximum degree of parallelism.</value>
         /// <exception cref="ArgumentOutOfRangeException">Throw in <paramref name="value"/> is less than 1.</exception>
@@ -90,7 +90,12 @@ namespace AudioWorks.Api
         /// true, and should only be disabled for testing or troubleshooting purposes.
         /// </summary>
         /// <value><c>false</c> if optimizations should be skipped; otherwise, <c>true</c>.</value>
-        public bool UseOptimizations { get; init; } = true;
+        [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Would be a breaking change.")]
+        public bool UseOptimizations
+        {
+            get => SampleBuffer.UseOptimizations;
+            init => SampleBuffer.UseOptimizations = value;
+        }
 
         /// <summary>
         /// Gets or sets the encoder settings.
@@ -180,8 +185,6 @@ namespace AudioWorks.Api
         /// <returns>The new audio files.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <see paramref="audioFiles"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if one or more audio files are null.</exception>
-        [SuppressMessage("Maintainability", "CA1506:Avoid excessive class coupling", Justification =
-            "Method is considered maintainable.")]
         public async Task<IEnumerable<ITaggedAudioFile>> EncodeAsync(
             IProgress<ProgressToken>? progress,
             CancellationToken cancellationToken,
@@ -192,19 +195,30 @@ namespace AudioWorks.Api
             if (audioFiles.Any(audioFile => audioFile == null))
                 throw new ArgumentException("One or more audio files are null.", nameof(audioFiles));
 
-            SampleBuffer.UseOptimizations = UseOptimizations;
+            var logger = LoggerManager.LoggerFactory.CreateLogger<AudioFileEncoder>();
+            logger.LogDebug("Preparing to encode {count} audio file(s).", audioFiles.Length);
+            logger.LogDebug("Optimizations are {optimized}.", UseOptimizations ? "enabled" : "disabled");
+            logger.LogDebug("Encoding up to {maxParallel} file(s) in parallel.",
+                Math.Min(_maxDegreeOfParallelism, audioFiles.Length));
 
             progress?.Report(new() { AudioFilesCompleted = 0, FramesCompleted = 0 });
 
             var audioFilesCompleted = 0;
             var totalFramesCompleted = 0L;
 
-            // Encoding can happen in parallel
-            var encodeBlock = new TransformBlock<(ITaggedAudioFile audioFile, string outputPath), ITaggedAudioFile>(
-                message =>
+            var outputPaths = GenerateOutputPaths(audioFiles);
+            var results = new TaggedAudioFile[audioFiles.Length];
+
+            await Parallel.ForAsync(0, audioFiles.Length,
+                new ParallelOptions
+                {
+                    CancellationToken = cancellationToken,
+                    MaxDegreeOfParallelism = MaxDegreeOfParallelism
+                },
+                async (i, c) =>
                 {
                     var tempOutputPath = Path.Combine(
-                        Path.GetDirectoryName(message.outputPath)!,
+                        Path.GetDirectoryName(outputPaths[i])!,
                         Path.GetRandomFileName());
 
                     try
@@ -219,12 +233,12 @@ namespace AudioWorks.Api
                             // Copy the source metadata, so it can't be modified
                             encoderExport.Value.Initialize(
                                 outputStream,
-                                message.audioFile.Info,
-                                new(message.audioFile.Metadata),
+                                audioFiles[i].Info,
+                                new(audioFiles[i].Metadata),
                                 Settings);
 
-                            encoderExport.Value.ProcessSamples(
-                                message.audioFile.Path,
+                            await encoderExport.Value.ProcessSamples(
+                                audioFiles[i].Path,
                                 progress == null
                                     ? null
                                     : new SimpleProgress<int>(framesCompleted => progress.Report(new()
@@ -233,17 +247,16 @@ namespace AudioWorks.Api
                                         AudioFilesCompleted = audioFilesCompleted,
                                         FramesCompleted = Interlocked.Add(ref totalFramesCompleted, framesCompleted)
                                     })),
-                                cancellationToken);
+                                c).ConfigureAwait(false);
 
                             encoderExport.Value.Finish();
-
-                            Interlocked.Increment(ref audioFilesCompleted);
                         }
                         finally
                         {
                             // Dispose the encoder before closing the stream
                             encoderExport.Dispose();
-                            outputStream?.Dispose();
+                            if (outputStream != null)
+                                await outputStream.DisposeAsync().ConfigureAwait(false);
                         }
                     }
                     catch (Exception)
@@ -255,25 +268,32 @@ namespace AudioWorks.Api
                     }
 
                     // Rename the temporary file to the final name
-                    File.Delete(message.outputPath);
-                    File.Move(tempOutputPath, message.outputPath);
+                    File.Delete(outputPaths[i]);
+                    File.Move(tempOutputPath, outputPaths[i]);
 
-                    return new TaggedAudioFile(message.outputPath);
-                },
-                new()
-                {
-                    MaxDegreeOfParallelism = MaxDegreeOfParallelism,
-                    SingleProducerConstrained = true,
-                    CancellationToken = cancellationToken
-                });
+                    results[i] = new(outputPaths[i]);
 
-            var batchBlock = new BatchBlock<ITaggedAudioFile>(audioFiles.Length);
-            encodeBlock.LinkTo(batchBlock, new() { PropagateCompletion = true });
+                    Interlocked.Increment(ref audioFilesCompleted);
+                }).ConfigureAwait(false);
 
-            string outputExtension;
+            logger.LogDebug("Finished encoding {count} audio file(s).", audioFiles.Length);
+
+            progress?.Report(new()
+            {
+                AudioFilesCompleted = audioFilesCompleted,
+                FramesCompleted = totalFramesCompleted
+            });
+
+            return results;
+        }
+
+        string[] GenerateOutputPaths(ITaggedAudioFile[] audioFiles)
+        {
+            string fileExtension;
             using (var export = _encoderFactory.CreateExport())
-                outputExtension = export.Value.FileExtension;
-            var uniqueOutputPaths = new List<string>(audioFiles.Length);
+                fileExtension = export.Value.FileExtension;
+
+            var result = new List<string>(audioFiles.Length);
 
             // File names need to be worked out sequentially, in case of conflicts
             foreach (var audioFile in audioFiles)
@@ -282,42 +302,20 @@ namespace AudioWorks.Api
                     Directory.CreateDirectory(_encodedDirectoryName?.ReplaceWith(audioFile.Metadata) ??
                                               Path.GetDirectoryName(audioFile.Path)!).FullName,
                     (_encodedFileName?.ReplaceWith(audioFile.Metadata) ??
-                     Path.GetFileNameWithoutExtension(audioFile.Path)) + outputExtension), uniqueOutputPaths);
+                     Path.GetFileNameWithoutExtension(audioFile.Path)) + fileExtension), result);
+
+                result.Add(outputPath);
 
                 if (File.Exists(outputPath) && !Overwrite)
                     throw new IOException($"The file '{outputPath}' already exists.");
-
-                await encodeBlock.SendAsync((audioFile, outputPath), cancellationToken).ConfigureAwait(false);
             }
 
-            try
-            {
-                var result = await batchBlock.ReceiveAsync(cancellationToken).ConfigureAwait(false);
-
-                progress?.Report(new()
-                {
-                    AudioFilesCompleted = audioFilesCompleted,
-                    FramesCompleted = totalFramesCompleted
-                });
-
-                return result;
-            }
-            catch (InvalidOperationException)
-            {
-                // Throw the real exception that caused the pipeline to cancel
-                if (batchBlock.Completion.Exception != null)
-                    throw batchBlock.Completion.Exception.GetBaseException();
-                throw;
-            }
+            return [.. result];
         }
 
-        static string GetUniquePath(string path, List<string> uniquePaths)
-        {
-            if (uniquePaths.Contains(path, StringComparer.OrdinalIgnoreCase))
-                path = $"{Path.ChangeExtension(path, null)}~{uniquePaths.Count}{Path.GetExtension(path)}";
-
-            uniquePaths.Add(path);
-            return path;
-        }
+        static string GetUniquePath(string path, List<string> existingPaths) =>
+            existingPaths.Contains(path, StringComparer.OrdinalIgnoreCase)
+                ? $"{Path.ChangeExtension(path, null)}~{existingPaths.Count}{Path.GetExtension(path)}"
+                : path;
     }
 }

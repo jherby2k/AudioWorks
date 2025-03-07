@@ -16,6 +16,8 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.IO;
 using System.Threading;
+using System.Threading.Channels;
+using System.Threading.Tasks;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
 
@@ -23,44 +25,72 @@ namespace AudioWorks.Api
 {
     static class ExtensionMethods
     {
-        internal static void ProcessSamples(
+        const int _channelCapacity = 20;
+
+        internal static async ValueTask ProcessSamples(
             this ISampleProcessor sampleProcessor,
             string inputFilePath,
             IProgress<int>? progress,
             CancellationToken cancellationToken)
         {
-            using (var inputStream = File.OpenRead(inputFilePath))
+            var inputStream = File.OpenRead(inputFilePath);
+            await using (inputStream.ConfigureAwait(false))
             {
                 // Try each decoder that supports this file extension
                 foreach (var decoderFactory in ExtensionProviderWrapper.GetFactories<IAudioDecoder>(
-                    "Extension", Path.GetExtension(inputFilePath)))
+                             "Extension", Path.GetExtension(inputFilePath)))
                     try
                     {
                         using (var decoderExport = decoderFactory.CreateExport())
                         {
-                            decoderExport.Value.Initialize(inputStream);
+                            var channel = Channel.CreateBounded<SampleBuffer>(
+                                new BoundedChannelOptions(_channelCapacity) { SingleReader = true, SingleWriter = true });
 
-                            while (!decoderExport.Value.Finished)
-                            {
-                                cancellationToken.ThrowIfCancellationRequested();
-
-                                using (var samples = decoderExport.Value.DecodeSamples())
-                                {
-                                    sampleProcessor.Submit(samples);
-                                    progress?.Report(samples.Frames);
-                                }
-                            }
+                            var consumer = ConsumeAsync(channel.Reader, sampleProcessor, progress, cancellationToken);
+                            await ProduceAsync(channel.Writer, inputStream, decoderExport.Value, cancellationToken)
+                                .ConfigureAwait(false);
+                            await consumer.ConfigureAwait(false);
                         }
 
                         return;
                     }
                     catch (AudioUnsupportedException)
                     {
-                        // If a decoder wasn't supported, rewind the stream and try another:
+                        // If a decoder wasn't supported, rewind the stream and try another
                         inputStream.Position = 0;
                     }
 
                 throw new AudioUnsupportedException("No supporting decoders are available.");
+            }
+        }
+
+        static async ValueTask ProduceAsync(
+            ChannelWriter<SampleBuffer> writer,
+            Stream inputStream,
+            IAudioDecoder decoder,
+            CancellationToken cancellationToken)
+        {
+            decoder.Initialize(inputStream);
+
+            while (!decoder.Finished)
+                await writer.WriteAsync(decoder.DecodeSamples(), cancellationToken)
+                    .ConfigureAwait(false);
+
+            writer.Complete();
+        }
+
+        static async ValueTask ConsumeAsync(
+            ChannelReader<SampleBuffer> reader,
+            ISampleProcessor sampleProcessor,
+            IProgress<int>? progress,
+            CancellationToken cancellationToken)
+        {
+            await foreach (var samples in reader.ReadAllAsync(cancellationToken)
+                               .ConfigureAwait(false))
+            {
+                sampleProcessor.Submit(samples);
+                samples.Dispose();
+                progress?.Report(samples.Frames);
             }
         }
     }

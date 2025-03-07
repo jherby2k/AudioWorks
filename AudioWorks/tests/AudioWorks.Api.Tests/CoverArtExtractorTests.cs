@@ -15,7 +15,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.IO;
-using AudioWorks.Common;
 using AudioWorks.TestUtilities;
 using AudioWorks.TestUtilities.DataSources;
 using Xunit;
@@ -24,9 +23,6 @@ namespace AudioWorks.Api.Tests
 {
     public sealed class CoverArtExtractorTests
     {
-        public CoverArtExtractorTests(ITestOutputHelper outputHelper) =>
-            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
-
         [Fact(DisplayName = "CoverArtExtractor's constructor throws an exception if encodedDirectoryName references an invalid metadata field")]
         public void ConstructorEncodedDirectoryNameInvalidThrowsException() =>
             Assert.Throws<ArgumentException>(() =>
@@ -44,7 +40,18 @@ namespace AudioWorks.Api.Tests
             }
                 .Extract(new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", sourceFileName)));
 
-            Assert.Equal(expectedHash, result == null ? string.Empty : HashUtility.CalculateHash(result.FullName));
+            byte[]? resultData = null;
+
+            if (result != null)
+            {
+                resultData = File.ReadAllBytes(result.FullName);
+                TestContext.Current.AddAttachment(
+                    Path.GetFileNameWithoutExtension(result.Name),
+                    resultData,
+                    PathUtility.GetMime(result.FullName));
+            }
+
+            Assert.Equal(expectedHash, result == null ? string.Empty : HashUtility.CalculateHash(resultData));
         }
     }
 }

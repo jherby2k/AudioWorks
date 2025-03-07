@@ -15,16 +15,12 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Collections.Generic;
-using AudioWorks.TestUtilities;
 using Xunit;
 
 namespace AudioWorks.Common.Tests
 {
     public sealed class SettingInfoDictionaryTests
     {
-        public SettingInfoDictionaryTests(ITestOutputHelper outputHelper) =>
-            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
-
         [Fact(DisplayName = "ValidateSettings throws an exception if settings is null")]
         public void ValidateSettingsNullSettingsThrowsException() =>
             Assert.Throws<ArgumentNullException>(() =>

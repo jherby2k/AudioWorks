@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
@@ -25,23 +24,17 @@ namespace AudioWorks.Extensions.Vorbis
 
         internal int SerialNumber => Marshal.PtrToStructure<OggStreamState>(_state).SerialNumber.Value.ToInt32();
 
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Native method is always expected to return 0")]
         internal unsafe OggStream(int serialNumber)
         {
             _state = Marshal.AllocHGlobal(sizeof(OggStreamState));
-            LibOgg.StreamInit(_state, serialNumber);
+            _ = LibOgg.StreamInit(_state, serialNumber);
         }
 
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Native method is always expected to return 0")]
-        internal void PageIn(in OggPage page) => LibOgg.StreamPageIn(_state, page);
+        internal void PageIn(in OggPage page) => _ = LibOgg.StreamPageIn(_state, page);
 
         internal bool PageOut(out OggPage page) => LibOgg.StreamPageOut(_state, out page) != 0;
 
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Native method is always expected to return 0")]
-        internal void PacketIn(in OggPacket packet) => LibOgg.StreamPacketIn(_state, packet);
+        internal void PacketIn(in OggPacket packet) => _ = LibOgg.StreamPacketIn(_state, packet);
 
         internal bool PacketOut(out OggPacket packet) => LibOgg.StreamPacketOut(_state, out packet) == 1;
 

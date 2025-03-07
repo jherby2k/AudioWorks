@@ -25,7 +25,8 @@ using Xunit;
 
 namespace AudioWorks.Commands.Tests
 {
-    public sealed class ExportAudioFileTests(ModuleFixture moduleFixture) : IClassFixture<ModuleFixture>
+    public sealed class ExportAudioFileTests(ModuleFixture moduleFixture, ITestOutputHelper output)
+        : IClassFixture<ModuleFixture>
     {
         [Fact(DisplayName = "Export-AudioFile command exists")]
         public void CommandExists()
@@ -139,7 +140,8 @@ namespace AudioWorks.Commands.Tests
             SettingDictionary settings,
             string[] validHashes)
         {
-            var sourceAudioFile = new TaggedAudioFile(Path.Combine(PathUtility.GetTestFileRoot(), "Valid", sourceFileName));
+            var sourceAudioFile = new TaggedAudioFile(
+                Path.Combine(PathUtility.GetTestFileRoot(), "Valid", sourceFileName));
             using (var ps = PowerShell.Create())
             {
                 ps.Runspace = moduleFixture.Runspace;
@@ -159,6 +161,7 @@ namespace AudioWorks.Commands.Tests
                         ps.AddParameter(item.Key, item.Value);
 
                 var results = ps.Invoke();
+                output.WriteStreams(ps);
 
                 Assert.Single(results);
                 Assert.Contains(

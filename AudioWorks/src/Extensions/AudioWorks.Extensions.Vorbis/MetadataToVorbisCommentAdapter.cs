@@ -14,7 +14,6 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using AudioWorks.Common;
 
 namespace AudioWorks.Extensions.Vorbis
@@ -70,18 +69,14 @@ namespace AudioWorks.Extensions.Vorbis
                     CoverArtFactory.ConvertToLossy(metadata.CoverArt)));
         }
 
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Native method is always expected to return 0")]
-        internal void HeaderOut(out OggPacket packet) => LibVorbis.CommentHeaderOut(_comment, out packet);
+        internal void HeaderOut(out OggPacket packet) => _ = LibVorbis.CommentHeaderOut(_comment, out packet);
 
-        [SuppressMessage("Performance", "CA1806:Do not ignore method results",
-            Justification = "Native method is always expected to return 0")]
         internal void HeaderOut(
             nint dspState,
             out OggPacket first,
             out OggPacket second,
             out OggPacket third) =>
-            LibVorbis.AnalysisHeaderOut(dspState, _comment, out first, out second, out third);
+            _ = LibVorbis.AnalysisHeaderOut(dspState, _comment, out first, out second, out third);
 
         public void Dispose()
         {

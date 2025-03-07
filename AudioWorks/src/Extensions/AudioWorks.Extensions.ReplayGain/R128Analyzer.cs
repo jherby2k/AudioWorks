@@ -63,7 +63,7 @@ namespace AudioWorks.Extensions.ReplayGain
         internal static double GetLoudnessMultiple(StateHandle[] handles)
         {
             LibEbur128.LoudnessGlobalMultiple(
-                handles.Select(handle => handle.DangerousGetHandle()).ToArray(),
+                [.. handles.Select(handle => handle.DangerousGetHandle())],
                 new((uint) handles.Length),
                 out var loudness);
             return loudness;

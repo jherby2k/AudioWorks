@@ -22,9 +22,6 @@ namespace AudioWorks.Common.Tests
 {
     public sealed class CoverArtTests
     {
-        public CoverArtTests(ITestOutputHelper outputHelper) =>
-            LoggerManager.AddSingletonProvider(() => new XunitLoggerProvider()).OutputHelper = outputHelper;
-
         [Theory(DisplayName = "CoverArt has the expected Width property value")]
         [MemberData(nameof(ValidImageFileDataSource.FileNamesAndWidth),
             MemberType = typeof(ValidImageFileDataSource))]

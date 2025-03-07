@@ -13,6 +13,7 @@ details.
 You should have received a copy of the GNU Affero General Public License along with AudioWorks. If not, see
 <https://www.gnu.org/licenses/>. */
 
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
 
@@ -28,7 +29,7 @@ namespace AudioWorks.Extensions.Apple
 
         internal void SetProperty<T>(ExtendedAudioFilePropertyId id, T value) where T : unmanaged
         {
-            var unmanagedValueSize = Marshal.SizeOf(typeof(T));
+            var unmanagedValueSize = Marshal.SizeOf<T>();
             var unmanagedValue = Marshal.AllocHGlobal(unmanagedValueSize);
             try
             {
@@ -41,9 +42,12 @@ namespace AudioWorks.Extensions.Apple
             }
         }
 
-        internal T GetProperty<T>(ExtendedAudioFilePropertyId id) where T : unmanaged
+        internal T GetProperty<
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors |
+                                        DynamicallyAccessedMemberTypes.NonPublicConstructors)]
+            T>(ExtendedAudioFilePropertyId id) where T : unmanaged
         {
-            var unmanagedValueSize = (uint) Marshal.SizeOf(typeof(T));
+            var unmanagedValueSize = (uint) Marshal.SizeOf<T>();
             var unmanagedValue = Marshal.AllocHGlobal((int) unmanagedValueSize);
             try
             {
