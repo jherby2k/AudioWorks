@@ -12,7 +12,7 @@
     <None Include="Readme.md" PackagePath="\" Pack="true" />
     <!-- Logging held back for PowerShell 7.4 compatibility -->
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.1" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.6" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.7" />
     <PackageReference Include="System.IO.Hashing" Version="9.0.2" />
   </ItemGroup>
 
