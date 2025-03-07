@@ -60,31 +60,45 @@ jobs:
         name: Build artifacts
         path: 'AudioWorks\src\artifacts\package\release\'
 
+    - name: Restore coverage history
+      uses: dawidd6/action-download-artifact@v3
+      with:
+        name: Coverage History for Windows
+        path: CoverageHistory
+      continue-on-error: true
+
     - name: Generate code coverage reports
       uses: danielpalme/ReportGenerator-GitHub-Action@5.4.4
       with:
         reports: '${{ github.workspace }}\**\coverage.cobertura.xml'
-        targetdir: 'coveragereport'
+        targetdir: 'CoverageReport'
+        historydir: 'CoverageHistory'
         reporttypes: 'HtmlInline;Cobertura;MarkdownSummaryGithub;'
         assemblyfilters: '-*.Tests;-*.TestUtilities'
         filefilters: '-*.g.cs'
         tag: '${{ github.run_number }}_${{ github.run_id }}'
 
-    - name: Upload coverage report artifacts
+    - name: Upload coverage report
       uses: actions/upload-artifact@v4
       with:
         name: Coverage Report for Windows
-        path: coveragereport
+        path: CoverageReport
+  
+    - name: Upload coverage history
+      uses: actions/upload-artifact@v4
+      with:
+        name: Coverage History for Windows
+        path: CoverageHistory
 
     - name: Add comment to PR
       if: github.event_name == 'pull_request'
-      run: gh pr comment $PR_NUMBER --body-file coveragereport\SummaryGithub.md
+      run: gh pr comment $PR_NUMBER --body-file CoverageReport\SummaryGithub.md
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         PR_NUMBER: ${{ github.event.number }}
 
     - name: Publish coverage in build summary
-      run: cat coveragereport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+      run: cat CoverageReport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
       shell: bash
 
 
@@ -121,31 +135,45 @@ jobs:
     - name: Test AudioWorks.Commands
       run: dotnet test AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
+    - name: Restore coverage history
+      uses: dawidd6/action-download-artifact@v3
+      with:
+        name: Coverage History for Ubuntu 24.04
+        path: CoverageHistory
+      continue-on-error: true
+
     - name: Generate code coverage reports
       uses: danielpalme/ReportGenerator-GitHub-Action@5.4.4
       with:
         reports: '${{ github.workspace }}/**/coverage.cobertura.xml'
-        targetdir: 'coveragereport'
+        targetdir: 'CoverageReport'
+        historydir: 'CoverageHistory'
         reporttypes: 'HtmlInline;Cobertura;MarkdownSummaryGithub;'
         assemblyfilters: '-*.Tests;-*.TestUtilities'
         filefilters: '-*.g.cs'
         tag: '${{ github.run_number }}_${{ github.run_id }}'
 
-    - name: Upload coverage report artifacts
+    - name: Upload coverage report
       uses: actions/upload-artifact@v4
       with:
         name: Coverage Report for Ubuntu 24.04
-        path: coveragereport
+        path: CoverageReport
+
+    - name: Upload coverage history
+      uses: actions/upload-artifact@v4
+      with:
+        name: Coverage History for Ubuntu 24.04
+        path: CoverageHistory
 
     - name: Add comment to PR
       if: github.event_name == 'pull_request'
-      run: gh pr comment $PR_NUMBER --body-file coveragereport/SummaryGithub.md
+      run: gh pr comment $PR_NUMBER --body-file CoverageReport/SummaryGithub.md
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         PR_NUMBER: ${{ github.event.number }}
 
     - name: Publish coverage in build summary
-      run: cat coveragereport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+      run: cat CoverageReport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
 
 
   ubuntu_2204:
@@ -181,31 +209,45 @@ jobs:
     - name: Test AudioWorks.Commands
       run: dotnet test AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
+    - name: Restore coverage history
+      uses: dawidd6/action-download-artifact@v3
+      with:
+        name: Coverage History for Ubuntu 22.04
+        path: CoverageHistory
+      continue-on-error: true
+
     - name: Generate code coverage reports
       uses: danielpalme/ReportGenerator-GitHub-Action@5.4.4
       with:
         reports: '${{ github.workspace }}/**/coverage.cobertura.xml'
-        targetdir: 'coveragereport'
+        targetdir: 'CoverageReport'
+        historydir: 'CoverageHistory'
         reporttypes: 'HtmlInline;Cobertura;MarkdownSummaryGithub;'
         assemblyfilters: '-*.Tests;-*.TestUtilities'
         filefilters: '-*.g.cs'
         tag: '${{ github.run_number }}_${{ github.run_id }}'
 
-    - name: Upload coverage report artifacts
+    - name: Upload coverage report
       uses: actions/upload-artifact@v4
       with:
         name: Coverage Report for Ubuntu 22.04
-        path: coveragereport
+        path: CoverageReport
+    
+    - name: Upload coverage history
+      uses: actions/upload-artifact@v4
+      with:
+        name: Coverage History for Ubuntu 22.04
+        path: CoverageHistory
 
     - name: Add comment to PR
       if: github.event_name == 'pull_request'
-      run: gh pr comment $PR_NUMBER --body-file coveragereport/SummaryGithub.md
+      run: gh pr comment $PR_NUMBER --body-file CoverageReport/SummaryGithub.md
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         PR_NUMBER: ${{ github.event.number }}
 
     - name: Publish coverage in build summary
-      run: cat coveragereport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+      run: cat CoverageReport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
 
 
   mac_arm:
@@ -238,31 +280,45 @@ jobs:
     - name: Test AudioWorks.Commands
       run: dotnet test AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
+    - name: Restore coverage history
+      uses: dawidd6/action-download-artifact@v3
+      with:
+        name: Coverage History for Mac on ARM
+        path: CoverageHistory
+      continue-on-error: true
+
     - name: Generate code coverage reports
       uses: danielpalme/ReportGenerator-GitHub-Action@5.4.4
       with:
         reports: '${{ github.workspace }}/**/coverage.cobertura.xml'
-        targetdir: 'coveragereport'
+        targetdir: 'CoverageReport'
+        historydir: 'CoverageHistory'
         reporttypes: 'HtmlInline;Cobertura;MarkdownSummaryGithub;'
         assemblyfilters: '-*.Tests;-*.TestUtilities'
         filefilters: '-*.g.cs'
         tag: '${{ github.run_number }}_${{ github.run_id }}'
 
-    - name: Upload coverage report artifacts
+    - name: Upload coverage report
       uses: actions/upload-artifact@v4
       with:
         name: Coverage Report for Mac on ARM
-        path: coveragereport
+        path: CoverageReport
+
+    - name: Upload coverage history
+      uses: actions/upload-artifact@v4
+      with:
+        name: Coverage History for Mac on ARM
+        path: CoverageHistory
 
     - name: Add comment to PR
       if: github.event_name == 'pull_request'
-      run: gh pr comment $PR_NUMBER --body-file coveragereport/SummaryGithub.md
+      run: gh pr comment $PR_NUMBER --body-file CoverageReport/SummaryGithub.md
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         PR_NUMBER: ${{ github.event.number }}
 
     - name: Publish coverage in build summary
-      run: cat coveragereport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+      run: cat CoverageReport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
 
 
   mac_intel:
@@ -295,28 +351,42 @@ jobs:
     - name: Test AudioWorks.Commands
       run: dotnet test AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
+    - name: Restore coverage history
+      uses: dawidd6/action-download-artifact@v3
+      with:
+        name: Coverage History for Mac on Intel
+        path: CoverageHistory
+      continue-on-error: true
+
     - name: Generate code coverage reports
       uses: danielpalme/ReportGenerator-GitHub-Action@5.4.4
       with:
         reports: '${{ github.workspace }}/**/coverage.cobertura.xml'
-        targetdir: 'coveragereport'
+        targetdir: 'CoverageReport'
+        historydir: 'CoverageHistory'
         reporttypes: 'HtmlInline;Cobertura;MarkdownSummaryGithub;'
         assemblyfilters: '-*.Tests;-*.TestUtilities'
         filefilters: '-*.g.cs'
         tag: '${{ github.run_number }}_${{ github.run_id }}'
 
-    - name: Upload coverage report artifacts
+    - name: Upload coverage report
       uses: actions/upload-artifact@v4
       with:
         name: Coverage Report for Mac on Intel
-        path: coveragereport
+        path: CoverageReport
+
+    - name: Upload coverage history
+      uses: actions/upload-artifact@v4
+      with:
+        name: Coverage History for Mac on Intel
+        path: CoverageHistory
   
     - name: Add comment to PR
       if: github.event_name == 'pull_request'
-      run: gh pr comment $PR_NUMBER --body-file coveragereport/SummaryGithub.md
+      run: gh pr comment $PR_NUMBER --body-file CoverageReport/SummaryGithub.md
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         PR_NUMBER: ${{ github.event.number }}
 
     - name: Publish coverage in build summary
-      run: cat coveragereport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+      run: cat CoverageReport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
