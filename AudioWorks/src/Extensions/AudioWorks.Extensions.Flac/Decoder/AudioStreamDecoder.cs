@@ -36,18 +36,12 @@ namespace AudioWorks.Extensions.Flac.Decoder
         {
             if (frame.Header.Channels == 1)
                 Samples = new(
-                    new Span<int>(
-                        Marshal.ReadIntPtr(buffer).ToPointer(),
-                        (int) frame.Header.BlockSize),
+                    new Span<int>(Marshal.ReadIntPtr(buffer).ToPointer(), (int) frame.Header.BlockSize),
                     (int) frame.Header.BitsPerSample);
             else
                 Samples = new(
-                    new Span<int>(
-                        Marshal.ReadIntPtr(buffer).ToPointer(),
-                        (int) frame.Header.BlockSize),
-                    new Span<int>(
-                        Marshal.ReadIntPtr(buffer, nint.Size).ToPointer(),
-                        (int) frame.Header.BlockSize),
+                    new Span<int>(Marshal.ReadIntPtr(buffer).ToPointer(), (int) frame.Header.BlockSize),
+                    new Span<int>(Marshal.ReadIntPtr(buffer, nint.Size).ToPointer(), (int) frame.Header.BlockSize),
                     (int) frame.Header.BitsPerSample);
 
             return DecoderWriteStatus.Continue;
