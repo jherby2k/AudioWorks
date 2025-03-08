@@ -168,6 +168,31 @@ namespace AudioWorks.Extensibility
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="SampleBuffer"/> class using interleaved short samples.
+        /// </summary>
+        /// <param name="interleavedSamples">The interleaved samples.</param>
+        /// <param name="channels">The channels.</param>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="interleavedSamples"/> is not a multiple of
+        /// channels.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="channels"/> is out of range.</exception>
+        public SampleBuffer(ReadOnlySpan<short> interleavedSamples, int channels)
+        {
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(channels);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(channels, 2);
+            if (interleavedSamples.Length % channels != 0)
+                throw new ArgumentException($"{nameof(interleavedSamples)} has an invalid length.",
+                    nameof(interleavedSamples));
+
+            Channels = channels;
+            Frames = interleavedSamples.Length / channels;
+            _buffer = ArrayPool<float>.Shared.Rent(Frames * channels);
+            if (channels > 1)
+                IsInterleaved = true;
+
+            SampleProcessor.Convert(interleavedSamples, _buffer, 16, UseOptimizations);
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SampleBuffer"/> class using interleaved integer samples, which
         /// are packed on the byte boundary according to <paramref name="bitsPerSample"/>.
         /// </summary>

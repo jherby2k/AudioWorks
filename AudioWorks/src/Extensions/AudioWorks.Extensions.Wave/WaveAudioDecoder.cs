@@ -160,8 +160,7 @@ namespace AudioWorks.Extensions.Wave
                     for (var sampleIndex = 0; sampleIndex < buffer.Length; sampleIndex++)
                         lpcmBuffer[sampleIndex] = _µLawDecodeValues[buffer[sampleIndex]];
 
-                // TODO SampleBuffer should probably accept 16-bit buffers directly
-                result = new(MemoryMarshal.Cast<short, byte>(lpcmBuffer), _audioInfo.Channels, 16);
+                result = new(lpcmBuffer, _audioInfo.Channels);
             }
 
             _framesRemaining -= result.Frames;
