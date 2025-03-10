@@ -12,7 +12,6 @@
     <None Include="Readme.md" PackagePath="\" Pack="true"/>
     <ProjectReference Include="..\AudioWorks.Common\AudioWorks.Common.csproj" />
     <PackageReference Include="System.Composition" Version="8.0.0" />
-    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
   </ItemGroup>
 
 </Project>
