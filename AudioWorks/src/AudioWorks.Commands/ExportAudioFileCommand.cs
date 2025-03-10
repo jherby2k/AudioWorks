@@ -18,6 +18,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using AudioWorks.Api;
@@ -63,6 +64,7 @@ namespace AudioWorks.Commands
                 MaxDegreeOfParallelism = MaxDegreeOfParallelism
             };
 
+            var activityId = RandomNumberGenerator.GetInt32(20, int.MaxValue);
             var activity = $"Encoding {_sourceAudioFiles.Count} audio files in {Encoder} format";
             var totalFrames = (double) _sourceAudioFiles.Sum(audioFile => audioFile.Info.FrameCount);
             var lastAudioFilesCompleted = 0;
@@ -82,7 +84,7 @@ namespace AudioWorks.Commands
                     lastPercentComplete = percentComplete;
 
                     // ReSharper disable once AccessToDisposedClosure
-                    messageQueue.Add(new ProgressRecord(0, activity,
+                    messageQueue.Add(new ProgressRecord(activityId, activity,
                         $"{token.AudioFilesCompleted} of {_sourceAudioFiles.Count} audio files encoded")
                     {
                         // If the audio files have estimated frame counts, make sure this doesn't go over 100%
@@ -100,6 +102,9 @@ namespace AudioWorks.Commands
                 encodeTask.ContinueWith(_ => messageQueue.CompleteAdding(), TaskScheduler.Current);
 
                 this.OutputMessages(messageQueue, _cancellationSource.Token);
+
+                // Remove the progress bar
+                WriteProgress(new ProgressRecord(activityId) { RecordType = ProgressRecordType.Completed });
 
                 try
                 {
