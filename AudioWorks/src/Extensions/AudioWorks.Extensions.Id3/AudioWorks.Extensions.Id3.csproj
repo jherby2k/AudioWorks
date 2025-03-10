@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\AudioWorks.Extensibility\AudioWorks.Extensibility.csproj" />
+    <!-- Logging held back for PowerShell 7.4 compatibility -->
     <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
   </ItemGroup>
 
