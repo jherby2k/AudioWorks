@@ -61,7 +61,7 @@ jobs:
         path: 'AudioWorks\src\artifacts\package\release\'
 
     - name: Restore coverage history
-      uses: dawidd6/action-download-artifact@v3
+      uses: dawidd6/action-download-artifact@v6
       with:
         name: Coverage History for Windows
         path: CoverageHistory
@@ -136,7 +136,7 @@ jobs:
       run: dotnet test AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
     - name: Restore coverage history
-      uses: dawidd6/action-download-artifact@v3
+      uses: dawidd6/action-download-artifact@v6
       with:
         name: Coverage History for Ubuntu 24.04
         path: CoverageHistory
@@ -210,7 +210,7 @@ jobs:
       run: dotnet test AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
     - name: Restore coverage history
-      uses: dawidd6/action-download-artifact@v3
+      uses: dawidd6/action-download-artifact@v6
       with:
         name: Coverage History for Ubuntu 22.04
         path: CoverageHistory
@@ -281,7 +281,7 @@ jobs:
       run: dotnet test AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
     - name: Restore coverage history
-      uses: dawidd6/action-download-artifact@v3
+      uses: dawidd6/action-download-artifact@v6
       with:
         name: Coverage History for Mac on ARM
         path: CoverageHistory
@@ -352,7 +352,7 @@ jobs:
       run: dotnet test AudioWorks/tests/AudioWorks.Commands.Tests/AudioWorks.Commands.Tests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage"
 
     - name: Restore coverage history
-      uses: dawidd6/action-download-artifact@v3
+      uses: dawidd6/action-download-artifact@v6
       with:
         name: Coverage History for Mac on Intel
         path: CoverageHistory
