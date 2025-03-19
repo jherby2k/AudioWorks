@@ -21,7 +21,6 @@ using System.IO;
 using System.Security.Cryptography;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
-using SixLabors.ImageSharp.Memory;
 
 namespace AudioWorks.Extensions.Opus
 {
