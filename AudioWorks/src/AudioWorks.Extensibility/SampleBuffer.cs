@@ -61,6 +61,18 @@ namespace AudioWorks.Extensibility
         /// <value>The frame count.</value>
         public int Frames { get; }
 
+        /// <summary>
+        /// Gets the interleaved samples.
+        /// </summary>
+        /// <remarks>
+        /// Throws an <see cref="InvalidOperationException"/> if <see cref="IsInterleaved"/> is false.
+        /// </remarks>
+        /// <value>The samples.</value>
+        public ReadOnlyMemory<float> Interleaved =>
+            IsInterleaved
+                ? _buffer.AsMemory(0, Frames * Channels)
+                : throw new InvalidOperationException("These samples are not interleaved.");
+
         SampleBuffer()
         {
         }
@@ -240,6 +252,31 @@ namespace AudioWorks.Extensibility
                     SampleProcessor.Convert(interleavedInt32Samples, _buffer, bitsPerSample, UseOptimizations);
                     break;
             }
+        }
+
+        /// <summary>
+        /// Gets a channel of audio samples, in normalized floating-point format.
+        /// </summary>
+        /// <remarks>
+        /// Throws an <see cref="InvalidOperationException"/> if <see cref="IsInterleaved"/> is true. The samples are
+        /// floating-point values normalized within -1.0 and 1.0. By convention, channel 0 is the left/mono channel,
+        /// and channel 1 is the right channel.
+        /// </remarks>
+        /// <param name="channel">The channel.</param>
+        /// <exception cref="ObjectDisposedException">This <see cref="SampleBuffer"/> has been disposed.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="channel"/> is not 0 or 1.
+        /// </exception>
+        public ReadOnlyMemory<float> GetChannel(int channel)
+        {
+            ObjectDisposedException.ThrowIf(_isDisposed, this);
+            ArgumentOutOfRangeException.ThrowIfLessThan(channel, 0);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(channel, Channels == 1 ? 0 : 1);
+
+            if (IsInterleaved) throw new InvalidOperationException("These samples are interleaved.");
+
+            return channel == 0
+                ? _buffer.AsMemory(0, Frames)
+                : _buffer.AsMemory(Frames);
         }
 
         /// <summary>

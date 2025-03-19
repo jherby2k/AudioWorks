@@ -53,9 +53,16 @@ namespace AudioWorks.Extensions.ReplayGain
         {
             if (samples.Frames == 0) return;
 
-            Span<float> buffer = stackalloc float[samples.Frames * samples.Channels];
-            samples.CopyToInterleaved(buffer);
-            _analyzer!.AddFrames(buffer, (uint) samples.Frames);
+            // Avoid a copy if the samples are already interleaved
+            if (samples.IsInterleaved)
+                _analyzer!.AddFrames(samples.Interleaved.Span, (uint) samples.Frames);
+            else
+            {
+                Span<float> buffer = stackalloc float[samples.Frames * samples.Channels];
+                samples.CopyToInterleaved(buffer);
+
+                _analyzer!.AddFrames(buffer, (uint) samples.Frames);
+            }
         }
 
         public AudioMetadata GetResult()

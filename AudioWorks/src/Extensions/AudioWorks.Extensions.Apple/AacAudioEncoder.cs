@@ -145,21 +145,48 @@ namespace AudioWorks.Extensions.Apple
             if (_replayGainExport != null)
                 samples = _replayGainExport.Value.Process(samples);
 
-            Span<float> buffer = stackalloc float[samples.Frames * samples.Channels];
-            samples.CopyToInterleaved(buffer);
+            ExtendedAudioFileStatus status;
 
-            var bufferList = new AudioBufferListSingle
+            if (samples.IsInterleaved)
             {
-                NumberBuffers = 1,
-                Buffer1 = new()
-                {
-                    NumberChannels = (uint) samples.Channels,
-                    DataByteSize = (uint) (buffer.Length * sizeof(float)),
-                    Data = new(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)))
-                }
-            };
+                // Avoid a copy if the samples are already interleaved
+                var buffer = samples.Interleaved;
 
-            var status = _audioFile!.Write(bufferList, (uint)samples.Frames);
+                using (var bufferHandle = samples.Interleaved.Pin())
+                {
+                    var bufferList = new AudioBufferListSingle
+                    {
+                        NumberBuffers = 1,
+                        Buffer1 = new()
+                        {
+                            NumberChannels = (uint) samples.Channels,
+                            DataByteSize = (uint) (buffer.Length * sizeof(float)),
+                            Data = new(bufferHandle.Pointer)
+                        }
+                    };
+
+                    status = _audioFile!.Write(bufferList, (uint) samples.Frames);
+                }
+            }
+            else
+            {
+                Span<float> buffer = stackalloc float[samples.Frames * samples.Channels];
+                samples.CopyToInterleaved(buffer);
+
+                var bufferList = new AudioBufferListSingle
+                {
+                    NumberBuffers = 1,
+                    Buffer1 = new()
+                    {
+                        NumberChannels = (uint) samples.Channels,
+                        DataByteSize = (uint) (buffer.Length * sizeof(float)),
+                        Data = new(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)))
+                    }
+                };
+
+                status = _audioFile!.Write(bufferList, (uint) samples.Frames);
+            }
+
             if (status != ExtendedAudioFileStatus.Ok)
                 throw new AudioEncodingException($"Apple AAC encoder encountered error '{status}'.");
         }

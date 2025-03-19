@@ -21,6 +21,7 @@ using System.IO;
 using System.Security.Cryptography;
 using AudioWorks.Common;
 using AudioWorks.Extensibility;
+using SixLabors.ImageSharp.Memory;
 
 namespace AudioWorks.Extensions.Opus
 {
@@ -105,10 +106,16 @@ namespace AudioWorks.Extensions.Opus
         {
             if (samples.Frames == 0) return;
 
-            Span<float> buffer = stackalloc float[samples.Channels * samples.Frames];
-            samples.CopyToInterleaved(buffer);
+            // Avoid a copy if the samples are already interleaved
+            if (samples.IsInterleaved)
+                _encoder!.Write(samples.Interleaved.Span);
+            else
+            {
+                Span<float> buffer = stackalloc float[samples.Channels * samples.Frames];
+                samples.CopyToInterleaved(buffer);
 
-            _encoder!.Write(buffer);
+                _encoder!.Write(buffer);
+            }
         }
 
         public void Finish() => _encoder!.Drain();
