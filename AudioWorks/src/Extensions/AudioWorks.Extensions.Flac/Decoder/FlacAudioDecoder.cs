@@ -26,7 +26,7 @@ namespace AudioWorks.Extensions.Flac.Decoder
     [AudioDecoderExport(".flac")]
     sealed class FlacAudioDecoder : IAudioDecoder, IDisposable
     {
-        AudioStreamDecoder? _decoder;
+        StreamDecoder? _decoder;
 
         public bool Finished { get; private set; }
 

@@ -18,103 +18,154 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
+using AudioWorks.Common;
+using AudioWorks.Extensibility;
 using AudioWorks.Extensions.Flac.Metadata;
 
 namespace AudioWorks.Extensions.Flac.Decoder
 {
-    abstract unsafe class StreamDecoder : IDisposable
+    sealed unsafe class StreamDecoder : IDisposable
     {
-        readonly LibFlac.StreamDecoderWriteCallback _writeCallback;
-        readonly LibFlac.StreamDecoderMetadataCallback _metadataCallback;
+        readonly StreamDecoderHandle _handle = LibFlac.StreamDecoderNew();
         [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed",
             Justification = "Type does not have dispose ownership")]
         readonly Stream _stream;
-        GCHandle _streamHandle;
+        GCHandle _instanceHandle;
 
-        protected StreamDecoderHandle Handle { get; } = LibFlac.StreamDecoderNew();
+        internal AudioInfo? AudioInfo { get; private set; }
 
-        internal StreamDecoder(Stream stream)
-        {
-            // Need a reference to the callbacks for the lifetime of the decoder
-            _writeCallback = WriteCallback;
-            _metadataCallback = MetadataCallback;
-            _stream = stream;
-        }
+        internal VorbisCommentToMetadataAdapter AudioMetadata { get; } = new();
+
+        internal SampleBuffer? Samples { get; set; }
+
+        internal StreamDecoder(Stream stream) => _stream = stream;
 
         internal void Initialize()
         {
-            // The callbacks have to be static, so pass the output stream through as userData
-            _streamHandle = GCHandle.Alloc(_stream);
+            // The callbacks have to be static, so pass this instance through as userData
+            _instanceHandle = GCHandle.Alloc(this);
 
-            _ = LibFlac.StreamDecoderInitStream(Handle,
+            _ = LibFlac.StreamDecoderInitStream(_handle,
                 &ReadCallback,
                 &SeekCallback,
                 &TellCallback,
                 &LengthCallback,
                 &EofCallback,
-                _writeCallback,
-                _metadataCallback,
+                &WriteCallback,
+                &MetadataCallback,
                 &ErrorCallback,
-                GCHandle.ToIntPtr(_streamHandle));
+                GCHandle.ToIntPtr(_instanceHandle));
         }
 
-        internal bool ProcessMetadata() => LibFlac.StreamDecoderProcessUntilEndOfMetadata(Handle);
+        internal void SetMetadataRespond(MetadataType type) =>
+    LibFlac.StreamDecoderSetMetadataRespond(_handle, type);
 
-        internal void Finish() => LibFlac.StreamDecoderFinish(Handle);
+        internal bool ProcessMetadata() => LibFlac.StreamDecoderProcessUntilEndOfMetadata(_handle);
 
-        internal DecoderState GetState() => LibFlac.StreamDecoderGetState(Handle);
+        internal bool ProcessSingle() => LibFlac.StreamDecoderProcessSingle(_handle);
+
+        internal void Finish() => LibFlac.StreamDecoderFinish(_handle);
+
+        internal DecoderState GetState() => LibFlac.StreamDecoderGetState(_handle);
 
         public void Dispose()
         {
-            _streamHandle.Free();
-            Handle.Dispose();
+            _handle.Dispose();
+            _instanceHandle.Free();
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static DecoderReadStatus ReadCallback(nint handle, byte* buffer, int* bytes, nint userData)
         {
-            var stream = (Stream) GCHandle.FromIntPtr(userData).Target!;
-            *bytes = stream.Read(new(buffer, *bytes));
+            var instance = (StreamDecoder) GCHandle.FromIntPtr(userData).Target!;
+            *bytes = instance._stream.Read(new(buffer, *bytes));
             return *bytes == 0 ? DecoderReadStatus.EndOfStream : DecoderReadStatus.Continue;
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static DecoderSeekStatus SeekCallback(nint handle, ulong absoluteOffset, nint userData)
         {
-            var stream = (Stream) GCHandle.FromIntPtr(userData).Target!;
-            stream.Position = (long) absoluteOffset;
+            var instance = (StreamDecoder) GCHandle.FromIntPtr(userData).Target!;
+            instance._stream.Position = (long) absoluteOffset;
             return DecoderSeekStatus.Ok;
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static DecoderTellStatus TellCallback(nint handle, ulong* absoluteOffset, nint userData)
         {
-            var stream = (Stream) GCHandle.FromIntPtr(userData).Target!;
-            *absoluteOffset = (ulong) stream.Position;
+            var instance = (StreamDecoder) GCHandle.FromIntPtr(userData).Target!;
+            *absoluteOffset = (ulong) instance._stream.Position;
             return DecoderTellStatus.Ok;
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static DecoderLengthStatus LengthCallback(nint handle, ulong* streamLength, nint userData)
         {
-            var stream = (Stream) GCHandle.FromIntPtr(userData).Target!;
-            *streamLength = (ulong) stream.Length;
+            var instance = (StreamDecoder) GCHandle.FromIntPtr(userData).Target!;
+            *streamLength = (ulong) instance._stream.Length;
             return DecoderLengthStatus.Ok;
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static int EofCallback(nint handle, nint userData)
         {
-            var stream = (Stream) GCHandle.FromIntPtr(userData).Target!;
-            return stream.Position >= stream.Length ? 1 : 0;
+            var instance = (StreamDecoder) GCHandle.FromIntPtr(userData).Target!;
+            return instance._stream.Position >= instance._stream.Length ? 1 : 0;
         }
 
-        protected virtual DecoderWriteStatus WriteCallback(nint handle, ref Frame frame, nint buffer,
-            nint userData) =>
-            DecoderWriteStatus.Continue;
-
-        protected virtual void MetadataCallback(nint handle, ref MetadataBlock metadataBlock, nint userData)
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        static DecoderWriteStatus WriteCallback(nint handle, Frame* frame, nint buffer, nint userData)
         {
+            var instance = (StreamDecoder) GCHandle.FromIntPtr(userData).Target!;
+
+            if ((*frame).Header.Channels == 1)
+                instance.Samples = new(
+                    new Span<int>(Marshal.ReadIntPtr(buffer).ToPointer(), (int) (*frame).Header.BlockSize),
+                    (int) (*frame).Header.BitsPerSample);
+            else
+                instance.Samples = new(
+                    new Span<int>(Marshal.ReadIntPtr(buffer).ToPointer(), (int) (*frame).Header.BlockSize),
+                    new Span<int>(Marshal.ReadIntPtr(buffer, nint.Size).ToPointer(), (int) (*frame).Header.BlockSize),
+                    (int) (*frame).Header.BitsPerSample);
+
+            return DecoderWriteStatus.Continue;
+        }
+
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        static void MetadataCallback(nint handle, MetadataBlock* metadataBlock, nint userData)
+        {
+            var instance = (StreamDecoder) GCHandle.FromIntPtr(userData).Target!;
+
+            switch ((*metadataBlock).Type)
+            {
+                case MetadataType.StreamInfo:
+                    instance.AudioInfo = AudioInfo.CreateForLossless(
+                        "FLAC",
+                        (int) (*metadataBlock).StreamInfo.Channels,
+                        (int) (*metadataBlock).StreamInfo.BitsPerSample,
+                        (int) (*metadataBlock).StreamInfo.SampleRate,
+                        (long) (*metadataBlock).StreamInfo.TotalSamples);
+                    break;
+
+                case MetadataType.VorbisComment:
+                    foreach (var entry in new Span<VorbisCommentEntry>(
+                                 (*metadataBlock).VorbisComment.Comments,
+                                 (int) (*metadataBlock).VorbisComment.Count))
+                    {
+                        var entryString = Utf8StringMarshaller.ConvertToManaged(entry.Entry) ?? string.Empty;
+                        var delimiter = entryString.IndexOf('=', StringComparison.OrdinalIgnoreCase);
+                        instance.AudioMetadata.Set(entryString[..delimiter], entryString[(delimiter + 1)..]);
+                    }
+                    break;
+
+                case MetadataType.Picture:
+                    if ((*metadataBlock).Picture.Type is PictureType.CoverFront or PictureType.Other)
+                        instance.AudioMetadata.CoverArt = CoverArtFactory.GetOrCreate(new Span<byte>(
+                            (*metadataBlock).Picture.Data,
+                            (int) (*metadataBlock).Picture.DataLength));
+                    break;
+            }
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]

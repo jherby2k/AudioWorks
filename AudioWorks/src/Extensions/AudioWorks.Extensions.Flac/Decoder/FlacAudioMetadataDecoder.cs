@@ -29,7 +29,7 @@ namespace AudioWorks.Extensions.Flac.Decoder
 
         public AudioMetadata ReadMetadata(Stream stream)
         {
-            using (var decoder = new MetadataStreamDecoder(stream))
+            using (var decoder = new StreamDecoder(stream))
             {
                 decoder.SetMetadataRespond(MetadataType.VorbisComment);
                 decoder.SetMetadataRespond(MetadataType.Picture);

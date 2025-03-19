@@ -38,8 +38,8 @@ namespace AudioWorks.Extensions.Flac.Decoder
             delegate* unmanaged[Cdecl]<nint, ulong*, nint, DecoderTellStatus> tellCallback,
             delegate* unmanaged[Cdecl]<nint, ulong*, nint, DecoderLengthStatus> lengthCallback,
             delegate* unmanaged[Cdecl]<nint, nint, int> eofCallback,
-            StreamDecoderWriteCallback writeCallback,
-            StreamDecoderMetadataCallback? metadataCallback,
+            delegate* unmanaged[Cdecl]<nint, Frame*, nint, nint, DecoderWriteStatus> writeCallback,
+            delegate* unmanaged[Cdecl]<nint, MetadataBlock*, nint, void> metadataCallback,
             delegate* unmanaged[Cdecl]<nint, DecoderErrorStatus, nint, void> errorCallback,
             nint userData);
 
@@ -71,13 +71,5 @@ namespace AudioWorks.Extensions.Flac.Decoder
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__stream_decoder_delete")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static partial void StreamDecoderDelete(nint handle);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate DecoderWriteStatus StreamDecoderWriteCallback(
-            nint handle, ref Frame frame, nint buffer, nint userData);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate void StreamDecoderMetadataCallback(
-            nint handle, ref MetadataBlock metadataBlock, nint userData);
     }
 }
