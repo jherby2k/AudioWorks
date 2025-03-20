@@ -30,6 +30,7 @@ namespace AudioWorks.Extensions.Flac.Decoder
         {
             using (var decoder = new StreamDecoder(stream))
             {
+                decoder.Initialize();
                 if (!decoder.ProcessMetadata())
                     throw new AudioInvalidException(
                         $"libFLAC was unable to read the audio information: {decoder.GetState()}.");

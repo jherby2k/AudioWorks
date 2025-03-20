@@ -30,7 +30,11 @@ namespace AudioWorks.Extensions.Flac.Decoder
 
         public bool Finished { get; private set; }
 
-        public void Initialize(Stream stream) => _decoder = new(stream);
+        public void Initialize(Stream stream)
+        {
+            _decoder = new(stream);
+            _decoder.Initialize();
+        }
 
         public SampleBuffer DecodeSamples()
         {
