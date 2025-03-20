@@ -83,16 +83,10 @@ namespace AudioWorks.Extensions.Apple
             Span<int> buffer = stackalloc int[samples.Frames * samples.Channels];
             samples.CopyToInterleaved(buffer, _bitsPerSample);
 
-            var bufferList = new AudioBufferListSingle
-            {
-                NumberBuffers = 1,
-                Buffer1 = new()
-                {
-                    NumberChannels = (uint) samples.Channels,
-                    DataByteSize = (uint) (buffer.Length * sizeof(int)),
-                    Data = new(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)))
-                }
-            };
+            var bufferList = new AudioBufferListSingle { NumberBuffers = 1 };
+            bufferList.Buffer1.NumberChannels = (uint) samples.Channels;
+            bufferList.Buffer1.DataByteSize = (uint) (buffer.Length * sizeof(int));
+            bufferList.Buffer1.Data = Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer));
 
             var status = _audioFile!.Write(bufferList, (uint) samples.Frames);
             if (status != ExtendedAudioFileStatus.Ok)

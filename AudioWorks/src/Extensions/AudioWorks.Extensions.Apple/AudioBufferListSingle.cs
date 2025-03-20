@@ -22,7 +22,7 @@ namespace AudioWorks.Extensions.Apple
     {
         internal uint NumberBuffers;
 
-        // This is difficult to marshal as an array with LibraryImport, and we only single (interlaced) buffers anyway
+        // This is difficult to marshal as an array with LibraryImport, and we only use single (interlaced) buffers
         internal AudioBuffer Buffer1;
     }
 }

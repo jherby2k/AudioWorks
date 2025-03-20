@@ -18,12 +18,12 @@ using System.Runtime.InteropServices;
 namespace AudioWorks.Extensions.Apple
 {
     [StructLayout(LayoutKind.Sequential)]
-    struct AudioBuffer
+    unsafe struct AudioBuffer
     {
         internal uint NumberChannels;
 
         internal uint DataByteSize;
 
-        internal nint Data;
+        internal void* Data;
     }
 }

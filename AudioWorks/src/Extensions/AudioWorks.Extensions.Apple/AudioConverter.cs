@@ -102,7 +102,7 @@ namespace AudioWorks.Extensions.Apple
             instance._packetIndex += *numberPackets;
 
             (*data).Buffer1.DataByteSize = numBytes;
-            (*data).Buffer1.Data = new(instance._bufferHandle.Pointer);
+            (*data).Buffer1.Data = instance._bufferHandle.Pointer;
 
             // If this conversion requires packet descriptions, provide them
             if (packetDescriptions != nint.Zero)

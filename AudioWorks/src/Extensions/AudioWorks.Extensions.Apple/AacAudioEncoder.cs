@@ -145,6 +145,9 @@ namespace AudioWorks.Extensions.Apple
             if (_replayGainExport != null)
                 samples = _replayGainExport.Value.Process(samples);
 
+            var bufferList = new AudioBufferListSingle { NumberBuffers = 1 };
+            bufferList.Buffer1.NumberChannels = (uint) samples.Channels;
+
             ExtendedAudioFileStatus status;
 
             if (samples.IsInterleaved)
@@ -154,16 +157,8 @@ namespace AudioWorks.Extensions.Apple
 
                 using (var bufferHandle = samples.Interleaved.Pin())
                 {
-                    var bufferList = new AudioBufferListSingle
-                    {
-                        NumberBuffers = 1,
-                        Buffer1 = new()
-                        {
-                            NumberChannels = (uint) samples.Channels,
-                            DataByteSize = (uint) (buffer.Length * sizeof(float)),
-                            Data = new(bufferHandle.Pointer)
-                        }
-                    };
+                    bufferList.Buffer1.DataByteSize = (uint) (buffer.Length * sizeof(float));
+                    bufferList.Buffer1.Data = bufferHandle.Pointer;
 
                     status = _audioFile!.Write(bufferList, (uint) samples.Frames);
                 }
@@ -173,16 +168,8 @@ namespace AudioWorks.Extensions.Apple
                 Span<float> buffer = stackalloc float[samples.Frames * samples.Channels];
                 samples.CopyToInterleaved(buffer);
 
-                var bufferList = new AudioBufferListSingle
-                {
-                    NumberBuffers = 1,
-                    Buffer1 = new()
-                    {
-                        NumberChannels = (uint) samples.Channels,
-                        DataByteSize = (uint) (buffer.Length * sizeof(float)),
-                        Data = new(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer)))
-                    }
-                };
+                bufferList.Buffer1.DataByteSize = (uint) (buffer.Length * sizeof(float));
+                bufferList.Buffer1.Data = Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer));
 
                 status = _audioFile!.Write(bufferList, (uint) samples.Frames);
             }
