@@ -80,6 +80,11 @@ namespace AudioWorks.Extensions.Apple
             _metadata = metadata;
             _settings = settings;
 
+            // Pre-allocate the whole stream (estimate worst case of 320kbps, plus cover art
+            // and 4096 bytes of tags/padding/overhead)
+            stream.SetLength(
+                0xA000 * (long) info.PlayLength.TotalSeconds + 4096 + (metadata.CoverArt?.Data.Length ?? 0));
+
             InitializeReplayGainFilter(info, metadata, settings);
 
             var inputDescription = GetInputDescription(info);
