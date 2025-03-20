@@ -29,24 +29,17 @@ namespace AudioWorks.Extensions.Opus
         readonly Stream _outputStream;
         readonly int _channels;
         readonly int _totalSeconds;
-        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
-        readonly OpusEncoderCallbacks _callbacks;
-        GCHandle _outputStreamHandle;
+        readonly unsafe OpusEncoderCallbacks _callbacks = new() { Write = &WriteCallback, Close = &CloseCallback };
+        readonly GCHandle _outputStreamHandle;
         readonly OpusEncoderHandle _encoderHandle;
         int _requestedBitRate;
         bool _headersFlushed;
 
-        internal Encoder(
-            Stream stream,
-            int sampleRate,
-            int channels,
-            int totalSeconds,
-            OpusCommentsHandle comments)
+        internal Encoder(Stream stream, int sampleRate, int channels, int totalSeconds, OpusCommentsHandle comments)
         {
             _outputStream = stream;
             _channels = channels;
             _totalSeconds = totalSeconds;
-            _callbacks = InitializeCallbacks();
 
             // The callbacks have to be static, so pass the output stream through as userData
             _outputStreamHandle = GCHandle.Alloc(_outputStream);
@@ -142,13 +135,6 @@ namespace AudioWorks.Extensions.Opus
             _outputStreamHandle.Free();
             _encoderHandle.Dispose();
         }
-
-        static unsafe OpusEncoderCallbacks InitializeCallbacks() => new()
-        {
-            Write = &WriteCallback,
-            // Leave the stream open
-            Close = &CloseCallback
-        };
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static unsafe int WriteCallback(nint userData, byte* buffer, int length)
