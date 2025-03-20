@@ -34,7 +34,6 @@ namespace AudioWorks.Extensions.Flac.Decoder
                 decoder.SetMetadataRespond(MetadataType.VorbisComment);
                 decoder.SetMetadataRespond(MetadataType.Picture);
 
-                decoder.Initialize();
                 if (!decoder.ProcessMetadata())
                     throw new AudioInvalidException(
                         $"libFLAC was unable to read the audio metadata: {decoder.GetState()}.");
