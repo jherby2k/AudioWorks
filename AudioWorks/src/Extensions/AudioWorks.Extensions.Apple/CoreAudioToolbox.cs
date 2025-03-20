@@ -26,23 +26,23 @@ namespace AudioWorks.Extensions.Apple
 
         [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial AudioFileStatus AudioFileOpenWithCallbacks(
+        internal static unsafe partial AudioFileStatus AudioFileOpenWithCallbacks(
             nint userData,
-            AudioFileReadCallback readCallback,
-            AudioFileWriteCallback? writeCallback,
-            AudioFileGetSizeCallback getSizeCallback,
-            AudioFileSetSizeCallback? setSizeCallback,
+            delegate* unmanaged[Cdecl]<nint, long, uint, byte*, uint*, AudioFileStatus> readCallback,
+            delegate* unmanaged[Cdecl]<nint, long, uint, byte*, uint*, AudioFileStatus> writeCallback,
+            delegate* unmanaged[Cdecl]<nint, long> getSizeCallback,
+            delegate* unmanaged[Cdecl]<nint, long, AudioFileStatus> setSizeCallback,
             AudioFileType fileType,
             out AudioFileHandle handle);
 
         [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial AudioFileStatus AudioFileInitializeWithCallbacks(
+        internal static unsafe partial AudioFileStatus AudioFileInitializeWithCallbacks(
             nint userData,
-            AudioFileReadCallback readCallback,
-            AudioFileWriteCallback writeCallback,
-            AudioFileGetSizeCallback getSizeCallback,
-            AudioFileSetSizeCallback setSizeCallback,
+            delegate* unmanaged[Cdecl]<nint, long, uint, byte*, uint*, AudioFileStatus> readCallback,
+            delegate* unmanaged[Cdecl]<nint, long, uint, byte*, uint*, AudioFileStatus> writeCallback,
+            delegate* unmanaged[Cdecl]<nint, long> getSizeCallback,
+            delegate* unmanaged[Cdecl]<nint, long, AudioFileStatus> setSizeCallback,
             AudioFileType fileType,
             ref AudioStreamBasicDescription description,
             uint flags,
@@ -124,9 +124,9 @@ namespace AudioWorks.Extensions.Apple
 
         [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial AudioConverterStatus AudioConverterFillComplexBuffer(
+        internal static unsafe partial AudioConverterStatus AudioConverterFillComplexBuffer(
             AudioConverterHandle handle,
-            AudioConverterComplexInputCallback inputCallback,
+            delegate* unmanaged[Cdecl]<nint, uint*, AudioBufferListSingle*, nint, nint, AudioConverterStatus> inputCallback,
             nint userData,
             ref uint packetSize,
             ref AudioBufferListSingle outputData,
@@ -151,38 +151,5 @@ namespace AudioWorks.Extensions.Apple
         [LibraryImport(_coreAudioLibrary)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         internal static partial AudioConverterStatus AudioConverterDispose(nint handle);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate AudioFileStatus AudioFileReadCallback(
-            nint userData,
-            long position,
-            uint requestCount,
-            [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] buffer,
-            out uint actualCount);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate AudioFileStatus AudioFileWriteCallback(
-            nint userData,
-            long position,
-            uint requestCount,
-            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] buffer,
-            out uint actualCount);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate long AudioFileGetSizeCallback(
-            nint userData);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate AudioFileStatus AudioFileSetSizeCallback(
-            nint userData,
-            long size);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate AudioConverterStatus AudioConverterComplexInputCallback(
-            nint handle,
-            ref uint numberPackets,
-            ref AudioBufferListSingle data,
-            nint packetDescriptions,
-            nint userData);
     }
 }

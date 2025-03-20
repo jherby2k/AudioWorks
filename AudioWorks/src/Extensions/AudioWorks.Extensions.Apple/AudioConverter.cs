@@ -15,13 +15,13 @@ You should have received a copy of the GNU Affero General Public License along w
 
 using System;
 using System.Buffers;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Apple
 {
     sealed class AudioConverter : IDisposable
     {
-        readonly CoreAudioToolbox.AudioConverterComplexInputCallback _inputCallback;
         readonly AudioConverterHandle _handle;
         readonly AudioFile _audioFile;
         long _packetIndex;
@@ -33,20 +33,34 @@ namespace AudioWorks.Extensions.Apple
             ref AudioStreamBasicDescription outputDescription,
             AudioFile audioFile)
         {
-            _inputCallback = InputCallback;
-
             CoreAudioToolbox.AudioConverterNew(ref inputDescription,
                 ref outputDescription, out _handle);
 
             _audioFile = audioFile;
         }
 
-        internal void FillBuffer(
+        internal unsafe void FillBuffer(
             ref uint packetSize,
             ref AudioBufferListSingle outputBuffer,
-            AudioStreamPacketDescription[]? packetDescriptions) =>
-            CoreAudioToolbox.AudioConverterFillComplexBuffer(_handle, _inputCallback, nint.Zero,
-                ref packetSize, ref outputBuffer, packetDescriptions);
+            AudioStreamPacketDescription[]? packetDescriptions)
+        {
+            // The callbacks have to be static, so pass this instance through as userData
+            var instanceHandle = GCHandle.Alloc(this);
+            try
+            {
+                CoreAudioToolbox.AudioConverterFillComplexBuffer(
+                    _handle,
+                    &InputCallback,
+                    GCHandle.ToIntPtr(instanceHandle),
+                    ref packetSize,
+                    ref outputBuffer,
+                    packetDescriptions);
+            }
+            finally
+            {
+                instanceHandle.Free();
+            }
+        }
 
         internal void SetProperty(AudioConverterPropertyId propertyId, uint size, nint data) =>
             CoreAudioToolbox.AudioConverterSetProperty(_handle, propertyId, size, data);
@@ -60,39 +74,41 @@ namespace AudioWorks.Extensions.Apple
                 _descriptionsHandle.Free();
         }
 
-        unsafe AudioConverterStatus InputCallback(
-            nint handle,
-            ref uint numberPackets,
-            ref AudioBufferListSingle data,
-            nint packetDescriptions,
-            nint userData)
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        static unsafe AudioConverterStatus InputCallback(
+            nint handle, uint* numberPackets, AudioBufferListSingle* data, nint packetDescriptions, nint userData)
         {
-            if (_buffer == null)
+            var instance = (AudioConverter) GCHandle.FromIntPtr(userData).Target!;
+
+            if (instance._buffer == null)
             {
-                _buffer = MemoryPool<byte>.Shared.Rent((int)
-                    (numberPackets * _audioFile.GetProperty<uint>(AudioFilePropertyId.PacketSizeUpperBound)));
-                _bufferHandle = _buffer.Memory.Pin();
+                // Rent a reusable buffer and keep it pinned between calls
+                instance._buffer = MemoryPool<byte>.Shared.Rent((int)
+                    (*numberPackets * instance._audioFile.GetProperty<uint>(AudioFilePropertyId.PacketSizeUpperBound)));
+                instance._bufferHandle = instance._buffer.Memory.Pin();
             }
 
-            if (_descriptionsHandle.IsAllocated)
-                _descriptionsHandle.Free();
+            // Free the GCHandle from a previous call
+            if (instance._descriptionsHandle.IsAllocated)
+                instance._descriptionsHandle.Free();
 
-            var inputDescriptions = new AudioStreamPacketDescription[numberPackets];
-            var numBytes = (uint) _buffer.Memory.Length;
-            _audioFile.ReadPackets(ref numBytes, inputDescriptions, _packetIndex, ref numberPackets,
-                new(_bufferHandle.Pointer));
+            var inputDescriptions = new AudioStreamPacketDescription[*numberPackets];
 
-            _packetIndex += numberPackets;
+            var numBytes = (uint) instance._buffer.Memory.Length;
 
-            data.Buffer1.DataByteSize = numBytes;
-            data.Buffer1.Data = new(_bufferHandle.Pointer);
+            instance._audioFile.ReadPackets(ref numBytes, inputDescriptions, instance._packetIndex, ref *numberPackets,
+                new(instance._bufferHandle.Pointer));
+
+            instance._packetIndex += *numberPackets;
+
+            (*data).Buffer1.DataByteSize = numBytes;
+            (*data).Buffer1.Data = new(instance._bufferHandle.Pointer);
 
             // If this conversion requires packet descriptions, provide them
-            // ReSharper disable once InvertIf
             if (packetDescriptions != nint.Zero)
             {
-                _descriptionsHandle = GCHandle.Alloc(inputDescriptions, GCHandleType.Pinned);
-                Marshal.WriteIntPtr(packetDescriptions, _descriptionsHandle.AddrOfPinnedObject());
+                instance._descriptionsHandle = GCHandle.Alloc(inputDescriptions, GCHandleType.Pinned);
+                Marshal.WriteIntPtr(packetDescriptions, instance._descriptionsHandle.AddrOfPinnedObject());
             }
 
             return AudioConverterStatus.Ok;

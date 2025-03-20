@@ -16,53 +16,61 @@ You should have received a copy of the GNU Affero General Public License along w
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Apple
 {
     class AudioFile : IDisposable
     {
-        // ReSharper disable PrivateFieldCanBeConvertedToLocalVariable
-        readonly CoreAudioToolbox.AudioFileReadCallback _readCallback;
-        readonly CoreAudioToolbox.AudioFileGetSizeCallback _getSizeCallback;
-        readonly CoreAudioToolbox.AudioFileWriteCallback? _writeCallback;
-        readonly CoreAudioToolbox.AudioFileSetSizeCallback? _setSizeCallback;
-        // ReSharper restore PrivateFieldCanBeConvertedToLocalVariable
         [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed",
             Justification = "Type does not have dispose ownership")]
         readonly Stream _stream;
         long _endOfData;
+        GCHandle _instanceHandle;
 
         protected AudioFileHandle Handle { get; }
 
-        internal AudioFile(AudioFileType fileType, Stream stream)
+        internal unsafe AudioFile(AudioFileType fileType, Stream stream)
         {
-            // This constructor is for reading
-            _readCallback = ReadCallback;
-            _getSizeCallback = GetSizeCallback;
-
             _stream = stream;
             _endOfData = stream.Length;
 
-            CoreAudioToolbox.AudioFileOpenWithCallbacks(nint.Zero,
-                _readCallback, null, _getSizeCallback, null,
-                fileType, out var handle);
+            // The callbacks have to be static, so pass this instance through as userData
+            _instanceHandle = GCHandle.Alloc(this);
+
+            // Open for reading
+            CoreAudioToolbox.AudioFileOpenWithCallbacks(
+                GCHandle.ToIntPtr(_instanceHandle),
+                &ReadCallback,
+                null,
+                &GetSizeCallback,
+                null,
+                fileType,
+                out var handle);
+
             Handle = handle;
         }
 
-        internal AudioFile(AudioStreamBasicDescription description, AudioFileType fileType, Stream stream)
+        internal unsafe AudioFile(AudioStreamBasicDescription description, AudioFileType fileType, Stream stream)
         {
-            // This constructor is for writing
-            _readCallback = ReadCallback;
-            _getSizeCallback = GetSizeCallback;
-            _writeCallback = WriteCallback;
-            _setSizeCallback = SetSizeCallback;
-
             _stream = stream;
 
-            CoreAudioToolbox.AudioFileInitializeWithCallbacks(nint.Zero,
-                _readCallback, _writeCallback, _getSizeCallback, _setSizeCallback,
-                fileType, ref description, 0, out var handle);
+            // The callbacks have to be static, so pass this instance through as userData
+            _instanceHandle = GCHandle.Alloc(this);
+
+            // Open for writing
+            CoreAudioToolbox.AudioFileInitializeWithCallbacks(
+                GCHandle.ToIntPtr(_instanceHandle),
+                &ReadCallback,
+                &WriteCallback,
+                &GetSizeCallback,
+                &SetSizeCallback,
+                fileType,
+                ref description,
+                0,
+                out var handle);
+
             Handle = handle;
         }
 
@@ -110,32 +118,52 @@ namespace AudioWorks.Extensions.Apple
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
+            {
                 Handle.Dispose();
+                _instanceHandle.Free();
+            }
         }
 
         public void Dispose() => Dispose(true);
 
-        AudioFileStatus ReadCallback(nint userData, long position, uint requestCount, byte[] buffer, out uint actualCount)
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        static unsafe AudioFileStatus ReadCallback(
+            nint userData, long position, uint requestCount, byte* buffer, uint* actualCount)
         {
-            _stream.Position = position;
-            actualCount = (uint) _stream.Read(buffer, 0, (int) requestCount);
-            return actualCount == 0 ? AudioFileStatus.EndOfFileError : AudioFileStatus.Ok;
+            var instance = (AudioFile) GCHandle.FromIntPtr(userData).Target!;
+
+            instance._stream.Position = position;
+            *actualCount = (uint) instance._stream.Read(new Span<byte>(buffer, (int) requestCount));
+            return *actualCount == 0 ? AudioFileStatus.EndOfFileError : AudioFileStatus.Ok;
         }
 
-        long GetSizeCallback(nint userData) => _endOfData;
-
-        AudioFileStatus WriteCallback(nint userData, long position, uint requestCount, byte[] buffer, out uint actualCount)
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        static unsafe AudioFileStatus WriteCallback(
+            nint userData, long position, uint requestCount, byte* buffer, uint* actualCount)
         {
-            _stream.Position = position;
-            _stream.Write(buffer, 0, (int) requestCount);
-            actualCount = requestCount;
-            _endOfData = Math.Max(_endOfData, _stream.Position);
+            var instance = (AudioFile) GCHandle.FromIntPtr(userData).Target!;
+
+            instance._stream.Position = position;
+            instance._stream.Write(new Span<byte>(buffer, (int) requestCount));
+            *actualCount = requestCount;
+            instance._endOfData = Math.Max(instance._endOfData, instance._stream.Position);
             return AudioFileStatus.Ok;
         }
 
-        AudioFileStatus SetSizeCallback(nint userData, long size)
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        static long GetSizeCallback(nint userData)
         {
-            _endOfData = size;
+            var instance = (AudioFile) GCHandle.FromIntPtr(userData).Target!;
+
+            return instance._endOfData;
+        }
+
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        static AudioFileStatus SetSizeCallback(nint userData, long size)
+        {
+            var instance = (AudioFile) GCHandle.FromIntPtr(userData).Target!;
+
+            instance._endOfData = size;
             return AudioFileStatus.Ok;
         }
     }
