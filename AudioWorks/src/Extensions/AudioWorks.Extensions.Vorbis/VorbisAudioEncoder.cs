@@ -66,6 +66,8 @@ namespace AudioWorks.Extensions.Vorbis
 
         public void Initialize(Stream stream, AudioInfo info, AudioMetadata metadata, SettingDictionary settings)
         {
+            _outputStream = stream;
+
             InitializeReplayGainFilter(info, metadata, settings);
 
             if (!settings.TryGetValue("SerialNumber", out int serialNumber))
