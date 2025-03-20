@@ -117,11 +117,10 @@ namespace AudioWorks.Extensions.Apple
 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                Handle.Dispose();
-                _instanceHandle.Free();
-            }
+            if (!disposing) return;
+
+            Handle.Dispose();
+            _instanceHandle.Free();
         }
 
         public void Dispose() => Dispose(true);
