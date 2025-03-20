@@ -26,7 +26,8 @@ namespace AudioWorks.Extensions.Flac.Decoder
         SeekError,
         Aborted,
         MemoryAllocationError,
-        Uninitialized
+        Uninitialized,
+        EndOfLink
     }
 
     enum DecoderReadStatus
@@ -60,6 +61,9 @@ namespace AudioWorks.Extensions.Flac.Decoder
         LostSync,
         BadHeader,
         FrameCrcMismatch,
-        UnparseableStream
+        UnparseableStream,
+        BadMetadata,
+        OutOfBounds,
+        MissingFrame
     }
 }
