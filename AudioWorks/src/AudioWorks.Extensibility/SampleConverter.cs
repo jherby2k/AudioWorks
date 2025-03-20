@@ -20,7 +20,7 @@ using System.Runtime.Intrinsics;
 
 namespace AudioWorks.Extensibility
 {
-    static class SampleProcessor
+    static class SampleConverter
     {
         internal static void Convert(ReadOnlySpan<float> source, Span<byte> destination, int bitsPerSample, bool optimize)
         {
