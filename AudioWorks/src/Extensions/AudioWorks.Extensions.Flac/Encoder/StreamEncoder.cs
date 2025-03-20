@@ -98,7 +98,8 @@ namespace AudioWorks.Extensions.Flac.Encoder
         public void Dispose()
         {
             _handle.Dispose();
-            _streamHandle.Free();
+            if (_streamHandle.IsAllocated)
+                _streamHandle.Free();
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
