@@ -55,16 +55,16 @@ namespace AudioWorks.Extensions.Flac.Encoder
                 _bitsPerSample = info.BitsPerSample;
 
             _encoder = new(stream);
-            _encoder.SetChannels((uint) info.Channels);
-            _encoder.SetBitsPerSample((uint) _bitsPerSample);
-            _encoder.SetSampleRate((uint) info.SampleRate);
+            _encoder.SetChannels(info.Channels);
+            _encoder.SetBitsPerSample(_bitsPerSample);
+            _encoder.SetSampleRate(info.SampleRate);
             if (info.FrameCount > 0)
-                _encoder.SetTotalSamplesEstimate((ulong) info.FrameCount);
+                _encoder.SetTotalSamplesEstimate(info.FrameCount);
 
             // Use a default compression level of 5
             _encoder.SetCompressionLevel(
                 settings.TryGetValue("CompressionLevel", out int compressionLevel)
-                    ? (uint) compressionLevel
+                    ? compressionLevel
                     : 5);
 
             // Use a default seek point interval of 10 seconds

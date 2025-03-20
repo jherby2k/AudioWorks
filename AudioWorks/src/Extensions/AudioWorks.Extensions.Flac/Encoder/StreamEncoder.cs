@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.IO.Pipes;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -32,22 +33,36 @@ namespace AudioWorks.Extensions.Flac.Encoder
                     Justification = "Type does not have dispose ownership")]
         readonly Stream _stream;
         GCHandle _streamHandle;
+        long _endOfData;
+        int _channels;
+        int _bytesPerSample;
+        long _sampleCount;
 
         internal StreamEncoder(Stream stream) => _stream = stream;
 
-        internal void SetChannels(uint channels) => LibFlac.StreamEncoderSetChannels(_handle, channels);
+        internal void SetChannels(int channels)
+        {
+            _channels = channels;
+            LibFlac.StreamEncoderSetChannels(_handle, (uint) channels);
+        }
 
-        internal void SetBitsPerSample(uint bitsPerSample) =>
-            LibFlac.StreamEncoderSetBitsPerSample(_handle, bitsPerSample);
+        internal void SetBitsPerSample(int bitsPerSample)
+        {
+            _bytesPerSample = (int) Math.Ceiling(bitsPerSample / 8.0);
+            LibFlac.StreamEncoderSetBitsPerSample(_handle, (uint) bitsPerSample);
+        }
 
-        internal void SetSampleRate(uint sampleRate) =>
-            LibFlac.StreamEncoderSetSampleRate(_handle, sampleRate);
+        internal void SetSampleRate(int sampleRate) =>
+            LibFlac.StreamEncoderSetSampleRate(_handle, (uint) sampleRate);
 
-        internal void SetTotalSamplesEstimate(ulong sampleCount) =>
-            LibFlac.StreamEncoderSetTotalSamplesEstimate(_handle, sampleCount);
+        internal void SetTotalSamplesEstimate(long sampleCount)
+        {
+            _sampleCount = sampleCount;
+            LibFlac.StreamEncoderSetTotalSamplesEstimate(_handle, (ulong) sampleCount);
+        }
 
-        internal void SetCompressionLevel(uint compressionLevel) =>
-            LibFlac.StreamEncoderSetCompressionLevel(_handle, compressionLevel);
+        internal void SetCompressionLevel(int compressionLevel) =>
+            LibFlac.StreamEncoderSetCompressionLevel(_handle, (uint) compressionLevel);
 
         internal void SetMetadata(IEnumerable<MetadataObject> metadataObjects)
         {
@@ -57,11 +72,14 @@ namespace AudioWorks.Extensions.Flac.Encoder
 
         internal unsafe void Initialize()
         {
-            // The callbacks have to be static, so pass the output stream through as userData
-            _streamHandle = GCHandle.Alloc(_stream);
+            // The callbacks have to be static, so pass this instance through as userData
+            _streamHandle = GCHandle.Alloc(this);
 
             _ = LibFlac.StreamEncoderInitStream(
                 _handle, &WriteCallback, &SeekCallback, &TellCallback, null, GCHandle.ToIntPtr(_streamHandle));
+
+            // Pre-allocate the whole stream (estimate worst case compression, plus metadata)
+            _stream.SetLength(_channels * _bytesPerSample * _sampleCount + _stream.Length);
         }
 
         internal unsafe void Process(ReadOnlySpan<int> leftBuffer, ReadOnlySpan<int> rightBuffer)
@@ -93,6 +111,9 @@ namespace AudioWorks.Extensions.Flac.Encoder
         {
             if (!LibFlac.StreamEncoderFinish(_handle))
                 throw new AudioEncodingException($"FLAC encountered error '{GetState()}' while finishing encoding.");
+
+            // The pre-allocation may have been based on an estimated frame count
+            _stream.SetLength(_endOfData);
         }
 
         public void Dispose()
@@ -104,31 +125,30 @@ namespace AudioWorks.Extensions.Flac.Encoder
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static unsafe EncoderWriteStatus WriteCallback(
-            nint handle,
-            byte* buffer,
-            int bytes,
-            uint samples,
-            uint currentFrame,
-            nint userData)
+            nint handle, byte* buffer, int bytes, uint samples, uint currentFrame, nint userData)
         {
-            var stream = (Stream) GCHandle.FromIntPtr(userData).Target!;
-            stream.Write(new(buffer, bytes));
+            var instance = (StreamEncoder) GCHandle.FromIntPtr(userData).Target!;
+
+            instance._stream.Write(new(buffer, bytes));
+            instance._endOfData = Math.Max(instance._endOfData, instance._stream.Position);
             return EncoderWriteStatus.Ok;
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static EncoderSeekStatus SeekCallback(nint handle, ulong absoluteOffset, nint userData)
         {
-            var stream = (Stream) GCHandle.FromIntPtr(userData).Target!;
-            stream.Position = (long) absoluteOffset;
+            var instance = (StreamEncoder) GCHandle.FromIntPtr(userData).Target!;
+
+            instance._stream.Position = (long) absoluteOffset;
             return EncoderSeekStatus.Ok;
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         static unsafe EncoderTellStatus TellCallback(nint handle, ulong* absoluteOffset, nint userData)
         {
-            var stream = (Stream) GCHandle.FromIntPtr(userData).Target!;
-            *absoluteOffset = (ulong) stream.Position;
+            var instance = (StreamEncoder) GCHandle.FromIntPtr(userData).Target!;
+
+            *absoluteOffset = (ulong) instance._stream.Position;
             return EncoderTellStatus.Ok;
         }
 

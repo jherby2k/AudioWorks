@@ -33,18 +33,10 @@ namespace AudioWorks.Extensions.Flac.Encoder
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static partial bool StreamEncoderSetChannels(StreamEncoderHandle handle, uint channels);
 
-        [LibraryImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_get_channels")]
-        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial uint StreamEncoderGetChannels(StreamEncoderHandle handle);
-
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_set_bits_per_sample")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static partial bool StreamEncoderSetBitsPerSample(StreamEncoderHandle handle, uint bitsPerSample);
-
-        [LibraryImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_get_bits_per_sample")]
-        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        internal static partial uint StreamEncoderGetBitsPerSample(StreamEncoderHandle handle);
 
         [LibraryImport(_flacLibrary, EntryPoint = "FLAC__stream_encoder_set_sample_rate")]
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
