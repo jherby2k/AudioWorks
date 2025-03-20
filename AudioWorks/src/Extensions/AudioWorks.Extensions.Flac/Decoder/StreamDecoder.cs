@@ -72,7 +72,8 @@ namespace AudioWorks.Extensions.Flac.Decoder
         public void Dispose()
         {
             _handle.Dispose();
-             _instanceHandle.Free();
+            if (_instanceHandle.IsAllocated)
+                _instanceHandle.Free();
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
