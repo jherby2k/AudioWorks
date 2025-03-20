@@ -18,12 +18,12 @@ using System.Runtime.InteropServices;
 
 namespace AudioWorks.Extensions.Vorbis
 {
-    sealed unsafe class VorbisEncoder : IDisposable
+    sealed class VorbisEncoder : IDisposable
     {
-        readonly nint _info = Marshal.AllocHGlobal(sizeof(VorbisInfo));
-        readonly nint _block = Marshal.AllocHGlobal(sizeof(VorbisBlock));
+        readonly unsafe nint _info = Marshal.AllocHGlobal(sizeof(VorbisInfo));
+        readonly unsafe nint _block = Marshal.AllocHGlobal(sizeof(VorbisBlock));
 
-        internal nint DspState { get; } = Marshal.AllocHGlobal(sizeof(VorbisDspState));
+        internal unsafe nint DspState { get; } = Marshal.AllocHGlobal(sizeof(VorbisDspState));
 
         internal VorbisEncoder(int channels, int sampleRate, float baseQuality)
         {

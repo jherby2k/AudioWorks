@@ -25,7 +25,7 @@ using AudioWorks.Extensions.Flac.Metadata;
 
 namespace AudioWorks.Extensions.Flac.Decoder
 {
-    sealed unsafe class StreamDecoder : IDisposable
+    sealed class StreamDecoder : IDisposable
     {
         readonly StreamDecoderHandle _handle = LibFlac.StreamDecoderNew();
         [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed",
@@ -41,7 +41,7 @@ namespace AudioWorks.Extensions.Flac.Decoder
 
         internal StreamDecoder(Stream stream) => _stream = stream;
 
-        internal void Initialize()
+        internal unsafe void Initialize()
         {
             // The callbacks have to be static, so pass this instance through as userData
             _instanceHandle = GCHandle.Alloc(this);
@@ -59,7 +59,7 @@ namespace AudioWorks.Extensions.Flac.Decoder
         }
 
         internal void SetMetadataRespond(MetadataType type) =>
-    LibFlac.StreamDecoderSetMetadataRespond(_handle, type);
+            LibFlac.StreamDecoderSetMetadataRespond(_handle, type);
 
         internal bool ProcessMetadata() => LibFlac.StreamDecoderProcessUntilEndOfMetadata(_handle);
 
@@ -72,11 +72,11 @@ namespace AudioWorks.Extensions.Flac.Decoder
         public void Dispose()
         {
             _handle.Dispose();
-            _instanceHandle.Free();
+             _instanceHandle.Free();
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-        static DecoderReadStatus ReadCallback(nint handle, byte* buffer, int* bytes, nint userData)
+        static unsafe DecoderReadStatus ReadCallback(nint handle, byte* buffer, int* bytes, nint userData)
         {
             var instance = (StreamDecoder) GCHandle.FromIntPtr(userData).Target!;
             *bytes = instance._stream.Read(new(buffer, *bytes));
@@ -92,7 +92,7 @@ namespace AudioWorks.Extensions.Flac.Decoder
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-        static DecoderTellStatus TellCallback(nint handle, ulong* absoluteOffset, nint userData)
+        static unsafe DecoderTellStatus TellCallback(nint handle, ulong* absoluteOffset, nint userData)
         {
             var instance = (StreamDecoder) GCHandle.FromIntPtr(userData).Target!;
             *absoluteOffset = (ulong) instance._stream.Position;
@@ -100,7 +100,7 @@ namespace AudioWorks.Extensions.Flac.Decoder
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-        static DecoderLengthStatus LengthCallback(nint handle, ulong* streamLength, nint userData)
+        static unsafe DecoderLengthStatus LengthCallback(nint handle, ulong* streamLength, nint userData)
         {
             var instance = (StreamDecoder) GCHandle.FromIntPtr(userData).Target!;
             *streamLength = (ulong) instance._stream.Length;
@@ -115,7 +115,7 @@ namespace AudioWorks.Extensions.Flac.Decoder
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-        static DecoderWriteStatus WriteCallback(nint handle, Frame* frame, nint buffer, nint userData)
+        static unsafe DecoderWriteStatus WriteCallback(nint handle, Frame* frame, nint buffer, nint userData)
         {
             var instance = (StreamDecoder) GCHandle.FromIntPtr(userData).Target!;
 
@@ -133,7 +133,7 @@ namespace AudioWorks.Extensions.Flac.Decoder
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-        static void MetadataCallback(nint handle, MetadataBlock* metadataBlock, nint userData)
+        static unsafe void MetadataCallback(nint handle, MetadataBlock* metadataBlock, nint userData)
         {
             var instance = (StreamDecoder) GCHandle.FromIntPtr(userData).Target!;
 
