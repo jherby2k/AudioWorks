@@ -54,7 +54,6 @@ namespace AudioWorks.Extensions.Mp4
                 // Move to the start of the ilst atom, or where it should be
                 originalMp4.DescendToAtom("moov", "udta", "meta");
                 tempMp4.DescendToAtom("moov", "udta", "meta");
-                //tempStream.SetLength(tempStream.Position);
 
                 var childInfo = originalMp4.GetChildAtomInfo();
 

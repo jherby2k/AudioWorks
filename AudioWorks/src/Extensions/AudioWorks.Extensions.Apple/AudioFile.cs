@@ -121,6 +121,10 @@ namespace AudioWorks.Extensions.Apple
 
             Handle.Dispose();
             _instanceHandle.Free();
+
+            // Any pre-allocation was based on an estimate
+            if (_stream.CanWrite)
+                _stream.SetLength(_endOfData);
         }
 
         public void Dispose() => Dispose(true);
