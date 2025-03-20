@@ -26,7 +26,6 @@ namespace AudioWorks.Extensions.Apple
         [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed",
             Justification = "Type does not have dispose ownership")]
         readonly Stream _stream;
-        long _endOfData;
         GCHandle _instanceHandle;
 
         protected AudioFileHandle Handle { get; }
@@ -34,7 +33,6 @@ namespace AudioWorks.Extensions.Apple
         internal unsafe AudioFile(AudioFileType fileType, Stream stream)
         {
             _stream = stream;
-            _endOfData = stream.Length;
 
             // The callbacks have to be static, so pass this instance through as userData
             _instanceHandle = GCHandle.Alloc(this);
@@ -146,7 +144,6 @@ namespace AudioWorks.Extensions.Apple
             instance._stream.Position = position;
             instance._stream.Write(new Span<byte>(buffer, (int) requestCount));
             *actualCount = requestCount;
-            instance._endOfData = Math.Max(instance._endOfData, instance._stream.Position);
             return AudioFileStatus.Ok;
         }
 
@@ -155,7 +152,7 @@ namespace AudioWorks.Extensions.Apple
         {
             var instance = (AudioFile) GCHandle.FromIntPtr(userData).Target!;
 
-            return instance._endOfData;
+            return instance._stream.Length;
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
@@ -163,7 +160,7 @@ namespace AudioWorks.Extensions.Apple
         {
             var instance = (AudioFile) GCHandle.FromIntPtr(userData).Target!;
 
-            instance._endOfData = size;
+            instance._stream.SetLength(size);
             return AudioFileStatus.Ok;
         }
     }
