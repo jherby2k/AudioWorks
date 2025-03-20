@@ -78,17 +78,10 @@ namespace AudioWorks.Extensions.Lame
                 ExtensionProvider.GetFactories<IAudioMetadataEncoder>("Extension", FileExtension).FirstOrDefault();
             if (metadataEncoderFactory != null)
                 using (var export = metadataEncoderFactory.CreateExport())
-                using (var tempStream = new MemoryStream())
-                {
-                    // Buffer the tag in memory
-                    export.Value.WriteMetadata(tempStream, metadata, settings);
+                    export.Value.WriteMetadata(stream, metadata, settings);
 
-                    // Pre-allocate the whole stream (estimate worst case of 320kbps, plus the tag)
-                    stream.SetLength(0xA000 * (long) info.PlayLength.TotalSeconds + tempStream.Length);
-
-                    // Flush the tag to the output stream
-                    tempStream.WriteTo(stream);
-                }
+            // Pre-allocate the whole stream (estimate worst case of 320kbps, plus the tag)
+            stream.SetLength(0xA000 * (long) info.PlayLength.TotalSeconds + stream.Length);
 
             _encoder = new(stream);
             _encoder.SetChannels(info.Channels);
