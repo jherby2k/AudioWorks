@@ -12,7 +12,7 @@
     <readme>Readme.md</readme>
     <dependencies>
       <group targetFramework="net8.0">
-        <dependency id="AudioWorks.Extensibility" version="2.0.0" />
+        <dependency id="AudioWorks.Extensibility" version="2.1.0" />
         <dependency id="AudioWorks.Extensions.Id3" version="2.0.0" include="contentFiles" />
         <dependency id="AudioWorks.Extensions.Mp3" version="2.0.0" include="contentFiles" />
         <dependency id="AudioWorks.Extensions.ReplayGain" version="2.0.0" include="contentFiles,native" />
