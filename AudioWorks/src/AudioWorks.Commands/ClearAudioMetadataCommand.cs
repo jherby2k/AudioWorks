@@ -14,7 +14,9 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using AudioWorks.Common;
+using System.Linq;
 using System.Management.Automation;
+using System.Reflection;
 
 namespace AudioWorks.Commands
 {
@@ -71,32 +73,37 @@ namespace AudioWorks.Commands
 
         protected override void ProcessRecord()
         {
-            if (Title) AudioFile!.Metadata.Title = string.Empty;
-            if (Artist) AudioFile!.Metadata.Artist = string.Empty;
-            if (Album) AudioFile!.Metadata.Album = string.Empty;
-            if (AlbumArtist) AudioFile!.Metadata.AlbumArtist = string.Empty;
-            if (Composer) AudioFile!.Metadata.Composer = string.Empty;
-            if (Genre) AudioFile!.Metadata.Genre = string.Empty;
-            if (Comment) AudioFile!.Metadata.Comment = string.Empty;
-            if (Day) AudioFile!.Metadata.Day = string.Empty;
-            if (Month) AudioFile!.Metadata.Month = string.Empty;
-            if (Year) AudioFile!.Metadata.Year = string.Empty;
-            if (TrackNumber) AudioFile!.Metadata.TrackNumber = string.Empty;
-            if (TrackCount) AudioFile!.Metadata.TrackCount = string.Empty;
-            if (Loudness)
-            {
-                AudioFile!.Metadata.TrackPeak = string.Empty;
-                AudioFile.Metadata.AlbumPeak = string.Empty;
-                AudioFile.Metadata.TrackGain = string.Empty;
-                AudioFile.Metadata.AlbumGain = string.Empty;
-            }
+            // Get all switches that are set (excluding PassThru)
+            var definedSwitches = typeof(ClearAudioMetadataCommand).GetProperties(
+                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)
+                .Where(p =>
+                    p.Name != nameof(PassThru) && p.GetValue(this) is SwitchParameter paramValue && paramValue)
+                .ToList();
 
-            if (CoverArt) AudioFile!.Metadata.CoverArt = null;
-
-            // If no switches were specified, clear everything
-            if (!(Title || Artist || Album || AlbumArtist || Composer || Genre || Comment ||
-                  Day || Month || Year || TrackNumber || TrackCount || Loudness || CoverArt))
+            // If no switches are set, clear all metadata
+            if (definedSwitches.Count == 0)
                 AudioFile!.Metadata.Clear();
+            else
+                foreach (var switchItem in definedSwitches)
+                    switch (switchItem.Name)
+                    {
+                        case nameof(Loudness):
+                            AudioFile!.Metadata.TrackPeak = string.Empty;
+                            AudioFile.Metadata.AlbumPeak = string.Empty;
+                            AudioFile.Metadata.TrackGain = string.Empty;
+                            AudioFile.Metadata.AlbumGain = string.Empty;
+                            break;
+
+                        case nameof(CoverArt):
+                            AudioFile!.Metadata.CoverArt = null;
+                            break;
+
+                        // All other fields are strings
+                        default:
+                            typeof(AudioMetadata).GetProperty(switchItem.Name)
+                                ?.SetValue(AudioFile!.Metadata, string.Empty);
+                            break;
+                    }
 
             ProcessLogMessages();
 
