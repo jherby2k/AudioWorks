@@ -30,8 +30,8 @@ namespace AudioWorks.Extensions.Opus
         readonly int _channels;
         readonly int _totalSeconds;
         readonly unsafe OpusEncoderCallbacks _callbacks = new() { Write = &WriteCallback, Close = &CloseCallback };
-        readonly GCHandle _outputStreamHandle;
         readonly OpusEncoderHandle _encoderHandle;
+        GCHandle _outputStreamHandle;
         int _requestedBitRate;
         bool _headersFlushed;
 
