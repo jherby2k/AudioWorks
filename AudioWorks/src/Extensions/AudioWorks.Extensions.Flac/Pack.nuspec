@@ -23,6 +23,7 @@
     <file src="Readme.md" />
     <file src="..\..\artifacts\bin\$id$\$configuration$\$id$.dll" target="content" />
     <file src="..\..\artifacts\bin\$id$\$configuration$\$id$.dll" target="contentFiles/any/net8.0" />
+    <file src="..\..\artifacts\bin\$id$\$configuration$\$id$.pdb" target="lib/net8.0" />
     <file src="..\..\artifacts\bin\$id$\$configuration$\runtimes\**" target="runtimes" />
   </files>
 </package>
