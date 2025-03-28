@@ -10,6 +10,7 @@
     <projectUrl>$ProjectUrl$</projectUrl>
     <tags>$Tags$</tags>
     <readme>Readme.md</readme>
+    <repository type="$RepositoryType$" url="$RepositoryUrl$" branch="$RepositoryBranch$" commit="$RepositoryCommit$" />
     <dependencies>
       <group targetFramework="net8.0">
         <dependency id="AudioWorks.Extensibility" version="2.0.0" />

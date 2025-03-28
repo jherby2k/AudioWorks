@@ -18,4 +18,14 @@
     <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
   </ItemGroup>
 
+  <!-- Enable SourceLink w/ custom .nuspec per https://github.com/dotnet/sourcelink/issues/1392 -->
+  <Target Name="SetCustomNuspecProperties" BeforeTargets="GenerateNuspec" DependsOnTargets="InitializeSourceControlInformation">
+    <PropertyGroup>
+      <NuspecProperties>$(NuspecProperties);RepositoryType=$(RepositoryType)</NuspecProperties>
+      <NuspecProperties>$(NuspecProperties);RepositoryUrl=$(RepositoryUrl)</NuspecProperties>
+      <NuspecProperties>$(NuspecProperties);RepositoryBranch=$(RepositoryBranch)</NuspecProperties>
+      <NuspecProperties>$(NuspecProperties);RepositoryCommit=$(RepositoryCommit)</NuspecProperties>
+    </PropertyGroup>
+  </Target>
+
 </Project>
