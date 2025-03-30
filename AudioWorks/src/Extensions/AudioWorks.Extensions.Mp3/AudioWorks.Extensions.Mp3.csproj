@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <!-- Enable SourceLink w/ custom .nuspec per https://github.com/dotnet/sourcelink/issues/1392 -->
-  <Target Name="SetCustomNuspecProperties" BeforeTargets="GenerateNuspec" DependsOnTargets="InitializeSourceControlInformation">
+  <Target Name="SetCustomNuspecProperties" BeforeTargets="GenerateNuspec">
     <PropertyGroup>
       <NuspecProperties>$(NuspecProperties);RepositoryType=$(RepositoryType)</NuspecProperties>
       <NuspecProperties>$(NuspecProperties);RepositoryUrl=$(RepositoryUrl)</NuspecProperties>
