@@ -42,22 +42,22 @@ namespace AudioWorks.Extensions.Flac.Encoder
         internal void SetChannels(int channels)
         {
             _channels = channels;
-            LibFlac.StreamEncoderSetChannels(_handle, (uint) channels);
+            _ = LibFlac.StreamEncoderSetChannels(_handle, (uint) channels);
         }
 
         internal void SetBitsPerSample(int bitsPerSample)
         {
             _bytesPerSample = (int) Math.Ceiling(bitsPerSample / 8.0);
-            LibFlac.StreamEncoderSetBitsPerSample(_handle, (uint) bitsPerSample);
+            _ = LibFlac.StreamEncoderSetBitsPerSample(_handle, (uint) bitsPerSample);
         }
 
         internal void SetSampleRate(int sampleRate) =>
-            LibFlac.StreamEncoderSetSampleRate(_handle, (uint) sampleRate);
+            _ = LibFlac.StreamEncoderSetSampleRate(_handle, (uint) sampleRate);
 
         internal void SetTotalSamplesEstimate(long sampleCount)
         {
             _sampleCount = sampleCount;
-            LibFlac.StreamEncoderSetTotalSamplesEstimate(_handle, (ulong) sampleCount);
+            _ = LibFlac.StreamEncoderSetTotalSamplesEstimate(_handle, (ulong) sampleCount);
         }
 
         internal void SetCompressionLevel(int compressionLevel) =>
@@ -66,7 +66,7 @@ namespace AudioWorks.Extensions.Flac.Encoder
         internal void SetMetadata(IEnumerable<MetadataObject> metadataObjects)
         {
             var handles = metadataObjects.Select(o => o.Handle.DangerousGetHandle()).ToArray();
-            LibFlac.StreamEncoderSetMetadata(_handle, handles, (uint) handles.Length);
+            _ = LibFlac.StreamEncoderSetMetadata(_handle, handles, (uint) handles.Length);
         }
 
         internal unsafe void Initialize()

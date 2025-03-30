@@ -59,13 +59,13 @@ namespace AudioWorks.Extensions.Flac.Decoder
         }
 
         internal void SetMetadataRespond(MetadataType type) =>
-            LibFlac.StreamDecoderSetMetadataRespond(_handle, type);
+            _ = LibFlac.StreamDecoderSetMetadataRespond(_handle, type);
 
         internal bool ProcessMetadata() => LibFlac.StreamDecoderProcessUntilEndOfMetadata(_handle);
 
         internal bool ProcessSingle() => LibFlac.StreamDecoderProcessSingle(_handle);
 
-        internal void Finish() => LibFlac.StreamDecoderFinish(_handle);
+        internal void Finish() => _ = LibFlac.StreamDecoderFinish(_handle);
 
         internal DecoderState GetState() => LibFlac.StreamDecoderGetState(_handle);
 

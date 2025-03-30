@@ -24,10 +24,10 @@ namespace AudioWorks.Extensions.Flac.Metadata
 
         internal void Append(string key, string value)
         {
-            LibFlac.MetadataObjectVorbisCommentEntryFromNameValuePair(out var entry, key, value);
+            _ = LibFlac.MetadataObjectVorbisCommentEntryFromNameValuePair(out var entry, key, value);
 
             // The comment takes ownership of the new entry if 'copy' is false
-            LibFlac.MetadataObjectVorbisCommentAppendComment(Handle, entry, false);
+            _ = LibFlac.MetadataObjectVorbisCommentAppendComment(Handle, entry, false);
         }
     }
 }

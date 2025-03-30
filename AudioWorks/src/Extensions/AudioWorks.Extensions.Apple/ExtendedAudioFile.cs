@@ -25,7 +25,7 @@ namespace AudioWorks.Extensions.Apple
 
         public ExtendedAudioFile(AudioStreamBasicDescription description, AudioFileType fileType, Stream stream)
             : base(description, fileType, stream) =>
-            CoreAudioToolbox.ExtAudioFileWrapAudioFile(Handle, true, out _handle);
+            _ = CoreAudioToolbox.ExtAudioFileWrapAudioFile(Handle, true, out _handle);
 
         internal void SetProperty<T>(ExtendedAudioFilePropertyId id, T value) where T : unmanaged
         {
@@ -34,7 +34,7 @@ namespace AudioWorks.Extensions.Apple
             try
             {
                 Marshal.StructureToPtr(value, unmanagedValue, false);
-                CoreAudioToolbox.ExtAudioFileSetProperty(_handle, id, (uint) unmanagedValueSize, unmanagedValue);
+                _ = CoreAudioToolbox.ExtAudioFileSetProperty(_handle, id, (uint) unmanagedValueSize, unmanagedValue);
             }
             finally
             {
@@ -51,7 +51,7 @@ namespace AudioWorks.Extensions.Apple
             var unmanagedValue = Marshal.AllocHGlobal((int) unmanagedValueSize);
             try
             {
-                CoreAudioToolbox.ExtAudioFileGetProperty(_handle, id, ref unmanagedValueSize, unmanagedValue);
+                _ = CoreAudioToolbox.ExtAudioFileGetProperty(_handle, id, ref unmanagedValueSize, unmanagedValue);
                 return Marshal.PtrToStructure<T>(unmanagedValue);
             }
             finally

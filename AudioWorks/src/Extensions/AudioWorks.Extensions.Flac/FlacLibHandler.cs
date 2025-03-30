@@ -79,7 +79,7 @@ namespace AudioWorks.Extensions.Flac
                 {
                     if (module != nint.Zero)
                         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                            Kernel32.FreeLibrary(module);
+                            _ = Kernel32.FreeLibrary(module);
                         else
                             _ = LibDl.DlClose(module);
                 }

@@ -268,7 +268,7 @@ namespace AudioWorks.Extensions.Apple
             try
             {
                 Marshal.StructureToPtr(value, unmanagedValue, false);
-                CoreAudioToolbox.AudioConverterSetProperty(converter, propertyId, (uint) unmanagedValueSize,
+                _ = CoreAudioToolbox.AudioConverterSetProperty(converter, propertyId, (uint) unmanagedValueSize,
                     unmanagedValue);
             }
             finally

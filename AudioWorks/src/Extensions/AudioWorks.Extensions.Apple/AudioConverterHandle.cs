@@ -21,7 +21,7 @@ namespace AudioWorks.Extensions.Apple
     {
         protected override bool ReleaseHandle()
         {
-            CoreAudioToolbox.AudioConverterDispose(handle);
+            _ = CoreAudioToolbox.AudioConverterDispose(handle);
             return true;
         }
     }

@@ -40,7 +40,7 @@ namespace AudioWorks.Extensions.Apple
             _instanceHandle = GCHandle.Alloc(this);
 
             // Open for reading
-            CoreAudioToolbox.AudioFileOpenWithCallbacks(
+            _ = CoreAudioToolbox.AudioFileOpenWithCallbacks(
                 GCHandle.ToIntPtr(_instanceHandle),
                 &ReadCallback,
                 null,
@@ -60,7 +60,7 @@ namespace AudioWorks.Extensions.Apple
             _instanceHandle = GCHandle.Alloc(this);
 
             // Open for writing
-            CoreAudioToolbox.AudioFileInitializeWithCallbacks(
+            _ = CoreAudioToolbox.AudioFileInitializeWithCallbacks(
                 GCHandle.ToIntPtr(_instanceHandle),
                 &ReadCallback,
                 &WriteCallback,
@@ -78,7 +78,7 @@ namespace AudioWorks.Extensions.Apple
         {
             // Callers must release this!
             var unmanagedValue = Marshal.AllocHGlobal((int) size);
-            CoreAudioToolbox.AudioFileGetProperty(Handle, id, ref size, unmanagedValue);
+            _ = CoreAudioToolbox.AudioFileGetProperty(Handle, id, ref size, unmanagedValue);
             return unmanagedValue;
         }
 
@@ -91,7 +91,7 @@ namespace AudioWorks.Extensions.Apple
             var unmanagedValue = Marshal.AllocHGlobal((int) size);
             try
             {
-                CoreAudioToolbox.AudioFileGetProperty(Handle, id, ref size, unmanagedValue);
+                _ = CoreAudioToolbox.AudioFileGetProperty(Handle, id, ref size, unmanagedValue);
                 return Marshal.PtrToStructure<T>(unmanagedValue);
             }
             finally
@@ -102,7 +102,7 @@ namespace AudioWorks.Extensions.Apple
 
         internal uint GetPropertyInfo(AudioFilePropertyId id)
         {
-            CoreAudioToolbox.AudioFileGetPropertyInfo(Handle, id, out var dataSize, out _);
+            _ = CoreAudioToolbox.AudioFileGetPropertyInfo(Handle, id, out var dataSize, out _);
             return dataSize;
         }
 
@@ -112,7 +112,7 @@ namespace AudioWorks.Extensions.Apple
             long startingPacket,
             ref uint packets,
             nint data) =>
-            CoreAudioToolbox.AudioFileReadPacketData(Handle, false, ref numBytes, packetDescriptions,
+            _ = CoreAudioToolbox.AudioFileReadPacketData(Handle, false, ref numBytes, packetDescriptions,
                 startingPacket, ref packets, data);
 
         protected virtual void Dispose(bool disposing)

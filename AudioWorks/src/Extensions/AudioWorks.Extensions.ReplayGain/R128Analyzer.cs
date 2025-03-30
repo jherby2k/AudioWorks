@@ -35,7 +35,7 @@ namespace AudioWorks.Extensions.ReplayGain
         }
 
         internal void AddFrames(ReadOnlySpan<float> samples, uint frames) =>
-            LibEbur128.AddFramesFloat(Handle, MemoryMarshal.GetReference(samples), new(frames));
+            _ = LibEbur128.AddFramesFloat(Handle, MemoryMarshal.GetReference(samples), new(frames));
 
         internal double GetPeak()
         {
@@ -43,11 +43,9 @@ namespace AudioWorks.Extensions.ReplayGain
 
             for (uint channel = 0; channel < _channels; channel++)
             {
-                double channelPeak;
-                if (_calculateTruePeaks)
-                    LibEbur128.TruePeak(Handle, channel, out channelPeak);
-                else
-                    LibEbur128.SamplePeak(Handle, channel, out channelPeak);
+                _ = _calculateTruePeaks
+                    ? LibEbur128.TruePeak(Handle, channel, out var channelPeak)
+                    : LibEbur128.SamplePeak(Handle, channel, out channelPeak);
                 absolutePeak = Math.Max(channelPeak, absolutePeak);
             }
 
@@ -56,13 +54,13 @@ namespace AudioWorks.Extensions.ReplayGain
 
         internal double GetLoudness()
         {
-            LibEbur128.LoudnessGlobal(Handle, out var loudness);
+            _ = LibEbur128.LoudnessGlobal(Handle, out var loudness);
             return loudness;
         }
 
         internal static double GetLoudnessMultiple(StateHandle[] handles)
         {
-            LibEbur128.LoudnessGlobalMultiple(
+            _ = LibEbur128.LoudnessGlobalMultiple(
                 [.. handles.Select(handle => handle.DangerousGetHandle())],
                 new((uint) handles.Length),
                 out var loudness);

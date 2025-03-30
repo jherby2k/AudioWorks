@@ -31,12 +31,12 @@ namespace AudioWorks.Extensions.Flac.Metadata
         internal void InsertBlockAfter(MetadataObject metadataObject)
         {
             // The iterator takes ownership of the handle
-            LibFlac.MetadataIteratorInsertBlockAfter(_handle, metadataObject.Handle);
+            _ = LibFlac.MetadataIteratorInsertBlockAfter(_handle, metadataObject.Handle);
             metadataObject.Handle.DropOwnership();
         }
 
         internal void DeleteBlock(bool replaceWithPadding) =>
-            LibFlac.MetadataIteratorDeleteBlock(_handle, replaceWithPadding);
+            _ = LibFlac.MetadataIteratorDeleteBlock(_handle, replaceWithPadding);
 
         public void Dispose() => _handle.Dispose();
     }

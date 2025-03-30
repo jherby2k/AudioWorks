@@ -36,7 +36,7 @@ namespace AudioWorks.Extensions.Flac.Metadata
             var streamHandle = GCHandle.Alloc(_stream);
             try
             {
-                LibFlac.MetadataChainReadWithCallbacks(_handle, GCHandle.ToIntPtr(streamHandle), _callbacks);
+                _ = LibFlac.MetadataChainReadWithCallbacks(_handle, GCHandle.ToIntPtr(streamHandle), _callbacks);
             }
             finally
             {
@@ -52,7 +52,7 @@ namespace AudioWorks.Extensions.Flac.Metadata
             var streamHandle = GCHandle.Alloc(_stream);
             try
             {
-                LibFlac.MetadataChainWriteWithCallbacks(
+                _ = LibFlac.MetadataChainWriteWithCallbacks(
                     _handle, usePadding, GCHandle.ToIntPtr(streamHandle), _callbacks);
             }
             finally
@@ -67,7 +67,7 @@ namespace AudioWorks.Extensions.Flac.Metadata
             var tempStreamHandle = GCHandle.Alloc(tempStream);
             try
             {
-                LibFlac.MetadataChainWriteWithCallbacksAndTempFile(
+                _ = LibFlac.MetadataChainWriteWithCallbacksAndTempFile(
                     _handle,
                     usePadding,
                     GCHandle.ToIntPtr(streamHandle),

@@ -33,7 +33,7 @@ namespace AudioWorks.Extensions.Apple
             ref AudioStreamBasicDescription outputDescription,
             AudioFile audioFile)
         {
-            CoreAudioToolbox.AudioConverterNew(ref inputDescription,
+            _ = CoreAudioToolbox.AudioConverterNew(ref inputDescription,
                 ref outputDescription, out _handle);
 
             _audioFile = audioFile;
@@ -48,7 +48,7 @@ namespace AudioWorks.Extensions.Apple
             var instanceHandle = GCHandle.Alloc(this);
             try
             {
-                CoreAudioToolbox.AudioConverterFillComplexBuffer(
+                _ = CoreAudioToolbox.AudioConverterFillComplexBuffer(
                     _handle,
                     &InputCallback,
                     GCHandle.ToIntPtr(instanceHandle),
@@ -63,7 +63,7 @@ namespace AudioWorks.Extensions.Apple
         }
 
         internal void SetProperty(AudioConverterPropertyId propertyId, uint size, nint data) =>
-            CoreAudioToolbox.AudioConverterSetProperty(_handle, propertyId, size, data);
+            _ = CoreAudioToolbox.AudioConverterSetProperty(_handle, propertyId, size, data);
 
         public void Dispose()
         {

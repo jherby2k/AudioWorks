@@ -21,7 +21,7 @@ namespace AudioWorks.Extensions.Apple
     {
         protected override bool ReleaseHandle()
         {
-            CoreAudioToolbox.AudioFileClose(handle);
+            _ = CoreAudioToolbox.AudioFileClose(handle);
             return true;
         }
     }
