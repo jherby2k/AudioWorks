@@ -136,7 +136,7 @@ namespace AudioWorks.Extensions.Apple
             var instance = (AudioFile) GCHandle.FromIntPtr(userData).Target!;
 
             instance._stream.Position = position;
-            *actualCount = (uint) instance._stream.Read(new Span<byte>(buffer, (int) requestCount));
+            *actualCount = (uint) instance._stream.Read(new(buffer, (int) requestCount));
             return *actualCount == 0 ? AudioFileStatus.EndOfFileError : AudioFileStatus.Ok;
         }
 

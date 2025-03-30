@@ -32,7 +32,7 @@ namespace AudioWorks.Common
         /// Gets an empty <see cref="SettingInfoDictionary"/>.
         /// </summary>
         /// <value>An empty <see cref="SettingInfoDictionary"/>.</value>
-        public new static SettingInfoDictionary Empty { get; } = new SettingInfoDictionary(new Dictionary<string, SettingInfo>());
+        public new static SettingInfoDictionary Empty { get; } = new(new Dictionary<string, SettingInfo>());
 
         /// <summary>
         /// Validates a settings dictionary against this <see cref="SettingInfoDictionary"/>.

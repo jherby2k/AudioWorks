@@ -68,7 +68,7 @@ namespace AudioWorks.Extensions.Apple
                         foreach (var settingInfo in export.Value.SettingInfo)
                             result.Add(settingInfo.Key, settingInfo.Value);
 
-                return new SettingInfoDictionary(result);
+                return new(result);
             }
         }
 

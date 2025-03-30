@@ -96,7 +96,7 @@ namespace AudioWorks.Commands
                 this.OutputMessages(messageQueue, _cancellationSource.Token);
 
                 // Remove the progress bar
-                WriteProgress(new ProgressRecord(activityId) { RecordType = ProgressRecordType.Completed });
+                WriteProgress(new(activityId) { RecordType = ProgressRecordType.Completed });
 
                 if (analyzeTask.Exception != null)
                     throw analyzeTask.Exception.GetBaseException();
