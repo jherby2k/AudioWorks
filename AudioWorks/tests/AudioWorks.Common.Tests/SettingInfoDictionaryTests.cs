@@ -34,25 +34,25 @@ namespace AudioWorks.Common.Tests
         [Fact(DisplayName = "ValidateSettings throws an exception if a setting is the wrong type")]
         public void ValidateSettingsSettingWrongTypeThrowsException() =>
             Assert.Throws<ArgumentException>(() =>
-                new SettingInfoDictionary(new Dictionary<string, SettingInfo>() { ["Foo"] = new BoolSettingInfo() })
+                new SettingInfoDictionary(new Dictionary<string, SettingInfo> { ["Foo"] = new BoolSettingInfo() })
                     .ValidateSettings(new() { ["Foo"] = "Bar" }));
 
         [Fact(DisplayName = "ValidateSettings throws an exception if an integer setting is too high")]
         public void ValidateSettingsIntSettingTooHighThrowsException() =>
             Assert.Throws<ArgumentException>(() =>
-                new SettingInfoDictionary(new Dictionary<string, SettingInfo>() { ["Foo"] = new IntSettingInfo(0, 1) })
+                new SettingInfoDictionary(new Dictionary<string, SettingInfo> { ["Foo"] = new IntSettingInfo(0, 1) })
                     .ValidateSettings(new() { ["Foo"] = 2 }));
 
         [Fact(DisplayName = "ValidateSettings throws an exception if an integer setting is too low")]
         public void ValidateSettingsIntSettingTooLowThrowsException() =>
             Assert.Throws<ArgumentException>(() =>
-                new SettingInfoDictionary(new Dictionary<string, SettingInfo>() { ["Foo"] = new IntSettingInfo(0, 1) })
+                new SettingInfoDictionary(new Dictionary<string, SettingInfo> { ["Foo"] = new IntSettingInfo(0, 1) })
                     .ValidateSettings(new() { ["Foo"] = -1 }));
 
         [Fact(DisplayName = "ValidateSettings returns without error if an integer setting is in range")]
         public void ValidateSettingsIntInRangePasses()
         {
-            new SettingInfoDictionary(new Dictionary<string, SettingInfo>() { ["Foo"] = new IntSettingInfo(0, 1) })
+            new SettingInfoDictionary(new Dictionary<string, SettingInfo> { ["Foo"] = new IntSettingInfo(0, 1) })
                 .ValidateSettings(new() { ["Foo"] = 0 });
             Assert.True(true);
         }
@@ -60,13 +60,13 @@ namespace AudioWorks.Common.Tests
         [Fact(DisplayName = "ValidateSettings throws an exception if a string setting is not in the list")]
         public void ValidateSettingsStringSettingNotInListThrowsException() =>
             Assert.Throws<ArgumentException>(() =>
-                new SettingInfoDictionary(new Dictionary<string, SettingInfo>() { ["Foo"] = new StringSettingInfo("Valid") })
+                new SettingInfoDictionary(new Dictionary<string, SettingInfo> { ["Foo"] = new StringSettingInfo("Valid") })
                     .ValidateSettings(new() { ["Foo"] = "NotValid" }));
 
         [Fact(DisplayName = "ValidateSettings returns without error if a string setting is in the list")]
         public void ValidateSettingsStringInListPasses()
         {
-            new SettingInfoDictionary(new Dictionary<string, SettingInfo>() { ["Foo"] = new StringSettingInfo("Valid") })
+            new SettingInfoDictionary(new Dictionary<string, SettingInfo> { ["Foo"] = new StringSettingInfo("Valid") })
                 .ValidateSettings(new() { ["Foo"] = "Valid" });
             Assert.True(true);
         }

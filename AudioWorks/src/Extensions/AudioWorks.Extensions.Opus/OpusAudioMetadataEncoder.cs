@@ -27,7 +27,7 @@ namespace AudioWorks.Extensions.Opus
     [AudioMetadataEncoderExport(".opus", "Opus", "Opus Comments")]
     sealed class OpusAudioMetadataEncoder : IAudioMetadataEncoder
     {
-        public SettingInfoDictionary SettingInfo { get; } = SettingInfoDictionary.Empty;
+        public SettingInfoDictionary SettingInfo => SettingInfoDictionary.Empty;
 
         public unsafe void WriteMetadata(Stream stream, AudioMetadata metadata, SettingDictionary settings)
         {

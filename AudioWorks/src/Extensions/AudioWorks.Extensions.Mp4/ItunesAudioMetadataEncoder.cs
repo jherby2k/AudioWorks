@@ -109,7 +109,7 @@ namespace AudioWorks.Extensions.Mp4
         static Stream GetTempStream(long length)
         {
             // Use a memory stream for < 64 MB
-            var result = length < 0x400_0000 ? new MemoryStream() : (Stream) new TempFileStream();
+            Stream result = length < 0x400_0000 ? new MemoryStream() : new TempFileStream();
             result.SetLength(length);
             return result;
         }

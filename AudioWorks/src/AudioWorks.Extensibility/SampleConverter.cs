@@ -232,72 +232,81 @@ namespace AudioWorks.Extensibility
             Span<float> destination,
             bool optimize)
         {
-            // Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
-            if (optimize && Vector256.IsHardwareAccelerated)
+            switch (optimize)
             {
-                var indices = Vector256.Create(0, 4, 1, 5, 2, 6, 3, 7);
-                var leftSrcVectors = MemoryMarshal.Cast<float, Vector256<float>>(leftSource);
-                var rightSrcVectors = MemoryMarshal.Cast<float, Vector256<float>>(rightSource);
-                var destVectors = MemoryMarshal.Cast<float, Vector256<float>>(destination);
+                // Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
+                case true when Vector256.IsHardwareAccelerated:
+                {
+                    var indices = Vector256.Create(0, 4, 1, 5, 2, 6, 3, 7);
+                    var leftSrcVectors = MemoryMarshal.Cast<float, Vector256<float>>(leftSource);
+                    var rightSrcVectors = MemoryMarshal.Cast<float, Vector256<float>>(rightSource);
+                    var destVectors = MemoryMarshal.Cast<float, Vector256<float>>(destination);
 
-                var destVectorIndex = 0;
-                for (var srcVectorIndex = 0; srcVectorIndex < leftSrcVectors.Length; srcVectorIndex++)
-                {
-                    var lowerVector = Vector256.Create(
-                        leftSrcVectors[srcVectorIndex].GetLower(),
-                        rightSrcVectors[srcVectorIndex].GetLower());
-                    var upperVector = Vector256.Create(
-                        leftSrcVectors[srcVectorIndex].GetUpper(),
-                        rightSrcVectors[srcVectorIndex].GetUpper());
-                    destVectors[destVectorIndex++] = Vector256.Shuffle(lowerVector, indices);
-                    destVectors[destVectorIndex++] = Vector256.Shuffle(upperVector, indices);
-                }
+                    var destVectorIndex = 0;
+                    for (var srcVectorIndex = 0; srcVectorIndex < leftSrcVectors.Length; srcVectorIndex++)
+                    {
+                        var lowerVector = Vector256.Create(
+                            leftSrcVectors[srcVectorIndex].GetLower(),
+                            rightSrcVectors[srcVectorIndex].GetLower());
+                        var upperVector = Vector256.Create(
+                            leftSrcVectors[srcVectorIndex].GetUpper(),
+                            rightSrcVectors[srcVectorIndex].GetUpper());
+                        destVectors[destVectorIndex++] = Vector256.Shuffle(lowerVector, indices);
+                        destVectors[destVectorIndex++] = Vector256.Shuffle(upperVector, indices);
+                    }
 
-                for (int frameIndex = leftSrcVectors.Length * Vector256<float>.Count,
-                    destIndex = destVectorIndex * Vector256<float>.Count;
-                    frameIndex < leftSource.Length;
-                    frameIndex++)
-                {
-                    destination[destIndex++] = leftSource[frameIndex];
-                    destination[destIndex++] = rightSource[frameIndex];
-                }
-            }
-            // ARM only supports Vector128
-            else if (optimize && Vector128.IsHardwareAccelerated)
-            {
-                var indices = Vector128.Create(0, 2, 1, 3);
-                var leftSrcVectors = MemoryMarshal.Cast<float, Vector128<float>>(leftSource);
-                var rightSrcVectors = MemoryMarshal.Cast<float, Vector128<float>>(rightSource);
-                var destVectors = MemoryMarshal.Cast<float, Vector128<float>>(destination);
+                    for (int frameIndex = leftSrcVectors.Length * Vector256<float>.Count,
+                         destIndex = destVectorIndex * Vector256<float>.Count;
+                         frameIndex < leftSource.Length;
+                         frameIndex++)
+                    {
+                        destination[destIndex++] = leftSource[frameIndex];
+                        destination[destIndex++] = rightSource[frameIndex];
+                    }
 
-                var destVectorIndex = 0;
-                for (var srcVectorIndex = 0; srcVectorIndex < leftSrcVectors.Length; srcVectorIndex++)
-                {
-                    var lowerVector = Vector128.Create(
-                        leftSrcVectors[srcVectorIndex].GetLower(),
-                        rightSrcVectors[srcVectorIndex].GetLower());
-                    var upperVector = Vector128.Create(
-                        leftSrcVectors[srcVectorIndex].GetUpper(),
-                        rightSrcVectors[srcVectorIndex].GetUpper());
-                    destVectors[destVectorIndex++] = Vector128.Shuffle(lowerVector, indices);
-                    destVectors[destVectorIndex++] = Vector128.Shuffle(upperVector, indices);
+                    break;
                 }
+                // ARM only supports Vector128
+                case true when Vector128.IsHardwareAccelerated:
+                {
+                    var indices = Vector128.Create(0, 2, 1, 3);
+                    var leftSrcVectors = MemoryMarshal.Cast<float, Vector128<float>>(leftSource);
+                    var rightSrcVectors = MemoryMarshal.Cast<float, Vector128<float>>(rightSource);
+                    var destVectors = MemoryMarshal.Cast<float, Vector128<float>>(destination);
 
-                for (int frameIndex = leftSrcVectors.Length * Vector128<float>.Count,
-                    destIndex = destVectorIndex * Vector128<float>.Count;
-                    frameIndex < leftSource.Length;
-                    frameIndex++)
-                {
-                    destination[destIndex++] = leftSource[frameIndex];
-                    destination[destIndex++] = rightSource[frameIndex];
+                    var destVectorIndex = 0;
+                    for (var srcVectorIndex = 0; srcVectorIndex < leftSrcVectors.Length; srcVectorIndex++)
+                    {
+                        var lowerVector = Vector128.Create(
+                            leftSrcVectors[srcVectorIndex].GetLower(),
+                            rightSrcVectors[srcVectorIndex].GetLower());
+                        var upperVector = Vector128.Create(
+                            leftSrcVectors[srcVectorIndex].GetUpper(),
+                            rightSrcVectors[srcVectorIndex].GetUpper());
+                        destVectors[destVectorIndex++] = Vector128.Shuffle(lowerVector, indices);
+                        destVectors[destVectorIndex++] = Vector128.Shuffle(upperVector, indices);
+                    }
+
+                    for (int frameIndex = leftSrcVectors.Length * Vector128<float>.Count,
+                         destIndex = destVectorIndex * Vector128<float>.Count;
+                         frameIndex < leftSource.Length;
+                         frameIndex++)
+                    {
+                        destination[destIndex++] = leftSource[frameIndex];
+                        destination[destIndex++] = rightSource[frameIndex];
+                    }
+
+                    break;
                 }
-            }
-            else
-            {
-                for (int frameIndex = 0, destIndex = 0; frameIndex < leftSource.Length; frameIndex++)
+                default:
                 {
-                    destination[destIndex++] = leftSource[frameIndex];
-                    destination[destIndex++] = rightSource[frameIndex];
+                    for (int frameIndex = 0, destIndex = 0; frameIndex < leftSource.Length; frameIndex++)
+                    {
+                        destination[destIndex++] = leftSource[frameIndex];
+                        destination[destIndex++] = rightSource[frameIndex];
+                    }
+
+                    break;
                 }
             }
         }
@@ -308,64 +317,73 @@ namespace AudioWorks.Extensibility
             Span<float> rightDestination,
             bool optimize)
         {
-            // Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
-            if (optimize && Vector256.IsHardwareAccelerated)
+            switch (optimize)
             {
-                var indices = Vector256.Create(0, 2, 4, 6, 1, 3, 5, 7);
-                var srcVectors = MemoryMarshal.Cast<float, Vector256<float>>(source);
-                var leftDestVectors = MemoryMarshal.Cast<float, Vector256<float>>(leftDestination);
-                var rightDestVectors = MemoryMarshal.Cast<float, Vector256<float>>(rightDestination);
+                // Vectorized implementation is significantly faster with AVX2 (256-bit SIMD)
+                case true when Vector256.IsHardwareAccelerated:
+                {
+                    var indices = Vector256.Create(0, 2, 4, 6, 1, 3, 5, 7);
+                    var srcVectors = MemoryMarshal.Cast<float, Vector256<float>>(source);
+                    var leftDestVectors = MemoryMarshal.Cast<float, Vector256<float>>(leftDestination);
+                    var rightDestVectors = MemoryMarshal.Cast<float, Vector256<float>>(rightDestination);
 
-                var srcVectorIndex = 0;
-                for (var destVectorIndex = 0; destVectorIndex < leftDestVectors.Length; destVectorIndex++)
-                {
-                    var shuffled1 = Vector256.Shuffle(srcVectors[srcVectorIndex++], indices);
-                    var shuffled2 = Vector256.Shuffle(srcVectors[srcVectorIndex++], indices);
-                    leftDestVectors[destVectorIndex] = Vector256.Create(shuffled1.GetLower(), shuffled2.GetLower());
-                    rightDestVectors[destVectorIndex] = Vector256.Create(shuffled1.GetUpper(), shuffled2.GetUpper());
-                }
+                    var srcVectorIndex = 0;
+                    for (var destVectorIndex = 0; destVectorIndex < leftDestVectors.Length; destVectorIndex++)
+                    {
+                        var shuffled1 = Vector256.Shuffle(srcVectors[srcVectorIndex++], indices);
+                        var shuffled2 = Vector256.Shuffle(srcVectors[srcVectorIndex++], indices);
+                        leftDestVectors[destVectorIndex] = Vector256.Create(shuffled1.GetLower(), shuffled2.GetLower());
+                        rightDestVectors[destVectorIndex] = Vector256.Create(shuffled1.GetUpper(), shuffled2.GetUpper());
+                    }
 
-                for (int destIndex = leftDestVectors.Length * Vector256<float>.Count,
-                    srcIndex = srcVectorIndex * Vector256<float>.Count;
-                    destIndex < leftDestination.Length;
-                    destIndex++)
-                {
-                    leftDestination[destIndex] = source[srcIndex++];
-                    rightDestination[destIndex] = source[srcIndex++];
-                }
-            }
-            // ARM only supports Vector128
-            else if (optimize && Vector128.IsHardwareAccelerated)
-            {
-                var indices = Vector128.Create(0, 2, 1, 3);
-                var srcVectors = MemoryMarshal.Cast<float, Vector128<float>>(source);
-                var leftDestVectors = MemoryMarshal.Cast<float, Vector128<float>>(leftDestination);
-                var rightDestVectors = MemoryMarshal.Cast<float, Vector128<float>>(rightDestination);
+                    for (int destIndex = leftDestVectors.Length * Vector256<float>.Count,
+                         srcIndex = srcVectorIndex * Vector256<float>.Count;
+                         destIndex < leftDestination.Length;
+                         destIndex++)
+                    {
+                        leftDestination[destIndex] = source[srcIndex++];
+                        rightDestination[destIndex] = source[srcIndex++];
+                    }
 
-                var srcVectorIndex = 0;
-                for (var destVectorIndex = 0; destVectorIndex < leftDestVectors.Length; destVectorIndex++)
-                {
-                    var shuffled1 = Vector128.Shuffle(srcVectors[srcVectorIndex++], indices);
-                    var shuffled2 = Vector128.Shuffle(srcVectors[srcVectorIndex++], indices);
-                    leftDestVectors[destVectorIndex] = Vector128.Create(shuffled1.GetLower(), shuffled2.GetLower());
-                    rightDestVectors[destVectorIndex] = Vector128.Create(shuffled1.GetUpper(), shuffled2.GetUpper());
+                    break;
                 }
+                // ARM only supports Vector128
+                case true when Vector128.IsHardwareAccelerated:
+                {
+                    var indices = Vector128.Create(0, 2, 1, 3);
+                    var srcVectors = MemoryMarshal.Cast<float, Vector128<float>>(source);
+                    var leftDestVectors = MemoryMarshal.Cast<float, Vector128<float>>(leftDestination);
+                    var rightDestVectors = MemoryMarshal.Cast<float, Vector128<float>>(rightDestination);
 
-                for (int destIndex = leftDestVectors.Length * Vector128<float>.Count,
-                    srcIndex = srcVectorIndex * Vector128<float>.Count;
-                    destIndex < leftDestination.Length;
-                    destIndex++)
-                {
-                    leftDestination[destIndex] = source[srcIndex++];
-                    rightDestination[destIndex] = source[srcIndex++];
+                    var srcVectorIndex = 0;
+                    for (var destVectorIndex = 0; destVectorIndex < leftDestVectors.Length; destVectorIndex++)
+                    {
+                        var shuffled1 = Vector128.Shuffle(srcVectors[srcVectorIndex++], indices);
+                        var shuffled2 = Vector128.Shuffle(srcVectors[srcVectorIndex++], indices);
+                        leftDestVectors[destVectorIndex] = Vector128.Create(shuffled1.GetLower(), shuffled2.GetLower());
+                        rightDestVectors[destVectorIndex] = Vector128.Create(shuffled1.GetUpper(), shuffled2.GetUpper());
+                    }
+
+                    for (int destIndex = leftDestVectors.Length * Vector128<float>.Count,
+                         srcIndex = srcVectorIndex * Vector128<float>.Count;
+                         destIndex < leftDestination.Length;
+                         destIndex++)
+                    {
+                        leftDestination[destIndex] = source[srcIndex++];
+                        rightDestination[destIndex] = source[srcIndex++];
+                    }
+
+                    break;
                 }
-            }
-            else
-            {
-                for (int destIndex = 0, sourceIndex = 0; destIndex < leftDestination.Length; destIndex++)
+                default:
                 {
-                    leftDestination[destIndex] = source[sourceIndex++];
-                    rightDestination[destIndex] = source[sourceIndex++];
+                    for (int destIndex = 0, sourceIndex = 0; destIndex < leftDestination.Length; destIndex++)
+                    {
+                        leftDestination[destIndex] = source[sourceIndex++];
+                        rightDestination[destIndex] = source[sourceIndex++];
+                    }
+
+                    break;
                 }
             }
         }
