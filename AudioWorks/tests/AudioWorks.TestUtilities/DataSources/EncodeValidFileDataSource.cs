@@ -2137,8 +2137,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     "50-15-21-02-0E-28-68-F6", // Opus 1.4.0 (Ubuntu 24.04 on AMD)
                     "D2-74-4E-6F-86-57-ED-B0", // Opus 1.5.2 (MacOS on Intel)
                     "1F-4A-FC-4B-5A-89-AF-64", // Opus 1.5.2 (MacOS on ARM)
-                    "6B422669A0FCB242E0E15204F5FDCC47", // Opus 1.3.1 (32-bit Windows on Intel)
-                    "C4-2A-4B-CD-42-71-E8-B2", // Opus 1.5.2 (32-bit Windows on AMD)
+                    "C4-2A-4B-CD-42-71-E8-B2", // Opus 1.5.2 (32-bit Windows)
                     "52-99-1C-C0-51-C8-95-9F", // Opus 1.5.2 (64-bit Windows on Intel)
                     "C8-D1-8B-E2-72-87-B5-49" // Opus 1.5.2 (64-bit Windows on AMD)
                 ]
