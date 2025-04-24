@@ -217,9 +217,7 @@ namespace AudioWorks.Api
                 },
                 async (i, c) =>
                 {
-                    var tempOutputPath = Path.Combine(
-                        Path.GetDirectoryName(outputPaths[i])!,
-                        Path.GetRandomFileName());
+                    var tempOutputPath = GetTempPath(outputPaths[i]);
 
                     try
                     {
@@ -312,6 +310,8 @@ namespace AudioWorks.Api
 
             return [.. result];
         }
+
+        static string GetTempPath(string path) => Path.Combine(Path.GetDirectoryName(path)!, Path.GetRandomFileName());
 
         static string GetUniquePath(string path, List<string> existingPaths) =>
             existingPaths.Contains(path, StringComparer.OrdinalIgnoreCase)
