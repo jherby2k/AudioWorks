@@ -25,7 +25,6 @@ namespace AudioWorks.TestUtilities.DataSources
     {
         public static IEnumerable<TheoryDataRow<string, string, SettingDictionary, AudioMetadata>> Data { get; } =
         [
-            // 8000Hz Stereo, default (simple) peaks
             new(
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "ReplayGain",
@@ -37,9 +36,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     TrackGain = "-8.84",
                     AlbumGain = "-8.84"
                 }
-            ),
-
-            // 8000Hz Stereo, interpolated peaks
+            ) { Label = "ReplayGain, 8000Hz Stereo, default (simple) peaks" },
             new(
                 "LPCM 8-bit 8000Hz Stereo.wav",
                 "ReplayGain",
@@ -54,9 +51,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     TrackGain = "-8.84",
                     AlbumGain = "-8.84"
                 }
-            ),
-
-            // 44100Hz Mono, default (simple) peaks
+            ) { Label = "ReplayGain, 8000Hz Stereo, interpolated peaks" },
             new(
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "ReplayGain",
@@ -68,9 +63,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     TrackGain = "-9.75",
                     AlbumGain = "-9.75"
                 }
-            ),
-
-            // 44100Hz Mono, interpolated peaks
+            ) { Label = "ReplayGain, 44100Hz Mono, default (simple) peaks" },
             new(
                 "LPCM 16-bit 44100Hz Mono.wav",
                 "ReplayGain",
@@ -85,9 +78,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     TrackGain = "-9.75",
                     AlbumGain = "-9.75"
                 }
-            ),
-
-            // 44100Hz Stereo, default (simple) peaks
+            ) { Label = "ReplayGain, 44100Hz Mono, interpolated peaks" },
             new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ReplayGain",
@@ -99,9 +90,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     TrackGain = "-8.67",
                     AlbumGain = "-8.67"
                 }
-            ),
-
-            // 44100Hz Stereo, interpolated peaks
+            ) { Label = "ReplayGain, 44100Hz Stereo, default (simple) peaks" },
             new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ReplayGain",
@@ -116,9 +105,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     TrackGain = "-8.67",
                     AlbumGain = "-8.67"
                 }
-            ),
-
-            // 48000Hz Stereo, default (simple) peaks
+            ) { Label = "ReplayGain, 44100Hz Stereo, interpolated peaks" },
             new(
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "ReplayGain",
@@ -130,9 +117,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     TrackGain = "-8.66",
                     AlbumGain = "-8.66"
                 }
-            ),
-
-            // 48000Hz Stereo, interpolated peaks
+            ) { Label = "ReplayGain, 48000Hz Stereo, default (simple) peaks" },
             new(
                 "LPCM 16-bit 48000Hz Stereo.wav",
                 "ReplayGain",
@@ -147,9 +132,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     TrackGain = "-8.66",
                     AlbumGain = "-8.66"
                 }
-            ),
-
-            // 96000Hz Stereo, default (simple) peaks
+            ) { Label = "ReplayGain, 48000Hz Stereo, interpolated peaks" },
             new(
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "ReplayGain",
@@ -161,9 +144,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     TrackGain = "-8.64",
                     AlbumGain = "-8.64"
                 }
-            ),
-
-            // 96000Hz Stereo, interpolated peaks
+            ) { Label = "ReplayGain, 96000Hz Stereo, default (simple) peaks" },
             new(
                 "LPCM 24-bit 96000Hz Stereo.wav",
                 "ReplayGain",
@@ -178,9 +159,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     TrackGain = "-8.64",
                     AlbumGain = "-8.64"
                 }
-            ),
-
-            // 44100Hz Stereo, simple peaks (explicit)
+            ) { Label = "ReplayGain, 96000Hz Stereo, interpolated peaks" },
             new(
                 "LPCM 16-bit 44100Hz Stereo.wav",
                 "ReplayGain",
@@ -195,7 +174,7 @@ namespace AudioWorks.TestUtilities.DataSources
                     TrackGain = "-8.67",
                     AlbumGain = "-8.67"
                 }
-            )
+            ) { Label = "ReplayGain, 44100Hz Stereo, simple peaks (explicit)" }
         ];
 
         public static IEnumerable<TheoryDataRow<string>> Analyzers =>
