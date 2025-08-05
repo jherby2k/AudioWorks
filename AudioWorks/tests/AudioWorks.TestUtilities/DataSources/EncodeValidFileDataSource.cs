@@ -999,7 +999,6 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
                 [
-
                     "E0-91-F3-FD-0E-3C-F5-1A", // MacOS on Intel
                     "2C-F5-B4-05-2D-2C-FB-DA", // MacOS on ARM
                     "D4-96-9B-4B-59-5F-B5-CE", // 32-bit Windows
@@ -1009,7 +1008,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 ]
             )
             {
-                Label = "Wave LPCM 16-bit 44100Hz Mono -> AppleAAC, BitRate = 128 (constrained)",
+                Label = "Wave LPCM 16-bit 44100Hz Mono -> AppleAAC, BitRate = 128",
                 Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null
             },
             new(
@@ -1032,7 +1031,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 ]
             )
             {
-                Label = "Wave LPCM 16-bit 44100Hz Mono -> AppleAAC, ControlMode = Constrained (explicit)",
+                Label = "Wave LPCM 16-bit 44100Hz Mono -> AppleAAC, BitRate = 128, ControlMode = Constrained (explicit)",
                 Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null
             },
             new(
@@ -1055,7 +1054,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 ]
             )
             {
-                Label = "Wave LPCM 16-bit 44100Hz Mono -> AppleAAC, ControlMode = Average",
+                Label = "Wave LPCM 16-bit 44100Hz Mono -> AppleAAC, BitRate = 128, ControlMode = Average",
                 Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null
             },
             new(
@@ -1079,7 +1078,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 ]
             )
             {
-                Label = "Wave LPCM 16-bit 44100Hz Mono -> AppleAAC, ControlMode = Constant",
+                Label = "Wave LPCM 16-bit 44100Hz Mono -> AppleAAC, BitRate = 128, ControlMode = Constant",
                 Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null
             },
             new(
