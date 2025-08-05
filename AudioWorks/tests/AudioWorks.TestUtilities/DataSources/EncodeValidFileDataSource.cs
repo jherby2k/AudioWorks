@@ -990,7 +990,7 @@ namespace AudioWorks.TestUtilities.DataSources
                 Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null
             },
             new(
-                "LPCM 16-bit 44100Hz Mono.wav",
+                "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
                 new()
                 {
@@ -999,21 +999,20 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
                 [
-
-                    "E0-91-F3-FD-0E-3C-F5-1A", // MacOS on Intel
-                    "2C-F5-B4-05-2D-2C-FB-DA", // MacOS on ARM
-                    "D4-96-9B-4B-59-5F-B5-CE", // 32-bit Windows
-                    "B5-95-50-67-B9-AE-AB-4D", // 64-bit Windows on Core i5-8250U
-                    "5B-E0-72-79-CF-69-6E-91", // 64-bit Windows on Ryzen 5600X
-                    "0A-9B-19-DA-40-0A-D1-0F" // 64-bit Windows on EPYC 7763
+                    "xE0-91-F3-FD-0E-3C-F5-1A", // MacOS on Intel
+                    "x2C-F5-B4-05-2D-2C-FB-DA", // MacOS on ARM
+                    "0E-9B-8F-80-52-E2-49-82", // 32-bit Windows
+                    "xB5-95-50-67-B9-AE-AB-4D", // 64-bit Windows on Core i5-8250U
+                    "04-56-0A-06-D5-AA-3B-90", // 64-bit Windows on Ryzen 5600X
+                    "x0A-9B-19-DA-40-0A-D1-0F" // 64-bit Windows on EPYC 7763
                 ]
             )
             {
-                Label = "Wave LPCM 16-bit 44100Hz Mono -> AppleAAC, BitRate = 128 (constrained)",
+                Label = "Wave LPCM 16-bit 44100Hz Stereo -> AppleAAC, ControlMode = Constrained (default)",
                 Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null
             },
             new(
-                "LPCM 16-bit 44100Hz Mono.wav",
+                "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
                 new()
                 {
@@ -1023,20 +1022,20 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
                 [
-                    "E0-91-F3-FD-0E-3C-F5-1A", // MacOS on Intel
-                    "2C-F5-B4-05-2D-2C-FB-DA", // MacOS on ARM
-                    "D4-96-9B-4B-59-5F-B5-CE", // 32-bit Windows
-                    "B5-95-50-67-B9-AE-AB-4D", // 64-bit Windows on Core i5-8250U
-                    "5B-E0-72-79-CF-69-6E-91", // 64-bit Windows on Ryzen 5600X
-                    "0A-9B-19-DA-40-0A-D1-0F" // 64-bit Windows on EPYC 7763
+                    "xE0-91-F3-FD-0E-3C-F5-1A", // MacOS on Intel
+                    "x2C-F5-B4-05-2D-2C-FB-DA", // MacOS on ARM
+                    "0E-9B-8F-80-52-E2-49-82", // 32-bit Windows
+                    "xB5-95-50-67-B9-AE-AB-4D", // 64-bit Windows on Core i5-8250U
+                    "04-56-0A-06-D5-AA-3B-90", // 64-bit Windows on Ryzen 5600X
+                    "x0A-9B-19-DA-40-0A-D1-0F" // 64-bit Windows on EPYC 7763
                 ]
             )
             {
-                Label = "Wave LPCM 16-bit 44100Hz Mono -> AppleAAC, ControlMode = Constrained (explicit)",
+                Label = "Wave LPCM 16-bit 44100Hz Stereo -> AppleAAC, ControlMode = Constrained (explicit)",
                 Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null
             },
             new(
-                "LPCM 16-bit 44100Hz Mono.wav",
+                "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
                 new()
                 {
@@ -1046,20 +1045,20 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
                 [
-                    "95-A5-76-FE-A3-32-33-72", // MacOS on Intel
-                    "55-83-14-EE-1E-DE-D7-9B", // MacOS on ARM
-                    "47-ED-90-FB-48-2E-19-55", // 32-bit Windows
-                    "9F-7D-0C-AF-47-8B-65-2C", // 64-bit Windows on Core i5-8250U
-                    "B8-F5-05-D4-50-4C-35-AA", // 64-bit Windows on Ryzen 5600X
-                    "2B-8C-3C-6F-C7-46-66-66" // 64-bit Windows on EPYC 7763
+                    "x95-A5-76-FE-A3-32-33-72", // MacOS on Intel
+                    "x55-83-14-EE-1E-DE-D7-9B", // MacOS on ARM
+                    "0E-9B-8F-80-52-E2-49-82", // 32-bit Windows
+                    "x9F-7D-0C-AF-47-8B-65-2C", // 64-bit Windows on Core i5-8250U
+                    "04-56-0A-06-D5-AA-3B-90", // 64-bit Windows on Ryzen 5600X
+                    "x2B-8C-3C-6F-C7-46-66-66" // 64-bit Windows on EPYC 7763
                 ]
             )
             {
-                Label = "Wave LPCM 16-bit 44100Hz Mono -> AppleAAC, ControlMode = Average",
+                Label = "Wave LPCM 16-bit 44100Hz Stereo -> AppleAAC, ControlMode = Average",
                 Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null
             },
             new(
-                "LPCM 16-bit 44100Hz Mono.wav",
+                "LPCM 16-bit 44100Hz Stereo.wav",
                 "AppleAAC",
                 new()
                 {
@@ -1069,17 +1068,17 @@ namespace AudioWorks.TestUtilities.DataSources
                     ["ModificationTime"] = new DateTime(2017, 1, 31)
                 },
                 [
-                    "61-11-48-3A-D6-7F-C3-28", // MacOS on Intel
-                    "A3-32-D7-07-D1-E5-55-80", // MacOS on ARM
-                    "9C-FF-C2-AE-1F-C3-F1-66", // 32-bit Windows on Core i5-8250U
-                    "98-55-BA-2D-4A-72-F1-1A", // 32-bit Windows on Ryzen 5600X
-                    "2A-87-45-4D-37-34-AF-94", // 64-bit Windows on Core i5-8250U
-                    "BC-47-2F-B6-C5-50-ED-17", // 64-bit Windows on Ryzen 5600X
-                    "AE-A9-BC-CB-C8-16-55-F6" // 64-bit Windows on EPYC 7763
+                    "x61-11-48-3A-D6-7F-C3-28", // MacOS on Intel
+                    "xA3-32-D7-07-D1-E5-55-80", // MacOS on ARM
+                    "x9C-FF-C2-AE-1F-C3-F1-66", // 32-bit Windows on Core i5-8250U
+                    "93-E9-95-1D-EF-48-81-DB", // 32-bit Windows on Ryzen 5600X
+                    "x2A-87-45-4D-37-34-AF-94", // 64-bit Windows on Core i5-8250U
+                    "29-13-DA-5D-8C-06-18-5A", // 64-bit Windows on Ryzen 5600X
+                    "xAE-A9-BC-CB-C8-16-55-F6" // 64-bit Windows on EPYC 7763
                 ]
             )
             {
-                Label = "Wave LPCM 16-bit 44100Hz Mono -> AppleAAC, ControlMode = Constant",
+                Label = "Wave LPCM 16-bit 44100Hz Stereo -> AppleAAC, ControlMode = Constant",
                 Skip = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Not supported on Linux" : null
             },
             new(
