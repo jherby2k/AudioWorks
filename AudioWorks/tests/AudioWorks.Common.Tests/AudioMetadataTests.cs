@@ -14,6 +14,7 @@ You should have received a copy of the GNU Affero General Public License along w
 <https://www.gnu.org/licenses/>. */
 
 using System;
+using System.Globalization;
 using System.Text.Json;
 using Xunit;
 
@@ -572,5 +573,26 @@ namespace AudioWorks.Common.Tests
         public void AlbumGainIsSerialized() =>
             Assert.Equal("0.80", JsonSerializer.Deserialize<AudioMetadata>(JsonSerializer.Serialize(
                 new AudioMetadata { AlbumGain = "0.80" }))?.AlbumGain);
+
+        [Fact(DisplayName = "AudioMetadata normalizes numeric strings under different cultures")]
+        public void NumericStringsAreCultureInvariant()
+        {
+            var original = CultureInfo.CurrentCulture;
+            try
+            {
+                CultureInfo.CurrentCulture = new CultureInfo("de-DE"); // uses ',' as decimal separator and '.' as grouping
+
+                var m = new AudioMetadata { TrackPeak = "0.5", AlbumPeak = "1.234567", TrackGain = "-9.75", AlbumGain = "-9.75" };
+
+                Assert.Equal("0.500000", m.TrackPeak);
+                Assert.Equal("1.234567", m.AlbumPeak);
+                Assert.Equal("-9.75", m.TrackGain);
+                Assert.Equal("-9.75", m.AlbumGain);
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = original;
+            }
+        }
     }
 }
