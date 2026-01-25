@@ -260,7 +260,7 @@ namespace AudioWorks.Common
                     _trackPeak = string.Empty;
                 else
                 {
-                    if (!double.TryParse(value, out var floatValue) || floatValue < 0)
+                    if (!double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var floatValue) || floatValue < 0)
                         throw new AudioMetadataInvalidException("TrackPeak cannot be negative.");
                     _trackPeak = floatValue.ToString("F6", CultureInfo.InvariantCulture);
                 }
@@ -284,7 +284,7 @@ namespace AudioWorks.Common
                     _albumPeak = string.Empty;
                 else
                 {
-                    if (!double.TryParse(value, out var floatValue) || floatValue < 0)
+                    if (!double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var floatValue) || floatValue < 0)
                         throw new AudioMetadataInvalidException("AlbumPeak cannot be negative.");
                     _albumPeak = floatValue.ToString("F6", CultureInfo.InvariantCulture);
                 }
@@ -309,7 +309,7 @@ namespace AudioWorks.Common
                     _trackGain = string.Empty;
                 else
                 {
-                    if (!double.TryParse(value, out var floatValue))
+                    if (!double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var floatValue))
                         throw new AudioMetadataInvalidException("TrackGain must be numeric.");
                     _trackGain = floatValue.ToString("F2", CultureInfo.InvariantCulture);
                 }
@@ -334,7 +334,7 @@ namespace AudioWorks.Common
                     _albumGain = string.Empty;
                 else
                 {
-                    if (!double.TryParse(value, out var floatValue))
+                    if (!double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var floatValue))
                         throw new AudioMetadataInvalidException("AlbumGain must be numeric.");
                     _albumGain = floatValue.ToString("F2", CultureInfo.InvariantCulture);
                 }
